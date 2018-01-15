@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class ResolverApi {
-    
+
     @RequestMapping("/")
     public String index() {
         return "Hey!, I'm your resolver!";
