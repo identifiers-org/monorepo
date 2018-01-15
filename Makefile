@@ -14,4 +14,6 @@ container-production: app-structure
 clean:
 	@mvn clean > /dev/null
 
+all: clean container-production
+
 .PHONY: app-structure container-production clean
