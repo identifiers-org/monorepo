@@ -10,3 +10,4 @@ ADD target/app/. /home/app
 
 # Launch information
 WORKDIR /home/app
+CMD ["java", "-jar", "service.jar"]
