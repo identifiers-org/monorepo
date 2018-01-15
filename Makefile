@@ -11,4 +11,7 @@ production-container: app-structure
 	@docker build -t identifiersorg/cloud-ws-resolver
 	@docker push identifiersorg/cloud-ws-resolver
 
-.PHONY: app-structure production-container
+clean:
+	@mvn clean > /dev/null
+
+.PHONY: app-structure production-container clean
