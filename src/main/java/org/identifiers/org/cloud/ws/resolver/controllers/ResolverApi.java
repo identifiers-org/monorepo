@@ -15,6 +15,6 @@ public class ResolverApi {
 
     @RequestMapping("/")
     public String index() {
-        return "Hey!, I'm your resolver!";
+        return "Hey!, I'm your resolver! Again!";
     }
 }
