@@ -8,7 +8,7 @@ app-structure:
 	@cp target/resolver-*.jar target/app/service.jar
 
 container-production: app-structure
-	@docker build -t identifiersorg/cloud-ws-resolver .
+	@docker build --no-cache -t identifiersorg/cloud-ws-resolver .
 	@docker push identifiersorg/cloud-ws-resolver
 
 clean:
