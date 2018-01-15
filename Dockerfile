@@ -9,5 +9,6 @@ RUN mkdir -p /home/app
 ADD target/app/. /home/app
 
 # Launch information
+EXPOSE 8080
 WORKDIR /home/app
 CMD ["java", "-jar", "service.jar"]
