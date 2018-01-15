@@ -7,4 +7,8 @@ app-structure:
 	@mkdir -p target/app/tmp
 	@cp target/resolver-*.jar target/app/service.jar
 
-.PHONY: app-structure
+production-container: app-structure
+	@docker build -t identifiersorg/cloud-ws-resolver
+	@docker push identifiersorg/cloud-ws-resolver
+
+.PHONY: app-structure production-container
