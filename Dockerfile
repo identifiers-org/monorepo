@@ -7,3 +7,6 @@ RUN mkdir -p /home/app
 
 # Add the application structure
 ADD target/app/. /home/app
+
+# Launch information
+WORKDIR /home/app
