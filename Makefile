@@ -1,6 +1,6 @@
 # This Makefile helps on building the production container image
 app-structure:
-	@echo -e "---> Creating application structure"
+	@echo "---> Creating application structure"
 	@mvn clean > /dev/null
 	@mvn package
 	@mkdir -p target/app/log
