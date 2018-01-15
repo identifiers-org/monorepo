@@ -7,13 +7,13 @@ app_structure:
 	@mkdir -p target/app/tmp
 	@cp target/resolver-*.jar target/app/service.jar
 
-container-production: app-structure
+container_production: app_structure
 	@docker build -t identifiersorg/cloud-ws-resolver .
 	@docker push identifiersorg/cloud-ws-resolver
 
 clean:
 	@mvn clean > /dev/null
 
-all: clean container-production
+all: clean container_production
 
-.PHONY: all app_structure container-production clean
+.PHONY: all app_structure container_production clean
