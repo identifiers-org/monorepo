@@ -1,4 +1,8 @@
 # This Makefile helps on building the production container image
+
+# Default target
+all: clean container_production
+
 app_structure:
 	@echo "---> Creating application structure"
 	@mvn clean > /dev/null
@@ -14,7 +18,5 @@ container_production: app_structure
 clean:
 	@echo "---> Cleaning the space"
 	@mvn clean > /dev/null
-
-all: clean container_production
 
 .PHONY: all app_structure container_production clean
