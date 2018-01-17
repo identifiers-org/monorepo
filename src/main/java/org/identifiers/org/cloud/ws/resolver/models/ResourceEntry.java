@@ -2,6 +2,7 @@ package org.identifiers.org.cloud.ws.resolver.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.index.Indexed;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -18,7 +19,7 @@ public class ResourceEntry {
     String institution;
     String location;
     boolean official;
-    String resourcePrefix;
+    @Indexed String resourcePrefix;
     String localId;
     String testString;
 }
