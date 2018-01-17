@@ -24,4 +24,16 @@ public class ResourceEntry {
     private String resourcePrefix;
     private String localId;
     private String testString;
+
+    public ResourceEntry(String id, String accessUrl, String info, String institution, String location, boolean official, String resourcePrefix, String localId, String testString) {
+        this.id = id;
+        this.accessUrl = accessUrl;
+        this.info = info;
+        this.institution = institution;
+        this.location = location;
+        this.official = official;
+        this.resourcePrefix = resourcePrefix;
+        this.localId = localId;
+        this.testString = testString;
+    }
 }
