@@ -1,6 +1,6 @@
 package org.identifiers.org.cloud.ws.resolver.data.repositories;
 
-import org.identifiers.org.cloud.ws.resolver.models.PidEntry;
+import org.identifiers.org.cloud.ws.resolver.data.models.PidEntry;
 import org.springframework.data.repository.CrudRepository;
 
 /**

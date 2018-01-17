@@ -1,4 +1,4 @@
-package org.identifiers.org.cloud.ws.resolver.models;
+package org.identifiers.org.cloud.ws.resolver.data.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
@@ -8,18 +8,15 @@ import org.springframework.data.redis.core.index.Indexed;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: resolver
  * Package: org.identifiers.org.cloud.ws.resolver.models
- * Timestamp: 2018-01-17 16:15
+ * Timestamp: 2018-01-17 15:20
  * ---
  */
-@RedisHash("resourceEntries")
-public class ResourceEntry {
+@RedisHash("pidentries")
+public class PidEntry {
     @Id String id;
-    String accessUrl;
-    String info;
-    String institution;
-    String location;
-    boolean official;
-    @Indexed String resourcePrefix;
-    String localId;
-    String testString;
+    String name;
+    String pattern;
+    String definition;
+    @Indexed String prefix;
+    ResourceEntry[] resourceEntries;
 }
