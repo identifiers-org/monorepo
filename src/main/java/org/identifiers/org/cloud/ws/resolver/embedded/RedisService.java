@@ -28,14 +28,14 @@ public class RedisService {
 
     @PostConstruct
     public void startRedis() throws IOException {
-        logger.info("--- STARTING REDIS ---");
+        logger.info("--- STARTING Embedded REDIS ---");
         redisServer = new RedisServer(redisPort);
         redisServer.start();
     }
 
     @PreDestroy
     public void stopRedis() {
-        logger.info("--- STOPPING REDIS ---");
+        logger.info("--- STOPPING Embedded REDIS ---");
         redisServer.stop();
     }
 
