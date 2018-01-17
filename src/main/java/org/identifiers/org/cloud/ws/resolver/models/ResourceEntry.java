@@ -20,4 +20,5 @@ public class ResourceEntry {
     boolean official;
     String resourcePrefix;
     String localId;
+    String testString;
 }
