@@ -13,4 +13,5 @@ import org.springframework.data.redis.core.RedisHash;
 @RedisHash("resourceEntries")
 public class ResourceEntry {
     @Id String id;
+    String accessUrl;
 }
