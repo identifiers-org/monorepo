@@ -19,4 +19,5 @@ public class ResourceEntry {
     String location;
     boolean official;
     String resourcePrefix;
+    String localId;
 }
