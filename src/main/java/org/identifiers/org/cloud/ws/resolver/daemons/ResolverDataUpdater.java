@@ -18,7 +18,7 @@ import java.util.Random;
  */
 @Component
 public class ResolverDataUpdater extends Thread {
-    private static final int WAIT_TIME_LIMIT_SECONDS = 3600;
+    private static final int WAIT_TIME_LIMIT_SECONDS = 1800;
     private Logger logger = LoggerFactory.getLogger(ResolverDataUpdater.class);
 
     @Value("${spring.redis.port}")
