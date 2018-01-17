@@ -2,6 +2,7 @@ package org.identifiers.org.cloud.ws.resolver.embedded;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import redis.embedded.RedisServer;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class RedisService {
+
     @Value("${spring.redis.port}")
     private int redisPort;
+
+    private RedisServer redisServer;
 }
