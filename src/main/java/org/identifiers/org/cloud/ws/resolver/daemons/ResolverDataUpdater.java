@@ -7,5 +7,6 @@ package org.identifiers.org.cloud.ws.resolver.daemons;
  * Timestamp: 2018-01-16 16:34
  * ---
  */
-public class ResolverDataUpdater {
+public class ResolverDataUpdater extends Thread {
+    
 }
