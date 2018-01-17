@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.util.Random;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: resolver
@@ -28,5 +30,13 @@ public class ResolverDataUpdater extends Thread {
 
     public void setShutdown() {
         this.shutdown = true;
+    }
+
+    @Override
+    public void run() {
+        logger.info("--- Resolver Data Update Daemon Start ---");
+        Random random = new Random(System.currentTimeMillis());
+        while (!isShutdown()) {
+        }
     }
 }
