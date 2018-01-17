@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.util.Random;
 
 /**
@@ -58,6 +59,7 @@ public class ResolverDataUpdater extends Thread {
         start();
     }
 
+    @PreDestroy
     public void stopDaemon() {
         logger.info("--- [STOPPING] Resolver Data Update Daemon ---");
         setShutdown();
