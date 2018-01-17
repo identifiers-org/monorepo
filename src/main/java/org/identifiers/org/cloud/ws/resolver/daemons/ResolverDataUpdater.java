@@ -1,5 +1,8 @@
 package org.identifiers.org.cloud.ws.resolver.daemons;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: resolver
@@ -8,5 +11,5 @@ package org.identifiers.org.cloud.ws.resolver.daemons;
  * ---
  */
 public class ResolverDataUpdater extends Thread {
-    
+    private Logger logger = LoggerFactory.getLogger(ResolverDataUpdater.class);
 }
