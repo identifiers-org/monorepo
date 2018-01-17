@@ -14,6 +14,7 @@ import java.util.Random;
  * ---
  */
 public class ResolverDataUpdater extends Thread {
+    private static final int WAIT_TIME_LIMIT_SECONDS = 3600;
     private Logger logger = LoggerFactory.getLogger(ResolverDataUpdater.class);
 
     @Value("${spring.redis.port}")
@@ -37,6 +38,17 @@ public class ResolverDataUpdater extends Thread {
         logger.info("--- Resolver Data Update Daemon Start ---");
         Random random = new Random(System.currentTimeMillis());
         while (!isShutdown()) {
+            // TODO - Do your stuff
+            // Wait for a predefined period of time before the next announcement
+            try {
+                long waitTime = random.nextInt(WAIT_TIME_LIMIT_SECONDS) * 1000;
+                Thread.sleep(waitTime);
+                logger.info("Waiting {}s before the we check again for the resolver data", waitTime);
+            } catch (InterruptedException e) {
+                logger.warn("The Resolver Data Update Daemon has been interrupted while waiting for " +
+                        "another iteration. Stopping the service, no more updates will be submitted");
+                shutdown = true;
+            }
         }
     }
 }
