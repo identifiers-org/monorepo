@@ -46,7 +46,7 @@ public class ResolverDataUpdater extends Thread {
             // Wait for a predefined period of time before the next announcement
             try {
                 long waitTime = random.nextInt(WAIT_TIME_LIMIT_SECONDS) * 1000;
-                logger.info("Waiting {}s before the we check again for the resolver data", waitTime);
+                logger.info("Waiting {}s before the we check again for the resolver data", waitTime / 1000);
                 Thread.sleep(waitTime);
             } catch (InterruptedException e) {
                 logger.warn("The Resolver Data Update Daemon has been interrupted while waiting for " +
