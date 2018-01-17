@@ -26,7 +26,10 @@ public class ApplicationConfig {
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        return new JedisConnectionFactory();
+        JedisConnectionFactory jedisConFactory = new JedisConnectionFactory();
+        jedisConFactory.setHostName(redisHost);
+        jedisConFactory.setPort(redisPort);
+        return jedisConFactory;
     }
 
     @Bean
