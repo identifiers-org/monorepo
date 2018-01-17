@@ -3,6 +3,7 @@ package org.identifiers.org.cloud.ws.resolver.daemons;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -15,6 +16,7 @@ import java.util.Random;
  * Timestamp: 2018-01-16 16:34
  * ---
  */
+@Component
 public class ResolverDataUpdater extends Thread {
     private static final int WAIT_TIME_LIMIT_SECONDS = 3600;
     private Logger logger = LoggerFactory.getLogger(ResolverDataUpdater.class);
