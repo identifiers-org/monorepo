@@ -25,4 +25,8 @@ public class ResolverDataUpdater extends Thread {
     public boolean isShutdown() {
         return shutdown;
     }
+
+    public void setShutdown() {
+        this.shutdown = true;
+    }
 }
