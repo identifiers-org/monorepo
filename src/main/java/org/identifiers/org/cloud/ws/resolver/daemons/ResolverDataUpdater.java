@@ -19,4 +19,6 @@ public class ResolverDataUpdater extends Thread {
 
     @Value("${spring.redis.host}")
     private String redisHost;
+
+    private boolean shutdown = false;
 }
