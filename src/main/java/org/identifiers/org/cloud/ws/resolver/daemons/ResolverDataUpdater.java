@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
+import javax.annotation.PostConstruct;
 import java.util.Random;
 
 /**
@@ -50,5 +51,10 @@ public class ResolverDataUpdater extends Thread {
                 shutdown = true;
             }
         }
+    }
+
+    @PostConstruct
+    public void autoStartThread() {
+        this.start();
     }
 }
