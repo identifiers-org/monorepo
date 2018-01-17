@@ -15,4 +15,5 @@ public class ResourceEntry {
     @Id String id;
     String accessUrl;
     String info;
+    String institution;
 }
