@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import redis.embedded.RedisServer;
 
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: resolver
@@ -18,4 +21,10 @@ public class RedisService {
     private int redisPort;
 
     private RedisServer redisServer;
+
+    @PostConstruct
+    public void startRedis() throws IOException {
+        redisServer = new RedisServer(redisPort);
+        redisServer.start();
+    }
 }
