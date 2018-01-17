@@ -1,5 +1,6 @@
 package org.identifiers.org.cloud.ws.resolver.models;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 /**
@@ -11,4 +12,5 @@ import org.springframework.data.redis.core.RedisHash;
  */
 @RedisHash("resourceEntries")
 public class ResourceEntry {
+    @Id String id;
 }
