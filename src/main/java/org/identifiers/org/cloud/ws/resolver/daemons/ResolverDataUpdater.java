@@ -21,4 +21,8 @@ public class ResolverDataUpdater extends Thread {
     private String redisHost;
 
     private boolean shutdown = false;
+
+    public boolean isShutdown() {
+        return shutdown;
+    }
 }
