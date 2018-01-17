@@ -13,7 +13,6 @@ import org.springframework.data.redis.core.index.Indexed;
  */
 @RedisHash("pidentries")
 public class PidEntry {
-
     @Id String id;
     String name;
     String pattern;
