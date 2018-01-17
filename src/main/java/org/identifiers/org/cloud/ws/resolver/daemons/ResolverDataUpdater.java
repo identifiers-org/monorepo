@@ -55,7 +55,7 @@ public class ResolverDataUpdater extends Thread {
 
     @PostConstruct
     public void autoStartThread() {
-        this.start();
+        start();
     }
 
     public void stopDaemon() {
