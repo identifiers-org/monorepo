@@ -18,4 +18,5 @@ public class PidEntry {
     String pattern;
     String definition;
     @Indexed String prefix;
+    ResourceEntry[] resourceEntries;
 }
