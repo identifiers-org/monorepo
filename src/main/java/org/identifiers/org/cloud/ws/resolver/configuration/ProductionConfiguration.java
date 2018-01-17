@@ -1,5 +1,7 @@
 package org.identifiers.org.cloud.ws.resolver.configuration;
 
+import org.identifiers.org.cloud.ws.resolver.embedded.RedisService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -12,5 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ProductionConfiguration {
 
-    
+    @Autowired
+    private RedisService redisService;
+
 }
