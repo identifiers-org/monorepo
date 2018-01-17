@@ -59,6 +59,7 @@ public class ResolverDataUpdater extends Thread {
     }
 
     public void stopDaemon() {
+        logger.info("--- [STOPPING] Resolver Data Update Daemon ---");
         setShutdown();
     }
 }
