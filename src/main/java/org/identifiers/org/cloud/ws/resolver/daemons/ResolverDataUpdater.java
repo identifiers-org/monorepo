@@ -57,4 +57,8 @@ public class ResolverDataUpdater extends Thread {
     public void autoStartThread() {
         this.start();
     }
+
+    public void stopDaemon() {
+        setShutdown();
+    }
 }
