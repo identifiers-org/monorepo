@@ -12,4 +12,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ResolverDataUpdater extends Thread {
     private Logger logger = LoggerFactory.getLogger(ResolverDataUpdater.class);
+
+    private int redisPort;
+    
 }
