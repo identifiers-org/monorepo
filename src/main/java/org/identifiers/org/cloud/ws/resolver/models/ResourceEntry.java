@@ -16,4 +16,5 @@ public class ResourceEntry {
     String accessUrl;
     String info;
     String institution;
+    String location;
 }
