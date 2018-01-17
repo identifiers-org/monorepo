@@ -17,5 +17,6 @@ public class ResolverDataUpdater extends Thread {
     @Value("${spring.redis.port}")
     private int redisPort;
 
+    @Value("${spring.redis.host}")
     private String redisHost;
 }
