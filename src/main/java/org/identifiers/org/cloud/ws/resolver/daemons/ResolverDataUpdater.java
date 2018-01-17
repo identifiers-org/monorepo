@@ -21,12 +21,6 @@ public class ResolverDataUpdater extends Thread {
     private static final int WAIT_TIME_LIMIT_SECONDS = 1800;
     private Logger logger = LoggerFactory.getLogger(ResolverDataUpdater.class);
 
-    @Value("${spring.redis.port}")
-    private int redisPort;
-
-    @Value("${spring.redis.host}")
-    private String redisHost;
-
     private boolean shutdown = false;
 
     public boolean isShutdown() {

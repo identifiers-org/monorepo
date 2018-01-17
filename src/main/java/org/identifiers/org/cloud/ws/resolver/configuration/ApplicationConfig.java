@@ -1,5 +1,6 @@
 package org.identifiers.org.cloud.ws.resolver.configuration;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -17,6 +18,11 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 @Configuration
 @EnableRedisRepositories
 public class ApplicationConfig {
+    @Value("${spring.redis.port}")
+    private int redisPort;
+
+    @Value("${spring.redis.host}")
+    private String redisHost;
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
