@@ -1,5 +1,6 @@
 package org.identifiers.org.cloud.ws.resolver.embedded;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,6 +12,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class RedisService {
-
+    @Value("${spring.redis.port}")
     private int redisPort;
 }
