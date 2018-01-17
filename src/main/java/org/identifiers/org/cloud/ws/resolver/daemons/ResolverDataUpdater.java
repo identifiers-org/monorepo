@@ -2,6 +2,7 @@ package org.identifiers.org.cloud.ws.resolver.daemons;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 public class ResolverDataUpdater extends Thread {
     private Logger logger = LoggerFactory.getLogger(ResolverDataUpdater.class);
 
+    @Value("${spring.redis.port}")
     private int redisPort;
-    
+
 }
