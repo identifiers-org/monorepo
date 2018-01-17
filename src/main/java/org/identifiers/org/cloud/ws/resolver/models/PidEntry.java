@@ -1,6 +1,8 @@
 package org.identifiers.org.cloud.ws.resolver.models;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.index.Indexed;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -11,10 +13,10 @@ import org.springframework.data.redis.core.RedisHash;
  */
 @RedisHash("pidentries")
 public class PidEntry {
-    
-    private String id;
-    private String name;
-    private String pattern;
-    private String definition;
-    private String prefix;
+
+    @Id String id;
+    String name;
+    String pattern;
+    String definition;
+    @Indexed String prefix;
 }
