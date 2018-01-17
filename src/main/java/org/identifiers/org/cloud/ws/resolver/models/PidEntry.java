@@ -11,5 +11,10 @@ import org.springframework.data.redis.core.RedisHash;
  */
 @RedisHash("pidentries")
 public class PidEntry {
-
+    
+    private String id;
+    private String name;
+    private String pattern;
+    private String definition;
+    private String prefix;
 }
