@@ -13,13 +13,15 @@ import org.springframework.data.redis.core.index.Indexed;
  */
 @RedisHash("resourceEntries")
 public class ResourceEntry {
-    @Id String id;
-    String accessUrl;
-    String info;
-    String institution;
-    String location;
-    boolean official;
-    @Indexed String resourcePrefix;
-    String localId;
-    String testString;
+    @Id
+    private String id;
+    private String accessUrl;
+    private String info;
+    private String institution;
+    private String location;
+    private boolean official;
+    @Indexed
+    private String resourcePrefix;
+    private String localId;
+    private String testString;
 }
