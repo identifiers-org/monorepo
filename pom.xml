@@ -36,6 +36,7 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Embedded Spring Boot Server -->
 		<dependency>
 			<groupId>com.github.kstyrc</groupId>
 			<artifactId>embedded-redis</artifactId>
