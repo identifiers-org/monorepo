@@ -4,6 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
 
+import java.io.Serializable;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: resolver
@@ -12,7 +14,7 @@ import org.springframework.data.redis.core.index.Indexed;
  * ---
  */
 @RedisHash("pidentries")
-public class PidEntry {
+public class PidEntry implements Serializable {
     @Id
     private String id;
     private String name;
