@@ -4,6 +4,7 @@ import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +21,8 @@ public class ResolverDataSourcerFromSampleFile implements ResolverDataSourcer {
 
     @Override
     public List<PidEntry> getResolverData() throws ResolverDataSourcerException {
-        return null;
+        ArrayList<PidEntry> result = new ArrayList<>();
+        // TODO
+        return result;
     }
 }
