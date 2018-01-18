@@ -26,3 +26,6 @@ nbdist/
 ### Extra
 .mvn/
 mvnw*
+
+# Mac OS files
+**.DS_Store
