@@ -1,5 +1,9 @@
 package org.identifiers.cloud.ws.resolver.daemons.models;
 
+import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
+
+import java.util.List;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: resolver
@@ -8,5 +12,6 @@ package org.identifiers.cloud.ws.resolver.daemons.models;
  * ---
  */
 public interface ResolverDataSourcer {
-    
+
+    List<PidEntry> getResolverData();
 }
