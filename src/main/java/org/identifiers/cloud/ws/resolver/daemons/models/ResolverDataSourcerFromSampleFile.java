@@ -15,7 +15,9 @@ import java.util.List;
  */
 public class ResolverDataSourcerFromSampleFile implements ResolverDataSourcer {
     private Logger logger = LoggerFactory.getLogger(ResolverDataSourcerFromSampleFile.class);
-    
+
+    private String sampleDataFileName;
+
     @Override
     public List<PidEntry> getResolverData() throws ResolverDataSourcerException {
         return null;
