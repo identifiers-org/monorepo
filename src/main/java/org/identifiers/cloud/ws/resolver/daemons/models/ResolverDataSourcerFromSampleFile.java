@@ -1,6 +1,5 @@
 package org.identifiers.cloud.ws.resolver.daemons.models;
 
-import com.sun.javafx.binding.StringFormatter;
 import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,17 +22,17 @@ public class ResolverDataSourcerFromSampleFile implements ResolverDataSourcer {
     private Logger logger = LoggerFactory.getLogger(ResolverDataSourcerFromSampleFile.class);
 
     @Value("${org.identifiers.cloud.ws.resolver.data.source.local.sample.file.name}")
-    private String sampleDataFileName;
+    private String sampleDataFileLocalPath;
 
     @Override
     public List<PidEntry> getResolverData() throws ResolverDataSourcerException {
         ArrayList<PidEntry> result = new ArrayList<>();
         // TODO
         try {
-            File dataFile = new ClassPathResource(sampleDataFileName).getFile();
-            logger.info(StringFormatter.format("Loading resolver data sample from '{}'", dataFile.getAbsolutePath().toString()).toString());
+            File dataFile = new ClassPathResource(sampleDataFileLocalPath).getFile();
+            logger.info("Loading resolver data sample from '{}'", dataFile.getAbsolutePath());
         } catch (IOException e) {
-            logger.error(StringFormatter.format("Apparently, the local data file '{}' is not there... we don't care! hahaha!", sampleDataFileName).toString());
+            logger.error("Apparently, the local data file '{}' is not there... we don't care! hahaha!", sampleDataFileLocalPath);
         }
         return result;
     }
