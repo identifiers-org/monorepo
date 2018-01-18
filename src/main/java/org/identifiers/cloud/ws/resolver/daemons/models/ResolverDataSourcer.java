@@ -13,5 +13,5 @@ import java.util.List;
  */
 public interface ResolverDataSourcer {
 
-    List<PidEntry> getResolverData();
+    List<PidEntry> getResolverData() throws ResolverDataSourcerException;
 }
