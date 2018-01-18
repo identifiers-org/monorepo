@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.resolver.daemons;
 
 import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcer;
+import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
 import org.identifiers.cloud.ws.resolver.data.repositories.PidEntryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -46,6 +48,7 @@ public class ResolverDataUpdater extends Thread {
         while (!isShutdown()) {
             // TODO - Do your stuff
             logger.info("---> Creating instance of PidEntry ---");
+            List<PidEntry> pidEntries = resolverDataSourcer.getResolverData();
             // Wait for a predefined period of time before the next announcement
             try {
                 long waitTime = random.nextInt(WAIT_TIME_LIMIT_SECONDS) * 1000;
