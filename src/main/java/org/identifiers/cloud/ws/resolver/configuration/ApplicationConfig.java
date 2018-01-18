@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resolver.configuration;
 
+import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcer;
+import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcerFromSampleFile;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,5 +39,10 @@ public class ApplicationConfig {
         RedisTemplate<byte[], byte[]> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory());
         return template;
+    }
+
+    @Bean
+    public ResolverDataSourcer resolverDataSourcer() {
+        return new ResolverDataSourcerFromSampleFile();
     }
 }
