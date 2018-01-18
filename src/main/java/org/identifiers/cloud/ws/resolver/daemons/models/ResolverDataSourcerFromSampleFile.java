@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resolver.daemons.models;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,13 +28,15 @@ public class ResolverDataSourcerFromSampleFile implements ResolverDataSourcer {
 
     @Override
     public List<PidEntry> getResolverData() throws ResolverDataSourcerException {
-        ArrayList<PidEntry> result = new ArrayList<>();
+        List<PidEntry> result = new ArrayList<>();
         // TODO
         try {
             File dataFile = new ClassPathResource(sampleDataFileLocalPath).getFile();
             logger.info("Loading resolver data sample from '{}'", dataFile.getAbsolutePath());
+            ObjectMapper objectMapper = new ObjectMapper();
+            result = objectMapper.readValue(dataFile, new TypeReference<List<PidEntry>>(){});
         } catch (IOException e) {
-            logger.error("Apparently, the local data file '{}' is not there... we don't care! hahaha!", sampleDataFileLocalPath);
+            logger.error("There was a problem reading the file at '{}' -> '{}'", sampleDataFileLocalPath, e.getMessage());
         }
         return result;
     }
