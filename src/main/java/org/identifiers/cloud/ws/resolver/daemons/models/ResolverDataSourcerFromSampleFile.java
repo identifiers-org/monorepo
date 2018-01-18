@@ -21,7 +21,7 @@ import java.util.List;
 public class ResolverDataSourcerFromSampleFile implements ResolverDataSourcer {
     private Logger logger = LoggerFactory.getLogger(ResolverDataSourcerFromSampleFile.class);
 
-    @Value("${org.identifiers.cloud.ws.resolver.data.source.local.sample.file.name}")
+    @Value("${org.identifiers.cloud.ws.resolver.data.source.file.local.path}")
     private String sampleDataFileLocalPath;
 
     @Override
