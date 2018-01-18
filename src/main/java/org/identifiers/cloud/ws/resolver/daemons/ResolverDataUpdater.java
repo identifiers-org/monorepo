@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.resolver.daemons;
 
+import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcer;
 import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
 import org.identifiers.cloud.ws.resolver.data.repositories.PidEntryRepository;
 import org.slf4j.Logger;
@@ -24,6 +25,9 @@ public class ResolverDataUpdater extends Thread {
     private Logger logger = LoggerFactory.getLogger(ResolverDataUpdater.class);
 
     private boolean shutdown = false;
+
+    @Autowired
+    private ResolverDataSourcer resolverDataSourcer;
 
     @Autowired
     private PidEntryRepository pidEntryRepository;
