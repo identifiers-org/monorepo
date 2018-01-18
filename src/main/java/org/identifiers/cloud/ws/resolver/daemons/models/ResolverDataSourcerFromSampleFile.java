@@ -1,6 +1,8 @@
 package org.identifiers.cloud.ws.resolver.daemons.models;
 
 import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -12,6 +14,8 @@ import java.util.List;
  * ---
  */
 public class ResolverDataSourcerFromSampleFile implements ResolverDataSourcer {
+    private Logger logger = LoggerFactory.getLogger(ResolverDataSourcerFromSampleFile.class);
+    
     @Override
     public List<PidEntry> getResolverData() throws ResolverDataSourcerException {
         return null;
