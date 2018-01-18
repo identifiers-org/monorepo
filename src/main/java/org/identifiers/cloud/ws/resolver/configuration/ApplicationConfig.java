@@ -1,4 +1,4 @@
-package org.identifiers.org.cloud.ws.resolver.configuration;
+package org.identifiers.cloud.ws.resolver.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

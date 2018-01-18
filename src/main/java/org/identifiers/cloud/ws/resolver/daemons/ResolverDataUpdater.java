@@ -1,7 +1,7 @@
-package org.identifiers.org.cloud.ws.resolver.daemons;
+package org.identifiers.cloud.ws.resolver.daemons;
 
-import org.identifiers.org.cloud.ws.resolver.data.models.PidEntry;
-import org.identifiers.org.cloud.ws.resolver.data.repositories.PidEntryRepository;
+import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
+import org.identifiers.cloud.ws.resolver.data.repositories.PidEntryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

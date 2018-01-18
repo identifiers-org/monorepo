@@ -1,4 +1,4 @@
-package org.identifiers.org.cloud.ws.resolver.data.models;
+package org.identifiers.cloud.ws.resolver.data.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;

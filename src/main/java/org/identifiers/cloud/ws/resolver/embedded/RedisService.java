@@ -1,4 +1,4 @@
-package org.identifiers.org.cloud.ws.resolver.embedded;
+package org.identifiers.cloud.ws.resolver.embedded;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

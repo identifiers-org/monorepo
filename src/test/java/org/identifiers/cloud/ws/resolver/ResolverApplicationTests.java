@@ -1,4 +1,4 @@
-package org.identifiers.org.cloud.ws.resolver;
+package org.identifiers.cloud.ws.resolver;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

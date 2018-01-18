@@ -1,4 +1,4 @@
-package org.identifiers.org.cloud.ws.resolver;
+package org.identifiers.cloud.ws.resolver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

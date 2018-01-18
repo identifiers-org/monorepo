@@ -1,4 +1,4 @@
-package org.identifiers.org.cloud.ws.resolver.controllers;
+package org.identifiers.cloud.ws.resolver.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
