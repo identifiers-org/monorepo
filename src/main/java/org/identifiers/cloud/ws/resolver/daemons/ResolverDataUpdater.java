@@ -1,7 +1,6 @@
 package org.identifiers.cloud.ws.resolver.daemons;
 
 import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcer;
-import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
 import org.identifiers.cloud.ws.resolver.data.repositories.PidEntryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,8 +46,6 @@ public class ResolverDataUpdater extends Thread {
         while (!isShutdown()) {
             // TODO - Do your stuff
             logger.info("---> Creating instance of PidEntry ---");
-            PidEntry pidEntry = new PidEntry("MIR:00000002", "ChEBI", "^CHEBI:\\d+$", "Chemical Entities of Biological Interest (ChEBI) is a freely available dictionary of molecular entities focused on 'small' chemical compounds.", "chebi", "http://identifiers.org/chebi", true, null);
-            pidEntryRepository.save(pidEntry);
             // Wait for a predefined period of time before the next announcement
             try {
                 long waitTime = random.nextInt(WAIT_TIME_LIMIT_SECONDS) * 1000;
