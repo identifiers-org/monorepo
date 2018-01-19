@@ -17,8 +17,10 @@ container_production_build: app_structure
 container_production_push: container_production_build
 	@docker push identifiersorg/cloud-ws-resolver
 
+dev_container_build: container_production_build
+
 clean:
 	@echo "---> Cleaning the space"
 	@mvn clean > /dev/null
 
-.PHONY: all app_structure container_production_build container_production_push clean
+.PHONY: all app_structure container_production_build container_production_push dev_container_build clean
