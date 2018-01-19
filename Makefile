@@ -4,7 +4,7 @@
 all: clean container_production_push
 
 app_structure:
-	@echo "[PACKAGE] Application"
+	@echo "<===|DEVOPS|===> [PACKAGE] Application"
 	@mvn clean > /dev/null
 	@mvn package
 	@mkdir -p target/app/log
@@ -12,18 +12,18 @@ app_structure:
 	@cp target/resolver-*.jar target/app/service.jar
 
 container_production_build: app_structure
-	@echo "[BUILD] Production container"
+	@echo "<===|DEVOPS|===> [BUILD] Production container"
 	@docker build -t identifiersorg/cloud-ws-resolver .
 
 container_production_push: container_production_build
-	@echo "[PUBLISH]> Production container"
+	@echo "<===|DEVOPS|===> [PUBLISH]> Production container"
 	@docker push identifiersorg/cloud-ws-resolver
 
 dev_container_build: container_production_build
-	@echo "[DEV] Preparing local container"
+	@echo "<===|DEVOPS|===> [DEV] Preparing local container"
 
 clean:
-	@echo "[CLEAN] Cleaning the space"
+	@echo "<===|DEVOPS|===> [CLEAN] Cleaning the space"
 	@mvn clean > /dev/null
 
 .PHONY: all clean app_structure container_production_build container_production_push dev_container_build
