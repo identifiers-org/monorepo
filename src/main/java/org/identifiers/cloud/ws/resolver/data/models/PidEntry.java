@@ -26,21 +26,7 @@ public class PidEntry implements Serializable {
     private String[] synonyms;
     private boolean prefixed;
     private ResourceEntry[] resources;
-
-    public PidEntry() {
-    }
-
-    public PidEntry(String id, String name, String pattern, String definition, String prefix, String url, boolean prefixed, ResourceEntry[] resources) {
-        this.id = id;
-        this.name = name;
-        this.pattern = pattern;
-        this.definition = definition;
-        this.prefix = prefix;
-        this.url = url;
-        this.prefixed = prefixed;
-        this.resources = resources;
-    }
-
+    
     public String getId() {
         return id;
     }
