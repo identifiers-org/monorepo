@@ -29,7 +29,6 @@ public class ResolverDataSourcerFromSampleFile implements ResolverDataSourcer {
     @Override
     public List<PidEntry> getResolverData() throws ResolverDataSourcerException {
         List<PidEntry> result = new ArrayList<>();
-        // TODO
         try {
             File dataFile = new ClassPathResource(sampleDataFileLocalPath).getFile();
             logger.info("Loading resolver data sample from '{}'", dataFile.getAbsolutePath());
