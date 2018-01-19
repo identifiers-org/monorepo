@@ -22,7 +22,7 @@ container_production_push: container_production_build
 dev_container_build: container_production_build
 
 clean:
-	@echo "---> Cleaning the space"
+	@echo "[CLEAN] Cleaning the space"
 	@mvn clean > /dev/null
 
 .PHONY: all clean app_structure container_production_build container_production_push dev_container_build
