@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.resolver.data.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
@@ -13,7 +14,7 @@ import java.io.Serializable;
  * Timestamp: 2018-01-17 15:20
  * ---
  */
-// @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @RedisHash("pidentries")
 public class PidEntry implements Serializable {
     @Id
