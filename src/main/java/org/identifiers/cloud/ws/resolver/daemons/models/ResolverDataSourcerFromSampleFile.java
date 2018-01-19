@@ -37,7 +37,9 @@ public class ResolverDataSourcerFromSampleFile implements ResolverDataSourcer {
             result = objectMapper.readValue(dataFile, new TypeReference<List<PidEntry>>() {
             });
         } catch (IOException e) {
-            throw new ResolverDataSourcerException(StringFormatter.format("There was a problem reading the file at '{}' -> '{}'", sampleDataFileLocalPath, e.getMessage()).toString(), e);
+            throw new ResolverDataSourcerException(StringFormatter
+                    .format("There was a problem reading the file at '{}' -> '{}'",
+                            sampleDataFileLocalPath, e.getMessage()).toString(), e);
         }
         return result;
     }
