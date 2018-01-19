@@ -90,4 +90,12 @@ public class PidEntry implements Serializable {
     public void setResources(ResourceEntry[] resources) {
         this.resources = resources;
     }
+
+    public String[] getSynonyms() {
+        return synonyms;
+    }
+
+    public void setSynonyms(String[] synonyms) {
+        this.synonyms = synonyms;
+    }
 }
