@@ -24,12 +24,12 @@ public class PidEntry implements Serializable {
     private String prefix;
     private String url;
     private boolean prefixed;
-    private ResourceEntry[] resourceEntries;
+    private ResourceEntry[] resources;
 
     public PidEntry() {
     }
 
-    public PidEntry(String id, String name, String pattern, String definition, String prefix, String url, boolean prefixed, ResourceEntry[] resourceEntries) {
+    public PidEntry(String id, String name, String pattern, String definition, String prefix, String url, boolean prefixed, ResourceEntry[] resources) {
         this.id = id;
         this.name = name;
         this.pattern = pattern;
@@ -37,7 +37,7 @@ public class PidEntry implements Serializable {
         this.prefix = prefix;
         this.url = url;
         this.prefixed = prefixed;
-        this.resourceEntries = resourceEntries;
+        this.resources = resources;
     }
 
     public String getId() {
@@ -96,11 +96,11 @@ public class PidEntry implements Serializable {
         this.prefixed = prefixed;
     }
 
-    public ResourceEntry[] getResourceEntries() {
-        return resourceEntries;
+    public ResourceEntry[] getResources() {
+        return resources;
     }
 
-    public void setResourceEntries(ResourceEntry[] resourceEntries) {
-        this.resourceEntries = resourceEntries;
+    public void setResources(ResourceEntry[] resources) {
+        this.resources = resources;
     }
 }
