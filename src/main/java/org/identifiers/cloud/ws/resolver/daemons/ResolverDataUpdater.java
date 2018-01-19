@@ -60,7 +60,7 @@ public class ResolverDataUpdater extends Thread {
                 logger.info("Resolver data update, #{} PID entries", pidEntries.size());
                 pidEntryRepository.save(pidEntries);
             } else {
-                logger.warn("NO RESOLVER PID ENTRIES to update!");
+                logger.warn("EMPTY resolver data update!");
             }
             // Wait for a predefined period of time before the next announcement
             try {
