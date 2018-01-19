@@ -11,4 +11,8 @@ public class ResolverDataSourcerException extends RuntimeException {
     public ResolverDataSourcerException(String message) {
         super(message);
     }
+
+    public ResolverDataSourcerException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
