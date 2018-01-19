@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class ResourceEntry implements Serializable {
     @Id
     private String id;
-    private String accessUrl;
+    private String accessURL;
     private String info;
     private String institution;
     private String location;
@@ -30,9 +30,9 @@ public class ResourceEntry implements Serializable {
     public ResourceEntry() {
     }
 
-    public ResourceEntry(String id, String accessUrl, String info, String institution, String location, boolean official, String resourcePrefix, String localId, String testString) {
+    public ResourceEntry(String id, String accessURL, String info, String institution, String location, boolean official, String resourcePrefix, String localId, String testString) {
         this.id = id;
-        this.accessUrl = accessUrl;
+        this.accessURL = accessURL;
         this.info = info;
         this.institution = institution;
         this.location = location;
@@ -50,12 +50,12 @@ public class ResourceEntry implements Serializable {
         this.id = id;
     }
 
-    public String getAccessUrl() {
-        return accessUrl;
+    public String getAccessURL() {
+        return accessURL;
     }
 
-    public void setAccessUrl(String accessUrl) {
-        this.accessUrl = accessUrl;
+    public void setAccessURL(String accessURL) {
+        this.accessURL = accessURL;
     }
 
     public String getInfo() {
