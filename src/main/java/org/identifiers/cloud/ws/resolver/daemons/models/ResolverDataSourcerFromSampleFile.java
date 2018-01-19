@@ -38,6 +38,7 @@ public class ResolverDataSourcerFromSampleFile implements ResolverDataSourcer {
         } catch (IOException e) {
             logger.error("There was a problem reading the file at '{}' -> '{}'", sampleDataFileLocalPath, e.getMessage());
         }
+        logger.info("#{} PID Entries have been processed", result.size());
         return result;
     }
 }
