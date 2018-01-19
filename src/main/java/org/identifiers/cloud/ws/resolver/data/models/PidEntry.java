@@ -23,6 +23,7 @@ public class PidEntry implements Serializable {
     @Indexed
     private String prefix;
     private String url;
+    private String[] synonyms;
     private boolean prefixed;
     private ResourceEntry[] resources;
 
