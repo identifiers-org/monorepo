@@ -7,9 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.ResourceLoader;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,17 +25,16 @@ public class ResolverDataSourcerFromSampleFile implements ResolverDataSourcer {
     @Value("${org.identifiers.cloud.ws.resolver.data.source.file.local.path}")
     private String sampleDataFileLocalPath;
 
-    private ResourceLoader resourceLoader;
-
     @Override
     public List<PidEntry> getResolverData() throws ResolverDataSourcerException {
         List<PidEntry> result = new ArrayList<>();
         try {
-            File dataFile = new ClassPathResource(sampleDataFileLocalPath).getFile();
-            logger.info("Loading resolver data sample from '{}'", dataFile.getAbsolutePath());
+            //File dataFile = new ClassPathResource(sampleDataFileLocalPath).getFile();
+            //logger.info("Loading resolver data sample from '{}'", dataFile.getAbsolutePath());
             ObjectMapper objectMapper = new ObjectMapper();
-            result = objectMapper.readValue(dataFile, new TypeReference<List<PidEntry>>() {
-            });
+            //result = objectMapper.readValue(dataFile, new TypeReference<List<PidEntry>>() {});
+            result = objectMapper.readValue(new ClassPathResource(sampleDataFileLocalPath).getInputStream(),
+                    new TypeReference<List<PidEntry>>() {});
         } catch (IOException e) {
             throw new ResolverDataSourcerException(String
                     .format("There was a problem reading the file at '%s' -> '%s'",
