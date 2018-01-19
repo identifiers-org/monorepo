@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.ResourceLoader;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +26,8 @@ public class ResolverDataSourcerFromSampleFile implements ResolverDataSourcer {
 
     @Value("${org.identifiers.cloud.ws.resolver.data.source.file.local.path}")
     private String sampleDataFileLocalPath;
+
+    private ResourceLoader resourceLoader;
 
     @Override
     public List<PidEntry> getResolverData() throws ResolverDataSourcerException {
