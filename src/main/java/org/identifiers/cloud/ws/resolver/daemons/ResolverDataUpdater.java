@@ -52,7 +52,7 @@ public class ResolverDataUpdater extends Thread {
             logger.info("---> Creating instance of PidEntry ---");
             List<PidEntry> pidEntries = new ArrayList<>();
             try {
-                resolverDataSourcer.getResolverData();
+                pidEntries = resolverDataSourcer.getResolverData();
             } catch (ResolverDataSourcerException e) {
                 logger.error("Failed to obtained resolver data update because '{}'", e.getMessage());
             }
