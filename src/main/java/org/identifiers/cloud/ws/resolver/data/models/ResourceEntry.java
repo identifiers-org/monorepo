@@ -27,6 +27,9 @@ public class ResourceEntry implements Serializable {
     private String localId;
     private String testString;
 
+    public ResourceEntry() {
+    }
+
     public ResourceEntry(String id, String accessUrl, String info, String institution, String location, boolean official, String resourcePrefix, String localId, String testString) {
         this.id = id;
         this.accessUrl = accessUrl;
