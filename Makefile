@@ -23,4 +23,4 @@ clean:
 	@echo "---> Cleaning the space"
 	@mvn clean > /dev/null
 
-.PHONY: all app_structure container_production_build container_production_push dev_container_build clean
+.PHONY: all clean app_structure container_production_build container_production_push dev_container_build
