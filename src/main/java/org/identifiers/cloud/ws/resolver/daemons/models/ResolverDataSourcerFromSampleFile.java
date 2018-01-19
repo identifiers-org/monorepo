@@ -2,7 +2,6 @@ package org.identifiers.cloud.ws.resolver.daemons.models;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.javafx.binding.StringFormatter;
 import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,9 +36,9 @@ public class ResolverDataSourcerFromSampleFile implements ResolverDataSourcer {
             result = objectMapper.readValue(dataFile, new TypeReference<List<PidEntry>>() {
             });
         } catch (IOException e) {
-            throw new ResolverDataSourcerException(StringFormatter
-                    .format("There was a problem reading the file at '{}' -> '{}'",
-                            sampleDataFileLocalPath, e.getMessage()).toString(), e);
+            throw new ResolverDataSourcerException(String
+                    .format("There was a problem reading the file at '%s' -> '%s'",
+                            sampleDataFileLocalPath, e.getMessage()));
         }
         return result;
     }
