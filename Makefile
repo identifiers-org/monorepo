@@ -16,6 +16,7 @@ container_production_build: app_structure
 	@docker build -t identifiersorg/cloud-ws-resolver .
 
 container_production_push: container_production_build
+	@echo "[PUBLISH]> Production container"
 	@docker push identifiersorg/cloud-ws-resolver
 
 dev_container_build: container_production_build
