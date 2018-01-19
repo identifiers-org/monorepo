@@ -20,6 +20,7 @@ container_production_push: container_production_build
 	@docker push identifiersorg/cloud-ws-resolver
 
 dev_container_build: container_production_build
+	@echo "[DEV] Preparing local container"
 
 clean:
 	@echo "[CLEAN] Cleaning the space"
