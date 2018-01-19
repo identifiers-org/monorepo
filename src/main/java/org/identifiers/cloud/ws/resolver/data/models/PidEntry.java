@@ -13,6 +13,7 @@ import java.io.Serializable;
  * Timestamp: 2018-01-17 15:20
  * ---
  */
+// @JsonIgnoreProperties(ignoreUnknown = true)
 @RedisHash("pidentries")
 public class PidEntry implements Serializable {
     @Id
