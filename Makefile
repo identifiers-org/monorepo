@@ -19,7 +19,7 @@ container_production_push: container_production_build
 	@echo "<===|DEVOPS|===> [PUBLISH]> Production container"
 	@docker push identifiersorg/cloud-ws-resolver
 
-dev_container_build: container_production_build
+dev_container_build: clean container_production_build
 	@echo "<===|DEVOPS|===> [DEV] Preparing local container"
 
 clean:
