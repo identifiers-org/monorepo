@@ -26,7 +26,7 @@ public class PidEntry implements Serializable {
     private String[] synonyms;
     private boolean prefixed;
     private ResourceEntry[] resources;
-    
+
     public String getId() {
         return id;
     }
