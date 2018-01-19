@@ -49,6 +49,7 @@ public class ResolverDataUpdater extends Thread {
             // TODO - Do your stuff
             logger.info("---> Creating instance of PidEntry ---");
             List<PidEntry> pidEntries = resolverDataSourcer.getResolverData();
+            logger.debug("Resolver Data Updater got #{} PID entries from the data sourcer");
             // Wait for a predefined period of time before the next announcement
             try {
                 long waitTime = random.nextInt(WAIT_TIME_LIMIT_SECONDS) * 1000;
