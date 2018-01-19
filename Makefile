@@ -12,6 +12,7 @@ app_structure:
 	@cp target/resolver-*.jar target/app/service.jar
 
 container_production_build: app_structure
+	@echo "---> Building production container"
 	@docker build -t identifiersorg/cloud-ws-resolver .
 
 container_production_push: container_production_build
