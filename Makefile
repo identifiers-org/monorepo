@@ -4,7 +4,7 @@
 all: clean container_production_push
 
 app_structure:
-	@echo "---> Creating application structure"
+	@echo "[PACKAGE] Application"
 	@mvn clean > /dev/null
 	@mvn package
 	@mkdir -p target/app/log
