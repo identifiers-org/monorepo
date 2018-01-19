@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.resolver.daemons;
 
 import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcer;
+import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcerException;
 import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
 import org.identifiers.cloud.ws.resolver.data.repositories.PidEntryRepository;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -48,7 +50,12 @@ public class ResolverDataUpdater extends Thread {
         while (!isShutdown()) {
             // TODO - Do your stuff
             logger.info("---> Creating instance of PidEntry ---");
-            List<PidEntry> pidEntries = resolverDataSourcer.getResolverData();
+            List<PidEntry> pidEntries = new ArrayList<>();
+            try {
+                resolverDataSourcer.getResolverData();
+            } catch (ResolverDataSourcerException e) {
+                logger.error("Failed to obtained resolver data update because '{}'", e.getMessage());
+            }
             if (pidEntries.size() > 0) {
                 logger.info("Resolver data update, #{} PID entries", pidEntries.size());
                 pidEntryRepository.save(pidEntries);
