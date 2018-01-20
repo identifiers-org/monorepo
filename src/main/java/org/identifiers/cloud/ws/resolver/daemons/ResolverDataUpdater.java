@@ -62,6 +62,7 @@ public class ResolverDataUpdater extends Thread {
             } else {
                 logger.warn("EMPTY resolver data update!");
             }
+            // TODO - Insert into redis
             // Wait for a predefined period of time before the next announcement
             try {
                 long waitTime = random.nextInt(WAIT_TIME_LIMIT_SECONDS) * 1000;
