@@ -59,10 +59,10 @@ public class ResolverDataUpdater extends Thread {
             if (pidEntries.size() > 0) {
                 logger.info("Resolver data update, #{} PID entries", pidEntries.size());
                 pidEntryRepository.save(pidEntries);
+                // TODO - Update Redis backend
             } else {
                 logger.warn("EMPTY resolver data update!");
             }
-            // TODO - Insert into redis
             // Wait for a predefined period of time before the next announcement
             try {
                 long waitTime = random.nextInt(WAIT_TIME_LIMIT_SECONDS) * 1000;
