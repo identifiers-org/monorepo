@@ -35,11 +35,11 @@ public class ResolverDataUpdater extends Thread {
     @Autowired
     private PidEntryRepository pidEntryRepository;
 
-    public boolean isShutdown() {
+    public synchronized boolean isShutdown() {
         return shutdown;
     }
 
-    public void setShutdown() {
+    public synchronized void setShutdown() {
         this.shutdown = true;
     }
 
