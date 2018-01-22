@@ -15,7 +15,6 @@ import java.io.Serializable;
  * ---
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@RedisHash("resourceEntries")
 public class ResourceEntry implements Serializable {
     @Id
     private String id;
