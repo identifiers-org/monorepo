@@ -63,6 +63,7 @@ public class ResolverDataUpdater extends Thread {
             } else {
                 logger.warn("EMPTY resolver data update!");
             }
+            // TODO - Somewhere I need to test how to access the data I put on the backend
             // Wait for a predefined period of time before the next announcement
             try {
                 long waitTime = random.nextInt(WAIT_TIME_LIMIT_SECONDS) * 1000;
