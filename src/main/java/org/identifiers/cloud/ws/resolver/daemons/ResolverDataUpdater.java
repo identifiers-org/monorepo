@@ -64,6 +64,7 @@ public class ResolverDataUpdater extends Thread {
                 logger.warn("EMPTY resolver data update!");
             }
             // TODO - Somewhere I need to test how to access the data I put on the backend
+            // TODO - Once data access has been tested, the next step is the algorithm that solves contexts and prefixes
             // Wait for a predefined period of time before the next announcement
             try {
                 long waitTime = random.nextInt(WAIT_TIME_LIMIT_SECONDS) * 1000;
