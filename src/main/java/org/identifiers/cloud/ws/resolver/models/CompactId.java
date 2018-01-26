@@ -10,5 +10,5 @@ package org.identifiers.cloud.ws.resolver.models;
 public class CompactId {
     private String original;
     private String prefix = "";
-
+    private String id = "";
 }
