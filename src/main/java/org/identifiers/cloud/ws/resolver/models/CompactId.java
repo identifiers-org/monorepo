@@ -27,10 +27,11 @@ public class CompactId {
         // Apparently, I no longer have reasons to throw exceptions on parsing a compact ID
         int index = 0;
         if (compactIdParts.size() > 1) {
-            prefix = compactIdParts.get(index++);
+            prefix = compactIdParts.get(index);
+            index++;
         }
         // TODO -- I may need to revisit this for refining the way the compact IDs are formatted and processed
-        id = String.join("", compactIdParts.subList(index, compactIdParts.size()));
+        id = String.join(":", compactIdParts.subList(index, compactIdParts.size()));
     }
 
     public CompactId(String original) {
