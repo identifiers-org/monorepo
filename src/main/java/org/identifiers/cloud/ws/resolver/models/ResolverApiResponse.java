@@ -1,5 +1,8 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: resolver
@@ -13,4 +16,5 @@ package org.identifiers.cloud.ws.resolver.models;
 public class ResolverApiResponse {
     // TODO
     private String errorMsg;
+    private List<ResolverApiResponseResource> resolvedResources = new ArrayList<>();
 }
