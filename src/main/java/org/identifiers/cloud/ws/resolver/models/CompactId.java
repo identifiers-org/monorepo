@@ -13,8 +13,8 @@ public class CompactId {
     public static final String COMPACT_ID_PREFIX_AND_ID_SEPARATOR = ":";
 
     private String original;
-    private String prefix = "";
-    private String id = "";
+    private String prefix = null;
+    private String id = null;
 
     // Helper
     private void workoutPrefixAndId(String compactId) throws CompactIdException {
