@@ -9,14 +9,14 @@ package org.identifiers.cloud.ws.resolver.models;
  */
 public class ResolverApi {
 
-    public String resolveCompactId(String compactId) {
+    public String resolveCompactId(String compactId) throws ResolverApiException {
         // TODO - Locate resource providers
         // TODO - If no providers, produce error response
         // TODO - If there are providers, transform them into Resolver API response providers
         return "";
     }
 
-    public String resolveCompactId(String selector, String compactId) {
+    public String resolveCompactId(String selector, String compactId) throws ResolverApiException {
         // TODO - Locate resource providers
         // TODO - If no providers, produce error response
         // TODO - If there are providers, apply filtering criteria
