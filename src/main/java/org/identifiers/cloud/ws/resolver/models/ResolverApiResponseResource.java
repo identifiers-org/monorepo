@@ -12,4 +12,5 @@ package org.identifiers.cloud.ws.resolver.models;
 public class ResolverApiResponseResource {
 
     private String accessUrl;
+    private String info;
 }
