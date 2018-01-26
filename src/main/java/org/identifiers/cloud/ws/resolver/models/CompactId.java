@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.resolver.models;
 
-import com.sun.javafx.binding.StringFormatter;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -19,15 +20,17 @@ public class CompactId {
     // Helper
     // TODO - Some identifiers may use ':', and within the prefix you can only have a '.' at the moment
     private void workoutPrefixAndId(String compactId) throws CompactIdException {
-        String[] compactIdParts = compactId.split(COMPACT_ID_PREFIX_AND_ID_SEPARATOR);
-        if (compactIdParts.length > 2) {
-            throw new CompactIdException(StringFormatter.format("Invalid compact ID '{}'", compactId).getValue());
-        }
+        List<String> compactIdParts = Arrays.asList(compactId.split(COMPACT_ID_PREFIX_AND_ID_SEPARATOR));
+//        if (compactIdParts.length > 2) {
+//            throw new CompactIdException(StringFormatter.format("Invalid compact ID '{}'", compactId).getValue());
+//        }
+        // Apparently, I no longer have reasons to throw exceptions on parsing a compact ID
         int index = 0;
-        if (compactIdParts.length == 2) {
-            prefix = compactIdParts[index++];
+        if (compactIdParts.size() > 1) {
+            prefix = compactIdParts.get(index++);
         }
-        id = compactIdParts[index];
+        // TODO -- I may need to revisit this for refining the way the compact IDs are formatted and processed
+        id = String.join("", compactIdParts.subList(index, compactIdParts.size()));
     }
 
     public CompactId(String original) {
