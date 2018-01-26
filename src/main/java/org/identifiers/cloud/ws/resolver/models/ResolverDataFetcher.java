@@ -13,7 +13,7 @@ import java.util.List;
  * ---
  */
 public class ResolverDataFetcher {
-    
+
     public List<ResourceEntry> findResourcesByPrefix(String prefix) {
         List<ResourceEntry> result = new ArrayList<>();
         return result;
