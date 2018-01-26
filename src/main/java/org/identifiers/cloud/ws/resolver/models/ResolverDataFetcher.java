@@ -1,5 +1,9 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
+
+import java.util.List;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: resolver
@@ -8,4 +12,9 @@ package org.identifiers.cloud.ws.resolver.models;
  * ---
  */
 public class ResolverDataFetcher {
+
+    public List<ResourceEntry> findByPrefix(String prefix) {
+        // TODO
+        return null;
+    }
 }
