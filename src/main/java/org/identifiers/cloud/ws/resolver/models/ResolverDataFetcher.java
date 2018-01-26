@@ -8,7 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -27,7 +29,11 @@ public class ResolverDataFetcher {
         List<ResourceEntry> result = new ArrayList<>();
         List<PidEntry> pidEntries = pidEntryRepository.findByPrefix(prefix);
         if (!pidEntries.isEmpty()) {
-            // TODO
+            if (pidEntries.size() > 1) {
+                logger.error("MULTIPLE PID entries for prefix '{}'", prefix);
+            }
+            result = pidEntries.parallelStream().flatMap(pidEntry -> Arrays.stream(pidEntry.getResources())).collect(Collectors
+                    .toList());
         } else {
             logger.warn("NO PID entry for prefix '{}'", prefix);
         }
