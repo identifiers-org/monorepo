@@ -32,7 +32,9 @@ public class CompactIdTest {
                 // Normal use case
                 {"GO:9876345", "GO", "9876345"},
                 // No prefix use case
-                {"Q9876345", null, "Q9876345"}
+                {"Q9876345", null, "Q9876345"},
+                // Multiple ':' use case
+                {"prefix:IDpart1:IDpart2:Q9876345", "prefix", "IDpart1:IDpart2:Q9876345"}
         });
     }
 }
