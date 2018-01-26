@@ -16,4 +16,20 @@ import java.util.List;
 public class ResolverApiResponse {
     private String errorMsg;
     private List<ResolverApiResponseResource> resolvedResources = new ArrayList<>();
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    public List<ResolverApiResponseResource> getResolvedResources() {
+        return resolvedResources;
+    }
+
+    public void setResolvedResources(List<ResolverApiResponseResource> resolvedResources) {
+        this.resolvedResources = resolvedResources;
+    }
 }
