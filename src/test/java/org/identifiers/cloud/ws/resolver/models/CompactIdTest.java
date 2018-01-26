@@ -3,6 +3,8 @@ package org.identifiers.cloud.ws.resolver.models;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import java.util.Collection;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: resolver
@@ -24,5 +26,7 @@ public class CompactIdTest {
         this.expectedId = expectedId;
     }
 
-
+    public static Collection<Object[]> getTestingValues() {
+        // TODO
+    }
 }
