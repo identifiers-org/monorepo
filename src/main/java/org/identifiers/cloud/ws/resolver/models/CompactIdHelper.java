@@ -10,4 +10,8 @@ package org.identifiers.cloud.ws.resolver.models;
  * This is a helper class to work with Compact IDs
  */
 public class CompactIdHelper {
+
+    public static String getCompactIdPrefix(String compactId) {
+        // TODO
+    }
 }
