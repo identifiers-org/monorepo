@@ -14,4 +14,5 @@ public class ResolverApiResponseResource {
     private String accessUrl;
     private String info;
     private String institution;
+    private String location;
 }
