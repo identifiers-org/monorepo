@@ -14,4 +14,11 @@ public class CompactIdTest {
     private String expectedPrefix;
     private String expectedId;
 
+    public CompactIdTest(String compactId, String expectedPrefix, String expectedId) {
+        this.compactId = compactId;
+        this.expectedPrefix = expectedPrefix;
+        this.expectedId = expectedId;
+    }
+
+    
 }
