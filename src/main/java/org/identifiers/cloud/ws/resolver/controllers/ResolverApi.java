@@ -1,9 +1,6 @@
 package org.identifiers.cloud.ws.resolver.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -21,7 +18,7 @@ public class ResolverApi {
     }
 
     @RequestMapping(value = "/{compactId]", method = RequestMethod.GET)
-    public @ResponseBody String queryByCompactId() {
+    public @ResponseBody String queryByCompactId(@PathVariable("compactId") String compactId) {
         // TODO
     }
 }
