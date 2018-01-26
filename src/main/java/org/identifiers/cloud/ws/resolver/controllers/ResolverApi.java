@@ -19,6 +19,6 @@ public class ResolverApi {
 
     @RequestMapping(value = "/{compactId]", method = RequestMethod.GET)
     public @ResponseBody String queryByCompactId(@PathVariable("compactId") String compactId) {
-        // TODO
+        return "[QUERY_BY_COMPACT_ID] Compact ID parameter ---> " + compactId;
     }
 }
