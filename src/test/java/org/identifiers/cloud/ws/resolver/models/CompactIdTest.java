@@ -27,6 +27,11 @@ public class CompactIdTest {
         this.expectedId = expectedId;
     }
 
+    public void wellFormedCompactId() {
+        //assertThat()
+        // TODO
+    }
+
     @Parameterized.Parameters
     public static Collection<Object[]> getTestingValues() {
         return Arrays.asList(new Object[][]{
