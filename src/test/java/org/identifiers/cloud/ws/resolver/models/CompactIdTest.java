@@ -27,6 +27,7 @@ public class CompactIdTest {
         this.expectedId = expectedId;
     }
 
+    @Parameterized.Parameters
     public static Collection<Object[]> getTestingValues() {
         return Arrays.asList(new Object[][]{
                 // Normal use case
