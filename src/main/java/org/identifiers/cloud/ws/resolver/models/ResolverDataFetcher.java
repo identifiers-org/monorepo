@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.resolver.models;
 
 import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,9 +13,9 @@ import java.util.List;
  * ---
  */
 public class ResolverDataFetcher {
-
+    
     public List<ResourceEntry> findResourcesByPrefix(String prefix) {
-        // TODO
-        return null;
+        List<ResourceEntry> result = new ArrayList<>();
+        return result;
     }
 }
