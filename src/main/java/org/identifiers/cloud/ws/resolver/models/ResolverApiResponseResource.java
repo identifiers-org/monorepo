@@ -6,6 +6,8 @@ package org.identifiers.cloud.ws.resolver.models;
  * Package: org.identifiers.cloud.ws.resolver.models
  * Timestamp: 2018-01-26 11:37
  * ---
+ *
+ * This class represents a resolved resource, part of the response from the Resolver API
  */
 public class ResolverApiResponseResource {
 }
