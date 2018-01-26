@@ -28,6 +28,8 @@ public class ResolverDataFetcher {
         List<PidEntry> pidEntries = pidEntryRepository.findByPrefix(prefix);
         if (!pidEntries.isEmpty()) {
             // TODO
+        } else {
+            logger.warn("NO PID entry for prefix '{}'", prefix);
         }
         return result;
     }
