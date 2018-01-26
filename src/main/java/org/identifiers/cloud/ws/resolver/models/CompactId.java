@@ -17,6 +17,7 @@ public class CompactId {
     private String id = null;
 
     // Helper
+    // TODO - Some identifiers may use ':', and within the prefix you can only have a '.' at the moment
     private void workoutPrefixAndId(String compactId) throws CompactIdException {
         String[] compactIdParts = compactId.split(COMPACT_ID_PREFIX_AND_ID_SEPARATOR);
         if (compactIdParts.length > 2) {
