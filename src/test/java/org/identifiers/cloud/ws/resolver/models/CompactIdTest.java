@@ -12,5 +12,6 @@ package org.identifiers.cloud.ws.resolver.models;
 public class CompactIdTest {
     private String compactId;
     private String expectedPrefix;
+    private String expectedId;
 
 }
