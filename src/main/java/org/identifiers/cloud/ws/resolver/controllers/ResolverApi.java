@@ -17,4 +17,8 @@ public class ResolverApi {
     public String index() {
         return "Hey!, I'm your resolver! Again!";
     }
+
+    public String queryByCompactId() {
+        // TODO
+    }
 }
