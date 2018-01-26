@@ -14,7 +14,6 @@ import java.util.List;
  * build
  */
 public class ResolverApiResponse {
-    // TODO
     private String errorMsg;
     private List<ResolverApiResponseResource> resolvedResources = new ArrayList<>();
 }
