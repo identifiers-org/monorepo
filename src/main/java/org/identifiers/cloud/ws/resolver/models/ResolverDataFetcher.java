@@ -23,6 +23,9 @@ public class ResolverDataFetcher {
     public List<ResourceEntry> findResourcesByPrefix(String prefix) {
         List<ResourceEntry> result = new ArrayList<>();
         List<PidEntry> pidEntries = pidEntryRepository.findByPrefix(prefix);
+        if (!pidEntries.isEmpty()) {
+            // TODO
+        }
         return result;
     }
 }
