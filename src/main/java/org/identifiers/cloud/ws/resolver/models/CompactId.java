@@ -11,4 +11,8 @@ public class CompactId {
     private String original;
     private String prefix = "";
     private String id = "";
+
+    public CompactId(String original) {
+        this.original = original;
+    }
 }
