@@ -3,6 +3,8 @@ package org.identifiers.cloud.ws.resolver.models;
 import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
 import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
 import org.identifiers.cloud.ws.resolver.data.repositories.PidEntryRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import java.util.List;
  * ---
  */
 public class ResolverDataFetcher {
+    private static Logger logger = LoggerFactory.getLogger(ResolverDataFetcher.class);
 
     @Autowired
     private PidEntryRepository pidEntryRepository;
