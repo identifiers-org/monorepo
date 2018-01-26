@@ -8,6 +8,8 @@ package org.identifiers.cloud.ws.resolver.models;
  * ---
  */
 public class CompactId {
+    public static final String COMPACT_ID_PREFIX_AND_ID_SEPARATOR = ":";
+
     private String original;
     private String prefix = "";
     private String id = "";
