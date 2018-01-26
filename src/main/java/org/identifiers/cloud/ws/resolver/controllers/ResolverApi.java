@@ -17,4 +17,8 @@ public class ResolverApi {
         // TODO
         return "[QUERY_BY_COMPACT_ID] Compact ID parameter ---> " + compactId;
     }
+
+    public String queryBySelectorAndCompactId() {
+        // TODO
+    }
 }
