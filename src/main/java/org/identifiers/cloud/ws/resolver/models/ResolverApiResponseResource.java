@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import java.io.Serializable;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: resolver
@@ -9,7 +11,7 @@ package org.identifiers.cloud.ws.resolver.models;
  *
  * This class represents a resolved resource, part of the response from the Resolver API
  */
-public class ResolverApiResponseResource {
+public class ResolverApiResponseResource implements Serializable {
 
     private String accessUrl;
     private String info;
