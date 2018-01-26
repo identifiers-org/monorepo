@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: resolver
@@ -8,6 +10,9 @@ package org.identifiers.cloud.ws.resolver.models;
  * ---
  */
 public class ResolverApi {
+
+    @Autowired
+    private ResolverDataFetcher resolverDataFetcher;
 
     public String resolveCompactId(String compactIdParameter) throws ResolverApiException {
         CompactId compactId = null;
