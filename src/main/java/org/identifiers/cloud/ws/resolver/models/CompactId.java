@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import com.sun.javafx.binding.StringFormatter;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: resolver
@@ -16,7 +18,10 @@ public class CompactId {
 
     // Helper
     private void workoutPrefixAndId(String compactId) throws CompactIdException {
-        // TODO
+        String[] compactIdParts = compactId.split(COMPACT_ID_PREFIX_AND_ID_SEPARATOR);
+        if (compactIdParts.length > 2) {
+            throw new CompactIdException(StringFormatter.format("Invalid compact ID '{}'", compactId).getValue());
+        }
     }
 
     public CompactId(String original) {
