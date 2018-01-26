@@ -10,7 +10,9 @@ package org.identifiers.cloud.ws.resolver.models;
 public class ResolverApi {
 
     public String resolveCompactId(String compactId) {
-        // TODO
+        // TODO - Locate resource providers
+        // TODO - If no providers, produce error response
+        // TODO - If there are providers, transform them into Resolver API response providers
         return "";
     }
 
