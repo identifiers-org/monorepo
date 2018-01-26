@@ -10,6 +10,7 @@ package org.identifiers.cloud.ws.resolver.models;
 public class ResolverApi {
 
     public String resolveCompactId(String compactIdParameter) throws ResolverApiException {
+        CompactId compactId = new CompactId(compactIdParameter);
         // TODO - Locate resource providers
         // TODO - If no providers, produce error response
         // TODO - If there are providers, transform them into Resolver API response providers
@@ -17,6 +18,7 @@ public class ResolverApi {
     }
 
     public String resolveCompactId(String selector, String compactIdParameter) throws ResolverApiException {
+        CompactId compactId = new CompactId(compactIdParameter);
         // TODO - Locate resource providers
         // TODO - If no providers, produce error response
         // TODO - If there are providers, apply filtering criteria
