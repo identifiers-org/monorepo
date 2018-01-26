@@ -31,6 +31,7 @@ public class CompactId {
 
     public CompactId(String original) {
         this.original = original;
-        // TODO - Workout the prefix and ID parts
+        // Workout the prefix and ID parts
+        workoutPrefixAndId(original);
     }
 }
