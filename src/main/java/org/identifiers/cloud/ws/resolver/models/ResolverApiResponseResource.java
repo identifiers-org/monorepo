@@ -10,4 +10,6 @@ package org.identifiers.cloud.ws.resolver.models;
  * This class represents a resolved resource, part of the response from the Resolver API
  */
 public class ResolverApiResponseResource {
+
+    private String accessUrl;
 }
