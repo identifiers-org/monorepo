@@ -12,4 +12,5 @@ package org.identifiers.cloud.ws.resolver.models;
  */
 public class ResolverApiResponse {
     // TODO
+    private String errorMsg;
 }
