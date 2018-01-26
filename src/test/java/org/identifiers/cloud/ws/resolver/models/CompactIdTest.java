@@ -1,10 +1,14 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 import java.util.Collection;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -29,9 +33,15 @@ public class CompactIdTest {
         this.testDescription = testDescription;
     }
 
+    @Test
     public void wellFormedCompactId() {
-        //assertThat()
-        // TODO
+        CompactId compactId = new CompactId(this.compactId);
+        assertThat(testDescription + " - prefix is detected correctly",
+                (compactId.getPrefix() == null ? expectedPrefix == null : compactId.getPrefix().equals(expectedPrefix)),
+                is(true));
+        assertThat(testDescription + " - ID is detected correctly",
+                (compactId.getId() == null ? expectedId == null : compactId.getId().equals(expectedId)),
+                is(true));
     }
 
     @Parameterized.Parameters
