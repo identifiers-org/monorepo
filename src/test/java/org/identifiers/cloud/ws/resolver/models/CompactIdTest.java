@@ -1,5 +1,8 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: resolver
@@ -9,6 +12,7 @@ package org.identifiers.cloud.ws.resolver.models;
  *
  * Unit tests for Compact ID parsing
  */
+@RunWith(Parameterized.class)
 public class CompactIdTest {
     private String compactId;
     private String expectedPrefix;
@@ -20,5 +24,5 @@ public class CompactIdTest {
         this.expectedId = expectedId;
     }
 
-    
+
 }
