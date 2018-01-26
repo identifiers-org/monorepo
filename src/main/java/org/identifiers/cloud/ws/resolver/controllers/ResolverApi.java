@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.resolver.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -18,6 +19,7 @@ public class ResolverApi {
         return "Hey!, I'm your resolver! Again!";
     }
 
+    @RequestMapping(value = "/{compactId]", method = RequestMethod.GET)
     public String queryByCompactId() {
         // TODO
     }
