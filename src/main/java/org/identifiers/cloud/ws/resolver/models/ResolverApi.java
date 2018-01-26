@@ -17,7 +17,10 @@ public class ResolverApi {
     }
 
     public String resolveCompactId(String selector, String compactId) {
-        // TODO
+        // TODO - Locate resource providers
+        // TODO - If no providers, produce error response
+        // TODO - If there are providers, apply filtering criteria
+        // TODO - Return Resolver API response providers
         return "";
     }
 }
