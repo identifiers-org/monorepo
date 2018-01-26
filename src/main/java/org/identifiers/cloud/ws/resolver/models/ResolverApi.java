@@ -13,4 +13,9 @@ public class ResolverApi {
         // TODO
         return "";
     }
+
+    public String resolveCompactId(String selector, String compactId) {
+        // TODO
+        return "";
+    }
 }
