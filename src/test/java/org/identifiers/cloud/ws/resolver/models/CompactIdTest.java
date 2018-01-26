@@ -10,5 +10,6 @@ package org.identifiers.cloud.ws.resolver.models;
  * Unit tests for Compact ID parsing
  */
 public class CompactIdTest {
+    private String compactId;
 
 }
