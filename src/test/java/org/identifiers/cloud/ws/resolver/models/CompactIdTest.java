@@ -20,11 +20,13 @@ public class CompactIdTest {
     private String compactId;
     private String expectedPrefix;
     private String expectedId;
+    private String testDescription;
 
-    public CompactIdTest(String compactId, String expectedPrefix, String expectedId) {
+    public CompactIdTest(String compactId, String expectedPrefix, String expectedId, String testDescription) {
         this.compactId = compactId;
         this.expectedPrefix = expectedPrefix;
         this.expectedId = expectedId;
+        this.testDescription = testDescription;
     }
 
     public void wellFormedCompactId() {
