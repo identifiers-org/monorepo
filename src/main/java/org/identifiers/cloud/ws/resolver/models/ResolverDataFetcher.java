@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
 import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
 import org.identifiers.cloud.ws.resolver.data.repositories.PidEntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ public class ResolverDataFetcher {
 
     public List<ResourceEntry> findResourcesByPrefix(String prefix) {
         List<ResourceEntry> result = new ArrayList<>();
+        List<PidEntry> pidEntries = pidEntryRepository.findByPrefix(prefix);
         return result;
     }
 }

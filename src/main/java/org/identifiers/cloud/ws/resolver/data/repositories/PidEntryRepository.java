@@ -1,7 +1,6 @@
 package org.identifiers.cloud.ws.resolver.data.repositories;
 
 import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
-import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -16,5 +15,5 @@ import java.util.List;
 public interface PidEntryRepository extends CrudRepository<PidEntry, String> {
 
     // Find a PID Entry by prefix
-    List<ResourceEntry> findByPrefix(String prefix);
+    List<PidEntry> findByPrefix(String prefix);
 }
