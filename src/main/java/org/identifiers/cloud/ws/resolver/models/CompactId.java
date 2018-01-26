@@ -12,6 +12,8 @@ public class CompactId {
     private String prefix = "";
     private String id = "";
 
+    // TODO - helper
+
     public CompactId(String original) {
         this.original = original;
         // TODO - Workout the prefix and ID parts
