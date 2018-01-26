@@ -3,6 +3,7 @@ package org.identifiers.cloud.ws.resolver.models;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -27,6 +28,9 @@ public class CompactIdTest {
     }
 
     public static Collection<Object[]> getTestingValues() {
-        // TODO
+        return Arrays.asList(new Object[][]{
+                // Normal use case
+                {"GO:9876345", "GO", "9876345"}
+        });
     }
 }
