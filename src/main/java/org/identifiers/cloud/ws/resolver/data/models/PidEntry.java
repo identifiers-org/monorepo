@@ -2,7 +2,6 @@ package org.identifiers.cloud.ws.resolver.data.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Reference;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
 
@@ -28,7 +27,7 @@ public class PidEntry implements Serializable {
     private String url;
     private String[] synonyms;
     private boolean prefixed;
-    private @Reference ResourceEntry[] resources;
+    private ResourceEntry[] resources;
 
     public String getId() {
         return id;
