@@ -13,6 +13,9 @@ public class CompactId {
     private String id = "";
 
     // TODO - helper
+    private void workoutPrefixAndId(String compactId) {
+        // TODO
+    }
 
     public CompactId(String original) {
         this.original = original;
