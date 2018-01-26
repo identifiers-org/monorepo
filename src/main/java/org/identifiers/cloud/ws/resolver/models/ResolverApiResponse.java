@@ -11,4 +11,5 @@ package org.identifiers.cloud.ws.resolver.models;
  * build
  */
 public class ResolverApiResponse {
+    // TODO
 }
