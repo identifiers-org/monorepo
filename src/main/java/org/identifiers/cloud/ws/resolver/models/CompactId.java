@@ -13,7 +13,7 @@ public class CompactId {
     private String id = "";
 
     // TODO - helper
-    private void workoutPrefixAndId(String compactId) {
+    private void workoutPrefixAndId(String compactId) throws CompactIdException {
         // TODO
     }
 
