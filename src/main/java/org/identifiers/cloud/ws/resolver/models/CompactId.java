@@ -34,4 +34,16 @@ public class CompactId {
         // Workout the prefix and ID parts
         workoutPrefixAndId(original);
     }
+
+    public String getOriginal() {
+        return original;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public String getId() {
+        return id;
+    }
 }
