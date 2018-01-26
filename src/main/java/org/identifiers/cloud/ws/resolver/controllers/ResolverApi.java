@@ -12,11 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class ResolverApi {
 
-    @RequestMapping("/")
-    public String index() {
-        return "Hey!, I'm your resolver! Again!";
-    }
-
     @RequestMapping(value = "/{compactId]", method = RequestMethod.GET)
     public @ResponseBody String queryByCompactId(@PathVariable("compactId") String compactId) {
         return "[QUERY_BY_COMPACT_ID] Compact ID parameter ---> " + compactId;
