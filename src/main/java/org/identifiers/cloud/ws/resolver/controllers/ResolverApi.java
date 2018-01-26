@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.resolver.controllers;
 
+import com.sun.javafx.binding.StringFormatter;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -21,5 +22,6 @@ public class ResolverApi {
     @RequestMapping(value = "{selector}/{compactId}", method = RequestMethod.GET)
     public @ResponseBody String queryBySelectorAndCompactId(@PathVariable("selector") String selector, @PathVariable("compactId") String compactId) {
         // TODO
+        return StringFormatter.format("[EXTENDED QUERY] With selector '%s' and compact ID '%s'", selector, compactId).getValue();
     }
 }
