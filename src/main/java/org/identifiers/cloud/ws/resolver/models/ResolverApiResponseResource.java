@@ -7,5 +7,5 @@ package org.identifiers.cloud.ws.resolver.models;
  * Timestamp: 2018-01-26 11:37
  * ---
  */
-public class ResolverApiResponseResources {
+public class ResolverApiResponseResource {
 }
