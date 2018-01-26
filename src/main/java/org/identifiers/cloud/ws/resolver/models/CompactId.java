@@ -22,6 +22,11 @@ public class CompactId {
         if (compactIdParts.length > 2) {
             throw new CompactIdException(StringFormatter.format("Invalid compact ID '{}'", compactId).getValue());
         }
+        int index = 0;
+        if (compactIdParts.length == 2) {
+            prefix = compactIdParts[index++];
+        }
+        id = compactIdParts[index];
     }
 
     public CompactId(String original) {
