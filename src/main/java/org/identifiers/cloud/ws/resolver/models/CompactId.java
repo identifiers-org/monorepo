@@ -12,7 +12,7 @@ public class CompactId {
     private String prefix = "";
     private String id = "";
 
-    // TODO - helper
+    // Helper
     private void workoutPrefixAndId(String compactId) throws CompactIdException {
         // TODO
     }
