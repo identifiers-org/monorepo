@@ -4,6 +4,7 @@ import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * Timestamp: 2018-01-26 10:31
  * ---
  */
+@Component
 public class ResolverApiModel {
     private static Logger logger = LoggerFactory.getLogger(ResolverApiModel.class);
 
