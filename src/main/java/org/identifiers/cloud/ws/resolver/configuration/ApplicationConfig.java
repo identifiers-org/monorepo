@@ -52,4 +52,5 @@ public class ApplicationConfig {
     public ResolverDataFetcher resolverDataFetcher() {
         return new ResolverDataFetcher();
     }
+    
 }
