@@ -15,6 +15,7 @@ import java.util.List;
  * Timestamp: 2018-01-26 10:31
  * ---
  */
+// Well, when using Spring Boot, you have to fit in a particular way of doing things. Is it the right way?
 @Component
 public class ResolverApiModel {
     private static Logger logger = LoggerFactory.getLogger(ResolverApiModel.class);
