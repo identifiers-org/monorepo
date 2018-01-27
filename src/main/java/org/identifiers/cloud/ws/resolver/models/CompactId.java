@@ -27,7 +27,8 @@ public class CompactId {
         // Apparently, I no longer have reasons to throw exceptions on parsing a compact ID
         int index = 0;
         if (compactIdParts.size() > 1) {
-            prefix = compactIdParts.get(index);
+            // We always use the prefix in lower case
+            prefix = compactIdParts.get(index).toLowerCase();
             index++;
         }
         // TODO -- I may need to revisit this for refining the way the compact IDs are formatted and processed
