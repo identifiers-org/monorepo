@@ -29,9 +29,15 @@ public class ResolverApiModel {
         }
         // TODO - Check if prefix is null
         // Locate resource providers
+        logger.info("Looking up resources for compact ID '{}', prefix '{}' and ID '{}'", compactId.getOriginal(), compactId.getPrefix(), compactId.getId());
         List<ResourceEntry> resourceEntries = resolverDataFetcher.findResourcesByPrefix(compactId.getPrefix());
-        logger.info("CompactId '{}', with prefix '{}' got #{} resources back from the data backend", compactId
-                .getOriginal(), compactId.getPrefix(), resourceEntries.size());
+        if (resourceEntries == null) {
+            logger.error("CompactId '{}', with prefix '{}' got NULL resources back from the data backend", compactId
+                    .getOriginal(), compactId.getPrefix());
+        } else {
+            logger.info("CompactId '{}', with prefix '{}' got #{} resources back from the data backend", compactId
+                    .getOriginal(), compactId.getPrefix(), resourceEntries.size());
+        }
         // TODO - If no providers, produce error response
         // TODO - If there are providers, transform them into Resolver API response providers
         return "";
