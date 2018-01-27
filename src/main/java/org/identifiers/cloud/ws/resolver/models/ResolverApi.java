@@ -1,6 +1,8 @@
 package org.identifiers.cloud.ws.resolver.models;
 
 import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.List;
  * ---
  */
 public class ResolverApi {
+    private static Logger logger = LoggerFactory.getLogger(ResolverApi.class);
 
     @Autowired
     private ResolverDataFetcher resolverDataFetcher;
@@ -24,6 +27,7 @@ public class ResolverApi {
         } catch (CompactIdException e) {
             throw new ResolverApiException(e.getMessage());
         }
+        // TODO - Check if prefix is null
         // Locate resource providers
         List<ResourceEntry> resourceEntries = resolverDataFetcher.findResourcesByPrefix(compactId.getPrefix());
         // TODO - If no providers, produce error response
