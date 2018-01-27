@@ -50,5 +50,6 @@ public class ApplicationConfig {
     // Resolver Data Fetcher
     @Bean
     public ResolverDataFetcher resolverDataFetcher() {
-        return new ResolverDataFetcher();}
+        return new ResolverDataFetcher();
+    }
 }
