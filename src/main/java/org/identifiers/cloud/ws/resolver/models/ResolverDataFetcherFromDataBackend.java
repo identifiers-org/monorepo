@@ -19,12 +19,13 @@ import java.util.stream.Collectors;
  * Timestamp: 2018-01-27 9:02
  * ---
  */
-public class ResolverDataFetcherFromDataBackend {
+public class ResolverDataFetcherFromDataBackend implements ResolverDataFetcher {
     private static Logger logger = LoggerFactory.getLogger(ResolverDataFetcherFromDataBackend.class);
 
     @Autowired
     private PidEntryRepository pidEntryRepository;
 
+    @Override
     public List<ResourceEntry> findResourcesByPrefix(String prefix) {
         logger.info("Find resources by prefix for '{}'", prefix);
         List<ResourceEntry> result = new ArrayList<>();
