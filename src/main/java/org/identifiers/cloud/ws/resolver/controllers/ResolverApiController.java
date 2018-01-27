@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.resolver.controllers;
 
 import com.sun.javafx.binding.StringFormatter;
+import org.identifiers.cloud.ws.resolver.models.ResolverApiModel;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 public class ResolverApiController {
+
+    private ResolverApiModel resolverApiModel = new ResolverApiModel();
 
     @RequestMapping(value = "{compactId}", method = RequestMethod.GET)
     public @ResponseBody String queryByCompactId(@PathVariable("compactId") String compactId) {
