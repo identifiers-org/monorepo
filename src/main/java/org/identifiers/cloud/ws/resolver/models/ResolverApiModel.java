@@ -42,6 +42,7 @@ public class ResolverApiModel {
         List<ResourceEntry> resourceEntries = resolverDataFetcher.findResourcesByPrefix(compactId.getPrefix());
         logger.info("CompactId '{}', with prefix '{}' got #{} resources back from the data backend", compactId
                 .getOriginal(), compactId.getPrefix(), resourceEntries.size());
+        // TODO - Apply default filter
         // TODO - If no providers, produce error response
         // NOTE - This code may be refactored later
         // TODO - If there are providers, transform them into Resolver API response providers
