@@ -26,6 +26,7 @@ public class ResolverDataFetcher {
     private PidEntryRepository pidEntryRepository;
 
     public List<ResourceEntry> findResourcesByPrefix(String prefix) {
+        logger.info("Find resources by prefix for '{}'", prefix);
         List<ResourceEntry> result = new ArrayList<>();
         List<PidEntry> pidEntries = pidEntryRepository.findByPrefix(prefix);
         if (!pidEntries.isEmpty()) {
