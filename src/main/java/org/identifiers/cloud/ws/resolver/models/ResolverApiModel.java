@@ -23,6 +23,12 @@ public class ResolverApiModel {
     @Autowired
     private ResolverDataFetcher resolverDataFetcher;
 
+    // This code may be refactored out later on
+    private List<ResolverApiResponseResource> resolveResourcesForCompactId(CompactId compactId, List<ResourceEntry>
+            resourceEntries) {
+        // TODO
+    }
+
     public String resolveCompactId(String compactIdParameter) throws ResolverApiException {
         CompactId compactId = null;
         try {
@@ -32,16 +38,12 @@ public class ResolverApiModel {
         }
         // TODO - Check if prefix is null
         // Locate resource providers
-        logger.info("Looking up resources for compact ID '{}', prefix '{}' and ID '{}'", compactId.getOriginal(), compactId.getPrefix(), compactId.getId());
+        logger.debug("Looking up resources for compact ID '{}', prefix '{}' and ID '{}'", compactId.getOriginal(), compactId.getPrefix(), compactId.getId());
         List<ResourceEntry> resourceEntries = resolverDataFetcher.findResourcesByPrefix(compactId.getPrefix());
-        if (resourceEntries == null) {
-            logger.error("CompactId '{}', with prefix '{}' got NULL resources back from the data backend", compactId
-                    .getOriginal(), compactId.getPrefix());
-        } else {
-            logger.info("CompactId '{}', with prefix '{}' got #{} resources back from the data backend", compactId
-                    .getOriginal(), compactId.getPrefix(), resourceEntries.size());
-        }
+        logger.info("CompactId '{}', with prefix '{}' got #{} resources back from the data backend", compactId
+                .getOriginal(), compactId.getPrefix(), resourceEntries.size());
         // TODO - If no providers, produce error response
+        // NOTE - This code may be refactored later
         // TODO - If there are providers, transform them into Resolver API response providers
         return "";
     }
