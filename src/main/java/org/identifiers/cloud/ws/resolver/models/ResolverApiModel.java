@@ -14,8 +14,8 @@ import java.util.List;
  * Timestamp: 2018-01-26 10:31
  * ---
  */
-public class ResolverApi {
-    private static Logger logger = LoggerFactory.getLogger(ResolverApi.class);
+public class ResolverApiModel {
+    private static Logger logger = LoggerFactory.getLogger(ResolverApiModel.class);
 
     @Autowired
     private ResolverDataFetcher resolverDataFetcher;
