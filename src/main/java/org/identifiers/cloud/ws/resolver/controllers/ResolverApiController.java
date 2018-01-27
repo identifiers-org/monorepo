@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
  * ---
  */
 @RestController
-public class ResolverApi {
+public class ResolverApiController {
 
     @RequestMapping(value = "{compactId}", method = RequestMethod.GET)
     public @ResponseBody String queryByCompactId(@PathVariable("compactId") String compactId) {
