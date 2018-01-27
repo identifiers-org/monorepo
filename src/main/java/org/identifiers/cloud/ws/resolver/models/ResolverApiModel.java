@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +27,9 @@ public class ResolverApiModel {
     // This code may be refactored out later on
     private List<ResolverApiResponseResource> resolveResourcesForCompactId(CompactId compactId, List<ResourceEntry>
             resourceEntries) {
+        List<ResolverApiResponseResource> resolverApiResponseResources = new ArrayList<>();
         // TODO
+        return resolverApiResponseResources;
     }
 
     public String resolveCompactId(String compactIdParameter) throws ResolverApiException {
