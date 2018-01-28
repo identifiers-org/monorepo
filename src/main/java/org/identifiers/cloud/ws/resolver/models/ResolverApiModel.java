@@ -75,7 +75,7 @@ public class ResolverApiModel {
         return resolverApiResponse;
     }
 
-    public String resolveCompactId(String selector, String compactIdParameter) throws ResolverApiException {
+    public ResolverApiResponse resolveCompactId(String selector, String compactIdParameter) throws ResolverApiException {
         CompactId compactId = null;
         try {
             compactId = new CompactId(compactIdParameter);
@@ -91,9 +91,6 @@ public class ResolverApiModel {
         } else {
             // TODO - We need to locate resources for the given compact ID and filter by the given selector
         }
-        // TODO - If no providers, produce error response
-        // TODO - If there are providers, apply filtering criteria
-        // TODO - Return Resolver API response providers
-        return "";
+        return resolverApiResponse;
     }
 }
