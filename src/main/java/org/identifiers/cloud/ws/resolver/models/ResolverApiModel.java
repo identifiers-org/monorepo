@@ -43,7 +43,7 @@ public class ResolverApiModel {
         return resolverApiResponseResources;
     }
 
-    public String resolveCompactId(String compactIdParameter) throws ResolverApiException {
+    public ResolverApiResponse resolveCompactId(String compactIdParameter) throws ResolverApiException {
         CompactId compactId = null;
         try {
             compactId = new CompactId(compactIdParameter);
@@ -70,7 +70,7 @@ public class ResolverApiModel {
             resolverApiResponse.setHttpStatus(HttpStatus.OK);
         }
         // NOTE - This code may be refactored later
-        return "";
+        return resolverApiResponse;
     }
 
     public String resolveCompactId(String selector, String compactIdParameter) throws ResolverApiException {
