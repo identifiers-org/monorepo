@@ -53,7 +53,7 @@ public class ResolverApiModel {
         // Prepare default answer
         ResolverApiResponse resolverApiResponse = new ResolverApiResponse();
         resolverApiResponse.setResolvedResources(new ArrayList<>());
-        // TODO - Check if prefix is null
+        // TODO - Check if prefix is null, as we may want to perform a more sofisticated search on the resolver data
         // Locate resource providers
         logger.debug("Looking up resources for compact ID '{}', prefix '{}' and ID '{}'", compactId.getOriginal(), compactId.getPrefix(), compactId.getId());
         List<ResourceEntry> resourceEntries = resolverDataFetcher.findResourcesByPrefix(compactId.getPrefix());
