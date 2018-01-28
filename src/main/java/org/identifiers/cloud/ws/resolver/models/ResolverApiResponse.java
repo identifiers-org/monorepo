@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
@@ -16,6 +17,7 @@ import java.util.List;
  * This may be the main Resolver API response object, let's see how it evolves over time, as the Resolver WS is being
  * build
  */
+@JsonIgnoreProperties(value = {"httpStatus"})
 public class ResolverApiResponse implements Serializable {
     private String errorMsg;
     private HttpStatus httpStatus;
