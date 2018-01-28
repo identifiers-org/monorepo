@@ -6,8 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -27,8 +27,17 @@ public class ResolverApiModel {
     // This code may be refactored out later on
     private List<ResolverApiResponseResource> resolveResourcesForCompactId(CompactId compactId, List<ResourceEntry>
             resourceEntries) {
-        List<ResolverApiResponseResource> resolverApiResponseResources = new ArrayList<>();
-        // TODO
+        List<ResolverApiResponseResource> resolverApiResponseResources = resourceEntries
+                .parallelStream()
+                .map(resourceEntry -> {
+                    ResolverApiResponseResource resolverApiResponseResource = new ResolverApiResponseResource();
+                    resolverApiResponseResource.setInfo(resourceEntry.getInfo());
+                    resolverApiResponseResource.setInstitution(resourceEntry.getInstitution());
+                    resolverApiResponseResource.setLocation(resourceEntry.getLocation());
+                    resolverApiResponseResource.setAccessUrl(resourceEntry
+                            .getAccessURL().replace("{$id}", compactId.getId()));
+                    return resolverApiResponseResource;
+                }).collect(Collectors.toList());
         return resolverApiResponseResources;
     }
 
