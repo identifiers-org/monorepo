@@ -86,6 +86,11 @@ public class ResolverApiModel {
         ResolverApiResponse resolverApiResponse = new ResolverApiResponse();
         resolverApiResponse.setResolvedResources(new ArrayList<>());
         // TODO - Locate resource providers
+        if ((compactId.getPrefix() == null) || (compactId.getPrefix().equals(selector))) {
+            // TODO - This is normal resolution
+        } else {
+            // TODO - We need to locate resources for the given compact ID and filter by the given selector
+        }
         // TODO - If no providers, produce error response
         // TODO - If there are providers, apply filtering criteria
         // TODO - Return Resolver API response providers
