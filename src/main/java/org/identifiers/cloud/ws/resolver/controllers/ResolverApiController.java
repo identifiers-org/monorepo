@@ -26,6 +26,11 @@ public class ResolverApiController {
     public @ResponseBody
     ResponseEntity<?> queryByCompactId(@PathVariable("compactId") String compactId) {
         ResolverApiResponse result = new ResolverApiResponse();
+        // NOTE - I don't like how this looks, if handling exceptions at controller level I think I should go for
+        // @ControllerAdvice, but it depends on where the exception belongs to, I think all exceptions belonging to the
+        // business logic should be caught and handled at the model level (the main model associated to the controller),
+        // and only request related exceptions should be handled at the controller level, probably via @ControllerAdvice
+        // mechanism and error controller, that I need to implement anyway.
         try {
             result = resolverApiModel.resolveCompactId(compactId);
         } catch (ResolverApiException e) {
