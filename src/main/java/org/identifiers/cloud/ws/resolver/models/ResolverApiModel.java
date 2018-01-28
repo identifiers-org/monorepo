@@ -4,6 +4,7 @@ import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -62,6 +63,7 @@ public class ResolverApiModel {
         if (resourceEntries.isEmpty()) {
             // TODO - If no providers, produce error response
             resolverApiResponse.setErrorMsg(String.format("No providers found for Compact ID '%s'", compactId.getOriginal()));
+            resolverApiResponse.setHttpStatus(HttpStatus.NOT_FOUND);
         } else {
             // TODO - Resolve the links
         }
