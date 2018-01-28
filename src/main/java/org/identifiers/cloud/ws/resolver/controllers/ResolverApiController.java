@@ -1,6 +1,5 @@
 package org.identifiers.cloud.ws.resolver.controllers;
 
-import com.sun.javafx.binding.StringFormatter;
 import org.identifiers.cloud.ws.resolver.models.ResolverApiException;
 import org.identifiers.cloud.ws.resolver.models.ResolverApiModel;
 import org.identifiers.cloud.ws.resolver.models.ResolverApiResponse;
@@ -41,8 +40,20 @@ public class ResolverApiController {
     }
 
     @RequestMapping(value = "{selector}/{compactId}", method = RequestMethod.GET)
-    public @ResponseBody String queryBySelectorAndCompactId(@PathVariable("selector") String selector, @PathVariable("compactId") String compactId) {
-        // TODO
-        return StringFormatter.format("[EXTENDED QUERY] With selector '%s' and compact ID '%s'", selector, compactId).getValue();
+    public @ResponseBody
+    ResponseEntity<?> queryBySelectorAndCompactId(@PathVariable("selector") String selector, @PathVariable("compactId") String compactId) {
+        ResolverApiResponse result = new ResolverApiResponse();
+        // NOTE - I don't like how this looks, if handling exceptions at controller level I think I should go for
+        // @ControllerAdvice, but it depends on where the exception belongs to, I think all exceptions belonging to the
+        // business logic should be caught and handled at the model level (the main model associated to the controller),
+        // and only request related exceptions should be handled at the controller level, probably via @ControllerAdvice
+        // mechanism and error controller, that I need to implement anyway.
+        try {
+            result = resolverApiModel.resolveCompactId(compactId, selector);
+        } catch (ResolverApiException e) {
+            result.setErrorMsg(String.format("The following error occurred while processing your request '%s'", e.getMessage()));
+            result.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(result, result.getHttpStatus());
     }
 }
