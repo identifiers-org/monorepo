@@ -104,6 +104,17 @@ public class ResolverApiModel {
                     compactId.getOriginal(),
                     selector,
                     resourceEntries.size());
+            if (resourceEntries.isEmpty()) {
+                // If no providers, produce error response
+                resolverApiResponse.setErrorMsg(String.format("No providers found for Compact ID '%s', selector '%s'",
+                        compactId.getOriginal(),
+                        selector));
+                resolverApiResponse.setHttpStatus(HttpStatus.NOT_FOUND);
+            } else {
+                // Resolve the links
+                resolverApiResponse.setResolvedResources(resolveResourcesForCompactId(compactId, resourceEntries));
+                resolverApiResponse.setHttpStatus(HttpStatus.OK);
+            }
         }
         return resolverApiResponse;
     }
