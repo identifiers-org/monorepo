@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,6 +56,9 @@ public class ResolverApiModel {
         logger.info("CompactId '{}', with prefix '{}' got #{} resources back from the data backend", compactId
                 .getOriginal(), compactId.getPrefix(), resourceEntries.size());
         // TODO - Apply default filter
+        // Prepare default answer
+        ResolverApiResponse resolverApiResponse = new ResolverApiResponse();
+        resolverApiResponse.setResolvedResources(new ArrayList<>());
         // TODO - If no providers, produce error response
         // NOTE - This code may be refactored later
         // TODO - If there are providers, transform them into Resolver API response providers
