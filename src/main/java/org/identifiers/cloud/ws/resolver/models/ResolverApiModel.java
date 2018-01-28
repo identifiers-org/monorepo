@@ -93,10 +93,17 @@ public class ResolverApiModel {
         } else {
             // TODO - We need to locate resources for the given compact ID and filter by the given selector
             // So... it turns out that I don't need anything more complex as a decider right now
+            logger.debug("Looking up resources for compact ID '{}', selector '{}' and ID '{}'",
+                    compactId.getOriginal(),
+                    selector);
             List<ResourceEntry> resourceEntries = resolverDataFetcher.findResourcesByPrefix(compactId.getPrefix())
                     .stream()
                     .filter(resourceEntry -> resourceEntry.getResourcePrefix().equals(selector))
                     .collect(Collectors.toList());
+            logger.info("CompactId '{}', with selector '{}' got #{} resources back from the data backend",
+                    compactId.getOriginal(),
+                    selector,
+                    resourceEntries.size());
         }
         return resolverApiResponse;
     }
