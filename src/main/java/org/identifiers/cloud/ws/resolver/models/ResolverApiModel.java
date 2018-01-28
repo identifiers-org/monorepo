@@ -76,6 +76,12 @@ public class ResolverApiModel {
     }
 
     public String resolveCompactId(String selector, String compactIdParameter) throws ResolverApiException {
+        CompactId compactId = null;
+        try {
+            compactId = new CompactId(compactIdParameter);
+        } catch (CompactIdException e) {
+            throw new ResolverApiException(e.getMessage());
+        }
         // TODO - Locate resource providers
         // TODO - If no providers, produce error response
         // TODO - If there are providers, apply filtering criteria
