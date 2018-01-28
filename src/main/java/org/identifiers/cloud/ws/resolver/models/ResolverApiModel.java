@@ -70,7 +70,6 @@ public class ResolverApiModel {
             resolverApiResponse.setHttpStatus(HttpStatus.OK);
         }
         // NOTE - This code may be refactored later
-        // TODO - If there are providers, transform them into Resolver API response providers
         return "";
     }
 
