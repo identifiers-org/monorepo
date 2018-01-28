@@ -66,6 +66,7 @@ public class ResolverApiModel {
             resolverApiResponse.setHttpStatus(HttpStatus.NOT_FOUND);
         } else {
             // TODO - Resolve the links
+            resolverApiResponse.setResolvedResources(resolveResourcesForCompactId(compactId, resourceEntries));
         }
         // NOTE - This code may be refactored later
         // TODO - If there are providers, transform them into Resolver API response providers
