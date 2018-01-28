@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import org.springframework.http.HttpStatus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,8 @@ import java.util.List;
  */
 public class ResolverApiResponse {
     private String errorMsg;
+    private HttpStatus httpStatus;
+
     private List<ResolverApiResponseResource> resolvedResources = new ArrayList<>();
 
     public String getErrorMsg() {
@@ -31,5 +35,13 @@ public class ResolverApiResponse {
 
     public void setResolvedResources(List<ResolverApiResponseResource> resolvedResources) {
         this.resolvedResources = resolvedResources;
+    }
+
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
+    }
+
+    public void setHttpStatus(HttpStatus httpStatus) {
+        this.httpStatus = httpStatus;
     }
 }
