@@ -65,7 +65,7 @@ public class ResolverApiModel {
             resolverApiResponse.setErrorMsg(String.format("No providers found for Compact ID '%s'", compactId.getOriginal()));
             resolverApiResponse.setHttpStatus(HttpStatus.NOT_FOUND);
         } else {
-            // TODO - Resolve the links
+            // Resolve the links
             resolverApiResponse.setResolvedResources(resolveResourcesForCompactId(compactId, resourceEntries));
             resolverApiResponse.setHttpStatus(HttpStatus.OK);
         }
