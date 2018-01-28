@@ -2,7 +2,9 @@ package org.identifiers.cloud.ws.resolver.controllers;
 
 import com.sun.javafx.binding.StringFormatter;
 import org.identifiers.cloud.ws.resolver.models.ResolverApiModel;
+import org.identifiers.cloud.ws.resolver.models.ResolverApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -19,10 +21,11 @@ public class ResolverApiController {
     private ResolverApiModel resolverApiModel;
 
     @RequestMapping(value = "{compactId}", method = RequestMethod.GET)
-    public @ResponseBody String queryByCompactId(@PathVariable("compactId") String compactId) {
+    public @ResponseBody
+    ResponseEntity<?> queryByCompactId(@PathVariable("compactId") String compactId) {
         // TODO
-        String result = resolverApiModel.resolveCompactId(compactId);
-        return "[QUERY_BY_COMPACT_ID] Compact ID parameter ---> " + compactId;
+        ResolverApiResponse result = resolverApiModel.resolveCompactId(compactId);
+        return new ResponseEntity<>(result, result.getHttpStatus());
     }
 
     @RequestMapping(value = "{selector}/{compactId}", method = RequestMethod.GET)
