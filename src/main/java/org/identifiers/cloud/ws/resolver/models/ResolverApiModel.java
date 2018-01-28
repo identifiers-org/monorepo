@@ -75,7 +75,8 @@ public class ResolverApiModel {
         return resolverApiResponse;
     }
 
-    public ResolverApiResponse resolveCompactId(String selector, String compactIdParameter) throws ResolverApiException {
+    public ResolverApiResponse resolveCompactId(String compactIdParameter, String selector) throws ResolverApiException {
+        logger.info("Resolve Compact ID '{}', with selector '{}'", compactIdParameter, selector);
         CompactId compactId = null;
         try {
             compactId = new CompactId(compactIdParameter);
