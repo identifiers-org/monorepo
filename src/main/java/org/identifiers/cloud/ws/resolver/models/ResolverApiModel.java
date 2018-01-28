@@ -88,6 +88,7 @@ public class ResolverApiModel {
         // TODO - Locate resource providers
         if ((compactId.getPrefix() == null) || (compactId.getPrefix().equals(selector))) {
             // This is normal resolution
+            // TODO - Don't worry intrepid optimizer, this model we'll get refactored later on
             return resolveCompactId(compactIdParameter);
         } else {
             // TODO - We need to locate resources for the given compact ID and filter by the given selector
