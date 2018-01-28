@@ -29,15 +29,17 @@ public class ResolverDataFetcherFromDataBackend implements ResolverDataFetcher {
     public List<ResourceEntry> findResourcesByPrefix(String prefix) {
         logger.info("Find resources by prefix for '{}'", prefix);
         List<ResourceEntry> result = new ArrayList<>();
-        List<PidEntry> pidEntries = pidEntryRepository.findByPrefix(prefix);
-        if (!pidEntries.isEmpty()) {
-            if (pidEntries.size() > 1) {
-                logger.error("MULTIPLE PID entries for prefix '{}'", prefix);
+        if (prefix != null) {
+            List<PidEntry> pidEntries = pidEntryRepository.findByPrefix(prefix);
+            if (!pidEntries.isEmpty()) {
+                if (pidEntries.size() > 1) {
+                    logger.error("MULTIPLE PID entries for prefix '{}'", prefix);
+                }
+                result = pidEntries.parallelStream().flatMap(pidEntry -> Arrays.stream(pidEntry.getResources())).collect(Collectors
+                        .toList());
+            } else {
+                logger.warn("NO PID entry for prefix '{}'", prefix);
             }
-            result = pidEntries.parallelStream().flatMap(pidEntry -> Arrays.stream(pidEntry.getResources())).collect(Collectors
-                    .toList());
-        } else {
-            logger.warn("NO PID entry for prefix '{}'", prefix);
         }
         return result;
     }
