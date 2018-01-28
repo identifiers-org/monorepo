@@ -82,6 +82,9 @@ public class ResolverApiModel {
         } catch (CompactIdException e) {
             throw new ResolverApiException(e.getMessage());
         }
+        // Prepare default answer
+        ResolverApiResponse resolverApiResponse = new ResolverApiResponse();
+        resolverApiResponse.setResolvedResources(new ArrayList<>());
         // TODO - Locate resource providers
         // TODO - If no providers, produce error response
         // TODO - If there are providers, apply filtering criteria
