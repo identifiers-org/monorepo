@@ -61,7 +61,7 @@ public class ResolverApiModel {
         ResolverApiResponse resolverApiResponse = new ResolverApiResponse();
         resolverApiResponse.setResolvedResources(new ArrayList<>());
         if (resourceEntries.isEmpty()) {
-            // TODO - If no providers, produce error response
+            // If no providers, produce error response
             resolverApiResponse.setErrorMsg(String.format("No providers found for Compact ID '%s'", compactId.getOriginal()));
             resolverApiResponse.setHttpStatus(HttpStatus.NOT_FOUND);
         } else {
