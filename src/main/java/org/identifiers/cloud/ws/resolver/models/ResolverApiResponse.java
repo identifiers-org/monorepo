@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.resolver.models;
 
 import org.springframework.http.HttpStatus;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +16,9 @@ import java.util.List;
  * This may be the main Resolver API response object, let's see how it evolves over time, as the Resolver WS is being
  * build
  */
-public class ResolverApiResponse {
+public class ResolverApiResponse implements Serializable {
     private String errorMsg;
     private HttpStatus httpStatus;
-
     private List<ResolverApiResponseResource> resolvedResources = new ArrayList<>();
 
     public String getErrorMsg() {
