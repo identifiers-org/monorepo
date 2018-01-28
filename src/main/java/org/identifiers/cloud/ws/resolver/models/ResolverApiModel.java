@@ -87,7 +87,8 @@ public class ResolverApiModel {
         resolverApiResponse.setResolvedResources(new ArrayList<>());
         // TODO - Locate resource providers
         if ((compactId.getPrefix() == null) || (compactId.getPrefix().equals(selector))) {
-            // TODO - This is normal resolution
+            // This is normal resolution
+            return resolveCompactId(compactIdParameter);
         } else {
             // TODO - We need to locate resources for the given compact ID and filter by the given selector
         }
