@@ -59,7 +59,11 @@ public class ResolverApiModel {
         // Prepare default answer
         ResolverApiResponse resolverApiResponse = new ResolverApiResponse();
         resolverApiResponse.setResolvedResources(new ArrayList<>());
-        // TODO - If no providers, produce error response
+        if (resourceEntries.isEmpty()) {
+            // TODO - If no providers, produce error response
+        } else {
+            // TODO - Resolve the links
+        }
         // NOTE - This code may be refactored later
         // TODO - If there are providers, transform them into Resolver API response providers
         return "";
