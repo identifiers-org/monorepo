@@ -43,6 +43,7 @@ public class ResolverApiModel {
         return resolverApiResponseResources;
     }
 
+    // TODO - Document this API method
     public ResolverApiResponse resolveCompactId(String compactIdParameter) throws ResolverApiException {
         CompactId compactId = null;
         try {
