@@ -50,6 +50,9 @@ public class ResolverApiModel {
         } catch (CompactIdException e) {
             throw new ResolverApiException(e.getMessage());
         }
+        // Prepare default answer
+        ResolverApiResponse resolverApiResponse = new ResolverApiResponse();
+        resolverApiResponse.setResolvedResources(new ArrayList<>());
         // TODO - Check if prefix is null
         // Locate resource providers
         logger.debug("Looking up resources for compact ID '{}', prefix '{}' and ID '{}'", compactId.getOriginal(), compactId.getPrefix(), compactId.getId());
@@ -57,9 +60,6 @@ public class ResolverApiModel {
         logger.info("CompactId '{}', with prefix '{}' got #{} resources back from the data backend", compactId
                 .getOriginal(), compactId.getPrefix(), resourceEntries.size());
         // TODO - Apply default filter
-        // Prepare default answer
-        ResolverApiResponse resolverApiResponse = new ResolverApiResponse();
-        resolverApiResponse.setResolvedResources(new ArrayList<>());
         if (resourceEntries.isEmpty()) {
             // If no providers, produce error response
             resolverApiResponse.setErrorMsg(String.format("No providers found for Compact ID '%s'", compactId.getOriginal()));
