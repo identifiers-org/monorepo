@@ -1,9 +1,11 @@
 package org.identifiers.cloud.ws.resolver.controllers;
 
 import com.sun.javafx.binding.StringFormatter;
+import org.identifiers.cloud.ws.resolver.models.ResolverApiException;
 import org.identifiers.cloud.ws.resolver.models.ResolverApiModel;
 import org.identifiers.cloud.ws.resolver.models.ResolverApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +25,13 @@ public class ResolverApiController {
     @RequestMapping(value = "{compactId}", method = RequestMethod.GET)
     public @ResponseBody
     ResponseEntity<?> queryByCompactId(@PathVariable("compactId") String compactId) {
-        // TODO
-        ResolverApiResponse result = resolverApiModel.resolveCompactId(compactId);
+        ResolverApiResponse result = new ResolverApiResponse();
+        try {
+            result = resolverApiModel.resolveCompactId(compactId);
+        } catch (ResolverApiException e) {
+            result.setErrorMsg(String.format("The following error occurred while processing your request '%s'", e.getMessage()));
+            result.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         return new ResponseEntity<>(result, result.getHttpStatus());
     }
 
