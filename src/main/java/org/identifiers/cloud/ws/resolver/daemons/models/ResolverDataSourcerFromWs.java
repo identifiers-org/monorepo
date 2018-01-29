@@ -21,8 +21,8 @@ import java.util.List;
  */
 @EnableRetry
 public class ResolverDataSourcerFromWs implements ResolverDataSourcer {
-    public static final int WS_REQUEST_RETRY_MAX_ATTEMPTS = 5;
-    public static final int WS_REQUEST_RETRY_BACK_OFF_PERIOD = 1500;
+    public static final int WS_REQUEST_RETRY_MAX_ATTEMPTS = 12;
+    public static final int WS_REQUEST_RETRY_BACK_OFF_PERIOD = 1500; // 1.5 seconds
 
     // Re-try pattern, externalize this later if needed
     private static final RetryTemplate retryTemplate;
@@ -31,7 +31,7 @@ public class ResolverDataSourcerFromWs implements ResolverDataSourcer {
         retryPolicy.setMaxAttempts(WS_REQUEST_RETRY_MAX_ATTEMPTS);
 
         FixedBackOffPolicy backOffPolicy = new FixedBackOffPolicy();
-        backOffPolicy.setBackOffPeriod(WS_REQUEST_RETRY_BACK_OFF_PERIOD); // 1.5 seconds
+        backOffPolicy.setBackOffPeriod(WS_REQUEST_RETRY_BACK_OFF_PERIOD);
 
         retryTemplate = new RetryTemplate();
         retryTemplate.setRetryPolicy(retryPolicy);
