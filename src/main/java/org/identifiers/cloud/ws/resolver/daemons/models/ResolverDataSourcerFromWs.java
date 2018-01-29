@@ -45,8 +45,10 @@ public class ResolverDataSourcerFromWs implements ResolverDataSourcer {
     public List<PidEntry> getResolverData() throws ResolverDataSourcerException {
         List<PidEntry> result = new ArrayList<>();
         // TODO - Get this code into the re-try pattern
-        RestTemplate restTemplate = new RestTemplate();
-        result = Arrays.asList(restTemplate.getForObject(resolverDataDumpWsEndpoint, PidEntry[].class));
+        result = retryTemplate.execute(retryContext -> {
+            RestTemplate restTemplate = new RestTemplate();
+            return Arrays.asList(restTemplate.getForObject(resolverDataDumpWsEndpoint, PidEntry[].class));
+        });
         return result;
     }
 }
