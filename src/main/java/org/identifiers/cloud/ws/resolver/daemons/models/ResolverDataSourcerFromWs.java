@@ -2,8 +2,10 @@ package org.identifiers.cloud.ws.resolver.daemons.models;
 
 import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,7 +22,9 @@ public class ResolverDataSourcerFromWs implements ResolverDataSourcer {
     @Override
     public List<PidEntry> getResolverData() throws ResolverDataSourcerException {
         List<PidEntry> result = new ArrayList<>();
-        // TODO
+        // TODO - Get this code into the re-try pattern
+        RestTemplate restTemplate = new RestTemplate();
+        result = Arrays.asList(restTemplate.getForObject(resolverDataDumpWsEndpoint, PidEntry[].class));
         return result;
     }
 }
