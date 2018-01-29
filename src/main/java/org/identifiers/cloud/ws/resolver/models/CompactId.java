@@ -17,6 +17,11 @@ public class CompactId {
     private String prefix = null;
     private String id = null;
 
+    // Helper to get a string representation of a compact ID by its parts
+    public static String getCompactIdString(String prefix, String id) {
+        return String.format("%s%s%s", prefix, COMPACT_ID_PREFIX_AND_ID_SEPARATOR, id);
+    }
+
     // Helper
     // TODO - Some identifiers may use ':', and within the prefix you can only have a '.' at the moment
     private void workoutPrefixAndId(String compactId) throws CompactIdException {
