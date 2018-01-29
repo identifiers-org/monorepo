@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.resolver.daemons.models;
 
 import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
@@ -18,6 +19,7 @@ import java.util.List;
  * Timestamp: 2018-01-29 10:16
  * ---
  */
+@EnableRetry
 public class ResolverDataSourcerFromWs implements ResolverDataSourcer {
     public static final int WS_REQUEST_RETRY_MAX_ATTEMPTS = 5;
     public static final int WS_REQUEST_RETRY_BACK_OFF_PERIOD = 1500;
