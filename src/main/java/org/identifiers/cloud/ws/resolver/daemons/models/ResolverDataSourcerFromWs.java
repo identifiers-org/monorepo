@@ -22,9 +22,12 @@ public class ResolverDataSourcerFromWs implements ResolverDataSourcer {
 
     // Re-try pattern, externalize this later if needed
     private static final RetryTemplate retryTemplate;
+
+    public static final int WS_REQUEST_RETRY_MAX_ATTEMPTS = 5;
+
     static {
         SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy();
-        retryPolicy.setMaxAttempts(5);
+        retryPolicy.setMaxAttempts(WS_REQUEST_RETRY_MAX_ATTEMPTS);
 
         FixedBackOffPolicy backOffPolicy = new FixedBackOffPolicy();
         backOffPolicy.setBackOffPeriod(1500); // 1.5 seconds
