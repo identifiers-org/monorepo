@@ -3,6 +3,7 @@ package org.identifiers.cloud.ws.resolver.daemons.models;
 import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,8 +16,11 @@ import java.util.List;
 public class ResolverDataSourcerFromWs implements ResolverDataSourcer {
     @Value("${org.identifiers.cloud.ws.resolver.data.source.url}")
     private String resolverDataDumpWsEndpoint;
+
     @Override
     public List<PidEntry> getResolverData() throws ResolverDataSourcerException {
-        return null;
+        List<PidEntry> result = new ArrayList<>();
+        // TODO
+        return result;
     }
 }
