@@ -50,10 +50,18 @@ public class ResolverDataSourcerFromWs implements ResolverDataSourcer {
         List<PidEntry> result = new ArrayList<>();
         logger.info("Try to get Resolver data dump from '{}'", resolverDataDumpWsEndpoint);
         // Run it with multiple tries
-        result = retryTemplate.execute(retryContext -> {
-            RestTemplate restTemplate = new RestTemplate();
-            return Arrays.asList(restTemplate.getForObject(resolverDataDumpWsEndpoint, PidEntry[].class));
-        });
+        try {
+            result = retryTemplate.execute(retryContext -> {
+                RestTemplate restTemplate = new RestTemplate();
+                return Arrays.asList(restTemplate.getForObject(resolverDataDumpWsEndpoint, PidEntry[].class));
+            });
+        } catch (RuntimeException e) {
+            // NOTE - Yes, according to best practices, I should not be catching such a top level exception, but here it
+            // makes sense
+            logger.error("COULD NOT RETRIVE Resolver Data Dump from '{}' because '{}'",
+                    resolverDataDumpWsEndpoint,
+                    e.getMessage());
+        }
         return result;
     }
 }
