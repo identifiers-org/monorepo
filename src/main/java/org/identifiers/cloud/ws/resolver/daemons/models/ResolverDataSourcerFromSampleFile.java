@@ -29,10 +29,7 @@ public class ResolverDataSourcerFromSampleFile implements ResolverDataSourcer {
     public List<PidEntry> getResolverData() throws ResolverDataSourcerException {
         List<PidEntry> result = new ArrayList<>();
         try {
-            //File dataFile = new ClassPathResource(sampleDataFileLocalPath).getFile();
-            //logger.info("Loading resolver data sample from '{}'", dataFile.getAbsolutePath());
             ObjectMapper objectMapper = new ObjectMapper();
-            //result = objectMapper.readValue(dataFile, new TypeReference<List<PidEntry>>() {});
             result = objectMapper.readValue(new ClassPathResource(sampleDataFileLocalPath).getInputStream(),
                     new TypeReference<List<PidEntry>>() {});
         } catch (IOException e) {
