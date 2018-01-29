@@ -25,12 +25,14 @@ public class ResolverDataSourcerFromWs implements ResolverDataSourcer {
 
     public static final int WS_REQUEST_RETRY_MAX_ATTEMPTS = 5;
 
+    public static final int WS_REQUEST_RETRY_BACK_OFF_PERIOD = 1500;
+
     static {
         SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy();
         retryPolicy.setMaxAttempts(WS_REQUEST_RETRY_MAX_ATTEMPTS);
 
         FixedBackOffPolicy backOffPolicy = new FixedBackOffPolicy();
-        backOffPolicy.setBackOffPeriod(1500); // 1.5 seconds
+        backOffPolicy.setBackOffPeriod(WS_REQUEST_RETRY_BACK_OFF_PERIOD); // 1.5 seconds
 
         retryTemplate = new RetryTemplate();
         retryTemplate.setRetryPolicy(retryPolicy);
