@@ -1,7 +1,7 @@
 package org.identifiers.cloud.ws.resolver.configuration;
 
 import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcer;
-import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcerFromSampleFile;
+import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcerFromWs;
 import org.identifiers.cloud.ws.resolver.models.ResolverDataFetcher;
 import org.identifiers.cloud.ws.resolver.models.ResolverDataFetcherFromDataBackend;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,7 +45,7 @@ public class ApplicationConfig {
 
     @Bean
     public ResolverDataSourcer resolverDataSourcer() {
-        return new ResolverDataSourcerFromSampleFile();
+        return new ResolverDataSourcerFromWs();
     }
 
     // Resolver Data Fetcher
