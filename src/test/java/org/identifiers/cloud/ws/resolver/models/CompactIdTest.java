@@ -48,7 +48,7 @@ public class CompactIdTest {
     public static Collection<Object[]> getTestingValues() {
         return Arrays.asList(new Object[][]{
                 // Normal use case
-                {"GO:9876345", "GO", "9876345", "Normal use case for Compact ID"},
+                {"GO:9876345", "go", "9876345", "Normal use case for Compact ID"},
                 // No prefix use case
                 {"Q9876345", null, "Q9876345", "Compact ID with no prefix"},
                 // Multiple ':' use case
