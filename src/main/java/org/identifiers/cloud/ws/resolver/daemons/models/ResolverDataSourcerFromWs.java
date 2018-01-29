@@ -1,6 +1,8 @@
 package org.identifiers.cloud.ws.resolver.daemons.models;
 
 import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
@@ -23,6 +25,8 @@ import java.util.List;
 public class ResolverDataSourcerFromWs implements ResolverDataSourcer {
     public static final int WS_REQUEST_RETRY_MAX_ATTEMPTS = 12;
     public static final int WS_REQUEST_RETRY_BACK_OFF_PERIOD = 1500; // 1.5 seconds
+
+    private static final Logger logger = LoggerFactory.getLogger(ResolverDataSourcerFromWs.class);
 
     // Re-try pattern, externalize this later if needed
     private static final RetryTemplate retryTemplate;
