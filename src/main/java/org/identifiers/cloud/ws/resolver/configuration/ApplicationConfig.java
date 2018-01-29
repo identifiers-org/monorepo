@@ -54,4 +54,6 @@ public class ApplicationConfig {
         return new ResolverDataFetcherFromDataBackend();
     }
 
+    // Re-try pattern
+
 }
