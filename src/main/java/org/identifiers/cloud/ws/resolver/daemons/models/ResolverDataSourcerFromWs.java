@@ -19,14 +19,11 @@ import java.util.List;
  * ---
  */
 public class ResolverDataSourcerFromWs implements ResolverDataSourcer {
+    public static final int WS_REQUEST_RETRY_MAX_ATTEMPTS = 5;
+    public static final int WS_REQUEST_RETRY_BACK_OFF_PERIOD = 1500;
 
     // Re-try pattern, externalize this later if needed
     private static final RetryTemplate retryTemplate;
-
-    public static final int WS_REQUEST_RETRY_MAX_ATTEMPTS = 5;
-
-    public static final int WS_REQUEST_RETRY_BACK_OFF_PERIOD = 1500;
-
     static {
         SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy();
         retryPolicy.setMaxAttempts(WS_REQUEST_RETRY_MAX_ATTEMPTS);
