@@ -11,7 +11,6 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
-import org.springframework.retry.support.RetryTemplate;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -53,11 +52,5 @@ public class ApplicationConfig {
     @Bean
     public ResolverDataFetcher resolverDataFetcher() {
         return new ResolverDataFetcherFromDataBackend();
-    }
-
-    // Re-try pattern
-    @Bean
-    public RetryTemplate retryTemplate() {
-        // TODO
     }
 }
