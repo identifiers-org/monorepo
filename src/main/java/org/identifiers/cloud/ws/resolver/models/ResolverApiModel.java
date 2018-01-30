@@ -88,6 +88,7 @@ public class ResolverApiModel {
         resolverApiResponse.setResolvedResources(new ArrayList<>());
         // TODO - I do need to do something about prefix being 'null', otherwise it will break this first implementation
         // Locate resource providers
+        // TODO - Refactor this later to make sure that 'selector' is always used lower case
         if ((compactId.getPrefix() == null) || (compactId.getPrefix().equals(selector.toLowerCase()))) {
             // This is normal resolution
             // TODO - Don't worry intrepid optimizer, this model we'll get refactored later on
