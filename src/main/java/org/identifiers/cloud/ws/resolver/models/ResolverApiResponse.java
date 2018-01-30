@@ -19,16 +19,16 @@ import java.util.List;
  */
 @JsonIgnoreProperties(value = {"httpStatus"})
 public class ResolverApiResponse implements Serializable {
-    private String errorMsg;
+    private String errorMessage;
     private HttpStatus httpStatus = HttpStatus.OK;
     private List<ResolverApiResponseResource> resolvedResources = new ArrayList<>();
 
-    public String getErrorMsg() {
-        return errorMsg;
+    public String getErrorMessage() {
+        return errorMessage;
     }
 
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 
     public List<ResolverApiResponseResource> getResolvedResources() {

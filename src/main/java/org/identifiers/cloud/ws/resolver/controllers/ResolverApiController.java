@@ -33,7 +33,7 @@ public class ResolverApiController {
         try {
             result = resolverApiModel.resolveCompactId(compactId);
         } catch (ResolverApiException e) {
-            result.setErrorMsg(String.format("The following error occurred while processing your request '%s'", e.getMessage()));
+            result.setErrorMessage(String.format("The following error occurred while processing your request '%s'", e.getMessage()));
             result.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(result, result.getHttpStatus());
@@ -51,7 +51,7 @@ public class ResolverApiController {
         try {
             result = resolverApiModel.resolveCompactId(compactId, selector);
         } catch (ResolverApiException e) {
-            result.setErrorMsg(String.format("The following error occurred while processing your request '%s'", e.getMessage()));
+            result.setErrorMessage(String.format("The following error occurred while processing your request '%s'", e.getMessage()));
             result.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(result, result.getHttpStatus());
