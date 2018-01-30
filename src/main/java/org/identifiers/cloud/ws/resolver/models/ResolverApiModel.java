@@ -88,7 +88,8 @@ public class ResolverApiModel {
         resolverApiResponse.setResolvedResources(new ArrayList<>());
         // TODO - I do need to do something about prefix being 'null', otherwise it will break this first implementation
         // TODO - Locate resource providers
-        if ((compactId.getPrefix() == null) || (compactId.getPrefix().equals(selector.toLowerCase()))) {
+        selector = selector.toLowerCase();
+        if ((compactId.getPrefix() == null) || (compactId.getPrefix().equals(selector))) {
             // This is normal resolution
             // TODO - Don't worry intrepid optimizer, this model we'll get refactored later on
             return resolveCompactId(CompactId.getCompactIdString(selector, compactId.getId()));
