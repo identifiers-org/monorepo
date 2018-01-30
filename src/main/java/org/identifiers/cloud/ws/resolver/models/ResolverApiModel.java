@@ -94,7 +94,7 @@ public class ResolverApiModel {
             // TODO - Don't worry intrepid optimizer, this model we'll get refactored later on
             return resolveCompactId(CompactId.getCompactIdString(selector, compactId.getId()));
         } else {
-            // TODO - We need to locate resources for the given compact ID and filter by the given selector
+            // We need to locate resources for the given compact ID and filter by the given selector
             // So... it turns out that I don't need anything more complex as a decider right now
             logger.debug("Looking up resources for compact ID '{}', selector '{}' and ID '{}'",
                     compactId.getOriginal(),
