@@ -30,7 +30,7 @@ public class ResolverApiModel {
     private List<ResolverApiResponseResource> resolveResourcesForCompactId(CompactId compactId, List<ResourceEntry>
             resourceEntries) {
         // TODO - I need to add whether the resource is official or not
-        List<ResolverApiResponseResource> resolverApiResponseResources = resourceEntries
+        return resourceEntries
                 .parallelStream()
                 .map(resourceEntry -> {
                     ResolverApiResponseResource resolverApiResponseResource = new ResolverApiResponseResource();
@@ -41,7 +41,6 @@ public class ResolverApiModel {
                             .getAccessURL().replace("{$id}", compactId.getId()));
                     return resolverApiResponseResource;
                 }).collect(Collectors.toList());
-        return resolverApiResponseResources;
     }
 
     // TODO - Document this API method
