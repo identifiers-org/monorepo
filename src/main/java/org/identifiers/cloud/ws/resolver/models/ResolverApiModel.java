@@ -29,6 +29,7 @@ public class ResolverApiModel {
     // This code may be refactored out later on
     private List<ResolverApiResponseResource> resolveResourcesForCompactId(CompactId compactId, List<ResourceEntry>
             resourceEntries) {
+        // TODO - I need to add whether the resource is official or not
         List<ResolverApiResponseResource> resolverApiResponseResources = resourceEntries
                 .parallelStream()
                 .map(resourceEntry -> {
