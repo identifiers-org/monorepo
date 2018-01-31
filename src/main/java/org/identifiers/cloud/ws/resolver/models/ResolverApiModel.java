@@ -88,20 +88,21 @@ public class ResolverApiModel {
         ResolverApiResponse resolverApiResponse = new ResolverApiResponse();
         resolverApiResponse.setResolvedResources(new ArrayList<>());
         // TODO - I do need to do something about prefix being 'null', otherwise it will break this first implementation
-        // TODO - Locate resource providers
-        if ((compactId.getPrefix() == null) || (compactId.getPrefix().equals(selector))) {
+        // Locate resource providers
+        // TODO - Refactor this later to make sure that 'selector' is always used lower case
+        if ((compactId.getPrefix() == null) || (compactId.getPrefix().equals(selector.toLowerCase()))) {
             // This is normal resolution
             // TODO - Don't worry intrepid optimizer, this model we'll get refactored later on
             return resolveCompactId(CompactId.getCompactIdString(selector, compactId.getId()));
         } else {
-            // TODO - We need to locate resources for the given compact ID and filter by the given selector
+            // We need to locate resources for the given compact ID and filter by the given selector
             // So... it turns out that I don't need anything more complex as a decider right now
             logger.debug("Looking up resources for compact ID '{}', selector '{}' and ID '{}'",
                     compactId.getOriginal(),
                     selector);
             List<ResourceEntry> resourceEntries = resolverDataFetcher.findResourcesByPrefix(compactId.getPrefix())
                     .stream()
-                    .filter(resourceEntry -> resourceEntry.getResourcePrefix().equals(selector))
+                    .filter(resourceEntry -> resourceEntry.getResourcePrefix().equals(selector.toLowerCase()))
                     .collect(Collectors.toList());
             logger.info("CompactId '{}', with selector '{}' got #{} resources back from the data backend",
                     compactId.getOriginal(),
