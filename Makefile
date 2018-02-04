@@ -4,6 +4,9 @@
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>	#
 #														#
 
+# Container name
+container_name = identifiersorg/cloud-ws-resolver
+
 # Default target
 all: clean container_production_push
 
@@ -16,12 +19,12 @@ app_structure:
 	@cp target/resolver-*.jar target/app/service.jar
 
 container_production_build: app_structure
-	@echo "<===|DEVOPS|===> [BUILD] Production container"
-	@docker build -t identifiersorg/cloud-ws-resolver .
+	@echo "<===|DEVOPS|===> [BUILD] Production container $(container_name)"
+	@docker build -t $(container_name) .
 
 container_production_push: container_production_build
-	@echo "<===|DEVOPS|===> [PUBLISH]> Production container"
-	@docker push identifiersorg/cloud-ws-resolver
+	@echo "<===|DEVOPS|===> [PUBLISH]> Production container $(container_name)"
+	@docker push $(container_name)
 
 dev_container_build: clean container_production_build
 	@echo "<===|DEVOPS|===> [DEV] Preparing local container"
