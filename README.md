@@ -44,3 +44,19 @@ In case you're interested in getting only a specific resource from the resolutio
 Where _selector_ is used by the resolver for filtering out any other provider than the one specified, e.g. if, for the same _CHEBI:36927_, I wanted the resolver to give me only the EBI resource, I could do it submitting my _HTTP GET_ request like this
 
 > http://resolver:8080/ebi/CHEBI:36927
+
+the response would be
+
+```json
+{
+    "errorMsg": null,
+    "resolvedResources": [
+        {
+            "accessUrl": "http://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:36927",
+            "info": "ChEBI (Chemical Entities of Biological Interest)",
+            "institution": "European Bioinformatics Institute, Hinxton, Cambridge",
+            "location": "UK"
+        }
+    ]
+}
+```
