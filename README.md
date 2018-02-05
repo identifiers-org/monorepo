@@ -1,8 +1,14 @@
 # Overview
 This Web Service implements [__identifiers.org__](http://identifiers.org) Compact ID resolution API for programmatic access to _ID resolution services_.
 
+
 # Running the Compact ID Resolution service
-TODO
+The only requirement for running the _resolution service_ is having a working installation of [Docker](http://docker.com).
+
+It can be launched with the following command
+
+> docker run -p 8080:8080 identifiersorg/cloud-ws-resolver
+
 
 # How to Query the Compact ID Resolution Service
 Given a _Compact ID_, e.g. _CHEBI:36927_, and being _resolver_ the name or IP address of the host that's running the service, there are two different endpoints that can be accessed, via __HTTP GET__ requests, at the service.
