@@ -5,4 +5,30 @@ Given a _Compact ID_, e.g. _CHEBI:36927_, and being _resolver_ the name or IP ad
 
 > http://resolver:8080/Compact_ID
 
-For resolving *Compact_ID* to all the resources that are registered within [identifiers.org](http://identifiers.org) as capable of providing information on that _ID_.
+For resolving *Compact_ID* to all the resources that are registered within [identifiers.org](http://identifiers.org) as capable of providing information on that _ID_. The response data comes back in JSON format, e.g. for _CHEBI:36927_, the response looks like
+
+```json
+{
+    "errorMsg": null,
+    "resolvedResources": [
+        {
+            "accessUrl": "http://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:36927",
+            "info": "ChEBI (Chemical Entities of Biological Interest)",
+            "institution": "European Bioinformatics Institute, Hinxton, Cambridge",
+            "location": "UK"
+        },
+        {
+            "accessUrl": "http://www.ebi.ac.uk/ols/ontologies/chebi/terms?obo_id=CHEBI:36927",
+            "info": "ChEBI through OLS",
+            "institution": "European Bioinformatics Institute, Hinxton, Cambridge",
+            "location": "UK"
+        },
+        {
+            "accessUrl": "http://purl.bioontology.org/ontology/CHEBI/CHEBI:36927",
+            "info": "ChEBI through BioPortal",
+            "institution": "National Center for Biomedical Ontology, Stanford",
+            "location": "USA"
+        }
+    ]
+}
+```
