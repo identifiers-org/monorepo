@@ -5,7 +5,9 @@ This Web Service implements [__identifiers.org__](http://identifiers.org) Compac
 # Running the Compact ID Resolution service
 The only requirement for running the _resolution service_ is having a working installation of [Docker](http://docker.com).
 
-It can be launched with the following command
+The docker image is called **identifiersorg/cloud-ws-resolver**, and it is part of [identifiers.org Docker Hub](https://hub.docker.com/r/identifiersorg/).
+
+The following command is an example on how to launch the _resolution service_
 
 > docker run -p 8080:8080 identifiersorg/cloud-ws-resolver
 
