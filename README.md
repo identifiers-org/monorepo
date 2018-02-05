@@ -36,3 +36,11 @@ For resolving *Compact_ID* to all the resources that are registered within [iden
     ]
 }
 ```
+
+In case you're interested in getting only a specific resource from the resolution service, you can use the following endpoint
+
+> http://resolver:8080/selector/Compact_ID
+
+Where _selector_ is used by the resolver for filtering out any other provider than the one specified, e.g. if, for the same _CHEBI:36927_, I wanted the resolver to give me only the EBI resource, I could do it submitting my _HTTP GET_ request like this
+
+> http://resolver:8080/ebi/CHEBI:36927
