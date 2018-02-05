@@ -60,3 +60,12 @@ the response would be
     ]
 }
 ```
+
+Successful requests will return an _HTTP OK_ (200) status, if the provided _Compact ID_ could not be resolved, an _HTTP NOT FOUND_ (404) would be sent back to the client, with some explanation on what happened, e.g. when querying with _Compact ID_ _newprefix:36927_, this is the response
+
+```json
+{
+    "errorMsg": "No providers found for Compact ID 'newprefix:36927'",
+    "resolvedResources": []
+}
+```
