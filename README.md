@@ -78,3 +78,5 @@ Something similar will happen when using the _selector_ endpoint, if the given r
     "resolvedResources": []
 }
 ```
+
+In the case of an internal error when attending a request, an _HTTP INTERNAL SERVER ERROR_ would be sent back to the client with, probably, some description of what could have happened.
