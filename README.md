@@ -69,3 +69,12 @@ Successful requests will return an _HTTP OK_ (200) status, if the provided _Comp
     "resolvedResources": []
 }
 ```
+
+Something similar will happen when using the _selector_ endpoint, if the given resource _selector_ does not exists, even if the _Compact ID_ exists and can be resolved, e.g. for _selector_ _moon_ and the same _Compact ID_ as before
+
+```json
+{
+    "errorMsg": "No providers found for Compact ID 'CHEBI:36927', selector 'moon'",
+    "resolvedResources": []
+}
+```
