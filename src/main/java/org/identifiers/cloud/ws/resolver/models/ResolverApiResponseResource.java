@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 
 /**
@@ -12,6 +14,7 @@ import java.io.Serializable;
  * This class represents a resolved resource, part of the response from the Resolver API
  */
 // TODO - REFACTOR OUT THIS ENTITY TO BE REUSED BY CLIENTS AS WELL
+    @JsonIgnoreProperties(ignoreUnknown = true)
 public class ResolverApiResponseResource implements Serializable {
 
     private String accessUrl;
