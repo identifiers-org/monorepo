@@ -39,6 +39,7 @@ public class ResolverApiModel {
                     resolverApiResponseResource.setLocation(resourceEntry.getLocation());
                     resolverApiResponseResource.setAccessUrl(resourceEntry
                             .getAccessURL().replace("{$id}", compactId.getId()));
+                    resolverApiResponseResource.setOfficial(resourceEntry.isOfficial());
                     return resolverApiResponseResource;
                 }).collect(Collectors.toList());
     }
