@@ -19,7 +19,8 @@ public class MetadataApiController {
     private MetadataApiController metadataApiController;
 
     @RequestMapping(value = "{compactId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getMetadataFor(@PathVariable String compactIdParameter) {
+    public @ResponseBody
+    ResponseEntity<?> getMetadataFor(@PathVariable("compactId") String compactIdParameter) {
         // TODO
         return new ResponseEntity<>(String.format("Thanks for the Compact ID '%s'", compactIdParameter), HttpStatus.OK);
     }
