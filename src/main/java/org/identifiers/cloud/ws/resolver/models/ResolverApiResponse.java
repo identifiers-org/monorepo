@@ -18,7 +18,7 @@ import java.util.List;
  * build
  */
 // TODO - REFACTOR OUT THIS ENTITY TO BE REUSED BY CLIENTS AS WELL
-@JsonIgnoreProperties(value = {"httpStatus"})
+@JsonIgnoreProperties(value = {"httpStatus"}, ignoreUnknown = true)
 public class ResolverApiResponse implements Serializable {
     private String errorMessage;
     private HttpStatus httpStatus = HttpStatus.OK;
