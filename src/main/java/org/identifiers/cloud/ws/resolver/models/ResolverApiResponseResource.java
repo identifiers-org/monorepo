@@ -17,36 +17,50 @@ public class ResolverApiResponseResource implements Serializable {
     private String info;
     private String institution;
     private String location;
+    private boolean official;
 
     public String getAccessUrl() {
         return accessUrl;
     }
 
-    public void setAccessUrl(String accessUrl) {
+    public ResolverApiResponseResource setAccessUrl(String accessUrl) {
         this.accessUrl = accessUrl;
+        return this;
     }
 
     public String getInfo() {
         return info;
     }
 
-    public void setInfo(String info) {
+    public ResolverApiResponseResource setInfo(String info) {
         this.info = info;
+        return this;
     }
 
     public String getInstitution() {
         return institution;
     }
 
-    public void setInstitution(String institution) {
+    public ResolverApiResponseResource setInstitution(String institution) {
         this.institution = institution;
+        return this;
     }
 
     public String getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public ResolverApiResponseResource setLocation(String location) {
         this.location = location;
+        return this;
+    }
+
+    public boolean isOfficial() {
+        return official;
+    }
+
+    public ResolverApiResponseResource setOfficial(boolean official) {
+        this.official = official;
+        return this;
     }
 }
