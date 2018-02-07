@@ -8,4 +8,6 @@ package org.identifiers.org.cloud.ws.metadata.controllers;
  * ---
  */
 public class MetadataApiController {
+
+    private MetadataApiController metadataApiController;
 }
