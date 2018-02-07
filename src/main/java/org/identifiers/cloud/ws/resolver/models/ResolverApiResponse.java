@@ -17,6 +17,7 @@ import java.util.List;
  * This may be the main Resolver API response object, let's see how it evolves over time, as the Resolver WS is being
  * build
  */
+// TODO - REFACTOR OUT THIS ENTITY TO BE REUSED BY CLIENTS AS WELL
 @JsonIgnoreProperties(value = {"httpStatus"})
 public class ResolverApiResponse implements Serializable {
     private String errorMessage;
@@ -27,23 +28,26 @@ public class ResolverApiResponse implements Serializable {
         return errorMessage;
     }
 
-    public void setErrorMessage(String errorMessage) {
+    public ResolverApiResponse setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
-    }
-
-    public List<ResolverApiResponseResource> getResolvedResources() {
-        return resolvedResources;
-    }
-
-    public void setResolvedResources(List<ResolverApiResponseResource> resolvedResources) {
-        this.resolvedResources = resolvedResources;
+        return this;
     }
 
     public HttpStatus getHttpStatus() {
         return httpStatus;
     }
 
-    public void setHttpStatus(HttpStatus httpStatus) {
+    public ResolverApiResponse setHttpStatus(HttpStatus httpStatus) {
         this.httpStatus = httpStatus;
+        return this;
+    }
+
+    public List<ResolverApiResponseResource> getResolvedResources() {
+        return resolvedResources;
+    }
+
+    public ResolverApiResponse setResolvedResources(List<ResolverApiResponseResource> resolvedResources) {
+        this.resolvedResources = resolvedResources;
+        return this;
     }
 }
