@@ -1,5 +1,7 @@
 package org.identifiers.org.cloud.ws.metadata.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,14 +15,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class MetadataApiController {
 
+    @Autowired
     private MetadataApiController metadataApiController;
-
-    public MetadataApiController(MetadataApiController metadataApiController) {
-        this.metadataApiController = metadataApiController;
-    }
 
     @RequestMapping(value = "{compactId}", method = RequestMethod.GET)
     public ResponseEntity<?> getMetadataFor(@PathVariable String compactIdParameter) {
         // TODO
+        return new ResponseEntity<>(String.format("Thanks for the Compact ID '%s'", compactIdParameter), HttpStatus.OK);
     }
 }
