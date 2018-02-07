@@ -1,6 +1,7 @@
 package org.identifiers.org.cloud.ws.metadata.controllers;
 
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -16,5 +17,10 @@ public class MetadataApiController {
 
     public MetadataApiController(MetadataApiController metadataApiController) {
         this.metadataApiController = metadataApiController;
+    }
+
+    @RequestMapping(value = "{compactId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getMetadataFor(@PathVariable String compactIdParameter) {
+        // TODO
     }
 }
