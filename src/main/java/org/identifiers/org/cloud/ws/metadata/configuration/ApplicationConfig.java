@@ -8,4 +8,5 @@ package org.identifiers.org.cloud.ws.metadata.configuration;
  * ---
  */
 public class ApplicationConfig {
+    // TODO - I may not need it because of the simplicity of this web service and the annotations
 }
