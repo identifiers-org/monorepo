@@ -4,3 +4,4 @@
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>	#
 #														#
 FROM identifiersorg/linux-java8
+LABEL maintainer="Manuel Bernal Llinares <mbdebian@gmail.com>"
