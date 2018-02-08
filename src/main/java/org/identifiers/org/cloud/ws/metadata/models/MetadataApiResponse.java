@@ -15,4 +15,31 @@ public class MetadataApiResponse {
     private String errorMessage;
     // Right now we focus on JSON-LD formatted metadata and we're not doing anything with it, so I keep it as a String
     private String metadata;
+
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
+    }
+
+    public MetadataApiResponse setHttpStatus(HttpStatus httpStatus) {
+        this.httpStatus = httpStatus;
+        return this;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public MetadataApiResponse setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+        return this;
+    }
+
+    public String getMetadata() {
+        return metadata;
+    }
+
+    public MetadataApiResponse setMetadata(String metadata) {
+        this.metadata = metadata;
+        return this;
+    }
 }
