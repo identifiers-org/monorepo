@@ -5,3 +5,7 @@
 #														#
 version: "3"
 services:
+    resolver:
+        image: identifiersorg/cloud-ws-resolver
+        ports:
+            - 8080:8080
