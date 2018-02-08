@@ -1,5 +1,7 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: metadata
@@ -8,4 +10,6 @@ package org.identifiers.org.cloud.ws.metadata.models;
  * ---
  */
 public class MetadataApiResponse {
+
+    private HttpStatus httpStatus = HttpStatus.OK;
 }
