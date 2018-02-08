@@ -39,4 +39,4 @@ app_structure:
 	@mvn package -DskipTests
 	@mkdir -p target/app/log
 	@mkdir -p target/app/tmp
-	@cp target/register-*.jar target/app/service.jar
+	@cp target/metadata-*.jar target/app/service.jar
