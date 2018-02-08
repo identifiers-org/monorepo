@@ -8,5 +8,5 @@ package org.identifiers.org.cloud.ws.metadata.models;
  * ---
  */
 public interface IdResolver {
-    ResolverApiResponse resolve(String compactIdParameter);
+    ResolverApiResponse resolve(String compactIdParameter) throws IdResolverException;
 }
