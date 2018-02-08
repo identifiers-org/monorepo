@@ -8,4 +8,6 @@ package org.identifiers.org.cloud.ws.metadata.models;
  * ---
  */
 public interface MetadataFetcher {
+
+    String fetchMetadataFor(String url);
 }
