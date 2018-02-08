@@ -9,5 +9,5 @@ package org.identifiers.org.cloud.ws.metadata.models;
  */
 public interface MetadataFetcher {
 
-    String fetchMetadataFor(String url);
+    String fetchMetadataFor(String url) throws MetadataFetcherException;
 }
