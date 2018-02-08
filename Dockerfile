@@ -5,3 +5,6 @@
 #														#
 FROM identifiersorg/linux-java8
 LABEL maintainer="Manuel Bernal Llinares <mbdebian@gmail.com>"
+
+# Prepare the application folder
+RUN mkdir -p /home/app
