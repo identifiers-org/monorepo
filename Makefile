@@ -10,3 +10,7 @@ docker_compose_development_file = docker-compose-development.yml
 springboot_development_profile = development
 
 # TODO default target
+
+clean:
+	@echo "<===|DEVOPS|===> [CLEAN] Running House Keeping tasks"
+	@mvn clean > /dev/null
