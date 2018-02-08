@@ -1,6 +1,9 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.http.HttpStatus;
+
+import java.io.Serializable;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -9,7 +12,8 @@ import org.springframework.http.HttpStatus;
  * Timestamp: 2018-02-07 11:36
  * ---
  */
-public class MetadataApiResponse {
+@JsonIgnoreProperties(value = {"httpStatus"})
+public class MetadataApiResponse implements Serializable {
 
     private HttpStatus httpStatus = HttpStatus.OK;
     private String errorMessage;
