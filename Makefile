@@ -14,3 +14,10 @@ springboot_development_profile = development
 clean:
 	@echo "<===|DEVOPS|===> [CLEAN] Running House Keeping tasks"
 	@mvn clean > /dev/null
+
+development_env_up:
+	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing development environment UP"
+	@docker-compose -f $(docker_compose_development_file) up -d
+	@# TODO Clean this way of referencing the target name in future iterations
+	@rm -f development_env_down
+	@touch development_env_up
