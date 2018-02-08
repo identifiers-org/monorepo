@@ -48,3 +48,5 @@ container_production_build: app_structure
 container_production_push: container_production_build
 	@echo "<===|DEVOPS|===> [PUBLISH]> Production container $(container_name)"
 	@docker push $(container_name)
+
+.PHONY: all clean development_run_tests app_structure container_production_build container_production_push
