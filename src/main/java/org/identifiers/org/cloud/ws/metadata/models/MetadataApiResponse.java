@@ -13,4 +13,6 @@ public class MetadataApiResponse {
 
     private HttpStatus httpStatus = HttpStatus.OK;
     private String errorMessage;
+    // Right now we focus on JSON-LD formatted metadata and we're not doing anything with it, so I keep it as a String
+    private String metadata;
 }
