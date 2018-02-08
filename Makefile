@@ -6,3 +6,4 @@
 
 # Container name
 container_name = identifiersorg/cloud-ws-metadata
+docker_compose_development_file = docker-compose-development.yml
