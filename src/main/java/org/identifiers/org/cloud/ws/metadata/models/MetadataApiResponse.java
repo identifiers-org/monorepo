@@ -12,4 +12,5 @@ import org.springframework.http.HttpStatus;
 public class MetadataApiResponse {
 
     private HttpStatus httpStatus = HttpStatus.OK;
+    private String errorMessage;
 }
