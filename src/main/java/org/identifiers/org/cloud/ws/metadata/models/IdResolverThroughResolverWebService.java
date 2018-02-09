@@ -84,8 +84,9 @@ public class IdResolverThroughResolverWebService implements IdResolver {
                     "- 'HTTP Status %d, %s'",
                     compactIdParameter,
                     response.getStatusCodeValue(),
-                    response.getBody()));
+                    response.getBody().getErrorMessage()));
         }
+        // Otherwise, everything went ok
         return null;
     }
 }
