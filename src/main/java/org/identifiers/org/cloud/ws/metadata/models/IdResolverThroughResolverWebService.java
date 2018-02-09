@@ -64,9 +64,9 @@ public class IdResolverThroughResolverWebService implements IdResolver {
         }
     }
 
-    @Value("${WS_METADATA_CONFIG_RESOLVER_HOST}")
+    @Value("${org.identifiers.cloud.ws.metadata.resolver.host}")
     private String wsResolverHost;
-    @Value("${WS_METADATA_CONFIG_RESOLVER_PORT}")
+    @Value("${org.identifiers.cloud.ws.metadata.resolver.port}")
     private int wsResolverPort;
 
     @Override
