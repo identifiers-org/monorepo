@@ -2,6 +2,7 @@ package org.identifiers.org.cloud.ws.metadata.models;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
@@ -39,7 +40,9 @@ public class IdResolverThroughResolverWebService implements IdResolver {
         retryTemplate.setBackOffPolicy(backOffPolicy);
     }
 
+    @Value("${WS_METADATA_CONFIG_RESOLVER_HOST}")
     private String wsResolverHost;
+    @Value("${WS_METADATA_CONFIG_RESOLVER_PORT}")
     private int wsResolverPort;
 
     @Override
