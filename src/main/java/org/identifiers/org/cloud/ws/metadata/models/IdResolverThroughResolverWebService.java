@@ -89,6 +89,6 @@ public class IdResolverThroughResolverWebService implements IdResolver {
                     response.getBody().getErrorMessage()));
         }
         // Otherwise, everything went ok
-        return null;
+        return response.getBody().getResolvedResources();
     }
 }
