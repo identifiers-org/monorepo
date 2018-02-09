@@ -10,6 +10,9 @@ import java.util.List;
  * ---
  */
 public class IdResolverThroughResolverWebService implements IdResolver {
+    // Re-try pattern
+    public static final int WS_REQUEST_RETRY_MAX_ATTEMPTS = 12;
+    
     @Override
     public List<ResolverApiResponseResource> resolve(String compactIdParameter) throws IdResolverException {
         // TODO
