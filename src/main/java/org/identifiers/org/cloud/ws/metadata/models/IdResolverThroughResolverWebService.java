@@ -51,6 +51,8 @@ public class IdResolverThroughResolverWebService implements IdResolver {
     public List<ResolverApiResponseResource> resolve(String compactIdParameter) throws IdResolverException {
         // TODO - Again, here I'm using the Resolver Web Service, for this prototype iteration is fine, but we need to
         // TODO - keep this in mind for future iterations of the software lifecycle
+        String queryUrl = String.format("http://%s:%d/%s", wsResolverHost, wsResolverPort, compactIdParameter);
+        logger.debug("Querying resolver with '{}'", queryUrl);
         return null;
     }
 }
