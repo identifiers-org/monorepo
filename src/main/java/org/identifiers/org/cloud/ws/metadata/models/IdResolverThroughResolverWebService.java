@@ -8,6 +8,7 @@ import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -53,6 +54,7 @@ public class IdResolverThroughResolverWebService implements IdResolver {
         // TODO - keep this in mind for future iterations of the software lifecycle
         String queryUrl = String.format("http://%s:%d/%s", wsResolverHost, wsResolverPort, compactIdParameter);
         logger.debug("Querying resolver with '{}'", queryUrl);
+        RestTemplate restTemplate = new RestTemplate();
         return null;
     }
 }
