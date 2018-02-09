@@ -12,4 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MetadataApiModel {
 
+    public MetadataApiResponse getMetadataFor(String compactId) {
+        // TODO
+    }
 }
