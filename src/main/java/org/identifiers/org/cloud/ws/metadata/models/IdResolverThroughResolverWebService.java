@@ -49,7 +49,8 @@ public class IdResolverThroughResolverWebService implements IdResolver {
 
     @Override
     public List<ResolverApiResponseResource> resolve(String compactIdParameter) throws IdResolverException {
-        // TODO
+        // TODO - Again, here I'm using the Resolver Web Service, for this prototype iteration is fine, but we need to
+        // TODO - keep this in mind for future iterations of the software lifecycle
         return null;
     }
 }
