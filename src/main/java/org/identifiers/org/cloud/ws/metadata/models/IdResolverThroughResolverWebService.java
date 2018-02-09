@@ -2,9 +2,11 @@ package org.identifiers.org.cloud.ws.metadata.models;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -15,6 +17,8 @@ import java.util.List;
  * Timestamp: 2018-02-08 12:02
  * ---
  */
+@Component
+@Scope("prototype")
 public class IdResolverThroughResolverWebService implements IdResolver {
     private static Logger logger = LoggerFactory.getLogger(IdResolverThroughResolverWebService.class);
 
