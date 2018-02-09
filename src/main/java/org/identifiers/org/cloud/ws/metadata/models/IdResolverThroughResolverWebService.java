@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
@@ -75,6 +76,7 @@ public class IdResolverThroughResolverWebService implements IdResolver {
         logger.debug("Querying resolver with '{}'", queryUrl);
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(new RestTemplateErrorHandler());
+        ResponseEntity<ResolverApiResponse> response = restTemplate.getForEntity(queryUrl, ResolverApiResponse.class);
         
         return null;
     }
