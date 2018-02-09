@@ -79,6 +79,8 @@ public class IdResolverThroughResolverWebService implements IdResolver {
         restTemplate.setErrorHandler(new RestTemplateErrorHandler());
         ResponseEntity<ResolverApiResponse> response = restTemplate.getForEntity(queryUrl, ResolverApiResponse.class);
         if (response.getStatusCode() != HttpStatus.OK) {
+            // TODO - I may need to deal with those cases where whatever is the content coming back, cannot be
+            // TODO - deserialized to an instance of ResolverApiResponse
             // We report back the error
             throw new IdResolverException(String.format("ERROR while trying to resolve Compact ID '%s' " +
                     "- 'HTTP Status %d, %s'",
