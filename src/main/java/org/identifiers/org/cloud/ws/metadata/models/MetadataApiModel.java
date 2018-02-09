@@ -1,6 +1,5 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,8 +12,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class MetadataApiModel {
 
-    @Autowired
     private IdResolver idResolver;
+
+    public MetadataApiModel(IdResolver idResolver) {
+        this.idResolver = idResolver;
+    }
 
     public MetadataApiResponse getMetadataFor(String compactId) {
         // TODO
