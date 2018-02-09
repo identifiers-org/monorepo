@@ -74,6 +74,8 @@ public class IdResolverThroughResolverWebService implements IdResolver {
         String queryUrl = String.format("http://%s:%d/%s", wsResolverHost, wsResolverPort, compactIdParameter);
         logger.debug("Querying resolver with '{}'", queryUrl);
         RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setErrorHandler(new RestTemplateErrorHandler());
+        
         return null;
     }
 }
