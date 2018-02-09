@@ -40,6 +40,8 @@ public class IdResolverThroughResolverWebService implements IdResolver {
         retryTemplate.setBackOffPolicy(backOffPolicy);
     }
 
+    // TODO - Error handler for the request
+
     @Value("${WS_METADATA_CONFIG_RESOLVER_HOST}")
     private String wsResolverHost;
     @Value("${WS_METADATA_CONFIG_RESOLVER_PORT}")
