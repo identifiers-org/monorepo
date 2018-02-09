@@ -12,6 +12,7 @@ import java.util.List;
 public class IdResolverThroughResolverWebService implements IdResolver {
     @Override
     public List<ResolverApiResponseResource> resolve(String compactIdParameter) throws IdResolverException {
+        // TODO
         return null;
     }
 }
