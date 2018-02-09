@@ -14,5 +14,10 @@ public class MetadataApiModel {
 
     public MetadataApiResponse getMetadataFor(String compactId) {
         // TODO
+        // TODO - Resolve the Compact ID
+        // TODO - Select the provider
+        // TODO - Extract the metadata
+        // TODO - return the response
+        return null;
     }
 }
