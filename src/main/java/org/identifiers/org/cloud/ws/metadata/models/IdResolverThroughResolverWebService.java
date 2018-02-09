@@ -88,7 +88,7 @@ public class IdResolverThroughResolverWebService implements IdResolver {
                     "due to the following error '%s'",
                     compactIdParameter,
                     queryUrl,
-                    e.getMessage())
+                    e.getMessage());
             logger.error(errorMessage);
             throw new IdResolverException(errorMessage);
         }
