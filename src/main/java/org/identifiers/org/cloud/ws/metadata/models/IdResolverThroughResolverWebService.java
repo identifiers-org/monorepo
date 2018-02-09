@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
@@ -77,7 +78,14 @@ public class IdResolverThroughResolverWebService implements IdResolver {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(new RestTemplateErrorHandler());
         ResponseEntity<ResolverApiResponse> response = restTemplate.getForEntity(queryUrl, ResolverApiResponse.class);
-        
+        if (response.getStatusCode() != HttpStatus.OK) {
+            // We report back the error
+            throw new IdResolverException(String.format("ERROR while trying to resolve Compact ID '%s' " +
+                    "- 'HTTP Status %d, %s'",
+                    compactIdParameter,
+                    response.getStatusCodeValue(),
+                    response.getBody()));
+        }
         return null;
     }
 }
