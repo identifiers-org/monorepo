@@ -13,9 +13,11 @@ import org.springframework.stereotype.Component;
 public class MetadataApiModel {
 
     private IdResolver idResolver;
+    private MetadataFetcher metadataFetcher;
 
-    public MetadataApiModel(IdResolver idResolver) {
+    public MetadataApiModel(IdResolver idResolver, MetadataFetcher metadataFetcher) {
         this.idResolver = idResolver;
+        this.metadataFetcher = metadataFetcher;
     }
 
     public MetadataApiResponse getMetadataFor(String compactId) {
