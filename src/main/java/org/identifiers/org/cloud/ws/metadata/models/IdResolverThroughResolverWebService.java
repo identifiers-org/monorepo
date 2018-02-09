@@ -4,12 +4,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -42,6 +45,22 @@ public class IdResolverThroughResolverWebService implements IdResolver {
     }
 
     // TODO - Error handler for the request
+    class RestTemplateErrorHandler implements ResponseErrorHandler {
+        ClientHttpResponse clientHttpResponse;
+
+        @Override
+        public boolean hasError(ClientHttpResponse clientHttpResponse) throws IOException {
+            // We're going to say that it has no error so we can't handle this properly
+            return false;
+        }
+
+        @Override
+        public void handleError(ClientHttpResponse clientHttpResponse) throws IOException {
+            logger.error("The following error came back from the Resolver, HTTP Status #{}, error content '{}'",
+                    clientHttpResponse.getRawStatusCode(),
+                    clientHttpResponse.getStatusText());
+        }
+    }
 
     @Value("${WS_METADATA_CONFIG_RESOLVER_HOST}")
     private String wsResolverHost;
