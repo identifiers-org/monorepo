@@ -75,9 +75,23 @@ public class IdResolverThroughResolverWebService implements IdResolver {
         // TODO - keep this in mind for future iterations of the software lifecycle
         String queryUrl = String.format("http://%s:%d/%s", wsResolverHost, wsResolverPort, compactIdParameter);
         logger.debug("Querying resolver with '{}'", queryUrl);
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setErrorHandler(new RestTemplateErrorHandler());
-        ResponseEntity<ResolverApiResponse> response = restTemplate.getForEntity(queryUrl, ResolverApiResponse.class);
+        ResponseEntity<ResolverApiResponse> response = null;
+        try {
+            response = retryTemplate.execute(retryContext -> {
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.setErrorHandler(new RestTemplateErrorHandler());
+                return restTemplate.getForEntity(queryUrl, ResolverApiResponse.class);
+            });
+        } catch (RuntimeException e) {
+            String errorMessage = String.format("Resolution of Compact ID '%s' was NOT POSSIBLE " +
+                    "through the Resolution Service at '%s', " +
+                    "due to the following error '%s'",
+                    compactIdParameter,
+                    queryUrl,
+                    e.getMessage())
+            logger.error(errorMessage);
+            throw new IdResolverException(errorMessage);
+        }
         if (response.getStatusCode() != HttpStatus.OK) {
             // TODO - I may need to deal with those cases where whatever is the content coming back, cannot be
             // TODO - deserialized to an instance of ResolverApiResponse
