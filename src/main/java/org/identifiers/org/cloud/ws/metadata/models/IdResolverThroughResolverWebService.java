@@ -35,6 +35,9 @@ public class IdResolverThroughResolverWebService implements IdResolver {
         retryTemplate.setBackOffPolicy(backOffPolicy);
     }
 
+    private String wsResolverHost;
+    private int wsResolverPort;
+
     @Override
     public List<ResolverApiResponseResource> resolve(String compactIdParameter) throws IdResolverException {
         // TODO
