@@ -31,4 +31,10 @@ public class IdResolverTest {
                 idResolver.resolve(compactId).isEmpty(),
                 is(false));
     }
+
+    @Test(expected = IdResolverException.class)
+    public void testInvalidId() {
+        String compactId = "nowaythisprefixexists:36927";
+        idResolver.resolve(compactId);
+    }
 }
