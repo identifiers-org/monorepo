@@ -2,6 +2,7 @@ package org.identifiers.org.cloud.ws.metadata.models;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.retry.support.RetryTemplate;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class IdResolverThroughResolverWebService implements IdResolver {
     public static final int WS_REQUEST_RETRY_MAX_ATTEMPTS = 12;
     public static final int WS_REQUEST_RETRY_BACK_OFF_PERIOD = 1500;    // 1.5 seconds
 
-    private static final RetryTemplate
+    private static final RetryTemplate retryTemplate;
 
     @Override
     public List<ResolverApiResponseResource> resolve(String compactIdParameter) throws IdResolverException {
