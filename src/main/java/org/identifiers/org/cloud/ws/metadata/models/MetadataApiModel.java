@@ -2,6 +2,8 @@ package org.identifiers.org.cloud.ws.metadata.models;
 
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: metadata
@@ -23,6 +25,7 @@ public class MetadataApiModel {
     public MetadataApiResponse getMetadataFor(String compactId) {
         // TODO
         // TODO - Resolve the Compact ID
+        List<ResolverApiResponseResource> resources = idResolver.resolve(compactId);
         // TODO - Select the provider
         // TODO - Extract the metadata
         // TODO - return the response
