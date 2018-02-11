@@ -23,7 +23,6 @@ public class MetadataApiModel {
     }
 
     public MetadataApiResponse getMetadataFor(String compactId) {
-        // TODO
         // TODO - Resolve the Compact ID
         List<ResolverApiResponseResource> resources = idResolver.resolve(compactId);
         // TODO - Select the provider
