@@ -28,7 +28,7 @@ public class MetadataFetcherTest {
         // TODO - Possible future extension here to make it more exhaustive
         // TODO - This unit test is too dependant on that particular URL to be up, as soon as this is working, I may
         // TODO - choose to deactivate this test
-        String url = "https://www.omicsdi.org/dataset/arrayexpress-repository/E-GEOD-37196";
+        String url = "https://reactome.org/content/detail/R-HSA-177929";
         String metadata = metadataFetcher.fetchMetadataFor(url);
         assertThat(String.format("URL '%s' contains VALID metadata", url), metadata.isEmpty(), is(false));
     }

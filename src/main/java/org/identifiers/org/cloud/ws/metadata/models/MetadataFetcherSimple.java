@@ -30,8 +30,10 @@ public class MetadataFetcherSimple implements MetadataFetcher {
     public String fetchMetadataFor(String url) throws MetadataFetcherException {
         // TODO - Fetch URL content
         Document document = null;
+        // TODO - First problem - Many pages produce the metadata content via Javascript
+        // TODO - Second problem - When a URL is HTTPS, very often the certificate is considered not valid
         try {
-            document = Jsoup.connect(url).get();
+            document = Jsoup.connect(url).validateTLSCertificates(false).get();
         } catch (IOException e) {
             throw new MetadataFetcherException(String.format("METADATA FETCH ERROR for URL '%s', there was a problem while fetching its content", url));
         }
@@ -41,6 +43,11 @@ public class MetadataFetcherSimple implements MetadataFetcher {
         Elements jsonldElements = document.head().select(jsonldSelector);
         if (jsonldElements.size() > 1) {
             String errorMessage = String.format("MULTIPLE JSON-LD entries found in the header of URL '%s', entries: %s", url, jsonldElements.toString());
+            logger.error(errorMessage);
+            throw new MetadataFetcherException(errorMessage);
+        }
+        if (jsonldElements.isEmpty()) {
+            String errorMessage = String.format("JSON-LD formatted METADATA NOT FOUND for URL '%s', content \n'%s'", url, document.head().toString());
             logger.error(errorMessage);
             throw new MetadataFetcherException(errorMessage);
         }
