@@ -52,7 +52,7 @@ public class MetadataFetcherSimple implements MetadataFetcher {
             throw new MetadataFetcherException(errorMessage);
         }
         // TODO - Check on schema.org context
-        String metadata = jsonldElements.get(0).text();
+        String metadata = jsonldElements.get(0).data();
         logger.debug("Trying to process Metadata content '{}'", metadata);
         JsonNode metadataRootNode = null;
         try {
@@ -72,7 +72,7 @@ public class MetadataFetcherSimple implements MetadataFetcher {
             logger.error(errorMessage);
             throw new MetadataFetcherException(errorMessage);
         }
-        String contexts = String.join(",", contextParents.stream().map(JsonNode::asText).collect(Collectors.toList()));
+        String contexts = String.join(",", contextParents.stream().map(jsonNode -> jsonNode.get("@context").asText()).collect(Collectors.toSet()));
         logger.info("SUCCESSFUL metadata extraction from URL '{}', METADATA '{}', found contexts '[{}]'", url, metadata, contexts);
         return metadata;
     }
