@@ -19,6 +19,9 @@ public class MetadataFetcherWithJavascript implements MetadataFetcher {
 
     @Override
     public String fetchMetadataFor(String url) throws MetadataFetcherException {
+        // TODO - Fetch the URL content
+        // TODO - Look for JSON-LD
+        // TODO - Check on used contexts
         return null;
     }
 }
