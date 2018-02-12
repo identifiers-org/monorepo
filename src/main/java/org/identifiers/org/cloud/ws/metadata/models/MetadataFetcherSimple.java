@@ -1,5 +1,7 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -31,7 +33,7 @@ public class MetadataFetcherSimple implements MetadataFetcher {
         } catch (IOException e) {
             throw new MetadataFetcherException(String.format("METADATA FETCH ERROR for URL '%s', there was a problem while fetching its content", url));
         }
-        logger.debug("Retrive content for URL '{}', titled '{}'", url, document.title());
+        logger.debug("Retrieved content from URL '{}', titled '{}'", url, document.title());
         // TODO - Look for JSON-LD
         String jsonldSelector = "script[type='application/ld+json'";
         Elements jsonldElements = document.head().select(jsonldSelector);
@@ -41,6 +43,16 @@ public class MetadataFetcherSimple implements MetadataFetcher {
             throw new MetadataFetcherException(errorMessage);
         }
         // TODO - Check on schema.org context
+        String metadata = jsonldElements.get(0).text();
+        logger.debug("Trying to process Metadata content '{}'", metadata);
+        JsonNode metadataRootNode = null;
+        try {
+            metadataRootNode = new ObjectMapper().readTree(metadata);
+        } catch (IOException e) {
+            String errorMessage = String.format("JSON-LD PROCESSING ERROR for URL '%s', error '%s'", url, e.getMessage());
+            logger.error(errorMessage);
+            throw new MetadataFetcherException(errorMessage);
+        }
         return null;
     }
 }
