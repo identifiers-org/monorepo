@@ -30,7 +30,7 @@ public class MetadataFetcherWithJavascript implements MetadataFetcher {
 
     @Override
     public String fetchMetadataFor(String url) throws MetadataFetcherException {
-        // TODO - Fetch the URL content
+        // Fetch the URL content
         WebClient webClient = new WebClient(BrowserVersion.CHROME);
         webClient.getOptions().setThrowExceptionOnScriptError(false);
         webClient.getOptions().setUseInsecureSSL(true);
@@ -42,7 +42,7 @@ public class MetadataFetcherWithJavascript implements MetadataFetcher {
             throw new MetadataFetcherException(String.format("METADATA FETCH ERROR for URL '%s', there was a problem while fetching its content", url));
         }
         logger.debug("Retrieved content from URL '{}', titled '{}'", url, page.getTitleText());
-        // TODO - Look for JSON-LD
+        // Look for JSON-LD
         String jsonldSelector = "script[type='application/ld+json']";
         DomNodeList<DomNode> jsonldDomNodes = page.querySelectorAll(jsonldSelector);
         if (jsonldDomNodes.size() > 1) {
@@ -55,7 +55,7 @@ public class MetadataFetcherWithJavascript implements MetadataFetcher {
             logger.error(errorMessage);
             throw new MetadataFetcherException(errorMessage);
         }
-        // TODO - Check on used contexts
+        // Check on used contexts
         String metadata = jsonldDomNodes.get(0).getFirstChild().getTextContent();
         logger.debug("Trying to process Metadata content '{}'", metadata);
         JsonNode metadataRootNode = null;
