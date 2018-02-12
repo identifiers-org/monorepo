@@ -1,5 +1,8 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,6 +13,8 @@ import java.util.stream.Collectors;
  * Timestamp: 2018-02-12 11:21
  * ---
  */
+@Component
+@Scope("prototype")
 public class IdResourceSelectorSimpleOfficial implements IdResourceSelector {
     @Override
     public ResolverApiResponseResource selectResource(List<ResolverApiResponseResource> resources) throws IdResourceSelectorException {
