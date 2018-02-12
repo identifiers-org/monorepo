@@ -17,5 +17,8 @@ public class IdResourceSelectorSimpleOfficial implements IdResourceSelector {
         if (selected.isEmpty()) {
             throw new IdResourceSelectorException("NO ID RESOURCE could be selected for mining metadata from (select official resource selector)");
         }
+        if (selected.size() > 1) {
+            throw new IdResourceSelectorException("THERE IS MORE THAN ONE official resource for the given list of ID resources");
+        }
     }
 }
