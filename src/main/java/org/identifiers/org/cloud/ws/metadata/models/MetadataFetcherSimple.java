@@ -7,6 +7,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
  */
 @Component
 @Scope("prototype")
+@Profile("never")
 public class MetadataFetcherSimple implements MetadataFetcher {
     private static Logger logger = LoggerFactory.getLogger(MetadataFetcherSimple.class);
 
