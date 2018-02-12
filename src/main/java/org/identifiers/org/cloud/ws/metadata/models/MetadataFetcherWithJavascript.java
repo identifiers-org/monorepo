@@ -37,6 +37,7 @@ public class MetadataFetcherWithJavascript implements MetadataFetcher {
         HtmlPage page = null;
         try {
             page = webClient.getPage(url);
+            // NOTE - Magic number here! OMG! Maybe change it in the future, if it makes sense
             webClient.waitForBackgroundJavaScript(10000);
         } catch (IOException e) {
             throw new MetadataFetcherException(String.format("METADATA FETCH ERROR for URL '%s', there was a problem while fetching its content", url));
