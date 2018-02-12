@@ -47,7 +47,7 @@ public class MetadataApiModel {
             response.setHttpStatus(HttpStatus.NOT_FOUND);
             return response;
         }
-        // TODO - Select the provider
+        // Select the provider
         ResolverApiResponseResource selectedResource = null;
         try {
             selectedResource = idResourceSelector.selectResource(resources);
