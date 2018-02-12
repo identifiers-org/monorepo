@@ -32,8 +32,8 @@ public class MetadataFetcherSimple implements MetadataFetcher {
     public String fetchMetadataFor(String url) throws MetadataFetcherException {
         // Fetch URL content
         Document document = null;
-        // TODO - First problem - Many pages produce the metadata content via Javascript
-        // TODO - Second problem - When a URL is HTTPS, very often the certificate is considered not valid
+        // TODO   - First problem - Many pages produce the metadata content via Javascript
+        // (SOLVED) Second problem - When a URL is HTTPS, very often the certificate is considered not valid
         try {
             document = Jsoup.connect(url).validateTLSCertificates(false).get();
         } catch (IOException e) {
