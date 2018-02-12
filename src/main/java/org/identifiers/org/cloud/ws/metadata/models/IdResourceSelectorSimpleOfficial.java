@@ -20,5 +20,6 @@ public class IdResourceSelectorSimpleOfficial implements IdResourceSelector {
         if (selected.size() > 1) {
             throw new IdResourceSelectorException("THERE IS MORE THAN ONE official resource for the given list of ID resources");
         }
+        return selected.get(0);
     }
 }
