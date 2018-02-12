@@ -53,6 +53,6 @@ public class MetadataFetcherSimple implements MetadataFetcher {
             logger.error(errorMessage);
             throw new MetadataFetcherException(errorMessage);
         }
-        return null;
+        return metadata;
     }
 }
