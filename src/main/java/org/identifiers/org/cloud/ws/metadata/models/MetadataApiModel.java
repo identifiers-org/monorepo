@@ -53,6 +53,13 @@ public class MetadataApiModel {
             selectedResource = idResourceSelector.selectResource(resources);
         } catch (IdResourceSelectorException e) {
             // TODO
+            response.setErrorMessage(String.format("FAILED to fetch metadata for Compact ID '%s', " +
+                            "because '%s'",
+                    compactId,
+                    e.getMessage()));
+            // TODO I need to refine the error reporting here to correctly flag errors as client or server side
+            response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            return response;
         }
         // TODO - Extract the metadata
         // TODO - return the response
