@@ -1,5 +1,7 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
+import java.util.List;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: metadata
@@ -8,5 +10,5 @@ package org.identifiers.org.cloud.ws.metadata.models;
  * ---
  */
 public interface IdResourceSelector {
-    
+    ResolverApiResponseResource selectResource(List<ResolverApiResponseResource> resources);
 }
