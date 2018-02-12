@@ -15,6 +15,9 @@ import org.springframework.stereotype.Component;
 public class MetadataFetcherSimple implements MetadataFetcher {
     @Override
     public String fetchMetadataFor(String url) throws MetadataFetcherException {
+        // TODO - Fetch URL content
+        // TODO - Look for JSON-LD
+        // TODO - Check on schema.org context
         return null;
     }
 }
