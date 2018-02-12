@@ -2,6 +2,7 @@ package org.identifiers.org.cloud.ws.metadata.models;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.DomNodeList;
@@ -30,10 +31,13 @@ public class MetadataFetcherWithJavascript implements MetadataFetcher {
     @Override
     public String fetchMetadataFor(String url) throws MetadataFetcherException {
         // TODO - Fetch the URL content
-        WebClient webClient = new WebClient();
+        WebClient webClient = new WebClient(BrowserVersion.CHROME);
+        webClient.getOptions().setThrowExceptionOnScriptError(false);
+        webClient.getOptions().setUseInsecureSSL(true);
         HtmlPage page = null;
         try {
             page = webClient.getPage(url);
+            webClient.waitForBackgroundJavaScript(10000);
         } catch (IOException e) {
             throw new MetadataFetcherException(String.format("METADATA FETCH ERROR for URL '%s', there was a problem while fetching its content", url));
         }
