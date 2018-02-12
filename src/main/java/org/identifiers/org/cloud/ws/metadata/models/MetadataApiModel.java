@@ -28,6 +28,8 @@ public class MetadataApiModel {
         List<ResolverApiResponseResource> resources = new ArrayList<>();
         try {
             idResolver.resolve(compactId);
+        } catch (IdResolverException e) {
+            // TODO
         }
         // TODO - Select the provider
         // TODO - Extract the metadata
