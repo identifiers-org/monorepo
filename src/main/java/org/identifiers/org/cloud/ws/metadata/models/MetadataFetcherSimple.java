@@ -37,7 +37,7 @@ public class MetadataFetcherSimple implements MetadataFetcher {
         }
         logger.debug("Retrieved content from URL '{}', titled '{}'", url, document.title());
         // TODO - Look for JSON-LD
-        String jsonldSelector = "script[type='application/ld+json'";
+        String jsonldSelector = "script[type='application/ld+json']";
         Elements jsonldElements = document.head().select(jsonldSelector);
         if (jsonldElements.size() > 1) {
             String errorMessage = String.format("MULTIPLE JSON-LD entries found in the header of URL '%s', entries: %s", url, jsonldElements.toString());
