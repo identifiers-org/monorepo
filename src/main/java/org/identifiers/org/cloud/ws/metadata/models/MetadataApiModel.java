@@ -47,6 +47,12 @@ public class MetadataApiModel {
             response.setHttpStatus(HttpStatus.NOT_FOUND);
         }
         // TODO - Select the provider
+        ResolverApiResponseResource selectedResource = null;
+        try {
+            selectedResource = idResourceSelector.selectResource(resources);
+        } catch (IdResourceSelectorException e) {
+            // TODO
+        }
         // TODO - Extract the metadata
         // TODO - return the response
         return response;
