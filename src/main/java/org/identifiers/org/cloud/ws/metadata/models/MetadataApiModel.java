@@ -29,7 +29,7 @@ public class MetadataApiModel {
         MetadataApiResponse response = new MetadataApiResponse();
         // Resolve the Compact ID
         try {
-            idResolver.resolve(compactId);
+            resources = idResolver.resolve(compactId);
         } catch (IdResolverException e) {
             response.setErrorMessage(String.format("FAILED to fetch metadata for Compact ID '%s', " +
                     "because '%s'",
@@ -37,6 +37,7 @@ public class MetadataApiModel {
                     e.getMessage()));
             // TODO I need to refine the error reporting here to correctly flag errors as client or server side
             response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            return response;
         }
         // TODO - Select the provider
         // TODO - Extract the metadata
