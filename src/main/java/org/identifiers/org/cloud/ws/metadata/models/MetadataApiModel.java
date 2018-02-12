@@ -18,10 +18,12 @@ public class MetadataApiModel {
 
     private IdResolver idResolver;
     private MetadataFetcher metadataFetcher;
+    private IdResourceSelector idResourceSelector;
 
-    public MetadataApiModel(IdResolver idResolver, MetadataFetcher metadataFetcher) {
+    public MetadataApiModel(IdResolver idResolver, MetadataFetcher metadataFetcher, IdResourceSelector idResourceSelector) {
         this.idResolver = idResolver;
         this.metadataFetcher = metadataFetcher;
+        this.idResourceSelector = idResourceSelector;
     }
 
     public MetadataApiResponse getMetadataFor(String compactId) {
