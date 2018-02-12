@@ -25,9 +25,9 @@ public class MetadataApiModel {
     }
 
     public MetadataApiResponse getMetadataFor(String compactId) {
-        // TODO - Resolve the Compact ID
         List<ResolverApiResponseResource> resources = new ArrayList<>();
         MetadataApiResponse response = new MetadataApiResponse();
+        // Resolve the Compact ID
         try {
             idResolver.resolve(compactId);
         } catch (IdResolverException e) {
