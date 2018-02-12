@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class MetadataFetcherWithJavascript implements MetadataFetcher {
     private Logger logger = LoggerFactory.getLogger(MetadataFetcherWithJavascript.class);
-    
+
     @Override
     public String fetchMetadataFor(String url) throws MetadataFetcherException {
         return null;
