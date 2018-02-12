@@ -10,5 +10,5 @@ import java.util.List;
  * ---
  */
 public interface IdResourceSelector {
-    ResolverApiResponseResource selectResource(List<ResolverApiResponseResource> resources);
+    ResolverApiResponseResource selectResource(List<ResolverApiResponseResource> resources) throws IdResourceSelectorException;
 }
