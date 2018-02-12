@@ -45,6 +45,7 @@ public class MetadataApiModel {
             response.setErrorMessage(String.format("FAILED to fetch metadata for Compact ID '%s' " +
                     "because NO RESOURCES COULD BE FOUND", compactId));
             response.setHttpStatus(HttpStatus.NOT_FOUND);
+            return response;
         }
         // TODO - Select the provider
         ResolverApiResponseResource selectedResource = null;
