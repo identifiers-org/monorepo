@@ -48,6 +48,7 @@ public class MetadataFetcherWithJavascript implements MetadataFetcher {
             throw new MetadataFetcherException(errorMessage);
         }
         // TODO - Check on used contexts
+        String metadata = jsonldDomNodes.get(0).getFirstChild().getTextContent();
         return null;
     }
 }
