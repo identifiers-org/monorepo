@@ -28,7 +28,7 @@ public class MetadataFetcherSimple implements MetadataFetcher {
 
     @Override
     public String fetchMetadataFor(String url) throws MetadataFetcherException {
-        // TODO - Fetch URL content
+        // Fetch URL content
         Document document = null;
         // TODO - First problem - Many pages produce the metadata content via Javascript
         // TODO - Second problem - When a URL is HTTPS, very often the certificate is considered not valid
@@ -38,7 +38,7 @@ public class MetadataFetcherSimple implements MetadataFetcher {
             throw new MetadataFetcherException(String.format("METADATA FETCH ERROR for URL '%s', there was a problem while fetching its content", url));
         }
         logger.debug("Retrieved content from URL '{}', titled '{}'", url, document.title());
-        // TODO - Look for JSON-LD
+        // Look for JSON-LD
         String jsonldSelector = "script[type='application/ld+json']";
         Elements jsonldElements = document.head().select(jsonldSelector);
         if (jsonldElements.size() > 1) {
@@ -51,7 +51,7 @@ public class MetadataFetcherSimple implements MetadataFetcher {
             logger.error(errorMessage);
             throw new MetadataFetcherException(errorMessage);
         }
-        // TODO - Check on schema.org context
+        // Check on schema.org context
         String metadata = jsonldElements.get(0).data();
         logger.debug("Trying to process Metadata content '{}'", metadata);
         JsonNode metadataRootNode = null;
