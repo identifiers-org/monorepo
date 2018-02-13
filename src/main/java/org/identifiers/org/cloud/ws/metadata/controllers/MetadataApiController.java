@@ -1,6 +1,7 @@
 package org.identifiers.org.cloud.ws.metadata.controllers;
 
 import org.identifiers.org.cloud.ws.metadata.models.MetadataApiModel;
+import org.identifiers.org.cloud.ws.metadata.models.MetadataApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class MetadataApiController {
     public @ResponseBody
     ResponseEntity<?> getMetadataFor(@PathVariable("compactId") String compactIdParameter) {
         // TODO
+        MetadataApiResponse response = metadataApiModel.getMetadataFor(compactIdParameter);
         return new ResponseEntity<>(String.format("Thanks for the Compact ID '%s'", compactIdParameter), HttpStatus.OK);
     }
 }
