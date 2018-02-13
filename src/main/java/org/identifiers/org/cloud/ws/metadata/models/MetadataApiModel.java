@@ -52,7 +52,6 @@ public class MetadataApiModel {
         try {
             selectedResource = idResourceSelector.selectResource(resources);
         } catch (IdResourceSelectorException e) {
-            // TODO
             response.setErrorMessage(String.format("FAILED to fetch metadata for Compact ID '%s', " +
                             "because '%s'",
                     compactId,
