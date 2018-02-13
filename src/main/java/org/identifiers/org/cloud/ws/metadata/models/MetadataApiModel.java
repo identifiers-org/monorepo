@@ -29,6 +29,8 @@ public class MetadataApiModel {
     public MetadataApiResponse getMetadataFor(String compactId) {
         List<ResolverApiResponseResource> resources = new ArrayList<>();
         MetadataApiResponse response = new MetadataApiResponse();
+        String metadata = "";
+        response.setMetadata(metadata);
         // Resolve the Compact ID
         try {
             resources = idResolver.resolve(compactId);
@@ -61,7 +63,6 @@ public class MetadataApiModel {
             return response;
         }
         // Extract the metadata
-        String metadata = "";
         try {
             metadata = metadataFetcher.fetchMetadataFor(selectedResource.getAccessUrl());
         } catch (MetadataFetcherException e) {
