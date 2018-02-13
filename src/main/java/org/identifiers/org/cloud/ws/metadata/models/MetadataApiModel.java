@@ -60,7 +60,7 @@ public class MetadataApiModel {
             response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
             return response;
         }
-        // TODO - Extract the metadata
+        // Extract the metadata
         String metadata = "";
         try {
             metadata = metadataFetcher.fetchMetadataFor(selectedResource.getAccessUrl());
