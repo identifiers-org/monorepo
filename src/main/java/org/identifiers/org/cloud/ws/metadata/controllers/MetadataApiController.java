@@ -1,5 +1,6 @@
 package org.identifiers.org.cloud.ws.metadata.controllers;
 
+import org.identifiers.org.cloud.ws.metadata.models.MetadataApiModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class MetadataApiController {
 
     @Autowired
-    private MetadataApiController metadataApiController;
+    private MetadataApiModel metadataApiModel;
 
     @RequestMapping(value = "{compactId}", method = RequestMethod.GET)
     public @ResponseBody
