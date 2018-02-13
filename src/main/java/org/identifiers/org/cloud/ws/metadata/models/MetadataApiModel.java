@@ -62,6 +62,18 @@ public class MetadataApiModel {
             return response;
         }
         // TODO - Extract the metadata
+        String metadata = "";
+        try {
+            metadata = metadataFetcher.fetchMetadataFor(selectedResource.getAccessUrl());
+        } catch (MetadataFetcherException e) {
+            response.setErrorMessage(String.format("FAILED to fetch metadata for Compact ID '%s', " +
+                            "because '%s'",
+                    compactId,
+                    e.getMessage()));
+            // TODO I need to refine the error reporting here to correctly flag errors as client or server side
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        }
+        response.setMetadata(metadata);
         // TODO - return the response
         return response;
     }
