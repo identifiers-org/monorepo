@@ -73,7 +73,7 @@ public class MetadataApiModel {
             response.setHttpStatus(HttpStatus.BAD_REQUEST);
         }
         response.setMetadata(metadata);
-        // TODO - return the response
+        // return the response
         return response;
     }
 }
