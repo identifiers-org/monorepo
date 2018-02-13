@@ -30,6 +30,7 @@ public class MetadataFetcherWithJavascript implements MetadataFetcher {
 
     @Override
     public String fetchMetadataFor(String url) throws MetadataFetcherException {
+        // TODO - This is too slow, we need some kind of caching mechanism here
         // Fetch the URL content
         WebClient webClient = new WebClient(BrowserVersion.CHROME);
         webClient.getOptions().setThrowExceptionOnScriptError(false);
