@@ -21,25 +21,28 @@ For resolving *Compact_ID* to all the resources that are registered within [iden
 
 ```json
 {
-    "errorMsg": null,
+    "errorMessage": null,
     "resolvedResources": [
         {
             "accessUrl": "http://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:36927",
             "info": "ChEBI (Chemical Entities of Biological Interest)",
             "institution": "European Bioinformatics Institute, Hinxton, Cambridge",
-            "location": "UK"
+            "location": "UK",
+            "official": true
         },
         {
             "accessUrl": "http://www.ebi.ac.uk/ols/ontologies/chebi/terms?obo_id=CHEBI:36927",
             "info": "ChEBI through OLS",
             "institution": "European Bioinformatics Institute, Hinxton, Cambridge",
-            "location": "UK"
+            "location": "UK",
+            "official": false
         },
         {
             "accessUrl": "http://purl.bioontology.org/ontology/CHEBI/CHEBI:36927",
             "info": "ChEBI through BioPortal",
             "institution": "National Center for Biomedical Ontology, Stanford",
-            "location": "USA"
+            "location": "USA",
+            "official": false
         }
     ]
 }
