@@ -8,3 +8,7 @@ TODO
 
 # How to query the Metadata Resolution Service
 TODO
+
+
+# Contributions
+TODO
