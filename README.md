@@ -77,7 +77,7 @@ Successful requests will return an _HTTP OK_ (200) status, if the provided _Comp
 
 ```json
 {
-    "errorMsg": "No providers found for Compact ID 'newprefix:36927'",
+    "errorMessage": "No providers found for Compact ID 'newprefix:36927'",
     "resolvedResources": []
 }
 ```
