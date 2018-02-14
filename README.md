@@ -40,7 +40,7 @@ _When different providers (resources) exist for a given Compact ID, this service
 
 
 # Contributions
-TODO
+Documentation for developers will be coming soon, through the repository Wiki.
 
 
 ### Contact
