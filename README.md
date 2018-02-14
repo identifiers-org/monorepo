@@ -12,3 +12,7 @@ TODO
 
 # Contributions
 TODO
+
+
+### Contact
+Manuel Bernal Llinares
