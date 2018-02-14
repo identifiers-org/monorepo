@@ -60,13 +60,14 @@ the response would be
 
 ```json
 {
-    "errorMsg": null,
+    "errorMessage": null,
     "resolvedResources": [
         {
             "accessUrl": "http://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:36927",
             "info": "ChEBI (Chemical Entities of Biological Interest)",
             "institution": "European Bioinformatics Institute, Hinxton, Cambridge",
-            "location": "UK"
+            "location": "UK",
+            "official": true
         }
     ]
 }
