@@ -86,7 +86,7 @@ Something similar will happen when using the _selector_ endpoint, if the given r
 
 ```json
 {
-    "errorMsg": "No providers found for Compact ID 'CHEBI:36927', selector 'moon'",
+    "errorMessage": "No providers found for Compact ID 'CHEBI:36927', selector 'moon'",
     "resolvedResources": []
 }
 ```
