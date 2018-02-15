@@ -30,7 +30,7 @@ For this particular example, the resource providing information on _CHEBI:36927_
 }
 ```
 
-And, _HTTP Status_ is _400 Bad Request_ in this case, although a _404 NOT FOUND_ would have made more sense, this is the could native prototype version of the service, and its first software lifecycle iteration.
+And, _HTTP Status_ is _400 Bad Request_ in this case, although a _404 NOT FOUND_ would have made more sense, this is the cloud native prototype version of the service, and its first software lifecycle iteration.
 
 We want to get feedback from the community as soon as possible, so it can be refined once we can better shape the use cases.
 
