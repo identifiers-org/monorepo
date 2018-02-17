@@ -79,8 +79,7 @@ public class MetadataApiModel {
     }
 
     public MetadataApiResponse getMetadataForUrl(String url) {
-        // TODO
-        List<ResolverApiResponseResource> resources = new ArrayList<>();
+        // Prepare default response
         MetadataApiResponse response = new MetadataApiResponse();
         String metadata = "";
         response.setMetadata(metadata);
