@@ -8,4 +8,5 @@ package org.identifiers.org.cloud.ws.metadata.models;
  * ---
  */
 public class RequestMetadataForUrl {
+    private String url;
 }
