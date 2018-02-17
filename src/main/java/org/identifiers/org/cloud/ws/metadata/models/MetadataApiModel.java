@@ -77,4 +77,8 @@ public class MetadataApiModel {
         // return the response
         return response;
     }
+
+    public MetadataApiResponse getMetadataForUrl(String url) {
+        // TODO
+    }
 }
