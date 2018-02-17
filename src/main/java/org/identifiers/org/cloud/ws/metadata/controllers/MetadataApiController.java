@@ -26,4 +26,9 @@ public class MetadataApiController {
         MetadataApiResponse response = metadataApiModel.getMetadataFor(compactIdParameter);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
+
+    @RequestMapping(value = "getMetadataForUrl", method = RequestMethod.POST)
+    public ResponseEntity<?> getMetadataForUrl() {
+        // TODO
+    }
 }
