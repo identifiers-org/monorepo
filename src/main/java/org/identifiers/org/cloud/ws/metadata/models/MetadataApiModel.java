@@ -83,5 +83,19 @@ public class MetadataApiModel {
         MetadataApiResponse response = new MetadataApiResponse();
         String metadata = "";
         response.setMetadata(metadata);
+        // Extract the metadata
+        try {
+            metadata = metadataFetcher.fetchMetadataFor(url);
+        } catch (MetadataFetcherException e) {
+            response.setErrorMessage(String.format("FAILED to fetch metadata for URL '%s', " +
+                            "because '%s'",
+                    url,
+                    e.getMessage()));
+            // TODO I need to refine the error reporting here to correctly flag errors as client or server side
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        }
+        response.setMetadata(metadata);
+        // return the response
+        return response;
     }
 }
