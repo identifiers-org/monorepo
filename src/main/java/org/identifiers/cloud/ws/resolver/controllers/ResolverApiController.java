@@ -56,4 +56,7 @@ public class ResolverApiController {
         }
         return new ResponseEntity<>(result, result.getHttpStatus());
     }
+
+    // liveness probe
+    
 }
