@@ -58,7 +58,7 @@ public class ResolverApiController {
     }
 
     // liveness probe
-    @RequestMapping(value = "/isAlive")
+    @RequestMapping(value = "/liveness_check")
     public String isAlive() {
         return "ALIVE!";
     }
