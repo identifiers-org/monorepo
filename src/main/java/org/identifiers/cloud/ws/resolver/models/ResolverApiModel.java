@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 @Component
 public class ResolverApiModel {
     private static Logger logger = LoggerFactory.getLogger(ResolverApiModel.class);
+    private static String runninsSessionId = UUID.randomUUID().toString();
 
     @Autowired
     private ResolverDataFetcher resolverDataFetcher;
