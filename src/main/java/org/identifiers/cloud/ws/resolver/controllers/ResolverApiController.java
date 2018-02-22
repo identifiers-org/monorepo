@@ -70,7 +70,7 @@ public class ResolverApiController {
     public String readinessCheck() {
         // TODO - This will be refactored out later, it will be the model who will implement the logic to determine
         // TODO - whether the service should be considered "ready" or not, but this code will live here for testing purposes
-        return "READY";
+        return resolverApiModel.livenessCheck();
     }
 
 }
