@@ -130,6 +130,6 @@ public class ResolverApiModel {
     }
 
     public String readinessCheck() {
-        // TODO
+        return runninsSessionId;
     }
 }
