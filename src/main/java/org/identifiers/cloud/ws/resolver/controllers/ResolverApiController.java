@@ -61,7 +61,8 @@ public class ResolverApiController {
     @RequestMapping(value = "/liveness_check")
     public String livenessCheck() {
         // TODO - This will be refactored out later, it will be the model who will implement the logic to determine
-        // TODO - whether the service should be considered "alive" or not, but this code will live here for testing purposes
+        // TODO - whether the service should be considered "alive" or not, but this code will live here for testing
+        // TODO - purposes
         return resolverApiModel.livenessCheck();
     }
 
@@ -69,7 +70,8 @@ public class ResolverApiController {
     @RequestMapping(value = "/rediness_check")
     public String readinessCheck() {
         // TODO - This will be refactored out later, it will be the model who will implement the logic to determine
-        // TODO - whether the service should be considered "ready" or not, but this code will live here for testing purposes
+        // TODO - whether the service should be considered "ready" or not, but this code will live here for testing
+        // TODO - purposes
         return resolverApiModel.livenessCheck();
     }
 
