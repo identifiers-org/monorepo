@@ -126,4 +126,8 @@ public class ResolverApiModel {
     public String livenessCheck() {
         // TODO
     }
+
+    public String readinessCheck() {
+        // TODO
+    }
 }
