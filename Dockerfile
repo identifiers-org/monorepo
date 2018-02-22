@@ -11,4 +11,4 @@ ADD target/app/. /home/app
 # Launch information
 EXPOSE 8080
 WORKDIR /home/app
-CMD ["java", "-jar", "service.jar"]
+CMD ["java", "-Xmx1024m", "-jar", "service.jar"]
