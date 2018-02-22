@@ -122,4 +122,8 @@ public class ResolverApiModel {
         }
         return resolverApiResponse;
     }
+
+    public String livenessCheck() {
+        // TODO
+    }
 }
