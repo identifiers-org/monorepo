@@ -13,7 +13,7 @@ all: clean container_production_push
 app_structure:
 	@echo "<===|DEVOPS|===> [PACKAGE] Application"
 	@mvn clean > /dev/null
-	@mvn package
+	@mvn package -DskipTests
 	@mkdir -p target/app/log
 	@mkdir -p target/app/tmp
 	@cp target/resolver-*.jar target/app/service.jar
