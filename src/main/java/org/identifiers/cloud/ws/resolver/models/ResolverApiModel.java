@@ -126,7 +126,7 @@ public class ResolverApiModel {
     }
 
     public String livenessCheck() {
-        // TODO
+        return runninsSessionId;
     }
 
     public String readinessCheck() {
