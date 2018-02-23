@@ -28,6 +28,7 @@ then
     version=$(./increment_version.sh -p ${version})
     echo -e "\tNew version '${version}'"
     echo "${version}" > VERSION
+    ok=true
 fi
 if [ "${verb}" == "minor" ]
 then
@@ -36,6 +37,7 @@ then
     version=$(./increment_version.sh -m ${version})
     echo -e "\tNew version '${version}'"
     echo "${version}" > VERSION
+    ok=true
 fi
 if [ "${verb}" == "major" ]
 then
@@ -44,6 +46,7 @@ then
     version=$(./increment_version.sh -M ${version})
     echo -e "\tNew version '${version}'"
     echo "${version}" > VERSION
+    ok=true
 fi
 
 # Should we publish the changes?
