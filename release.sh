@@ -64,7 +64,7 @@ if $ok ; then
         echo -e "\tNO VERSION tag message included"
     fi
     git commit -m "${message}"
-    git tag ${version}
+    git tag ${version} -m "${message}"
     git push origin ${version}
 else
     echo -e "\t--- ABORT --- Something went wrong"
