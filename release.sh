@@ -57,11 +57,15 @@ fi
 # Should we publish the changes?
 if $ok ; then
     echo -e "\tCommit, push and tag version"
+    git add VERSION
     if [ "${message}" != "" ] ; then
         echo -e "\tVersion Tag message: ${message}"
     else
         echo -e "\tNO VERSION tag message included"
     fi
+    git commit -m "${message}"
+    git tag ${version}
+    git push origin ${version}
 else
     echo -e "\t--- ABORT --- Something went wrong"
 fi
