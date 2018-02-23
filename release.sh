@@ -6,7 +6,7 @@
 
 # Defaults
 verb=nothing
-message=""
+message=false
 version=$(cat VERSION)
 
 if [ $# -lt 1 ]
@@ -52,6 +52,11 @@ fi
 # Should we publish the changes?
 if $ok ; then
     echo -e "\tCommit, push and tag version"
+    if $message ; then
+        echo -e "\tVersion Tag message: ${message}"
+    else
+        echo -e "\tNO VERSION tag message included"
+    fi
 else
     echo -e "\t--- ABORT --- Something went wrong"
 fi
