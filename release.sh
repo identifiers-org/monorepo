@@ -69,3 +69,6 @@ if $ok ; then
 else
     echo -e "\t--- ABORT --- Something went wrong"
 fi
+
+# Pack the new release
+make
