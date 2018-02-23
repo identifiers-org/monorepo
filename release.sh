@@ -62,13 +62,13 @@ if $ok ; then
         echo -e "\tVersion Tag message: ${message}"
     else
         echo -e "\tNO VERSION tag message included"
+        message="New release ${version}"
     fi
     git commit -m "${message}"
     git tag ${version} -m "${message}"
     git push origin ${version}
+    # Pack the new release
+    make
 else
     echo -e "\t--- ABORT --- Something went wrong"
 fi
-
-# Pack the new release
-make
