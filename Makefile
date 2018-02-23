@@ -6,6 +6,7 @@
 
 # Container name
 container_name = identifiersorg/cloud-ws-resolver
+tag_version = `cat VERSION`
 
 # Default target
 all: clean container_production_push
@@ -19,12 +20,13 @@ app_structure:
 	@cp target/resolver-*.jar target/app/service.jar
 
 container_production_build: app_structure
-	@echo "<===|DEVOPS|===> [BUILD] Production container $(container_name)"
-	@docker build -t $(container_name) .
+	@echo "<===|DEVOPS|===> [BUILD] Production container $(container_name):$(tag_version)"
+	@docker build -t $(container_name):$(tag_version) -t $(container_name):latest .
 
 container_production_push: container_production_build
-	@echo "<===|DEVOPS|===> [PUBLISH]> Production container $(container_name)"
-	@docker push $(container_name)
+	@echo "<===|DEVOPS|===> [PUBLISH]> Production container $(container_name):$(tag_version)"
+	@docker push $(container_name):$(tag_version)
+	@docker push $(container_name):latest
 
 dev_container_build: clean container_production_build
 	@echo "<===|DEVOPS|===> [DEV] Preparing local container"
