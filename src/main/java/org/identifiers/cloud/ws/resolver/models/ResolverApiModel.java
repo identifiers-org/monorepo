@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Component
 public class ResolverApiModel {
     private static Logger logger = LoggerFactory.getLogger(ResolverApiModel.class);
-    private static String runninsSessionId = UUID.randomUUID().toString();
+    private static String runningSessionId = UUID.randomUUID().toString();
 
     @Autowired
     private ResolverDataFetcher resolverDataFetcher;
@@ -126,10 +126,10 @@ public class ResolverApiModel {
     }
 
     public String livenessCheck() {
-        return runninsSessionId;
+        return runningSessionId;
     }
 
     public String readinessCheck() {
-        return runninsSessionId;
+        return runningSessionId;
     }
 }
