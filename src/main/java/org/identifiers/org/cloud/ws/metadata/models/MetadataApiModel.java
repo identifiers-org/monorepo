@@ -100,4 +100,10 @@ public class MetadataApiModel {
         // return the response
         return response;
     }
+
+    public String livenessCheck() {
+        return runningSessionId;
+    }
+
+
 }
