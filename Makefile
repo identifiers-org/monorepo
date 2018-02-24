@@ -8,6 +8,7 @@
 container_name = identifiersorg/cloud-ws-metadata
 docker_compose_development_file = docker-compose-development.yml
 springboot_development_profile = development
+tag_version = `cat VERSION`
 
 # default target
 
@@ -44,11 +45,12 @@ app_structure:
 	@cp target/metadata-*.jar target/app/service.jar
 
 container_production_build: app_structure
-	@echo "<===|DEVOPS|===> [BUILD] Production container $(container_name)"
-	@docker build -t $(container_name) .
+	@echo "<===|DEVOPS|===> [BUILD] Production container $(container_name):$(tag_version)"
+	@docker build -t $(container_name):$(tag_version) -t $(container_name):latest .
 
 container_production_push: container_production_build
-	@echo "<===|DEVOPS|===> [PUBLISH]> Production container $(container_name)"
-	@docker push $(container_name)
+	@echo "<===|DEVOPS|===> [PUBLISH]> Production container $(container_name):$(tag_version)"
+	@docker push $(container_name):$(tag_version)
+	@docker push $(container_name):latest
 
 .PHONY: all clean development_run_tests app_structure container_production_build container_production_push
