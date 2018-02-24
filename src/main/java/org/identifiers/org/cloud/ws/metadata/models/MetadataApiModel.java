@@ -105,5 +105,8 @@ public class MetadataApiModel {
         return runningSessionId;
     }
 
+    public String readinessCheck() {
+        return runningSessionId;
+    }
 
 }
