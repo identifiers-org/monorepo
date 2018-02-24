@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -16,6 +17,7 @@ import java.util.List;
 @Component
 public class MetadataApiModel {
 
+    private static String runningSessionId = UUID.randomUUID().toString();
     private IdResolver idResolver;
     private MetadataFetcher metadataFetcher;
     private IdResourceSelector idResourceSelector;
