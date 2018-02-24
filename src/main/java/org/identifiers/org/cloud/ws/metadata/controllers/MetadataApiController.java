@@ -33,4 +33,15 @@ public class MetadataApiController {
         MetadataApiResponse response = metadataApiModel.getMetadataForUrl(request.getUrl());
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
+
+    // liveness probe
+    @RequestMapping(value = "/liveness_check")
+    public String livenessCheck() {
+        // TODO - This will be refactored out later, it will be the model who will implement the logic to determine
+        // TODO - whether the service should be considered "alive" or not, but this code will live here for testing
+        // TODO - purposes
+        return metadataApiModel.livenessCheck();
+    }
+
+
 }
