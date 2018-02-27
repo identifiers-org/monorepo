@@ -8,4 +8,10 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
  * ---
  */
 public class RecommendedResource {
+    // This is an index [0,99] on how recommendable is this resource, 0 - not at all, 99 - way to go
+    private int recommendationIndex = 0;
+    private String recommendationExplanation = "no explanation has been specified";
+    // This is the contextual ID of the resource in the current recommendation request
+    private String id;
+    private String endPointUrl;
 }
