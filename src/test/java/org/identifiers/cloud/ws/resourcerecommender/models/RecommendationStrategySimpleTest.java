@@ -59,7 +59,6 @@ public class RecommendationStrategySimpleTest {
         // Evaluate the recommendation
         List<RecommendedResource> recommendations = recommendationStrategy.getRecommendations(dataset);
 /*      ObjectMapper objectMapper = new ObjectMapper();
-
         recommendations.stream().forEach(recommendedResource -> {
             try {
                 System.out.println(String.format("%s\n", objectMapper.writeValueAsString(recommendedResource)));
@@ -91,6 +90,33 @@ public class RecommendationStrategySimpleTest {
         List<RecommendedResource> recommendations = recommendationStrategy.getRecommendations(unOfficial.subList(0, 1));
         assertThat("When there is only one resource, this resource scores max.",
                 ((recommendations.size() == 1) && (recommendations.get(0).getRecommendationIndex() == 99)),
+                is(true));
+    }
+
+    @Test
+    public void testAllUnofficialResolvedResources() {
+        List<ResolvedResource> unOfficial = Lists.newArrayList(unOfficialResolvedResources);
+        Collections.shuffle(unOfficial);
+        List<ResolvedResource> dataset = unOfficial.subList(0, unOfficial.size() / 2);
+        List<RecommendedResource> recommendations = recommendationStrategy.getRecommendations(dataset);
+/*        ObjectMapper objectMapper = new ObjectMapper();
+        recommendations.stream().forEach(recommendedResource -> {
+            try {
+                System.out.println(String.format("%s\n", objectMapper.writeValueAsString(recommendedResource)));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        });
+*/
+        assertThat("When all resources are unofficial, all of them go back",
+                recommendations.size() == dataset.size(),
+                is(true));
+        assertThat("When all resources are unofficial, one of them scores max",
+                recommendations
+                        .parallelStream()
+                        .filter(recommendedResource -> recommendedResource
+                                .getRecommendationIndex() == 99)
+                        .count() == 1,
                 is(true));
     }
 
