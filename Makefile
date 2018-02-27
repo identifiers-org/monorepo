@@ -27,6 +27,10 @@ development_env_down:
 	@rm -f development_env_up
 	@touch development_env_down
 
+development_run_tests: development_env_up
+	@echo "<===|DEVOPS|===> [TESTS] Running Unit Tests"
+	@mvn -Dspring.profiles.active=$(springboot_development_profile) clean test
+
 app_structure:
 	@echo "<===|DEVOPS|===> [PACKAGE] Application"
 	@mvn clean > /dev/null
