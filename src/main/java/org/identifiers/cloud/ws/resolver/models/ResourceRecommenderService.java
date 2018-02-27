@@ -22,6 +22,8 @@ import java.util.List;
 @Scope("prototype")
 public class ResourceRecommenderService implements ResourceRecommenderStrategy {
     public static final int WS_REQUEST_RETRY_MAX_ATTEMPTS = 12;
+    public static final int WS_REQUEST_RETRY_BACK_OFF_PERIOD = 1500; // 1.5 seconds
+
 
     @Override
     public List<RecommendedResource> getRecommendations(List<ResourceEntry> resources) throws ResourceRecommenderStrategyException{
