@@ -29,6 +29,11 @@ public class RecommendationStrategySimple implements RecommendationStrategy {
                     .setRecommendationIndex(0)
                     .setRecommendationExplanation("This result is not official within this context");
         }).collect(Collectors.toList());
+        if (recommendations.size() == 1) {
+            recommendations.get(0)
+                    .setRecommendationIndex(99)
+                    .setRecommendationExplanation("This is the ONLY resource available within this context");
+        }
         return recommendations;
     }
 }
