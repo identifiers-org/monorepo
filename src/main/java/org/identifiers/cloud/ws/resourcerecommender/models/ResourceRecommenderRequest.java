@@ -8,4 +8,5 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
  * ---
  */
 public class ResourceRecommenderRequest {
+    // TODO
 }
