@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import java.util.UUID;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: resource-recommender
@@ -8,4 +10,7 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
  * ---
  */
 public class ResourceRecommenderApiModel {
+    private static String runningSessionId = UUID.randomUUID().toString();
+
+    
 }
