@@ -1,2 +1,2 @@
-# cloud-ws-resource-recommender
+# Overview
 Resource Recommendation Web Service
