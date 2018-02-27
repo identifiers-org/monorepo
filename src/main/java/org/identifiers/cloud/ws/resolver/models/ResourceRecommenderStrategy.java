@@ -7,6 +7,6 @@ package org.identifiers.cloud.ws.resolver.models;
  * Timestamp: 2018-02-27 21:26
  * ---
  */
-public interface RecommenderStrategy {
+public interface ResourceRecommenderStrategy {
     // TODO
 }
