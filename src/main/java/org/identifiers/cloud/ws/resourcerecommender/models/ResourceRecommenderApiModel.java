@@ -23,7 +23,7 @@ public class ResourceRecommenderApiModel {
     private RecommendationStrategy recommendationStrategy;
 
     private List<RecommendedResource> evaluateRecommendations(List<ResolvedResource> resolvedResources) {
-        recommendationStrategy.getRecommendations(resolvedResources);
+        return recommendationStrategy.getRecommendations(resolvedResources);
     }
 
     public String livenessCheck() {
