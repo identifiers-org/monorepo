@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -24,6 +25,19 @@ public class ResourceRecommenderApiModel {
 
     private List<RecommendedResource> evaluateRecommendations(List<ResolvedResource> resolvedResources) {
         return recommendationStrategy.getRecommendations(resolvedResources);
+    }
+
+    public ResourceRecommenderApiResponse getRecommendations(ResourceRecommenderRequest request) {
+        // NOTE - I know, I should not use try-catch as an if-else block, but in this case, this logic is sooo simple...
+        try {
+            return new ResourceRecommenderApiResponse()
+                    .setPayload(evaluateRecommendations(request.getResolvedResources()));
+        } catch (RuntimeException e) {
+            return new ResourceRecommenderApiResponse()
+                    .setErrorMessage("An error occurred while trying to evaluate the recommendations " +
+                            "for the given resolved resources")
+                    .setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     public String livenessCheck() {
