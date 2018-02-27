@@ -31,7 +31,7 @@ public class RecommendationStrategySimple implements RecommendationStrategy {
             }
             return recommendedResource
                     .setRecommendationIndex(0)
-                    .setRecommendationExplanation("This result is not official within this context");
+                    .setRecommendationExplanation("This resource is not official within this context");
         }).collect(Collectors.toList());
         if (recommendations.size() == 1) {
             recommendations.get(0)
