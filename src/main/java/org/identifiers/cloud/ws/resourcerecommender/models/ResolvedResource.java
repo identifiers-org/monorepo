@@ -17,5 +17,6 @@ public class ResolvedResource {
     private String id;
     // This field references the final URL that points to the current resolved resource request
     private String endPointUrl;
+    // For this particular resolved resource request, provides information on whether the resource is official or not
     private boolean official;
 }
