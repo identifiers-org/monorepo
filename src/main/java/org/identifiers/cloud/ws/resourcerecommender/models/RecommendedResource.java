@@ -14,4 +14,40 @@ public class RecommendedResource {
     // This is the contextual ID of the resource in the current recommendation request
     private String id;
     private String endPointUrl;
+
+    public int getRecommendationIndex() {
+        return recommendationIndex;
+    }
+
+    public RecommendedResource setRecommendationIndex(int recommendationIndex) {
+        this.recommendationIndex = recommendationIndex;
+        return this;
+    }
+
+    public String getRecommendationExplanation() {
+        return recommendationExplanation;
+    }
+
+    public RecommendedResource setRecommendationExplanation(String recommendationExplanation) {
+        this.recommendationExplanation = recommendationExplanation;
+        return this;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public RecommendedResource setId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getEndPointUrl() {
+        return endPointUrl;
+    }
+
+    public RecommendedResource setEndPointUrl(String endPointUrl) {
+        this.endPointUrl = endPointUrl;
+        return this;
+    }
 }
