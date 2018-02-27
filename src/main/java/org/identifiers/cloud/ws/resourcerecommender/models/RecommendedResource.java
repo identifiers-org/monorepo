@@ -1,5 +1,9 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.io.Serializable;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: resource-recommender
@@ -7,7 +11,8 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
  * Timestamp: 2018-02-27 11:43
  * ---
  */
-public class RecommendedResource {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class RecommendedResource implements Serializable {
     // This is an index [0,99] on how recommendable is this resource, 0 - not at all, 99 - way to go
     private int recommendationIndex = 0;
     private String recommendationExplanation = "no explanation has been specified";
