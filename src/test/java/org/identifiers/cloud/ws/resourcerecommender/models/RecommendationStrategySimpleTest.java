@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.util.Lists;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,10 +37,10 @@ public class RecommendationStrategySimpleTest {
         unOfficialResolvedResources = new CopyOnWriteArrayList<>();
         officialResolvedResources = new CopyOnWriteArrayList<>();
         IntStream.range(0, 10).parallel().forEach(operand ->
-            unOfficialResolvedResources.add(new ResolvedResource()
-                    .setOfficial(false)
-                    .setId(Integer.toString(operand))
-                    .setEndPointUrl(String.format("http://endpoint/%d", operand)))
+                unOfficialResolvedResources.add(new ResolvedResource()
+                        .setOfficial(false)
+                        .setId(Integer.toString(operand))
+                        .setEndPointUrl(String.format("http://endpoint/%d", operand)))
         );
         IntStream.range(10, 20).parallel().forEach(operand ->
                 officialResolvedResources.add(new ResolvedResource()
@@ -58,6 +60,14 @@ public class RecommendationStrategySimpleTest {
         dataset.add(official.get(0));
         // Evaluate the recommendation
         List<RecommendedResource> recommendations = recommendationStrategy.getRecommendations(dataset);
+        ObjectMapper objectMapper = new ObjectMapper();
+        recommendations.stream().forEach(recommendedResource -> {
+            try {
+                System.out.println(String.format("%s\n", objectMapper.writeValueAsString(recommendedResource)));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        });
         assertThat("All non-official resources are rated as '0'",
                 (recommendations.size() - recommendations.parallelStream()
                         .filter(recommendedResource -> recommendedResource.getRecommendationIndex() == 0).count()) == 1,

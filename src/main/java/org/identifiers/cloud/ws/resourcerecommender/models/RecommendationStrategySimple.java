@@ -40,7 +40,7 @@ public class RecommendationStrategySimple implements RecommendationStrategy {
             return recommendations;
         }
         // There is no official resource, pick one randomly
-        if (!recommendations.isEmpty()) {
+        if (!recommendations.isEmpty() && !thereIsOfficialResource.get()) {
             Collections.shuffle(recommendations);
             recommendations.get(0)
                     .setRecommendationIndex(99)
