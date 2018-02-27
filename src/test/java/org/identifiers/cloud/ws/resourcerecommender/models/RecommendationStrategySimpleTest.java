@@ -4,6 +4,8 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: resource-recommender
@@ -14,5 +16,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RecommendationStrategySimpleTest {
+    List<ResolvedResource> officialResolvedResources;
+    List<ResolvedResource> unOfficialResolvedResources;
 
+    
 }
