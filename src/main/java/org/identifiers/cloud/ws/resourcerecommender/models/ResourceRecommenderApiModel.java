@@ -36,6 +36,8 @@ public class ResourceRecommenderApiModel {
             return new ResourceRecommenderApiResponse()
                     .setPayload(evaluateRecommendations(request.getResolvedResources()));
         } catch (RuntimeException e) {
+            logger.error("The following ERROR occurred while trying to evaluate resolved resources recommendations: " +
+                    "'{}'", e.getMessage());
             return new ResourceRecommenderApiResponse()
                     .setErrorMessage("An error occurred while trying to evaluate the recommendations " +
                             "for the given resolved resources")
