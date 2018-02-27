@@ -41,6 +41,7 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
     }
 
     private String resourceRecommenderServiceHost;
+    private String ResourceRecommenderServicePort;
 
     @Override
     public List<RecommendedResource> getRecommendations(List<ResourceEntry> resources) throws ResourceRecommenderStrategyException{
