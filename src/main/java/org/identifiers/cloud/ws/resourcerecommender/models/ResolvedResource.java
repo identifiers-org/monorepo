@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 
 /**
@@ -9,6 +11,7 @@ import java.io.Serializable;
  * Timestamp: 2018-02-27 11:06
  * ---
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ResolvedResource implements Serializable {
     // Even if we have access to another service that, given a resource ID, could provide information on that resource,
     // these particular attributes exist within the context that resource / provider for a particular Compact ID. In the
