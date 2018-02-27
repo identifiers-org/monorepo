@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import java.util.List;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: resource-recommender
@@ -8,4 +10,5 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
  * ---
  */
 public interface RecommendationStrategy {
+    List<RecommendedResource> getRecommendations(List<ResolvedResource> resolvedResources);
 }
