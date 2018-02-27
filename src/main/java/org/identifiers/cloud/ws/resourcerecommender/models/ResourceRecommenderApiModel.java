@@ -12,5 +12,8 @@ import java.util.UUID;
 public class ResourceRecommenderApiModel {
     private static String runningSessionId = UUID.randomUUID().toString();
 
-    
+    public String livenessCheck() {
+        return runningSessionId;
+    }
+
 }
