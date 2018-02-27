@@ -40,11 +40,13 @@ public class RecommendationStrategySimple implements RecommendationStrategy {
             return recommendations;
         }
         // There is no official resource, pick one randomly
-        Collections.shuffle(recommendations);
-        recommendations.get(0)
-                .setRecommendationIndex(99)
-                .setRecommendationExplanation("There are multiple resources for this case, and none of them is official, " +
-                        "so this one has been chosen randomly");
+        if (!recommendations.isEmpty()) {
+            Collections.shuffle(recommendations);
+            recommendations.get(0)
+                    .setRecommendationIndex(99)
+                    .setRecommendationExplanation("There are multiple resources for this case, and none of them is official, " +
+                            "so this one has been chosen randomly");
+        }
         return recommendations;
     }
 }
