@@ -26,6 +26,8 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
 
     private static final Logger logger = LoggerFactory.getLogger(ResourceRecommenderService.class);
 
+    // Re-try pattern, externalize this later if needed
+    private static final RetryTemplate retryTemplate;
 
     @Override
     public List<RecommendedResource> getRecommendations(List<ResourceEntry> resources) throws ResourceRecommenderStrategyException{
