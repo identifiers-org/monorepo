@@ -16,4 +16,7 @@ public class ResourceRecommenderApiModel {
         return runningSessionId;
     }
 
+    public String readinessCheck() {
+        return runningSessionId;
+    }
 }
