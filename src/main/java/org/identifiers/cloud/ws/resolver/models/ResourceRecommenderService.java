@@ -17,7 +17,7 @@ import java.util.List;
 @Scope("prototype")
 public class ResourceRecommenderService implements ResourceRecommenderStrategy {
     @Override
-    public List<RecommendedResource> getRecommendations(List<ResourceEntry> resources) {
+    public List<RecommendedResource> getRecommendations(List<ResourceEntry> resources) throws ResourceRecommenderStrategyException{
         return null;
     }
 }
