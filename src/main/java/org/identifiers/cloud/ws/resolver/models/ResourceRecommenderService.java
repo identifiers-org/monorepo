@@ -40,6 +40,8 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
         retryTemplate.setBackOffPolicy(backOffPolicy);
     }
 
+    private String resourceRecommenderServiceHost;
+
     @Override
     public List<RecommendedResource> getRecommendations(List<ResourceEntry> resources) throws ResourceRecommenderStrategyException{
         return null;
