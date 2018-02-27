@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Timestamp: 2018-02-27 11:04
  * ---
  */
+@RestController
 public class ResourceRecommenderApiController {
 
     @Autowired
