@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
 
 import org.assertj.core.util.Lists;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -47,6 +48,7 @@ public class RecommendationStrategySimpleTest {
         );
     }
 
+    @Test
     public void testMixOfficialAndUnofficial() {
         List<ResolvedResource> unofficial = Lists.newArrayList(unOfficialResolvedResources);
         List<ResolvedResource> official = Lists.newArrayList(officialResolvedResources);
