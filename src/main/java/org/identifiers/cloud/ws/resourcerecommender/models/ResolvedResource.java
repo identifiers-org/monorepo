@@ -15,6 +15,7 @@ public class ResolvedResource {
 
     // This field references the ID of the resource within the context of the current Compact ID resolved request
     private String id;
+    // This field references the final URL that points to the current resolved resource request
     private String endPointUrl;
     private boolean official;
 }
