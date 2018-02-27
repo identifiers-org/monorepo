@@ -3,7 +3,6 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -56,21 +55,5 @@ public class RecommendedResource implements Serializable {
         this.endPointUrl = endPointUrl;
         return this;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        RecommendedResource that = (RecommendedResource) o;
-        return getRecommendationIndex() == that.getRecommendationIndex() &&
-                Objects.equals(getRecommendationExplanation(), that.getRecommendationExplanation()) &&
-                Objects.equals(getId(), that.getId()) &&
-                Objects.equals(getEndPointUrl(), that.getEndPointUrl());
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(getRecommendationIndex(), getRecommendationExplanation(), getId(), getEndPointUrl());
-    }
+    
 }
