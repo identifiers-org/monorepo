@@ -1,8 +1,10 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -16,6 +18,13 @@ import java.util.UUID;
 @Scope("prototype")
 public class ResourceRecommenderApiModel {
     private static String runningSessionId = UUID.randomUUID().toString();
+
+    @Autowired
+    private RecommendationStrategy recommendationStrategy;
+
+    private List<RecommendedResource> evaluateRecommendations(List<ResolvedResource> resolvedResources) {
+        recommendationStrategy.getRecommendations(resolvedResources);
+    }
 
     public String livenessCheck() {
         return runningSessionId;
