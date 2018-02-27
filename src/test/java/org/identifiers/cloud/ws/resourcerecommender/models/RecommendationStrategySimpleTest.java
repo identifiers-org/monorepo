@@ -99,15 +99,6 @@ public class RecommendationStrategySimpleTest {
         Collections.shuffle(unOfficial);
         List<ResolvedResource> dataset = unOfficial.subList(0, unOfficial.size() / 2);
         List<RecommendedResource> recommendations = recommendationStrategy.getRecommendations(dataset);
-/*        ObjectMapper objectMapper = new ObjectMapper();
-        recommendations.stream().forEach(recommendedResource -> {
-            try {
-                System.out.println(String.format("%s\n", objectMapper.writeValueAsString(recommendedResource)));
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-        });
-*/
         assertThat("When all resources are unofficial, all of them go back",
                 recommendations.size() == dataset.size(),
                 is(true));
