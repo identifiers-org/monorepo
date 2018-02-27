@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,7 @@ import java.util.UUID;
 @Component
 @Scope("prototype")
 public class ResourceRecommenderApiModel {
+    private static Logger logger = LoggerFactory.getLogger(ResourceRecommenderApiModel.class);
     private static String runningSessionId = UUID.randomUUID().toString();
 
     @Autowired
