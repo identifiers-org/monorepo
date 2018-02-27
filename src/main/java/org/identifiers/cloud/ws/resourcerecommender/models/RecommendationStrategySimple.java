@@ -3,6 +3,7 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -15,6 +16,19 @@ import java.util.List;
 public class RecommendationStrategySimple implements RecommendationStrategy {
     @Override
     public List<RecommendedResource> getRecommendations(List<ResolvedResource> resolvedResources) {
-        return null;
+        List<RecommendedResource> recommendations = resolvedResources.parallelStream().map(resolvedResource -> {
+            RecommendedResource recommendedResource = new RecommendedResource()
+                    .setEndPointUrl(resolvedResource.getEndPointUrl())
+                    .setId(resolvedResource.getId());
+            if (resolvedResource.isOfficial()) {
+                return recommendedResource
+                        .setRecommendationIndex(99)
+                        .setRecommendationExplanation("Official resource in this context");
+            }
+            return recommendedResource
+                    .setRecommendationIndex(0)
+                    .setRecommendationExplanation("This result is not official within this context");
+        }).collect(Collectors.toList());
+        return recommendations;
     }
 }
