@@ -1,5 +1,8 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import java.util.UUID;
 
 /**
@@ -9,6 +12,8 @@ import java.util.UUID;
  * Timestamp: 2018-02-27 11:04
  * ---
  */
+@Component
+@Scope("prototype")
 public class ResourceRecommenderApiModel {
     private static String runningSessionId = UUID.randomUUID().toString();
 
