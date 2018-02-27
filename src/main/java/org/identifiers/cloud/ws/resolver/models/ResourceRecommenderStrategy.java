@@ -12,5 +12,5 @@ import java.util.List;
  * ---
  */
 public interface ResourceRecommenderStrategy {
-    List<RecommendedResource> getRecommendations(List<ResourceEntry> resources);
+    List<RecommendedResource> getRecommendations(List<ResourceEntry> resources) throws ResourceRecommenderStrategyException;
 }
