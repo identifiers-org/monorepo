@@ -25,4 +25,13 @@ public class ResourceRecommenderApiController {
         return model.livenessCheck();
     }
 
+    // Readiness check
+    @RequestMapping(value = "/readiness_check")
+    public String readinessCheck() {
+        // TODO - This will be refactored out later, it will be the model who will implement the logic to determine
+        // TODO - whether the service should be considered "ready" or not, but this code will live here for testing
+        // TODO - purposes
+        return model.readinessCheck();
+    }
+
 }
