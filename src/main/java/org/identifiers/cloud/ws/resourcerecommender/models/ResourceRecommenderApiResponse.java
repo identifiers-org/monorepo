@@ -17,7 +17,7 @@ import java.util.List;
 public class ResourceRecommenderApiResponse implements Serializable {
     private String errorMessage;
     private HttpStatus httpStatus = HttpStatus.OK;
-    // TODO - payload
+    // payload
     private List<RecommendedResource> payload;
 
     public String getErrorMessage() {
