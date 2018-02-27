@@ -19,4 +19,31 @@ public class ResolvedResource {
     private String endPointUrl;
     // For this particular resolved resource request, provides information on whether the resource is official or not
     private boolean official;
+
+    public String getId() {
+        return id;
+    }
+
+    public ResolvedResource setId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getEndPointUrl() {
+        return endPointUrl;
+    }
+
+    public ResolvedResource setEndPointUrl(String endPointUrl) {
+        this.endPointUrl = endPointUrl;
+        return this;
+    }
+
+    public boolean isOfficial() {
+        return official;
+    }
+
+    public ResolvedResource setOfficial(boolean official) {
+        this.official = official;
+        return this;
+    }
 }
