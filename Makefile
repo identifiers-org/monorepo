@@ -12,6 +12,13 @@ tag_version = `cat VERSION`
 # Default target
 all: clean container_production_push
 
+development_env_up:
+	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing development environment UP"
+	@docker-compose -f $(docker_compose_development_file) up -d
+	@# TODO Clean this way of referencing the target name in future iterations
+	@rm -f development_env_down
+	@touch development_env_up
+
 app_structure:
 	@echo "<===|DEVOPS|===> [PACKAGE] Application"
 	@mvn clean > /dev/null
