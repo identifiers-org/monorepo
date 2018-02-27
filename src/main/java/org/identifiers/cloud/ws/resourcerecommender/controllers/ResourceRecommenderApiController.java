@@ -21,7 +21,7 @@ public class ResourceRecommenderApiController {
     private ResourceRecommenderApiModel model;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ResponseEntity<?> sortByRecommendationDescending(@RequestBody ResourceRecommenderRequest request) {
+    public ResponseEntity<?> getRecommendations(@RequestBody ResourceRecommenderRequest request) {
         // The model associated with the controller should handle any possible exception that could happen while running
         // the business logic, thus, the controller should handle only exceptions within the domain of the controller.
         return null;
