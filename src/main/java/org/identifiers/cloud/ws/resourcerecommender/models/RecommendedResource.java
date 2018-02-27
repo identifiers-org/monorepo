@@ -12,7 +12,7 @@ import java.io.Serializable;
  * ---
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RecommendedResource implements Serializable {
+public class RecommendedResource implements Serializable, Comparable<RecommendedResource> {
     // This is an index [0,99] on how recommendable is this resource, 0 - not at all, 99 - way to go
     private int recommendationIndex = 0;
     private String recommendationExplanation = "no explanation has been specified";
@@ -55,5 +55,9 @@ public class RecommendedResource implements Serializable {
         this.endPointUrl = endPointUrl;
         return this;
     }
-    
+
+    @Override
+    public int compareTo(RecommendedResource o) {
+        return Integer.compare(recommendationIndex, o.recommendationIndex);
+    }
 }
