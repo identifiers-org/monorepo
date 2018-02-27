@@ -1,6 +1,5 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.util.Lists;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -59,8 +58,8 @@ public class RecommendationStrategySimpleTest {
         dataset.add(official.get(0));
         // Evaluate the recommendation
         List<RecommendedResource> recommendations = recommendationStrategy.getRecommendations(dataset);
-        ObjectMapper objectMapper = new ObjectMapper();
-/*
+/*      ObjectMapper objectMapper = new ObjectMapper();
+
         recommendations.stream().forEach(recommendedResource -> {
             try {
                 System.out.println(String.format("%s\n", objectMapper.writeValueAsString(recommendedResource)));
@@ -72,6 +71,16 @@ public class RecommendationStrategySimpleTest {
         assertThat("All non-official resources are rated as '0'",
                 (recommendations.size() - recommendations.parallelStream()
                         .filter(recommendedResource -> recommendedResource.getRecommendationIndex() == 0).count()) == 1,
+                is(true));
+    }
+
+    @Test
+    public void testSingleOfficialResolvedResource() {
+        List<ResolvedResource> official = Lists.newArrayList(officialResolvedResources);
+        Collections.shuffle(official);
+        List<RecommendedResource> recommendations = recommendationStrategy.getRecommendations(official.subList(0, 1));
+        assertThat("When there is only one resource, this resource is scores max.",
+                ((recommendations.size() == 1) && (recommendations.get(0).getRecommendationIndex() == 99)),
                 is(true));
     }
 }
