@@ -2,6 +2,8 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
 
 import org.springframework.http.HttpStatus;
 
+import java.util.List;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: resource-recommender
@@ -13,4 +15,5 @@ public class ResourceRecommenderApiResponse {
     private String errorMessage;
     private HttpStatus httpStatus = HttpStatus.OK;
     // TODO - payload
+    private List<RecommendedResource> payload;
 }
