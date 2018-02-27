@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: resource-recommender
@@ -8,4 +10,6 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
  * ---
  */
 public class ResourceRecommenderApiResponse {
+    private String errorMessage;
+    private HttpStatus httpStatus = HttpStatus.OK;
 }
