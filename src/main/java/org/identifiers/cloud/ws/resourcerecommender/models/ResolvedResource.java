@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import java.io.Serializable;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: resource-recommender
@@ -7,7 +9,7 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
  * Timestamp: 2018-02-27 11:06
  * ---
  */
-public class ResolvedResource {
+public class ResolvedResource implements Serializable {
     // Even if we have access to another service that, given a resource ID, could provide information on that resource,
     // these particular attributes exist within the context that resource / provider for a particular Compact ID. In the
     // future, we could include more context information related to the particularities of the current recommendation
