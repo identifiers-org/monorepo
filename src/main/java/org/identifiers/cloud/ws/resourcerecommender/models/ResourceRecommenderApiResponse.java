@@ -19,4 +19,31 @@ public class ResourceRecommenderApiResponse implements Serializable {
     private HttpStatus httpStatus = HttpStatus.OK;
     // TODO - payload
     private List<RecommendedResource> payload;
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public ResourceRecommenderApiResponse setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+        return this;
+    }
+
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
+    }
+
+    public ResourceRecommenderApiResponse setHttpStatus(HttpStatus httpStatus) {
+        this.httpStatus = httpStatus;
+        return this;
+    }
+
+    public List<RecommendedResource> getPayload() {
+        return payload;
+    }
+
+    public ResourceRecommenderApiResponse setPayload(List<RecommendedResource> payload) {
+        this.payload = payload;
+        return this;
+    }
 }
