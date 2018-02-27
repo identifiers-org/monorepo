@@ -6,6 +6,7 @@
 
 # Container name
 container_name = identifiersorg/cloud-ws-resolver
+docker_compose_development_file = docker-compose-development.yml
 tag_version = `cat VERSION`
 
 # Default target
