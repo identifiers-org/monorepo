@@ -1,5 +1,8 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +12,8 @@ import java.util.List;
  * Timestamp: 2018-02-27 11:18
  * ---
  */
-public class ResourceRecommenderRequest {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ResourceRecommenderRequest implements Serializable {
     private List<ResolvedResource> resolvedResources;
 
     public List<ResolvedResource> getResolvedResources() {
