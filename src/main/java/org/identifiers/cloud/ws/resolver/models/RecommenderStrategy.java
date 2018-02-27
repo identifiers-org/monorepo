@@ -1,4 +1,4 @@
-package org.identifiers.cloud.ws.resolver.daemons.models;
+package org.identifiers.cloud.ws.resolver.models;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -8,4 +8,5 @@ package org.identifiers.cloud.ws.resolver.daemons.models;
  * ---
  */
 public interface RecommenderStrategy {
+    // TODO
 }
