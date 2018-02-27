@@ -28,6 +28,17 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
 
     // Re-try pattern, externalize this later if needed
     private static final RetryTemplate retryTemplate;
+    static {
+        SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy();
+        retryPolicy.setMaxAttempts(WS_REQUEST_RETRY_MAX_ATTEMPTS);
+
+        FixedBackOffPolicy backOffPolicy = new FixedBackOffPolicy();
+        backOffPolicy.setBackOffPeriod(WS_REQUEST_RETRY_BACK_OFF_PERIOD);
+
+        retryTemplate = new RetryTemplate();
+        retryTemplate.setRetryPolicy(retryPolicy);
+        retryTemplate.setBackOffPolicy(backOffPolicy);
+    }
 
     @Override
     public List<RecommendedResource> getRecommendations(List<ResourceEntry> resources) throws ResourceRecommenderStrategyException{
