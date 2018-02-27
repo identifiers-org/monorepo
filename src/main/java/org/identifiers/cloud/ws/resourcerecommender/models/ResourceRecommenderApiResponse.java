@@ -1,7 +1,9 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.http.HttpStatus;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,7 +13,8 @@ import java.util.List;
  * Timestamp: 2018-02-27 11:33
  * ---
  */
-public class ResourceRecommenderApiResponse {
+@JsonIgnoreProperties(ignoreUnknown = true, value = {"httpStatus"})
+public class ResourceRecommenderApiResponse implements Serializable {
     private String errorMessage;
     private HttpStatus httpStatus = HttpStatus.OK;
     // TODO - payload
