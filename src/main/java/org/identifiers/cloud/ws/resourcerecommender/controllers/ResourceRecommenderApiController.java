@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.resourcerecommender.controllers;
 
 import org.identifiers.cloud.ws.resourcerecommender.models.ResourceRecommenderApiModel;
+import org.identifiers.cloud.ws.resourcerecommender.models.ResourceRecommenderApiResponse;
 import org.identifiers.cloud.ws.resourcerecommender.models.ResourceRecommenderRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,8 @@ public class ResourceRecommenderApiController {
     public ResponseEntity<?> getRecommendations(@RequestBody ResourceRecommenderRequest request) {
         // The model associated with the controller should handle any possible exception that could happen while running
         // the business logic, thus, the controller should handle only exceptions within the domain of the controller.
-        return null;
+        ResourceRecommenderApiResponse response = model.getRecommendations(request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     // liveness probe
