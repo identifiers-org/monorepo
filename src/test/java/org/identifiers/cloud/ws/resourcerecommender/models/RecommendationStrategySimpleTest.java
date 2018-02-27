@@ -79,8 +79,19 @@ public class RecommendationStrategySimpleTest {
         List<ResolvedResource> official = Lists.newArrayList(officialResolvedResources);
         Collections.shuffle(official);
         List<RecommendedResource> recommendations = recommendationStrategy.getRecommendations(official.subList(0, 1));
-        assertThat("When there is only one resource, this resource is scores max.",
+        assertThat("When there is only one resource, this resource scores max.",
                 ((recommendations.size() == 1) && (recommendations.get(0).getRecommendationIndex() == 99)),
                 is(true));
     }
+
+    @Test
+    public void testSingleUnofficialResolvedResource() {
+        List<ResolvedResource> unOfficial = Lists.newArrayList(unOfficialResolvedResources);
+        Collections.shuffle(unOfficial);
+        List<RecommendedResource> recommendations = recommendationStrategy.getRecommendations(unOfficial.subList(0, 1));
+        assertThat("When there is only one resource, this resource scores max.",
+                ((recommendations.size() == 1) && (recommendations.get(0).getRecommendationIndex() == 99)),
+                is(true));
+    }
+
 }
