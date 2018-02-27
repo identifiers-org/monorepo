@@ -11,5 +11,13 @@ import java.util.List;
  */
 public class ResourceRecommenderRequest {
     private List<ResolvedResource> resolvedResources;
-    
+
+    public List<ResolvedResource> getResolvedResources() {
+        return resolvedResources;
+    }
+
+    public ResourceRecommenderRequest setResolvedResources(List<ResolvedResource> resolvedResources) {
+        this.resolvedResources = resolvedResources;
+        return this;
+    }
 }
