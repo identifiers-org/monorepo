@@ -1,5 +1,9 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
+
+import java.util.List;
+
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: resolver
@@ -8,5 +12,5 @@ package org.identifiers.cloud.ws.resolver.models;
  * ---
  */
 public interface ResourceRecommenderStrategy {
-    // TODO
+    List<RecommendedResource> getRecommendations(List<ResourceEntry> resources);
 }
