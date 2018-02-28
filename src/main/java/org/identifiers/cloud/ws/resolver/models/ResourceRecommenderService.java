@@ -9,6 +9,7 @@ import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,7 +47,8 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
     @Override
     public List<RecommendedResource> getRecommendations(List<ResourceEntry> resources) throws ResourceRecommenderStrategyException{
         String recommenderEndpoint = String.format("http://%s:%d", resourceRecommenderServiceHost, resourceRecommenderServicePort);
+        List<RecommendedResource> recommendations = new ArrayList<>();
         // TODO
-        return null;
+        return recommendations;
     }
 }
