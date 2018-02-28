@@ -9,3 +9,7 @@ services:
         image: redis
         ports:
             - 6379:6379
+    recommender:
+        image: identifiersorg/cloud-ws-resource-recommender
+        ports:
+            - 8083:8083
