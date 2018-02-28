@@ -3,6 +3,7 @@ package org.identifiers.cloud.ws.resolver.models;
 import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
@@ -47,7 +48,9 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
         retryTemplate.setBackOffPolicy(backOffPolicy);
     }
 
+    @Value("${org.identifiers.cloud.ws.resolver.service.recommender.host}")
     private String resourceRecommenderServiceHost;
+    @Value("${org.identifiers.cloud.ws.resolver.service.recommender.port}")
     private String resourceRecommenderServicePort;
 
     // Error handler for the request
