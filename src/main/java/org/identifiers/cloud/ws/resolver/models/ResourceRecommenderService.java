@@ -57,7 +57,9 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
                 return restTemplate.getForObject(recommenderEndpoint, ResourceRecommenderResponse.class);
             });
         } catch (RuntimeException e) {
-            // TODO
+            logger.error("ERROR retrieving resource recommendations from '{}' because of '{}'",
+                    recommenderEndpoint,
+                    e.getMessage());
         }
         return recommendations;
     }
