@@ -9,4 +9,6 @@ package org.identifiers.cloud.ws.resolver.models;
  */
 public class Recommendation {
     // This models a recommendation attached to a particular resource in the response from this web service
+    private int recommendationIndex = 0;
+    private String recommendationExplanation = "--- default explanation ---";
 }
