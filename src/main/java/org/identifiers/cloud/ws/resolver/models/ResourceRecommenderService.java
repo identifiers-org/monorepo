@@ -73,7 +73,7 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
 
     @Override
     public List<RecommendedResource> getRecommendations(List<ResourceEntry> resources) throws ResourceRecommenderStrategyException{
-        String recommenderEndpoint = String.format("http://%s:%d", resourceRecommenderServiceHost, resourceRecommenderServicePort);
+        String recommenderEndpoint = String.format("http://%s:%s", resourceRecommenderServiceHost, resourceRecommenderServicePort);
         List<RecommendedResource> recommendations = new ArrayList<>();
         logger.info("Looking for resource recommendations at '{}'", recommenderEndpoint);
         if (!resources.isEmpty()) {
