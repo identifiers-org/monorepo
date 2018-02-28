@@ -4,6 +4,7 @@ import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
@@ -56,6 +57,10 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
                 RestTemplate restTemplate = new RestTemplate();
                 return restTemplate.getForObject(recommenderEndpoint, ResourceRecommenderResponse.class);
             });
+            if (response.getHttpStatus() == HttpStatus.OK) {
+                logger.debug("Got recommendations!");
+                recommendations = response.getPayload();
+            }
         } catch (RuntimeException e) {
             logger.error("ERROR retrieving resource recommendations from '{}' because of '{}'",
                     recommenderEndpoint,
