@@ -9,9 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -50,14 +48,7 @@ public class ResolverApiModel {
                     return resolverApiResponseResource;
                 }).collect(Collectors.toList());
     }
-
-    private List<ResolverApiResponseResource> embeddRecommendations(List<ResourceEntry> resourceEntries,
-                                                                    List<ResolverApiResponseResource> resources) {
-        Map<String, RecommendedResource> recommendationByResourceId = new ConcurrentHashMap<>();
-        // TODO
-        return resources;
-    }
-
+    
     // TODO - Document this API method
     public ResolverApiResponse resolveCompactId(String compactIdParameter) throws ResolverApiException {
         CompactId compactId = null;
