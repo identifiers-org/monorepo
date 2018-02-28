@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -67,19 +68,23 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
         }
     }
 
-
     @Override
     public List<RecommendedResource> getRecommendations(List<ResourceEntry> resources) throws ResourceRecommenderStrategyException{
         String recommenderEndpoint = String.format("http://%s:%d", resourceRecommenderServiceHost, resourceRecommenderServicePort);
         List<RecommendedResource> recommendations = new ArrayList<>();
         logger.info("Looking for resource recommendations at '{}'", recommenderEndpoint);
         if (!resources.isEmpty()) {
+            List<ResolvedResource> resolvedResources = resources.parallelStream().map(resourceEntry -> new ResolvedResource()
+                    .setId(resourceEntry.getId())
+                    .setAccessURL(resourceEntry.getAccessURL())
+                    .setOfficial(resourceEntry.isOfficial())).collect(Collectors.toList());
             try {
                 // TODO
                 ResourceRecommenderResponse response = retryTemplate.execute(retryContext -> {
                     RestTemplate restTemplate = new RestTemplate();
-                    // TODO - Actually add the request object!!!
-                    return restTemplate.getForObject(recommenderEndpoint, ResourceRecommenderResponse.class);
+                    return restTemplate.postForObject(recommenderEndpoint,
+                            new ResourceRecommenderRequest().setResolvedResources(resolvedResources),
+                            ResourceRecommenderResponse.class);
                 });
                 if (response.getHttpStatus() == HttpStatus.OK) {
                     logger.debug("Got recommendations!");
