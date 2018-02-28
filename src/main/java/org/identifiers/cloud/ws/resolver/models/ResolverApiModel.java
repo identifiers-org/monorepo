@@ -136,7 +136,9 @@ public class ResolverApiModel {
                 resolverApiResponse.setHttpStatus(HttpStatus.NOT_FOUND);
             } else {
                 // Resolve the links
-                resolverApiResponse.setResolvedResources(resolveResourcesForCompactId(compactId, resourceEntries));
+                resolverApiResponse.setResolvedResources(resolveResourcesForCompactId(compactId,
+                        resourceEntries,
+                        getRecommendationsByResourceId(resourceEntries)));
                 resolverApiResponse.setHttpStatus(HttpStatus.OK);
             }
         }
