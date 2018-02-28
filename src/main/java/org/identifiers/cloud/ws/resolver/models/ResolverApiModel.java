@@ -87,8 +87,9 @@ public class ResolverApiModel {
             resolverApiResponse.setHttpStatus(HttpStatus.NOT_FOUND);
         } else {
             // Resolve the links
-            // TODO - Add recommendations
-            resolverApiResponse.setResolvedResources(resolveResourcesForCompactId(compactId, resourceEntries));
+            resolverApiResponse.setResolvedResources(resolveResourcesForCompactId(compactId,
+                    resourceEntries,
+                    getRecommendationsByResourceId(resourceEntries)));
             resolverApiResponse.setHttpStatus(HttpStatus.OK);
         }
         // NOTE - This code may be refactored later
