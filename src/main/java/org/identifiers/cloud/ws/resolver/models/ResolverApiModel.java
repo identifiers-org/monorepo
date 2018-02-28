@@ -52,8 +52,9 @@ public class ResolverApiModel {
     }
 
     private List<ResolverApiResponseResource> embeddRecommendations(List<ResolverApiResponseResource> resources) {
-        Map<String, RecommendedResource> recommendations = new ConcurrentHashMap<>();
+        Map<String, RecommendedResource> recommendationByResourceId = new ConcurrentHashMap<>();
         // TODO
+
         return resources;
     }
 
