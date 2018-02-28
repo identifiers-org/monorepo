@@ -8,6 +8,7 @@ import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,10 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
         logger.info("Looking for resource recommendations at '{}'", recommenderEndpoint);
         try {
             // TODO
+            ResourceRecommenderResponse response = retryTemplate.execute(retryContext -> {
+                RestTemplate restTemplate = new RestTemplate();
+                return restTemplate.getForObject(recommenderEndpoint, ResourceRecommenderResponse.class);
+            });
         } catch (RuntimeException e) {
             // TODO
         }
