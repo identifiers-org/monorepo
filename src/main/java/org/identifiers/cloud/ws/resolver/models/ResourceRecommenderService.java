@@ -97,7 +97,7 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
                             response.getHttpStatus().toString(),
                             response.getErrorMessage());
                     logger.error(errorMessage);
-                    throw new ResourceRecommenderStrategyException(errorMessage);
+                    //throw new ResourceRecommenderStrategyException(errorMessage);
                 }
             } catch (RuntimeException e) {
                 logger.error("ERROR retrieving resource recommendations from '{}' because of '{}'",
