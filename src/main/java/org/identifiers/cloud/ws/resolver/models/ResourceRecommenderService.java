@@ -49,7 +49,11 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
         String recommenderEndpoint = String.format("http://%s:%d", resourceRecommenderServiceHost, resourceRecommenderServicePort);
         List<RecommendedResource> recommendations = new ArrayList<>();
         logger.info("Looking for resource recommendations at '{}'", recommenderEndpoint);
-        // TODO
+        try {
+            // TODO
+        } catch (RuntimeException e) {
+            // TODO
+        }
         return recommendations;
     }
 }
