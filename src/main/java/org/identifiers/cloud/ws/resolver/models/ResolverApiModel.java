@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -47,6 +49,12 @@ public class ResolverApiModel {
                     resolverApiResponseResource.setOfficial(resourceEntry.isOfficial());
                     return resolverApiResponseResource;
                 }).collect(Collectors.toList());
+    }
+
+    private List<ResolverApiResponseResource> embeddRecommendations(List<ResolverApiResponseResource> resources) {
+        Map<String, RecommendedResource> recommendations = new ConcurrentHashMap<>();
+        // TODO
+        return resources;
     }
 
     // TODO - Document this API method
