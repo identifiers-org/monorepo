@@ -56,6 +56,7 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
                 // TODO
                 ResourceRecommenderResponse response = retryTemplate.execute(retryContext -> {
                     RestTemplate restTemplate = new RestTemplate();
+                    // TODO - Actually add the request object!!!
                     return restTemplate.getForObject(recommenderEndpoint, ResourceRecommenderResponse.class);
                 });
                 if (response.getHttpStatus() == HttpStatus.OK) {
