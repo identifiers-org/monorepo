@@ -60,6 +60,11 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
             if (response.getHttpStatus() == HttpStatus.OK) {
                 logger.debug("Got recommendations!");
                 recommendations = response.getPayload();
+            } else {
+                logger.error("ERROR retrieving resource recommendations from '{}', error code'{}', explanation '{}'",
+                        recommenderEndpoint,
+                        response.getHttpStatus(),
+                        response.getErrorMessage());
             }
         } catch (RuntimeException e) {
             logger.error("ERROR retrieving resource recommendations from '{}' because of '{}'",
