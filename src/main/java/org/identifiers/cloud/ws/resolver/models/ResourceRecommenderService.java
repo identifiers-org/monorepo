@@ -51,25 +51,27 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
         String recommenderEndpoint = String.format("http://%s:%d", resourceRecommenderServiceHost, resourceRecommenderServicePort);
         List<RecommendedResource> recommendations = new ArrayList<>();
         logger.info("Looking for resource recommendations at '{}'", recommenderEndpoint);
-        try {
-            // TODO
-            ResourceRecommenderResponse response = retryTemplate.execute(retryContext -> {
-                RestTemplate restTemplate = new RestTemplate();
-                return restTemplate.getForObject(recommenderEndpoint, ResourceRecommenderResponse.class);
-            });
-            if (response.getHttpStatus() == HttpStatus.OK) {
-                logger.debug("Got recommendations!");
-                recommendations = response.getPayload();
-            } else {
-                logger.error("ERROR retrieving resource recommendations from '{}', error code'{}', explanation '{}'",
+        if (!resources.isEmpty()) {
+            try {
+                // TODO
+                ResourceRecommenderResponse response = retryTemplate.execute(retryContext -> {
+                    RestTemplate restTemplate = new RestTemplate();
+                    return restTemplate.getForObject(recommenderEndpoint, ResourceRecommenderResponse.class);
+                });
+                if (response.getHttpStatus() == HttpStatus.OK) {
+                    logger.debug("Got recommendations!");
+                    recommendations = response.getPayload();
+                } else {
+                    logger.error("ERROR retrieving resource recommendations from '{}', error code'{}', explanation '{}'",
+                            recommenderEndpoint,
+                            response.getHttpStatus(),
+                            response.getErrorMessage());
+                }
+            } catch (RuntimeException e) {
+                logger.error("ERROR retrieving resource recommendations from '{}' because of '{}'",
                         recommenderEndpoint,
-                        response.getHttpStatus(),
-                        response.getErrorMessage());
+                        e.getMessage());
             }
-        } catch (RuntimeException e) {
-            logger.error("ERROR retrieving resource recommendations from '{}' because of '{}'",
-                    recommenderEndpoint,
-                    e.getMessage());
         }
         return recommendations;
     }
