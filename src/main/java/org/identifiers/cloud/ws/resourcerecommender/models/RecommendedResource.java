@@ -18,7 +18,7 @@ public class RecommendedResource implements Serializable, Comparable<Recommended
     private String recommendationExplanation = "no explanation has been specified";
     // This is the contextual ID of the resource in the current recommendation request
     private String id;
-    private String endPointUrl;
+    private String accessURL;
 
     public int getRecommendationIndex() {
         return recommendationIndex;
@@ -47,12 +47,12 @@ public class RecommendedResource implements Serializable, Comparable<Recommended
         return this;
     }
 
-    public String getEndPointUrl() {
-        return endPointUrl;
+    public String getAccessURL() {
+        return accessURL;
     }
 
-    public RecommendedResource setEndPointUrl(String endPointUrl) {
-        this.endPointUrl = endPointUrl;
+    public RecommendedResource setAccessURL(String accessURL) {
+        this.accessURL = accessURL;
         return this;
     }
 

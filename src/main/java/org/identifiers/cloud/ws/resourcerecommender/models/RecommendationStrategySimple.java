@@ -21,7 +21,7 @@ public class RecommendationStrategySimple implements RecommendationStrategy {
         AtomicReference<Boolean> thereIsOfficialResource = new AtomicReference<>(false);
         List<RecommendedResource> recommendations = resolvedResources.parallelStream().map(resolvedResource -> {
             RecommendedResource recommendedResource = new RecommendedResource()
-                    .setEndPointUrl(resolvedResource.getAccessURL())
+                    .setAccessURL(resolvedResource.getAccessURL())
                     .setId(resolvedResource.getId());
             if (resolvedResource.isOfficial()) {
                 thereIsOfficialResource.set(Boolean.TRUE);
