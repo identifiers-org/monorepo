@@ -4,6 +4,7 @@ import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
  */
 // Well, when using Spring Boot, you have to fit in a particular way of doing things. Is it the right way?
 @Component
+@Scope("prototype")
 public class ResolverApiModel {
     private static Logger logger = LoggerFactory.getLogger(ResolverApiModel.class);
     private static String runningSessionId = UUID.randomUUID().toString();
