@@ -56,6 +56,9 @@ public class ResolverApiModel {
                     .collect(Collectors.toMap(RecommendedResource::getId,
                             recommendedResource -> recommendedResource,
                             (oldValue, newValue) -> oldValue));
+        } catch (ResourceRecommenderStrategyException e) {
+            logger.error("The following ERROR occurred while trying to get recommendations for the given resources," +
+                    " ERROR '{}'", e.getMessage());
         }
         return new HashMap<>();
     }
