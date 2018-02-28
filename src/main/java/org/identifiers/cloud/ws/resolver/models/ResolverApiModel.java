@@ -44,6 +44,14 @@ public class ResolverApiModel {
                     resolverApiResponseResource.setAccessUrl(resourceEntry
                             .getAccessURL().replace("{$id}", compactId.getId()));
                     resolverApiResponseResource.setOfficial(resourceEntry.isOfficial());
+                    // Embed Recommendation
+                    Recommendation recommendation = new Recommendation();
+                    if (recommendationById.containsKey(resourceEntry.getId())) {
+                        recommendation
+                                .setRecommendationExplanation(recommendationById.get(resourceEntry.getId()).getRecommendationExplanation())
+                                .setRecommendationIndex(recommendationById.get(resourceEntry.getId()).getRecommendationIndex());
+                    }
+                    resolverApiResponseResource.setRecommendation(recommendation);
                     return resolverApiResponseResource;
                 }).collect(Collectors.toList());
     }
