@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -48,7 +46,18 @@ public class ResolverApiModel {
                     return resolverApiResponseResource;
                 }).collect(Collectors.toList());
     }
-    
+
+    private Map<String, RecommendedResource> getRecommendationMap(List<ResourceEntry> resourceEntries) {
+        try {
+            return resourceRecommender
+                    .getRecommendations(resourceEntries)
+                    .parallelStream()
+                    .collect(Collectors.toMap(RecommendedResource::getId,
+                            recommendedResource -> recommendedResource,
+                            (oldValue, newValue) -> oldValue));
+        }
+        return new HashMap<>();
+    }
     // TODO - Document this API method
     public ResolverApiResponse resolveCompactId(String compactIdParameter) throws ResolverApiException {
         CompactId compactId = null;
