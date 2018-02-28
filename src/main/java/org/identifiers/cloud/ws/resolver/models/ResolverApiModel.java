@@ -51,10 +51,10 @@ public class ResolverApiModel {
                 }).collect(Collectors.toList());
     }
 
-    private List<ResolverApiResponseResource> embeddRecommendations(List<ResolverApiResponseResource> resources) {
+    private List<ResolverApiResponseResource> embeddRecommendations(List<ResourceEntry> resourceEntries,
+                                                                    List<ResolverApiResponseResource> resources) {
         Map<String, RecommendedResource> recommendationByResourceId = new ConcurrentHashMap<>();
         // TODO
-
         return resources;
     }
 
