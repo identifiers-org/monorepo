@@ -48,6 +48,7 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
     public List<RecommendedResource> getRecommendations(List<ResourceEntry> resources) throws ResourceRecommenderStrategyException{
         String recommenderEndpoint = String.format("http://%s:%d", resourceRecommenderServiceHost, resourceRecommenderServicePort);
         List<RecommendedResource> recommendations = new ArrayList<>();
+        logger.info("Looking for resource recommendations at '{}'", recommenderEndpoint);
         // TODO
         return recommendations;
     }
