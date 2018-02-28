@@ -30,8 +30,9 @@ public class ResolverApiModel {
     private ResourceRecommenderStrategy resourceRecommender;
 
     // This code may be refactored out later on
-    private List<ResolverApiResponseResource> resolveResourcesForCompactId(CompactId compactId, List<ResourceEntry>
-            resourceEntries) {
+    private List<ResolverApiResponseResource> resolveResourcesForCompactId(CompactId compactId,
+                                                                           List<ResourceEntry> resourceEntries,
+                                                                           Map<String, RecommendedResource> recommendationById) {
         // TODO - I need to add whether the resource is official or not
         return resourceEntries
                 .parallelStream()
