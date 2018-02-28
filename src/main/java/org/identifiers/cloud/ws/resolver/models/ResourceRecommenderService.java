@@ -79,7 +79,6 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
                     .setAccessURL(resourceEntry.getAccessURL())
                     .setOfficial(resourceEntry.isOfficial())).collect(Collectors.toList());
             try {
-                // TODO
                 ResourceRecommenderResponse response = retryTemplate.execute(retryContext -> {
                     RestTemplate restTemplate = new RestTemplate();
                     return restTemplate.postForObject(recommenderEndpoint,
@@ -90,10 +89,15 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
                     logger.debug("Got recommendations!");
                     recommendations = response.getPayload();
                 } else {
-                    logger.error("ERROR retrieving resource recommendations from '{}', error code'{}', explanation '{}'",
+                    String errorMessage = String.format("ERROR retrieving resource recommendations " +
+                                    "from '%s', " +
+                                    "error code'%s', " +
+                                    "explanation '%s'",
                             recommenderEndpoint,
-                            response.getHttpStatus(),
+                            response.getHttpStatus().toString(),
                             response.getErrorMessage());
+                    logger.error(errorMessage);
+                    throw new ResourceRecommenderStrategyException(errorMessage);
                 }
             } catch (RuntimeException e) {
                 logger.error("ERROR retrieving resource recommendations from '{}' because of '{}'",
