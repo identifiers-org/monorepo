@@ -28,6 +28,9 @@ public class ResolverApiModel {
     @Autowired
     private ResolverDataFetcher resolverDataFetcher;
 
+    @Autowired
+    private ResourceRecommenderStrategy resourceRecommender;
+
     // This code may be refactored out later on
     private List<ResolverApiResponseResource> resolveResourcesForCompactId(CompactId compactId, List<ResourceEntry>
             resourceEntries) {
@@ -63,6 +66,7 @@ public class ResolverApiModel {
         List<ResourceEntry> resourceEntries = resolverDataFetcher.findResourcesByPrefix(compactId.getPrefix());
         logger.info("CompactId '{}', with prefix '{}' got #{} resources back from the data backend", compactId
                 .getOriginal(), compactId.getPrefix(), resourceEntries.size());
+        // TODO - Add recommendations
         // Default behaviour for the Resolver Web Service is to return all the possible options, we may want to include
         // information regarding availability of every possible resource providing information on the given compact ID
         if (resourceEntries.isEmpty()) {
