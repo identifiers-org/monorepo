@@ -8,5 +8,5 @@ package org.identifiers.cloud.ws.resolver.models;
  * ---
  */
 public class Recommendation {
-    //TODO
+    // This models a recommendation attached to a particular resource in the response from this web service
 }
