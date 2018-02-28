@@ -10,11 +10,11 @@ import java.io.Serializable;
  * Package: org.identifiers.cloud.ws.resolver.models
  * Timestamp: 2018-01-26 11:37
  * ---
- *
+ * <p>
  * This class represents a resolved resource, part of the response from the Resolver API
  */
 // TODO - REFACTOR OUT THIS ENTITY TO BE REUSED BY CLIENTS AS WELL
-    @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ResolverApiResponseResource implements Serializable {
 
     private String accessUrl;
