@@ -38,13 +38,13 @@ public class RecommendationStrategySimpleTest {
                 unOfficialResolvedResources.add(new ResolvedResource()
                         .setOfficial(false)
                         .setId(Integer.toString(operand))
-                        .setEndPointUrl(String.format("http://endpoint/%d", operand)))
+                        .setAccessURL(String.format("http://endpoint/%d", operand)))
         );
         IntStream.range(10, 20).parallel().forEach(operand ->
                 officialResolvedResources.add(new ResolvedResource()
                         .setOfficial(true)
                         .setId(Integer.toString(operand))
-                        .setEndPointUrl(String.format("http://endpoint/%d", operand)))
+                        .setAccessURL(String.format("http://endpoint/%d", operand)))
         );
     }
 

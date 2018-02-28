@@ -21,7 +21,7 @@ public class ResolvedResource implements Serializable {
     // This field references the ID of the resource within the context of the current Compact ID resolved request
     private String id;
     // This field references the final URL that points to the current resolved resource request
-    private String endPointUrl;
+    private String accessURL;
     // For this particular resolved resource request, provides information on whether the resource is official or not
     private boolean official;
 
@@ -34,12 +34,12 @@ public class ResolvedResource implements Serializable {
         return this;
     }
 
-    public String getEndPointUrl() {
-        return endPointUrl;
+    public String getAccessURL() {
+        return accessURL;
     }
 
-    public ResolvedResource setEndPointUrl(String endPointUrl) {
-        this.endPointUrl = endPointUrl;
+    public ResolvedResource setAccessURL(String accessURL) {
+        this.accessURL = accessURL;
         return this;
     }
 
