@@ -45,6 +45,7 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
 
     @Override
     public List<RecommendedResource> getRecommendations(List<ResourceEntry> resources) throws ResourceRecommenderStrategyException{
+        // TODO
         return null;
     }
 }
