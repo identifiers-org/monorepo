@@ -48,7 +48,7 @@ public class ResolverApiModel {
                 }).collect(Collectors.toList());
     }
 
-    private Map<String, RecommendedResource> getRecommendationMap(List<ResourceEntry> resourceEntries) {
+    private Map<String, RecommendedResource> getRecommendationsByResourceId(List<ResourceEntry> resourceEntries) {
         try {
             return resourceRecommender
                     .getRecommendations(resourceEntries)
