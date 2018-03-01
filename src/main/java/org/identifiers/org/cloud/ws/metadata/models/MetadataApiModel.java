@@ -1,5 +1,6 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,6 +71,11 @@ public class MetadataApiModel {
         }
         // Log selection
         ObjectMapper mapper = new ObjectMapper();
+        try {
+            logger.info("Mining metadata for Compact ID '{}' on selected resource '{}'", compactId, mapper.writeValueAsString(selectedResource));
+        } catch (JsonProcessingException e) {
+            // TODO will never happen ^_^
+        }
         // Extract the metadata
         try {
             metadata = metadataFetcher.fetchMetadataFor(selectedResource.getAccessUrl());
