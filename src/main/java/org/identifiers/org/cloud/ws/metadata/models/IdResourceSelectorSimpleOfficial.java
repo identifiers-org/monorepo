@@ -1,7 +1,6 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,7 +14,6 @@ import java.util.stream.Collectors;
  * ---
  */
 @Component
-@Scope("prototype")
 @Profile("disabled")
 public class IdResourceSelectorSimpleOfficial implements IdResourceSelector {
     @Override
