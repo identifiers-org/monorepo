@@ -22,6 +22,16 @@ public class ResolverApiResponseResource implements Serializable {
     private String institution;
     private String location;
     private boolean official;
+    private Recommendation recommendation;
+
+    public Recommendation getRecommendation() {
+        return recommendation;
+    }
+
+    public ResolverApiResponseResource setRecommendation(Recommendation recommendation) {
+        this.recommendation = recommendation;
+        return this;
+    }
 
     public String getAccessUrl() {
         return accessUrl;
