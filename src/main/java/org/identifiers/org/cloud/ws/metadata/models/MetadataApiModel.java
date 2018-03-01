@@ -1,5 +1,8 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +20,7 @@ import java.util.UUID;
 @Component
 public class MetadataApiModel {
 
+    private static Logger logger = LoggerFactory.getLogger(MetadataApiModel.class);
     private static String runningSessionId = UUID.randomUUID().toString();
     private IdResolver idResolver;
     private MetadataFetcher metadataFetcher;
@@ -64,6 +68,8 @@ public class MetadataApiModel {
             response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
             return response;
         }
+        // Log selection
+        ObjectMapper mapper = new ObjectMapper();
         // Extract the metadata
         try {
             metadata = metadataFetcher.fetchMetadataFor(selectedResource.getAccessUrl());
