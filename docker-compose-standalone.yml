@@ -11,7 +11,7 @@ services:
         environment:
             - WS_METADATA_CONFIG_RESOLVER_HOST=resolver
             - WS_METADATA_CONFIG_RESOLVER_PORT=8080
-            - METADATA_JVM_MEMORY_MAX=1024m
+            - WS_METADATA_JVM_MEMORY_MAX=1024m
         ports:
             - 8082:8082
         depends_on:
