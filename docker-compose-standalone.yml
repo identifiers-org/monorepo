@@ -5,6 +5,19 @@
 #														#
 version: "3"
 services:
+    resolver:
+        image: identifiersorg/cloud-ws-resolver
+        environment:
+            - WS_RESOLVER_CONFIG_REDIS_HOST=redis
+            - WS_RESOLVER_CONFIG_REDIS_PORT=6379
+            - WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_HOST=recommender
+            - WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_PORT=8083
+            - WS_RESOLVER_JVM_MEMORY_MAX=1024m
+        ports:
+            - 8080:8080
+        depends_on:
+            - redis
+            - recommender
     metadata:
         image: identifiersorg/cloud-ws-resolver
         environment:
