@@ -4,6 +4,7 @@ LABEL maintainer="Manuel Bernal Llinares <mbdebian@gmail.com>"
 
 # Environment - defaults
 ENV RESOLVER_JVM_MEMORY_MAX 1024m
+
 # Prepare the application folder
 RUN mkdir -p /home/app
 
