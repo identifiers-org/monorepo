@@ -12,6 +12,7 @@ services:
             - WS_RESOLVER_CONFIG_REDIS_PORT=6379
             - WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_HOST=recommender
             - WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_PORT=8083
+            - WS_RESOLVER_JVM_MEMORY_MAX=1024m
         ports:
             - 8080:8080
         depends_on:
@@ -23,5 +24,7 @@ services:
             - 6379:6379
     recommender:
         image: identifiersorg/cloud-ws-resource-recommender
+        environment:
+            - WS_RESOURCE_RECOMMENDER_JVM_MEMORY_MAX=1024m
         ports:
             - 8083:8083
