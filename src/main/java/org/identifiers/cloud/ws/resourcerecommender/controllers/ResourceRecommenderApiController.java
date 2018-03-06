@@ -1,8 +1,6 @@
 package org.identifiers.cloud.ws.resourcerecommender.controllers;
 
-import org.identifiers.cloud.ws.resourcerecommender.models.ResourceRecommenderApiModel;
-import org.identifiers.cloud.ws.resourcerecommender.models.ResourceRecommenderApiResponse;
-import org.identifiers.cloud.ws.resourcerecommender.models.ResourceRecommenderRequest;
+import org.identifiers.cloud.ws.resourcerecommender.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,10 +22,11 @@ public class ResourceRecommenderApiController {
     private ResourceRecommenderApiModel model;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ResponseEntity<?> getRecommendations(@RequestBody ResourceRecommenderRequest request) {
+    public ResponseEntity<?> getRecommendations(@RequestBody ServiceRequestRecommend request) {
         // The model associated with the controller should handle any possible exception that could happen while running
         // the business logic, thus, the controller should handle only exceptions within the domain of the controller.
-        ResourceRecommenderApiResponse response = model.getRecommendations(request);
+        // TODO - This is where we check the API version?
+        ServiceResponseRecommend response = model.getRecommendations(request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 

@@ -12,7 +12,7 @@ import java.io.Serializable;
  * ---
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RecommendedResource implements Serializable, Comparable<RecommendedResource> {
+public class ResourceRecommendation implements Serializable, Comparable<ResourceRecommendation> {
     // This is an index [0,99] on how recommendable is this resource, 0 - not at all, 99 - way to go
     private int recommendationIndex = 0;
     private String recommendationExplanation = "no explanation has been specified";
@@ -24,7 +24,7 @@ public class RecommendedResource implements Serializable, Comparable<Recommended
         return recommendationIndex;
     }
 
-    public RecommendedResource setRecommendationIndex(int recommendationIndex) {
+    public ResourceRecommendation setRecommendationIndex(int recommendationIndex) {
         this.recommendationIndex = recommendationIndex;
         return this;
     }
@@ -33,7 +33,7 @@ public class RecommendedResource implements Serializable, Comparable<Recommended
         return recommendationExplanation;
     }
 
-    public RecommendedResource setRecommendationExplanation(String recommendationExplanation) {
+    public ResourceRecommendation setRecommendationExplanation(String recommendationExplanation) {
         this.recommendationExplanation = recommendationExplanation;
         return this;
     }
@@ -42,7 +42,7 @@ public class RecommendedResource implements Serializable, Comparable<Recommended
         return id;
     }
 
-    public RecommendedResource setId(String id) {
+    public ResourceRecommendation setId(String id) {
         this.id = id;
         return this;
     }
@@ -51,13 +51,13 @@ public class RecommendedResource implements Serializable, Comparable<Recommended
         return accessURL;
     }
 
-    public RecommendedResource setAccessURL(String accessURL) {
+    public ResourceRecommendation setAccessURL(String accessURL) {
         this.accessURL = accessURL;
         return this;
     }
 
     @Override
-    public int compareTo(RecommendedResource o) {
+    public int compareTo(ResourceRecommendation o) {
         return Integer.compare(recommendationIndex, o.recommendationIndex);
     }
 }

@@ -17,19 +17,19 @@ import java.util.stream.Collectors;
 @Component
 public class RecommendationStrategySimple implements RecommendationStrategy {
     @Override
-    public List<RecommendedResource> getRecommendations(List<ResolvedResource> resolvedResources) {
+    public List<ResourceRecommendation> getRecommendations(List<ResolvedResource> resolvedResources) {
         AtomicReference<Boolean> thereIsOfficialResource = new AtomicReference<>(false);
-        List<RecommendedResource> recommendations = resolvedResources.parallelStream().map(resolvedResource -> {
-            RecommendedResource recommendedResource = new RecommendedResource()
+        List<ResourceRecommendation> recommendations = resolvedResources.parallelStream().map(resolvedResource -> {
+            ResourceRecommendation resourceRecommendation = new ResourceRecommendation()
                     .setAccessURL(resolvedResource.getAccessURL())
                     .setId(resolvedResource.getId());
             if (resolvedResource.isOfficial()) {
                 thereIsOfficialResource.set(Boolean.TRUE);
-                return recommendedResource
+                return resourceRecommendation
                         .setRecommendationIndex(99)
                         .setRecommendationExplanation("Official resource in this context");
             }
-            return recommendedResource
+            return resourceRecommendation
                     .setRecommendationIndex(0)
                     .setRecommendationExplanation("This resource is not official within this context");
         }).collect(Collectors.toList());

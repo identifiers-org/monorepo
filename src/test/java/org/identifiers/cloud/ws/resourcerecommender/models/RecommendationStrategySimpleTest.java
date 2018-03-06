@@ -57,7 +57,7 @@ public class RecommendationStrategySimpleTest {
         List<ResolvedResource> dataset = unofficial.subList(0, 3);
         dataset.add(official.get(0));
         // Evaluate the recommendation
-        List<RecommendedResource> recommendations = recommendationStrategy.getRecommendations(dataset);
+        List<ResourceRecommendation> recommendations = recommendationStrategy.getRecommendations(dataset);
 /*      ObjectMapper objectMapper = new ObjectMapper();
         recommendations.stream().forEach(recommendedResource -> {
             try {
@@ -77,7 +77,7 @@ public class RecommendationStrategySimpleTest {
     public void testSingleOfficialResolvedResource() {
         List<ResolvedResource> official = Lists.newArrayList(officialResolvedResources);
         Collections.shuffle(official);
-        List<RecommendedResource> recommendations = recommendationStrategy.getRecommendations(official.subList(0, 1));
+        List<ResourceRecommendation> recommendations = recommendationStrategy.getRecommendations(official.subList(0, 1));
         assertThat("When there is only one resource, this resource scores max.",
                 ((recommendations.size() == 1) && (recommendations.get(0).getRecommendationIndex() == 99)),
                 is(true));
@@ -87,7 +87,7 @@ public class RecommendationStrategySimpleTest {
     public void testSingleUnofficialResolvedResource() {
         List<ResolvedResource> unOfficial = Lists.newArrayList(unOfficialResolvedResources);
         Collections.shuffle(unOfficial);
-        List<RecommendedResource> recommendations = recommendationStrategy.getRecommendations(unOfficial.subList(0, 1));
+        List<ResourceRecommendation> recommendations = recommendationStrategy.getRecommendations(unOfficial.subList(0, 1));
         assertThat("When there is only one resource, this resource scores max.",
                 ((recommendations.size() == 1) && (recommendations.get(0).getRecommendationIndex() == 99)),
                 is(true));
@@ -98,7 +98,7 @@ public class RecommendationStrategySimpleTest {
         List<ResolvedResource> unOfficial = Lists.newArrayList(unOfficialResolvedResources);
         Collections.shuffle(unOfficial);
         List<ResolvedResource> dataset = unOfficial.subList(0, unOfficial.size() / 2);
-        List<RecommendedResource> recommendations = recommendationStrategy.getRecommendations(dataset);
+        List<ResourceRecommendation> recommendations = recommendationStrategy.getRecommendations(dataset);
         assertThat("When all resources are unofficial, all of them go back",
                 recommendations.size() == dataset.size(),
                 is(true));

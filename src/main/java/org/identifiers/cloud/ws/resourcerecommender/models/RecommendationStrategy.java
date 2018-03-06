@@ -10,5 +10,5 @@ import java.util.List;
  * ---
  */
 public interface RecommendationStrategy {
-    List<RecommendedResource> getRecommendations(List<ResolvedResource> resolvedResources);
+    List<ResourceRecommendation> getRecommendations(List<ResolvedResource> resolvedResources);
 }
