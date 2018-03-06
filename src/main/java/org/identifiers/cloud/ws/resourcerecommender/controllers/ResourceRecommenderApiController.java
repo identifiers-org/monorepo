@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.resourcerecommender.controllers;
 
 import org.identifiers.cloud.ws.resourcerecommender.models.*;
+import org.identifiers.cloud.ws.resourcerecommender.models.api.requests.ServiceRequestRecommend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
