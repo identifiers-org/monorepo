@@ -10,6 +10,7 @@
 
 	<name>resource-recommender</name>
 	<description>Resource Recommendation Web Service for Identifiers.org platform</description>
+	<url>http://identifiers.org</url>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
