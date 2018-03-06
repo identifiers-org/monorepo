@@ -10,6 +10,7 @@
 
     <name>resolver</name>
     <description>ID Resolver Web Service API</description>
+    <url>http://identifiers.org</url>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
