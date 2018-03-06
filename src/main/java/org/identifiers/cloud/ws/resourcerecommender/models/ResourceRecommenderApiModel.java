@@ -1,6 +1,8 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
 import org.identifiers.cloud.ws.resourcerecommender.models.api.requests.ServiceRequestRecommend;
+import org.identifiers.cloud.ws.resourcerecommender.models.api.responses.ResponseRecommendPayload;
+import org.identifiers.cloud.ws.resourcerecommender.models.api.responses.ServiceResponseRecommend;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

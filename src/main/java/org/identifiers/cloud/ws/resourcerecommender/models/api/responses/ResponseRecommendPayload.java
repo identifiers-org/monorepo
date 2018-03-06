@@ -1,6 +1,7 @@
-package org.identifiers.cloud.ws.resourcerecommender.models;
+package org.identifiers.cloud.ws.resourcerecommender.models.api.responses;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.identifiers.cloud.ws.resourcerecommender.models.ResourceRecommendation;
 
 import java.io.Serializable;
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.identifiers.cloud.ws.resourcerecommender.models;
+package org.identifiers.cloud.ws.resourcerecommender.models.api.responses;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.http.HttpStatus;
