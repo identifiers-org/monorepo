@@ -13,12 +13,20 @@ public class MetadataFetcherException extends RuntimeException {
         INTERNAL_ERROR(1, "An internal error occurred while fetching metadata"),
         METADATA_INVALID(2, "Invalid Metadata found");
 
-        private final int errorCode;
+        private final int value;
         private final String errorDescription;
 
-        ErrorCode(int errorCode, String errorDescription) {
-            this.errorCode = errorCode;
+        ErrorCode(int value, String errorDescription) {
+            this.value = value;
             this.errorDescription = errorDescription;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public String getErrorDescription() {
+            return errorDescription;
         }
     }
 
