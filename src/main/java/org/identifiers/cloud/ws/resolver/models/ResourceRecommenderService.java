@@ -1,8 +1,8 @@
 package org.identifiers.cloud.ws.resolver.models;
 
 import org.identifiers.cloud.libapi.ApiServicesFactory;
-import org.identifiers.cloud.libapi.models.ResourceRecommender.ResolvedResource;
-import org.identifiers.cloud.libapi.models.ResourceRecommender.ResourceRecommendation;
+import org.identifiers.cloud.libapi.models.resourcerecommender.ResolvedResource;
+import org.identifiers.cloud.libapi.models.resourcerecommender.ResourceRecommendation;
 import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
