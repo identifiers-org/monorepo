@@ -1,5 +1,6 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
@@ -29,7 +30,7 @@ public class MetadataFetcherWithJavascript implements MetadataFetcher {
     private Logger logger = LoggerFactory.getLogger(MetadataFetcherWithJavascript.class);
 
     @Override
-    public String fetchMetadataFor(String url) throws MetadataFetcherException {
+    public Object fetchMetadataFor(String url) throws MetadataFetcherException {
         // TODO - This is too slow, we need some kind of caching mechanism here
         // Fetch the URL content
         WebClient webClient = new WebClient(BrowserVersion.CHROME);
@@ -61,21 +62,34 @@ public class MetadataFetcherWithJavascript implements MetadataFetcher {
         }
         // Check on used contexts
         //String metadata = jsonldDomNodes.get(0).getFirstChild().getTextContent();
-        String metadata = String.format("[%s]",
+        /*String metadata = String.format("[%s]",
                 String.join(",", jsonldDomNodes.stream()
-                        .map(domNode -> domNode.getFirstChild().getTextContent()).collect(Collectors.toList())));
+                        .map(domNode -> domNode.getFirstChild().getTextContent()).collect(Collectors.toList())));*/
+        ObjectMapper mapper = new ObjectMapper();
+        List<Object> metadataObjects = jsonldDomNodes.stream().map(domNode -> {
+            try {
+                return mapper.readTree(domNode.getFirstChild().getTextContent());
+            } catch (IOException e) {
+                // TODO - Right now we ignore the errors, as it is not very clear how we're gonna deal with this kind
+                // TODO - of data
+            }
+            return "ERROR IOException - Jackson JSON parser";
+        }).collect(Collectors.toList());
+        /*String metadata = "ERROR - Jackson mapper";
+        try {
+            metadata = mapper.writeValueAsString(metadataObjects);
+        } catch (JsonProcessingException e) {
+            // TODO
+        }*/
+        String metadata = "";
+        try {
+            metadata = mapper.writeValueAsString(metadataObjects);
+        } catch (JsonProcessingException e) {
+            // TODO - Not important right now as it is just for logging errors
+        }
         logger.debug("Trying to process Metadata content '{}'", metadata);
         JsonNode metadataRootNode = null;
-        try {
-            metadataRootNode = new ObjectMapper().readTree(metadata);
-        } catch (IOException e) {
-            String errorMessage = String.format("JSON-LD PROCESSING ERROR for URL '%s', " +
-                    "METADATA being parsed '%s', " +
-                    "ERROR '%s'", url, metadata, e.getMessage());
-            logger.error(errorMessage);
-            throw new MetadataFetcherException(errorMessage,
-                    MetadataFetcherException.ErrorCode.INTERNAL_ERROR);
-        }
+        metadataRootNode = new ObjectMapper().valueToTree(metadataObjects);
         List<JsonNode> contextParents = metadataRootNode.findParents("@context");
         if (contextParents.isEmpty()) {
             String errorMessage = String.format("JSON-LD PROCESSING ERROR for URL '%s', " +
@@ -88,6 +102,6 @@ public class MetadataFetcherWithJavascript implements MetadataFetcher {
         String contexts = String.join(",", contextParents.stream().map(jsonNode -> jsonNode.get("@context").asText()).collect(Collectors.toSet()));
         logger.info("SUCCESSFUL metadata extraction from URL '{}', METADATA '{}', found contexts '[{}]'",
                 url, metadata, contexts);
-        return metadata;
+        return metadataObjects;
     }
 }
