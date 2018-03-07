@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import org.identifiers.cloud.libapi.models.ResourceRecommender.ResourceRecommendation;
 import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
 
 import java.util.List;
@@ -12,5 +13,5 @@ import java.util.List;
  * ---
  */
 public interface ResourceRecommenderStrategy {
-    List<RecommendedResource> getRecommendations(List<ResourceEntry> resources) throws ResourceRecommenderStrategyException;
+    List<ResourceRecommendation> getRecommendations(List<ResourceEntry> resources) throws ResourceRecommenderStrategyException;
 }

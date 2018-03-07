@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import org.identifiers.cloud.libapi.models.ResourceRecommender.ResourceRecommendation;
 import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,7 @@ public class ResolverApiModel {
     // This code may be refactored out later on
     private List<ResolverApiResponseResource> resolveResourcesForCompactId(CompactId compactId,
                                                                            List<ResourceEntry> resourceEntries,
-                                                                           Map<String, RecommendedResource> recommendationById) {
+                                                                           Map<String, ResourceRecommendation> recommendationById) {
         // TODO - I need to add whether the resource is official or not
         return resourceEntries
                 .parallelStream()
@@ -58,12 +59,12 @@ public class ResolverApiModel {
                 }).collect(Collectors.toList());
     }
 
-    private Map<String, RecommendedResource> getRecommendationsByResourceId(List<ResourceEntry> resourceEntries) {
+    private Map<String, ResourceRecommendation> getRecommendationsByResourceId(List<ResourceEntry> resourceEntries) {
         try {
             return resourceRecommender
                     .getRecommendations(resourceEntries)
                     .parallelStream()
-                    .collect(Collectors.toMap(RecommendedResource::getId,
+                    .collect(Collectors.toMap(ResourceRecommendation::getId,
                             recommendedResource -> recommendedResource,
                             (oldValue, newValue) -> oldValue));
         } catch (ResourceRecommenderStrategyException e) {
