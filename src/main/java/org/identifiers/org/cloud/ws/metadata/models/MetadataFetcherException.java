@@ -9,7 +9,9 @@ package org.identifiers.org.cloud.ws.metadata.models;
  */
 public class MetadataFetcherException extends RuntimeException {
     public enum ErrorCode {
-        METADATA_NOT_FOUND(0, "Metadata NOT FOUND");
+        METADATA_NOT_FOUND(0, "Metadata NOT FOUND"),
+        INTERNAL_ERROR(1, "An internal error occurred while fetching metadata"),
+        METADATA_INVALID(2, "Invalid Metadata found");
 
         private final int errorCode;
         private final String errorDescription;

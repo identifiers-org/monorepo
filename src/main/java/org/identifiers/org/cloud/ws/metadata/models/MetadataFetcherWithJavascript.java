@@ -41,7 +41,9 @@ public class MetadataFetcherWithJavascript implements MetadataFetcher {
             // NOTE - Magic number here! OMG! Maybe change it in the future, if it makes sense
             webClient.waitForBackgroundJavaScript(10000);
         } catch (IOException e) {
-            throw new MetadataFetcherException(String.format("METADATA FETCH ERROR for URL '%s', there was a problem while fetching its content", url));
+            throw new MetadataFetcherException(String.format("METADATA FETCH ERROR for URL '%s', " +
+                    "there was a problem while fetching its content", url),
+                    MetadataFetcherException.ErrorCode.INTERNAL_ERROR);
         }
         logger.debug("Retrieved content from URL '{}', titled '{}'", url, page.getTitleText());
         // Look for JSON-LD
@@ -53,9 +55,9 @@ public class MetadataFetcherWithJavascript implements MetadataFetcher {
             throw new MetadataFetcherException(errorMessage);
         }
         if (jsonldDomNodes.isEmpty()) {
-            String errorMessage = String.format("JSON-LD formatted METADATA NOT FOUND for URL '%s', content \n'%s'", url, page.getHead().toString());
+            String errorMessage = String.format("JSON-LD formatted METADATA NOT FOUND for URL '%s'", url);
             logger.error(errorMessage);
-            throw new MetadataFetcherException(errorMessage);
+            throw new MetadataFetcherException(errorMessage, MetadataFetcherException.ErrorCode.METADATA_NOT_FOUND);
         }
         // Check on used contexts
         String metadata = jsonldDomNodes.get(0).getFirstChild().getTextContent();
@@ -68,7 +70,8 @@ public class MetadataFetcherWithJavascript implements MetadataFetcher {
                     "METADATA being parsed '%s', " +
                     "ERROR '%s'", url, metadata, e.getMessage());
             logger.error(errorMessage);
-            throw new MetadataFetcherException(errorMessage);
+            throw new MetadataFetcherException(errorMessage,
+                    MetadataFetcherException.ErrorCode.INTERNAL_ERROR);
         }
         List<JsonNode> contextParents = metadataRootNode.findParents("@context");
         if (contextParents.isEmpty()) {
@@ -76,10 +79,12 @@ public class MetadataFetcherWithJavascript implements MetadataFetcher {
                     "METADATA being parsed '%s', " +
                     "NO CONTEXT DEFINITION NODES FOUND! INVALID JSON+LD", url, metadata);
             logger.error(errorMessage);
-            throw new MetadataFetcherException(errorMessage);
+            throw new MetadataFetcherException(errorMessage,
+                    MetadataFetcherException.ErrorCode.METADATA_INVALID);
         }
         String contexts = String.join(",", contextParents.stream().map(jsonNode -> jsonNode.get("@context").asText()).collect(Collectors.toSet()));
-        logger.info("SUCCESSFUL metadata extraction from URL '{}', METADATA '{}', found contexts '[{}]'", url, metadata, contexts);
+        logger.info("SUCCESSFUL metadata extraction from URL '{}', METADATA '{}', found contexts '[{}]'",
+                url, metadata, contexts);
         return metadata;
     }
 }
