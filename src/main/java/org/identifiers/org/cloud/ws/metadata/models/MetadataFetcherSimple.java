@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 @Scope("prototype")
 @Profile("disabled")
 public class MetadataFetcherSimple implements MetadataFetcher {
+    // TODO - Is it worth updating this one to use the new error codes in the exception?
     private static Logger logger = LoggerFactory.getLogger(MetadataFetcherSimple.class);
 
     @Override
