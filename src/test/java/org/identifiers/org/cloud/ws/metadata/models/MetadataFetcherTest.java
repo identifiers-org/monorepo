@@ -32,8 +32,8 @@ public class MetadataFetcherTest {
         // This unit test is too dependant on that particular URL to be up, as soon as this is working, I may
         // choose to deactivate this test
         getUrlsWithValidMetadata().parallelStream().forEach(validUrl -> {
-            String metadata = metadataFetcher.fetchMetadataFor(validUrl);
-            assertThat(String.format("URL '%s' contains VALID metadata", validUrl), metadata.isEmpty(), is(false));
+            Object metadata = metadataFetcher.fetchMetadataFor(validUrl);
+            assertThat(String.format("URL '%s' contains VALID metadata", validUrl), metadata == null, is(false));
         });
     }
 
