@@ -12,7 +12,7 @@ import java.io.Serializable;
  * Timestamp: 2018-03-06 11:32
  * ---
  */
-@JsonIgnoreProperties(value = "{httpStatus")
+@JsonIgnoreProperties(value = {"httpStatus"})
 public class ServiceResponse<T> implements Serializable {
     private String apiVersion;
     private String errorMessage;

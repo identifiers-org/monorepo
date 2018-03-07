@@ -1,10 +1,8 @@
 package org.identifiers.cloud.ws.resolver.controllers;
 
-import org.identifiers.cloud.ws.resolver.models.ResolverApiException;
 import org.identifiers.cloud.ws.resolver.models.ResolverApiModel;
-import org.identifiers.cloud.ws.resolver.models.ResolverApiResponse;
+import org.identifiers.cloud.ws.resolver.models.api.responses.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,36 +22,24 @@ public class ResolverApiController {
     @RequestMapping(value = "{compactId}", method = RequestMethod.GET)
     public @ResponseBody
     ResponseEntity<?> queryByCompactId(@PathVariable("compactId") String compactId) {
-        ResolverApiResponse result = new ResolverApiResponse();
         // NOTE - I don't like how this looks, if handling exceptions at controller level I think I should go for
         // @ControllerAdvice, but it depends on where the exception belongs to, I think all exceptions belonging to the
         // business logic should be caught and handled at the model level (the main model associated to the controller),
         // and only request related exceptions should be handled at the controller level, probably via @ControllerAdvice
         // mechanism and error controller, that I need to implement anyway.
-        try {
-            result = resolverApiModel.resolveCompactId(compactId);
-        } catch (ResolverApiException e) {
-            result.setErrorMessage(String.format("The following error occurred while processing your request '%s'", e.getMessage()));
-            result.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        ServiceResponse result = resolverApiModel.resolveCompactId(compactId);
         return new ResponseEntity<>(result, result.getHttpStatus());
     }
 
     @RequestMapping(value = "{selector}/{compactId}", method = RequestMethod.GET)
     public @ResponseBody
     ResponseEntity<?> queryBySelectorAndCompactId(@PathVariable("selector") String selector, @PathVariable("compactId") String compactId) {
-        ResolverApiResponse result = new ResolverApiResponse();
         // NOTE - I don't like how this looks, if handling exceptions at controller level I think I should go for
         // @ControllerAdvice, but it depends on where the exception belongs to, I think all exceptions belonging to the
         // business logic should be caught and handled at the model level (the main model associated to the controller),
         // and only request related exceptions should be handled at the controller level, probably via @ControllerAdvice
         // mechanism and error controller, that I need to implement anyway.
-        try {
-            result = resolverApiModel.resolveCompactId(compactId, selector);
-        } catch (ResolverApiException e) {
-            result.setErrorMessage(String.format("The following error occurred while processing your request '%s'", e.getMessage()));
-            result.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        ServiceResponse result = resolverApiModel.resolveCompactId(compactId, selector);
         return new ResponseEntity<>(result, result.getHttpStatus());
     }
 
