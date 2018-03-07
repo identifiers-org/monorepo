@@ -1,5 +1,7 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
+import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
+
 import java.util.List;
 
 /**
@@ -10,5 +12,5 @@ import java.util.List;
  * ---
  */
 public interface IdResourceSelector {
-    ResolverApiResponseResource selectResource(List<ResolverApiResponseResource> resources) throws IdResourceSelectorException;
+    ResolvedResource selectResource(List<ResolvedResource> resources) throws IdResourceSelectorException;
 }

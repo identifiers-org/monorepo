@@ -1,5 +1,6 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
+import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -17,8 +18,11 @@ import java.util.stream.Collectors;
 @Profile("disabled")
 public class IdResourceSelectorSimpleOfficial implements IdResourceSelector {
     @Override
-    public ResolverApiResponseResource selectResource(List<ResolverApiResponseResource> resources) throws IdResourceSelectorException {
-        List<ResolverApiResponseResource> selected = resources.parallelStream().filter(resolverApiResponseResource -> resolverApiResponseResource.isOfficial()).collect(Collectors.toList());
+    public ResolvedResource selectResource(List<ResolvedResource> resources) throws IdResourceSelectorException {
+        List<ResolvedResource> selected = resources
+                .parallelStream()
+                .filter(resolverApiResponseResource -> resolverApiResponseResource.isOfficial())
+                .collect(Collectors.toList());
         if (selected.isEmpty()) {
             throw new IdResourceSelectorException("NO ID RESOURCE could be selected for mining metadata from (select official resource selector)");
         }

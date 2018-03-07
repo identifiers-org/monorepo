@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  */
 @Component
 @Scope("prototype")
-@Profile("never")
+@Profile("disabled")
 public class MetadataFetcherSimple implements MetadataFetcher {
     private static Logger logger = LoggerFactory.getLogger(MetadataFetcherSimple.class);
 

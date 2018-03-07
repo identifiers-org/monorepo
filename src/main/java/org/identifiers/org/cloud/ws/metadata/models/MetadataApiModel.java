@@ -2,6 +2,9 @@ package org.identifiers.org.cloud.ws.metadata.models;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
+import org.identifiers.org.cloud.ws.metadata.models.api.responses.ResponseFetchMetadataPayload;
+import org.identifiers.org.cloud.ws.metadata.models.api.responses.ServiceResponseFetchMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -20,44 +23,56 @@ import java.util.UUID;
  */
 @Component
 public class MetadataApiModel {
-
+    public static final String apiVersion = "1.0";
     private static Logger logger = LoggerFactory.getLogger(MetadataApiModel.class);
     private static String runningSessionId = UUID.randomUUID().toString();
     private IdResolver idResolver;
     private MetadataFetcher metadataFetcher;
     private IdResourceSelector idResourceSelector;
 
-    public MetadataApiModel(IdResolver idResolver, MetadataFetcher metadataFetcher, IdResourceSelector idResourceSelector) {
+    public MetadataApiModel(IdResolver idResolver,
+                            MetadataFetcher metadataFetcher,
+                            IdResourceSelector idResourceSelector) {
         this.idResolver = idResolver;
         this.metadataFetcher = metadataFetcher;
         this.idResourceSelector = idResourceSelector;
     }
 
-    public MetadataApiResponse getMetadataFor(String compactId) {
-        List<ResolverApiResponseResource> resources = new ArrayList<>();
-        MetadataApiResponse response = new MetadataApiResponse();
-        String metadata = "";
-        response.setMetadata(metadata);
+    private ServiceResponseFetchMetadata createDefaultResponse(HttpStatus httpStatus, String errorMessage) {
+        ServiceResponseFetchMetadata response = new ServiceResponseFetchMetadata();
+        response.setApiVersion(apiVersion)
+                .setHttpStatus(httpStatus)
+                .setErrorMessage(errorMessage);
+        response.setPayload(new ResponseFetchMetadataPayload().setMetadata(""));
+        return response;
+    }
+
+    private List<ResolvedResource> resolveCompactId(String compactId, ServiceResponseFetchMetadata response) {
         // Resolve the Compact ID
+        List<ResolvedResource> resources = new ArrayList<>();
         try {
             resources = idResolver.resolve(compactId);
         } catch (IdResolverException e) {
             response.setErrorMessage(String.format("FAILED to fetch metadata for Compact ID '%s', " +
-                    "because '%s'",
+                            "because '%s'",
                     compactId,
                     e.getMessage()));
             // TODO I need to refine the error reporting here to correctly flag errors as client or server side
             response.setHttpStatus(HttpStatus.BAD_REQUEST);
-            return response;
+            return resources;
         }
         if (resources.isEmpty()) {
             response.setErrorMessage(String.format("FAILED to fetch metadata for Compact ID '%s' " +
                     "because NO RESOURCES COULD BE FOUND", compactId));
             response.setHttpStatus(HttpStatus.NOT_FOUND);
-            return response;
         }
-        // Select the provider
-        ResolverApiResponseResource selectedResource = null;
+        return resources;
+    }
+
+    private ResolvedResource selectResource(String compactId,
+                                            List<ResolvedResource> resources,
+                                            ServiceResponseFetchMetadata response) {
+        ResolvedResource selectedResource = null;
         try {
             selectedResource = idResourceSelector.selectResource(resources);
         } catch (IdResourceSelectorException e) {
@@ -67,18 +82,35 @@ public class MetadataApiModel {
                     e.getMessage()));
             // TODO I need to refine the error reporting here to correctly flag errors as client or server side
             response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-            return response;
+            return selectedResource;
         }
         // Log selection
         ObjectMapper mapper = new ObjectMapper();
         try {
-            logger.info("Mining metadata for Compact ID '{}' on selected resource '{}'", compactId, mapper.writeValueAsString(selectedResource));
+            logger.info("Mining metadata for Compact ID '{}' on selected resource '{}'",
+                    compactId,
+                    mapper.writeValueAsString(selectedResource));
         } catch (JsonProcessingException e) {
             // TODO will never happen ^_^
         }
+        return selectedResource;
+    }
+
+    // --- API Methods ---
+    public ServiceResponseFetchMetadata getMetadataFor(String compactId) {
+        ServiceResponseFetchMetadata response = createDefaultResponse(HttpStatus.OK, "");
+        List<ResolvedResource> resources = resolveCompactId(compactId, response);
+        if (response.getHttpStatus() != HttpStatus.OK) {
+            return response;
+        }
+        // Select the provider
+        ResolvedResource selectedResource = selectResource(compactId, resources, response);
+        if (response.getHttpStatus() != HttpStatus.OK) {
+            return response;
+        }
         // Extract the metadata
         try {
-            metadata = metadataFetcher.fetchMetadataFor(selectedResource.getAccessUrl());
+           response.getPayload().setMetadata(metadataFetcher.fetchMetadataFor(selectedResource.getAccessUrl()));
         } catch (MetadataFetcherException e) {
             response.setErrorMessage(String.format("FAILED to fetch metadata for Compact ID '%s', " +
                             "because '%s'",
@@ -87,19 +119,16 @@ public class MetadataApiModel {
             // TODO I need to refine the error reporting here to correctly flag errors as client or server side
             response.setHttpStatus(HttpStatus.BAD_REQUEST);
         }
-        response.setMetadata(metadata);
         // return the response
         return response;
     }
 
-    public MetadataApiResponse getMetadataForUrl(String url) {
+    public ServiceResponseFetchMetadata getMetadataForUrl(String url) {
         // Prepare default response
-        MetadataApiResponse response = new MetadataApiResponse();
-        String metadata = "";
-        response.setMetadata(metadata);
+        ServiceResponseFetchMetadata response = createDefaultResponse(HttpStatus.OK, "");
         // Extract the metadata
         try {
-            metadata = metadataFetcher.fetchMetadataFor(url);
+            response.getPayload().setMetadata(metadataFetcher.fetchMetadataFor(url));
         } catch (MetadataFetcherException e) {
             response.setErrorMessage(String.format("FAILED to fetch metadata for URL '%s', " +
                             "because '%s'",
@@ -108,7 +137,6 @@ public class MetadataApiModel {
             // TODO I need to refine the error reporting here to correctly flag errors as client or server side
             response.setHttpStatus(HttpStatus.BAD_REQUEST);
         }
-        response.setMetadata(metadata);
         // return the response
         return response;
     }

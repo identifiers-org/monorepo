@@ -1,5 +1,7 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
+import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
+
 import java.util.List;
 
 /**
@@ -17,5 +19,5 @@ public interface IdResolver {
     // the job perfectly, and this iteration of the metadata web service will not have another provider. Also, even in
     // the case of having another provider, the only burden in to the eyes, as this model will probably stay, and models
     // from other providers would be translated into this one... until a differentiation aspect comes up.
-    List<ResolverApiResponseResource> resolve(String compactIdParameter) throws IdResolverException;
+    List<ResolvedResource> resolve(String compactIdParameter) throws IdResolverException;
 }
