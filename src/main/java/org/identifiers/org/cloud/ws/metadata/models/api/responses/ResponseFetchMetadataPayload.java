@@ -10,13 +10,13 @@ import java.io.Serializable;
  * ---
  */
 public class ResponseFetchMetadataPayload implements Serializable {
-    String metadata;
+    Object metadata;
 
-    public String getMetadata() {
+    public Object getMetadata() {
         return metadata;
     }
 
-    public ResponseFetchMetadataPayload setMetadata(String metadata) {
+    public ResponseFetchMetadataPayload setMetadata(Object metadata) {
         this.metadata = metadata;
         return this;
     }
