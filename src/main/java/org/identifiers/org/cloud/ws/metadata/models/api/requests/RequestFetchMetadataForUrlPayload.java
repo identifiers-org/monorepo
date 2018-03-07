@@ -10,14 +10,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * ---
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RequestMetadataForUrl {
+public class RequestFetchMetadataForUrlPayload {
     private String url;
 
     public String getUrl() {
         return url;
     }
 
-    public RequestMetadataForUrl setUrl(String url) {
+    public RequestFetchMetadataForUrlPayload setUrl(String url) {
         this.url = url;
         return this;
     }
