@@ -1,7 +1,6 @@
 package org.identifiers.cloud.ws.resolver.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.identifiers.cloud.ws.resolver.models.api.responses.ResolverApiResponseResource;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
