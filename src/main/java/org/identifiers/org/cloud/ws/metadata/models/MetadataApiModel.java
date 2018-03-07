@@ -117,7 +117,15 @@ public class MetadataApiModel {
                     compactId,
                     e.getMessage()));
             // TODO I need to refine the error reporting here to correctly flag errors as client or server side
-            if (e.)
+            if (e.getErrorCode() == MetadataFetcherException.ErrorCode.INTERNAL_ERROR) {
+                response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            if (e.getErrorCode() == MetadataFetcherException.ErrorCode.METADATA_NOT_FOUND) {
+                response.setHttpStatus(HttpStatus.NOT_FOUND);
+            }
+            if (e.getErrorCode() == MetadataFetcherException.ErrorCode.METADATA_INVALID) {
+                response.setHttpStatus(HttpStatus.UNPROCESSABLE_ENTITY);
+            }
             response.setHttpStatus(HttpStatus.BAD_REQUEST);
         }
         // return the response
