@@ -1,8 +1,9 @@
 package org.identifiers.org.cloud.ws.metadata.controllers;
 
 import org.identifiers.org.cloud.ws.metadata.models.MetadataApiModel;
-import org.identifiers.org.cloud.ws.metadata.models.api.requests.RequestFetchMetadataForUrlPayload;
+import org.identifiers.org.cloud.ws.metadata.models.api.requests.ServiceRequestFetchMetadataForUrl;
 import org.identifiers.org.cloud.ws.metadata.models.api.responses.ServiceResponseFetchMetadata;
+import org.identifiers.org.cloud.ws.metadata.models.api.responses.ServiceResponseFetchMetadataForUrl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +30,8 @@ public class MetadataApiController {
     }
 
     @RequestMapping(value = "/getMetadataForUrl", method = RequestMethod.POST)
-    public ResponseEntity<?> getMetadataForUrl(@RequestBody RequestFetchMetadataForUrlPayload request) {
-        ServiceResponseFetchMetadata response = metadataApiModel.getMetadataForUrl(request.getUrl());
+    public ResponseEntity<?> getMetadataForUrl(@RequestBody ServiceRequestFetchMetadataForUrl request) {
+        ServiceResponseFetchMetadataForUrl response = metadataApiModel.getMetadataForUrl(request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
