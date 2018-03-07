@@ -1,7 +1,7 @@
 package org.identifiers.org.cloud.ws.metadata.controllers;
 
 import org.identifiers.org.cloud.ws.metadata.models.MetadataApiModel;
-import org.identifiers.org.cloud.ws.metadata.models.RequestMetadataForUrl;
+import org.identifiers.org.cloud.ws.metadata.models.api.requests.RequestMetadataForUrl;
 import org.identifiers.org.cloud.ws.metadata.models.api.responses.ServiceResponseFetchMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

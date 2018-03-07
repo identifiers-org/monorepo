@@ -49,18 +49,21 @@ public class MetadataFetcherWithJavascript implements MetadataFetcher {
         // Look for JSON-LD
         String jsonldSelector = "script[type='application/ld+json']";
         DomNodeList<DomNode> jsonldDomNodes = page.querySelectorAll(jsonldSelector);
-        if (jsonldDomNodes.size() > 1) {
+        /*if (jsonldDomNodes.size() > 1) {
             String errorMessage = String.format("MULTIPLE JSON-LD entries found in the header of URL '%s', entries: %s", url, jsonldDomNodes.toString());
             logger.error(errorMessage);
             throw new MetadataFetcherException(errorMessage);
-        }
+        }*/
         if (jsonldDomNodes.isEmpty()) {
             String errorMessage = String.format("JSON-LD formatted METADATA NOT FOUND for URL '%s'", url);
             logger.error(errorMessage);
             throw new MetadataFetcherException(errorMessage, MetadataFetcherException.ErrorCode.METADATA_NOT_FOUND);
         }
         // Check on used contexts
-        String metadata = jsonldDomNodes.get(0).getFirstChild().getTextContent();
+        //String metadata = jsonldDomNodes.get(0).getFirstChild().getTextContent();
+        String metadata = String.format("[%s]",
+                String.join(",", jsonldDomNodes.stream()
+                        .map(domNode -> domNode.getFirstChild().getTextContent()).collect(Collectors.toList())));
         logger.debug("Trying to process Metadata content '{}'", metadata);
         JsonNode metadataRootNode = null;
         try {

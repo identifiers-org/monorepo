@@ -1,4 +1,4 @@
-package org.identifiers.org.cloud.ws.metadata.models;
+package org.identifiers.org.cloud.ws.metadata.models.api.requests;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
