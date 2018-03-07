@@ -1,7 +1,6 @@
-package org.identifiers.cloud.ws.resolver.models;
+package org.identifiers.cloud.ws.resolver.models.api.responses;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.identifiers.cloud.ws.resolver.models.api.responses.Recommendation;
 
 import java.io.Serializable;
 
