@@ -24,6 +24,10 @@ public class MetadataFetcherException extends RuntimeException {
 
     private ErrorCode errorCode;
 
+    public ErrorCode getErrorCode() {
+        return errorCode;
+    }
+
     public MetadataFetcherException(String message) {
         super(message);
     }

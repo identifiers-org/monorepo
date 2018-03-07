@@ -117,6 +117,7 @@ public class MetadataApiModel {
                     compactId,
                     e.getMessage()));
             // TODO I need to refine the error reporting here to correctly flag errors as client or server side
+            if (e.)
             response.setHttpStatus(HttpStatus.BAD_REQUEST);
         }
         // return the response
