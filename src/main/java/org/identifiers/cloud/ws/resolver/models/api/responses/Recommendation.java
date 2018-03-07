@@ -1,4 +1,4 @@
-package org.identifiers.cloud.ws.resolver.models;
+package org.identifiers.cloud.ws.resolver.models.api.responses;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
