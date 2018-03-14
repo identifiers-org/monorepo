@@ -8,10 +8,27 @@
 container_name = identifiersorg/cloud-ws-resource-recommender
 #docker_compose_development_file = docker-compose-development.yml
 springboot_development_profile = development
-tag_version = `cat VERSION`
+tag_version = $(shell cat VERSION)
 
 # Default target
 all: clean container_production_push
+
+release: deploy set_next_development_version
+	@echo "<===|DEVOPS|===> [DEPLOY] Deploying library to Maven Respository"
+	@git add pom.xml
+	@git commit -am "Next project development version prepared"
+	@git push
+
+sync_project_version:
+	@echo "<===|DEVOPS|===> [SYNC] Synchronizing project version to version '${tag_version}'"
+	@mvn versions:set -DnewVersion=${tag_version}
+
+set_next_development_version:
+	@echo "<===|DEVOPS|===> [SYNC] Setting the new development version, current ${tag_version}"
+	@mvn versions:set -DnewVersion=$(shell ./increment_version.sh -p ${tag_version})-SNAPSHOT
+
+deploy: clean container_production_push
+	@echo "<===|DEVOPS|===> [DEPLOY] Deploying version ${tag_version}"
 
 development_env_up:
 	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing development environment UP"
@@ -37,7 +54,7 @@ app_structure:
 	@mvn package -DskipTests
 	@mkdir -p target/app/log
 	@mkdir -p target/app/tmp
-	@cp target/resource-recommender-*.jar target/app/service.jar
+	@cp target/resource-recommender-$(shell mvn help:evaluate -Dexpression=project.version | grep -v '^\[').jar target/app/service.jar
 
 container_production_build: app_structure
 	@echo "<===|DEVOPS|===> [BUILD] Production container $(container_name):$(tag_version)"
@@ -55,4 +72,4 @@ clean:
 	@echo "<===|DEVOPS|===> [CLEAN] Cleaning the space"
 	@mvn clean > /dev/null
 
-.PHONY: all clean app_structure container_production_build container_production_push dev_container_build
+.PHONY: all clean app_structure container_production_build container_production_push dev_container_build deploy release sync_project_version set_next_development_version

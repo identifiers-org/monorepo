@@ -5,13 +5,13 @@
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 
 # Defaults
-verb=nothing
+verb='nothing'
 message=""
 version=$(cat VERSION)
 
 if [ $# -lt 1 ]
 then
-  echo "usage: $(basename $0) patch|minor|major major.minor.patch"
+  echo "usage: $(basename $0) patch|minor|major <'descriptive message for this release'>"
   exit 1
 fi
 
@@ -31,8 +31,6 @@ then
     echo "<===|DEVOPS|===> [RELEASE] PATCH"
     echo -e "\tCurrent version '${version}'"
     version=$(./increment_version.sh -p ${version})
-    echo -e "\tNew version '${version}'"
-    echo "${version}" > VERSION
     ok=true
 fi
 if [ "${verb}" == "minor" ]
@@ -40,8 +38,6 @@ then
     echo "<===|DEVOPS|===> [RELEASE] MINOR"
     echo -e "\tCurrent version '${version}'"
     version=$(./increment_version.sh -m ${version})
-    echo -e "\tNew version '${version}'"
-    echo "${version}" > VERSION
     ok=true
 fi
 if [ "${verb}" == "major" ]
@@ -49,26 +45,28 @@ then
     echo "<===|DEVOPS|===> [RELEASE] MAJOR"
     echo -e "\tCurrent version '${version}'"
     version=$(./increment_version.sh -M ${version})
-    echo -e "\tNew version '${version}'"
-    echo "${version}" > VERSION
     ok=true
 fi
 
 # Should we publish the changes?
 if $ok ; then
+    # TODO - There is room for detecting if anything went wrong here and revert the changes (feature request)
+    echo -e "\tNew version '${version}'"
+    echo "${version}" > VERSION
+    echo -e "\tSynchronize project version"
+    make sync_project_version
     echo -e "\tCommit, push and tag version"
-    git add VERSION
     if [ "${message}" != "" ] ; then
         echo -e "\tVersion Tag message: ${message}"
     else
         echo -e "\tNO VERSION tag message included"
         message="New release ${version}"
     fi
-    git commit -m "${message}"
+    git commit -am "${message}"
     git tag ${version} -m "${message}"
     git push origin ${version}
-    # Pack the new release
-    make
+    # Do the release at the project level
+    make release
 else
     echo -e "\t--- ABORT --- Something went wrong"
 fi
