@@ -11,7 +11,7 @@ springboot_development_profile = development
 tag_version = `cat VERSION`
 
 # Default target
-all: clean container_production_push
+all: deploy
 
 release: deploy set_next_development_version
 	@echo "<===|DEVOPS|===> [DEPLOY] Deploying library to Maven Respository"
