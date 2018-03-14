@@ -9,7 +9,7 @@ The docker image is called **identifiersorg/cloud-ws-resolver**, and it is part 
 
 The following command is an example on how to launch the _resolution service_
 
-> docker run -p 8080:8080 identifiersorg/cloud-ws-resolver
+> docker-compose -f docker-compose-standalone.yml up
 
 
 # How to Query the Compact ID Resolution Service
