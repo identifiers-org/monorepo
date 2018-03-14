@@ -139,7 +139,12 @@ public class ResolverApiModel {
                     selector);
             List<ResourceEntry> resourceEntries = resolverDataFetcher.findResourcesByPrefix(compactId.getPrefix())
                     .stream()
-                    .filter(resourceEntry -> resourceEntry.getResourcePrefix().equals(selector.toLowerCase()))
+                    .filter(resourceEntry -> {
+                        if (resourceEntry.getResourcePrefix() != null) {
+                            return resourceEntry.getResourcePrefix().equals(selector.toLowerCase());
+                        }
+                        return false;
+                    })
                     .collect(Collectors.toList());
             logger.info("CompactId '{}', with selector '{}' got #{} resources back from the data backend",
                     compactId.getOriginal(),
