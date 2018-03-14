@@ -1,6 +1,6 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
-import org.identifiers.cloud.libapi.ApiServicesFactory;
+import org.identifiers.cloud.libapi.services.ApiServicesFactory;
 import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
