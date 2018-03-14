@@ -19,7 +19,7 @@ clean:
 	@mvn versions:commit
 
 release: deploy set_next_development_version
-	@echo "<===|DEVOPS|===> [DEPLOY] Deploying library to Maven Respository"
+	@echo "<===|DEVOPS|===> [RELEASE] New Software Release, and next development version prepared"
 	@git add pom.xml
 	@git commit -am "Next project development version prepared"
 	@git push
@@ -33,7 +33,7 @@ set_next_development_version:
 	@mvn versions:set -DnewVersion=$(shell ./increment_version.sh -p ${tag_version})-SNAPSHOT
 
 deploy: clean container_production_push
-	@echo "<===|DEVOPS|===> [DEPLOY] Deploying version ${tag_version}"
+	@echo "<===|DEVOPS|===> [DEPLOY] Deploying service container version ${tag_version}"
 
 development_env_up:
 	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing development environment UP"
