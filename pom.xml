@@ -19,19 +19,44 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
+	<licenses>
+		<license>
+			<name>The MIT License</name>
+			<url>https://opensource.org/licenses/MIT</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<organization>
+		<name>The European Bioinformatics Institute</name>
+		<url>https://ebi.ac.uk</url>
+	</organization>
+
 	<developers>
 		<developer>
 			<id>mbernal</id>
 			<name>Manuel Bernal-Llinares</name>
 			<email>mbdebian@gmail.com</email>
-			<organization>Hermjakob Team, EMBL-European Bioinformatics Institute</organization>
-			<organizationUrl>https://www.ebi.ac.uk/</organizationUrl>
+			<organization>EMBL-European Bioinformatics Institute</organization>
+			<organizationUrl>http://ebi.ac.uk/</organizationUrl>
+			<timezone>Europe/London</timezone>
 			<roles>
+				<role>architect</role>
 				<role>developer</role>
 			</roles>
-			<timezone>Europe/London</timezone>
 		</developer>
 	</developers>
+
+	<scm>
+		<connection>scm:git:git://github.com/identifiers-org/cloud-ws-resource-recommender.git</connection>
+		<developerConnection>scm:git:ssh://github.com:identifiers-org/cloud-ws-resource-recommender.git</developerConnection>
+		<url>https://github.com/identifiers-org/cloud-ws-resource-recommender/tree/master</url>
+	</scm>
+
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/identifiers-org/cloud-ws-resource-recommender/issues</url>
+	</issueManagement>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
