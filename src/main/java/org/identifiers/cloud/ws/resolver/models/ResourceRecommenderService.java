@@ -1,6 +1,6 @@
 package org.identifiers.cloud.ws.resolver.models;
 
-import org.identifiers.cloud.libapi.ApiServicesFactory;
+import org.identifiers.cloud.libapi.services.ApiServicesFactory;
 import org.identifiers.cloud.libapi.models.resourcerecommender.ResolvedResource;
 import org.identifiers.cloud.libapi.models.resourcerecommender.ResourceRecommendation;
 import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
