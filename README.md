@@ -11,5 +11,10 @@ The score is any integer between '0' and '99', being '99' the scoring of a highl
 _resolved resource_.
 
 
+## How to get scoring data from this service
+Scoring information is obtained via the Compact ID _Resolution Service_, when it resolves a
+Compact ID into a list of providers, a.k.a. _resolved resources_.
+
+
 ### Contact
 Manuel Bernal Llinares
