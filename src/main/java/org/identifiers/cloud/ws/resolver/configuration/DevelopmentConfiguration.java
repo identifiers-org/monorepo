@@ -1,5 +1,8 @@
 package org.identifiers.cloud.ws.resolver.configuration;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+
 /**
  * Project: resolver
  * Package: org.identifiers.cloud.ws.resolver.configuration
@@ -8,5 +11,7 @@ package org.identifiers.cloud.ws.resolver.configuration;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+@Configuration
+@Profile("development")
 public class DevelopmentConfiguration {
 }
