@@ -18,15 +18,4 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 @Profile("production")
 public class ProductionConfiguration {
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("https://*.identifiers.org",
-                                "http://*.identifiers.org");
-            }
-        };
-    }
 }
