@@ -16,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * ---
  */
 @Configuration
-@Profile("development")
+@Profile({"development", "thirdparty"})
 public class DevelopmentConfiguration {
     @Bean
     public WebMvcConfigurer corsConfigurer() {
