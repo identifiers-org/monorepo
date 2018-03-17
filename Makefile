@@ -8,7 +8,7 @@
 container_name = identifiersorg/cloud-ws-resolver
 docker_compose_development_file = docker-compose-development.yml
 springboot_development_profile = development
-tag_version = `cat VERSION`
+tag_version = $(shell cat VERSION)
 
 # Default target
 all: deploy
