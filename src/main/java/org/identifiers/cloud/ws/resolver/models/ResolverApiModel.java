@@ -46,6 +46,8 @@ public class ResolverApiModel {
                 .parallelStream()
                 .map(resourceEntry -> {
                     ResolvedResource resolverApiResponseResource = new ResolvedResource();
+                    resolverApiResponseResource.setId(resourceEntry.getId());
+                    resolverApiResponseResource.setResourcePrefix(resourceEntry.getResourcePrefix());
                     resolverApiResponseResource.setInfo(resourceEntry.getInfo());
                     resolverApiResponseResource.setInstitution(resourceEntry.getInstitution());
                     resolverApiResponseResource.setLocation(resourceEntry.getLocation());
