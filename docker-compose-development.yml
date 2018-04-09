@@ -8,10 +8,10 @@ services:
     redis:
         image: redis:4.0.8-alpine
         ports:
-            - 6379:6379
+            - "6379:6379"
     recommender:
         image: identifiersorg/cloud-ws-resource-recommender
         environment:
             - WS_RESOURCE_RECOMMENDER_JVM_MEMORY_MAX=1024m
         ports:
-            - 8083:8083
+            - "8083:8083"
