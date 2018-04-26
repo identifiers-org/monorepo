@@ -31,6 +31,9 @@ public class ApplicationConfig {
     @Value("${spring.redis.host}")
     private String redisHost;
 
+    @Value("${org.identifiers.cloud.ws.resolver.cors.origin}")
+    private String corsOrigins;
+
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         JedisConnectionFactory jedisConFactory = new JedisConnectionFactory();
@@ -63,8 +66,7 @@ public class ApplicationConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("https://*.identifiers.org",
-                                "http://*.identifiers.org");
+                        .allowedOrigins(corsOrigins.split(","));
             }
         };
     }
