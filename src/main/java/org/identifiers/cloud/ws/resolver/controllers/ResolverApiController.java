@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 public class ResolverApiController {
+    // TODO - Prepare the ground for the endpoints implementing the new use cases
 
     @Autowired
     private ResolverApiModel resolverApiModel;
