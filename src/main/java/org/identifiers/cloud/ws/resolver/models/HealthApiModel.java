@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import org.springframework.stereotype.Component;
+
 import java.util.UUID;
 
 /**
@@ -12,6 +14,7 @@ import java.util.UUID;
  *
  * Health Check API Controller model.
  */
+@Component
 public class HealthApiModel {
     private static String runningSessionId = UUID.randomUUID().toString();
 
