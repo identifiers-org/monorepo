@@ -15,5 +15,12 @@ import java.util.UUID;
 public class HealthApiModel {
     private static String runningSessionId = UUID.randomUUID().toString();
 
-    
+    public String livenessCheck() {
+        return runningSessionId;
+    }
+
+    public String readinessCheck() {
+        return runningSessionId;
+    }
+
 }

@@ -168,12 +168,4 @@ public class ResolverApiModel {
         resolverApiResponse.setApiVersion(apiVersion);
         return resolverApiResponse;
     }
-
-    public String livenessCheck() {
-        return runningSessionId;
-    }
-
-    public String readinessCheck() {
-        return runningSessionId;
-    }
 }
