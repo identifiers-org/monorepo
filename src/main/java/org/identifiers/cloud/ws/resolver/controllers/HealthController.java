@@ -29,5 +29,4 @@ public class HealthController {
     public String readinessCheck() {
         return model.readinessCheck();
     }
-
 }
