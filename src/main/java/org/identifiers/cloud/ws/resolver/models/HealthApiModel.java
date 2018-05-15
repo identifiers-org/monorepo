@@ -7,6 +7,8 @@ package org.identifiers.cloud.ws.resolver.models;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * Health Check API Controller model.
  */
 public class HealthApiModel {
 }
