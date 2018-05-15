@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 public class ResolverApiModel {
     private static final String apiVersion = "1.0";
     private static Logger logger = LoggerFactory.getLogger(ResolverApiModel.class);
-    private static String runningSessionId = UUID.randomUUID().toString();
 
     @Autowired
     private ResolverDataFetcher resolverDataFetcher;

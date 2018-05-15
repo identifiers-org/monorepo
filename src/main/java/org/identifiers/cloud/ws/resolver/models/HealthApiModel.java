@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import java.util.UUID;
+
 /**
  * Project: resolver
  * Package: org.identifiers.cloud.ws.resolver.models
@@ -11,4 +13,7 @@ package org.identifiers.cloud.ws.resolver.models;
  * Health Check API Controller model.
  */
 public class HealthApiModel {
+    private static String runningSessionId = UUID.randomUUID().toString();
+
+    
 }
