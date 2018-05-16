@@ -7,6 +7,8 @@ package org.identifiers.cloud.ws.resolver.models;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * Main model for Insight API Controller.
  */
 public class InsightApiModel {
 }
