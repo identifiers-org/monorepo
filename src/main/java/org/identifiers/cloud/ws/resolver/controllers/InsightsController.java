@@ -7,6 +7,8 @@ package org.identifiers.cloud.ws.resolver.controllers;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * Expose an API that offers insights into the resolver dataset.
  */
 public class InsightsController {
 }
