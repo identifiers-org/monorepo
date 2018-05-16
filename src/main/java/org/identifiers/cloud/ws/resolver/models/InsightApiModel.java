@@ -25,4 +25,8 @@ public class InsightApiModel {
     public List<ResolvedResource> getAllSampleIdsResolved() {
         // TODO
     }
+
+    public List<ResolvedResource> getAllHomeUrls() {
+        // TODO
+    }
 }
