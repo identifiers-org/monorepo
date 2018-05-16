@@ -40,7 +40,6 @@ public class ResolverApiModel {
     private List<ResolvedResource> resolveResourcesForCompactId(CompactId compactId,
                                                                 List<ResourceEntry> resourceEntries,
                                                                 Map<String, ResourceRecommendation> recommendationById) {
-        // TODO - I need to add whether the resource is official or not
         return resourceEntries
                 .parallelStream()
                 .map(resourceEntry -> {
