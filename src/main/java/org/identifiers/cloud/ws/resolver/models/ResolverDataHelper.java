@@ -76,5 +76,8 @@ public class ResolverDataHelper {
         return new HashMap<>();
     }
 
-
+    public List<ResolvedResource> resolveAllResourcesWithTheirSampleId() {
+        // TODO
+        return null;
+    }
 }
