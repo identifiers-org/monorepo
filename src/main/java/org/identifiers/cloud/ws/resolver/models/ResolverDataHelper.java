@@ -80,4 +80,9 @@ public class ResolverDataHelper {
         // TODO
         return null;
     }
+
+    public List<ResolvedResource> getAllResolvedResourcesHomes() {
+        // TODO
+        return null;
+    }
 }
