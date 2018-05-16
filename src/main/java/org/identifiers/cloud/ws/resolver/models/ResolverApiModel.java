@@ -1,6 +1,5 @@
 package org.identifiers.cloud.ws.resolver.models;
 
-import org.identifiers.cloud.libapi.models.resourcerecommender.ResourceRecommendation;
 import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
 import org.identifiers.cloud.ws.resolver.models.api.responses.ResponseResolvePayload;
 import org.identifiers.cloud.ws.resolver.models.api.responses.ServiceResponseResolve;
@@ -12,9 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -35,26 +32,9 @@ public class ResolverApiModel {
     private ResolverDataFetcher resolverDataFetcher;
 
     @Autowired
-    private ResourceRecommenderStrategy resourceRecommender;
-
-    @Autowired
     private ResolverDataHelper resolverDataHelper;
 
 
-    private Map<String, ResourceRecommendation> getRecommendationsByResourceId(List<ResourceEntry> resourceEntries) {
-        try {
-            return resourceRecommender
-                    .getRecommendations(resourceEntries)
-                    .parallelStream()
-                    .collect(Collectors.toMap(ResourceRecommendation::getId,
-                            recommendedResource -> recommendedResource,
-                            (oldValue, newValue) -> oldValue));
-        } catch (ResourceRecommenderStrategyException e) {
-            logger.error("The following ERROR occurred while trying to get recommendations for the given resources," +
-                    " ERROR '{}'", e.getMessage());
-        }
-        return new HashMap<>();
-    }
     // TODO - Document this API method
     public ServiceResponseResolve resolveCompactId(String compactIdParameter) throws ResolverApiException {
         CompactId compactId = null;
@@ -82,7 +62,7 @@ public class ResolverApiModel {
             // Resolve the links
             resolverApiResponse.getPayload().setResolvedResources(resolverDataHelper.resolveResourcesForCompactId(compactId,
                     resourceEntries,
-                    getRecommendationsByResourceId(resourceEntries)));
+                    resolverDataHelper.getRecommendationsByResourceId(resourceEntries)));
             resolverApiResponse.setHttpStatus(HttpStatus.OK);
         }
         // NOTE - This code may be refactored later
@@ -137,7 +117,7 @@ public class ResolverApiModel {
                 // Resolve the links
                 resolverApiResponse.getPayload().setResolvedResources(resolverDataHelper.resolveResourcesForCompactId(compactId,
                         resourceEntries,
-                        getRecommendationsByResourceId(resourceEntries)));
+                        resolverDataHelper.getRecommendationsByResourceId(resourceEntries)));
                 resolverApiResponse.setHttpStatus(HttpStatus.OK);
             }
         }
