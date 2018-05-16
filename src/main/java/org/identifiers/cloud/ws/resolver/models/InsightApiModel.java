@@ -21,12 +21,14 @@ import java.util.List;
 public class InsightApiModel {
     // TODO
 
-
+    // NOTE - This is fine, don't panic ^_^
     public List<ResolvedResource> getAllSampleIdsResolved() {
         // TODO
+        return null;
     }
 
     public List<ResolvedResource> getAllHomeUrls() {
         // TODO
+        return null;
     }
 }
