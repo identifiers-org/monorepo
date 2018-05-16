@@ -45,8 +45,8 @@ public class ResolverDataFetcherFromDataBackend implements ResolverDataFetcher {
     }
 
     @Override
-    public List<PidEntry> findAllPidEntries() {
+    public Iterable<PidEntry> findAllPidEntries() {
         // TODO
-        return null;
+        return pidEntryRepository.findAll();
     }
 }

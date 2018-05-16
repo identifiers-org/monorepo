@@ -15,5 +15,5 @@ import java.util.List;
 public interface ResolverDataFetcher {
     List<ResourceEntry> findResourcesByPrefix(String prefix);
 
-    List<PidEntry> findAllPidEntries();
+    Iterable<PidEntry> findAllPidEntries();
 }
