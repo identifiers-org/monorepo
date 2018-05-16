@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Expose an API that offers insights into the resolver dataset.
  */
 @RestController
-public class InsightsController {
+public class InsightApiController {
 
     // TODO
 }
