@@ -26,6 +26,12 @@ public class InsightApiController {
     @RequestMapping(value = "/get_all_sample_ids_resolved")
     public ResponseEntity<?> getAllSampleIdsResolved() {
         // TODO
-        return new ResponseEntity<>("", HttpStatus.OK);
+        return new ResponseEntity<>("get_all_sample_ids_resolved", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "get_all_home_urls")
+    public ResponseEntity<?> getAllHomeUrls() {
+        // TODO
+        return new ResponseEntity<>("get_all_home_urls", HttpStatus.OK);
     }
 }
