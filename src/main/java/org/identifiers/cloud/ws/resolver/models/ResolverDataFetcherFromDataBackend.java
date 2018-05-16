@@ -43,4 +43,10 @@ public class ResolverDataFetcherFromDataBackend implements ResolverDataFetcher {
         }
         return result;
     }
+
+    @Override
+    public List<PidEntry> findAllPidEntries() {
+        // TODO
+        return null;
+    }
 }
