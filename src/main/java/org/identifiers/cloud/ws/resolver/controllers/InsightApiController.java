@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.resolver.controllers;
 
 import org.identifiers.cloud.ws.resolver.models.InsightApiModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,5 +26,6 @@ public class InsightApiController {
     @RequestMapping(value = "/get_all_sample_ids_resolved")
     public ResponseEntity<?> getAllSampleIdsResolved() {
         // TODO
+        return new ResponseEntity<>("", HttpStatus.OK);
     }
 }
