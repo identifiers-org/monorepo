@@ -19,4 +19,6 @@ public class InsightApiController {
     // TODO
     @Autowired
     private InsightApiModel model;
+
+    
 }
