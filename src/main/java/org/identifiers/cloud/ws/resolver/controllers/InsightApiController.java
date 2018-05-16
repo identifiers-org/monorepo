@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resolver.controllers;
 
+import org.identifiers.cloud.ws.resolver.models.InsightApiModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class InsightApiController {
-
     // TODO
+    @Autowired
+    private InsightApiModel model;
 }
