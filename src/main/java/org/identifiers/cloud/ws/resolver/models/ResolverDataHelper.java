@@ -7,6 +7,8 @@ package org.identifiers.cloud.ws.resolver.models;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * Helper for working with resolution data
  */
 public class ResolverDataHelper {
 }
