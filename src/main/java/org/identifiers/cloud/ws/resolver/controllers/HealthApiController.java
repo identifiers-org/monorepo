@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * This controller offers the endpoints that provide health checks for the service, e.g. liveness and health check
  */
 @RestController
-public class HealthController {
+public class HealthApiController {
     @Autowired
     private HealthApiModel model;
 
