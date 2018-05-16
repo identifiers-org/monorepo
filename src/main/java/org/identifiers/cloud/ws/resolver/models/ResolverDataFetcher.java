@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
 import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
 
 import java.util.List;
@@ -13,4 +14,6 @@ import java.util.List;
  */
 public interface ResolverDataFetcher {
     List<ResourceEntry> findResourcesByPrefix(String prefix);
+
+    List<PidEntry> findAllPidEntries();
 }
