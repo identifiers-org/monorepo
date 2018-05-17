@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.resolver.controllers;
 
 import org.identifiers.cloud.ws.resolver.models.InsightApiModel;
+import org.identifiers.cloud.ws.resolver.models.api.responses.ServiceResponseResolve;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,8 @@ public class InsightApiController {
     @RequestMapping(value = "/get_all_sample_ids_resolved")
     public ResponseEntity<?> getAllSampleIdsResolved() {
         // TODO
-        return new ResponseEntity<>("get_all_sample_ids_resolved", HttpStatus.OK);
+        ServiceResponseResolve response = model.getAllSampleIdsResolved();
+        return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     @RequestMapping(value = "get_all_home_urls")
