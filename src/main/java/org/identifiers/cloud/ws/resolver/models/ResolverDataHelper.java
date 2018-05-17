@@ -95,6 +95,7 @@ public class ResolverDataHelper {
             resolvedResource.setAccessUrl(resourceEntry
                     .getAccessURL().replace("{$id}", resourceEntry.getLocalId()));
             resolvedResource.setOfficial(resourceEntry.isOfficial());
+            resolvedResource.setResourceURL(resourceEntry.getResourceURL());
             // Embed Recommendation
             Recommendation recommendation = new Recommendation();
             return resolvedResource;
