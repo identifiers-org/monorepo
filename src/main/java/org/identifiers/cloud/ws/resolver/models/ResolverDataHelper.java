@@ -33,6 +33,9 @@ public class ResolverDataHelper {
     @Autowired
     private ResourceRecommenderStrategy resourceRecommender;
 
+    @Autowired
+    private ResolverDataFetcher resolverDataFetcher;
+
     // This code may be refactored out later on
     public List<ResolvedResource> resolveResourcesForCompactId(CompactId compactId,
                                                                 List<ResourceEntry> resourceEntries,
