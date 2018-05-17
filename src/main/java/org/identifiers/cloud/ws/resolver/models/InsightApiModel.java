@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-
 /**
  * Project: resolver
  * Package: org.identifiers.cloud.ws.resolver.models
@@ -29,8 +27,9 @@ public class InsightApiModel {
     public ServiceResponseResolve getAllSampleIdsResolved() {
         // Prepare default answer
         ServiceResponseResolve resolverApiResponse = new ServiceResponseResolve();
-        resolverApiResponse.setPayload(new ResponseResolvePayload().setResolvedResources(new ArrayList<>()));
-        // TODO
+        resolverApiResponse
+                .setPayload(new ResponseResolvePayload()
+                        .setResolvedResources(resolverDataHelper.resolveAllResourcesWithTheirSampleId()));
         return resolverApiResponse;
     }
 
