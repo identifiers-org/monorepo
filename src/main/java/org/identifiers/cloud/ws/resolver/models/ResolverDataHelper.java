@@ -43,15 +43,15 @@ public class ResolverDataHelper {
         return resourceEntries
                 .parallelStream()
                 .map(resourceEntry -> {
-                    ResolvedResource resolverApiResponseResource = new ResolvedResource();
-                    resolverApiResponseResource.setId(resourceEntry.getId());
-                    resolverApiResponseResource.setResourcePrefix(resourceEntry.getResourcePrefix());
-                    resolverApiResponseResource.setInfo(resourceEntry.getInfo());
-                    resolverApiResponseResource.setInstitution(resourceEntry.getInstitution());
-                    resolverApiResponseResource.setLocation(resourceEntry.getLocation());
-                    resolverApiResponseResource.setAccessUrl(resourceEntry
+                    ResolvedResource resolvedResource = new ResolvedResource();
+                    resolvedResource.setId(resourceEntry.getId());
+                    resolvedResource.setResourcePrefix(resourceEntry.getResourcePrefix());
+                    resolvedResource.setInfo(resourceEntry.getInfo());
+                    resolvedResource.setInstitution(resourceEntry.getInstitution());
+                    resolvedResource.setLocation(resourceEntry.getLocation());
+                    resolvedResource.setAccessUrl(resourceEntry
                             .getAccessURL().replace("{$id}", compactId.getId()));
-                    resolverApiResponseResource.setOfficial(resourceEntry.isOfficial());
+                    resolvedResource.setOfficial(resourceEntry.isOfficial());
                     // Embed Recommendation
                     Recommendation recommendation = new Recommendation();
                     if (recommendationById.containsKey(resourceEntry.getId())) {
@@ -61,8 +61,8 @@ public class ResolverDataHelper {
                                 .setRecommendationIndex(recommendationById.get(resourceEntry.getId())
                                         .getRecommendationIndex());
                     }
-                    resolverApiResponseResource.setRecommendation(recommendation);
-                    return resolverApiResponseResource;
+                    resolvedResource.setRecommendation(recommendation);
+                    return resolvedResource;
                 }).collect(Collectors.toList());
     }
 
@@ -102,7 +102,6 @@ public class ResolverDataHelper {
     }
 
     public List<ResolvedResource> getAllResolvedResourcesHomes() {
-        // TODO
-        return null;
+        return resolveAllResourcesWithTheirSampleId();
     }
 }
