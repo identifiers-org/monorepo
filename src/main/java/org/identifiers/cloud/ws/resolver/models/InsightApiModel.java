@@ -4,6 +4,7 @@ import org.identifiers.cloud.ws.resolver.models.api.responses.ResponseResolvePay
 import org.identifiers.cloud.ws.resolver.models.api.responses.ServiceResponseResolve;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,6 +32,10 @@ public class InsightApiModel {
         resolverApiResponse
                 .setPayload(new ResponseResolvePayload()
                         .setResolvedResources(resolverDataHelper.resolveAllResourcesWithTheirSampleId()));
+        if (resolverApiResponse.getPayload().getResolvedResources().isEmpty()) {
+            resolverApiResponse.setErrorMessage("NO PROVIDERS found in the Resolution Service data set.");
+            resolverApiResponse.setHttpStatus(HttpStatus.NOT_FOUND);
+        }
         return resolverApiResponse;
     }
 
