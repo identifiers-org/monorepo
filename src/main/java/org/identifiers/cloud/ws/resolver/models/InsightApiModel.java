@@ -41,7 +41,6 @@ public class InsightApiModel {
     }
 
     public ServiceResponseResolve getAllHomeUrls() {
-        // TODO
-        return null;
+        return getAllSampleIdsResolved();
     }
 }
