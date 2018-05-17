@@ -27,6 +27,7 @@ public class InsightApiModel {
     public ServiceResponseResolve getAllSampleIdsResolved() {
         // Prepare default answer
         ServiceResponseResolve resolverApiResponse = new ServiceResponseResolve();
+        // TODO - Split this with a default value and take care of any possible exception
         resolverApiResponse
                 .setPayload(new ResponseResolvePayload()
                         .setResolvedResources(resolverDataHelper.resolveAllResourcesWithTheirSampleId()));
