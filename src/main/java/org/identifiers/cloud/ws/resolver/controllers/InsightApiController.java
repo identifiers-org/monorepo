@@ -26,7 +26,6 @@ public class InsightApiController {
 
     @RequestMapping(value = "/get_all_sample_ids_resolved")
     public ResponseEntity<?> getAllSampleIdsResolved() {
-        // TODO
         ServiceResponseResolve response = model.getAllSampleIdsResolved();
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
