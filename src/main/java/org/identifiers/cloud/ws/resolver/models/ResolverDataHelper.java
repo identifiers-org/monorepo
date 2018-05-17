@@ -103,6 +103,7 @@ public class ResolverDataHelper {
         return resolvedResources;
     }
 
+    // TODO - This could potentially be removed in the future?
     public List<ResolvedResource> getAllResolvedResourcesHomes() {
         return resolveAllResourcesWithTheirSampleId();
     }
