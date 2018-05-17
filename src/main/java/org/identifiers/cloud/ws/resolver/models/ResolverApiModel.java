@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 @Component
 @Scope("prototype")
 public class ResolverApiModel {
-    private static final String apiVersion = "1.0";
     private static Logger logger = LoggerFactory.getLogger(ResolverApiModel.class);
 
     @Autowired
@@ -66,7 +65,7 @@ public class ResolverApiModel {
             resolverApiResponse.setHttpStatus(HttpStatus.OK);
         }
         // NOTE - This code may be refactored later
-        resolverApiResponse.setApiVersion(apiVersion);
+        resolverApiResponse.setApiVersion(ApiCentral.apiVersion);
         return resolverApiResponse;
     }
 
@@ -121,7 +120,7 @@ public class ResolverApiModel {
                 resolverApiResponse.setHttpStatus(HttpStatus.OK);
             }
         }
-        resolverApiResponse.setApiVersion(apiVersion);
+        resolverApiResponse.setApiVersion(ApiCentral.apiVersion);
         return resolverApiResponse;
     }
 }
