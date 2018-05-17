@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.resolver.models;
 
 import org.identifiers.cloud.ws.resolver.models.api.responses.ResolvedResource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,8 @@ import java.util.List;
 @Scope("prototype")
 public class InsightApiModel {
     // TODO
+    @Autowired
+    private ResolverDataHelper resolverDataHelper;
 
     // NOTE - This is fine, don't panic ^_^
     public List<ResolvedResource> getAllSampleIdsResolved() {
