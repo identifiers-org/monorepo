@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class InsightApiController {
-    // TODO
     @Autowired
     private InsightApiModel model;
 
