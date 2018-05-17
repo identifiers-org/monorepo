@@ -36,6 +36,7 @@ public class InsightApiModel {
             resolverApiResponse.setErrorMessage("NO PROVIDERS found in the Resolution Service data set.");
             resolverApiResponse.setHttpStatus(HttpStatus.NOT_FOUND);
         }
+        resolverApiResponse.setApiVersion(ApiCentral.apiVersion);
         return resolverApiResponse;
     }
 
