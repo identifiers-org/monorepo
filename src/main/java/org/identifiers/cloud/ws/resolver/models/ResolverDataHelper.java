@@ -52,6 +52,7 @@ public class ResolverDataHelper {
                     resolvedResource.setAccessUrl(resourceEntry
                             .getAccessURL().replace("{$id}", compactId.getId()));
                     resolvedResource.setOfficial(resourceEntry.isOfficial());
+                    resolvedResource.setResourceURL(resourceEntry.getResourceURL());
                     // Embed Recommendation
                     Recommendation recommendation = new Recommendation();
                     if (recommendationById.containsKey(resourceEntry.getId())) {
