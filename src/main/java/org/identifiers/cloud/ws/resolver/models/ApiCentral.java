@@ -7,6 +7,10 @@ package org.identifiers.cloud.ws.resolver.models;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This is a centralized location for managing API wide specific aspects, i.e. API version
  */
 public class ApiCentral {
+    // Current API Version flag
+    public static final String apiVersion = "1.0";
 }
