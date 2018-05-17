@@ -20,7 +20,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class InsightApiModel {
-    // TODO
     @Autowired
     private ResolverDataHelper resolverDataHelper;
 
