@@ -29,7 +29,7 @@ public class InsightApiController {
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
-    @RequestMapping(value = "get_all_home_urls")
+    @RequestMapping(value = "/get_all_home_urls")
     public ResponseEntity<?> getAllHomeUrls() {
         ServiceResponseResolve response = model.getAllHomeUrls();
         return new ResponseEntity<>(response, response.getHttpStatus());
