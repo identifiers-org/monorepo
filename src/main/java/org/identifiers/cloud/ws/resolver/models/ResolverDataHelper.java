@@ -34,6 +34,8 @@ public class ResolverDataHelper {
     @Autowired
     private ResolverDataFetcher resolverDataFetcher;
 
+    // TODO - Maybe, refactor out the logic for resolving a resource given an ID, i.e. the URL substring substitution
+
     // This code may be refactored out later on
     public List<ResolvedResource> resolveResourcesForCompactId(CompactId compactId,
                                                                List<ResourceEntry> resourceEntries,
