@@ -1,11 +1,12 @@
 package org.identifiers.cloud.ws.resolver.models;
 
-import org.identifiers.cloud.ws.resolver.models.api.responses.ResolvedResource;
+import org.identifiers.cloud.ws.resolver.models.api.responses.ResponseResolvePayload;
+import org.identifiers.cloud.ws.resolver.models.api.responses.ServiceResponseResolve;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Project: resolver
@@ -25,12 +26,15 @@ public class InsightApiModel {
     private ResolverDataHelper resolverDataHelper;
 
     // NOTE - This is fine, don't panic ^_^
-    public List<ResolvedResource> getAllSampleIdsResolved() {
+    public ServiceResponseResolve getAllSampleIdsResolved() {
+        // Prepare default answer
+        ServiceResponseResolve resolverApiResponse = new ServiceResponseResolve();
+        resolverApiResponse.setPayload(new ResponseResolvePayload().setResolvedResources(new ArrayList<>()));
         // TODO
-        return null;
+        return resolverApiResponse;
     }
 
-    public List<ResolvedResource> getAllHomeUrls() {
+    public ServiceResponseResolve getAllHomeUrls() {
         // TODO
         return null;
     }
