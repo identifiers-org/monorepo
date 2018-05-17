@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -22,7 +20,7 @@ import java.util.stream.Collectors;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
- *
+ * <p>
  * Helper for working with resolution data
  */
 @Component
@@ -38,8 +36,8 @@ public class ResolverDataHelper {
 
     // This code may be refactored out later on
     public List<ResolvedResource> resolveResourcesForCompactId(CompactId compactId,
-                                                                List<ResourceEntry> resourceEntries,
-                                                                Map<String, ResourceRecommendation> recommendationById) {
+                                                               List<ResourceEntry> resourceEntries,
+                                                               Map<String, ResourceRecommendation> recommendationById) {
         return resourceEntries
                 .parallelStream()
                 .map(resourceEntry -> {
@@ -56,8 +54,10 @@ public class ResolverDataHelper {
                     Recommendation recommendation = new Recommendation();
                     if (recommendationById.containsKey(resourceEntry.getId())) {
                         recommendation
-                                .setRecommendationExplanation(recommendationById.get(resourceEntry.getId()).getRecommendationExplanation())
-                                .setRecommendationIndex(recommendationById.get(resourceEntry.getId()).getRecommendationIndex());
+                                .setRecommendationExplanation(recommendationById.get(resourceEntry.getId())
+                                        .getRecommendationExplanation())
+                                .setRecommendationIndex(recommendationById.get(resourceEntry.getId())
+                                        .getRecommendationIndex());
                     }
                     resolverApiResponseResource.setRecommendation(recommendation);
                     return resolverApiResponseResource;
@@ -80,8 +80,23 @@ public class ResolverDataHelper {
     }
 
     public List<ResolvedResource> resolveAllResourcesWithTheirSampleId() {
-        // TODO
-        return null;
+        List<ResolvedResource> resolvedResources = new ArrayList<>();
+        resolverDataFetcher.findAllPidEntries().forEach(pidEntry -> resolvedResources.addAll(Arrays.stream(pidEntry
+                .getResources()).parallel().map(resourceEntry -> {
+            ResolvedResource resolvedResource = new ResolvedResource();
+            resolvedResource.setId(resourceEntry.getId());
+            resolvedResource.setResourcePrefix(resourceEntry.getResourcePrefix());
+            resolvedResource.setInfo(resourceEntry.getInfo());
+            resolvedResource.setInstitution(resourceEntry.getInstitution());
+            resolvedResource.setLocation(resourceEntry.getLocation());
+            resolvedResource.setAccessUrl(resourceEntry
+                    .getAccessURL().replace("{$id}", resourceEntry.getLocalId()));
+            resolvedResource.setOfficial(resourceEntry.isOfficial());
+            // Embed Recommendation
+            Recommendation recommendation = new Recommendation();
+            return resolvedResource;
+        }).collect(Collectors.toList())));
+        return resolvedResources;
     }
 
     public List<ResolvedResource> getAllResolvedResourcesHomes() {
