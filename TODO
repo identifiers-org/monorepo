@@ -1,6 +1,3 @@
-- Extender la interfaz del resolver
-    - Recuperar todos los posibles resolved resources con URLs que apunten a los sample IDs que se proporcionaron al registrar el namespace.
-    - Recuperar todas posibles home URLs en forma de resolved resources
 - Interfaz del link checker
     - Get the score for a plain URL
     - Get the score for a CID, given a resolved resource
