@@ -5,3 +5,6 @@ container_name = identifiersorg/cloud-ws-link-checker
 docker_compose_development_file = docker-compose-development.yml
 springboot_development_profile = development
 tag_version = $(shell cat VERSION)
+
+# Default target
+all: deploy
