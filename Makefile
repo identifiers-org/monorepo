@@ -43,3 +43,11 @@ development_env_down:
 development_run_tests: development_env_up
 	@echo "<===|DEVOPS|===> [TESTS] Running Unit Tests"
 	@mvn -Dspring.profiles.active=$(springboot_development_profile) clean test
+
+app_structure:
+	@echo "<===|DEVOPS|===> [PACKAGE] Application"
+	@mvn clean > /dev/null
+	@mvn package -DskipTests
+	@mkdir -p target/app/log
+	@mkdir -p target/app/tmp
+	@cp target/link-checker-$(shell mvn help:evaluate -Dexpression=project.version | grep -v '^\[').jar target/app/service.jar
