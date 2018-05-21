@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.controllers;
 
+import org.springframework.web.bind.annotation.RestController;
+
 /**
  * Project: link-checker
  * Package: org.identifiers.cloud.ws.linkchecker.controllers
@@ -8,5 +10,6 @@ package org.identifiers.cloud.ws.linkchecker.controllers;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+@RestController
 public class LinkScoringApiController {
 }
