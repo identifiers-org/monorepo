@@ -1,0 +1,8 @@
+# Development environment for working with the Link Checker service
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+version: "3"
+services:
+    redis:
+        image: redis:4.0.8-alpine
+        ports:
+            - "6379:6379"
