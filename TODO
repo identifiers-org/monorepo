@@ -32,4 +32,7 @@
 - Upon announcement of a LinkCheckResult
     if (in local cache)
         update(linkCheckResult)
-        
+
+[NOTES on LinkCheckRequest]
+- I may use a Redis Sorted Set where the timestamp of the link checking request is the score, this will allow me to pop form the sorted set the oldest requests.
+- WARNING - It would be nice to have a way of grouping by, for example, domain name, so a link checking worker can checkout all the requests for a given domain, and then politely check them to avoid being banned by that domain.
