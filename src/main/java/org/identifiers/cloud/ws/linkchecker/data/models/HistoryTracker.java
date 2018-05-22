@@ -39,7 +39,10 @@ public abstract class HistoryTracker implements Serializable {
         return history;
     }
 
-    public HistoryTracker setHistory(SortedList<CheckedUrl> history) {
+    public HistoryTracker setHistory(SortedList<CheckedUrl> history) throws HistoryTrackerException {
+        if (!history.isEmpty()) {
+            throw new HistoryTrackerException("CANNOT SET HISTORY for a NON-empty pre-existing history");
+        }
         this.history = history;
         return this;
     }
