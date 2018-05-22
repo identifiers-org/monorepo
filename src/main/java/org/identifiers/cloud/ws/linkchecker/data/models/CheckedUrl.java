@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.data.models;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -12,7 +13,7 @@ import java.sql.Timestamp;
  *
  * This entity models a checked URL
  */
-public class CheckedUrl {
+public class CheckedUrl implements Serializable {
     // URL that has been checked
     private String url;
     // When it has been checked (UTC)
