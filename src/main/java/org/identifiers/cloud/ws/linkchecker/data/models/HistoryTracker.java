@@ -20,11 +20,11 @@ import java.util.stream.Collectors;
  */
 public abstract class HistoryTracker implements Serializable {
     // Home URL for this provider within the context of a namespace or prefix
-    private String url;
+    protected String url;
     // Historical information
-    private SortedList<CheckedUrl> history;
+    protected SortedList<CheckedUrl> history;
     // When the tracking was queued / added to the link checker (UTC)
-    private Timestamp created;
+    protected Timestamp created;
 
     public String getUrl() {
         return url;
