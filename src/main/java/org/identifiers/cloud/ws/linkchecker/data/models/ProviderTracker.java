@@ -1,11 +1,11 @@
 package org.identifiers.cloud.ws.linkchecker.data.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import javafx.collections.transformation.SortedList;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
 
 /**
  * Project: link-checker
@@ -19,8 +19,8 @@ import java.util.List;
  * will be used for tracking the provider home URL.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@RedisHash("linkCheckerProviderEntry")
-public class ProviderEntry implements Serializable {
+@RedisHash("linkCheckerProviderTracker")
+public class ProviderTracker implements Serializable {
     // Provider ID within the context of a namespace or prefix
     private String id;
     // Home URL for this provider within the context of a namespace or prefix
@@ -32,7 +32,7 @@ public class ProviderEntry implements Serializable {
     // Location information on this provider within the context of a namespace or prefix, if available
     private String location;
     // Historical information
-    private List<CheckedUrl> history;
+    private SortedList<CheckedUrl> history;
     // When the tracking was queued / added to the link checker (UTC)
     private Timestamp created;
 
@@ -40,7 +40,7 @@ public class ProviderEntry implements Serializable {
         return id;
     }
 
-    public ProviderEntry setId(String id) {
+    public ProviderTracker setId(String id) {
         this.id = id;
         return this;
     }
@@ -49,7 +49,7 @@ public class ProviderEntry implements Serializable {
         return url;
     }
 
-    public ProviderEntry setUrl(String url) {
+    public ProviderTracker setUrl(String url) {
         this.url = url;
         return this;
     }
@@ -58,7 +58,7 @@ public class ProviderEntry implements Serializable {
         return description;
     }
 
-    public ProviderEntry setDescription(String description) {
+    public ProviderTracker setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -67,7 +67,7 @@ public class ProviderEntry implements Serializable {
         return institution;
     }
 
-    public ProviderEntry setInstitution(String institution) {
+    public ProviderTracker setInstitution(String institution) {
         this.institution = institution;
         return this;
     }
@@ -76,16 +76,16 @@ public class ProviderEntry implements Serializable {
         return location;
     }
 
-    public ProviderEntry setLocation(String location) {
+    public ProviderTracker setLocation(String location) {
         this.location = location;
         return this;
     }
 
-    public List<CheckedUrl> getHistory() {
+    public SortedList<CheckedUrl> getHistory() {
         return history;
     }
 
-    public ProviderEntry setHistory(List<CheckedUrl> history) {
+    public ProviderTracker setHistory(SortedList<CheckedUrl> history) {
         this.history = history;
         return this;
     }
@@ -94,7 +94,7 @@ public class ProviderEntry implements Serializable {
         return created;
     }
 
-    public ProviderEntry setCreated(Timestamp created) {
+    public ProviderTracker setCreated(Timestamp created) {
         this.created = created;
         return this;
     }
