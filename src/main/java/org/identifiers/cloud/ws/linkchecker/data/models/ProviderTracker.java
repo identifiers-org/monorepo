@@ -21,6 +21,35 @@ import java.sql.Timestamp;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @RedisHash("linkCheckerProviderTracker")
 public class ProviderTracker implements Serializable {
+    public enum HistoryInformation {
+        SIMPLE(new CheckedUrlHistoryStatsSimple(), "Simple UP/DOWN history tracking");
+
+        private CheckedUrlHistoryStats historyStats;
+        private String description;
+
+        HistoryInformation(CheckedUrlHistoryStats historyStats, String description) {
+            this.historyStats = historyStats;
+            this.description = description;
+        }
+
+        public CheckedUrlHistoryStats getHistoryStats() {
+            return historyStats;
+        }
+
+        public HistoryInformation setHistoryStats(CheckedUrlHistoryStats historyStats) {
+            this.historyStats = historyStats;
+            return this;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public HistoryInformation setDescription(String description) {
+            this.description = description;
+            return this;
+        }
+    }
     // Provider ID within the context of a namespace or prefix
     private String id;
     // Home URL for this provider within the context of a namespace or prefix
