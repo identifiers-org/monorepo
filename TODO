@@ -21,3 +21,9 @@
             Populate local cached stats
         Queue link checking request
     return cached stats
+
+[Link Checking worker]
+- Pull link checking request
+- Perform check
+- Add check results to the LinkCheckResult hash
+- Announce the LinkCheckResult
