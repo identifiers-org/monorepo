@@ -11,3 +11,13 @@
     - Create a redis hash for a provider (home url tracking)
     - Create a redis hash for a resource (cid resolution, a.k.a. resolved resource, tracking)
     - Create a redis hash for tracking of plain URLs
+
+[Requesting Scoring on tracked entity]
+- Workflow when requesting scoring on a link (url, provider or resource):
+    If (no stats cache exits for the given link checking request)
+        if (no entry exists in its corresponding redis hash (url, provider or resource))
+            Create tracking entry
+        else
+            Populate local cached stats
+        Queue link checking request
+    return cached stats
