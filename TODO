@@ -27,3 +27,9 @@
 - Perform check
 - Add check results to the LinkCheckResult hash
 - Announce the LinkCheckResult
+
+[Local Cached Stats Updater]
+- Upon announcement of a LinkCheckResult
+    if (in local cache)
+        update(linkCheckResult)
+        
