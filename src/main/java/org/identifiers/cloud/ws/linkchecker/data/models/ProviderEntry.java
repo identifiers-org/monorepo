@@ -8,5 +8,5 @@ package org.identifiers.cloud.ws.linkchecker.data.models;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-public class ProviderEntity {
+public class ProviderEntry {
 }
