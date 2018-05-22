@@ -11,6 +11,11 @@ import java.util.List;
  * ---
  */
 public class CheckedUrlHistoryStatsSimple implements CheckedUrlHistoryStats {
+    // Number of events where the checked URL was considered to be up
+    private int nUpEvents = 0;
+    // Number of events where the checked URL was considered to be down
+    private int nDownEvents = 0;
+
     @Override
     public void init(List<CheckedUrl> checkedUrls) {
 
