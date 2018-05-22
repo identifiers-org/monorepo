@@ -4,6 +4,9 @@ import javafx.collections.transformation.SortedList;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Project: link-checker
@@ -48,6 +51,10 @@ public abstract class HistoryTracker implements Serializable {
     public HistoryTracker setCreated(Timestamp created) {
         this.created = created;
         return this;
+    }
+
+    public List<CheckedUrlHistoryStats> getHistoryStats() {
+        return Arrays.stream(HistoryStats.values()).map(HistoryStats::getHistoryStats).collect(Collectors.toList());
     }
 
     public enum HistoryStats implements Serializable {
