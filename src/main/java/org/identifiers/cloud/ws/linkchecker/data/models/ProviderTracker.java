@@ -21,13 +21,13 @@ import java.sql.Timestamp;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @RedisHash("linkCheckerProviderTracker")
 public class ProviderTracker implements Serializable {
-    public enum HistoryInformation implements Serializable {
+    public enum HistoryStats implements Serializable {
         SIMPLE(new CheckedUrlHistoryStatsSimple(), "Simple UP/DOWN history tracking");
 
         private CheckedUrlHistoryStats historyStats;
         private String description;
 
-        HistoryInformation(CheckedUrlHistoryStats historyStats, String description) {
+        HistoryStats(CheckedUrlHistoryStats historyStats, String description) {
             this.historyStats = historyStats;
             this.description = description;
         }
@@ -36,7 +36,7 @@ public class ProviderTracker implements Serializable {
             return historyStats;
         }
 
-        public HistoryInformation setHistoryStats(CheckedUrlHistoryStats historyStats) {
+        public HistoryStats setHistoryStats(CheckedUrlHistoryStats historyStats) {
             this.historyStats = historyStats;
             return this;
         }
@@ -45,7 +45,7 @@ public class ProviderTracker implements Serializable {
             return description;
         }
 
-        public HistoryInformation setDescription(String description) {
+        public HistoryStats setDescription(String description) {
             this.description = description;
             return this;
         }
