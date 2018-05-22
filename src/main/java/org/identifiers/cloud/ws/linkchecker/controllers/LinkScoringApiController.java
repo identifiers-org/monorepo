@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.linkchecker.controllers;
 
 import org.identifiers.cloud.ws.linkchecker.models.LinkScoringApiModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -16,4 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class LinkScoringApiController {
     @Autowired
     private LinkScoringApiModel model;
+
+    public ResponseEntity<?> getScoreForUrl() {
+        // TODO
+    }
 }
