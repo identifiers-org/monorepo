@@ -1,5 +1,8 @@
 package org.identifiers.cloud.ws.linkchecker.data.models;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 /**
@@ -11,6 +14,7 @@ import java.util.List;
  * ---
  */
 public class CheckedUrlHistoryStatsSimple implements CheckedUrlHistoryStats {
+    private static final Logger logger = LoggerFactory.getLogger(CheckedUrlHistoryStatsSimple.class);
     // Number of events where the checked URL was considered to be up
     private int nUpEvents = 0;
     // Number of events where the checked URL was considered to be down
@@ -18,7 +22,12 @@ public class CheckedUrlHistoryStatsSimple implements CheckedUrlHistoryStats {
 
     @Override
     public void init(List<CheckedUrl> checkedUrls) {
-        // TODO
+        if ((nUpEvents + nDownEvents) == 0) {
+            nUpEvents += checkedUrls.parallelStream().filter(checkedUrl -> checkedUrl.getHttpStatus() == 200).count();
+            nDownEvents = checkedUrls.size() - nUpEvents;
+        } else {
+            logger.error("CANNOT INITIALIZE stats for alredy initialized stats");
+        }
     }
 
     @Override
