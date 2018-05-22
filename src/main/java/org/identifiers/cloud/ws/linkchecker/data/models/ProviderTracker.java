@@ -21,7 +21,7 @@ import java.sql.Timestamp;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @RedisHash("linkCheckerProviderTracker")
 public class ProviderTracker implements Serializable {
-    public enum HistoryInformation {
+    public enum HistoryInformation implements Serializable {
         SIMPLE(new CheckedUrlHistoryStatsSimple(), "Simple UP/DOWN history tracking");
 
         private CheckedUrlHistoryStats historyStats;
