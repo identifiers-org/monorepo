@@ -32,4 +32,10 @@ public class LinkScoringApiController {
         // TODO
         return new ResponseEntity<>("getScoreForResolvedId()", HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/getScoreForProvider", method = RequestMethod.POST)
+    public ResponseEntity<?> getScoreForProvider() {
+        // TODO
+        return new ResponseEntity<>("getScoreForProvider()", HttpStatus.OK);
+    }
 }
