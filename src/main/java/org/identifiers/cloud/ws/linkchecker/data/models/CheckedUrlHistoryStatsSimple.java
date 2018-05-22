@@ -27,9 +27,7 @@ public class CheckedUrlHistoryStatsSimple implements CheckedUrlHistoryStats, Ser
             nUpEvents += checkedUrls.parallelStream().filter(checkedUrl -> checkedUrl.getHttpStatus() == 200).count();
             nDownEvents = checkedUrls.size() - nUpEvents;
         } else {
-            String errorMessage = "CANNOT INITIALIZE stats for alredy initialized stats";
-            logger.error(errorMessage);
-            throw new CheckedUrlHistoryStatsException(errorMessage);
+            throw new CheckedUrlHistoryStatsException("CANNOT INITIALIZE stats for alredy initialized stats");
         }
     }
 
