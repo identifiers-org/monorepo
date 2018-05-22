@@ -60,6 +60,14 @@ public abstract class HistoryTracker implements Serializable {
         return Arrays.stream(HistoryStats.values()).map(HistoryStats::getHistoryStats).collect(Collectors.toList());
     }
 
+    public void addCheckedUrlEvent(CheckedUrl checkedUrl) {
+        // Keep it for the records
+        history.add(checkedUrl);
+        // Update the history stats
+        Arrays.stream(HistoryStats.values())
+                .forEach(historyStats -> historyStats.getHistoryStats().update(checkedUrl));
+    }
+
     public enum HistoryStats implements Serializable {
         SIMPLE(new CheckedUrlHistoryStatsSimple(), "Simple UP/DOWN history tracking");
 
