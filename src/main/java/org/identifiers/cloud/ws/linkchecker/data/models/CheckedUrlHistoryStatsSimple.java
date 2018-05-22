@@ -21,12 +21,14 @@ public class CheckedUrlHistoryStatsSimple implements CheckedUrlHistoryStats {
     private int nDownEvents = 0;
 
     @Override
-    public void init(List<CheckedUrl> checkedUrls) {
+    public void init(List<CheckedUrl> checkedUrls) throws CheckedUrlHistoryStatsException {
         if ((nUpEvents + nDownEvents) == 0) {
             nUpEvents += checkedUrls.parallelStream().filter(checkedUrl -> checkedUrl.getHttpStatus() == 200).count();
             nDownEvents = checkedUrls.size() - nUpEvents;
         } else {
-            logger.error("CANNOT INITIALIZE stats for alredy initialized stats");
+            String errorMessage = "CANNOT INITIALIZE stats for alredy initialized stats";
+            logger.error(errorMessage);
+            throw new CheckedUrlHistoryStatsException(errorMessage);
         }
     }
 

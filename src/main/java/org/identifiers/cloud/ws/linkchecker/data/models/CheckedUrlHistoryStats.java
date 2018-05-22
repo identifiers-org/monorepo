@@ -15,7 +15,7 @@ public interface CheckedUrlHistoryStats {
      * Initialize the history with a given list of checked URLs events
      * @param checkedUrls list of checked URLs events
      */
-    void init(List<CheckedUrl> checkedUrls);
+    void init(List<CheckedUrl> checkedUrls) throws CheckedUrlHistoryStatsException;
 
     /**
      * Update the history with a given checked URL event
