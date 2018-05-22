@@ -34,7 +34,11 @@ public class CheckedUrlHistoryStatsSimple implements CheckedUrlHistoryStats {
 
     @Override
     public void update(CheckedUrl checkedUrl) {
-        // TODO
+        if (checkedUrl.getHttpStatus() == 200) {
+            nUpEvents++;
+        } else {
+            nDownEvents++;
+        }
     }
 
     @Override
