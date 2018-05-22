@@ -13,7 +13,7 @@ import java.sql.Timestamp;
  *
  * This entity models a checked URL
  */
-public class CheckedUrl implements Serializable {
+public class CheckedUrl implements Serializable, Comparable<CheckedUrl> {
     // URL that has been checked
     private String url;
     // When it has been checked (UTC)
@@ -46,5 +46,10 @@ public class CheckedUrl implements Serializable {
     public CheckedUrl setHttpStatus(int httpStatus) {
         this.httpStatus = httpStatus;
         return this;
+    }
+
+    @Override
+    public int compareTo(CheckedUrl o) {
+        return this.timestamp.compareTo(o.getTimestamp());
     }
 }
