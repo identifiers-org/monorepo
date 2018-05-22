@@ -1,11 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.data.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import javafx.collections.transformation.SortedList;
 import org.springframework.data.redis.core.RedisHash;
-
-import java.io.Serializable;
-import java.sql.Timestamp;
 
 /**
  * Project: link-checker
@@ -20,50 +16,15 @@ import java.sql.Timestamp;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @RedisHash("linkCheckerProviderTracker")
-public class ProviderTracker implements Serializable {
-    public enum HistoryStats implements Serializable {
-        SIMPLE(new CheckedUrlHistoryStatsSimple(), "Simple UP/DOWN history tracking");
-
-        private CheckedUrlHistoryStats historyStats;
-        private String description;
-
-        HistoryStats(CheckedUrlHistoryStats historyStats, String description) {
-            this.historyStats = historyStats;
-            this.description = description;
-        }
-
-        public CheckedUrlHistoryStats getHistoryStats() {
-            return historyStats;
-        }
-
-        public HistoryStats setHistoryStats(CheckedUrlHistoryStats historyStats) {
-            this.historyStats = historyStats;
-            return this;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public HistoryStats setDescription(String description) {
-            this.description = description;
-            return this;
-        }
-    }
+public class ProviderTracker extends HistoryTracker {
     // Provider ID within the context of a namespace or prefix
     private String id;
-    // Home URL for this provider within the context of a namespace or prefix
-    private String url;
     // A description of this provider within the context of a namespace or prefix
     private String description;
     // Institution information
     private String institution;
     // Location information on this provider within the context of a namespace or prefix, if available
     private String location;
-    // Historical information
-    private SortedList<CheckedUrl> history;
-    // When the tracking was queued / added to the link checker (UTC)
-    private Timestamp created;
 
     public String getId() {
         return id;
@@ -71,15 +32,6 @@ public class ProviderTracker implements Serializable {
 
     public ProviderTracker setId(String id) {
         this.id = id;
-        return this;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public ProviderTracker setUrl(String url) {
-        this.url = url;
         return this;
     }
 
@@ -110,21 +62,4 @@ public class ProviderTracker implements Serializable {
         return this;
     }
 
-    public SortedList<CheckedUrl> getHistory() {
-        return history;
-    }
-
-    public ProviderTracker setHistory(SortedList<CheckedUrl> history) {
-        this.history = history;
-        return this;
-    }
-
-    public Timestamp getCreated() {
-        return created;
-    }
-
-    public ProviderTracker setCreated(Timestamp created) {
-        this.created = created;
-        return this;
-    }
 }
