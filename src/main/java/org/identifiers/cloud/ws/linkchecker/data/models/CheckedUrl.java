@@ -19,4 +19,31 @@ public class CheckedUrl {
     private Timestamp timestamp;
     // Returning HTTP Status code
     private int httpStatus;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public CheckedUrl setUrl(String url) {
+        this.url = url;
+        return this;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public CheckedUrl setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+        return this;
+    }
+
+    public int getHttpStatus() {
+        return httpStatus;
+    }
+
+    public CheckedUrl setHttpStatus(int httpStatus) {
+        this.httpStatus = httpStatus;
+        return this;
+    }
 }
