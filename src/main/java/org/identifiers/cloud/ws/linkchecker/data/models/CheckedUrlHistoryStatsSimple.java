@@ -18,16 +18,16 @@ public class CheckedUrlHistoryStatsSimple implements CheckedUrlHistoryStats {
 
     @Override
     public void init(List<CheckedUrl> checkedUrls) {
-
+        // TODO
     }
 
     @Override
     public void update(CheckedUrl checkedUrl) {
-
+        // TODO
     }
 
     @Override
-    public float getUpPercenetage() {
-        return 0;
+    public double getUpPercenetage() {
+        return (nUpEvents * 100.0) / (nDownEvents + nUpEvents);
     }
 }

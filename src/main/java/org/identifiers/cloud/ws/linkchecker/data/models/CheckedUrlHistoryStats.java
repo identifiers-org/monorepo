@@ -27,5 +27,5 @@ public interface CheckedUrlHistoryStats {
      * Get the percentage of events where the checked URL was considered to be up and running
      * @return up and running percentage
      */
-    float getUpPercenetage();
+    double getUpPercenetage();
 }
