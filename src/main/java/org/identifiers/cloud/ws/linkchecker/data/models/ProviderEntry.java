@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -32,6 +33,8 @@ public class ProviderEntry implements Serializable {
     private String location;
     // Historical information
     private List<CheckedUrl> history;
+    // When the tracking was queued / added to the link checker (UTC)
+    private Timestamp created;
 
     public String getId() {
         return id;
@@ -84,6 +87,15 @@ public class ProviderEntry implements Serializable {
 
     public ProviderEntry setHistory(List<CheckedUrl> history) {
         this.history = history;
+        return this;
+    }
+
+    public Timestamp getCreated() {
+        return created;
+    }
+
+    public ProviderEntry setCreated(Timestamp created) {
+        this.created = created;
         return this;
     }
 }
