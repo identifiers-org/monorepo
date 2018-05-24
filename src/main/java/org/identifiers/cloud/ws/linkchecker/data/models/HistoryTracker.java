@@ -22,7 +22,7 @@ public abstract class HistoryTracker implements Serializable {
     // Home URL for this provider within the context of a namespace or prefix
     protected String url;
     // Historical information
-    protected SortedList<CheckedUrl> history;
+    protected SortedList<LinkCheckResult> history;
     // When the tracking was queued / added to the link checker (UTC)
     protected Timestamp created;
 
@@ -35,11 +35,11 @@ public abstract class HistoryTracker implements Serializable {
         return this;
     }
 
-    public SortedList<CheckedUrl> getHistory() {
+    public SortedList<LinkCheckResult> getHistory() {
         return history;
     }
 
-    public HistoryTracker setHistory(SortedList<CheckedUrl> history) throws HistoryTrackerException {
+    public HistoryTracker setHistory(SortedList<LinkCheckResult> history) throws HistoryTrackerException {
         if (!history.isEmpty()) {
             throw new HistoryTrackerException("CANNOT SET HISTORY for a NON-empty pre-existing history");
         }
@@ -60,12 +60,12 @@ public abstract class HistoryTracker implements Serializable {
         return Arrays.stream(HistoryStats.values()).map(HistoryStats::getHistoryStats).collect(Collectors.toList());
     }
 
-    public void addCheckedUrlEvent(CheckedUrl checkedUrl) {
+    public void addCheckedUrlEvent(LinkCheckResult linkCheckResult) {
         // Keep it for the records
-        history.add(checkedUrl);
+        history.add(linkCheckResult);
         // Update the history stats
         Arrays.stream(HistoryStats.values())
-                .forEach(historyStats -> historyStats.getHistoryStats().update(checkedUrl));
+                .forEach(historyStats -> historyStats.getHistoryStats().update(linkCheckResult));
     }
 
     public enum HistoryStats implements Serializable {

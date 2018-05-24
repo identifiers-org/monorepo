@@ -13,15 +13,15 @@ import java.util.List;
 public interface CheckedUrlHistoryStats {
     /**
      * Initialize the history with a given list of checked URLs events
-     * @param checkedUrls list of checked URLs events
+     * @param linkCheckResults list of checked URLs events
      */
-    void init(List<CheckedUrl> checkedUrls) throws CheckedUrlHistoryStatsException;
+    void init(List<LinkCheckResult> linkCheckResults) throws CheckedUrlHistoryStatsException;
 
     /**
      * Update the history with a given checked URL event
-     * @param checkedUrl checked URL event
+     * @param linkCheckResult checked URL event
      */
-    void update(CheckedUrl checkedUrl);
+    void update(LinkCheckResult linkCheckResult);
 
     /**
      * Get the percentage of events where the checked URL was considered to be up and running

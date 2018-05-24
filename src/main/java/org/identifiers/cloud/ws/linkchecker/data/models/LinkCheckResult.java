@@ -11,9 +11,9 @@ import java.sql.Timestamp;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  *
- * This entity models a checked URL
+ * This entity models a checked URL, for either a provider, a resource or a plain URL.
  */
-public class CheckedUrl implements Serializable, Comparable<CheckedUrl> {
+public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult> {
     // URL that has been checked
     private String url;
     // When it has been checked (UTC)
@@ -25,7 +25,7 @@ public class CheckedUrl implements Serializable, Comparable<CheckedUrl> {
         return url;
     }
 
-    public CheckedUrl setUrl(String url) {
+    public LinkCheckResult setUrl(String url) {
         this.url = url;
         return this;
     }
@@ -34,7 +34,7 @@ public class CheckedUrl implements Serializable, Comparable<CheckedUrl> {
         return timestamp;
     }
 
-    public CheckedUrl setTimestamp(Timestamp timestamp) {
+    public LinkCheckResult setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
         return this;
     }
@@ -43,13 +43,13 @@ public class CheckedUrl implements Serializable, Comparable<CheckedUrl> {
         return httpStatus;
     }
 
-    public CheckedUrl setHttpStatus(int httpStatus) {
+    public LinkCheckResult setHttpStatus(int httpStatus) {
         this.httpStatus = httpStatus;
         return this;
     }
 
     @Override
-    public int compareTo(CheckedUrl o) {
+    public int compareTo(LinkCheckResult o) {
         return this.timestamp.compareTo(o.getTimestamp());
     }
 }
