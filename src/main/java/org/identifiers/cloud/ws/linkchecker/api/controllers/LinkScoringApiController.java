@@ -1,4 +1,4 @@
-package org.identifiers.cloud.ws.linkchecker.controllers;
+package org.identifiers.cloud.ws.linkchecker.api.controllers;
 
 import org.identifiers.cloud.ws.linkchecker.api.models.LinkScoringApiModel;
 import org.springframework.beans.factory.annotation.Autowired;
