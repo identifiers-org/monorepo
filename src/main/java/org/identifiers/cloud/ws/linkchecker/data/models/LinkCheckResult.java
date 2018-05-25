@@ -22,7 +22,8 @@ public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult
     // URL that has been checked
     @Indexed
     private String url;
-    // When it has been checked (UTC)
+    // When it has been checked (UTC), indexed to easily find those entities to remove
+    @Indexed
     private Timestamp timestamp;
     // When this check was requested (UTC)
     private Timestamp requestTimestamp;
