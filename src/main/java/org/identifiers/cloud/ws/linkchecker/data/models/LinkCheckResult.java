@@ -21,6 +21,8 @@ public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult
     private String url;
     // When it has been checked (UTC)
     private Timestamp timestamp;
+    // When this check was requested (UTC)
+    private Timestamp requestTimestamp;
     // Link check request type / reference
     private String providerId;
     private String resourceId;
@@ -42,6 +44,15 @@ public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult
 
     public LinkCheckResult setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
+        return this;
+    }
+
+    public Timestamp getRequestTimestamp() {
+        return requestTimestamp;
+    }
+
+    public LinkCheckResult setRequestTimestamp(Timestamp requestTimestamp) {
+        this.requestTimestamp = requestTimestamp;
         return this;
     }
 
