@@ -7,6 +7,8 @@ package org.identifiers.cloud.ws.linkchecker.services;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This service manages the thistory tracking business logic, stats, etc.
  */
 public class HistoryTrackingService {
 }
