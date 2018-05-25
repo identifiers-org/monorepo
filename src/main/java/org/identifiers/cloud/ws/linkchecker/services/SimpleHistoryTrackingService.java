@@ -3,6 +3,9 @@ package org.identifiers.cloud.ws.linkchecker.services;
 import org.identifiers.cloud.ws.linkchecker.models.ProviderTracker;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 /**
  * Project: link-checker
  * Package: org.identifiers.cloud.ws.linkchecker.services
@@ -13,6 +16,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SimpleHistoryTrackingService implements HistoryTrackingService {
+    // Provider trackers by Provider ID
+    private ConcurrentMap<String, ProviderTracker> providerTrackers = new ConcurrentHashMap<>();
+
     @Override
     public ProviderTracker getTrackerForProvider(String providerId) {
         return null;
