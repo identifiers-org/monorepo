@@ -1,7 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.data.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.data.redis.core.RedisHash;
 
 /**
  * Project: link-checker
@@ -15,7 +14,6 @@ import org.springframework.data.redis.core.RedisHash;
  * will be used for tracking the provider home URL.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@RedisHash("linkCheckerProviderTracker")
 public class ProviderTracker extends HistoryTracker {
     // Provider ID within the context of a namespace or prefix
     private String id;

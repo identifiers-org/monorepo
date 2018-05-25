@@ -18,9 +18,9 @@ import java.util.stream.Collectors;
  */
 public abstract class HistoryTracker implements Serializable {
     // Home URL for this provider within the context of a namespace or prefix
-    protected String url;
+    private String url;
     // When the tracking was queued / added to the link checker (UTC)
-    protected Timestamp created;
+    private Timestamp created;
 
     public String getUrl() {
         return url;
