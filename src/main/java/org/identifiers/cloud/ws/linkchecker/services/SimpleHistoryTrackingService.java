@@ -10,7 +10,7 @@ import org.identifiers.cloud.ws.linkchecker.models.ProviderTracker;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-public class DefaultHistoryTrackingService implements HistoryTrackingService {
+public class SimpleHistoryTrackingService implements HistoryTrackingService {
     @Override
     public ProviderTracker getTrackerForProvider(String providerId) {
         return null;
