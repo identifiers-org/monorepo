@@ -17,6 +17,7 @@ import java.sql.Timestamp;
  */
 @RedisHash("LinkCheckerLinkCheckResult")
 public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult> {
+    // TODO - We'll let Redis to create an ID for this entity
     // URL that has been checked
     private String url;
     // When it has been checked (UTC)
