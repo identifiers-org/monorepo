@@ -16,13 +16,11 @@ import java.util.stream.Collectors;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  *
- * Base class for the different trackers this service uses
+ * This is a local cache for the history tracking information on a link. Base class for the different tracked entities.
  */
 public abstract class HistoryTracker implements Serializable {
     // Home URL for this provider within the context of a namespace or prefix
     protected String url;
-    // Historical information
-    protected SortedList<LinkCheckResult> history;
     // When the tracking was queued / added to the link checker (UTC)
     protected Timestamp created;
 
