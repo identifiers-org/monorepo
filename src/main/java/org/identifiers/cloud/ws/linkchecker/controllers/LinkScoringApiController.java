@@ -1,6 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.controllers;
 
-import org.identifiers.cloud.ws.linkchecker.models.LinkScoringApiModel;
+import org.identifiers.cloud.ws.linkchecker.api.models.LinkScoringApiModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
