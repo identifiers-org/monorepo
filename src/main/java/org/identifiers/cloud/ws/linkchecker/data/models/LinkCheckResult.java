@@ -17,17 +17,49 @@ import java.sql.Timestamp;
  */
 @RedisHash("LinkCheckerLinkCheckResult")
 public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult> {
+    // URL that has been checked
+    private String url;
     // When it has been checked (UTC)
-    private Timestamp checkTimestamp;
+    private Timestamp timestamp;
+    // Link check request type / reference
+    private String providerId;
+    private String resourceId;
     // Returning HTTP Status code
     private int httpStatus;
 
-    public Timestamp getCheckTimestamp() {
-        return checkTimestamp;
+    public String getUrl() {
+        return url;
     }
 
-    public LinkCheckResult setCheckTimestamp(Timestamp checkTimestamp) {
-        this.checkTimestamp = checkTimestamp;
+    public LinkCheckResult setUrl(String url) {
+        this.url = url;
+        return this;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public LinkCheckResult setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+        return this;
+    }
+
+    public String getProviderId() {
+        return providerId;
+    }
+
+    public LinkCheckResult setProviderId(String providerId) {
+        this.providerId = providerId;
+        return this;
+    }
+
+    public String getResourceId() {
+        return resourceId;
+    }
+
+    public LinkCheckResult setResourceId(String resourceId) {
+        this.resourceId = resourceId;
         return this;
     }
 
@@ -42,6 +74,6 @@ public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult
 
     @Override
     public int compareTo(LinkCheckResult o) {
-        return this.checkTimestamp.compareTo(o.getCheckTimestamp());
+        return this.timestamp.compareTo(o.getTimestamp());
     }
 }
