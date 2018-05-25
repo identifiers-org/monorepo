@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.services;
 
+import org.identifiers.cloud.ws.linkchecker.models.ProviderTracker;
+
 /**
  * Project: link-checker
  * Package: org.identifiers.cloud.ws.linkchecker.services
@@ -11,4 +13,5 @@ package org.identifiers.cloud.ws.linkchecker.services;
  * A history tracking service maintains and provides the tracking information for the requested entity.
  */
 public interface HistoryTrackingService {
+    ProviderTracker getTrackerForProvider(String providerId);
 }
