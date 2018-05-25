@@ -13,12 +13,12 @@ import java.sql.Timestamp;
  */
 public class LinkCheckRequest implements Serializable, Comparable<LinkCheckRequest> {
     // URL that has been checked
-    protected String url;
+    private String url;
     // When it has been checked (UTC)
-    protected Timestamp requestTimestamp;
+    private Timestamp timestamp;
     // Link check request type / reference
-    protected String providerId;
-    protected String resourceId;
+    private String providerId;
+    private String resourceId;
 
     public String getUrl() {
         return url;
@@ -29,12 +29,12 @@ public class LinkCheckRequest implements Serializable, Comparable<LinkCheckReque
         return this;
     }
 
-    public Timestamp getRequestTimestamp() {
-        return requestTimestamp;
+    public Timestamp getTimestamp() {
+        return timestamp;
     }
 
-    public LinkCheckRequest setRequestTimestamp(Timestamp requestTimestamp) {
-        this.requestTimestamp = requestTimestamp;
+    public LinkCheckRequest setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
         return this;
     }
 
@@ -58,7 +58,7 @@ public class LinkCheckRequest implements Serializable, Comparable<LinkCheckReque
 
     @Override
     public int compareTo(LinkCheckRequest o) {
-        return this.requestTimestamp.compareTo(o.getRequestTimestamp());
+        return this.timestamp.compareTo(o.getTimestamp());
     }
 
 }

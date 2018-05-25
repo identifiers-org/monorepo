@@ -16,7 +16,7 @@ import java.sql.Timestamp;
  * This entity models a checked URL, for either a provider, a resource or a plain URL.
  */
 @RedisHash("LinkCheckerLinkCheckResult")
-public class LinkCheckResult extends LinkCheckRequest implements Serializable, Comparable<LinkCheckResult> {
+public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult> {
     // When it has been checked (UTC)
     private Timestamp checkTimestamp;
     // Returning HTTP Status code
