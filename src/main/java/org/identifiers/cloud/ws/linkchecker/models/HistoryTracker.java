@@ -1,4 +1,6 @@
-package org.identifiers.cloud.ws.linkchecker.data.models;
+package org.identifiers.cloud.ws.linkchecker.models;
+
+import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 
 import java.io.Serializable;
 import java.sql.Timestamp;

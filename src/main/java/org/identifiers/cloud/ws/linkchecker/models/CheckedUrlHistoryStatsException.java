@@ -1,4 +1,4 @@
-package org.identifiers.cloud.ws.linkchecker.data.models;
+package org.identifiers.cloud.ws.linkchecker.models;
 
 /**
  * Project: link-checker
