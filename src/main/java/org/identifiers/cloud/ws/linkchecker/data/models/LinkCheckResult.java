@@ -14,21 +14,10 @@ import java.sql.Timestamp;
  * This entity models a checked URL, for either a provider, a resource or a plain URL.
  */
 public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult> {
-    // URL that has been checked
-    private String url;
     // When it has been checked (UTC)
     private Timestamp timestamp;
     // Returning HTTP Status code
     private int httpStatus;
-
-    public String getUrl() {
-        return url;
-    }
-
-    public LinkCheckResult setUrl(String url) {
-        this.url = url;
-        return this;
-    }
 
     public Timestamp getTimestamp() {
         return timestamp;
