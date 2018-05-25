@@ -15,16 +15,16 @@ import java.sql.Timestamp;
  */
 public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult> {
     // When it has been checked (UTC)
-    private Timestamp timestamp;
+    private Timestamp checkTimestamp;
     // Returning HTTP Status code
     private int httpStatus;
 
-    public Timestamp getTimestamp() {
-        return timestamp;
+    public Timestamp getCheckTimestamp() {
+        return checkTimestamp;
     }
 
-    public LinkCheckResult setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
+    public LinkCheckResult setCheckTimestamp(Timestamp checkTimestamp) {
+        this.checkTimestamp = checkTimestamp;
         return this;
     }
 
@@ -39,6 +39,6 @@ public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult
 
     @Override
     public int compareTo(LinkCheckResult o) {
-        return this.timestamp.compareTo(o.getTimestamp());
+        return this.checkTimestamp.compareTo(o.getCheckTimestamp());
     }
 }
