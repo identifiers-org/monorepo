@@ -33,7 +33,7 @@ public class ApplicationConfig {
     @Value("${spring.redis.host}")
     private String redisHost;
 
-    @Value("org.identifiers.cloud.ws.linkchecker.backend.data.queue.key.linkcheckrequests")
+    @Value("${org.identifiers.cloud.ws.linkchecker.backend.data.queue.key.linkcheckrequests}")
     private String queueKeyLinkCheckRequests;
 
     @Bean
