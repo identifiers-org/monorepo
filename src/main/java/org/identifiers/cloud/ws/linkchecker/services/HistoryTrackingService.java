@@ -14,4 +14,5 @@ import org.identifiers.cloud.ws.linkchecker.models.ProviderTracker;
  */
 public interface HistoryTrackingService {
     ProviderTracker getTrackerForProvider(String providerId);
+    // TODO - Add the methods for the rest of the entities
 }
