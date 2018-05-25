@@ -1,7 +1,5 @@
 package org.identifiers.cloud.ws.linkchecker.data.models;
 
-import javafx.collections.transformation.SortedList;
-
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Arrays;
@@ -33,18 +31,6 @@ public abstract class HistoryTracker implements Serializable {
         return this;
     }
 
-    public SortedList<LinkCheckResult> getHistory() {
-        return history;
-    }
-
-    public HistoryTracker setHistory(SortedList<LinkCheckResult> history) throws HistoryTrackerException {
-        if (!history.isEmpty()) {
-            throw new HistoryTrackerException("CANNOT SET HISTORY for a NON-empty pre-existing history");
-        }
-        this.history = history;
-        return this;
-    }
-
     public Timestamp getCreated() {
         return created;
     }
@@ -59,8 +45,6 @@ public abstract class HistoryTracker implements Serializable {
     }
 
     public void addCheckedUrlEvent(LinkCheckResult linkCheckResult) {
-        // Keep it for the records
-        history.add(linkCheckResult);
         // Update the history stats
         Arrays.stream(HistoryStats.values())
                 .forEach(historyStats -> historyStats.getHistoryStats().update(linkCheckResult));
