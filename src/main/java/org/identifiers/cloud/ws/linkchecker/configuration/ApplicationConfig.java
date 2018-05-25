@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.configuration;
 
+import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +9,10 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
+import org.springframework.data.redis.support.collections.DefaultRedisList;
+import org.springframework.data.redis.support.collections.RedisList;
+
+import java.util.Deque;
 
 /**
  * Project: link-checker
@@ -28,6 +33,9 @@ public class ApplicationConfig {
     @Value("${spring.redis.host}")
     private String redisHost;
 
+    @Value("org.identifiers.cloud.ws.linkchecker.backend.data.queue.key.linkcheckrequests")
+    private String queueKeyLinkCheckRequests;
+
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(redisHost,
@@ -40,5 +48,13 @@ public class ApplicationConfig {
         RedisTemplate<byte[], byte[]> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory());
         return template;
+    }
+
+    @Bean
+    public Deque<LinkCheckRequest> linkCheckRequestDeque() {
+        RedisTemplate<String, LinkCheckRequest> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory());
+        RedisList<LinkCheckRequest> linkCheckRequests = new DefaultRedisList<LinkCheckRequest>(queueKeyLinkCheckRequests, redisTemplate);
+        return linkCheckRequests;
     }
 }
