@@ -10,6 +10,8 @@ import java.sql.Timestamp;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This model represents a request for checking a link
  */
 public class LinkCheckRequest implements Serializable, Comparable<LinkCheckRequest> {
     // URL that has been checked
