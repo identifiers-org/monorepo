@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.data.models;
 
+import org.springframework.data.redis.core.RedisHash;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -13,6 +15,7 @@ import java.sql.Timestamp;
  *
  * This entity models a checked URL, for either a provider, a resource or a plain URL.
  */
+@RedisHash("LinkCheckerLinkCheckResult")
 public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult> {
     // When it has been checked (UTC)
     private Timestamp checkTimestamp;
