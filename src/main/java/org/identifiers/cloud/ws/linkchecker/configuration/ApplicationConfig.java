@@ -51,7 +51,7 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public Deque<LinkCheckRequest> linkCheckRequestDeque() {
+    public Deque<LinkCheckRequest> linkCheckRequestQueue() {
         RedisTemplate<String, LinkCheckRequest> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
         RedisList<LinkCheckRequest> linkCheckRequests = new DefaultRedisList<LinkCheckRequest>(queueKeyLinkCheckRequests, redisTemplate);
