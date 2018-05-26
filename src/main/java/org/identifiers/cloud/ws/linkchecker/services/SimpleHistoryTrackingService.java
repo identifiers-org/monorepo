@@ -88,7 +88,9 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
             return providers.get(scoringRequestWithIdPayload.getId(), new Callable<ProviderTracker>() {
                 @Override
                 public ProviderTracker call() throws Exception {
-                    return loadCreateTrackedProvider(scoringRequestWithIdPayload);
+                    ProviderTracker providerTracker = loadCreateTrackedProvider(scoringRequestWithIdPayload);
+                    // TODO - Build up the stats
+                    return providerTracker;
                 }
             });
         } catch (ExecutionException e) {
