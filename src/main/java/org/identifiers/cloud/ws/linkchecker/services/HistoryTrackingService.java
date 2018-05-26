@@ -14,6 +14,6 @@ import org.identifiers.cloud.ws.linkchecker.models.ProviderTracker;
  * A history tracking service maintains and provides the tracking information for the requested entity.
  */
 public interface HistoryTrackingService {
-    ProviderTracker getTrackerForProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload);
+    ProviderTracker getTrackerForProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) throws HistoryTrackingServiceException ;
     // TODO - Add the methods for the rest of the entities
 }

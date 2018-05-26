@@ -83,7 +83,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     }
 
     @Override
-    public ProviderTracker getTrackerForProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) {
+    public ProviderTracker getTrackerForProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) throws HistoryTrackingServiceException {
         ProviderTracker providerTracker = new ProviderTracker();
         providerTracker.setId(scoringRequestWithIdPayload.getId())
                 .setUrl(scoringRequestWithIdPayload.getUrl())
@@ -96,7 +96,11 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
                 }
             });
         } catch (ExecutionException e) {
-            return providerTracker;
+            throw new SimpleHistoryTrackingServiceException(String.format("Error while getting scoring stats " +
+                    "for Provider ID '%s', URL '%s', because '%s'",
+                    scoringRequestWithIdPayload.getId(),
+                    scoringRequestWithIdPayload.getUrl(),
+                    e.getMessage()));
         }
     }
 }
