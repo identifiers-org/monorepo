@@ -69,19 +69,20 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
 
     @Override
     public ProviderTracker getTrackerForProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) {
+        ProviderTracker providerTracker = new ProviderTracker();
+        providerTracker.setId(scoringRequestWithIdPayload.getId())
+                .setUrl(scoringRequestWithIdPayload.getUrl())
+                .setCreated(new Timestamp(System.currentTimeMillis()));
         try {
             return providers.get(scoringRequestWithIdPayload.getId(), new Callable<ProviderTracker>() {
                 @Override
                 public ProviderTracker call() throws Exception {
-                    ProviderTracker providerTracker = new ProviderTracker();
-                    providerTracker.setId(scoringRequestWithIdPayload.getId())
-                            .setUrl(scoringRequestWithIdPayload.getUrl())
-                            .setCreated(new Timestamp(System.currentTimeMillis()));
                     return providerTracker;
                 }
             });
         } catch (ExecutionException e) {
             // TODO
+            return providerTracker;
         }
     }
 }
