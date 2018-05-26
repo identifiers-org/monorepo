@@ -61,7 +61,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
                 removalNotification.getCause().toString());
     }
 
-    // Cached Stats Data Loaders
+    // Tracking entry Loaders
     private ProviderTracker loadCreateTrackedProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) {
         ProviderTracker providerTracker = new ProviderTracker();
         providerTracker.setId(scoringRequestWithIdPayload.getId())
