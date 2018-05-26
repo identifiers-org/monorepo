@@ -5,6 +5,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
 import com.google.common.cache.RemovalNotification;
 import org.identifiers.cloud.ws.linkchecker.api.requests.ScoringRequestWithIdPayload;
+import org.identifiers.cloud.ws.linkchecker.data.models.TrackedProvider;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.TrackedProviderRepository;
 import org.identifiers.cloud.ws.linkchecker.models.ProviderTracker;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
+import java.util.Optional;
 import java.util.concurrent.*;
 
 /**
@@ -65,9 +67,18 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
         providerTracker.setId(scoringRequestWithIdPayload.getId())
                 .setUrl(scoringRequestWithIdPayload.getUrl())
                 .setCreated(new Timestamp(System.currentTimeMillis()));
-        trackedProviderRepository.findById(scoringRequestWithIdPayload.getId()).ifPresent(trackedProvider -> {
-            providerTracker.setCreated(trackedProvider.getCreated());
+        Optional<TrackedProvider> trackedProvider = trackedProviderRepository.findById(scoringRequestWithIdPayload
+                .getId());
+        trackedProvider.ifPresent(entry -> {
+            providerTracker.setCreated(entry.getCreated());
         });
+        if (!trackedProvider.isPresent()) {
+            TrackedProvider newTrackedProvider = new TrackedProvider()
+                    .setCreated(providerTracker.getCreated())
+                    .setId(providerTracker.getId())
+                    .setUrl(providerTracker.getUrl());
+            trackedProviderRepository.save(newTrackedProvider);
+        }
         return providerTracker;
     }
 
