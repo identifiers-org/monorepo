@@ -32,6 +32,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     @Value("${org.identifiers.cloud.ws.linkchecker.backend.data.cache.size}")
     private long cacheSize;
 
+    // Cache Eviction Listener Actions
     private void processProviderEviction(RemovalNotification<String, ProviderTracker> removalNotification) {
         logger.info("Evicting tracking cache for provider ID '{}', '{}', EVICTION CAUSE '{}'",
                 removalNotification.getKey(),
