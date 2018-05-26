@@ -1,12 +1,13 @@
 package org.identifiers.cloud.ws.linkchecker.services;
 
-import com.google.common.cache.LoadingCache;
+import com.google.common.cache.*;
 import org.identifiers.cloud.ws.linkchecker.models.ProviderTracker;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Project: link-checker
@@ -29,6 +30,25 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
 
     // Cached stats
     LoadingCache<String, ProviderTracker> providers;
+
+    public SimpleHistoryTrackingService() {
+        providers = CacheBuilder.newBuilder()
+                .maximumSize(cacheSize)
+                .expireAfterWrite(cacheExpirySeconds, TimeUnit.SECONDS)
+                .removalListener(new RemovalListener<String, ProviderTracker>() {
+                    @Override
+                    public void onRemoval(RemovalNotification<String, ProviderTracker> removalNotification) {
+                        // TODO
+                    }
+                })
+                .build(new CacheLoader<String, ProviderTracker>() {
+                    @Override
+                    public ProviderTracker load(String s) throws Exception {
+                        // TODO
+                        return null;
+                    }
+                });
+    }
 
     @Override
     public ProviderTracker getTrackerForProvider(String providerId) {
