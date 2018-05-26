@@ -62,7 +62,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     }
 
     // Cached Stats Data Loaders
-    private ProviderTracker loadTrackedProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) {
+    private ProviderTracker loadCreateTrackedProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) {
         ProviderTracker providerTracker = new ProviderTracker();
         providerTracker.setId(scoringRequestWithIdPayload.getId())
                 .setUrl(scoringRequestWithIdPayload.getUrl())
@@ -88,7 +88,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
             return providers.get(scoringRequestWithIdPayload.getId(), new Callable<ProviderTracker>() {
                 @Override
                 public ProviderTracker call() throws Exception {
-                    return loadTrackedProvider(scoringRequestWithIdPayload);
+                    return loadCreateTrackedProvider(scoringRequestWithIdPayload);
                 }
             });
         } catch (ExecutionException e) {
