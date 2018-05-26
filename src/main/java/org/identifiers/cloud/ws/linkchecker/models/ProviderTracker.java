@@ -17,12 +17,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class ProviderTracker extends HistoryTracker {
     // Provider ID within the context of a namespace or prefix
     private String id;
-    // A description of this provider within the context of a namespace or prefix
-    private String description;
-    // Institution information
-    private String institution;
-    // Location information on this provider within the context of a namespace or prefix, if available
-    private String location;
 
     public String getId() {
         return id;
@@ -32,32 +26,4 @@ public class ProviderTracker extends HistoryTracker {
         this.id = id;
         return this;
     }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public ProviderTracker setDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public String getInstitution() {
-        return institution;
-    }
-
-    public ProviderTracker setInstitution(String institution) {
-        this.institution = institution;
-        return this;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public ProviderTracker setLocation(String location) {
-        this.location = location;
-        return this;
-    }
-
 }
