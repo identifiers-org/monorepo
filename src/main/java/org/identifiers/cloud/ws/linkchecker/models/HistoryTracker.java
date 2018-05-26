@@ -52,6 +52,11 @@ public abstract class HistoryTracker implements Serializable {
                 .forEach(historyStats -> historyStats.getHistoryStats().update(linkCheckResult));
     }
 
+    public void initHistoryStats(List<LinkCheckResult> linkCheckResults) {
+        Arrays.stream(HistoryStats.values())
+                .forEach(historyStats -> historyStats.getHistoryStats().init(linkCheckResults));
+    }
+
     public enum HistoryStats implements Serializable {
         SIMPLE(new CheckedUrlHistoryStatsSimple(), "Simple UP/DOWN history tracking");
 
