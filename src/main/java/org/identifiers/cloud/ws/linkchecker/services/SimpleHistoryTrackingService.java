@@ -22,7 +22,9 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
 
     @Value("${org.identifiers.cloud.ws.linkchecker.backend.data.cache.expiry.seconds}")
     private long cacheExpirySeconds;
-    
+
+    @Value("${org.identifiers.cloud.ws.linkchecker.backend.data.cache.size}")
+    private long cacheSize;
 
     @Override
     public ProviderTracker getTrackerForProvider(String providerId) {
