@@ -77,6 +77,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
             return providers.get(scoringRequestWithIdPayload.getId(), new Callable<ProviderTracker>() {
                 @Override
                 public ProviderTracker call() throws Exception {
+                    // TODO - Load from Repo
                     return providerTracker;
                 }
             });
