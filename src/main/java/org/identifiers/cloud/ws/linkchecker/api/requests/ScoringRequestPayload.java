@@ -11,5 +11,14 @@ import java.io.Serializable;
  * ---
  */
 public class ScoringRequestPayload implements Serializable {
-    public String url;
+    protected String url;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public ScoringRequestPayload setUrl(String url) {
+        this.url = url;
+        return this;
+    }
 }
