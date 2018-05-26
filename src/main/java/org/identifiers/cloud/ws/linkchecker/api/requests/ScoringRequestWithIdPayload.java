@@ -10,7 +10,15 @@ import java.io.Serializable;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-public class ScoringRequestWithIdPayload implements Serializable {
-    public String id;
-    public String url;
+public class ScoringRequestWithIdPayload extends ScoringRequestPayload implements Serializable {
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public ScoringRequestWithIdPayload setId(String id) {
+        this.id = id;
+        return this;
+    }
 }
