@@ -26,6 +26,9 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     @Value("${org.identifiers.cloud.ws.linkchecker.backend.data.cache.size}")
     private long cacheSize;
 
+    // Cached stats
+
+
     @Override
     public ProviderTracker getTrackerForProvider(String providerId) {
         return null;
