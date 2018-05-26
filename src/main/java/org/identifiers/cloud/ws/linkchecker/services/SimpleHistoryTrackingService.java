@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.services;
 
+import com.google.common.cache.LoadingCache;
 import org.identifiers.cloud.ws.linkchecker.models.ProviderTracker;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -27,7 +28,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     private long cacheSize;
 
     // Cached stats
-
+    LoadingCache<String, ProviderTracker> providers;
 
     @Override
     public ProviderTracker getTrackerForProvider(String providerId) {
