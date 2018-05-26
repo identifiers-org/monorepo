@@ -61,8 +61,14 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
 
     // Cached Stats Data Loaders
     private ProviderTracker loadTrackedProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) {
-        // TODO
-        return null;
+        ProviderTracker providerTracker = new ProviderTracker();
+        providerTracker.setId(scoringRequestWithIdPayload.getId())
+                .setUrl(scoringRequestWithIdPayload.getUrl())
+                .setCreated(new Timestamp(System.currentTimeMillis()));
+        trackedProviderRepository.findById(scoringRequestWithIdPayload.getId()).ifPresent(trackedProvider -> {
+            providerTracker.setCreated(trackedProvider.getCreated());
+        });
+        return providerTracker;
     }
 
     @Override
