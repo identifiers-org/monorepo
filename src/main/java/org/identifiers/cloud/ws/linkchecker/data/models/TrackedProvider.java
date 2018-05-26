@@ -22,13 +22,6 @@ public class TrackedProvider implements Serializable {
     // Provider ID within the context of a namespace or prefix
     @Id
     private String id;
-    // A description of this provider within the context of a namespace or prefix
-    private String description;
-    // Institution information
-    private String institution;
-    // Location information on this provider within the context of a namespace or prefix, if available
-    @Indexed
-    private String location;
     // Home URL for this provider within the context of a namespace or prefix
     @Indexed
     private String url;
@@ -42,33 +35,6 @@ public class TrackedProvider implements Serializable {
 
     public TrackedProvider setId(String id) {
         this.id = id;
-        return this;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public TrackedProvider setDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public String getInstitution() {
-        return institution;
-    }
-
-    public TrackedProvider setInstitution(String institution) {
-        this.institution = institution;
-        return this;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public TrackedProvider setLocation(String location) {
-        this.location = location;
         return this;
     }
 
