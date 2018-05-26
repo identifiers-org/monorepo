@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -52,6 +53,10 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
 
     @Override
     public ProviderTracker getTrackerForProvider(String providerId) {
-        return null;
+        try {
+            return providers.get(providerId);
+        } catch (ExecutionException e) {
+            // TODO
+        }
     }
 }
