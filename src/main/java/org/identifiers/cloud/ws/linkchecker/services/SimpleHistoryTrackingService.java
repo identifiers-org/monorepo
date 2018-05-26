@@ -54,7 +54,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     }
 
     // Cached stats
-    LoadingCache<String, ProviderTracker> providers;
+    Cache<String, ProviderTracker> providers;
 
     public SimpleHistoryTrackingService() {
         providers = CacheBuilder.newBuilder()
@@ -66,13 +66,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
                         processProviderEviction(removalNotification);
                     }
                 })
-                .build(new CacheLoader<String, ProviderTracker>() {
-                    @Override
-                    public ProviderTracker load(String s) throws Exception {
-                        // TODO
-                        return null;
-                    }
-                });
+                .build();
     }
 
     @Override
