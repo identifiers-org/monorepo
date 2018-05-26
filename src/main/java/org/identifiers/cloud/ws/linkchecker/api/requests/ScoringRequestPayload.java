@@ -10,6 +10,6 @@ import java.io.Serializable;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-public class PlainScoringRequestPayload implements Serializable {
-
+public class ScoringRequestPayload implements Serializable {
+    public String url;
 }
