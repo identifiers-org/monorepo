@@ -7,6 +7,8 @@ package org.identifiers.cloud.ws.linkchecker.data.models;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This models a provider being tracked by the service.
  */
 public class TrackedProvider {
 }
