@@ -49,6 +49,10 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     // Cached Stats Data Loaders
     private void loadTrackedProvider(String providerId) {
         // TODO
+        ProviderTracker providerTracker = new ProviderTracker().setId(providerId);
+        trackedProviderRepository.findById(providerId).ifPresent(trackedProvider -> {
+            // TODO - build the cache entry
+        });
     }
 
     // Cached stats
