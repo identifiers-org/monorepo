@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.data.models;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
 
 import java.io.Serializable;
@@ -16,6 +17,7 @@ import java.sql.Timestamp;
  * <p>
  * This models a provider being tracked by the service.
  */
+@RedisHash("LinkCheckerTrackedProvider")
 public class TrackedProvider implements Serializable {
     // Provider ID within the context of a namespace or prefix
     @Id
