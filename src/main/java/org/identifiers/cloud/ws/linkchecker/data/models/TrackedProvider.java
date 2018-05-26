@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.data.models;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * Project: link-checker
@@ -21,4 +22,9 @@ public class TrackedProvider implements Serializable {
     private String institution;
     // Location information on this provider within the context of a namespace or prefix, if available
     private String location;
+    // Home URL for this provider within the context of a namespace or prefix
+    private String url;
+    // When the tracking was queued / added to the link checker (UTC)
+    private Timestamp created;
+
 }
