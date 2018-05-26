@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * Project: link-checker
@@ -71,6 +69,16 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
 
     @Override
     public ProviderTracker getTrackerForProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) {
-        return null;
+        try {
+            return providers.get(scoringRequestWithIdPayload.getId(), new Callable<ProviderTracker>() {
+                @Override
+                public ProviderTracker call() throws Exception {
+                    // TODO
+                    return null;
+                }
+            });
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 }
