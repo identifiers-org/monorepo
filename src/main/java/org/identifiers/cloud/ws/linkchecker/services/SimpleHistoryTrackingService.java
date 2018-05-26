@@ -81,7 +81,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
                 }
             });
         } catch (ExecutionException e) {
-            e.printStackTrace();
+            // TODO
         }
     }
 }
