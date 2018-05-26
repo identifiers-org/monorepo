@@ -2,6 +2,8 @@ package org.identifiers.cloud.ws.linkchecker.services;
 
 import com.google.common.cache.*;
 import org.identifiers.cloud.ws.linkchecker.models.ProviderTracker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +22,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 public class SimpleHistoryTrackingService implements HistoryTrackingService {
+    private final static Logger logger = LoggerFactory.getLogger(SimpleHistoryTrackingService.class);
     // Provider trackers by Provider ID
     private ConcurrentMap<String, ProviderTracker> providerTrackers = new ConcurrentHashMap<>();
 
