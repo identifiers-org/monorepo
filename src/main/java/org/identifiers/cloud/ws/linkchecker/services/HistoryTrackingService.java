@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.services;
 
+import org.identifiers.cloud.ws.linkchecker.api.requests.ScoringRequestWithIdPayload;
 import org.identifiers.cloud.ws.linkchecker.models.ProviderTracker;
 
 /**
@@ -13,6 +14,6 @@ import org.identifiers.cloud.ws.linkchecker.models.ProviderTracker;
  * A history tracking service maintains and provides the tracking information for the requested entity.
  */
 public interface HistoryTrackingService {
-    ProviderTracker getTrackerForProvider(String providerId);
+    ProviderTracker getTrackerForProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload);
     // TODO - Add the methods for the rest of the entities
 }

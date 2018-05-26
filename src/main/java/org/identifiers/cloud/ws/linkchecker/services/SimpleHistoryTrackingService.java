@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.services;
 
 import com.google.common.cache.*;
+import org.identifiers.cloud.ws.linkchecker.api.requests.ScoringRequestWithIdPayload;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.TrackedProviderRepository;
 import org.identifiers.cloud.ws.linkchecker.models.ProviderTracker;
 import org.slf4j.Logger;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -48,7 +48,6 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     // Cached Stats Data Loaders
     private void loadTrackedProvider(String providerId) {
         // TODO
-        ProviderTracker providerTracker = new ProviderTracker().setId(providerId);
         trackedProviderRepository.findById(providerId).ifPresent(trackedProvider -> {
             // TODO - build the cache entry
         });
@@ -77,12 +76,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     }
 
     @Override
-    public ProviderTracker getTrackerForProvider(String providerId) {
-        try {
-            return providers.get(providerId);
-        } catch (ExecutionException e) {
-            // TODO
-            return null;
-        }
+    public ProviderTracker getTrackerForProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) {
+        return null;
     }
 }
