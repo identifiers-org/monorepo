@@ -40,6 +40,11 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
                 removalNotification.getCause().toString());
     }
 
+    // Cached Stats Data Loaders
+    private void loadTrackedProvider(String providerId) {
+        // TODO
+    }
+
     // Cached stats
     LoadingCache<String, ProviderTracker> providers;
 
