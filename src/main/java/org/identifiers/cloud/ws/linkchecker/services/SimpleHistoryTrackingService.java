@@ -50,7 +50,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
                 .removalListener(new RemovalListener<String, ProviderTracker>() {
                     @Override
                     public void onRemoval(RemovalNotification<String, ProviderTracker> removalNotification) {
-                        // TODO
+                        processProviderEviction(removalNotification);
                     }
                 })
                 .build(new CacheLoader<String, ProviderTracker>() {
