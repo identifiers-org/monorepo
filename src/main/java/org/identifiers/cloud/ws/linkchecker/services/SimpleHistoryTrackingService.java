@@ -40,9 +40,8 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
 
     // Cache Eviction Listener Actions
     private void processProviderEviction(RemovalNotification<String, ProviderTracker> removalNotification) {
-        logger.info("Evicting tracking cache for provider ID '{}', '{}', EVICTION CAUSE '{}'",
+        logger.info("Evicting tracking cache for provider ID '{}', EVICTION CAUSE '{}'",
                 removalNotification.getKey(),
-                removalNotification.getValue().getDescription(),
                 removalNotification.getCause().toString());
     }
 
