@@ -1,4 +1,4 @@
-package org.identifiers.cloud.ws.linkchecker.api.requests;
+package org.identifiers.cloud.ws.linkchecker.api.responses;
 
 import java.io.Serializable;
 
