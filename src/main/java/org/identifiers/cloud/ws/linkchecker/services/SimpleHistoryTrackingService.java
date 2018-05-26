@@ -60,11 +60,9 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     }
 
     // Cached Stats Data Loaders
-    private void loadTrackedProvider(String providerId) {
+    private ProviderTracker loadTrackedProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) {
         // TODO
-        trackedProviderRepository.findById(providerId).ifPresent(trackedProvider -> {
-            // TODO - build the cache entry
-        });
+        return null;
     }
 
     @Override
