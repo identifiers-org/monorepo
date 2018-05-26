@@ -33,7 +33,10 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     private long cacheSize;
 
     private void processCacheEntryRemoval(RemovalNotification<String, ProviderTracker> removalNotification) {
-        // TODO
+        logger.info("Evicting tracking cache for provider ID '{}', '{}', EVICTION CAUSE '{}'",
+                removalNotification.getKey(),
+                removalNotification.getValue().getDescription(),
+                removalNotification.getCause().toString());
     }
 
     // Cached stats
