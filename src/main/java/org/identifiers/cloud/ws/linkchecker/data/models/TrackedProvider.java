@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.data.models;
 
+import java.io.Serializable;
+
 /**
  * Project: link-checker
  * Package: org.identifiers.cloud.ws.linkchecker.data.models
@@ -10,5 +12,5 @@ package org.identifiers.cloud.ws.linkchecker.data.models;
  *
  * This models a provider being tracked by the service.
  */
-public class TrackedProvider {
+public class TrackedProvider implements Serializable {
 }
