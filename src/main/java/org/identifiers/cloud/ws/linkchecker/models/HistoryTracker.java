@@ -46,7 +46,7 @@ public abstract class HistoryTracker implements Serializable {
         return Arrays.stream(HistoryStats.values()).map(HistoryStats::getHistoryStats).collect(Collectors.toList());
     }
 
-    public void addCheckedUrlEvent(LinkCheckResult linkCheckResult) {
+    public void addLinkCheckResult(LinkCheckResult linkCheckResult) {
         // Update the history stats
         Arrays.stream(HistoryStats.values())
                 .forEach(historyStats -> historyStats.getHistoryStats().update(linkCheckResult));
