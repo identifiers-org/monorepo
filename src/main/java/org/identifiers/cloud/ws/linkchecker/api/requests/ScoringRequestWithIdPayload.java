@@ -11,5 +11,6 @@ import java.io.Serializable;
  * ---
  */
 public class ScoringRequestWithIdPayload implements Serializable {
-
+    public String id;
+    public String url;
 }
