@@ -57,6 +57,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
             return providers.get(providerId);
         } catch (ExecutionException e) {
             // TODO
+            return null;
         }
     }
 }
