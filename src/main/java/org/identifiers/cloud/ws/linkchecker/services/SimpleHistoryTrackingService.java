@@ -84,10 +84,6 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
 
     @Override
     public ProviderTracker getTrackerForProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) throws HistoryTrackingServiceException {
-        ProviderTracker providerTracker = new ProviderTracker();
-        providerTracker.setId(scoringRequestWithIdPayload.getId())
-                .setUrl(scoringRequestWithIdPayload.getUrl())
-                .setCreated(new Timestamp(System.currentTimeMillis()));
         try {
             return providers.get(scoringRequestWithIdPayload.getId(), new Callable<ProviderTracker>() {
                 @Override
