@@ -81,7 +81,6 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
                 }
             });
         } catch (ExecutionException e) {
-            // TODO
             return providerTracker;
         }
     }
