@@ -99,7 +99,12 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
                 @Override
                 public ProviderTracker call() throws Exception {
                     ProviderTracker providerTracker = loadCreateTrackedProvider(scoringRequestWithIdPayload);
-                    // TODO - Build up the stats
+                    // Initialize the stats for the given provider
+                    List<LinkCheckResult> linkCheckResults = linkCheckResultRepository.findByProviderId
+                            (scoringRequestWithIdPayload.getId());
+                    if (linkCheckResults != null) {
+                        providerTracker.initHistoryStats(linkCheckResults);
+                    }
                     return providerTracker;
                 }
             });
