@@ -87,11 +87,6 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
         return providerTracker;
     }
 
-    private List<LinkCheckResult> getLinkCheckResultForProvider(String id) {
-        // TODO
-
-    }
-
     @Override
     public ProviderTracker getTrackerForProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) throws HistoryTrackingServiceException {
         try {
