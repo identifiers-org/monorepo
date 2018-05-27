@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.*;
 
@@ -42,6 +43,8 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     // Repositories
     @Autowired
     private TrackedProviderRepository trackedProviderRepository;
+    @Autowired
+    private LinkCheckResultRepository linkCheckResultRepository;
 
     public SimpleHistoryTrackingService() {
         providers = CacheBuilder.newBuilder()
@@ -84,8 +87,9 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
         return providerTracker;
     }
 
-    private Iterable<LinkCheckResult> getLinkCheckResultForProvider(String id) {
+    private List<LinkCheckResult> getLinkCheckResultForProvider(String id) {
         // TODO
+
     }
 
     @Override
