@@ -3,6 +3,8 @@ package org.identifiers.cloud.ws.linkchecker.data.repositories;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 /**
  * Project: link-checker
  * Package: org.identifiers.cloud.ws.linkchecker.data.repositories
@@ -13,4 +15,5 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface LinkCheckResultRepository extends CrudRepository<LinkCheckResult, String> {
     // TODO
+    List<LinkCheckResult> findByProviderId();
 }

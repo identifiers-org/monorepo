@@ -5,7 +5,9 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
 import com.google.common.cache.RemovalNotification;
 import org.identifiers.cloud.ws.linkchecker.api.requests.ScoringRequestWithIdPayload;
+import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 import org.identifiers.cloud.ws.linkchecker.data.models.TrackedProvider;
+import org.identifiers.cloud.ws.linkchecker.data.repositories.LinkCheckResultRepository;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.TrackedProviderRepository;
 import org.identifiers.cloud.ws.linkchecker.models.ProviderTracker;
 import org.slf4j.Logger;
@@ -80,6 +82,10 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
             trackedProviderRepository.save(newTrackedProvider);
         }
         return providerTracker;
+    }
+
+    private Iterable<LinkCheckResult> getLinkCheckResultForProvider(String id) {
+        // TODO
     }
 
     @Override
