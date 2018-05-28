@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.strategies;
 
+import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
+
 /**
  * Project: link-checker
  * Package: org.identifiers.cloud.ws.linkchecker.strategies
@@ -7,6 +9,10 @@ package org.identifiers.cloud.ws.linkchecker.strategies;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This is the interface of Link Checking strategies
  */
 public interface LinkChecker {
+
+    LinkCheckerReport check(String url);
 }
