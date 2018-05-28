@@ -1,5 +1,8 @@
 package org.identifiers.cloud.ws.linkchecker.strategies;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -17,6 +20,8 @@ import java.sql.Timestamp;
  * <p>
  * This class implements a simple link checking strategy based on HTTP GET request.
  */
+@Component
+@Scope("prototype")
 public class SimpleLinkChecker implements LinkChecker {
     private static final int CONNECTION_TIMEOUT_SECONDS = 30;
 
