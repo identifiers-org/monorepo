@@ -18,12 +18,13 @@ import java.sql.Timestamp;
  * This class implements a simple link checking strategy based on HTTP GET request.
  */
 public class SimpleLinkChecker implements LinkChecker {
+    private static final int CONNECTION_TIMEOUT_SECONDS = 30;
+
     @Override
     public LinkCheckerReport check(String url) {
         LinkCheckerReport report = new LinkCheckerReport()
                 .setUrl(url)
                 .setTimestamp(new Timestamp(System.currentTimeMillis()));
-        // TODO
         URL checkingUrl = null;
         try {
             checkingUrl = new URL(url);
@@ -41,6 +42,7 @@ public class SimpleLinkChecker implements LinkChecker {
         } catch (ProtocolException e) {
             throw new SimpleLinkCheckerException(e.getMessage());
         }
+        // TODO
         return report;
     }
 }

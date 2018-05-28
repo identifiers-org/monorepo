@@ -11,6 +11,5 @@ package org.identifiers.cloud.ws.linkchecker.strategies;
  * This is the interface of Link Checking strategies
  */
 public interface LinkChecker {
-
     LinkCheckerReport check(String url) throws LinkCheckerException;
 }
