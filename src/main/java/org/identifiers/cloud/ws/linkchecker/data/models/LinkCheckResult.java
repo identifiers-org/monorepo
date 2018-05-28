@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.data.models;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
 
@@ -19,6 +20,9 @@ import java.sql.Timestamp;
 @RedisHash("LinkCheckerLinkCheckResult")
 public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult> {
     // TODO - We'll let Redis to create an ID for this entity
+    // Fucking ID
+    @Id
+    private String id;
     // URL that has been checked
     @Indexed
     private String url;
@@ -34,6 +38,15 @@ public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult
     private String resourceId;
     // Returning HTTP Status code
     private int httpStatus;
+
+    public String getId() {
+        return id;
+    }
+
+    public LinkCheckResult setId(String id) {
+        this.id = id;
+        return this;
+    }
 
     public String getUrl() {
         return url;
