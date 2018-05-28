@@ -43,6 +43,7 @@ public class SimpleLinkChecker implements LinkChecker {
             throw new SimpleLinkCheckerException(e.getMessage());
         }
         // TODO
+        connection.setConnectTimeout(CONNECTION_TIMEOUT_SECONDS);
         return report;
     }
 }
