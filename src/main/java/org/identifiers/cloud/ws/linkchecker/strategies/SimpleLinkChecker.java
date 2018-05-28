@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.strategies;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -28,7 +29,12 @@ public class SimpleLinkChecker implements LinkChecker {
         } catch (MalformedURLException e) {
             throw new SimpleLinkCheckerException(e.getMessage());
         }
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        HttpURLConnection con = null;
+        try {
+            con = (HttpURLConnection) checkingUrl.openConnection();
+        } catch (IOException e) {
+            throw new SimpleLinkCheckerException(e.getMessage());
+        }
         con.setRequestMethod("GET");
         return report;
     }
