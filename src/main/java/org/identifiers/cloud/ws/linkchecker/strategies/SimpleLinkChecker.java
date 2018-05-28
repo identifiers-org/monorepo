@@ -31,14 +31,14 @@ public class SimpleLinkChecker implements LinkChecker {
         } catch (MalformedURLException e) {
             throw new SimpleLinkCheckerException(e.getMessage());
         }
-        HttpURLConnection con = null;
+        HttpURLConnection connection = null;
         try {
-            con = (HttpURLConnection) checkingUrl.openConnection();
+            connection = (HttpURLConnection) checkingUrl.openConnection();
         } catch (IOException e) {
             throw new SimpleLinkCheckerException(e.getMessage());
         }
         try {
-            con.setRequestMethod("GET");
+            connection.setRequestMethod("GET");
         } catch (ProtocolException e) {
             throw new SimpleLinkCheckerException(e.getMessage());
         }
