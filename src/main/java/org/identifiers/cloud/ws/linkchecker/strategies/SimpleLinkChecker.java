@@ -1,5 +1,8 @@
 package org.identifiers.cloud.ws.linkchecker.strategies;
 
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Timestamp;
 
 /**
@@ -19,6 +22,14 @@ public class SimpleLinkChecker implements LinkChecker {
                 .setUrl(url)
                 .setTimestamp(new Timestamp(System.currentTimeMillis()));
         // TODO
+        URL checkingUrl = null;
+        try {
+            checkingUrl = new URL(url);
+        } catch (MalformedURLException e) {
+            throw new SimpleLinkCheckerException(e.getMessage());
+        }
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
         return report;
     }
 }
