@@ -18,4 +18,9 @@ import static org.junit.Assert.*;
 @SpringBootTest
 public class SimpleLinkCheckerTest {
 
+    public void reportOverviewTest() {
+        LinkCheckerReport report = new SimpleLinkChecker().check("http://www.ebi.ac.uk/chebi/");
+        // Just checking how the report looks like
+        // TODO
+    }
 }
