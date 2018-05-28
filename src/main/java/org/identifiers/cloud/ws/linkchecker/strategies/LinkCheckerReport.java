@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.strategies;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -12,7 +13,7 @@ import java.sql.Timestamp;
  *
  * Report built by a link checking strategy.
  */
-public class LinkCheckerReport {
+public class LinkCheckerReport implements Serializable {
     // Checked URL
     private String url;
     // UTC time stamp when the URL was checked
