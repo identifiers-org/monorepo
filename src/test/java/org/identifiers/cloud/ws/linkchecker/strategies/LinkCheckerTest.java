@@ -32,7 +32,7 @@ public class LinkCheckerTest {
         // Just checking how the report looks like
         ObjectMapper mapper = new ObjectMapper();
         try {
-            logger.debug(mapper.writer().writeValueAsString(report));
+            logger.info("Link Checker REPORT '{}'", mapper.writer().writeValueAsString(report));
         } catch (JsonProcessingException e) {
             logger.error("WTF! Error serializing a simple POJO!");
         }
