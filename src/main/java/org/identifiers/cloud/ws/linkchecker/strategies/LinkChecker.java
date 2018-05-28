@@ -1,7 +1,5 @@
 package org.identifiers.cloud.ws.linkchecker.strategies;
 
-import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
-
 /**
  * Project: link-checker
  * Package: org.identifiers.cloud.ws.linkchecker.strategies
@@ -14,5 +12,5 @@ import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
  */
 public interface LinkChecker {
 
-    LinkCheckerReport check(String url);
+    LinkCheckerReport check(String url) throws LinkCheckerException;
 }
