@@ -28,7 +28,7 @@ public class LinkCheckerTest {
 
     @Test
     public void reportOverviewTest() {
-        LinkCheckerReport report = simpleLinkChecker.check("http://www.ebi.ac.uk/chebi/");
+        LinkCheckerReport report = linkChecker.check("http://www.ebi.ac.uk/chebi/");
         // Just checking how the report looks like
         ObjectMapper mapper = new ObjectMapper();
         try {
