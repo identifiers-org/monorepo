@@ -52,8 +52,9 @@ public class SimpleLinkChecker implements LinkChecker {
             report.setHttpStatus(connection.getResponseCode());
         } catch (IOException e) {
             throw new SimpleLinkCheckerException(e.getMessage());
+        } finally {
+            connection.disconnect();
         }
-        // TODO
         return report;
     }
 }
