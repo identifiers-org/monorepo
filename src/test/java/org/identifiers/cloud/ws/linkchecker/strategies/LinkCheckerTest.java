@@ -21,7 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class LinkCheckerTest {
-    private static final Logger logger = LoggerFactory.getLogger(LinkCheckerTest);
+    private static final Logger logger = LoggerFactory.getLogger(LinkCheckerTest.class);
 
     @Autowired
     private LinkChecker linkChecker;
