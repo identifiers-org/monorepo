@@ -12,7 +12,6 @@ import org.identifiers.cloud.ws.linkchecker.data.repositories.TrackedProviderRep
 import org.identifiers.cloud.ws.linkchecker.models.ProviderTracker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -41,12 +40,13 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     @Value("${org.identifiers.cloud.ws.linkchecker.backend.data.cache.size}")
     private long cacheSize;
     // Repositories
-    @Autowired
+    //@Autowired
     private TrackedProviderRepository trackedProviderRepository;
-    @Autowired
+    //@Autowired
     private LinkCheckResultRepository linkCheckResultRepository;
 
-    public SimpleHistoryTrackingService() {
+    public SimpleHistoryTrackingService(TrackedProviderRepository trackedProviderRepository,
+                                        LinkCheckResultRepository linkCheckResultRepository) {
         providers = CacheBuilder.newBuilder()
                 .maximumSize(cacheSize)
                 .expireAfterWrite(cacheExpirySeconds, TimeUnit.SECONDS)

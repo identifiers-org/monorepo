@@ -14,6 +14,5 @@ import java.util.List;
  * ---
  */
 public interface LinkCheckResultRepository extends CrudRepository<LinkCheckResult, String> {
-    // TODO
     List<LinkCheckResult> findByProviderId(String providerId);
 }
