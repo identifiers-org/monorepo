@@ -3,6 +3,7 @@ package org.identifiers.cloud.ws.linkchecker.strategies;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.sql.Timestamp;
 
@@ -35,7 +36,11 @@ public class SimpleLinkChecker implements LinkChecker {
         } catch (IOException e) {
             throw new SimpleLinkCheckerException(e.getMessage());
         }
-        con.setRequestMethod("GET");
+        try {
+            con.setRequestMethod("GET");
+        } catch (ProtocolException e) {
+            throw new SimpleLinkCheckerException(e.getMessage());
+        }
         return report;
     }
 }
