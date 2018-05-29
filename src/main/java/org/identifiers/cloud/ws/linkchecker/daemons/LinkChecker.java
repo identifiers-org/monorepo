@@ -79,7 +79,7 @@ public class LinkChecker extends Thread {
                     shutdown = true;
                 }
             }
-            // TODO - Check URL
+            // Check URL
             LinkCheckerReport linkCheckerReport;
             try {
                 linkCheckerReport = linkCheckingStrategy.check(linkCheckRequest.getUrl());
