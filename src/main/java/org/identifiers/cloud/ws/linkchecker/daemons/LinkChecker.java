@@ -9,6 +9,7 @@ import org.identifiers.cloud.ws.linkchecker.strategies.LinkCheckerReport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -42,6 +43,9 @@ public class LinkChecker extends Thread {
 
     @Autowired
     private LinkCheckResultRepository linkCheckResultRepository;
+
+    @Autowired
+    private RedisTemplate<String, LinkCheckResult> linkCheckResultRedisTemplate;
 
     public synchronized boolean isShutdown() {
         return shutdown;
