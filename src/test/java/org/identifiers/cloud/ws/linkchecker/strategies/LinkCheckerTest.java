@@ -50,7 +50,7 @@ public class LinkCheckerTest {
                 .setProviderId("providerID1")
                 .setTimestamp(new Timestamp(System.currentTimeMillis()))
                 .setUrl("http://www.ebi.ac.uk/chebi/");
-
+        logger.info("Queuing link checking request for provider URL '{}'", linkCheckRequest.getUrl());
         // TODO
     }
 }
