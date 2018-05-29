@@ -72,12 +72,16 @@ public class LinkChecker extends Thread {
             // TODO - Check URL
             LinkCheckerReport linkCheckerReport;
             try {
-                linkCheckingStrategy.check(linkCheckRequest.getUrl());
+                linkCheckerReport = linkCheckingStrategy.check(linkCheckRequest.getUrl());
             } catch (LinkCheckerException e) {
                 logger.error("SKIP processing link checking request for URL '{}', reason '{}'", linkCheckRequest.getUrl(), e.getMessage());
                 continue;
             }
             // TODO - Log the results
+            logger.info("Link Check result for URL '{}', HTTP Status '{}', assessment '{}'",
+                    linkCheckerReport.getUrl(),
+                    linkCheckerReport.getHttpStatus(),
+                    linkCheckerReport.isUrlAssessmentOk() ? "OK" : "NOT OK");
             // TODO - Announce the link checking results
         }
     }
