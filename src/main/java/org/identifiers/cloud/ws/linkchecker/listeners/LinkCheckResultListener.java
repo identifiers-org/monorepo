@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This component listens to the link check results channel for announcements.
  */
 @Component
 public class LinkCheckResultListener implements MessageListener {
