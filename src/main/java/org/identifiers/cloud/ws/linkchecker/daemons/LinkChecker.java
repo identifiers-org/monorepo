@@ -1,6 +1,8 @@
 package org.identifiers.cloud.ws.linkchecker.daemons;
 
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
+import org.identifiers.cloud.ws.linkchecker.strategies.LinkCheckerException;
+import org.identifiers.cloud.ws.linkchecker.strategies.LinkCheckerReport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,24 +49,33 @@ public class LinkChecker extends Thread {
     public void run() {
         logger.info("--- [START] Link Checker Daemon ---");
         Random random = new Random(System.currentTimeMillis());
-        // Pop element, if any, from the link checking request queue
-        LinkCheckRequest linkCheckRequest = linkCheckRequestQueue.pollFirst();
-        if (linkCheckRequest == null) {
-            // If no element is in there, wait a random amount of time before trying again
-            logger.info("No URL check request found");
-            try {
-                long waitTimeSeconds = random.nextInt(WAIT_TIME_LIMIT_SECONDS);
-                logger.info("Waiting {}s before we checking again for URLs", waitTimeSeconds);
-                Thread.sleep(waitTimeSeconds * 1000);
-            } catch (InterruptedException e) {
-                logger.warn("The Link Checker Daemon has been interrupted while waiting for " +
-                        "another iteration. Stopping the daemon, no more URL check requests will be processed");
-                shutdown = true;
+        while (!isShutdown()) {
+            // Pop element, if any, from the link checking request queue
+            LinkCheckRequest linkCheckRequest = linkCheckRequestQueue.pollFirst();
+            if (linkCheckRequest == null) {
+                // If no element is in there, wait a random amount of time before trying again
+                logger.info("No URL check request found");
+                try {
+                    long waitTimeSeconds = random.nextInt(WAIT_TIME_LIMIT_SECONDS);
+                    logger.info("Waiting {}s before we checking again for URLs", waitTimeSeconds);
+                    Thread.sleep(waitTimeSeconds * 1000);
+                } catch (InterruptedException e) {
+                    logger.warn("The Link Checker Daemon has been interrupted while waiting for " +
+                            "another iteration. Stopping the daemon, no more URL check requests will be processed");
+                    shutdown = true;
+                }
             }
+            // TODO - Check URL
+            LinkCheckerReport linkCheckerReport;
+            try {
+                linkCheckingStrategy.check(linkCheckRequest.getUrl());
+            } catch (LinkCheckerException e) {
+                logger.error("SKIP processing link checking request for URL '{}', reason '{}'", linkCheckRequest.getUrl(), e.getMessage());
+                continue;
+            }
+            // TODO - Log the results
+            // TODO - Announce the link checking results
         }
-        // TODO - Check URL
-        // TODO - Log the results
-        // TODO - Announce the link checking results
     }
 
     @PostConstruct
