@@ -7,6 +7,8 @@ package org.identifiers.cloud.ws.linkchecker.data;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This class implements diverse helpers, specially for model transformation, to keep model decoupling.
  */
 public class LinkCheckModelsHelper {
 }
