@@ -63,4 +63,6 @@ public class ApplicationConfig {
                 linkCheckRequestRedisTemplate());
         return linkCheckRequests;
     }
+
+    // Publisher Subscriber
 }
