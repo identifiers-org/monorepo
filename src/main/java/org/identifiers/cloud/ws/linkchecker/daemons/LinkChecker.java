@@ -34,6 +34,7 @@ public class LinkChecker extends Thread {
 
     @Override
     public void run() {
+        logger.info("--- [START] Link Checker Daemon ---");
         // TODO
     }
 
