@@ -20,6 +20,8 @@ public class LinkCheckerReport implements Serializable {
     private Timestamp timestamp;
     // Returned HTTP Status
     private int httpStatus;
+    // Checking strategy URL status evaluation
+    private boolean evaluationStatusOk = false;
 
     public String getUrl() {
         return url;
