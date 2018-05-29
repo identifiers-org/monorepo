@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.listeners;
 
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
+import org.identifiers.cloud.ws.linkchecker.services.HistoryTrackingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,9 @@ public class LinkCheckResultListener implements MessageListener {
     @Autowired
     private RedisTemplate<String, LinkCheckResult> linkCheckResultRedisTemplate;
 
+    @Autowired
+    private HistoryTrackingService historyTrackingService;
+
     @PostConstruct
     public void registerListener() {
         logger.info("[REGISTER] for topic '{}'", channelKeyLinkCheckResults.getTopic());
@@ -45,6 +49,6 @@ public class LinkCheckResultListener implements MessageListener {
     @Override
     public void onMessage(Message message, byte[] bytes) {
         // TODO
-        
+
     }
 }
