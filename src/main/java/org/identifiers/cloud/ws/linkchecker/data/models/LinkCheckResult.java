@@ -105,6 +105,15 @@ public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult
         return this;
     }
 
+    public boolean isUrlAssessmentOk() {
+        return urlAssessmentOk;
+    }
+
+    public LinkCheckResult setUrlAssessmentOk(boolean urlAssessmentOk) {
+        this.urlAssessmentOk = urlAssessmentOk;
+        return this;
+    }
+
     @Override
     public int compareTo(LinkCheckResult o) {
         return this.timestamp.compareTo(o.getTimestamp());
