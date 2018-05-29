@@ -2,8 +2,10 @@ package org.identifiers.cloud.ws.linkchecker.listeners;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,7 +21,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class LinkCheckResultListener implements MessageListener {
     private static final Logger logger = LoggerFactory.getLogger(LinkCheckResultListener.class);
-    // TODO
+
+    @Autowired
+    private RedisMessageListenerContainer redisContainer;
 
     @Override
     public void onMessage(Message message, byte[] bytes) {
