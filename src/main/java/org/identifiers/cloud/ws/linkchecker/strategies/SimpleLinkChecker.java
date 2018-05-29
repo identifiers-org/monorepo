@@ -55,6 +55,9 @@ public class SimpleLinkChecker implements LinkChecker {
         } finally {
             connection.disconnect();
         }
+        if (report.getHttpStatus() == 200) {
+            report.setUrlAssessmentOk(true);
+        }
         return report;
     }
 }
