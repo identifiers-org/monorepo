@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.Deque;
+import java.util.Random;
 
 /**
  * Project: link-checker
@@ -41,8 +42,22 @@ public class LinkChecker extends Thread {
     @Override
     public void run() {
         logger.info("--- [START] Link Checker Daemon ---");
+        Random random = new Random(System.currentTimeMillis());
         // TODO
         // TODO - Pop element, if any, from the link checking request queue
+        LinkCheckRequest linkCheckRequest = linkCheckRequestQueue.pollFirst();
+        if (linkCheckRequest == null) {
+            logger.info("No URL check request found");
+            try {
+                long waitTimeSeconds = random.nextInt(WAIT_TIME_LIMIT_SECONDS);
+                logger.info("Waiting {}s before we checking again for URLs", waitTimeSeconds);
+                Thread.sleep(waitTimeSeconds * 1000);
+            } catch (InterruptedException e) {
+                logger.warn("The Link Checker Daemon has been interrupted while waiting for " +
+                        "another iteration. Stopping the daemon, no more URL check requests will be processed");
+                shutdown = true;
+            }
+        }
         // TODO - If no element is in there, wait a random amount of time before trying again
         // TODO - Check URL
         // TODO - Log the results
