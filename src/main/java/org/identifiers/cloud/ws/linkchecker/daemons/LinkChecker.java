@@ -32,6 +32,11 @@ public class LinkChecker extends Thread {
         this.shutdown = true;
     }
 
+    @Override
+    public void run() {
+        // TODO
+    }
+
     @PostConstruct
     public void autoStartThread() {
         start();
