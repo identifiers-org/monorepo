@@ -4,6 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 /**
  * Project: link-checker
  * Package: org.identifiers.cloud.ws.linkchecker.daemons
@@ -27,5 +30,10 @@ public class LinkChecker extends Thread {
 
     public synchronized void setShutdown() {
         this.shutdown = true;
+    }
+
+    @PostConstruct
+    public void autoStartThread() {
+        start();
     }
 }
