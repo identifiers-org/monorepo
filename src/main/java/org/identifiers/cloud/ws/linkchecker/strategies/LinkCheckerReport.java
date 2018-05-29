@@ -21,7 +21,7 @@ public class LinkCheckerReport implements Serializable {
     // Returned HTTP Status
     private int httpStatus;
     // Checking strategy URL status evaluation
-    private boolean evaluationStatusOk = false;
+    private boolean urlAssessmentOk = false;
 
     public String getUrl() {
         return url;
