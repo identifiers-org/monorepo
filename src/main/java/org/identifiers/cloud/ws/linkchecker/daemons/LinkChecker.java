@@ -79,7 +79,7 @@ public class LinkChecker extends Thread {
                 logger.error("SKIP processing link checking request for URL '{}', reason '{}'", linkCheckRequest.getUrl(), e.getMessage());
                 continue;
             }
-            // TODO - Log the results
+            // Log the results
             logger.info("Link Check result for URL '{}', HTTP Status '{}', assessment '{}'",
                     linkCheckerReport.getUrl(),
                     linkCheckerReport.getHttpStatus(),
