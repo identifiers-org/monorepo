@@ -36,4 +36,10 @@ public class LinkChecker extends Thread {
     public void autoStartThread() {
         start();
     }
+
+    @PreDestroy
+    public void stopDaemon() {
+        logger.info("--- [STOPPING] Link Checker Daemon ---");
+        setShutdown();
+    }
 }
