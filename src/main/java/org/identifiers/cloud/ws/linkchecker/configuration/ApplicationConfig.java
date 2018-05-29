@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.configuration;
 
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
+import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +9,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.support.collections.DefaultRedisList;
 import org.springframework.data.redis.support.collections.RedisList;
@@ -65,4 +67,17 @@ public class ApplicationConfig {
     }
 
     // Publisher Subscriber
+    @Bean
+    public RedisTemplate<String, LinkCheckResult> linkCheckResultRedisTemplate() {
+        RedisTemplate<String, LinkCheckResult> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory());
+        return redisTemplate;
+    }
+
+    @Bean
+    public RedisMessageListenerContainer redisContainer() {
+        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
+        container.setConnectionFactory(redisConnectionFactory());
+        return container;
+    }
 }
