@@ -1,10 +1,12 @@
 package org.identifiers.cloud.ws.linkchecker.listeners;
 
+import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Component;
@@ -30,6 +32,9 @@ public class LinkCheckResultListener implements MessageListener {
 
     @Autowired
     private ChannelTopic channelKeyLinkCheckResults;
+
+    @Autowired
+    private RedisTemplate<String, LinkCheckResult> linkCheckResultRedisTemplate;
 
     @PostConstruct
     public void registerListener() {
