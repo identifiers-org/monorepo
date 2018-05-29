@@ -11,7 +11,6 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
-import org.springframework.data.redis.listener.Topic;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.support.collections.DefaultRedisList;
 import org.springframework.data.redis.support.collections.RedisList;
@@ -87,7 +86,7 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public Topic channelKeyLinkCheckResults() {
+    public ChannelTopic channelKeyLinkCheckResults() {
         return new ChannelTopic(channelKeyLinkCheckResults);
     }
 }

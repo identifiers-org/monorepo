@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -46,6 +47,9 @@ public class LinkChecker extends Thread {
 
     @Autowired
     private RedisTemplate<String, LinkCheckResult> linkCheckResultRedisTemplate;
+
+    @Autowired
+    private ChannelTopic channelKeyLinkCheckResults;
 
     public synchronized boolean isShutdown() {
         return shutdown;
@@ -91,7 +95,8 @@ public class LinkChecker extends Thread {
             LinkCheckResult linkCheckResult =
                     LinkCheckModelsHelper.getResultFromReport(linkCheckerReport, linkCheckRequest);
             linkCheckResultRepository.save(linkCheckResult);
-            // TODO - Announce the link checking results
+            // Announce the link checking results
+            linkCheckResultRedisTemplate.convertAndSend(channelKeyLinkCheckResults.getTopic(), linkCheckResult);
         }
     }
 
