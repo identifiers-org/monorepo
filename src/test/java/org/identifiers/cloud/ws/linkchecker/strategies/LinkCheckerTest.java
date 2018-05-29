@@ -52,6 +52,10 @@ public class LinkCheckerTest {
                 .setUrl("http://www.ebi.ac.uk/chebi/");
         logger.info("Queuing link checking request for provider URL '{}'", linkCheckRequest.getUrl());
         linkCheckRequestQueue.offerLast(linkCheckRequest);
-        // TODO
+        try {
+            Thread.sleep(7000);
+        } catch (InterruptedException e) {
+            // Ignore
+        }
     }
 }
