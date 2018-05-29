@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.Timestamp;
+import java.util.Deque;
 
 /**
  * Project: link-checker
@@ -28,6 +29,9 @@ public class LinkCheckerTest {
 
     @Autowired
     private LinkChecker linkChecker;
+
+    @Autowired
+    private Deque<LinkCheckRequest> linkCheckRequestQueue;
 
     @Test
     public void reportOverviewTest() {
@@ -46,6 +50,7 @@ public class LinkCheckerTest {
                 .setProviderId("providerID1")
                 .setTimestamp(new Timestamp(System.currentTimeMillis()))
                 .setUrl("http://www.ebi.ac.uk/chebi/");
+
         // TODO
     }
 }
