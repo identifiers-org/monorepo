@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class LinkChecker extends Thread {
+    private static final int WAIT_TIME_LIMIT_SECONDS = 1800;
     private static final Logger logger = LoggerFactory.getLogger(LinkChecker.class);
-
+    
+    private boolean shutdown = false;
 }
