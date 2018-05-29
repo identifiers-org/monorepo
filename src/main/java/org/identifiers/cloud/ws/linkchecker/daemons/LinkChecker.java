@@ -1,6 +1,8 @@
 package org.identifiers.cloud.ws.linkchecker.daemons;
 
+import org.identifiers.cloud.ws.linkchecker.data.LinkCheckModelsHelper;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
+import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.LinkCheckResultRepository;
 import org.identifiers.cloud.ws.linkchecker.strategies.LinkCheckerException;
 import org.identifiers.cloud.ws.linkchecker.strategies.LinkCheckerReport;
@@ -82,6 +84,9 @@ public class LinkChecker extends Thread {
                     linkCheckerReport.getUrl(),
                     linkCheckerReport.getHttpStatus(),
                     linkCheckerReport.isUrlAssessmentOk() ? "OK" : "NOT OK");
+            LinkCheckResult linkCheckResult =
+                    LinkCheckModelsHelper.getResultFromReport(linkCheckerReport, linkCheckRequest);
+            linkCheckResultRepository.save(linkCheckResult);
             // TODO - Announce the link checking results
         }
     }
