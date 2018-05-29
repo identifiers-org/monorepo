@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.daemons;
 
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
+import org.identifiers.cloud.ws.linkchecker.data.repositories.LinkCheckResultRepository;
 import org.identifiers.cloud.ws.linkchecker.strategies.LinkCheckerException;
 import org.identifiers.cloud.ws.linkchecker.strategies.LinkCheckerReport;
 import org.slf4j.Logger;
@@ -36,6 +37,9 @@ public class LinkChecker extends Thread {
     // It may not be the best of the names... I may refactor this in the future
     @Autowired
     private org.identifiers.cloud.ws.linkchecker.strategies.LinkChecker linkCheckingStrategy;
+
+    @Autowired
+    private LinkCheckResultRepository linkCheckResultRepository;
 
     public synchronized boolean isShutdown() {
         return shutdown;
