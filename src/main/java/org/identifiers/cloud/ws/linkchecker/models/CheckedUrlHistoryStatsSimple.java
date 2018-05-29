@@ -1,8 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.models;
 
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.List;
@@ -16,7 +14,6 @@ import java.util.List;
  * ---
  */
 public class CheckedUrlHistoryStatsSimple implements CheckedUrlHistoryStats, Serializable {
-    private static final Logger logger = LoggerFactory.getLogger(CheckedUrlHistoryStatsSimple.class);
     // Number of events where the checked URL was considered to be up
     private int nUpEvents = 0;
     // Number of events where the checked URL was considered to be down
