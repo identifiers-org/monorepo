@@ -43,10 +43,10 @@ public class LinkChecker extends Thread {
     public void run() {
         logger.info("--- [START] Link Checker Daemon ---");
         Random random = new Random(System.currentTimeMillis());
-        // TODO
-        // TODO - Pop element, if any, from the link checking request queue
+        // Pop element, if any, from the link checking request queue
         LinkCheckRequest linkCheckRequest = linkCheckRequestQueue.pollFirst();
         if (linkCheckRequest == null) {
+            // If no element is in there, wait a random amount of time before trying again
             logger.info("No URL check request found");
             try {
                 long waitTimeSeconds = random.nextInt(WAIT_TIME_LIMIT_SECONDS);
@@ -58,7 +58,6 @@ public class LinkChecker extends Thread {
                 shutdown = true;
             }
         }
-        // TODO - If no element is in there, wait a random amount of time before trying again
         // TODO - Check URL
         // TODO - Log the results
         // TODO - Announce the link checking results
