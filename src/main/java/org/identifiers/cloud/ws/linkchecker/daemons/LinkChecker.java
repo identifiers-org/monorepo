@@ -31,6 +31,10 @@ public class LinkChecker extends Thread {
     @Autowired
     private Deque<LinkCheckRequest> linkCheckRequestQueue;
 
+    // It may not be the best of the names... I may refactor this in the future
+    @Autowired
+    private org.identifiers.cloud.ws.linkchecker.strategies.LinkChecker linkCheckingStrategy;
+
     public synchronized boolean isShutdown() {
         return shutdown;
     }
