@@ -78,6 +78,7 @@ public class LinkChecker extends Thread {
                             "another iteration. Stopping the daemon, no more URL check requests will be processed");
                     shutdown = true;
                 }
+                continue;
             }
             // Check URL
             LinkCheckerReport linkCheckerReport;
