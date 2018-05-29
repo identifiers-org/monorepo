@@ -48,8 +48,7 @@ public class LinkCheckResultListener implements MessageListener {
 
     @Override
     public void onMessage(Message message, byte[] bytes) {
-        logger.info("Processing link check result announcement");
-        
+        logger.info("Processing link check result announcement, '{}'", message.toString());
         // TODO
     }
 }
