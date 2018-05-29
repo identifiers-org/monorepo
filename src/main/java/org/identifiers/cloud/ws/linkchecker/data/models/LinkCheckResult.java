@@ -20,7 +20,7 @@ import java.sql.Timestamp;
 @RedisHash("LinkCheckerLinkCheckResult")
 public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult> {
     // TODO - We'll let Redis to create an ID for this entity
-    // Fucking ID
+    // Result ID, hopefully manufactured by Redis
     @Id
     private String id;
     // URL that has been checked
