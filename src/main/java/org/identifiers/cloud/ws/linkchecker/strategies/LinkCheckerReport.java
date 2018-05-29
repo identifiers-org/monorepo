@@ -50,4 +50,13 @@ public class LinkCheckerReport implements Serializable {
         this.httpStatus = httpStatus;
         return this;
     }
+
+    public boolean isUrlAssessmentOk() {
+        return urlAssessmentOk;
+    }
+
+    public LinkCheckerReport setUrlAssessmentOk(boolean urlAssessmentOk) {
+        this.urlAssessmentOk = urlAssessmentOk;
+        return this;
+    }
 }
