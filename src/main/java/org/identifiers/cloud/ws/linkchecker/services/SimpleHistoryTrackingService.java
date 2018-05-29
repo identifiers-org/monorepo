@@ -67,6 +67,8 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
                 removalNotification.getCause().toString());
     }
 
+    // TODO - I may need to make this method synchronized because of the non-atomic gap between checking if a provider
+    // TODO - already has a tracking entry and creating one for it
     // Tracking entry Loaders
     private ProviderTracker loadCreateTrackedProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) {
         ProviderTracker providerTracker = new ProviderTracker();

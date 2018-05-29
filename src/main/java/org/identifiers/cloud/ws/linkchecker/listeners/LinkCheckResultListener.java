@@ -45,5 +45,6 @@ public class LinkCheckResultListener implements MessageListener {
     @Override
     public void onMessage(Message message, byte[] bytes) {
         // TODO
+        
     }
 }
