@@ -1,11 +1,14 @@
 package org.identifiers.cloud.ws.linkchecker.daemons;
 
+import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.util.Deque;
 
 /**
  * Project: link-checker
@@ -23,6 +26,9 @@ public class LinkChecker extends Thread {
     private static final Logger logger = LoggerFactory.getLogger(LinkChecker.class);
 
     private boolean shutdown = false;
+
+    @Autowired
+    private Deque<LinkCheckRequest> linkCheckRequestQueue;
 
     public synchronized boolean isShutdown() {
         return shutdown;
