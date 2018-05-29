@@ -51,10 +51,16 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public Deque<LinkCheckRequest> linkCheckRequestQueue() {
+    public RedisTemplate<String, LinkCheckRequest> linkCheckRequestRedisTemplate() {
         RedisTemplate<String, LinkCheckRequest> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
-        RedisList<LinkCheckRequest> linkCheckRequests = new DefaultRedisList<LinkCheckRequest>(queueKeyLinkCheckRequests, redisTemplate);
+        return redisTemplate;
+    }
+
+    @Bean
+    public Deque<LinkCheckRequest> linkCheckRequestQueue() {
+        RedisList<LinkCheckRequest> linkCheckRequests = new DefaultRedisList<LinkCheckRequest>(queueKeyLinkCheckRequests,
+                linkCheckRequestRedisTemplate());
         return linkCheckRequests;
     }
 }
