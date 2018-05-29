@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.linkchecker.strategies;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -36,5 +37,10 @@ public class LinkCheckerTest {
         } catch (JsonProcessingException e) {
             logger.error("WTF! Error serializing a simple POJO!");
         }
+    }
+
+    public void queueLinkCheckRequestProvider() {
+        LinkCheckRequest linkCheckRequest = new LinkCheckRequest();
+        // TODO
     }
 }
