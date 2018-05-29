@@ -36,6 +36,11 @@ public class LinkChecker extends Thread {
     public void run() {
         logger.info("--- [START] Link Checker Daemon ---");
         // TODO
+        // TODO - Pop element, if any, from the link checking request queue
+        // TODO - If no element is in there, wait a random amount of time before trying again
+        // TODO - Check URL
+        // TODO - Log the results
+        // TODO - Announce the link checking results
     }
 
     @PostConstruct
