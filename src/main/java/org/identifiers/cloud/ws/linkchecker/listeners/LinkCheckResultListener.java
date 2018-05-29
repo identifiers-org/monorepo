@@ -9,6 +9,8 @@ import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+
 /**
  * Project: link-checker
  * Package: org.identifiers.cloud.ws.linkchecker.listeners
@@ -28,6 +30,12 @@ public class LinkCheckResultListener implements MessageListener {
 
     @Autowired
     private ChannelTopic channelKeyLinkCheckResults;
+
+    @PostConstruct
+    public void registerListener() {
+        logger.info("[REGISTER] for topic '{}'", channelKeyLinkCheckResults.getTopic());
+        redisContainer.addMessageListener(this, channelKeyLinkCheckResults);
+    }
 
     @Override
     public void onMessage(Message message, byte[] bytes) {
