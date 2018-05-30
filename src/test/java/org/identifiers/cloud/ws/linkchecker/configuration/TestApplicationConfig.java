@@ -5,7 +5,6 @@ import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -29,7 +28,6 @@ import java.util.Deque;
  */
 @Configuration
 @PropertySource("classpath:application.properties")
-@Profile("test")
 @EnableRedisRepositories
 public class TestApplicationConfig {
     @Value("${spring.redis.port}")
