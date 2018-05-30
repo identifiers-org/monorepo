@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.workout;
 
 import org.identifiers.cloud.ws.linkchecker.LinkCheckerApplication;
+import org.identifiers.cloud.ws.linkchecker.configuration.ApplicationConfig;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,7 +39,11 @@ public class LearningTest {
         // TODO
     }
 
-    @Config
+    @Configuration
+    @Import(ApplicationConfig.class)
+    public static class TestApplicationConfig {
+        // TODO
+    }
 
     @Autowired
     private Deque<LinkCheckRequest> linkCheckRequestQueue;
