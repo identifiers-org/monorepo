@@ -82,6 +82,7 @@ public class ApplicationConfig {
     public RedisMessageListenerContainer redisContainer() {
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
         container.setConnectionFactory(redisConnectionFactory());
+        container.start();
         return container;
     }
 
