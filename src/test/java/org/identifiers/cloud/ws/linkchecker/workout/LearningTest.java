@@ -37,7 +37,7 @@ public class LearningTest {
                     .setUrl("http://www.ebi.ac.uk/chebi/"));
         });
         try {
-            Thread.sleep(20000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             // Ignore
         }
