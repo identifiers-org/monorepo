@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.workout;
 
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.sql.Timestamp;
 import java.util.Deque;
 
 /**
@@ -28,5 +30,19 @@ public class LearningTest {
     @Autowired
     private Deque<LinkCheckRequest> linkCheckRequestQueue;
 
-    
+    @Test
+    public void queueLinkCheckRequestProvider() {
+        LinkCheckRequest linkCheckRequest = new LinkCheckRequest()
+                .setProviderId("providerID1")
+                .setTimestamp(new Timestamp(System.currentTimeMillis()))
+                .setUrl("http://www.ebi.ac.uk/chebi/");
+        logger.info("Queuing link checking request for provider URL '{}'", linkCheckRequest.getUrl());
+        linkCheckRequestQueue.offerLast(linkCheckRequest);
+        try {
+            Thread.sleep(7000);
+        } catch (InterruptedException e) {
+            // Ignore
+        }
+    }
+
 }
