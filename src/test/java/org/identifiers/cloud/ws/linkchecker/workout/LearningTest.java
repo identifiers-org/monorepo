@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.sql.Timestamp;
 import java.util.Deque;
 
+
 /**
  * Project: link-checker
  * Package: org.identifiers.cloud.ws.linkchecker.workout
