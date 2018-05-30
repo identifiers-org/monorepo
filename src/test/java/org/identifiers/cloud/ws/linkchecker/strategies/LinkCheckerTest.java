@@ -47,11 +47,6 @@ public class LinkCheckerTest {
 
     @Test
     public void queueLinkCheckRequestProvider() {
-        try {
-            Thread.sleep(7000);
-        } catch (InterruptedException e) {
-            // Ignore
-        }
         LinkCheckRequest linkCheckRequest = new LinkCheckRequest()
                 .setProviderId("providerID1")
                 .setTimestamp(new Timestamp(System.currentTimeMillis()))
