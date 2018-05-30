@@ -2,7 +2,6 @@ package org.identifiers.cloud.ws.linkchecker.strategies;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.identifiers.cloud.ws.linkchecker.LinkCheckerApplication;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +23,7 @@ import java.util.Deque;
  * ---
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = LinkCheckerApplication.class)
+@SpringBootTest
 public class LinkCheckerTest {
     private static final Logger logger = LoggerFactory.getLogger(LinkCheckerTest.class);
 
