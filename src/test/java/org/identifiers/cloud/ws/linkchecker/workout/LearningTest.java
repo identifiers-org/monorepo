@@ -34,9 +34,11 @@ public class LearningTest {
 
     @Configuration
     @Import(LinkCheckerApplication.class)
-    public static class TestConfig {
+    public static class TestAppConfig {
         // TODO
     }
+
+    @Config
 
     @Autowired
     private Deque<LinkCheckRequest> linkCheckRequestQueue;
