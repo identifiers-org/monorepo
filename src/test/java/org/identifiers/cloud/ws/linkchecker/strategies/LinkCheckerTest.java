@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.sql.Timestamp;
 import java.util.Deque;
 
 /**
@@ -42,21 +41,6 @@ public class LinkCheckerTest {
             logger.info("Link Checker REPORT '{}'", mapper.writer().writeValueAsString(report));
         } catch (JsonProcessingException e) {
             logger.error("WTF! Error serializing a simple POJO!");
-        }
-    }
-
-    @Test
-    public void queueLinkCheckRequestProvider() {
-        LinkCheckRequest linkCheckRequest = new LinkCheckRequest()
-                .setProviderId("providerID1")
-                .setTimestamp(new Timestamp(System.currentTimeMillis()))
-                .setUrl("http://www.ebi.ac.uk/chebi/");
-        logger.info("Queuing link checking request for provider URL '{}'", linkCheckRequest.getUrl());
-        linkCheckRequestQueue.offerLast(linkCheckRequest);
-        try {
-            Thread.sleep(7000);
-        } catch (InterruptedException e) {
-            // Ignore
         }
     }
 }
