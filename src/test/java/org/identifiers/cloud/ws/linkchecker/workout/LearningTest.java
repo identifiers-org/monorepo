@@ -34,14 +34,8 @@ public class LearningTest {
     private static final Logger logger = LoggerFactory.getLogger(LearningTest.class);
 
     @Configuration
-    @Import(LinkCheckerApplication.class)
+    @Import({LinkCheckerApplication.class, ApplicationConfig.class})
     public static class TestAppConfig {
-        // TODO
-    }
-
-    @Configuration
-    @Import(ApplicationConfig.class)
-    public static class TestApplicationConfig {
         // TODO
     }
 
