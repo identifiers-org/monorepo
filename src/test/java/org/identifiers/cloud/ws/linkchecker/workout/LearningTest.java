@@ -1,6 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.workout;
 
-import org.identifiers.cloud.ws.linkchecker.configuration.ApplicationConfig;
+import org.identifiers.cloud.ws.linkchecker.LinkCheckerApplication;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +33,7 @@ public class LearningTest {
     private static final Logger logger = LoggerFactory.getLogger(LearningTest.class);
 
     @Configuration
-    @Import(ApplicationConfig.class)
+    @Import(LinkCheckerApplication.class)
     public static class TestConfig {
         // TODO
     }
