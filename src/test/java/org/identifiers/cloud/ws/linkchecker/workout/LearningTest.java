@@ -7,6 +7,8 @@ package org.identifiers.cloud.ws.linkchecker.workout;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This unit test is for working out how things work with Spring Data Redis and backend operations.
  */
 public class LearningTest {
 }
