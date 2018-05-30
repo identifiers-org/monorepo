@@ -3,8 +3,8 @@ package org.identifiers.cloud.ws.linkchecker.configuration;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -26,7 +26,7 @@ import java.util.Deque;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-@Configuration
+@TestConfiguration
 @PropertySource("classpath:application.properties")
 @EnableRedisRepositories
 public class TestApplicationConfig {
