@@ -86,7 +86,7 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public ChannelTopic channelKeyLinkCheckResults() {
+    public ChannelTopic channelLinkCheckResults() {
         return new ChannelTopic(channelKeyLinkCheckResults);
     }
 }

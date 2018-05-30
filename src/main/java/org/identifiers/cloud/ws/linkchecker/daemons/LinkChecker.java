@@ -49,7 +49,7 @@ public class LinkChecker extends Thread {
     private RedisTemplate<String, LinkCheckResult> linkCheckResultRedisTemplate;
 
     @Autowired
-    private ChannelTopic channelKeyLinkCheckResults;
+    private ChannelTopic channelLinkCheckResults;
 
     public synchronized boolean isShutdown() {
         return shutdown;
@@ -101,7 +101,7 @@ public class LinkChecker extends Thread {
                     linkCheckerReport.getUrl(),
                     linkCheckerReport.getHttpStatus(),
                     linkCheckerReport.isUrlAssessmentOk() ? "OK" : "NOT OK");
-            linkCheckResultRedisTemplate.convertAndSend(channelKeyLinkCheckResults.getTopic(), linkCheckResult);
+            linkCheckResultRedisTemplate.convertAndSend(channelLinkCheckResults.getTopic(), linkCheckResult);
         }
     }
 

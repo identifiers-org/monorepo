@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.Timestamp;
 import java.util.Deque;
+import java.util.stream.IntStream;
 
 
 /**
@@ -26,6 +27,7 @@ import java.util.Deque;
 @RunWith(SpringRunner.class)
 //@ContextConfiguration(classes = ApplicationConfig.class)
 @SpringBootTest
+//@ContextConfiguration(classes = {LinkCheckerApplication.class})
 public class LearningTest {
     private static final Logger logger = LoggerFactory.getLogger(LearningTest.class);
 
@@ -34,12 +36,13 @@ public class LearningTest {
 
     @Test
     public void queueLinkCheckRequestProvider() {
-        LinkCheckRequest linkCheckRequest = new LinkCheckRequest()
-                .setProviderId("providerID1")
-                .setTimestamp(new Timestamp(System.currentTimeMillis()))
-                .setUrl("http://www.ebi.ac.uk/chebi/");
-        logger.info("Queuing link checking request for provider URL '{}'", linkCheckRequest.getUrl());
-        linkCheckRequestQueue.offerLast(linkCheckRequest);
+        IntStream.range(0, 20).parallel().forEach(i -> {
+            logger.info("Queuing link checking request #{}", i);
+            linkCheckRequestQueue.offerLast(new LinkCheckRequest()
+                    .setProviderId("providerID1")
+                    .setTimestamp(new Timestamp(System.currentTimeMillis()))
+                    .setUrl("http://www.ebi.ac.uk/chebi/"));
+        });
         try {
             Thread.sleep(20000);
         } catch (InterruptedException e) {
