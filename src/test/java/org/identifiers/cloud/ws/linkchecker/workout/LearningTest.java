@@ -39,7 +39,7 @@ public class LearningTest {
         IntStream.range(0, 20).parallel().forEach(i -> {
             logger.info("Queuing link checking request #{}", i);
             linkCheckRequestQueue.offerLast(new LinkCheckRequest()
-                    .setProviderId("providerID1")
+                    .setProviderId(String.format("%d", i))
                     .setTimestamp(new Timestamp(System.currentTimeMillis()))
                     .setUrl("http://www.ebi.ac.uk/chebi/"));
         });
