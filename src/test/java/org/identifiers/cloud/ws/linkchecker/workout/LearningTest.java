@@ -17,7 +17,6 @@ import java.sql.Timestamp;
 import java.util.Deque;
 import java.util.stream.IntStream;
 
-
 /**
  * Project: link-checker
  * Package: org.identifiers.cloud.ws.linkchecker.workout
@@ -29,12 +28,11 @@ import java.util.stream.IntStream;
  * This unit test is for working out how things work with Spring Data Redis and backend operations.
  */
 @RunWith(SpringRunner.class)
-//@ContextConfiguration(classes = ApplicationConfig.class)
+@ContextConfiguration(classes = {LinkCheckerApplication.class})
 @SpringBootTest(classes = {
         ApplicationConfig.class,
         LinkCheckerApplicationTests.class
 })
-@ContextConfiguration(classes = {LinkCheckerApplication.class})
 public class LearningTest {
     private static final Logger logger = LoggerFactory.getLogger(LearningTest.class);
 
@@ -57,3 +55,4 @@ public class LearningTest {
         }
     }
 }
+
