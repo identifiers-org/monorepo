@@ -97,6 +97,10 @@ public class LinkChecker extends Thread {
                     LinkCheckModelsHelper.getResultFromReport(linkCheckerReport, linkCheckRequest);
             linkCheckResultRepository.save(linkCheckResult);
             // Announce the link checking results
+            logger.info("Announcing Link Check result for URL '{}', HTTP Status '{}', assessment '{}'",
+                    linkCheckerReport.getUrl(),
+                    linkCheckerReport.getHttpStatus(),
+                    linkCheckerReport.isUrlAssessmentOk() ? "OK" : "NOT OK");
             linkCheckResultRedisTemplate.convertAndSend(channelKeyLinkCheckResults.getTopic(), linkCheckResult);
         }
     }
