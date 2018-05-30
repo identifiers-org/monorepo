@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.Timestamp;
 import java.util.Deque;
@@ -23,7 +23,7 @@ import java.util.Deque;
  * <p>
  * This unit test is for working out how things work with Spring Data Redis and backend operations.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 //@ContextConfiguration(classes = ApplicationConfig.class)
 @SpringBootTest
 public class LearningTest {
