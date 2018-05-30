@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -29,8 +28,11 @@ import java.util.stream.IntStream;
 public class LearningTest {
     private static final Logger logger = LoggerFactory.getLogger(LearningTest.class);
 
-    @Autowired
     private Deque<LinkCheckRequest> linkCheckRequestQueue;
+
+    public LearningTest(Deque<LinkCheckRequest> linkCheckRequestQueue) {
+        this.linkCheckRequestQueue = linkCheckRequestQueue;
+    }
 
     @Test
     public void queueLinkCheckRequestProvider() {
