@@ -1,4 +1,4 @@
-package org.identifiers.cloud.ws.linkchecker.configuration;
+package org.identifiers.cloud.ws.linkchecker.workout;
 
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
