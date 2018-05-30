@@ -7,8 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Timestamp;
 import java.util.Deque;
@@ -24,10 +23,8 @@ import java.util.Deque;
  * <p>
  * This unit test is for working out how things work with Spring Data Redis and backend operations.
  */
-@RunWith(SpringRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 //@ContextConfiguration(classes = ApplicationConfig.class)
-//@SpringBootTest(classes = LinkCheckerApplication.class)
-@ComponentScan("org.identifiers.cloud.ws.linkchecker")
 @SpringBootTest
 public class LearningTest {
     private static final Logger logger = LoggerFactory.getLogger(LearningTest.class);
