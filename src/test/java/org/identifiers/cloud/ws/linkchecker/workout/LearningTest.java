@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.workout;
 
+import org.identifiers.cloud.ws.linkchecker.configuration.ApplicationConfig;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +24,7 @@ import java.util.Deque;
  * This unit test is for working out how things work with Spring Data Redis and backend operations.
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = ApplicationConfig.class)
 public class LearningTest {
     private static final Logger logger = LoggerFactory.getLogger(LearningTest.class);
 
