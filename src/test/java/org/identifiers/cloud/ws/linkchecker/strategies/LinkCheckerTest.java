@@ -2,7 +2,6 @@ package org.identifiers.cloud.ws.linkchecker.strategies;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -10,8 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Deque;
 
 /**
  * Project: link-checker
@@ -28,9 +25,6 @@ public class LinkCheckerTest {
 
     @Autowired
     private LinkChecker linkChecker;
-
-    @Autowired
-    private Deque<LinkCheckRequest> linkCheckRequestQueue;
 
     @Test
     public void reportOverviewTest() {
