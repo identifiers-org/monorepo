@@ -125,13 +125,14 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
 
     @Override
     public ProviderTracker updateTrackerWith(LinkCheckResult linkCheckResult) throws HistoryTrackingServiceException {
+        ProviderTracker providerTracker = null;
         if (linkCheckResult.getProviderId() != null) {
-            // TODO
-        } else if (linkCheckResult.getResourceId() != null) {
-            // TODO
-        } else {
-            // TODO
+            // It is a provider link check result
+            return updateProviderTrackerWith(linkCheckResult);
         }
-        return null;
+        if (linkCheckResult.getResourceId() != null) {
+            // TODO - It is a resource link check result
+        }
+        // TODO - It is a plain URL check result
     }
 }
