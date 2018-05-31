@@ -31,23 +31,5 @@ import java.util.stream.IntStream;
 public class LearningTest {
     private static final Logger logger = LoggerFactory.getLogger(LearningTest.class);
 
-    @Autowired
-    private Deque<LinkCheckRequest> linkCheckRequestQueue;
-
-    @Test
-    public void queueLinkCheckRequestProvider() {
-        IntStream.range(0, 50).parallel().forEach(i -> {
-            logger.info("Queuing link checking request #{}", i);
-            linkCheckRequestQueue.offerLast(new LinkCheckRequest()
-                    .setProviderId(String.format("%d", i))
-                    .setTimestamp(new Timestamp(System.currentTimeMillis()))
-                    .setUrl("http://www.ebi.ac.uk/chebi/"));
-        });
-        /*try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            // Ignore
-        }*/
-    }
 }
 
