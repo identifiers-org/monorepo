@@ -51,7 +51,7 @@ public class SimpleLinkChecker implements LinkChecker {
         try {
             report.setHttpStatus(connection.getResponseCode());
         } catch (IOException e) {
-            throw new SimpleLinkCheckerException(e.getMessage());
+            throw new SimpleLinkCheckerException(String.format("IO Exception when checking '{}', reason '{}'", url, e.getMessage()));
         } finally {
             connection.disconnect();
         }
