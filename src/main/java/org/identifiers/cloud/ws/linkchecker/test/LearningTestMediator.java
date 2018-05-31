@@ -7,6 +7,8 @@ package org.identifiers.cloud.ws.linkchecker.test;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This is a mediator for LearningTest unit tests
  */
 public class LearningTestMediator {
 }
