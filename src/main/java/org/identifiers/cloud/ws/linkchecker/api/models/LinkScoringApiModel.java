@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.api.models;
 
+import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseScoringRequest;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -14,5 +15,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class LinkScoringApiModel {
-    // TODO
+
+    public ServiceResponseScoringRequest getScoreForProvider() {
+        // TODO
+    }
 }
