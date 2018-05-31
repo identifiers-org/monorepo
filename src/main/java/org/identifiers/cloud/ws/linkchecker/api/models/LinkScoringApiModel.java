@@ -24,13 +24,15 @@ public class LinkScoringApiModel {
 
     private ServiceResponseScoringRequest getDefaultResponse() {
         ServiceResponseScoringRequest response = new ServiceResponseScoringRequest();
-        response.setApiVersion(ApiCentral.apiVersion)
-                .setPayload(new ServiceResponseScoringRequestPayload());
+        response.setApiVersion(ApiCentral.apiVersion);
+        response.setPayload(new ServiceResponseScoringRequestPayload());
         return response;
     }
 
     public ServiceResponseScoringRequest getScoreForProvider(ScoringRequestWithIdPayload request) {
         logger.info("Provider scoring request for ID '{}', URL '{}'", request.getId(), request.getUrl());
+        ServiceResponseScoringRequest response = getDefaultResponse();
         // TODO
+        return response;
     }
 }
