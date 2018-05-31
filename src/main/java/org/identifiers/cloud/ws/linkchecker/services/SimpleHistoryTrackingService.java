@@ -139,7 +139,9 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
         }
         if (linkCheckResult.getResourceId() != null) {
             // TODO - It is a resource link check result
+            return null;
         }
         // TODO - It is a plain URL check result
+        return null;
     }
 }
