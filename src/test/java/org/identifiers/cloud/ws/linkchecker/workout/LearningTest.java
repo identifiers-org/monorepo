@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.workout;
 
 import org.identifiers.cloud.ws.linkchecker.test.LearningTestMediator;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,8 @@ public class LearningTest {
     // Autowire the test mediator
     @Autowired
     private LearningTestMediator mediator;
-    
+
+    @Test
+    public void
 }
 

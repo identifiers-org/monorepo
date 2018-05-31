@@ -35,7 +35,7 @@ public class LearningTestMediator {
         logger.info("LearningTestMediator instantiated");
     }
 
-    public void queueLinkCheckRequestProvider() {
+    public void testLinkCheckQueuing() {
         IntStream.range(0, 50).parallel().forEach(i -> {
             logger.info("Queuing link checking request #{}", i);
             linkCheckRequestQueue.offerLast(new LinkCheckRequest()
