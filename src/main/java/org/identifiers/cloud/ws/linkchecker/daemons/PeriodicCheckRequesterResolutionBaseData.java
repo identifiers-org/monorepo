@@ -29,4 +29,7 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
 
     private boolean shutdown = false;
 
+    @Autowired
+    private Deque<LinkCheckRequest> linkCheckRequestQueue;
+
 }
