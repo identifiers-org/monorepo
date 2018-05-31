@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.sql.Timestamp;
 import java.util.Deque;
 import java.util.stream.IntStream;
 
@@ -40,7 +39,7 @@ public class LearningTestMediator {
             logger.info("Queuing link checking request #{}", i);
             linkCheckRequestQueue.offerLast(new LinkCheckRequest()
                     .setProviderId(String.format("%d", i))
-                    .setTimestamp(new Timestamp(System.currentTimeMillis()))
+                    //.setTimestamp(new Timestamp(System.currentTimeMillis()))
                     .setUrl("http://www.ebi.ac.uk/chebi/"));
         });
         while (!linkCheckRequestQueue.isEmpty()) {
