@@ -4,6 +4,7 @@ import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ public abstract class HistoryTracker implements Serializable {
     // History stats for this tracker instance
     private Map<String, CheckedUrlHistoryStats> historyStatsMap =
             Arrays.stream(HistoryStats.values()).collect(Collectors.toMap(HistoryStats::getKey, historyStats -> historyStats.getFactoryMethod().get()));
+
     public String getUrl() {
         return url;
     }
@@ -47,7 +49,7 @@ public abstract class HistoryTracker implements Serializable {
     }
 
     public List<CheckedUrlHistoryStats> getHistoryStats() {
-        return Arrays.stream(HistoryStats.values()).map(HistoryStats::getHistoryStats).collect(Collectors.toList());
+        return new ArrayList<>(historyStatsMap.values());
     }
 
     public void addLinkCheckResult(LinkCheckResult linkCheckResult) {
