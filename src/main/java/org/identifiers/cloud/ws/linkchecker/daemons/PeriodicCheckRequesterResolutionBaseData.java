@@ -26,4 +26,7 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
     private static final int WAIT_TIME_MAX_BEFORE_NEXT_REQUEST_SECONDS = 86400; // 24 hours
     private static final int WAIT_TIME_MIN_BEFORE_NEXT_REQUEST_SECONDS = 21600; // 6 hours
     private static final Logger logger = LoggerFactory.getLogger(PeriodicCheckRequesterResolutionBaseData.class);
+
+    private boolean shutdown = false;
+
 }
