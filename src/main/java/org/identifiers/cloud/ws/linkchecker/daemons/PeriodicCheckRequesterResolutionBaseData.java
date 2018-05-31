@@ -44,4 +44,11 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
     public void autoStartThread() {
         start();
     }
+
+    @PreDestroy
+    public void stopDaemon() {
+        logger.info("--- [STOPPING] Periodic Link Check Requester on Resolution Base Data ---");
+        setShutdown();
+    }
+
 }
