@@ -91,14 +91,19 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     }
 
     private ProviderTracker updateProviderTrackerWith(LinkCheckResult linkCheckResult) {
+        logger.info("Updating provider ID '{}' with link check result on URL '{}', " +
+                "request timestamp '{}', check timestamp '{}', elapsed '{}'",
+                linkCheckResult.getProviderId(),
+                linkCheckResult.getUrl(),
+                linkCheckResult.getRequestTimestamp(),
+                linkCheckResult.getTimestamp(),
+                (linkCheckResult.getTimestamp().getTime() - linkCheckResult.getRequestTimestamp().getTime()));
         ProviderTracker providerTracker = providers.getIfPresent(linkCheckResult.getProviderId());
         if (providerTracker != null) {
             providerTracker.addLinkCheckResult(linkCheckResult);
         }
         return providerTracker;
     }
-
-
 
     @Override
     public ProviderTracker getTrackerForProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) throws HistoryTrackingServiceException {
