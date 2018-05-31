@@ -38,8 +38,7 @@ public class LinkScoringApiModel {
     public ServiceResponseScoringRequest getScoreForProvider(ScoringRequestWithIdPayload request) {
         logger.info("Provider scoring request for ID '{}', URL '{}'", request.getId(), request.getUrl());
         ServiceResponseScoringRequest response = getDefaultResponse();
-        response.getPayload().setScore((int) HistoryTracker.HistoryStats.SIMPLE.getHistoryStats().getUpPercenetage());
-        // TODO
+        response.getPayload().setScore((int) Math.round(historyTrackingService.getTrackerForProvider(request).getHistoryStats(HistoryTracker.HistoryStats.SIMPLE).getUpPercenetage()));
         return response;
     }
 }
