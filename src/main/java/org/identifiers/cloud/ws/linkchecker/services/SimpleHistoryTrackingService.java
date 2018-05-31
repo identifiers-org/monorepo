@@ -116,7 +116,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     }
 
     @Override
-    public ProviderTracker updateTrackerFor(LinkCheckResult linkCheckResult) throws HistoryTrackingServiceException {
+    public ProviderTracker updateTrackerWith(LinkCheckResult linkCheckResult) throws HistoryTrackingServiceException {
         return null;
     }
 }
