@@ -6,6 +6,7 @@ import org.springframework.data.redis.core.index.Indexed;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Project: link-checker
@@ -28,7 +29,7 @@ public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult
     private String url;
     // When it has been checked (UTC), indexed to easily find those entities to remove
     @Indexed
-    private Timestamp timestamp;
+    private Timestamp timestamp = new Timestamp(new Date().getTime());
     // When this check was requested (UTC)
     private Timestamp requestTimestamp;
     // Link check request type / reference
