@@ -20,7 +20,7 @@ public class CheckedUrlHistoryStatsSimple implements CheckedUrlHistoryStats, Ser
     private int nDownEvents = 0;
 
     @Override
-    public void init(List<LinkCheckResult> linkCheckResults) throws CheckedUrlHistoryStatsException {
+    public synchronized void init(List<LinkCheckResult> linkCheckResults) throws CheckedUrlHistoryStatsException {
         if ((nUpEvents + nDownEvents) == 0) {
             nUpEvents += linkCheckResults.parallelStream().filter(LinkCheckResult::isUrlAssessmentOk).count();
             nDownEvents = linkCheckResults.size() - nUpEvents;
@@ -30,7 +30,7 @@ public class CheckedUrlHistoryStatsSimple implements CheckedUrlHistoryStats, Ser
     }
 
     @Override
-    public void update(LinkCheckResult linkCheckResult) {
+    public synchronized void update(LinkCheckResult linkCheckResult) {
         if (linkCheckResult.isUrlAssessmentOk()) {
             nUpEvents++;
         } else {
