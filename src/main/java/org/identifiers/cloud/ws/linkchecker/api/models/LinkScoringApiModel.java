@@ -4,6 +4,7 @@ import org.identifiers.cloud.ws.linkchecker.api.ApiCentral;
 import org.identifiers.cloud.ws.linkchecker.api.requests.ScoringRequestWithIdPayload;
 import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseScoringRequest;
 import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseScoringRequestPayload;
+import org.identifiers.cloud.ws.linkchecker.models.HistoryTracker;
 import org.identifiers.cloud.ws.linkchecker.services.HistoryTrackingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +38,7 @@ public class LinkScoringApiModel {
     public ServiceResponseScoringRequest getScoreForProvider(ScoringRequestWithIdPayload request) {
         logger.info("Provider scoring request for ID '{}', URL '{}'", request.getId(), request.getUrl());
         ServiceResponseScoringRequest response = getDefaultResponse();
+        response.getPayload().setScore((int) HistoryTracker.HistoryStats.SIMPLE.getHistoryStats().getUpPercenetage());
         // TODO
         return response;
     }

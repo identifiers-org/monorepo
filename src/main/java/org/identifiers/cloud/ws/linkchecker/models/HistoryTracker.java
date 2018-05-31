@@ -58,12 +58,13 @@ public abstract class HistoryTracker implements Serializable {
     }
 
     public enum HistoryStats implements Serializable {
-        SIMPLE(new CheckedUrlHistoryStatsSimple(), "Simple UP/DOWN history tracking");
+        SIMPLE(new CheckedUrlHistoryStatsSimple(), "Simple UP/DOWN history tracking", "simple");
 
         private CheckedUrlHistoryStats historyStats;
+        private String key;
         private String description;
 
-        HistoryStats(CheckedUrlHistoryStats historyStats, String description) {
+        HistoryStats(CheckedUrlHistoryStats historyStats, String description, String key) {
             this.historyStats = historyStats;
             this.description = description;
         }
