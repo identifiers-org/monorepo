@@ -68,7 +68,8 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     }
 
     // TODO - I may need to make this method synchronized because of the non-atomic gap between checking if a provider
-    // TODO - already has a tracking entry and creating one for it
+    // TODO - already has a tracking entry and creating one for it. It really depends on whether the Cache locks write
+    // TODO - operation by key or not.
     // Tracking entry Loaders
     private ProviderTracker loadCreateTrackedProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) {
         ProviderTracker providerTracker = new ProviderTracker();
