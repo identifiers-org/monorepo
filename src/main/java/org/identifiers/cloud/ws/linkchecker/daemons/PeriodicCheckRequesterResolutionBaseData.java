@@ -40,4 +40,8 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
         this.shutdown = true;
     }
 
+    @PostConstruct
+    public void autoStartThread() {
+        start();
+    }
 }
