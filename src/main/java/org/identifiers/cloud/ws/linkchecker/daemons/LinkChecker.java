@@ -30,7 +30,7 @@ import java.util.Random;
  */
 @Component
 public class LinkChecker extends Thread {
-    private static final int WAIT_TIME_LIMIT_SECONDS = 600;
+    private static final int WAIT_TIME_LIMIT_SECONDS = 30;
     private static final Logger logger = LoggerFactory.getLogger(LinkChecker.class);
 
     private boolean shutdown = false;
