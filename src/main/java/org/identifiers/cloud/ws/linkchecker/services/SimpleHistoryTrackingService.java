@@ -114,4 +114,9 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
                     e.getMessage()));
         }
     }
+
+    @Override
+    public ProviderTracker updateTrackerFor(LinkCheckResult linkCheckResult) throws HistoryTrackingServiceException {
+        return null;
+    }
 }
