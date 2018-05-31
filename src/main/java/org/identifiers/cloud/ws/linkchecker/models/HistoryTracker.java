@@ -58,8 +58,7 @@ public abstract class HistoryTracker implements Serializable {
     }
 
     public void initHistoryStats(List<LinkCheckResult> linkCheckResults) {
-        Arrays.stream(HistoryStats.values())
-                .forEach(historyStats -> historyStats.getHistoryStats().init(linkCheckResults));
+        historyStatsMap.values().parallelStream().forEach(checkedUrlHistoryStat -> {checkedUrlHistoryStat.init(linkCheckResults);});
     }
 
     public enum HistoryStats implements Serializable {
