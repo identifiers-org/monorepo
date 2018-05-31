@@ -13,5 +13,5 @@ import java.io.Serializable;
  * Response to a Scoring request
  */
 public class ServiceResponseScoringRequestPayload implements Serializable {
-    public int score;
+    public int score = 50;
 }
