@@ -40,6 +40,10 @@ public class CheckedUrlHistoryStatsSimple implements CheckedUrlHistoryStats, Ser
 
     @Override
     public double getUpPercenetage() {
-        return (nUpEvents * 100.0) / (nDownEvents + nUpEvents);
+        int nEvents = nDownEvents + nUpEvents;
+        if (nEvents == 0) {
+            return 50.0;
+        }
+        return(nUpEvents * 100.0) / nEvents;
     }
 }
