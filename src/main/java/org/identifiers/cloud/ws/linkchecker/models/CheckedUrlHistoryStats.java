@@ -31,9 +31,4 @@ public interface CheckedUrlHistoryStats {
      */
     double getUpPercenetage();
 
-    /**
-     * Get an instance of current history stats implementation.
-     * @return an instance of of a Checked URL history stats implementation
-     */
-    CheckedUrlHistoryStats getInstance();
 }
