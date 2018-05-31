@@ -90,6 +90,14 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
         return providerTracker;
     }
 
+    public ProviderTracker updateProviderTrackerWith(LinkCheckResult linkCheckResult) {
+        ProviderTracker providerTracker = providers.getIfPresent(linkCheckResult.getProviderId());
+        if (providerTracker != null) {
+            providerTracker.addLinkCheckResult(linkCheckResult);
+        }
+        return providerTracker;
+    }
+
     @Override
     public ProviderTracker getTrackerForProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) throws HistoryTrackingServiceException {
         try {
@@ -117,6 +125,13 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
 
     @Override
     public ProviderTracker updateTrackerWith(LinkCheckResult linkCheckResult) throws HistoryTrackingServiceException {
+        if (linkCheckResult.getProviderId() != null) {
+            // TODO
+        } else if (linkCheckResult.getResourceId() != null) {
+            // TODO
+        } else {
+            // TODO
+        }
         return null;
     }
 }
