@@ -30,5 +30,4 @@ public interface CheckedUrlHistoryStats {
      * @return up and running percentage
      */
     double getUpPercenetage();
-
 }
