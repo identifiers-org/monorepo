@@ -17,7 +17,7 @@ import org.identifiers.cloud.ws.linkchecker.strategies.LinkCheckerReport;
 public class LinkCheckModelsHelper {
     public static LinkCheckResult getResultFromReport(LinkCheckerReport report, LinkCheckRequest request) {
         return new LinkCheckResult()
-                .setTimestamp(report.getTimestamp())
+                //.setTimestamp(report.getTimestamp())
                 .setHttpStatus(report.getHttpStatus())
                 .setUrl(report.getUrl())
                 .setUrlAssessmentOk(report.isUrlAssessmentOk())
