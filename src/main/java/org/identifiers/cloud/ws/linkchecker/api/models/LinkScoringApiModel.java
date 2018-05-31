@@ -4,8 +4,10 @@ import org.identifiers.cloud.ws.linkchecker.api.ApiCentral;
 import org.identifiers.cloud.ws.linkchecker.api.requests.ScoringRequestWithIdPayload;
 import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseScoringRequest;
 import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseScoringRequestPayload;
+import org.identifiers.cloud.ws.linkchecker.services.HistoryTrackingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +23,9 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class LinkScoringApiModel {
     private static final Logger logger = LoggerFactory.getLogger(LinkScoringApiModel.class);
+
+    @Autowired
+    private HistoryTrackingService historyTrackingService;
 
     private ServiceResponseScoringRequest getDefaultResponse() {
         ServiceResponseScoringRequest response = new ServiceResponseScoringRequest();
