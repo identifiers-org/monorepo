@@ -7,6 +7,9 @@ package org.identifiers.cloud.ws.linkchecker.daemons;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This is a check requester daemon that will use resolution insight data for periodically request link checking of
+ * resources and providers.
  */
 public class PeriodicCheckRequester {
 }
