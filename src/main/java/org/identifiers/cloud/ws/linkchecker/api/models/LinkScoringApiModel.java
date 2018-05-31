@@ -1,7 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.api.models;
 
 import org.identifiers.cloud.ws.linkchecker.api.ApiCentral;
-import org.identifiers.cloud.ws.linkchecker.api.requests.ScoringRequestWithIdPayload;
+import org.identifiers.cloud.ws.linkchecker.api.requests.ServiceRequestScoreProvider;
 import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseScoringRequest;
 import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseScoringRequestPayload;
 import org.identifiers.cloud.ws.linkchecker.models.HistoryTracker;
@@ -36,12 +36,15 @@ public class LinkScoringApiModel {
         return response;
     }
 
-    public ServiceResponseScoringRequest getScoreForProvider(ScoringRequestWithIdPayload request) {
-        logger.info("Provider scoring request for ID '{}', URL '{}'", request.getId(), request.getUrl());
+    public ServiceResponseScoringRequest getScoreForProvider(ServiceRequestScoreProvider request) {
+        logger.info("Provider scoring request for ID '{}', URL '{}'",
+                request.getPayload().getId(),
+                request.getPayload().getUrl());
         ServiceResponseScoringRequest response = getDefaultResponse();
         try {
-            response.getPayload().setScore((int) Math.round(historyTrackingService.getTrackerForProvider(request)
-                    .getHistoryStats(HistoryTracker.HistoryStats.SIMPLE).getUpPercenetage()));
+            response.getPayload()
+                    .setScore((int) Math.round(historyTrackingService.getTrackerForProvider(request.getPayload())
+                            .getHistoryStats(HistoryTracker.HistoryStats.SIMPLE).getUpPercenetage()));
         } catch (Exception e) {
             response.setErrorMessage(String.format("Scoring could not be calculated due to '%s'", e.getMessage()));
             response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
