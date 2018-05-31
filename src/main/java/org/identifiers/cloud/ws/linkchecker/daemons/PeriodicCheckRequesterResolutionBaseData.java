@@ -51,4 +51,11 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
         setShutdown();
     }
 
+    @Override
+    public void run() {
+        logger.info("--- [START] Periodic Link Check Requester on Resolution Base Data ---");
+        while (!isShutdown()) {
+            // TODO
+        }
+    }
 }
