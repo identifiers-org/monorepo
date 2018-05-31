@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.data.models;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.sql.Timestamp;
 
 /**
@@ -17,7 +18,7 @@ public class LinkCheckRequest implements Serializable, Comparable<LinkCheckReque
     // URL that has been checked
     private String url;
     // When it has been checked (UTC)
-    private Timestamp timestamp;
+    private Timestamp timestamp = new Timestamp(new Date().getTime());
     // Link check request type / reference
     private String providerId;
     private String resourceId;
