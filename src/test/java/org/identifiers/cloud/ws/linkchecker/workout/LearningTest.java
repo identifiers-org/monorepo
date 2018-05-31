@@ -32,6 +32,8 @@ public class LearningTest {
     private LearningTestMediator mediator;
 
     @Test
-    public void
+    public void testLinkCheckQueuing() {
+        mediator.testLinkCheckQueuing();
+    }
 }
 
