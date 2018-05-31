@@ -54,6 +54,6 @@ public class LinkCheckResultListener implements MessageListener {
                 result.getUrl(),
                 result.getProviderId(),
                 result.getResourceId());
-        // TODO
+        historyTrackingService.updateTrackerWith(result);
     }
 }
