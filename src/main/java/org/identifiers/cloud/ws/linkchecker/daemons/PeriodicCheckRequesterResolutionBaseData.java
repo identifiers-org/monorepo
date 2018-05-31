@@ -32,4 +32,12 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
     @Autowired
     private Deque<LinkCheckRequest> linkCheckRequestQueue;
 
+    public synchronized boolean isShutdown() {
+        return shutdown;
+    }
+
+    public synchronized void setShutdown() {
+        this.shutdown = true;
+    }
+
 }
