@@ -3,7 +3,6 @@ package org.identifiers.cloud.ws.linkchecker.test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -19,7 +18,6 @@ import javax.annotation.PostConstruct;
  * This is a mediator for LearningTest unit tests
  */
 @Component
-@Scope("prototype")
 @Profile("test")
 public class LearningTestMediator {
     private static final Logger logger = LoggerFactory.getLogger(LearningTestMediator.class);
