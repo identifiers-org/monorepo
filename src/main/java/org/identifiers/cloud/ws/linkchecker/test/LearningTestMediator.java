@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.test;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -20,7 +22,7 @@ import javax.annotation.PostConstruct;
 @Scope("prototype")
 @Profile("test")
 public class LearningTestMediator {
-    // TODO
+    private static final Logger logger = LoggerFactory.getLogger(LearningTestMediator.class);
 
     @PostConstruct
     public void postConstruct() {
