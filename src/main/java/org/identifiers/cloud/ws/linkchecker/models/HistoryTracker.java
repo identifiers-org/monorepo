@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -23,7 +25,9 @@ public abstract class HistoryTracker implements Serializable {
     private String url;
     // When the tracking was queued / added to the link checker (UTC)
     private Timestamp created;
-
+    // History stats for this tracker instance
+    private Map<String, CheckedUrlHistoryStats> historyStatsMap =
+            Arrays.stream(HistoryStats.values()).collect(Collectors.toMap(HistoryStats::getKey, historyStats -> historyStats.getFactoryMethod().get()));
     public String getUrl() {
         return url;
     }
@@ -58,33 +62,28 @@ public abstract class HistoryTracker implements Serializable {
     }
 
     public enum HistoryStats implements Serializable {
-        SIMPLE(new CheckedUrlHistoryStatsSimple(), "Simple UP/DOWN history tracking", "simple");
+        SIMPLE(CheckedUrlHistoryStatsSimple::new, "Simple UP/DOWN history tracking", "simple");
 
-        private CheckedUrlHistoryStats historyStats;
+        private Supplier<CheckedUrlHistoryStats> factoryMethod;
         private String key;
         private String description;
 
-        HistoryStats(CheckedUrlHistoryStats historyStats, String description, String key) {
-            this.historyStats = historyStats;
+        HistoryStats(Supplier<CheckedUrlHistoryStats> factoryMethod, String key, String description) {
+            this.factoryMethod = factoryMethod;
+            this.key = key;
             this.description = description;
         }
 
-        public CheckedUrlHistoryStats getHistoryStats() {
-            return historyStats;
+        public Supplier<CheckedUrlHistoryStats> getFactoryMethod() {
+            return factoryMethod;
         }
 
-        public HistoryStats setHistoryStats(CheckedUrlHistoryStats historyStats) {
-            this.historyStats = historyStats;
-            return this;
+        public String getKey() {
+            return key;
         }
 
         public String getDescription() {
             return description;
-        }
-
-        public HistoryStats setDescription(String description) {
-            this.description = description;
-            return this;
         }
     }
 }
