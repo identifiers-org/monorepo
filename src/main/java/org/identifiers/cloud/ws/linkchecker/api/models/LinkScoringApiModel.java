@@ -1,6 +1,8 @@
 package org.identifiers.cloud.ws.linkchecker.api.models;
 
 import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseScoringRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class LinkScoringApiModel {
+    private static final Logger logger = LoggerFactory.getLogger(LinkScoringApiModel.class);
 
     public ServiceResponseScoringRequest getScoreForProvider() {
         // TODO
