@@ -26,6 +26,6 @@ public class LearningTestMediator {
 
     @PostConstruct
     public void postConstruct() {
-        // TODO
+        logger.info("LearningTestMediator instantiated");
     }
 }
