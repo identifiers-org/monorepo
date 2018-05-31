@@ -90,13 +90,15 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
         return providerTracker;
     }
 
-    public ProviderTracker updateProviderTrackerWith(LinkCheckResult linkCheckResult) {
+    private ProviderTracker updateProviderTrackerWith(LinkCheckResult linkCheckResult) {
         ProviderTracker providerTracker = providers.getIfPresent(linkCheckResult.getProviderId());
         if (providerTracker != null) {
             providerTracker.addLinkCheckResult(linkCheckResult);
         }
         return providerTracker;
     }
+
+
 
     @Override
     public ProviderTracker getTrackerForProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) throws HistoryTrackingServiceException {
