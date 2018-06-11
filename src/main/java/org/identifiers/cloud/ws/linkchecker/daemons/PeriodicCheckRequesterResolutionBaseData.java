@@ -4,6 +4,7 @@ import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -29,6 +30,12 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
 
     private boolean shutdown = false;
 
+    @Value("${org.identifiers.cloud.ws.linkchecker.backend.service.resolver.host}")
+    private String wsResolverHost;
+
+    @Value("${org.identifiers.cloud.ws.linkchecker.backend.service.resolver.port}")
+    private String wsResolverPort;
+    
     @Autowired
     private Deque<LinkCheckRequest> linkCheckRequestQueue;
 
