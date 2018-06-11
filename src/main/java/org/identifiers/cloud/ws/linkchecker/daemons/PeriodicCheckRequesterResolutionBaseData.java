@@ -77,7 +77,13 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
                     .getResolverService(wsResolverHost, wsResolverPort)
                     .getAllSampleIdsResolved();
             if (insightResponse.getHttpStatus() == HttpStatus.OK) {
-                // TODO
+                if (!insightResponse.getPayload().getResolvedResources().isEmpty()) {
+                    logger.info("Processing #{} entries from the Resolution insight API",
+                            insightResponse.getPayload().getResolvedResources().size());
+                    // TODO
+                } else {
+                    // TODO
+                }
             } else {
                 logger.error("Got HTTP Status '{}' from Resolution Service Insight API, reason '{}', " +
                         "SKIPPING this link checking request iteration",
@@ -98,7 +104,6 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
                         "submitted");
                 shutdown = true;
             }
-            // TODO
         }
     }
 }
