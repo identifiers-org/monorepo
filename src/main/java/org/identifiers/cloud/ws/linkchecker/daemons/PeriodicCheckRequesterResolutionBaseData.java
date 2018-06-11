@@ -113,7 +113,7 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
                 logger.warn("The Periodic Link Check Requester on Resolution insight data has been interrupted while " +
                         "waiting for another iteration. Stopping the service, no more link checking requests will be " +
                         "submitted");
-                shutdown = true;
+                setShutdown();
             }
         }
     }
