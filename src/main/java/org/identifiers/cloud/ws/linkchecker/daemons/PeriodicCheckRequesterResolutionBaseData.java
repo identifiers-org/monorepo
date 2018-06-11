@@ -88,7 +88,7 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
             }
             // TODO - Create link checking requests for resolution samples
             // TODO - Create link checking requests for home URLs (a.k.a. providers)
-            // TODO - Wait for a random period of time before running another iteration
+            // Wait before the next wave of link check requests
             try {
                 logger.info("Waiting {}s before we check again for resolution insight data", waitTimeSeconds);
                 Thread.sleep(waitTimeSeconds * 1000);
