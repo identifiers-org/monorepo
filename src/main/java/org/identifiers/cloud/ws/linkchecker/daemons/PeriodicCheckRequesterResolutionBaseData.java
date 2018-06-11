@@ -64,6 +64,8 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
     @Override
     public void run() {
         logger.info("--- [START] Periodic Link Check Requester on Resolution Base Data ---");
+        int waitTimeMaxBeforeNextRequestSeconds = WAIT_TIME_MAX_BEFORE_NEXT_REQUEST_SECONDS;
+        int waitTimeMinBeforeNextRequestSeconds = WAIT_TIME_MIN_BEFORE_NEXT_REQUEST_SECONDS;
         while (!isShutdown()) {
             // Get Resolution client and insight data on resolution samples, as they also contain the provider home URL,
             // we'll only need one request.
