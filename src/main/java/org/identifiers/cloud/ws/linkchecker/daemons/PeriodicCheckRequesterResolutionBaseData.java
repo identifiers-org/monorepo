@@ -86,6 +86,13 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
                             .setUrl(resolvedResource.getAccessUrl())
                             .setResourceId(resolvedResource.getId()));
                     // Create link checking requests for home URLs (a.k.a. providers)
+                    // NOTE - This implementation assumes that every provider in the resolution dataset has a different
+                    // ID depending on the namespace context where it's providing an access URL, the provider home URL
+                    // may be the same for different namespaces where this provider is a resource, but the provider ID
+                    // will be different, and stats are collected by provider ID, not by the URL of the provider. This
+                    // is done this way to scope the statistical information about a provider within a particular
+                    // namespace. This way, more complex scoring can be calculated by combining metrics related to the
+                    // same provider / resource ID, i.e. scoped by the namespace where the provider is a resource.
                     linkCheckRequestQueue.add(new LinkCheckRequest()
                             .setUrl(resolvedResource.getResourceURL())
                             .setProviderId(resolvedResource.getId()));
