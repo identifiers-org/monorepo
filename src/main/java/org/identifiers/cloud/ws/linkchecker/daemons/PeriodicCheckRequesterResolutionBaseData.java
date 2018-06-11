@@ -84,6 +84,8 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
                         "SKIPPING this link checking request iteration",
                         insightResponse.getHttpStatus().value(),
                         insightResponse.getErrorMessage());
+                // Adjust the time to wait before checking the insight api again
+                waitTimeSeconds = random.nextInt(WAIT_TIME_ERROR_BEFORE_NEXT_REQUEST_SECONDS);
             }
             // TODO - Create link checking requests for resolution samples
             // TODO - Create link checking requests for home URLs (a.k.a. providers)
