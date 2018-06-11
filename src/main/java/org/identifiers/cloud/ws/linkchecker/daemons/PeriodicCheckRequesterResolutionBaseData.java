@@ -79,7 +79,6 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
             if (insightResponse.getHttpStatus() == HttpStatus.OK) {
                 // TODO
             } else {
-                // TODO
                 logger.error("Got HTTP Status '{}' from Resolution Service Insight API, reason '{}', " +
                         "SKIPPING this link checking request iteration",
                         insightResponse.getHttpStatus().value(),
