@@ -80,6 +80,8 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
                 logger.info("Processing #{} entries from the Resolution insight API",
                         insightResponse.getPayload().getResolvedResources().size());
                 // TODO
+                // TODO - Create link checking requests for resolution samples
+                // TODO - Create link checking requests for home URLs (a.k.a. providers)
             } else {
                 logger.error("Got HTTP Status '{}' from Resolution Service Insight API, reason '{}', " +
                                 "SKIPPING this link checking request iteration",
@@ -88,8 +90,6 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
                 // Adjust the time to wait before checking the insight api again
                 waitTimeSeconds = random.nextInt(WAIT_TIME_ERROR_BEFORE_NEXT_REQUEST_SECONDS);
             }
-            // TODO - Create link checking requests for resolution samples
-            // TODO - Create link checking requests for home URLs (a.k.a. providers)
             // Wait before the next wave of link check requests
             try {
                 logger.info("Waiting {}s before we check again for resolution insight data", waitTimeSeconds);
