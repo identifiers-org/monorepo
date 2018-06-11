@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.Deque;
+import java.util.Random;
 
 /**
  * Project: link-checker
@@ -67,6 +68,7 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
         logger.info("--- [START] Periodic Link Check Requester on Resolution Base Data ---");
         int waitTimeMaxBeforeNextRequestSeconds = WAIT_TIME_MAX_BEFORE_NEXT_REQUEST_SECONDS;
         int waitTimeMinBeforeNextRequestSeconds = WAIT_TIME_MIN_BEFORE_NEXT_REQUEST_SECONDS;
+        Random random = new Random(System.currentTimeMillis());
         while (!isShutdown()) {
             // Get Resolution client and insight data on resolution samples, as they also contain the provider home URL,
             // we'll only need one request.
