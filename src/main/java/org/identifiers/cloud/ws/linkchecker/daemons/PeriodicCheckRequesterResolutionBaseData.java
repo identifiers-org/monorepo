@@ -79,9 +79,13 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
             if (insightResponse.getHttpStatus() == HttpStatus.OK) {
                 logger.info("Processing #{} entries from the Resolution insight API",
                         insightResponse.getPayload().getResolvedResources().size());
-                // TODO
-                // TODO - Create link checking requests for resolution samples
-                // TODO - Create link checking requests for home URLs (a.k.a. providers)
+                insightResponse.getPayload().getResolvedResources().parallelStream().forEach(resolvedResource -> {
+                    // Create link checking requests for resolution samples
+                    linkCheckRequestQueue.add(new LinkCheckRequest()
+                            .setUrl(resolvedResource.getAccessUrl())
+                            .setResourceId(resolvedResource.getId()));
+                    // TODO - Create link checking requests for home URLs (a.k.a. providers)
+                });
             } else {
                 logger.error("Got HTTP Status '{}' from Resolution Service Insight API, reason '{}', " +
                                 "SKIPPING this link checking request iteration",
