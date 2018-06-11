@@ -36,6 +36,13 @@ public class LinkScoringApiModel {
         return response;
     }
 
+    /**
+     * Getting a score for a provider (within the context of a particular namespace), is based on the 'uptime' history
+     * of that provider, i.e. how many times the provider was up over the total number of times we have checked its
+     * status.
+     * @param request the request that contains the reference to the provider being scored
+     * @return a Service Response ready for the controller to send back to the client
+     */
     public ServiceResponseScoringRequest getScoreForProvider(ServiceRequestScoreProvider request) {
         logger.info("Provider scoring request for ID '{}', URL '{}'",
                 request.getPayload().getId(),
