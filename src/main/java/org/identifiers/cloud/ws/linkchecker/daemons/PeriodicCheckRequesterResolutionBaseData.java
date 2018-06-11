@@ -89,6 +89,15 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
             // TODO - Create link checking requests for resolution samples
             // TODO - Create link checking requests for home URLs (a.k.a. providers)
             // TODO - Wait for a random period of time before running another iteration
+            try {
+                logger.info("Waiting {}s before we check again for resolution insight data", waitTimeSeconds);
+                Thread.sleep(waitTimeSeconds * 1000);
+            } catch (InterruptedException e) {
+                logger.warn("The Periodic Link Check Requester on Resolution insight data has been interrupted while " +
+                        "waiting for another iteration. Stopping the service, no more link checking requests will be " +
+                        "submitted");
+                shutdown = true;
+            }
             // TODO
         }
     }
