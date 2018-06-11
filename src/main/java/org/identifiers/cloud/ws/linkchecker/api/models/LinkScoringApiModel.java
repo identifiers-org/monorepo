@@ -36,6 +36,9 @@ public class LinkScoringApiModel {
         return response;
     }
 
+    // TODO - The following method is a very simple way of scoring a provider but, in the future, more complex logic
+    // TODO - could be set in place, that also weights in 'how good' that provider has been when it comes to providing
+    // TODO - resources.
     /**
      * Getting a score for a provider (within the context of a particular namespace), is based on the 'uptime' history
      * of that provider, i.e. how many times the provider was up over the total number of times we have checked its
