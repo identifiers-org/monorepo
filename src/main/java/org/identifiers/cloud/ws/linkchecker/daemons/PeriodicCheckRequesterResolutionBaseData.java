@@ -35,7 +35,7 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
 
     @Value("${org.identifiers.cloud.ws.linkchecker.backend.service.resolver.port}")
     private String wsResolverPort;
-    
+
     @Autowired
     private Deque<LinkCheckRequest> linkCheckRequestQueue;
 
@@ -63,6 +63,11 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
         logger.info("--- [START] Periodic Link Check Requester on Resolution Base Data ---");
         while (!isShutdown()) {
             // TODO
+            // TODO - Get Resolution client
+            // TODO - Insight data on resolution samples, as they also contain the provider home URL, we'll only need one request.
+            // TODO - Create link checking requests for resolution samples
+            // TODO - Create link checking requests for home URLs (a.k.a. providers)
+            // TODO - Wait for a random period of time before running another iteration
         }
     }
 }
