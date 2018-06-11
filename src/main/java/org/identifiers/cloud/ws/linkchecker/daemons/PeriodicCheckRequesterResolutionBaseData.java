@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.daemons;
 
+import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
 import org.identifiers.cloud.libapi.models.resolver.ServiceResponseResolve;
 import org.identifiers.cloud.libapi.services.ApiServicesFactory;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
@@ -13,7 +14,9 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.Deque;
+import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * Project: link-checker
@@ -79,16 +82,15 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
             if (insightResponse.getHttpStatus() == HttpStatus.OK) {
                 logger.info("Processing #{} entries from the Resolution insight API",
                         insightResponse.getPayload().getResolvedResources().size());
-                insightResponse.getPayload().getResolvedResources().parallelStream().forEach(resolvedResource -> {
-                    // Create link checking requests for resolution samples
-                    linkCheckRequestQueue.add(new LinkCheckRequest()
-                            .setUrl(resolvedResource.getAccessUrl())
-                            .setResourceId(resolvedResource.getId()));
-                    // Create link checking requests for home URLs (a.k.a. providers)
-                    linkCheckRequestQueue.add(new LinkCheckRequest()
-                            .setUrl(resolvedResource.getResourceURL())
-                            .setProviderId(resolvedResource.getId()));
-                });
+                Map<String, ResolvedResource> homeUrlsMap = insightResponse.getPayload().getResolvedResources()
+                        .parallelStream().peek(resolvedResource -> {
+                            // Create link checking requests for resolution samples
+                            linkCheckRequestQueue.add(new LinkCheckRequest()
+                                    .setUrl(resolvedResource.getAccessUrl())
+                                    .setResourceId(resolvedResource.getId()));
+                        }).collect(Collectors.toMap(ResolvedResource::getResourceURL, resolvedResource ->
+                                resolvedResource));
+                // TODO - Create link checking requests for home URLs (a.k.a. providers)
             } else {
                 logger.error("Got HTTP Status '{}' from Resolution Service Insight API, reason '{}', " +
                                 "SKIPPING this link checking request iteration",
