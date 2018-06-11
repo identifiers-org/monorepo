@@ -22,7 +22,7 @@ import java.util.Random;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
- *
+ * <p>
  * This is a check requester daemon that will use resolution insight data for periodically request link checking of
  * resources and providers.
  */
@@ -77,16 +77,12 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
                     .getResolverService(wsResolverHost, wsResolverPort)
                     .getAllSampleIdsResolved();
             if (insightResponse.getHttpStatus() == HttpStatus.OK) {
-                if (!insightResponse.getPayload().getResolvedResources().isEmpty()) {
-                    logger.info("Processing #{} entries from the Resolution insight API",
-                            insightResponse.getPayload().getResolvedResources().size());
-                    // TODO
-                } else {
-                    // TODO
-                }
+                logger.info("Processing #{} entries from the Resolution insight API",
+                        insightResponse.getPayload().getResolvedResources().size());
+                // TODO
             } else {
                 logger.error("Got HTTP Status '{}' from Resolution Service Insight API, reason '{}', " +
-                        "SKIPPING this link checking request iteration",
+                                "SKIPPING this link checking request iteration",
                         insightResponse.getHttpStatus().value(),
                         insightResponse.getErrorMessage());
                 // Adjust the time to wait before checking the insight api again
