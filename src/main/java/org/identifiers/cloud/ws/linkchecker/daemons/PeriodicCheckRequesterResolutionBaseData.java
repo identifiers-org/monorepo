@@ -74,6 +74,10 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
                 // TODO
             } else {
                 // TODO
+                logger.error("Got HTTP Status '{}' from Resolution Service Insight API, reason '{}', " +
+                        "SKIPPING this link checking request iteration",
+                        insightResponse.getHttpStatus().value(),
+                        insightResponse.getErrorMessage());
             }
             // TODO - Create link checking requests for resolution samples
             // TODO - Create link checking requests for home URLs (a.k.a. providers)
