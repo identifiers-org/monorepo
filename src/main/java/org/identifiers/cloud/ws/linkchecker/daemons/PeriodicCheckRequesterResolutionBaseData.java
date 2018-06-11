@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -69,6 +70,11 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
             ServiceResponseResolve insightResponse = ApiServicesFactory
                     .getResolverService(wsResolverHost, wsResolverPort)
                     .getAllSampleIdsResolved();
+            if (insightResponse.getHttpStatus() == HttpStatus.OK) {
+                // TODO
+            } else {
+                // TODO
+            }
             // TODO - Create link checking requests for resolution samples
             // TODO - Create link checking requests for home URLs (a.k.a. providers)
             // TODO - Wait for a random period of time before running another iteration
