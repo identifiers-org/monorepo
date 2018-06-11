@@ -66,10 +66,11 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
     @Override
     public void run() {
         logger.info("--- [START] Periodic Link Check Requester on Resolution Base Data ---");
-        int waitTimeMaxBeforeNextRequestSeconds = WAIT_TIME_MAX_BEFORE_NEXT_REQUEST_SECONDS;
-        int waitTimeMinBeforeNextRequestSeconds = WAIT_TIME_MIN_BEFORE_NEXT_REQUEST_SECONDS;
         Random random = new Random(System.currentTimeMillis());
         while (!isShutdown()) {
+            // Next random number of seconds to wait before the next iteration
+            int waitTimeSeconds = Math.min(WAIT_TIME_MIN_BEFORE_NEXT_REQUEST_SECONDS,
+                    random.nextInt(WAIT_TIME_MAX_BEFORE_NEXT_REQUEST_SECONDS));
             // Get Resolution client and insight data on resolution samples, as they also contain the provider home URL,
             // we'll only need one request.
             ServiceResponseResolve insightResponse = ApiServicesFactory
