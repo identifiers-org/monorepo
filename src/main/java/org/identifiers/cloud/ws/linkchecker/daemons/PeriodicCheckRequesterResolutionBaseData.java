@@ -84,7 +84,10 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
                     linkCheckRequestQueue.add(new LinkCheckRequest()
                             .setUrl(resolvedResource.getAccessUrl())
                             .setResourceId(resolvedResource.getId()));
-                    // TODO - Create link checking requests for home URLs (a.k.a. providers)
+                    // Create link checking requests for home URLs (a.k.a. providers)
+                    linkCheckRequestQueue.add(new LinkCheckRequest()
+                            .setUrl(resolvedResource.getResourceURL())
+                            .setProviderId(resolvedResource.getId()));
                 });
             } else {
                 logger.error("Got HTTP Status '{}' from Resolution Service Insight API, reason '{}', " +
