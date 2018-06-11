@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.daemons;
 
+import org.identifiers.cloud.libapi.models.resolver.ServiceResponseResolve;
+import org.identifiers.cloud.libapi.services.ApiServicesFactory;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,12 +64,15 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
     public void run() {
         logger.info("--- [START] Periodic Link Check Requester on Resolution Base Data ---");
         while (!isShutdown()) {
-            // TODO
-            // TODO - Get Resolution client
-            // TODO - Insight data on resolution samples, as they also contain the provider home URL, we'll only need one request.
+            // Get Resolution client and insight data on resolution samples, as they also contain the provider home URL,
+            // we'll only need one request.
+            ServiceResponseResolve insightResponse = ApiServicesFactory
+                    .getResolverService(wsResolverHost, wsResolverPort)
+                    .getAllSampleIdsResolved();
             // TODO - Create link checking requests for resolution samples
             // TODO - Create link checking requests for home URLs (a.k.a. providers)
             // TODO - Wait for a random period of time before running another iteration
+            // TODO
         }
     }
 }
