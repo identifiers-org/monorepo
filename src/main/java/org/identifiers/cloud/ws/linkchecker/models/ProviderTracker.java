@@ -1,7 +1,5 @@
 package org.identifiers.cloud.ws.linkchecker.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 /**
  * Project: link-checker
  * Package: org.identifiers.cloud.ws.linkchecker.data.models
@@ -13,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * This class models a scoring entry, at provider level, within the context of a namespace or prefix, i.e. this entity
  * will be used for tracking the provider home URL.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProviderTracker extends HistoryTracker {
     // Provider ID within the context of a namespace or prefix
     private String id;
