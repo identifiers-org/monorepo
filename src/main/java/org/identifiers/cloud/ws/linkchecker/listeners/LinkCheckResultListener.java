@@ -50,7 +50,7 @@ public class LinkCheckResultListener implements MessageListener {
     public void onMessage(Message message, byte[] bytes) {
         //logger.info("Processing link check result announcement, '{}'", message.toString());
         LinkCheckResult result = (LinkCheckResult) linkCheckResultRedisTemplate.getValueSerializer().deserialize(message.getBody());
-        logger.info("Processing link check result announcement for URL '{}', provider ID '{}', resource ID'{}'",
+        logger.info("Processing link check result announcement for URL '{}', provider ID '{}', resource ID '{}'",
                 result.getUrl(),
                 result.getProviderId(),
                 result.getResourceId());

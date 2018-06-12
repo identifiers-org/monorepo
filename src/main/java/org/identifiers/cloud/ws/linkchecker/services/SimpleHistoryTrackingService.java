@@ -66,11 +66,28 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
                     }
                 })
                 .build();
+        resources = CacheBuilder.newBuilder()
+                .maximumSize(cacheSize)
+                .expireAfterWrite(cacheExpirySeconds, TimeUnit.SECONDS)
+                .removalListener(new RemovalListener<String, ResourceTracker>() {
+                    @Override
+                    public void onRemoval(RemovalNotification<String, ResourceTracker> removalNotification) {
+                        processResourceEviction(removalNotification);
+                    }
+                })
+                .build();
     }
 
     // Cache Eviction Listener Actions
     private void processProviderEviction(RemovalNotification<String, ProviderTracker> removalNotification) {
         logger.info("Evicting tracking cache for provider ID '{}', URL '{}', EVICTION CAUSE '{}'",
+                removalNotification.getKey(),
+                removalNotification.getValue().getUrl(),
+                removalNotification.getCause().toString());
+    }
+
+    private void processResourceEviction(RemovalNotification<String, ResourceTracker> removalNotification) {
+        logger.info("Evicting tracking cache for resource ID '{}', URL '{}', EVICTION CAUSE '{}'",
                 removalNotification.getKey(),
                 removalNotification.getValue().getUrl(),
                 removalNotification.getCause().toString());
