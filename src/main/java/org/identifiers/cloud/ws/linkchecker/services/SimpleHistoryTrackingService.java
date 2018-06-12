@@ -194,7 +194,15 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     @Override
     public ResourceTracker getTrackerForResource(ScoringRequestWithIdPayload scoringRequestWithIdPayload) throws HistoryTrackingServiceException {
         // TODO
-        return null;
+        try {
+            // TODO
+        } catch (ExecutionException e) {
+            throw new SimpleHistoryTrackingServiceException(String.format("Error while getting scoring stats " +
+                            "for Resource ID '%s', URL '%s', because '%s'",
+                    scoringRequestWithIdPayload.getId(),
+                    scoringRequestWithIdPayload.getUrl(),
+                    e.getMessage()));
+        }
     }
 
     @Override
