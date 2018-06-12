@@ -15,4 +15,5 @@ import java.util.List;
  */
 public interface LinkCheckResultRepository extends CrudRepository<LinkCheckResult, String> {
     List<LinkCheckResult> findByProviderId(String providerId);
+    List<LinkCheckResult> findByResourceId(String resourceId);
 }

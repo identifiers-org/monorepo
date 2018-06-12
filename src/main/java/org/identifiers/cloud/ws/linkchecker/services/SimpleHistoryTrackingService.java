@@ -193,9 +193,19 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
 
     @Override
     public ResourceTracker getTrackerForResource(ScoringRequestWithIdPayload scoringRequestWithIdPayload) throws HistoryTrackingServiceException {
-        // TODO
         try {
-            // TODO
+            return resources.get(scoringRequestWithIdPayload.getId(), new Callable<ResourceTracker>() {
+                @Override
+                public ResourceTracker call() throws Exception {
+                    ResourceTracker resourceTracker = loadCreateTrackedResource(scoringRequestWithIdPayload);
+                    // Initialize stats for the given resource
+                    List<LinkCheckResult> linkCheckResults = linkCheckResultRepository.findByResourceId(scoringRequestWithIdPayload.getId());
+                    if (linkCheckResults != null) {
+                        resourceTracker.initHistoryStats(linkCheckResults);
+                    }
+                    return resourceTracker;
+                }
+            });
         } catch (ExecutionException e) {
             throw new SimpleHistoryTrackingServiceException(String.format("Error while getting scoring stats " +
                             "for Resource ID '%s', URL '%s', because '%s'",
