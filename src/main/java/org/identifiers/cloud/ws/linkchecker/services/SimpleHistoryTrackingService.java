@@ -9,6 +9,7 @@ import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 import org.identifiers.cloud.ws.linkchecker.data.models.TrackedProvider;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.LinkCheckResultRepository;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.TrackedProviderRepository;
+import org.identifiers.cloud.ws.linkchecker.data.repositories.TrackedResourceRepository;
 import org.identifiers.cloud.ws.linkchecker.models.ProviderTracker;
 import org.identifiers.cloud.ws.linkchecker.models.ResourceTracker;
 import org.slf4j.Logger;
@@ -36,13 +37,18 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     Cache<String, ProviderTracker> providers;
     // Provider trackers by Provider ID
     private ConcurrentMap<String, ProviderTracker> providerTrackers = new ConcurrentHashMap<>();
+
     @Value("${org.identifiers.cloud.ws.linkchecker.backend.data.cache.expiry.seconds}")
     private long cacheExpirySeconds;
+
     @Value("${org.identifiers.cloud.ws.linkchecker.backend.data.cache.size}")
     private long cacheSize;
+
     // Repositories
     @Autowired
     private TrackedProviderRepository trackedProviderRepository;
+    @Autowired
+    private TrackedResourceRepository trackedResourceRepository;
     @Autowired
     private LinkCheckResultRepository linkCheckResultRepository;
 
