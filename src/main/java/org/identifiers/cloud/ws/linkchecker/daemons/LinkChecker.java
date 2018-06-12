@@ -71,7 +71,7 @@ public class LinkChecker extends Thread {
                 logger.info("No URL check request found");
                 try {
                     long waitTimeSeconds = random.nextInt(WAIT_TIME_LIMIT_SECONDS);
-                    logger.info("Waiting {}s before we checking again for URLs", waitTimeSeconds);
+                    logger.info("Waiting {}s before we check again for URLs", waitTimeSeconds);
                     Thread.sleep(waitTimeSeconds * 1000);
                 } catch (InterruptedException e) {
                     logger.warn("The Link Checker Daemon has been interrupted while waiting for " +
