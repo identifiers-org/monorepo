@@ -145,9 +145,22 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     private ResourceTracker updateResourceTrackerWith(LinkCheckResult linkCheckResult) {
         ResourceTracker resourceTracker = resources.getIfPresent(linkCheckResult.getResourceId());
         if (resourceTracker != null) {
-            // TODO
+            logger.info("Updating history tracker for resource ID '{}' with link check result on URL '{}', " +
+                            "request timestamp '{}', check timestamp '{}', elapsed '{}'",
+                    linkCheckResult.getResourceId(),
+                    linkCheckResult.getUrl(),
+                    linkCheckResult.getRequestTimestamp(),
+                    linkCheckResult.getTimestamp(),
+                    (linkCheckResult.getTimestamp().getTime() - linkCheckResult.getRequestTimestamp().getTime()));
+            resourceTracker.addLinkCheckResult(linkCheckResult);
         } else {
-            // TODO
+            logger.info("SKIP NOT CACHED history tracker for resource ID '{}' with link check result on URL '{}', " +
+                            "request timestamp '{}', check timestamp '{}', elapsed '{}'",
+                    linkCheckResult.getResourceId(),
+                    linkCheckResult.getUrl(),
+                    linkCheckResult.getRequestTimestamp(),
+                    linkCheckResult.getTimestamp(),
+                    (linkCheckResult.getTimestamp().getTime() - linkCheckResult.getRequestTimestamp().getTime()));
         }
         return resourceTracker;
     }
