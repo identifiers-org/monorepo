@@ -9,5 +9,15 @@ package org.identifiers.cloud.ws.linkchecker.models;
  * ---
  */
 public class ResourceTracker extends HistoryTracker {
-    // TODO
+    // Resource ID within the context of a namespace / prefix
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public ResourceTracker setId(String id) {
+        this.id = id;
+        return this;
+    }
 }
