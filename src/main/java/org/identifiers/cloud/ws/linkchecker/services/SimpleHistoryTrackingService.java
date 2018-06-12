@@ -10,6 +10,7 @@ import org.identifiers.cloud.ws.linkchecker.data.models.TrackedProvider;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.LinkCheckResultRepository;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.TrackedProviderRepository;
 import org.identifiers.cloud.ws.linkchecker.models.ProviderTracker;
+import org.identifiers.cloud.ws.linkchecker.models.ResourceTracker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +90,10 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
             trackedProviderRepository.save(newTrackedProvider);
         }
         return providerTracker;
+    }
+
+    private ResourceTracker loadCreateTrackedResource(ScoringRequestWithIdPayload scoringRequestWithIdPayload) {
+        // TODO
     }
 
     private ProviderTracker updateProviderTrackerWith(LinkCheckResult linkCheckResult) {
