@@ -4,10 +4,7 @@ import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -25,7 +22,7 @@ public abstract class HistoryTracker implements Serializable {
     // Home URL for this provider within the context of a namespace or prefix
     private String url;
     // When the tracking was queued / added to the link checker (UTC)
-    private Timestamp created;
+    private Timestamp created = new Timestamp(new Date().getTime());
     // History stats for this tracker instance
     private Map<String, CheckedUrlHistoryStats> historyStatsMap =
             Arrays.stream(HistoryStats.values()).collect(Collectors.toMap(HistoryStats::getKey, historyStats -> historyStats.getFactoryMethod().get()));

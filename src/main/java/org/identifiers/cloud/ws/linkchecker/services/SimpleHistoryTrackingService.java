@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.*;
@@ -76,8 +74,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     private ProviderTracker loadCreateTrackedProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) {
         ProviderTracker providerTracker = new ProviderTracker();
         providerTracker.setId(scoringRequestWithIdPayload.getId())
-                .setUrl(scoringRequestWithIdPayload.getUrl())
-                .setCreated(new Timestamp(new Date().getTime()));
+                .setUrl(scoringRequestWithIdPayload.getUrl());
         Optional<TrackedProvider> trackedProvider = trackedProviderRepository.findById(scoringRequestWithIdPayload
                 .getId());
         trackedProvider.ifPresent(entry -> {
@@ -101,8 +98,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
         // heavy lifting done for free.
         ResourceTracker resourceTracker = new ResourceTracker();
         resourceTracker.setId(scoringRequestWithIdPayload.getId())
-                .setUrl(scoringRequestWithIdPayload.getUrl())
-                .setCreated(new Timestamp(new Date().getTime()));
+                .setUrl(scoringRequestWithIdPayload.getUrl());
         // TODO
         return resourceTracker;
     }
