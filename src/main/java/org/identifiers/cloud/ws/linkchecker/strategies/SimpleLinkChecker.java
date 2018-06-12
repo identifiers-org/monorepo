@@ -39,9 +39,7 @@ public class SimpleLinkChecker implements LinkChecker {
         HttpURLConnection connection = null;
         try {
             connection = (HttpURLConnection) checkingUrl.openConnection();
-        } catch (IOException e) {
-            throw new SimpleLinkCheckerException(e.getMessage());
-        } catch (ClassCastException e) {
+        } catch (IOException | ClassCastException e) {
             throw new SimpleLinkCheckerException(e.getMessage());
         }
         try {
