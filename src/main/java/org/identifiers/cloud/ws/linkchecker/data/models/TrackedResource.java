@@ -3,6 +3,7 @@ package org.identifiers.cloud.ws.linkchecker.data.models;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * Project: link-checker
@@ -17,4 +18,11 @@ import java.io.Serializable;
  */
 @RedisHash("LinkCheckerTrackedResource")
 public class TrackedResource implements Serializable {
+
+    // Resource ID within the context of a namespace / prefix
+    private String id;
+    // Resolved URL
+    private String url;
+    // When the tracking was queued / added to the link checker (UTC)
+    private Timestamp created;
 }
