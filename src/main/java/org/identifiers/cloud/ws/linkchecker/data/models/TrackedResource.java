@@ -1,6 +1,8 @@
 package org.identifiers.cloud.ws.linkchecker.data.models;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.index.Indexed;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -20,9 +22,12 @@ import java.sql.Timestamp;
 public class TrackedResource implements Serializable {
 
     // Resource ID within the context of a namespace / prefix
+    @Id
     private String id;
     // Resolved URL
+    @Indexed
     private String url;
     // When the tracking was queued / added to the link checker (UTC)
+    @Indexed
     private Timestamp created;
 }
