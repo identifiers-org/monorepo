@@ -41,6 +41,8 @@ public class SimpleLinkChecker implements LinkChecker {
             connection = (HttpURLConnection) checkingUrl.openConnection();
         } catch (IOException e) {
             throw new SimpleLinkCheckerException(e.getMessage());
+        } catch (ClassCastException e) {
+            throw new SimpleLinkCheckerException(e.getMessage());
         }
         try {
             connection.setRequestMethod("GET");
