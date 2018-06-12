@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.*;
@@ -99,6 +100,9 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
         // by doing what it looks like duplicating code... it is not actually, as it is contributing to having a lot of
         // heavy lifting done for free.
         ResourceTracker resourceTracker = new ResourceTracker();
+        resourceTracker.setId(scoringRequestWithIdPayload.getId())
+                .setUrl(scoringRequestWithIdPayload.getUrl())
+                .setCreated(new Timestamp(new Date().getTime()));
         // TODO
         return resourceTracker;
     }
