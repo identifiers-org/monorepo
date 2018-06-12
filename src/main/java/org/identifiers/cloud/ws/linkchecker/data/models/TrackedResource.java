@@ -6,6 +6,7 @@ import org.springframework.data.redis.core.index.Indexed;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Project: link-checker
@@ -29,7 +30,7 @@ public class TrackedResource implements Serializable {
     private String url;
     // When the tracking was queued / added to the link checker (UTC)
     @Indexed
-    private Timestamp created;
+    private Timestamp created = new Timestamp(new Date().getTime());
 
     public String getId() {
         return id;
