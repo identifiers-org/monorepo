@@ -7,6 +7,7 @@ import com.google.common.cache.RemovalNotification;
 import org.identifiers.cloud.ws.linkchecker.api.requests.ScoringRequestWithIdPayload;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 import org.identifiers.cloud.ws.linkchecker.data.models.TrackedProvider;
+import org.identifiers.cloud.ws.linkchecker.data.models.TrackedResource;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.LinkCheckResultRepository;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.TrackedProviderRepository;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.TrackedResourceRepository;
@@ -81,8 +82,8 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
         ProviderTracker providerTracker = new ProviderTracker();
         providerTracker.setId(scoringRequestWithIdPayload.getId())
                 .setUrl(scoringRequestWithIdPayload.getUrl());
-        Optional<TrackedProvider> trackedProvider = trackedProviderRepository.findById(scoringRequestWithIdPayload
-                .getId());
+        Optional<TrackedProvider> trackedProvider =
+                trackedProviderRepository.findById(scoringRequestWithIdPayload.getId());
         trackedProvider.ifPresent(entry -> providerTracker.setCreated(entry.getCreated()));
         if (!trackedProvider.isPresent()) {
             TrackedProvider newTrackedProvider = new TrackedProvider()
@@ -103,7 +104,16 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
         ResourceTracker resourceTracker = new ResourceTracker();
         resourceTracker.setId(scoringRequestWithIdPayload.getId())
                 .setUrl(scoringRequestWithIdPayload.getUrl());
-        // TODO
+        Optional<TrackedResource> trackedResource =
+                trackedResourceRepository.findById(scoringRequestWithIdPayload.getId());
+        trackedResource.ifPresent(entry -> resourceTracker.setCreated(entry.getCreated()));
+        if (!trackedResource.isPresent()) {
+            TrackedResource newTrackedResource = new TrackedResource()
+                    .setCreated(resourceTracker.getCreated())
+                    .setId(resourceTracker.getId())
+                    .setUrl(resourceTracker.getUrl());
+            trackedResourceRepository.save(newTrackedResource);
+        }
         return resourceTracker;
     }
 
@@ -131,7 +141,8 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     }
 
     @Override
-    public ProviderTracker getTrackerForProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) throws HistoryTrackingServiceException {
+    public ProviderTracker getTrackerForProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) throws
+            HistoryTrackingServiceException {
         try {
             return providers.get(scoringRequestWithIdPayload.getId(), new Callable<ProviderTracker>() {
                 @Override
@@ -148,7 +159,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
             });
         } catch (ExecutionException e) {
             throw new SimpleHistoryTrackingServiceException(String.format("Error while getting scoring stats " +
-                    "for Provider ID '%s', URL '%s', because '%s'",
+                            "for Provider ID '%s', URL '%s', because '%s'",
                     scoringRequestWithIdPayload.getId(),
                     scoringRequestWithIdPayload.getUrl(),
                     e.getMessage()));
