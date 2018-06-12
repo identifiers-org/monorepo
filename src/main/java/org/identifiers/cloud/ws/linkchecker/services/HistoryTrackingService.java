@@ -2,7 +2,9 @@ package org.identifiers.cloud.ws.linkchecker.services;
 
 import org.identifiers.cloud.ws.linkchecker.api.requests.ScoringRequestWithIdPayload;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
+import org.identifiers.cloud.ws.linkchecker.models.HistoryTracker;
 import org.identifiers.cloud.ws.linkchecker.models.ProviderTracker;
+import org.identifiers.cloud.ws.linkchecker.models.ResourceTracker;
 
 /**
  * Project: link-checker
@@ -16,6 +18,7 @@ import org.identifiers.cloud.ws.linkchecker.models.ProviderTracker;
  */
 public interface HistoryTrackingService {
     ProviderTracker getTrackerForProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) throws HistoryTrackingServiceException ;
+    ResourceTracker getTrackerForResource(ScoringRequestWithIdPayload scoringRequestWithIdPayload) throws HistoryTrackingServiceException ;
     // TODO - Add the methods for the rest of the entities
-    ProviderTracker updateTrackerWith(LinkCheckResult linkCheckResult) throws HistoryTrackingServiceException;
+    HistoryTracker updateTrackerWith(LinkCheckResult linkCheckResult) throws HistoryTrackingServiceException;
 }

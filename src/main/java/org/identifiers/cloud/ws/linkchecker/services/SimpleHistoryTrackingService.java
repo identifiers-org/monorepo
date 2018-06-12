@@ -12,6 +12,7 @@ import org.identifiers.cloud.ws.linkchecker.data.models.TrackedResource;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.LinkCheckResultRepository;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.TrackedProviderRepository;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.TrackedResourceRepository;
+import org.identifiers.cloud.ws.linkchecker.models.HistoryTracker;
 import org.identifiers.cloud.ws.linkchecker.models.ProviderTracker;
 import org.identifiers.cloud.ws.linkchecker.models.ResourceTracker;
 import org.slf4j.Logger;
@@ -172,7 +173,13 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     }
 
     @Override
-    public ProviderTracker updateTrackerWith(LinkCheckResult linkCheckResult) throws HistoryTrackingServiceException {
+    public ResourceTracker getTrackerForResource(ScoringRequestWithIdPayload scoringRequestWithIdPayload) throws HistoryTrackingServiceException {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public HistoryTracker updateTrackerWith(LinkCheckResult linkCheckResult) throws HistoryTrackingServiceException {
         ProviderTracker providerTracker = null;
         if (linkCheckResult.getProviderId() != null) {
             // It is a provider link check result
