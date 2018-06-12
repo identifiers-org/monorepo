@@ -93,7 +93,14 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     }
 
     private ResourceTracker loadCreateTrackedResource(ScoringRequestWithIdPayload scoringRequestWithIdPayload) {
+        // NOTE - I know this method looks a lot like 'loadCreateTrackedProvider', at this iteration of the service,
+        // both entities look pretty much the same, but not only they're expected to diverge, maybe, slightly in the
+        // future, but it also makes sense to ease things with serialization/deserialization on the data backend, so,
+        // by doing what it looks like duplicating code... it is not actually, as it is contributing to having a lot of
+        // heavy lifting done for free.
+        ResourceTracker resourceTracker = new ResourceTracker();
         // TODO
+        return resourceTracker;
     }
 
     private ProviderTracker updateProviderTrackerWith(LinkCheckResult linkCheckResult) {
