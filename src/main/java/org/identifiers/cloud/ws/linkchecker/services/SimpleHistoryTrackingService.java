@@ -5,7 +5,6 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
 import com.google.common.cache.RemovalNotification;
 import org.identifiers.cloud.ws.linkchecker.api.requests.ScoringRequestWithIdPayload;
-import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 import org.identifiers.cloud.ws.linkchecker.data.models.TrackedProvider;
 import org.identifiers.cloud.ws.linkchecker.data.models.TrackedResource;
@@ -144,7 +143,13 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     }
 
     private ResourceTracker updateResourceTrackerWith(LinkCheckResult linkCheckResult) {
-        // TODO
+        ResourceTracker resourceTracker = resources.getIfPresent(linkCheckResult.getResourceId());
+        if (resourceTracker != null) {
+            // TODO
+        } else {
+            // TODO
+        }
+        return resourceTracker;
     }
 
     @Override
