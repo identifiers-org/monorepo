@@ -77,7 +77,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
         ProviderTracker providerTracker = new ProviderTracker();
         providerTracker.setId(scoringRequestWithIdPayload.getId())
                 .setUrl(scoringRequestWithIdPayload.getUrl())
-                .setCreated(new Timestamp(System.currentTimeMillis()));
+                .setCreated(new Timestamp(new Date().getTime()));
         Optional<TrackedProvider> trackedProvider = trackedProviderRepository.findById(scoringRequestWithIdPayload
                 .getId());
         trackedProvider.ifPresent(entry -> {
