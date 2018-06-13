@@ -61,4 +61,8 @@ public class LinkScoringApiModel {
         }
         return response;
     }
+
+    public ServiceResponseScoringRequest getScoreForResolvedId(ServiceRequestScoreProvider request) {
+        // TODO
+    }
 }
