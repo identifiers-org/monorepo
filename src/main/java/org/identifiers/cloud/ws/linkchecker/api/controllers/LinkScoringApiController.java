@@ -35,7 +35,7 @@ public class LinkScoringApiController {
     @RequestMapping(value = "/getScoreForResolvedId", method = RequestMethod.POST)
     public ResponseEntity<?> getScoreForResolvedId(@RequestBody ServiceRequestScoreResource request) {
         ServiceResponseScoringRequest response = model.getScoreForResolvedId(request);
-        return new ResponseEntity<>("getScoreForResolvedId()", HttpStatus.OK);
+        return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     @RequestMapping(value = "/getScoreForProvider", method = RequestMethod.POST)
