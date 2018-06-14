@@ -85,6 +85,12 @@ public class LinkScoringApiModel {
         return response;
     }
 
+    /**
+     * The same way we can keep historical data on providers and resources, we can do the same with plain URLs, but
+     * right now, this functionality is not implemented, as it is not immediately needed.
+     * @param request the request that contains the reference to the URL being scored
+     * @return a Service Response reporting an HTTP BAD REQUEST reply to the client
+     */
     public ServiceResponseScoringRequest getScoreForUrl(ServiceRequestScoring request) {
         logger.warn("URL scoring request for URL '{}' - NOT IMPLEMENTED", request.getPayload().getUrl());
         ServiceResponseScoringRequest response = getDefaultResponse();
