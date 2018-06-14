@@ -63,6 +63,13 @@ public class LinkScoringApiModel {
         return response;
     }
 
+    /**
+     * Get the realiability score for a resource (within the context of a particular namespace), the calculation is
+     * based on the seen 'uptime' history of that resource, i.e. how many times the resource was up over the total
+     * number of times we have checked its status.
+     * @param request the request that contains the reference to the resource being scored
+     * @return a Service Response ready for the controller to send back to the client
+     */
     public ServiceResponseScoringRequest getScoreForResolvedId(ServiceRequestScoreProvider request) {
         logger.info("Resource scoring request for ID '{}', URL '{}'",
                 request.getPayload().getId(),
