@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.linkchecker.api.controllers;
 
 import org.identifiers.cloud.ws.linkchecker.api.models.LinkScoringApiModel;
 import org.identifiers.cloud.ws.linkchecker.api.requests.ServiceRequestScoreProvider;
+import org.identifiers.cloud.ws.linkchecker.api.requests.ServiceRequestScoreResource;
 import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseScoringRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,11 +28,12 @@ public class LinkScoringApiController {
     @RequestMapping(value = "/getScoreForUrl", method = RequestMethod.POST)
     public ResponseEntity<?> getScoreForUrl() {
         // TODO
+
         return new ResponseEntity<>("getScoreForUrl()", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/getScoreForResolvedId", method = RequestMethod.POST)
-    public ResponseEntity<?> getScoreForResolvedId(@RequestBody ServiceRequestScoreProvider request) {
+    public ResponseEntity<?> getScoreForResolvedId(@RequestBody ServiceRequestScoreResource request) {
         ServiceResponseScoringRequest response = model.getScoreForResolvedId(request);
         return new ResponseEntity<>("getScoreForResolvedId()", HttpStatus.OK);
     }

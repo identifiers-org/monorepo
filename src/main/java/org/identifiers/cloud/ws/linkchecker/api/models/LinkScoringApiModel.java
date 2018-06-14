@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.linkchecker.api.models;
 
 import org.identifiers.cloud.ws.linkchecker.api.ApiCentral;
 import org.identifiers.cloud.ws.linkchecker.api.requests.ServiceRequestScoreProvider;
+import org.identifiers.cloud.ws.linkchecker.api.requests.ServiceRequestScoreResource;
 import org.identifiers.cloud.ws.linkchecker.api.requests.ServiceRequestScoring;
 import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseScoringRequest;
 import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseScoringRequestPayload;
@@ -70,7 +71,7 @@ public class LinkScoringApiModel {
      * @param request the request that contains the reference to the resource being scored
      * @return a Service Response ready for the controller to send back to the client
      */
-    public ServiceResponseScoringRequest getScoreForResolvedId(ServiceRequestScoreProvider request) {
+    public ServiceResponseScoringRequest getScoreForResolvedId(ServiceRequestScoreResource request) {
         logger.info("Resource scoring request for ID '{}', URL '{}'",
                 request.getPayload().getId(),
                 request.getPayload().getUrl());
