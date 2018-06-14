@@ -3,9 +3,9 @@ package org.identifiers.cloud.ws.linkchecker.api.controllers;
 import org.identifiers.cloud.ws.linkchecker.api.models.LinkScoringApiModel;
 import org.identifiers.cloud.ws.linkchecker.api.requests.ServiceRequestScoreProvider;
 import org.identifiers.cloud.ws.linkchecker.api.requests.ServiceRequestScoreResource;
+import org.identifiers.cloud.ws.linkchecker.api.requests.ServiceRequestScoring;
 import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseScoringRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,10 +26,9 @@ public class LinkScoringApiController {
     private LinkScoringApiModel model;
 
     @RequestMapping(value = "/getScoreForUrl", method = RequestMethod.POST)
-    public ResponseEntity<?> getScoreForUrl() {
-        // TODO
-
-        return new ResponseEntity<>("getScoreForUrl()", HttpStatus.OK);
+    public ResponseEntity<?> getScoreForUrl(@RequestBody ServiceRequestScoring request) {
+        ServiceResponseScoringRequest response = model.getScoreForUrl(request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     @RequestMapping(value = "/getScoreForResolvedId", method = RequestMethod.POST)
