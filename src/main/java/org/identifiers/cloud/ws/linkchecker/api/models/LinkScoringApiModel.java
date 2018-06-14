@@ -74,6 +74,6 @@ public class LinkScoringApiModel {
             response.setErrorMessage(String.format("Scoring could not be calculated due to '%s'", e.getMessage()));
             response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        // TODO
+        return response;
     }
 }
