@@ -79,6 +79,7 @@ public class LinkScoringApiModel {
     }
 
     public ServiceResponseScoringRequest getScoreForUrl(ServiceRequestScoring request) {
+        logger.warn("URL scoring request for URL '{}' - NOT IMPLEMENTED", request.getPayload().getUrl());
         // TODO
     }
 }
