@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.linkchecker.api.models;
 
 import org.identifiers.cloud.ws.linkchecker.api.ApiCentral;
 import org.identifiers.cloud.ws.linkchecker.api.requests.ServiceRequestScoreProvider;
+import org.identifiers.cloud.ws.linkchecker.api.requests.ServiceRequestScoring;
 import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseScoringRequest;
 import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseScoringRequestPayload;
 import org.identifiers.cloud.ws.linkchecker.models.HistoryTracker;
@@ -75,5 +76,9 @@ public class LinkScoringApiModel {
             response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return response;
+    }
+
+    public ServiceResponseScoringRequest getScoreForUrl(ServiceRequestScoring request) {
+        // TODO
     }
 }
