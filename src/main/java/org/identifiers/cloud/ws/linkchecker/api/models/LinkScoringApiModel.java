@@ -63,6 +63,10 @@ public class LinkScoringApiModel {
     }
 
     public ServiceResponseScoringRequest getScoreForResolvedId(ServiceRequestScoreProvider request) {
+        logger.info("Resource scoring request for ID '{}', URL '{}'",
+                request.getPayload().getId(),
+                request.getPayload().getUrl());
+        
         // TODO
     }
 }
