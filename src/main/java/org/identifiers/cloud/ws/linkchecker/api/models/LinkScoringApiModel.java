@@ -22,6 +22,13 @@ import org.springframework.stereotype.Component;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * Link Scoring API, implements a reliability score [0, 100] on a given provider, resource or plain URL. '0' means it's
+ * never seen on-line, '100' means it's always seen on-line.
+ *
+ * We need to keep in mind that this scoring is based on the perception that the running copies of this service have
+ * about a provider, resource or URL, from wherever they're running. Other copies of the service running on different
+ * infrastructures will have a different perception of the provicers, resources or URLs checked.
  */
 @Component
 @Scope("prototype")
