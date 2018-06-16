@@ -100,6 +100,7 @@ public class LinkScoringApiModel {
      * @return a Service Response reporting an HTTP BAD REQUEST reply to the client
      */
     public ServiceResponseScoringRequest getScoreForUrl(ServiceRequestScoring request) {
+        // TODO - Maybe I'll remove this use case in the future
         logger.warn("URL scoring request for URL '{}' - NOT IMPLEMENTED", request.getPayload().getUrl());
         ServiceResponseScoringRequest response = getDefaultResponse();
         response.setHttpStatus(HttpStatus.BAD_REQUEST);
