@@ -21,6 +21,7 @@ public class HealthApiModel {
         return runningSessionId;
     }
 
+    // TODO - Refactor this to actually reflect whether the service ir ready or not
     public String readinessCheck() {
         return runningSessionId;
     }
