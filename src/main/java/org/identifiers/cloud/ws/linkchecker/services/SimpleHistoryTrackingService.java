@@ -56,6 +56,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     private LinkCheckResultRepository linkCheckResultRepository;
 
     public SimpleHistoryTrackingService() {
+        logger.info("Simple History Tracking Service - Cache SIZE = {}", cacheSize);
         providers = CacheBuilder.newBuilder()
                 .maximumSize(cacheSize)
                 .expireAfterWrite(cacheExpirySeconds, TimeUnit.SECONDS)
