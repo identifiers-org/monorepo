@@ -32,7 +32,7 @@ public class CheckedUrlHistoryStatsSimple implements CheckedUrlHistoryStats, Ser
             nUpEvents += linkCheckResults.parallelStream().filter(LinkCheckResult::isUrlAssessmentOk).count();
             nDownEvents = linkCheckResults.size() - nUpEvents;
         } else {
-            throw new CheckedUrlHistoryStatsException("CANNOT INITIALIZE stats for alredy initialized stats");
+            throw new CheckedUrlHistoryStatsException("CANNOT INITIALIZE stats for already initialized stats");
         }
     }
 
