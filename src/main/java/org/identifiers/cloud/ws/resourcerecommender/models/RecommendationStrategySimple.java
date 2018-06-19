@@ -23,6 +23,7 @@ public class RecommendationStrategySimple implements RecommendationStrategy {
             ResourceRecommendation resourceRecommendation = new ResourceRecommendation()
                     .setAccessURL(resolvedResource.getAccessURL())
                     .setId(resolvedResource.getId());
+            // TODO - Implement the function for every entry here
             if (resolvedResource.isOfficial()) {
                 thereIsOfficialResource.set(Boolean.TRUE);
                 return resourceRecommendation
