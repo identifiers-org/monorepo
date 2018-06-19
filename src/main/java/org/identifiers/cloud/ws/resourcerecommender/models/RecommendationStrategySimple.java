@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
  * ---
  */
 @Component
+@Profile("recommendationStrategySimple")
 public class RecommendationStrategySimple implements RecommendationStrategy {
     @Override
     public List<ResourceRecommendation> getRecommendations(List<ResolvedResource> resolvedResources) {
