@@ -65,8 +65,13 @@ public class LinkScoringApiModel {
                     .setScore((int) Math.round(historyTrackingService.getTrackerForProvider(request.getPayload())
                             .getHistoryStats(HistoryTracker.HistoryStats.SIMPLE).getUpPercenetage()));
         } catch (Exception e) {
-            response.setErrorMessage(String.format("Scoring could not be calculated due to '%s'", e.getMessage()));
+            String errorMessage = String.format("Scoring could not be calculated due to '%s'", e.getMessage());
+            response.setErrorMessage(errorMessage);
             response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            logger.error("Provider Scoring request for ID'{}', URL '{}', ERROR -> '{}'",
+                    request.getPayload().getId(),
+                    request.getPayload().getUrl(),
+                    errorMessage);
         }
         return response;
     }
