@@ -29,9 +29,9 @@ public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult
     private String url;
     // When it has been checked (UTC), indexed to easily find those entities to remove
     @Indexed
-    private Timestamp timestamp = new Timestamp(new Date().getTime());
+    private String timestamp = (new Timestamp(new Date().getTime())).toString();
     // When this check was requested (UTC)
-    private Timestamp requestTimestamp;
+    private String requestTimestamp;
     // Link check request type / reference
     @Indexed
     private String providerId;
@@ -62,20 +62,20 @@ public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult
     }
 
     public Timestamp getTimestamp() {
-        return timestamp;
+        return Timestamp.valueOf(timestamp);
     }
 
     public LinkCheckResult setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
+        this.timestamp = timestamp.toString();
         return this;
     }
 
     public Timestamp getRequestTimestamp() {
-        return requestTimestamp;
+        return Timestamp.valueOf(requestTimestamp);
     }
 
     public LinkCheckResult setRequestTimestamp(Timestamp requestTimestamp) {
-        this.requestTimestamp = requestTimestamp;
+        this.requestTimestamp = requestTimestamp.toString();
         return this;
     }
 
@@ -117,6 +117,6 @@ public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult
 
     @Override
     public int compareTo(LinkCheckResult o) {
-        return this.timestamp.compareTo(o.getTimestamp());
+        return getTimestamp().compareTo(o.getTimestamp());
     }
 }
