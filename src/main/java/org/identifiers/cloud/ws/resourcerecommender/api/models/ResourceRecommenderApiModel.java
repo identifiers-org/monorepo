@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.resourcerecommender.api.models;
 
+import org.identifiers.cloud.ws.resourcerecommender.api.ApiCentral;
 import org.identifiers.cloud.ws.resourcerecommender.api.requests.ServiceRequestRecommend;
 import org.identifiers.cloud.ws.resourcerecommender.api.responses.ResponseRecommendPayload;
 import org.identifiers.cloud.ws.resourcerecommender.api.responses.ServiceResponseRecommend;
@@ -27,7 +28,6 @@ import java.util.UUID;
 @Component
 @Scope("prototype")
 public class ResourceRecommenderApiModel {
-    private static final String apiVersion = "1.0";
     private static Logger logger = LoggerFactory.getLogger(ResourceRecommenderApiModel.class);
     private static String runningSessionId = UUID.randomUUID().toString();
 
@@ -43,7 +43,7 @@ public class ResourceRecommenderApiModel {
         // TODO - This is where we check the API version?
         // TODO - check payload as well?
         ServiceResponseRecommend response = new ServiceResponseRecommend();
-        response.setApiVersion(apiVersion);
+        response.setApiVersion(ApiCentral.apiVersion);
         // Set default payload
         response.setPayload(new ResponseRecommendPayload().setResourceRecommendations(new ArrayList<>()));
         try {
