@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.*;
@@ -55,7 +56,8 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     @Autowired
     private LinkCheckResultRepository linkCheckResultRepository;
 
-    public SimpleHistoryTrackingService() {
+    @PostConstruct
+    public void init() {
         logger.info("Simple History Tracking Service - Cache SIZE = {}", cacheSize);
         providers = CacheBuilder.newBuilder()
                 .maximumSize(cacheSize)
