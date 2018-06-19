@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -29,7 +28,6 @@ import java.util.UUID;
 @Scope("prototype")
 public class ResourceRecommenderApiModel {
     private static Logger logger = LoggerFactory.getLogger(ResourceRecommenderApiModel.class);
-    private static String runningSessionId = UUID.randomUUID().toString();
 
     @Autowired
     private RecommendationStrategy recommendationStrategy;
@@ -56,13 +54,5 @@ public class ResourceRecommenderApiModel {
                     "for the given resolved resources").setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return response;
-    }
-
-    public String livenessCheck() {
-        return runningSessionId;
-    }
-
-    public String readinessCheck() {
-        return runningSessionId;
     }
 }
