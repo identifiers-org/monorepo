@@ -10,5 +10,7 @@ import java.util.List;
  * ---
  */
 public interface RecommendationStrategy {
+    int RECOMMENDATION_SCORE_MAX = 100;
+    int RECOMMENDATION_SCORE_MIN = 0;
     List<ResourceRecommendation> getRecommendations(List<ResolvedResource> resolvedResources);
 }
