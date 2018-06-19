@@ -30,7 +30,7 @@ public class TrackedResource implements Serializable {
     private String url;
     // When the tracking was queued / added to the link checker (UTC)
     @Indexed
-    private Timestamp created = new Timestamp(new Date().getTime());
+    private String created = (new Timestamp(new Date().getTime())).toString();
 
     public String getId() {
         return id;
@@ -51,11 +51,11 @@ public class TrackedResource implements Serializable {
     }
 
     public Timestamp getCreated() {
-        return created;
+        return Timestamp.valueOf(created);
     }
 
     public TrackedResource setCreated(Timestamp created) {
-        this.created = created;
+        this.created = created.toString();
         return this;
     }
 }
