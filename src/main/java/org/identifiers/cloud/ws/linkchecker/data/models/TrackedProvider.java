@@ -1,6 +1,5 @@
 package org.identifiers.cloud.ws.linkchecker.data.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
@@ -29,8 +28,7 @@ public class TrackedProvider implements Serializable {
     private String url;
     // When the tracking was queued / added to the link checker (UTC)
     @Indexed
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss.SSS")
-    private Timestamp created = new Timestamp(new Date().getTime());
+    private String created = (new Timestamp(new Date().getTime())).toString();
 
     public String getId() {
         return id;
@@ -51,11 +49,11 @@ public class TrackedProvider implements Serializable {
     }
 
     public Timestamp getCreated() {
-        return created;
+        return Timestamp.valueOf(created);
     }
 
     public TrackedProvider setCreated(Timestamp created) {
-        this.created = created;
+        this.created = created.toString();
         return this;
     }
 }
