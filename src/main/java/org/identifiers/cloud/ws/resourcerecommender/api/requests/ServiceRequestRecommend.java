@@ -1,4 +1,4 @@
-package org.identifiers.cloud.ws.resourcerecommender.api.models.requests;
+package org.identifiers.cloud.ws.resourcerecommender.api.requests;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
