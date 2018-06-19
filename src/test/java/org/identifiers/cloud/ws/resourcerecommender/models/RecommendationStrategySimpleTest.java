@@ -3,9 +3,6 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
 import org.assertj.core.util.Lists;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,8 +20,8 @@ import static org.hamcrest.Matchers.is;
  * ---
  */
 // TODO - These unit tests are no longer valid with the new recommendation strategies
-@RunWith(SpringRunner.class)
-@SpringBootTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 public class RecommendationStrategySimpleTest {
     private static List<ResolvedResource> officialResolvedResources;
     private static List<ResolvedResource> unOfficialResolvedResources;
