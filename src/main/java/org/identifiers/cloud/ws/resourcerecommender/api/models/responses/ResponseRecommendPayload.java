@@ -1,4 +1,4 @@
-package org.identifiers.cloud.ws.resourcerecommender.models.api.responses;
+package org.identifiers.cloud.ws.resourcerecommender.api.models.responses;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.identifiers.cloud.ws.resourcerecommender.models.ResourceRecommendation;
