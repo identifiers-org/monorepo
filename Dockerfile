@@ -17,4 +17,4 @@ ADD target/app/. /home/app
 EXPOSE 8084
 WORKDIR /home/app
 #CMD ["java", "-Xmx1024m", "-jar", "service.jar"]
-CMD java -Xmx${WS_RESOLVER_JVM_MEMORY_MAX} -jar service.jar
+CMD java -Xmx${WS_LINK_CHECKER_JVM_MEMORY_MAX} -jar service.jar
