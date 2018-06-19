@@ -22,6 +22,7 @@ import static org.hamcrest.Matchers.is;
  * Timestamp: 2018-02-27 12:28
  * ---
  */
+// TODO - These unit tests are no longer valid with the new recommendation strategies
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RecommendationStrategySimpleTest {
