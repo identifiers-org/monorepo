@@ -27,24 +27,24 @@ public class RecommendationStrategySimple implements RecommendationStrategy {
             if (resolvedResource.isOfficial()) {
                 thereIsOfficialResource.set(Boolean.TRUE);
                 return resourceRecommendation
-                        .setRecommendationIndex(100)
+                        .setRecommendationIndex(RECOMMENDATION_SCORE_MAX)
                         .setRecommendationExplanation("Official resource in this context");
             }
             return resourceRecommendation
-                    .setRecommendationIndex(0)
+                    .setRecommendationIndex(RECOMMENDATION_SCORE_MIN)
                     .setRecommendationExplanation("This resource is not official within this context");
         }).collect(Collectors.toList());
         if (recommendations.size() == 1) {
-            recommendations.get(0)
-                    .setRecommendationIndex(100)
+            recommendations.get(RECOMMENDATION_SCORE_MIN)
+                    .setRecommendationIndex(RECOMMENDATION_SCORE_MAX)
                     .setRecommendationExplanation("This is the ONLY resource available within this context");
             return recommendations;
         }
         // There is no official resource, pick one randomly
         if (!recommendations.isEmpty() && !thereIsOfficialResource.get()) {
             Collections.shuffle(recommendations);
-            recommendations.get(0)
-                    .setRecommendationIndex(100)
+            recommendations.get(RECOMMENDATION_SCORE_MIN)
+                    .setRecommendationIndex(RECOMMENDATION_SCORE_MAX)
                     .setRecommendationExplanation("There are multiple resources for this case, and none of them is official, " +
                             "so this one has been chosen randomly");
         }
