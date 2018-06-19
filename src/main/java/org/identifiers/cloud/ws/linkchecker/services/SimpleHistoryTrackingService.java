@@ -37,8 +37,8 @@ import java.util.concurrent.*;
 public class SimpleHistoryTrackingService implements HistoryTrackingService {
     private final static Logger logger = LoggerFactory.getLogger(SimpleHistoryTrackingService.class);
     // Cached stats
-    Cache<String, ProviderTracker> providers;
-    Cache<String, ResourceTracker> resources;
+    private Cache<String, ProviderTracker> providers;
+    private Cache<String, ResourceTracker> resources;
     // Provider trackers by Provider ID
     private ConcurrentMap<String, ProviderTracker> providerTrackers = new ConcurrentHashMap<>();
 
