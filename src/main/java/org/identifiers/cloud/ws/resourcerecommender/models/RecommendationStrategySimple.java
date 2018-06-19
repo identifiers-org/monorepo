@@ -27,7 +27,7 @@ public class RecommendationStrategySimple implements RecommendationStrategy {
             if (resolvedResource.isOfficial()) {
                 thereIsOfficialResource.set(Boolean.TRUE);
                 return resourceRecommendation
-                        .setRecommendationIndex(99)
+                        .setRecommendationIndex(100)
                         .setRecommendationExplanation("Official resource in this context");
             }
             return resourceRecommendation
@@ -36,7 +36,7 @@ public class RecommendationStrategySimple implements RecommendationStrategy {
         }).collect(Collectors.toList());
         if (recommendations.size() == 1) {
             recommendations.get(0)
-                    .setRecommendationIndex(99)
+                    .setRecommendationIndex(100)
                     .setRecommendationExplanation("This is the ONLY resource available within this context");
             return recommendations;
         }
@@ -44,7 +44,7 @@ public class RecommendationStrategySimple implements RecommendationStrategy {
         if (!recommendations.isEmpty() && !thereIsOfficialResource.get()) {
             Collections.shuffle(recommendations);
             recommendations.get(0)
-                    .setRecommendationIndex(99)
+                    .setRecommendationIndex(100)
                     .setRecommendationExplanation("There are multiple resources for this case, and none of them is official, " +
                             "so this one has been chosen randomly");
         }
