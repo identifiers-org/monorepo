@@ -1,5 +1,8 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Project: resource-recommender
  * Package: org.identifiers.cloud.ws.resourcerecommender.models
@@ -11,6 +14,7 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
  * This score provider is based on reliability scoring information provided by the link checker service.
  */
 public class ScoreProviderOnReliability implements ScoreProvider {
+    private static final Logger logger = LoggerFactory.getLogger(ScoreProviderOnReliability.class);
     private String linkCheckerServiceHost;
     private String linkCheckerServicePort;
 
