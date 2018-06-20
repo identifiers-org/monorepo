@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import java.util.List;
+
 /**
  * Project: resource-recommender
  * Package: org.identifiers.cloud.ws.resourcerecommender.models
@@ -12,5 +14,5 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
  * built.
  */
 public interface ScoringFunctionProvider {
-    // TODO
+    List<WeightedScore> getFunctionComponents();
 }
