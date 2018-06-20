@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Project: resource-recommender
@@ -30,6 +31,11 @@ public class RecommendationStrategyWeighted implements RecommendationStrategy {
 
     @Override
     public List<ResourceRecommendation> getRecommendations(List<ResolvedResource> resolvedResources) {
-        return null;
+        return resolvedResources.parallelStream().map(resolvedResource -> new ResourceRecommendation()
+                        .setAccessURL(resolvedResource.getAccessURL())
+                        .setId(resolvedResource.getId())
+                        .setRecommendationExplanation("Function based recommendation")
+                        .setRecommendationIndex(getResourceRecommendationScore(resolvedResource)))
+                .collect(Collectors.toList());
     }
 }
