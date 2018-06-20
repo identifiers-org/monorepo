@@ -1,7 +1,10 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import org.identifiers.cloud.libapi.models.linkchecker.responses.ServiceResponseScoringRequest;
+import org.identifiers.cloud.libapi.services.ApiServicesFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 
 /**
  * Project: resource-recommender
@@ -10,7 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
- *
+ * <p>
  * This score provider is based on reliability scoring information provided by the link checker service.
  */
 public class ScoreProviderOnReliability implements ScoreProvider {
@@ -25,8 +28,20 @@ public class ScoreProviderOnReliability implements ScoreProvider {
 
     @Override
     public int getScoreForResource(ResolvedResource resolvedResource) {
-        // TODO
-        return 0;
+        ServiceResponseScoringRequest response = ApiServicesFactory
+                .getLinkCheckerService(linkCheckerServiceHost, linkCheckerServicePort)
+                .getScoreForResolvedId(resolvedResource.getId(), resolvedResource.getAccessURL());
+        if (response.getHttpStatus() != HttpStatus.OK) {
+            // Just report the error an keep going with the default scoring
+            logger.error("FAILED Reliability score for " +
+                            "resource ID '{}', " +
+                            "URL '{}', " +
+                            "reason '{}'",
+                    resolvedResource.getId(),
+                    resolvedResource.getAccessURL(),
+                    response.getErrorMessage());
+        }
+        return response.getPayload().getScore();
     }
 
     @Override
