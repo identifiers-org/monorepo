@@ -23,7 +23,7 @@ public class ScoringFunctionProviderSimple implements ScoringFunctionProvider {
     private String serviceLinkCheckerPort;
 
     @Override
-    public List<WeightedScore> getFunctionComponents() throws ScoringFunctionProviderException {
+    public synchronized List<WeightedScore> getFunctionComponents() throws ScoringFunctionProviderException {
         if (weightedScores.isEmpty()) {
             // TODO - This can be improved in the future, and the weights dynamically set through environment variables
             weightedScores.add(new WeightedScore(60, new ScoreProviderOfficiality()));

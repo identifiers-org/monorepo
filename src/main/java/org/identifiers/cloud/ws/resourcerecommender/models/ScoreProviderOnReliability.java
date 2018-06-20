@@ -41,6 +41,13 @@ public class ScoreProviderOnReliability implements ScoreProvider {
                     resolvedResource.getAccessURL(),
                     response.getErrorMessage());
         }
+        logger.info("Reliability score for " +
+                        "resource ID '{}', " +
+                        "URL '{}', " +
+                        "score '{}'",
+                resolvedResource.getId(),
+                resolvedResource.getAccessURL(),
+                response.getPayload().getScore());
         return response.getPayload().getScore();
     }
 
