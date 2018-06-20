@@ -15,7 +15,7 @@ public interface ScoreProvider {
     int MAX_SCORE = 100;
     int MIN_SCORE = 0;
 
-    int getScoreForResource(ResolvedResource resolvedResource);
+    int getScoreForResource(ResolvedResource resolvedResource) throws ScoreProviderException;
 
-    int getScoreForProvider(ResolvedResource resolvedResource);
+    int getScoreForProvider(ResolvedResource resolvedResource) throws ScoreProviderException;
 }
