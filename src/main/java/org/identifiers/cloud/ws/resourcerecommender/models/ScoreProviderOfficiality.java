@@ -11,6 +11,13 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
  * This Score Provider calculates its score taking into account whether a resource is tagged as official or not.
  */
 public class ScoreProviderOfficiality implements ScoreProvider {
+
+    /**
+     * Get the score for a resource within the fiven context. The score is calculated based on whether the resource is
+     * tagged as official or not, thus, getting the corresponding maximum or minimum score respectively
+     * @param resolvedResource the context within which the resource will be evaluated
+     * @return a scoring metric
+     */
     @Override
     public int getScoreForResource(ResolvedResource resolvedResource) {
         if (resolvedResource.isOfficial()) {
