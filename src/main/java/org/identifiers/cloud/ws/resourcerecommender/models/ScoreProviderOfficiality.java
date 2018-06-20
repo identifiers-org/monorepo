@@ -11,7 +11,10 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
 public class ScoreProviderOfficiality implements ScoreProvider {
     @Override
     public int getScoreForResource(ResolvedResource resolvedResource) {
-        return 0;
+        if (resolvedResource.isOfficial()) {
+            return MAX_SCORE;
+        }
+        return MIN_SCORE;
     }
 
     @Override
