@@ -12,6 +12,8 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
  * views, attending to different aspects of it.
  */
 public interface ScoreProvider {
+    int MAX_SCORE = 100;
+    int MIN_SCORE = 0;
 
     int getScoreForResource(ResolvedResource resolvedResource);
 
