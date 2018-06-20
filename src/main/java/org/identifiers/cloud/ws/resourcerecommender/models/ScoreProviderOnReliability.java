@@ -46,7 +46,14 @@ public class ScoreProviderOnReliability implements ScoreProvider {
 
     @Override
     public int getScoreForProvider(ResolvedResource resolvedResource) {
-        // TODO
-        return 0;
+        // TODO - Right now this is not going to be used, and there may not be anough information in a resolved resource
+        // TODO - for addressing providers
+        logger.warn("NOT IMPLEMENTED, reliability scoring for provider based on resolved " +
+                "resource ID '{}' " +
+                "and URL '{}' " +
+                "as there may not be enough information to perform the request to the link checker on the provider",
+                resolvedResource.getId(),
+                resolvedResource.getAccessURL());
+        return ((MAX_SCORE + MIN_SCORE) / 2);
     }
 }
