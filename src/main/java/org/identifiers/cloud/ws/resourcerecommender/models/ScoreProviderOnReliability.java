@@ -48,12 +48,15 @@ public class ScoreProviderOnReliability implements ScoreProvider {
     public int getScoreForProvider(ResolvedResource resolvedResource) {
         // TODO - Right now this is not going to be used, and there may not be anough information in a resolved resource
         // TODO - for addressing providers
+        int defaultScoring = ((MAX_SCORE + MIN_SCORE) / 2);
         logger.warn("NOT IMPLEMENTED, reliability scoring for provider based on resolved " +
                 "resource ID '{}' " +
                 "and URL '{}' " +
-                "as there may not be enough information to perform the request to the link checker on the provider",
+                "as there may not be enough information to perform the request to the link checker on the provider. " +
+                        "Default scoring of '{}' is being used",
                 resolvedResource.getId(),
-                resolvedResource.getAccessURL());
-        return ((MAX_SCORE + MIN_SCORE) / 2);
+                resolvedResource.getAccessURL(),
+                defaultScoring);
+        return defaultScoring;
     }
 }
