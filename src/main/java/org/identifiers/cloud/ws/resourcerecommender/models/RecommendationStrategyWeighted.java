@@ -20,6 +20,14 @@ public class RecommendationStrategyWeighted implements RecommendationStrategy {
     @Autowired
     private ScoringFunctionProvider scoringFunctionProvider;
 
+    // Helper method to compute a resource recommendation score for a given resolved resource
+    private int getResourceRecommendationScore(ResolvedResource resolvedResource) {
+        return scoringFunctionProvider.getFunctionComponents().parallelStream()
+                .mapToInt(weightedScore ->
+                        weightedScore.getWeight()
+                                * weightedScore.getScoreProvider().getScoreForResource(resolvedResource)).sum();
+    }
+
     @Override
     public List<ResourceRecommendation> getRecommendations(List<ResolvedResource> resolvedResources) {
         return null;
