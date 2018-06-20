@@ -1,7 +1,9 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,8 +16,20 @@ import java.util.List;
  */
 @Component
 public class ScoringFunctionProviderSimple implements ScoringFunctionProvider {
+    private List<WeightedScore> weightedScores = new ArrayList<>();
+    @Value("${org.identifiers.cloud.ws.resourcerecommender.backend.service.linkchecker.host}")
+    private String serviceLinkCheckerHost;
+    @Value("${org.identifiers.cloud.ws.resourcerecommender.backend.service.linkchecker.host")
+    private String serviceLinkCheckerPort;
+
     @Override
     public List<WeightedScore> getFunctionComponents() throws ScoringFunctionProviderException {
-        return null;
+        if (weightedScores.isEmpty()) {
+            // TODO
+            weightedScores.add(new WeightedScore(60, new ScoreProviderOfficiality()));
+            weightedScores.add(new WeightedScore(40,
+                    new ScoreProviderOnReliability(serviceLinkCheckerHost, serviceLinkCheckerPort)));
+        }
+        return weightedScores;
     }
 }
