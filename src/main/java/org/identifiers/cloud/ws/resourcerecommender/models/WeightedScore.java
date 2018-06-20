@@ -18,9 +18,10 @@ public class WeightedScore {
     private int weight;
     private ScoreProvider scoreProvider;
 
-    public WeightedScore(int weight, ScoreProvider scoreProvider) {
+    public WeightedScore(int weight, ScoreProvider scoreProvider) throws WeightedScoreException {
         if ((weight > MAX_SCORE) || (weight < MIN_SCORE)) {
-            // TODO
+            throw new WeightedScoreException(String.format("Weight '%d' OUT OF RANGE [%d,%d]",
+                    weight, MIN_SCORE, MAX_SCORE));
         }
         this.weight = weight;
         this.scoreProvider = scoreProvider;
