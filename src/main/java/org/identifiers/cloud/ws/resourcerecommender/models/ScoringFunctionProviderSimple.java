@@ -19,7 +19,7 @@ public class ScoringFunctionProviderSimple implements ScoringFunctionProvider {
     private List<WeightedScore> weightedScores = new ArrayList<>();
     @Value("${org.identifiers.cloud.ws.resourcerecommender.backend.service.linkchecker.host}")
     private String serviceLinkCheckerHost;
-    @Value("${org.identifiers.cloud.ws.resourcerecommender.backend.service.linkchecker.port")
+    @Value("${org.identifiers.cloud.ws.resourcerecommender.backend.service.linkchecker.port}")
     private String serviceLinkCheckerPort;
 
     @Override
