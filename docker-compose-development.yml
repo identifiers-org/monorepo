@@ -1,5 +1,13 @@
 # identifiers.org Satellite docker-compose based development environment
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+
+# NOTE - We can see circular dependencies over here, where link-checker dependes on the resolver, which depends on the
+# resource recommender, which also depends on the resolver... Fortunately, what we are testing here is the resource
+# recommender, and not the resolution API, we also know that the resolver only requires the recommender for resolving
+# purposes, not for the current iteration of the insight API. Anyway, this is something that should be addressed in the
+# future, we should try to avoid circular dependencies. In addition, for those unit tests that are testing resource
+# recommender internals, no other services are needed, and the rest of the tests, e.g. integration tests, the resource
+# recommender will run fully, so... let's see how it goes, hahaha!
 version: "3"
 services:
     link-checker:
@@ -25,6 +33,7 @@ services:
             - "8080:8080"
         depends_on:
             - redis
+            - localhost
     redis:
         image: redis:4.0.8-alpine
         ports:
