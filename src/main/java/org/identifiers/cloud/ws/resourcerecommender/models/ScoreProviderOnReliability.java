@@ -13,11 +13,13 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
 public class ScoreProviderOnReliability implements ScoreProvider {
     @Override
     public int getScoreForResource(ResolvedResource resolvedResource) {
+        // TODO
         return 0;
     }
 
     @Override
     public int getScoreForProvider(ResolvedResource resolvedResource) {
+        // TODO
         return 0;
     }
 }
