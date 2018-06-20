@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 /**
@@ -10,6 +12,7 @@ import java.util.List;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+@Component
 public class ScoringFunctionProviderSimple implements ScoringFunctionProvider {
     @Override
     public List<WeightedScore> getFunctionComponents() throws ScoringFunctionProviderException {
