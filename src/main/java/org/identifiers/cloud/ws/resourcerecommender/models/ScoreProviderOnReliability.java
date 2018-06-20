@@ -7,6 +7,8 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This score provider is based on reliability scoring information provided by the link checker service.
  */
 public class ScoreProviderOnReliability implements ScoreProvider {
     @Override
