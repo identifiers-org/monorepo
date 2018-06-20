@@ -14,5 +14,5 @@ import java.util.List;
  * built.
  */
 public interface ScoringFunctionProvider {
-    List<WeightedScore> getFunctionComponents();
+    List<WeightedScore> getFunctionComponents() throws ScoringFunctionProviderException;
 }
