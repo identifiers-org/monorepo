@@ -1,0 +1,3 @@
+# identifiers.org Satellite docker-compose based development environment
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+version: "3"
