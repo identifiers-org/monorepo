@@ -11,6 +11,14 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
  * This score provider is based on reliability scoring information provided by the link checker service.
  */
 public class ScoreProviderOnReliability implements ScoreProvider {
+    private String linkCheckerServiceHost;
+    private String linkCheckerServicePort;
+
+    public ScoreProviderOnReliability(String linkCheckerServiceHost, String linkCheckerServicePort) {
+        this.linkCheckerServiceHost = linkCheckerServiceHost;
+        this.linkCheckerServicePort = linkCheckerServicePort;
+    }
+
     @Override
     public int getScoreForResource(ResolvedResource resolvedResource) {
         // TODO
