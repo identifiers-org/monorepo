@@ -19,6 +19,6 @@ public class ScoreProviderOfficiality implements ScoreProvider {
 
     @Override
     public int getScoreForProvider(ResolvedResource resolvedResource) {
-        return 0;
+        return getScoreForResource(resolvedResource);
     }
 }
