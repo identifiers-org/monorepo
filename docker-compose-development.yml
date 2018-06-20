@@ -12,3 +12,5 @@ services:
         depends_on:
             - resolver
             - redis
+    resolver:
+        image: identifiersorg/cloud-ws-resolver:1.0.3
