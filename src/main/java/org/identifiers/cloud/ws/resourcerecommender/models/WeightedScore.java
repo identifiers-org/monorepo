@@ -12,5 +12,18 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
  * weight.
  */
 public class WeightedScore {
-    // TODO
+    public static final int MAX_SCORE = 100;
+    public static final int MIN_SCORE = 0;
+
+    private int weight;
+    private ScoreProvider scoreProvider;
+
+    public WeightedScore(int weight, ScoreProvider scoreProvider) {
+        if ((weight > MAX_SCORE) || (weight < MIN_SCORE)) {
+            // TODO
+        }
+        this.weight = weight;
+        this.scoreProvider = scoreProvider;
+    }
+    
 }
