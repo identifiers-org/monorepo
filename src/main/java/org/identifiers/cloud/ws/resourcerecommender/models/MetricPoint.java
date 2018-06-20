@@ -7,6 +7,9 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This models the contract for any metric point provider. A metric point is a measure [0, 100] on a particular
+ * dimension of a given resovled resource.
  */
 public interface MetricPoint {
 }
