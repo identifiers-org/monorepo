@@ -3,7 +3,8 @@ FROM identifiersorg/linux-java8
 LABEL maintainer="Manuel Bernal Llinares <mbdebian@gmail.com>"
 
 # Environment - defaults
-ENV WS_RESOURCE_RECOMMENDER_JVM_MEMORY_MAX 1024m
+ENV WS_RESOURCE_RECOMMENDER_JVM_MEMORY_MAX 768m
+ENV WS_RESOURCE_RECOMMENDER_CONFIG_BACKEND_SERVICE_LINK_CHECKER_HOST link-checker
 
 # Prepare the application folder
 RUN mkdir -p /home/app
