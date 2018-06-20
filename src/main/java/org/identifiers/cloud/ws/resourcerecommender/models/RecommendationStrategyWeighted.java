@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,8 @@ import java.util.List;
 @Component
 @Profile("recommendationStrategyWeighted")
 public class RecommendationStrategyWeighted implements RecommendationStrategy {
+    @Autowired
+    private ScoringFunctionProvider scoringFunctionProvider;
 
     @Override
     public List<ResourceRecommendation> getRecommendations(List<ResolvedResource> resolvedResources) {
