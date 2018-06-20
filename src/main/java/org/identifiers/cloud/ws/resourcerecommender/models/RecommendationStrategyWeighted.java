@@ -26,7 +26,8 @@ public class RecommendationStrategyWeighted implements RecommendationStrategy {
         return scoringFunctionProvider.getFunctionComponents().parallelStream()
                 .mapToInt(weightedScore ->
                         weightedScore.getWeight()
-                                * weightedScore.getScoreProvider().getScoreForResource(resolvedResource)).sum();
+                                * weightedScore.getScoreProvider().getScoreForResource(resolvedResource))
+                .sum() / 100;
     }
 
     @Override
