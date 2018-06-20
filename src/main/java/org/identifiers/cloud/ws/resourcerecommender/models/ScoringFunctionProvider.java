@@ -15,4 +15,5 @@ import java.util.List;
  */
 public interface ScoringFunctionProvider {
     List<WeightedScore> getFunctionComponents() throws ScoringFunctionProviderException;
+    // TODO - Add another method that provides an explanation on the components of the scoring function
 }
