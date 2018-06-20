@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resourcerecommender.api.models;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.identifiers.cloud.ws.resourcerecommender.api.ApiCentral;
 import org.identifiers.cloud.ws.resourcerecommender.api.requests.ServiceRequestRecommend;
 import org.identifiers.cloud.ws.resourcerecommender.api.responses.ResponseRecommendPayload;
@@ -33,7 +35,22 @@ public class ResourceRecommenderApiModel {
     private RecommendationStrategy recommendationStrategy;
 
     private List<ResourceRecommendation> evaluateRecommendations(List<ResolvedResource> resolvedResources) {
-        return recommendationStrategy.getRecommendations(resolvedResources);
+        try {
+            return recommendationStrategy.getRecommendations(resolvedResources);
+        } catch (RuntimeException e) {
+            ObjectMapper mapper = new ObjectMapper();
+            String resolvedResourcesJsonDump = "---";
+            try {
+                 resolvedResourcesJsonDump = mapper.writeValueAsString(resolvedResources);
+            } catch (JsonProcessingException ex) {
+                // Ignore
+            }
+            logger.error("Recommendation ERROR '{}' " +
+                            "when evaluating the following Resolved Resources '{}'",
+                    e.getMessage(),
+                    resolvedResourcesJsonDump);
+            return new ArrayList<>();
+        }
     }
 
     public ServiceResponseRecommend getRecommendations(ServiceRequestRecommend request) {
