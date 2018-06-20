@@ -25,5 +25,12 @@ public class WeightedScore {
         this.weight = weight;
         this.scoreProvider = scoreProvider;
     }
-    
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public ScoreProvider getScoreProvider() {
+        return scoreProvider;
+    }
 }
