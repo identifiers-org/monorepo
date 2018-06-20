@@ -12,4 +12,8 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
  * dimension of a given resovled resource.
  */
 public interface MetricPoint {
+    
+    int getMetricPointForResource(ResolvedResource resolvedResource);
+
+    int getMetricPointForProvider(ResolvedResource resolvedResource);
 }
