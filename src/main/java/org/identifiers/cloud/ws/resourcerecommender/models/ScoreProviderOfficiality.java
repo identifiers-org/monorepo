@@ -7,6 +7,8 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This Score Provider calculates its score taking into account whether a resource is tagged as official or not.
  */
 public class ScoreProviderOfficiality implements ScoreProvider {
     @Override
