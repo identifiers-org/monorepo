@@ -11,8 +11,8 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
  * This models the contract for any metric point provider. A metric point is a measure [0, 100] on a particular
  * dimension of a given resovled resource.
  */
-public interface MetricPoint {
-    
+public interface SubscoreProvider {
+
     int getMetricPointForResource(ResolvedResource resolvedResource);
 
     int getMetricPointForProvider(ResolvedResource resolvedResource);
