@@ -1,8 +1,5 @@
 # Development environment for working with the Compact ID Resolution Service
-
-#														#
-# Author: Manuel Bernal Llinares <mbdebian@gmail.com>	#
-#														#
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 version: "3"
 services:
     redis:
@@ -15,3 +12,15 @@ services:
             - WS_RESOURCE_RECOMMENDER_JVM_MEMORY_MAX=1024m
         ports:
             - "8083:8083"
+        depends_on:
+            - link-checker
+    link-checker:
+        image: identifiersorg/cloud-ws-link-checker:1.0.3
+        environment:
+            - WS_LINK_CHECKER_CONFIG_REDIS_HOST=redis
+            - WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST=localhost
+            - WS_LINK_CHECKER_CONFIG_DAEMON_PERIODIC_LINK_CHECK_REQUESTER_ENABLED=false
+        ports:
+            - "8084:8084"
+        depends_on:
+            - redis
