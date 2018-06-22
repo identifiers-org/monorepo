@@ -1,4 +1,4 @@
-package org.identifiers.cloud.ws.resolver.models.api.responses;
+package org.identifiers.cloud.ws.resolver.api.responses;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.http.HttpStatus;

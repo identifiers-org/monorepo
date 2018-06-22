@@ -1,4 +1,4 @@
-package org.identifiers.cloud.ws.resolver.models.api.responses;
+package org.identifiers.cloud.ws.resolver.api.responses;
 
 import java.io.Serializable;
 

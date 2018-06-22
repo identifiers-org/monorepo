@@ -1,8 +1,8 @@
 package org.identifiers.cloud.ws.resolver.models;
 
 import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
-import org.identifiers.cloud.ws.resolver.models.api.responses.ResponseResolvePayload;
-import org.identifiers.cloud.ws.resolver.models.api.responses.ServiceResponseResolve;
+import org.identifiers.cloud.ws.resolver.api.responses.ResponseResolvePayload;
+import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponseResolve;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

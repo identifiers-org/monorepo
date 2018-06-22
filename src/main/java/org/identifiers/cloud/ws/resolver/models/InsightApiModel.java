@@ -1,7 +1,7 @@
 package org.identifiers.cloud.ws.resolver.models;
 
-import org.identifiers.cloud.ws.resolver.models.api.responses.ResponseResolvePayload;
-import org.identifiers.cloud.ws.resolver.models.api.responses.ServiceResponseResolve;
+import org.identifiers.cloud.ws.resolver.api.responses.ResponseResolvePayload;
+import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponseResolve;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;

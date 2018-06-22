@@ -1,7 +1,7 @@
 package org.identifiers.cloud.ws.resolver.api.controllers;
 
 import org.identifiers.cloud.ws.resolver.models.ResolverApiModel;
-import org.identifiers.cloud.ws.resolver.models.api.responses.ServiceResponse;
+import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
