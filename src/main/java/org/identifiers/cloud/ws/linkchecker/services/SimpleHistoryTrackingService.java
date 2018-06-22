@@ -5,6 +5,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
 import com.google.common.cache.RemovalNotification;
 import org.identifiers.cloud.ws.linkchecker.api.requests.ScoringRequestWithIdPayload;
+import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 import org.identifiers.cloud.ws.linkchecker.data.models.TrackedProvider;
 import org.identifiers.cloud.ws.linkchecker.data.models.TrackedResource;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Deque;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.*;
@@ -55,6 +57,10 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     private TrackedResourceRepository trackedResourceRepository;
     @Autowired
     private LinkCheckResultRepository linkCheckResultRepository;
+
+    // Link check requests queue
+    @Autowired
+    private Deque<LinkCheckRequest> linkCheckRequestQueue;
 
     @PostConstruct
     public void initCache() {
@@ -195,6 +201,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     @Override
     public ProviderTracker getTrackerForProvider(ScoringRequestWithIdPayload scoringRequestWithIdPayload) throws
             HistoryTrackingServiceException {
+        // TODO - Queue the provider scoring requests
         try {
             return providers.get(scoringRequestWithIdPayload.getId(), new Callable<ProviderTracker>() {
                 @Override
