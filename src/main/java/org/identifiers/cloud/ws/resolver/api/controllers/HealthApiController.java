@@ -1,4 +1,4 @@
-package org.identifiers.cloud.ws.resolver.controllers;
+package org.identifiers.cloud.ws.resolver.api.controllers;
 
 import org.identifiers.cloud.ws.resolver.models.HealthApiModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Project: resolver
- * Package: org.identifiers.cloud.ws.resolver.controllers
+ * Package: org.identifiers.cloud.ws.resolver.api.controllers
  * Timestamp: 2018-05-15 13:32
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>

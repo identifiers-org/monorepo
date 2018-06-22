@@ -1,4 +1,4 @@
-package org.identifiers.cloud.ws.resolver.controllers;
+package org.identifiers.cloud.ws.resolver.api.controllers;
 
 import org.identifiers.cloud.ws.resolver.models.ResolverApiModel;
 import org.identifiers.cloud.ws.resolver.models.api.responses.ServiceResponse;
