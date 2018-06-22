@@ -33,7 +33,7 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
     private static final int WAIT_TIME_MIN_BEFORE_NEXT_REQUEST_SECONDS = 21600;     // 6 hours
     private static final int WAIT_TIME_ERROR_BEFORE_NEXT_REQUEST_SECONDS = 3600;    // 1 hour
     private static final Logger logger = LoggerFactory.getLogger(PeriodicCheckRequesterResolutionBaseData.class);
-    
+
     private boolean shutdown = false;
 
     @Value("${org.identifiers.cloud.ws.linkchecker.daemon.periodiclinkcheckrequester.enabled}")
@@ -71,7 +71,7 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
     public void run() {
         logger.info("--- [START] Periodic Link Check Requester on Resolution Base Data ---");
         Random random = new Random(System.currentTimeMillis());
-        while (!isShutdown()) {
+        while (!isShutdown() && enabled) {
             // Next random number of seconds to wait before the next iteration
             int waitTimeSeconds = Math.min(WAIT_TIME_MIN_BEFORE_NEXT_REQUEST_SECONDS,
                     random.nextInt(WAIT_TIME_MAX_BEFORE_NEXT_REQUEST_SECONDS));
