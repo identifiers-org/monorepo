@@ -36,9 +36,9 @@ public class ResolverDataHelper {
 
     // This code may be refactored out later on
     public List<ResolvedResource> resolveResourcesForCompactId(CompactId compactId,
-                                                               List<ResourceEntry> resourceEntries,
-                                                               Map<String, ResourceRecommendation> recommendationById) {
-        return resourceEntries
+                                                               List<ResourceEntry> resourceEntries) {
+        // Resolve the URLs
+        List<ResolvedResource> resolvedResources = resourceEntries
                 .parallelStream()
                 .map(resourceEntry -> {
                     ResolvedResource resolvedResource = new ResolvedResource();
@@ -53,19 +53,23 @@ public class ResolverDataHelper {
                     resolvedResource.setResourceURL(resourceEntry.getResourceURL());
                     // Embed Recommendation
                     Recommendation recommendation = new Recommendation();
-                    if (recommendationById.containsKey(resourceEntry.getId())) {
-                        recommendation
-                                .setRecommendationExplanation(recommendationById.get(resourceEntry.getId())
-                                        .getRecommendationExplanation())
-                                .setRecommendationIndex(recommendationById.get(resourceEntry.getId())
-                                        .getRecommendationIndex());
-                    }
                     resolvedResource.setRecommendation(recommendation);
                     return resolvedResource;
                 }).collect(Collectors.toList());
+        // Get their recommendation index
+        Map<String, ResourceRecommendation> recommendationById = getRecommendationsByResourceId(resolvedResources);
+        resolvedResources.parallelStream().forEach(resolvedResource -> {
+            if (recommendationById.containsKey(resolvedResource.getId())) {
+                resolvedResource.getRecommendation()
+                        .setRecommendationExplanation(recommendationById.get(resolvedResource.getId()).getRecommendationExplanation())
+                        .setRecommendationIndex(recommendationById.get(resolvedResource.getId()).getRecommendationIndex());
+            }
+
+        });
+        return resolvedResources;
     }
 
-    public Map<String, ResourceRecommendation> getRecommendationsByResourceId(List<ResourceEntry> resourceEntries) {
+    public Map<String, ResourceRecommendation> getRecommendationsByResourceId(List<ResolvedResource> resourceEntries) {
         try {
             return resourceRecommender
                     .getRecommendations(resourceEntries)

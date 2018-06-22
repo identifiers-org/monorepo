@@ -1,9 +1,8 @@
 package org.identifiers.cloud.ws.resolver.models;
 
-import org.identifiers.cloud.libapi.services.ApiServicesFactory;
 import org.identifiers.cloud.libapi.models.resourcerecommender.ResolvedResource;
 import org.identifiers.cloud.libapi.models.resourcerecommender.ResourceRecommendation;
-import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
+import org.identifiers.cloud.libapi.services.ApiServicesFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +31,7 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
     private String resourceRecommenderServicePort;
 
     @Override
-    public List<ResourceRecommendation> getRecommendations(List<ResourceEntry> resources) throws ResourceRecommenderStrategyException {
+    public List<ResourceRecommendation> getRecommendations(List<org.identifiers.cloud.ws.resolver.models.ResolvedResource> resources) throws ResourceRecommenderStrategyException {
         // Whatever happens, the client library will always return a default empty answer that is valid
         return ApiServicesFactory
                 .getResourceRecommenderService(resourceRecommenderServiceHost, resourceRecommenderServicePort)
@@ -40,7 +39,7 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
                         .map(resourceEntry ->
                                 new ResolvedResource()
                                         .setOfficial(resourceEntry.isOfficial())
-                                        .setAccessURL(resourceEntry.getAccessURL())
+                                        .setAccessURL(resourceEntry.getAccessUrl())
                                         .setId(resourceEntry.getId()))
                         .collect(Collectors.toList()))
                 .getPayload()

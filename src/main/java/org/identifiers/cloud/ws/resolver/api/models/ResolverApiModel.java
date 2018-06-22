@@ -64,9 +64,8 @@ public class ResolverApiModel {
             resolverApiResponse.setHttpStatus(HttpStatus.NOT_FOUND);
         } else {
             // Resolve the links
-            resolverApiResponse.getPayload().setResolvedResources(resolverDataHelper.resolveResourcesForCompactId(compactId,
-                    resourceEntries,
-                    resolverDataHelper.getRecommendationsByResourceId(resourceEntries)));
+            resolverApiResponse.getPayload()
+                    .setResolvedResources(resolverDataHelper.resolveResourcesForCompactId(compactId, resourceEntries));
             resolverApiResponse.setHttpStatus(HttpStatus.OK);
         }
         // NOTE - This code may be refactored later
@@ -119,9 +118,8 @@ public class ResolverApiModel {
                 resolverApiResponse.setHttpStatus(HttpStatus.NOT_FOUND);
             } else {
                 // Resolve the links
-                resolverApiResponse.getPayload().setResolvedResources(resolverDataHelper.resolveResourcesForCompactId(compactId,
-                        resourceEntries,
-                        resolverDataHelper.getRecommendationsByResourceId(resourceEntries)));
+                resolverApiResponse.getPayload()
+                        .setResolvedResources(resolverDataHelper.resolveResourcesForCompactId(compactId,resourceEntries));
                 resolverApiResponse.setHttpStatus(HttpStatus.OK);
             }
         }
