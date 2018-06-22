@@ -227,6 +227,9 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
 
     @Override
     public ResourceTracker getTrackerForResource(ScoringRequestWithIdPayload scoringRequestWithIdPayload) throws HistoryTrackingServiceException {
+        linkCheckRequestQueue.add(new LinkCheckRequest()
+                .setResourceId(scoringRequestWithIdPayload.getId())
+                .setUrl(scoringRequestWithIdPayload.getUrl()));
         try {
             return resources.get(scoringRequestWithIdPayload.getId(), new Callable<ResourceTracker>() {
                 @Override
