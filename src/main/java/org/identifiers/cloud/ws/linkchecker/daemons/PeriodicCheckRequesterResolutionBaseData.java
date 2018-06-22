@@ -69,7 +69,11 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
 
     @Override
     public void run() {
-        logger.info("--- [START] Periodic Link Check Requester on Resolution Base Data ---");
+        if (!enabled) {
+            logger.warn("--- [DISABLED] Periodic Link Check Requester on Resolution Base Data ---");
+        } else {
+            logger.info("--- [START] Periodic Link Check Requester on Resolution Base Data ---");
+        }
         Random random = new Random(System.currentTimeMillis());
         while (!isShutdown() && enabled) {
             // Next random number of seconds to wait before the next iteration
@@ -119,9 +123,6 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
                         "submitted");
                 setShutdown();
             }
-        }
-        if (!enabled) {
-            logger.warn("--- [DISABLED] Periodic Link Check Requester on Resolution Base Data ---");
         }
     }
 }
