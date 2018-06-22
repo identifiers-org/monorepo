@@ -34,6 +34,9 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
     private static final int WAIT_TIME_ERROR_BEFORE_NEXT_REQUEST_SECONDS = 3600;    // 1 hour
     private static final Logger logger = LoggerFactory.getLogger(PeriodicCheckRequesterResolutionBaseData.class);
 
+    @Value("${org.identifiers.cloud.ws.linkchecker.daemon.periodiclinkcheckrequester.enabled}")
+    private boolean enabled;
+
     private boolean shutdown = false;
 
     @Value("${org.identifiers.cloud.ws.linkchecker.backend.service.resolver.host}")
