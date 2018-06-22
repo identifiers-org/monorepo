@@ -1,6 +1,6 @@
 package org.identifiers.cloud.ws.resolver.api.controllers;
 
-import org.identifiers.cloud.ws.resolver.models.HealthApiModel;
+import org.identifiers.cloud.ws.resolver.api.models.HealthApiModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

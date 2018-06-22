@@ -1,6 +1,6 @@
 package org.identifiers.cloud.ws.resolver.api.controllers;
 
-import org.identifiers.cloud.ws.resolver.models.InsightApiModel;
+import org.identifiers.cloud.ws.resolver.api.models.InsightApiModel;
 import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponseResolve;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

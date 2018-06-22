@@ -1,4 +1,4 @@
-package org.identifiers.cloud.ws.resolver.models;
+package org.identifiers.cloud.ws.resolver.api.models;
 
 import org.springframework.stereotype.Component;
 
