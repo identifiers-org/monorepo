@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import org.identifiers.cloud.ws.resolver.api.ApiCentral;
 import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
 import org.identifiers.cloud.ws.resolver.api.responses.ResponseResolvePayload;
 import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponseResolve;
