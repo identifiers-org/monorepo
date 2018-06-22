@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resolver.api.responses;
 
+import org.identifiers.cloud.ws.resolver.models.ResolvedResource;
+
 import java.io.Serializable;
 import java.util.List;
 

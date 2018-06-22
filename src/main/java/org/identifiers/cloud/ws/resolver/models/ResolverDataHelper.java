@@ -2,8 +2,6 @@ package org.identifiers.cloud.ws.resolver.models;
 
 import org.identifiers.cloud.libapi.models.resourcerecommender.ResourceRecommendation;
 import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
-import org.identifiers.cloud.ws.resolver.api.responses.Recommendation;
-import org.identifiers.cloud.ws.resolver.api.responses.ResolvedResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
