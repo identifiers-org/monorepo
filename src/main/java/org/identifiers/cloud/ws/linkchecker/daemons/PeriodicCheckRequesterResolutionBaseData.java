@@ -120,5 +120,8 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
                 setShutdown();
             }
         }
+        if (!enabled) {
+            logger.warn("--- [DISABLED] Periodic Link Check Requester on Resolution Base Data ---");
+        }
     }
 }
