@@ -23,6 +23,7 @@ public class LinkCheckerReport implements Serializable {
     // Checking strategy URL status evaluation. This is an assessment of the checked URL, on whether it is considered to
     // lead to a non-error resource, and it is calculated by the link checking strategy used.
     private boolean urlAssessmentOk = false;
+    // TODO - Do we want to add additional information here, e.g. HTTP Redirection destinations?
 
     public String getUrl() {
         return url;
