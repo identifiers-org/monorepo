@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.linkchecker.data.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.TimeToLive;
 import org.springframework.data.redis.core.index.Indexed;
 
 import java.io.Serializable;
@@ -25,6 +26,7 @@ public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult
     @Id
     private String id;
     // URL that has been checked
+    @TimeToLive private Long ttl = 10L;
     @Indexed
     private String url;
     // When it has been checked (UTC), indexed to easily find those entities to remove
@@ -49,6 +51,15 @@ public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult
 
     public LinkCheckResult setId(String id) {
         this.id = id;
+        return this;
+    }
+
+    public Long getTtl() {
+        return ttl;
+    }
+
+    public LinkCheckResult setTtl(Long ttl) {
+        this.ttl = ttl;
         return this;
     }
 
