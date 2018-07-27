@@ -18,7 +18,7 @@ import java.util.Date;
  *
  * This entity models a checked URL, for either a provider, a resource or a plain URL.
  */
-@RedisHash(value = "LinkCheckerLinkCheckResult")
+@RedisHash(value = "LinkCheckerLinkCheckResult", timeToLive = 10L)
 public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult> {
     // TODO - We'll let Redis to create an ID for this entity
     // Result ID, hopefully manufactured by Redis
