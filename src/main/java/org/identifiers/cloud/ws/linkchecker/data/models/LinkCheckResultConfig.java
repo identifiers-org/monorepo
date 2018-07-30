@@ -29,6 +29,7 @@ public class LinkCheckResultConfig {
 
     @PostConstruct
     private void init() {
-        // TODO
+        logger.info("Setting link check results Time To Live value to {} seconds", timeToLiveParam);
+        timeToLive = timeToLiveParam;
     }
 }
