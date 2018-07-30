@@ -18,6 +18,7 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 import org.springframework.data.redis.support.collections.DefaultRedisList;
 import org.springframework.data.redis.support.collections.RedisList;
 
+import javax.annotation.PostConstruct;
 import java.util.Deque;
 
 /**
@@ -34,7 +35,7 @@ import java.util.Deque;
 @EnableRedisRepositories(enableKeyspaceEvents = RedisKeyValueAdapter.EnableKeyspaceEvents.ON_STARTUP)
 public class ApplicationConfig {
     private static final Logger logger = LoggerFactory.getLogger(ApplicationConfig.class);
-    
+
     @Value("${spring.redis.port}")
     private int redisPort;
 
@@ -49,6 +50,11 @@ public class ApplicationConfig {
 
     @Value("${org.identifiers.cloud.ws.linkchecker.backend.data.linkcheckresults.ttl.seconds}")
     private Long linkCheckResultsTimeToLive;
+
+    @PostConstruct
+    private void init() {
+        // TODO
+    }
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
