@@ -20,6 +20,8 @@ import org.springframework.stereotype.Component;
 public class LinkCheckResultConfig {
     private static final Logger logger = LoggerFactory.getLogger(LinkCheckResultConfig.class);
 
+    public static Long timeToLive = 10L;
+
     @Value("${org.identifiers.cloud.ws.linkchecker.backend.data.linkcheckresults.ttl.seconds}")
     private Long timeToLiveParam;
 
