@@ -19,8 +19,9 @@ import java.util.Date;
  * This entity models a checked URL, for either a provider, a resource or a plain URL.
  */
 // TODO - Parameterize TTL via configuration, and check for multiple copies of the service running concurrently
-@RedisHash(value = "LinkCheckerLinkCheckResult", timeToLive = 10L)
+@RedisHash(value = "LinkCheckerLinkCheckResult")
 public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult> {
+    // TTL as property
     // Result ID, hopefully manufactured by Redis
     @Id
     private String id;
