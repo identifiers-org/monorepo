@@ -21,5 +21,7 @@ public class LinkCheckResultConfig {
     private static final Logger logger = LoggerFactory.getLogger(LinkCheckResultConfig.class);
 
     @Value("${org.identifiers.cloud.ws.linkchecker.backend.data.linkcheckresults.ttl.seconds}")
-    private Long timeToLive;
+    private Long timeToLiveParam;
+
+
 }
