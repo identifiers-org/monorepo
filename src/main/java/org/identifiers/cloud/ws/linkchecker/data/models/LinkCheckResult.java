@@ -21,7 +21,6 @@ import java.util.Date;
 // TODO - Parameterize TTL via configuration, and check for multiple copies of the service running concurrently
 @RedisHash(value = "LinkCheckerLinkCheckResult", timeToLive = 10L)
 public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult> {
-    // TODO - We'll let Redis to create an ID for this entity
     // Result ID, hopefully manufactured by Redis
     @Id
     private String id;
