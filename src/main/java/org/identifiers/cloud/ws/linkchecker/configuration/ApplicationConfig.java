@@ -2,6 +2,8 @@ package org.identifiers.cloud.ws.linkchecker.configuration;
 
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +33,8 @@ import java.util.Deque;
 @Configuration
 @EnableRedisRepositories(enableKeyspaceEvents = RedisKeyValueAdapter.EnableKeyspaceEvents.ON_STARTUP)
 public class ApplicationConfig {
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationConfig.class);
+    
     @Value("${spring.redis.port}")
     private int redisPort;
 
