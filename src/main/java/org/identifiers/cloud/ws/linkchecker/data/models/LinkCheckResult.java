@@ -23,7 +23,7 @@ import java.util.Date;
 @RedisHash(value = "LinkCheckerLinkCheckResult")
 public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult> {
     // TTL as property
-    @TimeToLive public static Long timeToLive = 10L;
+    @TimeToLive private Long timeToLive = LinkCheckResultConfig.timeToLive;
     // Result ID, hopefully manufactured by Redis
     @Id
     private String id;
