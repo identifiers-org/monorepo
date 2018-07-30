@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.linkchecker.data.models;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,5 +19,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class LinkCheckResultConfig {
     private static final Logger logger = LoggerFactory.getLogger(LinkCheckResultConfig.class);
-    // TODO
+
+    @Value("${org.identifiers.cloud.ws.linkchecker.backend.data.linkcheckresults.ttl.seconds}")
+    private Long timeToLive;
 }
