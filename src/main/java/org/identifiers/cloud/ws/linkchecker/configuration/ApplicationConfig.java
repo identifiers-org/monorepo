@@ -43,6 +43,9 @@ public class ApplicationConfig {
     @Value("${org.identifiers.cloud.ws.linkchecker.backend.data.channel.key.linkcheckresults}")
     private String channelKeyLinkCheckResults;
 
+    @Value("${org.identifiers.cloud.ws.linkchecker.backend.data.linkcheckresults.ttl.seconds}")
+    private Long linkCheckResultsTimeToLive;
+
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(redisHost,
