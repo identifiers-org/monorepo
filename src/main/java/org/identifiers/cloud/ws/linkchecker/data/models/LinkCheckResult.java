@@ -23,7 +23,7 @@ import java.util.Date;
 @RedisHash(value = "LinkCheckerLinkCheckResult")
 public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult> {
     // TTL as property
-    @TimeToLive Long timeToLive = 10L;
+    @TimeToLive private Long timeToLive = 10L;
     // Result ID, hopefully manufactured by Redis
     @Id
     private String id;
@@ -45,6 +45,15 @@ public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult
     // Checking strategy URL status evaluation. This is an assessment of the checked URL, on whether it is considered to
     // lead to a non-error resource, and it is calculated by the link checking strategy used.
     private boolean urlAssessmentOk = false;
+
+    public Long getTimeToLive() {
+        return timeToLive;
+    }
+
+    public LinkCheckResult setTimeToLive(Long timeToLive) {
+        this.timeToLive = timeToLive;
+        return this;
+    }
 
     public String getId() {
         return id;
