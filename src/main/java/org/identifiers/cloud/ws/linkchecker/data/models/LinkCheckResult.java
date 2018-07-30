@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.linkchecker.data.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.TimeToLive;
 import org.springframework.data.redis.core.index.Indexed;
 
 import java.io.Serializable;
@@ -22,6 +23,7 @@ import java.util.Date;
 @RedisHash(value = "LinkCheckerLinkCheckResult")
 public class LinkCheckResult implements Serializable, Comparable<LinkCheckResult> {
     // TTL as property
+    @TimeToLive Long timeToLive;
     // Result ID, hopefully manufactured by Redis
     @Id
     private String id;
