@@ -18,7 +18,6 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 import org.springframework.data.redis.support.collections.DefaultRedisList;
 import org.springframework.data.redis.support.collections.RedisList;
 
-import javax.annotation.PostConstruct;
 import java.util.Deque;
 
 /**
@@ -47,14 +46,6 @@ public class ApplicationConfig {
 
     @Value("${org.identifiers.cloud.ws.linkchecker.backend.data.channel.key.linkcheckresults}")
     private String channelKeyLinkCheckResults;
-
-    @Value("${org.identifiers.cloud.ws.linkchecker.backend.data.linkcheckresults.ttl.seconds}")
-    private Long linkCheckResultsTimeToLive;
-
-    @PostConstruct
-    private void init() {
-        // TODO
-    }
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
