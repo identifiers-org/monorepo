@@ -24,4 +24,5 @@ public interface HistoryTrackingService {
 
     // Flushing link checking historical data
     // TODO - Attend flushing request directly
+    // TODO - Attend flushing request received by a sibling service
 }
