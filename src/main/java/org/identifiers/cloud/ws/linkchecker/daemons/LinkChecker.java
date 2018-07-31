@@ -48,6 +48,7 @@ public class LinkChecker extends Thread {
     @Autowired
     private RedisTemplate<String, LinkCheckResult> linkCheckResultRedisTemplate;
 
+    // TODO - Refactor this to outsource publishing things on a channel
     @Autowired
     private ChannelTopic channelLinkCheckResults;
 
