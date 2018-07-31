@@ -7,6 +7,8 @@ package org.identifiers.cloud.ws.linkchecker.api.responses;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This is a generic payload for management requests.
  */
 public class ServiceResponseManagementRequestPayload {
 }
