@@ -22,6 +22,6 @@ public class ManagementApiModel {
 
     public ServiceResponseManagementRequest flushLinkCheckingHistory() {
         logger.warn("FLUSH REQUEST for link checking hisotrical data");
-        // TODO
+        // TODO It is responsibility of the history tracking service used to flush the link checking history
     }
 }
