@@ -22,7 +22,10 @@ public interface HistoryTrackingService {
     // TODO - Add the methods for the rest of the entities
     HistoryTracker updateTrackerWith(LinkCheckResult linkCheckResult) throws HistoryTrackingServiceException;
 
-    // Flushing link checking historical data
+    // --- Flushing link checking historical data ---
+    // Multiple copies of this service may be running at the same time, so this request will be completed in two steps:
+    //  - The service that receives the request will wipe out the link checking history and then send a message on a particular channel to notify the other services of what just happened
+    //  - All copies of this service will attend the flush announcement by flushing their history tracking service
     // TODO - Attend flushing request directly
     // TODO - Attend flushing request received by a sibling service
 }
