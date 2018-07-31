@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.api.responses;
 
+import java.io.Serializable;
+
 /**
  * Project: link-checker
  * Package: org.identifiers.cloud.ws.linkchecker.api.responses
@@ -10,7 +12,7 @@ package org.identifiers.cloud.ws.linkchecker.api.responses;
  *
  * This is a generic payload for management requests.
  */
-public class ServiceResponseManagementRequestPayload {
+public class ServiceResponseManagementRequestPayload implements Serializable {
     private String message = "";
 
     public String getMessage() {
