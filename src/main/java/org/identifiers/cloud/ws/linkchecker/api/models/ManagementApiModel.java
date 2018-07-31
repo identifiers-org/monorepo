@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.api.models;
 
 import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseManagementRequest;
+import org.identifiers.cloud.ws.linkchecker.data.repositories.LinkCheckResultRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
@@ -20,6 +21,7 @@ public class ManagementApiModel {
     private static final Logger logger = LoggerFactory.getLogger(ManagementApiModel.class);
 
     public ServiceResponseManagementRequest flushLinkCheckingHistory() {
+        logger.warn("FLUSH REQUEST for link checking hisotrical data");
         // TODO
     }
 }
