@@ -21,4 +21,7 @@ public interface HistoryTrackingService {
     ResourceTracker getTrackerForResource(ScoringRequestWithIdPayload scoringRequestWithIdPayload) throws HistoryTrackingServiceException ;
     // TODO - Add the methods for the rest of the entities
     HistoryTracker updateTrackerWith(LinkCheckResult linkCheckResult) throws HistoryTrackingServiceException;
+
+    // Flushing link checking historical data
+    // TODO - Attend flushing request directly
 }
