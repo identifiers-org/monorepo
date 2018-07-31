@@ -1,6 +1,8 @@
 package org.identifiers.cloud.ws.linkchecker.api.models;
 
 import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseManagementRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +17,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class ManagementApiModel {
-    // TODO
+    private static final Logger logger = LoggerFactory.getLogger(ManagementApiModel.class);
+
     public ServiceResponseManagementRequest flushLinkCheckingHistory() {
         // TODO
     }
