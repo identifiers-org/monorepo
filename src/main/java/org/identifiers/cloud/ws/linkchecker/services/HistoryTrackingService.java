@@ -28,5 +28,7 @@ public interface HistoryTrackingService {
     //  - All copies of this service will attend the flush announcement by flushing their history tracking service
     // TODO - Attend flushing request directly
     HistoryTracker deleteHistoryTracking() throws HistoryTrackingServiceException;
+
     // TODO - Attend flushing request received by a sibling service
+    HistoryTracker flushHistoryTrackers() throws HistoryTrackingServiceException;
 }
