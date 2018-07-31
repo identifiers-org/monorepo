@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.api.models;
 
+import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseManagementRequest;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -15,4 +16,7 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class ManagementApiModel {
     // TODO
+    public ServiceResponseManagementRequest flushLinkCheckingHistory() {
+        // TODO
+    }
 }
