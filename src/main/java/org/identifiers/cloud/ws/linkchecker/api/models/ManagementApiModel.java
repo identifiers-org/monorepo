@@ -1,7 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.api.models;
 
 import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseManagementRequest;
-import org.identifiers.cloud.ws.linkchecker.data.repositories.LinkCheckResultRepository;
+import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseManagementRequestPayload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
@@ -23,5 +23,10 @@ public class ManagementApiModel {
     public ServiceResponseManagementRequest flushLinkCheckingHistory() {
         logger.warn("FLUSH REQUEST for link checking hisotrical data");
         // TODO It is responsibility of the history tracking service used to flush the link checking history
+        // TODO change this when the code is completed
+        ServiceResponseManagementRequest response = new ServiceResponseManagementRequest();
+        response.setPayload(new ServiceResponseManagementRequestPayload()
+                .setMessage("This is a default response"));
+        return response;
     }
 }
