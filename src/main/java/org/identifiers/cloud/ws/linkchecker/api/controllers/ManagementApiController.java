@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * The initial idea behind this API, is to expose endpoints that will allow clients to ask this service to perform tasks
+ * like flushing the link checking historical data.
  */
 @RestController
 @RequestMapping("/management")
