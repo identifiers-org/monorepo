@@ -11,4 +11,14 @@ package org.identifiers.cloud.ws.linkchecker.api.responses;
  * This is a generic payload for management requests.
  */
 public class ServiceResponseManagementRequestPayload {
+    private String message = "";
+
+    public String getMessage() {
+        return message;
+    }
+
+    public ServiceResponseManagementRequestPayload setMessage(String message) {
+        this.message = message;
+        return this;
+    }
 }
