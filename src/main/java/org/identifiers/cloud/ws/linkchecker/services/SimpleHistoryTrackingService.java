@@ -266,4 +266,16 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
         // TODO - It is a plain URL check result
         return null;
     }
+
+    @Override
+    public HistoryTracker deleteHistoryTracking() throws HistoryTrackingServiceException {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public HistoryTracker flushHistoryTrackers() throws HistoryTrackingServiceException {
+        // TODO
+        return null;
+    }
 }
