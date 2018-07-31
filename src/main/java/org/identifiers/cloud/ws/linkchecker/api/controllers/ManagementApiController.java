@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.api.controllers;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,4 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/management")
 public class ManagementApiController {
+
+    @RequestMapping("flushLinkCheckingHistory")
+    public ResponseEntity<?> flushLinkCheckingHistory() {
+        //ServiceResponseScoringRequest response = model.getScoreForUrl(request);
+        //return new ResponseEntity<>(response, response.getHttpStatus());
+        return new ResponseEntity<>("Flushing link checking history data", HttpStatus.OK);
+    }
 }
