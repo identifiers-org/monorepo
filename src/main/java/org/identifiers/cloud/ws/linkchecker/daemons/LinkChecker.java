@@ -102,7 +102,6 @@ public class LinkChecker extends Thread {
                     linkCheckerReport.isUrlAssessmentOk() ? "OK" : "NOT OK");
             LinkCheckResult linkCheckResult =
                     LinkCheckModelsHelper.getResultFromReport(linkCheckerReport, linkCheckRequest);
-            // linkCheckResultRepository.save(linkCheckResult);
             try {
                 linkCheckResultService.save(linkCheckResult);
             } catch (LinkCheckResultServiceException e) {
