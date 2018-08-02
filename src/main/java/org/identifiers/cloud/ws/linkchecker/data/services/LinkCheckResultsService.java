@@ -42,5 +42,9 @@ public class LinkCheckResultsService {
     public List<LinkCheckResult> findByResourceId(String resourceId) {
         return repository.findByResourceId(resourceId);
     }
+
+    public void deleteAll() {
+        repository.deleteAll();
+    }
     // TODO
 }
