@@ -9,4 +9,7 @@ package org.identifiers.cloud.ws.linkchecker.data.services;
  * ---
  */
 public class LinkCheckResultServiceException extends RuntimeException {
+    public LinkCheckResultServiceException(String message) {
+        super(message);
+    }
 }
