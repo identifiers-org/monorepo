@@ -47,13 +47,6 @@ public class LinkChecker extends Thread {
     @Autowired
     private LinkCheckResultService linkCheckResultService;
 
-    @Autowired
-    private RedisTemplate<String, LinkCheckResult> linkCheckResultRedisTemplate;
-
-    // TODO - Refactor this to outsource publishing things on a channel
-    @Autowired
-    private ChannelTopic channelLinkCheckResults;
-
     private LinkCheckResult attendLinkCheckRequest(LinkCheckRequest linkCheckRequest) {
         // Check URL
         LinkCheckerReport linkCheckerReport;
