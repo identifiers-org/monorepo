@@ -12,6 +12,7 @@ import org.identifiers.cloud.ws.linkchecker.data.models.TrackedResource;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.LinkCheckResultRepository;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.TrackedProviderRepository;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.TrackedResourceRepository;
+import org.identifiers.cloud.ws.linkchecker.data.services.LinkCheckResultsService;
 import org.identifiers.cloud.ws.linkchecker.models.HistoryTracker;
 import org.identifiers.cloud.ws.linkchecker.models.ProviderTracker;
 import org.identifiers.cloud.ws.linkchecker.models.ResourceTracker;
@@ -58,6 +59,9 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     private TrackedResourceRepository trackedResourceRepository;
     @Autowired
     private LinkCheckResultRepository linkCheckResultRepository;
+    // Persistence Services
+    @Autowired
+    private LinkCheckResultsService linkCheckResultsService;
 
     // Link check requests queue
     @Autowired
