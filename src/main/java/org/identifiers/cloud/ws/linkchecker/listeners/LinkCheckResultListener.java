@@ -41,7 +41,7 @@ public class LinkCheckResultListener extends Subscriber<String, LinkCheckResult>
 
     @PostConstruct
     public void registerListener() {
-        doRegisterListener();
+        doRegisterSubscriber();
     }
 
     @Override

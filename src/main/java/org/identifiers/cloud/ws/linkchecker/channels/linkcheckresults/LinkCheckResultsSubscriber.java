@@ -11,8 +11,6 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Project: link-checker
@@ -36,8 +34,8 @@ public class LinkCheckResultsSubscriber extends Subscriber<String, LinkCheckResu
     private RedisTemplate<String, LinkCheckResult> linkCheckResultRedisTemplate;
 
     @PostConstruct
-    public void registerListener() {
-        doRegisterListener();
+    public void registerSubscriber() {
+        doRegisterSubscriber();
     }
 
     @Override
@@ -53,10 +51,5 @@ public class LinkCheckResultsSubscriber extends Subscriber<String, LinkCheckResu
     @Override
     protected RedisTemplate<String, LinkCheckResult> getRedisTemplate() {
         return linkCheckResultRedisTemplate;
-    }
-
-    @Override
-    protected void processValue(LinkCheckResult value) {
-        listeners.parallelStream().forEach(listener -> listener.process(value));
     }
 }

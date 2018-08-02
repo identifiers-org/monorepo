@@ -30,7 +30,7 @@ public abstract class Subscriber<K, V> implements MessageListener {
     protected abstract ChannelTopic getChannelTopic();
     protected abstract RedisTemplate<K, V> getRedisTemplate();
 
-    protected void doRegisterListener() {
+    protected void doRegisterSubscriber() {
         logger.info("[REGISTER] for topic '{}'", getChannelTopic().getTopic());
         getRedisContainer().addMessageListener(this, getChannelTopic());
     }
