@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.data.services;
 
+import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.LinkCheckResultRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,5 +22,8 @@ public class LinkCheckResultService {
     @Autowired
     private LinkCheckResultRepository repository;
 
+    public LinkCheckResult save(LinkCheckResult linkCheckResult) throws LinkCheckResultServiceException {
+        // TODO
+    }
     // TODO
 }
