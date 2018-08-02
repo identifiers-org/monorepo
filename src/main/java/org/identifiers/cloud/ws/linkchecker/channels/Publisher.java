@@ -16,5 +16,9 @@ import org.springframework.data.redis.listener.ChannelTopic;
 public abstract class Publisher<K, V> {
     protected abstract ChannelTopic getChannelTopic();
     protected abstract RedisTemplate<K, V> getRedisTemplate();
-    
+
+    public void publish(V value) {
+        // TODO
+        
+    }
 }
