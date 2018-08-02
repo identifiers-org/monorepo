@@ -19,6 +19,5 @@ public abstract class Publisher<K, V> {
 
     public void publish(V value) {
         // TODO
-        
     }
 }
