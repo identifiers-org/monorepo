@@ -26,7 +26,7 @@ import java.util.Random;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
- *
+ * <p>
  * This daemon pulls link checking requests from a queue, runs them through a link checker, and lodges in the results.
  */
 @Component
@@ -53,8 +53,35 @@ public class LinkChecker extends Thread {
     @Autowired
     private ChannelTopic channelLinkCheckResults;
 
-    private void attendLinkCheckRequest(LinkCheckRequest linkCheckRequest) {
-        // TODO
+    private LinkCheckResult attendLinkCheckRequest(LinkCheckRequest linkCheckRequest) {
+        // Check URL
+        LinkCheckerReport linkCheckerReport;
+        try {
+            linkCheckerReport = linkCheckingStrategy.check(linkCheckRequest.getUrl());
+        } catch (LinkCheckerException e) {
+            logger.error("Could not attend link checking request for URL '{}', reason '{}'", linkCheckRequest.getUrl()
+                    , e.getMessage());
+            return null;
+        }
+        // Log the results
+        logger.info("Link Check result for URL '{}', HTTP Status '{}', assessment '{}'",
+                linkCheckerReport.getUrl(),
+                linkCheckerReport.getHttpStatus(),
+                linkCheckerReport.isUrlAssessmentOk() ? "OK" : "NOT OK");
+        return LinkCheckModelsHelper.getResultFromReport(linkCheckerReport, linkCheckRequest);
+    }
+
+    private void waitRandomTime() {
+        Random random = new Random(System.currentTimeMillis());
+        try {
+            long waitTimeSeconds = random.nextInt(WAIT_TIME_LIMIT_SECONDS);
+            logger.info("Waiting {}s before we check again for URLs", waitTimeSeconds);
+            Thread.sleep(waitTimeSeconds * 1000);
+        } catch (InterruptedException e) {
+            logger.warn("The Link Checker Daemon has been interrupted while waiting for " +
+                    "another iteration. Stopping the daemon, no more URL check requests will be processed");
+            shutdown = true;
+        }
     }
 
     public synchronized boolean isShutdown() {
@@ -68,46 +95,27 @@ public class LinkChecker extends Thread {
     @Override
     public void run() {
         logger.info("--- [START] Link Checker Daemon ---");
-        Random random = new Random(System.currentTimeMillis());
+
         while (!isShutdown()) {
             // Pop element, if any, from the link checking request queue
             LinkCheckRequest linkCheckRequest = linkCheckRequestQueue.pollFirst();
             if (linkCheckRequest == null) {
                 // If no element is in there, wait a random amount of time before trying again
                 logger.info("No URL check request found");
-                try {
-                    long waitTimeSeconds = random.nextInt(WAIT_TIME_LIMIT_SECONDS);
-                    logger.info("Waiting {}s before we check again for URLs", waitTimeSeconds);
-                    Thread.sleep(waitTimeSeconds * 1000);
-                } catch (InterruptedException e) {
-                    logger.warn("The Link Checker Daemon has been interrupted while waiting for " +
-                            "another iteration. Stopping the daemon, no more URL check requests will be processed");
-                    shutdown = true;
-                }
+                waitRandomTime();
                 continue;
             }
             // Check URL
-            LinkCheckerReport linkCheckerReport;
-            try {
-                linkCheckerReport = linkCheckingStrategy.check(linkCheckRequest.getUrl());
-            } catch (LinkCheckerException e) {
-                logger.error("SKIP processing link checking request for URL '{}', reason '{}'", linkCheckRequest.getUrl(), e.getMessage());
-                continue;
+            LinkCheckResult linkCheckResult = attendLinkCheckRequest(linkCheckRequest);
+            if (linkCheckResult != null) {
+                try {
+                    linkCheckResultService.save(linkCheckResult);
+                } catch (LinkCheckResultServiceException e) {
+                    logger.error("COULD not save link check result for URL '{}'", linkCheckResult.getUrl());
+                }
+                // Announce the link checking results
+                linkCheckResultRedisTemplate.convertAndSend(channelLinkCheckResults.getTopic(), linkCheckResult);
             }
-            // Log the results
-            logger.info("Link Check result for URL '{}', HTTP Status '{}', assessment '{}'",
-                    linkCheckerReport.getUrl(),
-                    linkCheckerReport.getHttpStatus(),
-                    linkCheckerReport.isUrlAssessmentOk() ? "OK" : "NOT OK");
-            LinkCheckResult linkCheckResult =
-                    LinkCheckModelsHelper.getResultFromReport(linkCheckerReport, linkCheckRequest);
-            try {
-                linkCheckResultService.save(linkCheckResult);
-            } catch (LinkCheckResultServiceException e) {
-                logger.error("COULD not save link check result for URL '{}'", linkCheckResult.getUrl());
-            }
-            // Announce the link checking results
-            linkCheckResultRedisTemplate.convertAndSend(channelLinkCheckResults.getTopic(), linkCheckResult);
         }
     }
 
