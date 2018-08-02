@@ -42,6 +42,7 @@ public class LinkChecker extends Thread {
     @Autowired
     private org.identifiers.cloud.ws.linkchecker.strategies.LinkChecker linkCheckingStrategy;
 
+    // TODO - This belongs to a Service on top of that repository
     @Autowired
     private LinkCheckResultRepository linkCheckResultRepository;
 
