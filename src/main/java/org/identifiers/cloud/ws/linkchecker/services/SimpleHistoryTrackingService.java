@@ -281,6 +281,13 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
 
     @Override
     public void flushHistoryTrackers() throws HistoryTrackingServiceException {
-        // TODO
+        try {
+            providers.invalidateAll();
+            logger.warn("ALL cached stats for providers have been WIPED OUT as requested");
+            resources.invalidateAll();
+            logger.warn("ALL cached stats for resources have been WIPED OUT as requested");
+        } catch (RuntimeException e) {
+            throw new HistoryTrackingServiceException(String.format("History tracker could not flush history trackers, due to '{}'", e.getMessage()));
+        }
     }
 }
