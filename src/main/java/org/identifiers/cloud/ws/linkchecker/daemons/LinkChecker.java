@@ -35,6 +35,7 @@ public class LinkChecker extends Thread {
     private static final Logger logger = LoggerFactory.getLogger(LinkChecker.class);
 
     private boolean shutdown = false;
+    private Random random = new Random(System.currentTimeMillis());
 
     @Autowired
     private Deque<LinkCheckRequest> linkCheckRequestQueue;
@@ -81,7 +82,6 @@ public class LinkChecker extends Thread {
     }
 
     private void randomWait() {
-        Random random = new Random(System.currentTimeMillis());
         try {
             long waitTimeSeconds = random.nextInt(WAIT_TIME_LIMIT_SECONDS);
             logger.info("Waiting {}s before we check again for URLs", waitTimeSeconds);
