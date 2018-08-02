@@ -45,13 +45,17 @@ public class LinkChecker extends Thread {
 
     @Autowired
     private LinkCheckResultService linkCheckResultService;
-    
+
     @Autowired
     private RedisTemplate<String, LinkCheckResult> linkCheckResultRedisTemplate;
 
     // TODO - Refactor this to outsource publishing things on a channel
     @Autowired
     private ChannelTopic channelLinkCheckResults;
+
+    private void attendLinkCheckRequest(LinkCheckRequest linkCheckRequest) {
+        // TODO
+    }
 
     public synchronized boolean isShutdown() {
         return shutdown;
