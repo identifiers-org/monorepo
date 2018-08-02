@@ -3,7 +3,6 @@ package org.identifiers.cloud.ws.linkchecker.daemons;
 import org.identifiers.cloud.ws.linkchecker.data.LinkCheckModelsHelper;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
-import org.identifiers.cloud.ws.linkchecker.data.repositories.LinkCheckResultRepository;
 import org.identifiers.cloud.ws.linkchecker.data.services.LinkCheckResultService;
 import org.identifiers.cloud.ws.linkchecker.data.services.LinkCheckResultServiceException;
 import org.identifiers.cloud.ws.linkchecker.strategies.LinkCheckerException;
@@ -46,11 +45,7 @@ public class LinkChecker extends Thread {
 
     @Autowired
     private LinkCheckResultService linkCheckResultService;
-
-    // TODO - This belongs to a Service on top of that repository
-    @Autowired
-    private LinkCheckResultRepository linkCheckResultRepository;
-
+    
     @Autowired
     private RedisTemplate<String, LinkCheckResult> linkCheckResultRedisTemplate;
 
