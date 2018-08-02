@@ -18,8 +18,8 @@ import org.springframework.stereotype.Component;
  * This service offers high level business logic interface for persisting link check results.
  */
 @Component
-public class LinkCheckResultService {
-    private static final Logger logger = LoggerFactory.getLogger(LinkCheckResultService.class);
+public class LinkCheckResultsService {
+    private static final Logger logger = LoggerFactory.getLogger(LinkCheckResultsService.class);
 
     @Autowired
     private LinkCheckResultRepository repository;

@@ -5,7 +5,7 @@ import org.identifiers.cloud.ws.linkchecker.channels.linkcheckresults.LinkCheckR
 import org.identifiers.cloud.ws.linkchecker.data.LinkCheckModelsHelper;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
-import org.identifiers.cloud.ws.linkchecker.data.services.LinkCheckResultService;
+import org.identifiers.cloud.ws.linkchecker.data.services.LinkCheckResultsService;
 import org.identifiers.cloud.ws.linkchecker.data.services.LinkCheckResultServiceException;
 import org.identifiers.cloud.ws.linkchecker.strategies.LinkCheckerException;
 import org.identifiers.cloud.ws.linkchecker.strategies.LinkCheckerReport;
@@ -45,7 +45,7 @@ public class LinkChecker extends Thread {
     private org.identifiers.cloud.ws.linkchecker.strategies.LinkChecker linkCheckingStrategy;
 
     @Autowired
-    private LinkCheckResultService linkCheckResultService;
+    private LinkCheckResultsService linkCheckResultsService;
 
     @Autowired
     private LinkCheckResultsPublisher linkCheckResultsPublisher;
@@ -70,7 +70,7 @@ public class LinkChecker extends Thread {
 
     private LinkCheckResult persist(LinkCheckResult linkCheckResult) {
         try {
-            linkCheckResultService.save(linkCheckResult);
+            linkCheckResultsService.save(linkCheckResult);
         } catch (LinkCheckResultServiceException e) {
             logger.error("COULD not save link check result for URL '{}', reason '{}'", linkCheckResult.getUrl(), e.getMessage());
         }
