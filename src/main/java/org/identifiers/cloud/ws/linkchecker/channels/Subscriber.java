@@ -10,5 +10,6 @@ package org.identifiers.cloud.ws.linkchecker.channels;
  *
  * Subscriber for announcements on a Redis backend
  */
-public class Subscriber {
+public class Subscriber<K, V> {
+    // TODO
 }
