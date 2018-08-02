@@ -7,6 +7,8 @@ package org.identifiers.cloud.ws.linkchecker.data.services;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This service offers high level business logic interface for persisting link check results.
  */
 public class LinkCheckResultService {
 }
