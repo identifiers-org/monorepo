@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.channels.linkcheckresults;
 
+import org.identifiers.cloud.ws.linkchecker.channels.Listener;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 
 /**
@@ -10,6 +11,6 @@ import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-public interface LinkCheckResultListener {
-    void process(LinkCheckResult linkCheckResult);
+public interface LinkCheckResultListener extends Listener<LinkCheckResult> {
+    
 }
