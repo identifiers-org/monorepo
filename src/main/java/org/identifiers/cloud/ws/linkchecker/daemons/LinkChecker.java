@@ -71,6 +71,15 @@ public class LinkChecker extends Thread {
         return LinkCheckModelsHelper.getResultFromReport(linkCheckerReport, linkCheckRequest);
     }
 
+    private LinkCheckResult persist(LinkCheckResult linkCheckResult) {
+        try {
+            linkCheckResultService.save(linkCheckResult);
+        } catch (LinkCheckResultServiceException e) {
+            logger.error("COULD not save link check result for URL '{}'", linkCheckResult.getUrl());
+        }
+        return linkCheckResult;
+    }
+
     private void randomWait() {
         Random random = new Random(System.currentTimeMillis());
         try {
@@ -108,11 +117,7 @@ public class LinkChecker extends Thread {
             // Check URL
             LinkCheckResult linkCheckResult = attendLinkCheckRequest(linkCheckRequest);
             if (linkCheckResult != null) {
-                try {
-                    linkCheckResultService.save(linkCheckResult);
-                } catch (LinkCheckResultServiceException e) {
-                    logger.error("COULD not save link check result for URL '{}'", linkCheckResult.getUrl());
-                }
+                persist(linkCheckResult);
                 // Announce the link checking results
                 linkCheckResultRedisTemplate.convertAndSend(channelLinkCheckResults.getTopic(), linkCheckResult);
             }
