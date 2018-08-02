@@ -35,7 +35,7 @@ public abstract class Subscriber<K, V> implements MessageListener {
         getRedisContainer().addMessageListener(this, getChannelTopic());
     }
 
-    protected void addListener(Listener listener) {
+    public void addListener(Listener listener) {
         listeners.add(listener);
     }
 
