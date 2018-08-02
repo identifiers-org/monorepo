@@ -51,6 +51,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     private long cacheSize;
 
     // Repositories
+    // TODO - Refactor out these repositories to services in the future (when possible)
     @Autowired
     private TrackedProviderRepository trackedProviderRepository;
     @Autowired
