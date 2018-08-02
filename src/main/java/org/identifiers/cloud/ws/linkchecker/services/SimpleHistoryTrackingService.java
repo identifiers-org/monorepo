@@ -9,7 +9,6 @@ import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 import org.identifiers.cloud.ws.linkchecker.data.models.TrackedProvider;
 import org.identifiers.cloud.ws.linkchecker.data.models.TrackedResource;
-import org.identifiers.cloud.ws.linkchecker.data.repositories.LinkCheckResultRepository;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.TrackedProviderRepository;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.TrackedResourceRepository;
 import org.identifiers.cloud.ws.linkchecker.data.services.LinkCheckResultsService;
@@ -52,13 +51,13 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     private long cacheSize;
 
     // Repositories
-    // TODO - Refactor out these repositories to services in the future (when possible)
+    // TODO - Refactor out these repositories to services in the future (when possible), in the meantime, I will use
+    // TODO - link check results repository as an example of whether that makes sense in such a small component like
+    // TODO - this microservice, maybe in some cases we can break rules
     @Autowired
     private TrackedProviderRepository trackedProviderRepository;
     @Autowired
     private TrackedResourceRepository trackedResourceRepository;
-    @Autowired
-    private LinkCheckResultRepository linkCheckResultRepository;
     // Persistence Services
     @Autowired
     private LinkCheckResultsService linkCheckResultsService;
@@ -273,14 +272,12 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     }
 
     @Override
-    public HistoryTracker deleteHistoryTracking() throws HistoryTrackingServiceException {
+    public void deleteHistoryTracking() throws HistoryTrackingServiceException {
         // TODO
-        return null;
     }
 
     @Override
-    public HistoryTracker flushHistoryTrackers() throws HistoryTrackingServiceException {
+    public void flushHistoryTrackers() throws HistoryTrackingServiceException {
         // TODO
-        return null;
     }
 }
