@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.linkchecker.channels;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
@@ -23,10 +24,16 @@ public abstract class Subscriber<K, V> implements MessageListener {
     protected abstract RedisMessageListenerContainer getRedisContainer();
     protected abstract ChannelTopic getChannelTopic();
     protected abstract RedisTemplate<K, V> getRedisTemplate();
+    protected abstract void processValue(V value);
 
     protected void doRegisterListener() {
         logger.info("[REGISTER] for topic '{}'", getChannelTopic().getTopic());
         getRedisContainer().addMessageListener(this, getChannelTopic());
     }
-    // TODO
+
+    @Override
+    public void onMessage(Message message, byte[] bytes) {
+        V value = (V) getRedisTemplate().getValueSerializer().deserialize(message.getBody());
+        processValue(value);
+    }
 }

@@ -1,12 +1,11 @@
 package org.identifiers.cloud.ws.linkchecker.listeners;
 
+import org.identifiers.cloud.ws.linkchecker.channels.Subscriber;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 import org.identifiers.cloud.ws.linkchecker.services.HistoryTrackingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.connection.Message;
-import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
@@ -25,7 +24,7 @@ import javax.annotation.PostConstruct;
  * This component listens to the link check results channel for announcements.
  */
 @Component
-public class LinkCheckResultListener implements MessageListener {
+public class LinkCheckResultListener extends Subscriber<String, LinkCheckResult> {
     private static final Logger logger = LoggerFactory.getLogger(LinkCheckResultListener.class);
 
     @Autowired
@@ -42,18 +41,30 @@ public class LinkCheckResultListener implements MessageListener {
 
     @PostConstruct
     public void registerListener() {
-        logger.info("[REGISTER] for topic '{}'", channelKeyLinkCheckResults.getTopic());
-        redisContainer.addMessageListener(this, channelKeyLinkCheckResults);
+        doRegisterListener();
     }
 
     @Override
-    public void onMessage(Message message, byte[] bytes) {
-        //logger.info("Processing link check result announcement, '{}'", message.toString());
-        LinkCheckResult result = (LinkCheckResult) linkCheckResultRedisTemplate.getValueSerializer().deserialize(message.getBody());
+    protected RedisMessageListenerContainer getRedisContainer() {
+        return redisContainer;
+    }
+
+    @Override
+    protected ChannelTopic getChannelTopic() {
+        return channelKeyLinkCheckResults;
+    }
+
+    @Override
+    protected RedisTemplate<String, LinkCheckResult> getRedisTemplate() {
+        return linkCheckResultRedisTemplate;
+    }
+
+    @Override
+    protected void processValue(LinkCheckResult value) {
         logger.info("Processing link check result announcement for URL '{}', provider ID '{}', resource ID '{}'",
-                result.getUrl(),
-                result.getProviderId(),
-                result.getResourceId());
-        historyTrackingService.updateTrackerWith(result);
+                value.getUrl(),
+                value.getProviderId(),
+                value.getResourceId());
+        historyTrackingService.updateTrackerWith(value);
     }
 }
