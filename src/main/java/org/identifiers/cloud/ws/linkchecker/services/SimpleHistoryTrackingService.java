@@ -213,7 +213,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
                 public ProviderTracker call() throws Exception {
                     ProviderTracker providerTracker = loadCreateTrackedProvider(scoringRequestWithIdPayload);
                     // Initialize the stats for the given provider
-                    List<LinkCheckResult> linkCheckResults = linkCheckResultRepository.findByProviderId
+                    List<LinkCheckResult> linkCheckResults = linkCheckResultsService.findByProviderId
                             (scoringRequestWithIdPayload.getId());
                     if (linkCheckResults != null) {
                         providerTracker.initHistoryStats(linkCheckResults);
@@ -241,7 +241,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
                 public ResourceTracker call() throws Exception {
                     ResourceTracker resourceTracker = loadCreateTrackedResource(scoringRequestWithIdPayload);
                     // Initialize stats for the given resource
-                    List<LinkCheckResult> linkCheckResults = linkCheckResultRepository.findByResourceId(scoringRequestWithIdPayload.getId());
+                    List<LinkCheckResult> linkCheckResults = linkCheckResultsService.findByResourceId(scoringRequestWithIdPayload.getId());
                     if (linkCheckResults != null) {
                         resourceTracker.initHistoryStats(linkCheckResults);
                     }
