@@ -17,7 +17,7 @@ public abstract class Publisher<K, V> {
     protected abstract ChannelTopic getChannelTopic();
     protected abstract RedisTemplate<K, V> getRedisTemplate();
 
-    public void publish(V value) {
+    public void publish(V value) throws PublisherException {
         // TODO
     }
 }
