@@ -106,20 +106,25 @@ public class LinkChecker extends Thread {
         logger.info("--- [START] Link Checker Daemon ---");
 
         while (!isShutdown()) {
-            // Pop element, if any, from the link checking request queue
-            LinkCheckRequest linkCheckRequest = linkCheckRequestQueue.pollFirst();
-            if (linkCheckRequest == null) {
-                // If no element is in there, wait a random amount of time before trying again
-                logger.info("No URL check request found");
-                randomWait();
-                continue;
-            }
-            // Check URL
-            LinkCheckResult linkCheckResult = attendLinkCheckRequest(linkCheckRequest);
-            if (linkCheckResult != null) {
-                persist(linkCheckResult);
-                // Announce the link checking results
-                linkCheckResultRedisTemplate.convertAndSend(channelLinkCheckResults.getTopic(), linkCheckResult);
+            try {
+                // Pop element, if any, from the link checking request queue
+                LinkCheckRequest linkCheckRequest = linkCheckRequestQueue.pollFirst();
+                if (linkCheckRequest == null) {
+                    // If no element is in there, wait a random amount of time before trying again
+                    logger.info("No URL check request found");
+                    randomWait();
+                    continue;
+                }
+                // Check URL
+                LinkCheckResult linkCheckResult = attendLinkCheckRequest(linkCheckRequest);
+                if (linkCheckResult != null) {
+                    persist(linkCheckResult);
+                    // Announce the link checking results
+                    linkCheckResultRedisTemplate.convertAndSend(channelLinkCheckResults.getTopic(), linkCheckResult);
+                }
+            } catch (RuntimeException e) {
+                // Prevent the thread from crashing on any possible error
+                logger.error("An error has been stopped for preventing the thread from crashing, '{}'", e.getMessage());
             }
         }
     }
