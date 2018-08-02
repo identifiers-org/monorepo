@@ -19,7 +19,7 @@ public class LinkCheckResultService {
     private static final Logger logger = LoggerFactory.getLogger(LinkCheckResultService.class);
 
     @Autowired
-    private LinkCheckResultRepository linkCheckResultRepository;
+    private LinkCheckResultRepository repository;
 
     // TODO
 }
