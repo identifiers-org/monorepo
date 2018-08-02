@@ -275,6 +275,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     public void deleteHistoryTracking() throws HistoryTrackingServiceException {
         try {
             linkCheckResultsService.deleteAll();
+            logger.warn("ALL LINK CHECKING HISTORICAL DATA HAS BEEN WIPED OUT as requested");
         } catch (RuntimeException e) {
             throw new HistoryTrackingServiceException(String.format("History tracker could not delete the historical data, due to '{}'", e.getMessage()));
         }
