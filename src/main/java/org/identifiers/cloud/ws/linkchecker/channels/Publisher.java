@@ -18,6 +18,10 @@ public abstract class Publisher<K, V> {
     protected abstract RedisTemplate<K, V> getRedisTemplate();
 
     public void publish(V value) throws PublisherException {
-        // TODO
+        try {
+            getRedisTemplate().convertAndSend(getChannelTopic().getTopic(), value);
+        } catch (RuntimeException e) {
+            throw new PublisherException(e.getMessage());
+        }
     }
 }
