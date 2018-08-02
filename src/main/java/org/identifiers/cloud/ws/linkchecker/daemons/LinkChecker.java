@@ -71,7 +71,7 @@ public class LinkChecker extends Thread {
         return LinkCheckModelsHelper.getResultFromReport(linkCheckerReport, linkCheckRequest);
     }
 
-    private void waitRandomTime() {
+    private void randomWait() {
         Random random = new Random(System.currentTimeMillis());
         try {
             long waitTimeSeconds = random.nextInt(WAIT_TIME_LIMIT_SECONDS);
@@ -102,7 +102,7 @@ public class LinkChecker extends Thread {
             if (linkCheckRequest == null) {
                 // If no element is in there, wait a random amount of time before trying again
                 logger.info("No URL check request found");
-                waitRandomTime();
+                randomWait();
                 continue;
             }
             // Check URL
