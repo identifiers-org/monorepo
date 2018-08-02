@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.daemons;
 
+import org.identifiers.cloud.ws.linkchecker.channels.PublisherException;
+import org.identifiers.cloud.ws.linkchecker.channels.linkcheckresults.LinkCheckResultsPublisher;
 import org.identifiers.cloud.ws.linkchecker.data.LinkCheckModelsHelper;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
@@ -10,8 +12,6 @@ import org.identifiers.cloud.ws.linkchecker.strategies.LinkCheckerReport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -47,6 +47,9 @@ public class LinkChecker extends Thread {
     @Autowired
     private LinkCheckResultService linkCheckResultService;
 
+    @Autowired
+    private LinkCheckResultsPublisher linkCheckResultsPublisher;
+
     private LinkCheckResult attendLinkCheckRequest(LinkCheckRequest linkCheckRequest) {
         // Check URL
         LinkCheckerReport linkCheckerReport;
@@ -69,7 +72,7 @@ public class LinkChecker extends Thread {
         try {
             linkCheckResultService.save(linkCheckResult);
         } catch (LinkCheckResultServiceException e) {
-            logger.error("COULD not save link check result for URL '{}'", linkCheckResult.getUrl());
+            logger.error("COULD not save link check result for URL '{}', reason '{}'", linkCheckResult.getUrl(), e.getMessage());
         }
         return linkCheckResult;
     }
@@ -113,7 +116,11 @@ public class LinkChecker extends Thread {
                 if (linkCheckResult != null) {
                     persist(linkCheckResult);
                     // Announce the link checking results
-                    linkCheckResultRedisTemplate.convertAndSend(channelLinkCheckResults.getTopic(), linkCheckResult);
+                    try {
+                        linkCheckResultsPublisher.publish(linkCheckResult);
+                    } catch (PublisherException e) {
+                        logger.error("COULD not announce link check result for URL '{}', reason '{}'", linkCheckResult.getUrl(), e.getMessage());
+                    }
                 }
             } catch (RuntimeException e) {
                 // Prevent the thread from crashing on any possible error
