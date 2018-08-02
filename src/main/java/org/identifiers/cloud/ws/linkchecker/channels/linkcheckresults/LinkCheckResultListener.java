@@ -12,5 +12,5 @@ import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
  * ---
  */
 public interface LinkCheckResultListener extends Listener<LinkCheckResult> {
-    
+
 }

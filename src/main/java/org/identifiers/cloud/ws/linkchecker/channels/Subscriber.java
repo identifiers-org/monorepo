@@ -8,6 +8,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Project: link-checker
  * Package: org.identifiers.cloud.ws.linkchecker.channels
@@ -21,19 +24,24 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 public abstract class Subscriber<K, V> implements MessageListener {
     private static final Logger logger = LoggerFactory.getLogger(Subscriber.class);
 
+    private Set<Listener> listeners = new HashSet<>();
+
     protected abstract RedisMessageListenerContainer getRedisContainer();
     protected abstract ChannelTopic getChannelTopic();
     protected abstract RedisTemplate<K, V> getRedisTemplate();
-    protected abstract void processValue(V value);
 
     protected void doRegisterListener() {
         logger.info("[REGISTER] for topic '{}'", getChannelTopic().getTopic());
         getRedisContainer().addMessageListener(this, getChannelTopic());
     }
 
+    protected void addListener(Listener listener) {
+        listeners.add(listener);
+    }
+
     @Override
     public void onMessage(Message message, byte[] bytes) {
         V value = (V) getRedisTemplate().getValueSerializer().deserialize(message.getBody());
-        processValue(value);
+        listeners.parallelStream().forEach(listener -> listener.process(value));
     }
 }
