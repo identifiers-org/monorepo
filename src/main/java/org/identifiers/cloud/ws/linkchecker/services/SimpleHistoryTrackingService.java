@@ -273,7 +273,11 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
 
     @Override
     public void deleteHistoryTracking() throws HistoryTrackingServiceException {
-        // TODO
+        try {
+            linkCheckResultsService.deleteAll();
+        } catch (RuntimeException e) {
+            throw new HistoryTrackingServiceException(String.format("History tracker could not delete the historical data, due to '{}'", e.getMessage()));
+        }
     }
 
     @Override
