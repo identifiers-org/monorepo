@@ -7,6 +7,9 @@ package org.identifiers.cloud.ws.linkchecker.channels;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This abstract base class implements the base logic for publishing on Redis channels.
  */
-public class Publisher {
+public abstract class Publisher {
+    // TODO
 }
