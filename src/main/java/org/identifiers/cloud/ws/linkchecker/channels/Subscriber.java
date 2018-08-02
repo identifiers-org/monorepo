@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.channels;
 
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
+
 /**
  * Project: link-checker
  * Package: org.identifiers.cloud.ws.linkchecker.channels
@@ -10,6 +12,7 @@ package org.identifiers.cloud.ws.linkchecker.channels;
  *
  * Subscriber for announcements on a Redis backend
  */
-public class Subscriber<K, V> {
+public abstract class Subscriber<K, V> {
+    protected abstract RedisMessageListenerContainer getRedisContainer();
     // TODO
 }
