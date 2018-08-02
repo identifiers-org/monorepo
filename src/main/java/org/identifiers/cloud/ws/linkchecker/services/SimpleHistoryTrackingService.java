@@ -41,8 +41,6 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     // Cached stats
     private Cache<String, ProviderTracker> providers;
     private Cache<String, ResourceTracker> resources;
-    // Provider trackers by Provider ID
-    private ConcurrentMap<String, ProviderTracker> providerTrackers = new ConcurrentHashMap<>();
 
     @Value("${org.identifiers.cloud.ws.linkchecker.backend.data.cache.expiry.seconds}")
     private long cacheExpirySeconds;
