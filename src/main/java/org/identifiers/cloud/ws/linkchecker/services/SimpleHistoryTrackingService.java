@@ -270,7 +270,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     }
 
     @Override
-    public void deleteHistoryTracking() throws HistoryTrackingServiceException {
+    public void deleteHistoryTrackingData() throws HistoryTrackingServiceException {
         try {
             linkCheckResultsService.deleteAll();
             logger.warn("ALL LINK CHECKING HISTORICAL DATA HAS BEEN WIPED OUT as requested");
