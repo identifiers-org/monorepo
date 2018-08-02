@@ -1,5 +1,8 @@
 package org.identifiers.cloud.ws.linkchecker.data.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Project: link-checker
  * Package: org.identifiers.cloud.ws.linkchecker.data.services
@@ -11,4 +14,6 @@ package org.identifiers.cloud.ws.linkchecker.data.services;
  * This service offers high level business logic interface for persisting link check results.
  */
 public class LinkCheckResultService {
+    private static final Logger logger = LoggerFactory.getLogger(LinkCheckResultService.class);
+    // TODO
 }
