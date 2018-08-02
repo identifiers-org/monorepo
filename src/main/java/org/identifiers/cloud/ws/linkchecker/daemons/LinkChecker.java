@@ -5,6 +5,7 @@ import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.LinkCheckResultRepository;
 import org.identifiers.cloud.ws.linkchecker.data.services.LinkCheckResultService;
+import org.identifiers.cloud.ws.linkchecker.data.services.LinkCheckResultServiceException;
 import org.identifiers.cloud.ws.linkchecker.strategies.LinkCheckerException;
 import org.identifiers.cloud.ws.linkchecker.strategies.LinkCheckerReport;
 import org.slf4j.Logger;
@@ -101,12 +102,13 @@ public class LinkChecker extends Thread {
                     linkCheckerReport.isUrlAssessmentOk() ? "OK" : "NOT OK");
             LinkCheckResult linkCheckResult =
                     LinkCheckModelsHelper.getResultFromReport(linkCheckerReport, linkCheckRequest);
-            linkCheckResultRepository.save(linkCheckResult);
+            // linkCheckResultRepository.save(linkCheckResult);
+            try {
+                linkCheckResultService.save(linkCheckResult);
+            } catch (LinkCheckResultServiceException e) {
+                logger.error("COULD not save link check result for URL '{}'", linkCheckResult.getUrl());
+            }
             // Announce the link checking results
-            logger.info("Announcing Link Check result for URL '{}', HTTP Status '{}', assessment '{}'",
-                    linkCheckerReport.getUrl(),
-                    linkCheckerReport.getHttpStatus(),
-                    linkCheckerReport.isUrlAssessmentOk() ? "OK" : "NOT OK");
             linkCheckResultRedisTemplate.convertAndSend(channelLinkCheckResults.getTopic(), linkCheckResult);
         }
     }
