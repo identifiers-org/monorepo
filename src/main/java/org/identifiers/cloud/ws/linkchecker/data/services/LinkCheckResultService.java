@@ -5,6 +5,7 @@ import org.identifiers.cloud.ws.linkchecker.data.repositories.LinkCheckResultRep
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Project: link-checker
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * This service offers high level business logic interface for persisting link check results.
  */
+@Component
 public class LinkCheckResultService {
     private static final Logger logger = LoggerFactory.getLogger(LinkCheckResultService.class);
 
