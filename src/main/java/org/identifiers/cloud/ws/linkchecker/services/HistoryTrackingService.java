@@ -26,9 +26,9 @@ public interface HistoryTrackingService {
     // Multiple copies of this service may be running at the same time, so this request will be completed in two steps:
     //  - The service that receives the request will wipe out the link checking history and then send a message on a particular channel to notify the other services of what just happened
     //  - All copies of this service will attend the flush announcement by flushing their history tracking service
-    // TODO - Attend flushing request directly
+    // Attend flushing request directly
     void deleteHistoryTracking() throws HistoryTrackingServiceException;
 
-    // TODO - Attend flushing request received by a sibling service
+    // Attend flushing request received by a sibling service
     void flushHistoryTrackers() throws HistoryTrackingServiceException;
 }
