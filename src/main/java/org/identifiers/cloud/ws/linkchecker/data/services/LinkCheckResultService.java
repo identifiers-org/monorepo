@@ -25,7 +25,12 @@ public class LinkCheckResultService {
     private LinkCheckResultRepository repository;
 
     public LinkCheckResult save(LinkCheckResult linkCheckResult) throws LinkCheckResultServiceException {
-        // TODO
+        try {
+            repository.save(linkCheckResult);
+        } catch (RuntimeException e) {
+            throw new LinkCheckResultServiceException(e.getMessage());
+        }
+        return linkCheckResult;
     }
     // TODO
 }
