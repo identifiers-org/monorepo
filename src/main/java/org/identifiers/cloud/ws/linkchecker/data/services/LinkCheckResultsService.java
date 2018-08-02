@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Project: link-checker
  * Package: org.identifiers.cloud.ws.linkchecker.data.services
@@ -31,6 +33,14 @@ public class LinkCheckResultsService {
             throw new LinkCheckResultServiceException(e.getMessage());
         }
         return linkCheckResult;
+    }
+
+    public List<LinkCheckResult> findByProviderId(String providerId) {
+        return repository.findByProviderId(providerId);
+    }
+
+    public List<LinkCheckResult> findByResourceId(String resourceId) {
+        return repository.findByResourceId(resourceId);
     }
     // TODO
 }
