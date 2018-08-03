@@ -1,5 +1,8 @@
 package org.identifiers.cloud.ws.linkchecker.data.models;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 /**
  * Project: link-checker
  * Package: org.identifiers.cloud.ws.linkchecker.data.models
@@ -11,4 +14,6 @@ package org.identifiers.cloud.ws.linkchecker.data.models;
  * This message model represents an announcement that a request for flushing history tracking data has been received.
  */
 public class FlushHistoryTrackingDataMessage {
+    // Timestamp for the message
+    private String timestamp = (new Timestamp(new Date().getTime())).toString();
 }
