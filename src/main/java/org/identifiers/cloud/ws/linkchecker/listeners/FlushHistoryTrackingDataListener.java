@@ -33,5 +33,11 @@ public class FlushHistoryTrackingDataListener extends Listener<FlushHistoryTrack
         logger.info("Adding listener for requests on flushing history tracking data");
         subscriber.addListener(this);
     }
+
+    @Override
+    public void process(FlushHistoryTrackingDataMessage value) {
+        // TODO
+    }
+
     // TODO
 }
