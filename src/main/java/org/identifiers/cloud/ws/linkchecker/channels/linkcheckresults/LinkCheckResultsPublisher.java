@@ -22,7 +22,6 @@ public class LinkCheckResultsPublisher extends Publisher<String, LinkCheckResult
     @Autowired
     private RedisTemplate<String, LinkCheckResult> linkCheckResultRedisTemplate;
 
-    // TODO - Refactor this to outsource publishing things on a channel
     @Autowired
     private ChannelTopic channelTopicLinkCheckResults;
 
