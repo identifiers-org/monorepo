@@ -1,9 +1,12 @@
 package org.identifiers.cloud.ws.linkchecker.listeners;
 
 import org.identifiers.cloud.ws.linkchecker.channels.Listener;
+import org.identifiers.cloud.ws.linkchecker.channels.management.flushhistorytrackingdata
+        .FlushHistoryTrackingDataSubscriber;
 import org.identifiers.cloud.ws.linkchecker.data.models.FlushHistoryTrackingDataMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Project: link-checker
@@ -15,6 +18,8 @@ import org.slf4j.LoggerFactory;
  */
 public class FlushHistoryTrackingDataListener extends Listener<FlushHistoryTrackingDataMessage> {
     private static final Logger logger = LoggerFactory.getLogger(FlushHistoryTrackingDataListener.class);
-    
+
+    @Autowired
+    private FlushHistoryTrackingDataSubscriber subscriber;
     // TODO
 }
