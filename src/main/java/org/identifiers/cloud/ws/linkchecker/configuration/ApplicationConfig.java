@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.configuration;
 
+import org.identifiers.cloud.ws.linkchecker.data.models.FlushHistoryTrackingDataMessage;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 import org.slf4j.Logger;
@@ -76,9 +77,18 @@ public class ApplicationConfig {
     }
 
     // Publisher Subscriber
+    // Link Check Results
     @Bean
     public RedisTemplate<String, LinkCheckResult> linkCheckResultRedisTemplate() {
         RedisTemplate<String, LinkCheckResult> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory());
+        return redisTemplate;
+    }
+
+    // Flush History Tracking Data Message
+    @Bean
+    public RedisTemplate<String, FlushHistoryTrackingDataMessage> flushHistoryTrackingDataMessageRedisTemplate() {
+        RedisTemplate<String, FlushHistoryTrackingDataMessage> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
         return redisTemplate;
     }
