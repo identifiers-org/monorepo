@@ -47,6 +47,4 @@ public class FlushHistoryTrackingDataListener extends Listener<FlushHistoryTrack
             logger.error("Could not FLUSH history trackers due to the following error '{}'", e.getMessage());
         }
     }
-
-    // TODO
 }
