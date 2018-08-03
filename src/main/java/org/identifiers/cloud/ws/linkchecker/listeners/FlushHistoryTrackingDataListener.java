@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.PostConstruct;
+
 /**
  * Project: link-checker
  * Package: org.identifiers.cloud.ws.linkchecker.listeners
@@ -25,5 +27,11 @@ public class FlushHistoryTrackingDataListener extends Listener<FlushHistoryTrack
 
     @Autowired
     private HistoryTrackingService historyTrackingService;
+
+    @PostConstruct
+    private void init() {
+        logger.info("Adding listener for requests on flushing history tracking data");
+        subscriber.addListener(this);
+    }
     // TODO
 }
