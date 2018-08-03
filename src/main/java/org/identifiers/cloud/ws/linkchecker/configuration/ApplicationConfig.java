@@ -48,6 +48,9 @@ public class ApplicationConfig {
     @Value("${org.identifiers.cloud.ws.linkchecker.backend.data.channel.key.linkcheckresults}")
     private String channelKeyLinkCheckResults;
 
+    @Value("${org.identifiers.cloud.ws.linkchecker.backend.data.channel.key.flushhistorytrackingdata}")
+    private String channelKeyFlushHistoryTrackingData;
+
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(redisHost,
@@ -113,6 +116,6 @@ public class ApplicationConfig {
 
     @Bean
     public ChannelTopic channelFlushHistoryTrackingData() {
-        return new ChannelTopic("");
+        return new ChannelTopic(channelKeyFlushHistoryTrackingData);
     }
 }
