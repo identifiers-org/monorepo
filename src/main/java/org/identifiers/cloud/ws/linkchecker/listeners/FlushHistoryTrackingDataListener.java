@@ -22,7 +22,7 @@ import javax.annotation.PostConstruct;
  * ---
  */
 @Component
-public class FlushHistoryTrackingDataListener extends Listener<FlushHistoryTrackingDataMessage> {
+public class FlushHistoryTrackingDataListener implements Listener<FlushHistoryTrackingDataMessage> {
     private static final Logger logger = LoggerFactory.getLogger(FlushHistoryTrackingDataListener.class);
 
     @Autowired
