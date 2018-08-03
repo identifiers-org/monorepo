@@ -29,4 +29,8 @@ public class FlushHistoryTrackingDataSubscriber extends Subscriber<String, Flush
     @Autowired
     private RedisTemplate<String, FlushHistoryTrackingDataMessage> flushHistoryTrackingDataMessageRedisTemplate;
 
+    @PostConstruct
+    public void registerSubscriber() {
+        doRegisterSubscriber();
+    }
 }
