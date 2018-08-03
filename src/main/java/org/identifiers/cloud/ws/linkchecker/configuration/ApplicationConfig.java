@@ -81,6 +81,7 @@ public class ApplicationConfig {
     @Bean
     public RedisTemplate<String, LinkCheckResult> linkCheckResultRedisTemplate() {
         RedisTemplate<String, LinkCheckResult> redisTemplate = new RedisTemplate<>();
+        // TODO - Refactor this part of the code when possible
         redisTemplate.setConnectionFactory(redisConnectionFactory());
         return redisTemplate;
     }
