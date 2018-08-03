@@ -5,10 +5,9 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
 import com.google.common.cache.RemovalNotification;
 import org.identifiers.cloud.ws.linkchecker.api.requests.ScoringRequestWithIdPayload;
-import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
-import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
-import org.identifiers.cloud.ws.linkchecker.data.models.TrackedProvider;
-import org.identifiers.cloud.ws.linkchecker.data.models.TrackedResource;
+import org.identifiers.cloud.ws.linkchecker.channels.management.flushhistorytrackingdata
+        .FlushHistoryTrackingDataPublisher;
+import org.identifiers.cloud.ws.linkchecker.data.models.*;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.TrackedProviderRepository;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.TrackedResourceRepository;
 import org.identifiers.cloud.ws.linkchecker.data.services.LinkCheckResultsService;
@@ -63,6 +62,11 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
     // Link check requests queue
     @Autowired
     private Deque<LinkCheckRequest> linkCheckRequestQueue;
+
+    // Channels
+    // Flush Link Checking historic data
+    @Autowired
+    private FlushHistoryTrackingDataPublisher flushHistoryTrackingDataPublisher;
 
     @PostConstruct
     public void initCache() {
@@ -274,6 +278,7 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
         try {
             linkCheckResultsService.deleteAll();
             logger.warn("ALL LINK CHECKING HISTORICAL DATA HAS BEEN WIPED OUT as requested");
+            flushHistoryTrackingDataPublisher.publish(new FlushHistoryTrackingDataMessage());
         } catch (RuntimeException e) {
             throw new HistoryTrackingServiceException(String.format("History tracker could not delete the historical data, due to '{}'", e.getMessage()));
         }
