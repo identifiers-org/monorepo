@@ -2,6 +2,8 @@ package org.identifiers.cloud.ws.linkchecker.listeners;
 
 import org.identifiers.cloud.ws.linkchecker.channels.Listener;
 import org.identifiers.cloud.ws.linkchecker.data.models.FlushHistoryTrackingDataMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Project: link-checker
@@ -12,5 +14,7 @@ import org.identifiers.cloud.ws.linkchecker.data.models.FlushHistoryTrackingData
  * ---
  */
 public class FlushHistoryTrackingDataListener extends Listener<FlushHistoryTrackingDataMessage> {
+    private static final Logger logger = LoggerFactory.getLogger(FlushHistoryTrackingDataListener.class);
+    
     // TODO
 }
