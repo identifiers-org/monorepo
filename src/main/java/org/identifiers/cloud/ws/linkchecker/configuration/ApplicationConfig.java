@@ -89,6 +89,7 @@ public class ApplicationConfig {
     @Bean
     public RedisTemplate<String, FlushHistoryTrackingDataMessage> flushHistoryTrackingDataMessageRedisTemplate() {
         RedisTemplate<String, FlushHistoryTrackingDataMessage> redisTemplate = new RedisTemplate<>();
+        // TODO - Refactor this part of the code when possible
         redisTemplate.setConnectionFactory(redisConnectionFactory());
         return redisTemplate;
     }
