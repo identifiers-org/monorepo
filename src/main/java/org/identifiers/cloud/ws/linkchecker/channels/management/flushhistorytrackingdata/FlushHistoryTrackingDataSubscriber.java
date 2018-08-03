@@ -33,4 +33,19 @@ public class FlushHistoryTrackingDataSubscriber extends Subscriber<String, Flush
     public void registerSubscriber() {
         doRegisterSubscriber();
     }
+
+    @Override
+    protected RedisMessageListenerContainer getRedisContainer() {
+        return redisContainer;
+    }
+
+    @Override
+    protected ChannelTopic getChannelTopic() {
+        return channelTopicFlushHistoryTrackingData;
+    }
+
+    @Override
+    protected RedisTemplate<String, FlushHistoryTrackingDataMessage> getRedisTemplate() {
+        return flushHistoryTrackingDataMessageRedisTemplate;
+    }
 }
