@@ -95,6 +95,7 @@ public class ApplicationConfig {
         return redisTemplate;
     }
 
+    // Redis Container
     @Bean
     public RedisMessageListenerContainer redisContainer() {
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
@@ -103,8 +104,15 @@ public class ApplicationConfig {
         return container;
     }
 
+    // Channels
+    // Link Check Results Channel
     @Bean
     public ChannelTopic channelLinkCheckResults() {
         return new ChannelTopic(channelKeyLinkCheckResults);
+    }
+
+    @Bean
+    public ChannelTopic channelFlushHistoryTrackingData() {
+        return new ChannelTopic("");
     }
 }
