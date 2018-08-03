@@ -22,8 +22,6 @@ import javax.annotation.PostConstruct;
  */
 @Component
 public class LinkCheckResultsSubscriber extends Subscriber<String, LinkCheckResult> {
-    private static final Logger logger = LoggerFactory.getLogger(LinkCheckResultsSubscriber.class);
-
     @Autowired
     private RedisMessageListenerContainer redisContainer;
 
