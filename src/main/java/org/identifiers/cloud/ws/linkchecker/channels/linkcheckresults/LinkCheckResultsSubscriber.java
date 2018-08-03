@@ -2,8 +2,6 @@ package org.identifiers.cloud.ws.linkchecker.channels.linkcheckresults;
 
 import org.identifiers.cloud.ws.linkchecker.channels.Subscriber;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
