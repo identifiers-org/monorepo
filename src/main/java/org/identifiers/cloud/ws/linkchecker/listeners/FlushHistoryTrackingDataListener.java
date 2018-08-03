@@ -4,6 +4,7 @@ import org.identifiers.cloud.ws.linkchecker.channels.Listener;
 import org.identifiers.cloud.ws.linkchecker.channels.management.flushhistorytrackingdata
         .FlushHistoryTrackingDataSubscriber;
 import org.identifiers.cloud.ws.linkchecker.data.models.FlushHistoryTrackingDataMessage;
+import org.identifiers.cloud.ws.linkchecker.services.HistoryTrackingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +22,8 @@ public class FlushHistoryTrackingDataListener extends Listener<FlushHistoryTrack
 
     @Autowired
     private FlushHistoryTrackingDataSubscriber subscriber;
+
+    @Autowired
+    private HistoryTrackingService historyTrackingService;
     // TODO
 }
