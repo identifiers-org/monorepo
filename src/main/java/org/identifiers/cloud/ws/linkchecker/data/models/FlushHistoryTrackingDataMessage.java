@@ -16,4 +16,14 @@ import java.util.Date;
 public class FlushHistoryTrackingDataMessage {
     // Timestamp for the message
     private String timestamp = (new Timestamp(new Date().getTime())).toString();
+
+    public Timestamp getTimestamp() {
+        return Timestamp.valueOf(timestamp);
+    }
+
+    public FlushHistoryTrackingDataMessage setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp.toString();
+        return this;
+    }
+
 }
