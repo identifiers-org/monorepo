@@ -3,9 +3,12 @@ package org.identifiers.cloud.ws.linkchecker.channels.management.flushhistorytra
 import org.identifiers.cloud.ws.linkchecker.channels.Subscriber;
 import org.identifiers.cloud.ws.linkchecker.data.models.FlushHistoryTrackingDataMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 
 /**
  * Project: link-checker
@@ -23,5 +26,7 @@ public class FlushHistoryTrackingDataSubscriber extends Subscriber<String, Flush
     @Autowired
     private ChannelTopic channelTopicFlushHistoryTrackingData;
 
-    
+    @Autowired
+    private RedisTemplate<String, FlushHistoryTrackingDataMessage> flushHistoryTrackingDataMessageRedisTemplate;
+
 }
