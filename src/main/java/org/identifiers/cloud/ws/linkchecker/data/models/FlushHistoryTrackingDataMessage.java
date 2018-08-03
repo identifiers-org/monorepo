@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.data.models;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -13,7 +14,7 @@ import java.util.Date;
  *
  * This message model represents an announcement that a request for flushing history tracking data has been received.
  */
-public class FlushHistoryTrackingDataMessage {
+public class FlushHistoryTrackingDataMessage implements Serializable {
     // Timestamp for the message
     private String timestamp = (new Timestamp(new Date().getTime())).toString();
 

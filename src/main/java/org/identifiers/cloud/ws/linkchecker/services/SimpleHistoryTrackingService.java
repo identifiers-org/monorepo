@@ -5,8 +5,8 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
 import com.google.common.cache.RemovalNotification;
 import org.identifiers.cloud.ws.linkchecker.api.requests.ScoringRequestWithIdPayload;
-import org.identifiers.cloud.ws.linkchecker.channels.management.flushhistorytrackingdata
-        .FlushHistoryTrackingDataPublisher;
+import org.identifiers.cloud.ws.linkchecker.channels.PublisherException;
+import org.identifiers.cloud.ws.linkchecker.channels.management.flushhistorytrackingdata.FlushHistoryTrackingDataPublisher;
 import org.identifiers.cloud.ws.linkchecker.data.models.*;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.TrackedProviderRepository;
 import org.identifiers.cloud.ws.linkchecker.data.repositories.TrackedResourceRepository;
@@ -24,7 +24,9 @@ import javax.annotation.PostConstruct;
 import java.util.Deque;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Project: link-checker
@@ -278,9 +280,13 @@ public class SimpleHistoryTrackingService implements HistoryTrackingService {
         try {
             linkCheckResultsService.deleteAll();
             logger.warn("ALL LINK CHECKING HISTORICAL DATA HAS BEEN WIPED OUT as requested");
-            flushHistoryTrackingDataPublisher.publish(new FlushHistoryTrackingDataMessage());
         } catch (RuntimeException e) {
             throw new HistoryTrackingServiceException(String.format("History tracker could not delete the historical data, due to '{}'", e.getMessage()));
+        }
+        try {
+            flushHistoryTrackingDataPublisher.publish(new FlushHistoryTrackingDataMessage());
+        } catch (PublisherException e) {
+            throw new HistoryTrackingServiceException(String.format("History tracker could not announce the request to delete the historical data, due to '{}'", e.getMessage()));
         }
     }
 
