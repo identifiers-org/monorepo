@@ -1,5 +1,12 @@
 package org.identifiers.cloud.ws.linkchecker.channels.management.flushhistorytrackingdata;
 
+import org.identifiers.cloud.ws.linkchecker.channels.Publisher;
+import org.identifiers.cloud.ws.linkchecker.data.models.FlushHistoryTrackingDataMessage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.ChannelTopic;
+import org.springframework.stereotype.Component;
+
 /**
  * Project: link-checker
  * Package: org.identifiers.cloud.ws.linkchecker.channels.management.flushhistorytrackingdata
@@ -8,5 +15,21 @@ package org.identifiers.cloud.ws.linkchecker.channels.management.flushhistorytra
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-public class FlushHistoryTrackingDataPublisher {
+@Component
+public class FlushHistoryTrackingDataPublisher extends Publisher<String, FlushHistoryTrackingDataMessage> {
+    @Autowired
+    private RedisTemplate<String, FlushHistoryTrackingDataMessage> flushHistoryTrackingDataMessageRedisTemplate;
+
+    @Autowired
+    private ChannelTopic channelTopicFlushHistoryTrackingData;
+
+    @Override
+    protected ChannelTopic getChannelTopic() {
+        return channelTopicFlushHistoryTrackingData;
+    }
+
+    @Override
+    protected RedisTemplate<String, FlushHistoryTrackingDataMessage> getRedisTemplate() {
+        return flushHistoryTrackingDataMessageRedisTemplate;
+    }
 }
