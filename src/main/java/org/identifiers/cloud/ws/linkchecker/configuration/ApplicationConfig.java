@@ -110,12 +110,12 @@ public class ApplicationConfig {
     // Channels
     // Link Check Results Channel
     @Bean
-    public ChannelTopic channelLinkCheckResults() {
+    public ChannelTopic channelTopicLinkCheckResults() {
         return new ChannelTopic(channelKeyLinkCheckResults);
     }
 
     @Bean
-    public ChannelTopic channelFlushHistoryTrackingData() {
+    public ChannelTopic channelTopicFlushHistoryTrackingData() {
         return new ChannelTopic(channelKeyFlushHistoryTrackingData);
     }
 }

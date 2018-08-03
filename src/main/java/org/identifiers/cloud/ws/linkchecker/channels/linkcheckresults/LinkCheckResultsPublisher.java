@@ -24,11 +24,11 @@ public class LinkCheckResultsPublisher extends Publisher<String, LinkCheckResult
 
     // TODO - Refactor this to outsource publishing things on a channel
     @Autowired
-    private ChannelTopic channelLinkCheckResults;
+    private ChannelTopic channelTopicLinkCheckResults;
 
     @Override
     protected ChannelTopic getChannelTopic() {
-        return channelLinkCheckResults;
+        return channelTopicLinkCheckResults;
     }
 
     @Override

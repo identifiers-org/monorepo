@@ -28,7 +28,7 @@ public class LinkCheckResultsSubscriber extends Subscriber<String, LinkCheckResu
     private RedisMessageListenerContainer redisContainer;
 
     @Autowired
-    private ChannelTopic channelKeyLinkCheckResults;
+    private ChannelTopic channelTopicLinkCheckResults;
 
     @Autowired
     private RedisTemplate<String, LinkCheckResult> linkCheckResultRedisTemplate;
@@ -45,7 +45,7 @@ public class LinkCheckResultsSubscriber extends Subscriber<String, LinkCheckResu
 
     @Override
     protected ChannelTopic getChannelTopic() {
-        return channelKeyLinkCheckResults;
+        return channelTopicLinkCheckResults;
     }
 
     @Override
