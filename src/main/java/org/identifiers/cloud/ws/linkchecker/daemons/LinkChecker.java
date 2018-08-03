@@ -125,6 +125,7 @@ public class LinkChecker extends Thread {
             } catch (RuntimeException e) {
                 // Prevent the thread from crashing on any possible error
                 logger.error("An error has been stopped for preventing the thread from crashing, '{}'", e.getMessage());
+                randomWait();
             }
         }
     }
