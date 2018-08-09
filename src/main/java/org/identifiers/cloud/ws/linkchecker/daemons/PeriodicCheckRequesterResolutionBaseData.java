@@ -85,7 +85,7 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
                     .getResolverService(wsResolverHost, wsResolverPort)
                     .getAllSampleIdsResolved();
             if (insightResponse.getHttpStatus() == HttpStatus.OK) {
-                logger.info("Processing #{} entries from the Resolution insight API",
+                logger.info("Queuing link check requests for #{} entries from the Resolution insight API",
                         insightResponse.getPayload().getResolvedResources().size());
                 insightResponse.getPayload().getResolvedResources()
                         .parallelStream().forEach(resolvedResource -> {
