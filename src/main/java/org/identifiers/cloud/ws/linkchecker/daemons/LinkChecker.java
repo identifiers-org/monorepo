@@ -106,6 +106,7 @@ public class LinkChecker extends Thread {
     }
 
     public synchronized void setShutdown() {
+        logger.warn("--- [SHUTDOWN] REQUESTED ---");
         this.shutdown = true;
     }
 
