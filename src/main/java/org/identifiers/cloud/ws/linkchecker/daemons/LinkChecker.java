@@ -117,6 +117,7 @@ public class LinkChecker extends Thread {
         while (!isShutdown()) {
             try {
                 // Pop element, if any, from the link checking request queue
+                logger.info("Polling link check request queue");
                 LinkCheckRequest linkCheckRequest = linkCheckRequestQueue.pollFirst();
                 if (linkCheckRequest == null) {
                     // If no element is in there, wait a random amount of time before trying again
