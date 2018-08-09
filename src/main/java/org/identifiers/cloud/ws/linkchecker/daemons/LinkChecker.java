@@ -71,21 +71,33 @@ public class LinkChecker extends Thread {
     private LinkCheckResult persist(LinkCheckResult linkCheckResult) {
         try {
             linkCheckResultsService.save(linkCheckResult);
+            return linkCheckResult;
         } catch (LinkCheckResultServiceException e) {
             logger.error("COULD not save link check result for URL '{}', reason '{}'", linkCheckResult.getUrl(), e.getMessage());
         }
-        return linkCheckResult;
+        return null;
+    }
+
+    private LinkCheckResult announce(LinkCheckResult linkCheckResult) {
+        // Announce the link checking results
+        try {
+            linkCheckResultsPublisher.publish(linkCheckResult);
+            return linkCheckResult;
+        } catch (PublisherException e) {
+            logger.error("COULD not announce link check result for URL '{}', reason '{}'", linkCheckResult.getUrl(), e.getMessage());
+        }
+        return null;
     }
 
     private void randomWait() {
         try {
             long waitTimeSeconds = random.nextInt(WAIT_TIME_LIMIT_SECONDS);
-            logger.info("Waiting {}s before we check again for URLs", waitTimeSeconds);
+            logger.info("Random wait {}s", waitTimeSeconds);
             Thread.sleep(waitTimeSeconds * 1000);
         } catch (InterruptedException e) {
             logger.warn("The Link Checker Daemon has been interrupted while waiting for " +
                     "another iteration. Stopping the daemon, no more URL check requests will be processed");
-            shutdown = true;
+            setShutdown();
         }
     }
 
@@ -115,12 +127,7 @@ public class LinkChecker extends Thread {
                 LinkCheckResult linkCheckResult = attendLinkCheckRequest(linkCheckRequest);
                 if (linkCheckResult != null) {
                     persist(linkCheckResult);
-                    // Announce the link checking results
-                    try {
-                        linkCheckResultsPublisher.publish(linkCheckResult);
-                    } catch (PublisherException e) {
-                        logger.error("COULD not announce link check result for URL '{}', reason '{}'", linkCheckResult.getUrl(), e.getMessage());
-                    }
+                    announce(linkCheckResult);
                 }
             } catch (RuntimeException e) {
                 // Prevent the thread from crashing on any possible error
@@ -128,6 +135,7 @@ public class LinkChecker extends Thread {
                 randomWait();
             }
         }
+        logger.info("--- [END] Link Checker Daemon ---");
     }
 
     @PostConstruct
