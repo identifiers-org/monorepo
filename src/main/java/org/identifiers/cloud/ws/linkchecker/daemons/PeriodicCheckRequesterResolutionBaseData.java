@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import java.util.Deque;
 import java.util.Random;
+import java.util.concurrent.BlockingDeque;
 
 /**
  * Project: link-checker
@@ -30,7 +30,7 @@ import java.util.Random;
 public class PeriodicCheckRequesterResolutionBaseData extends Thread {
     // TODO - Refactor this out to application properties
     private static final int WAIT_TIME_MAX_BEFORE_NEXT_REQUEST_SECONDS = 86400;     // 24 hours
-    private static final int WAIT_TIME_MIN_BEFORE_NEXT_REQUEST_SECONDS = 21600;     // 6 hours
+    private static final int WAIT_TIME_MIN_BEFORE_NEXT_REQUEST_SECONDS = 43200;     // 12 hours
     private static final int WAIT_TIME_ERROR_BEFORE_NEXT_REQUEST_SECONDS = 3600;    // 1 hour
     private static final Logger logger = LoggerFactory.getLogger(PeriodicCheckRequesterResolutionBaseData.class);
 
@@ -46,7 +46,7 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
     private String wsResolverPort;
 
     @Autowired
-    private Deque<LinkCheckRequest> linkCheckRequestQueue;
+    private BlockingDeque<LinkCheckRequest> linkCheckRequestQueue;
 
     public synchronized boolean isShutdown() {
         return shutdown;

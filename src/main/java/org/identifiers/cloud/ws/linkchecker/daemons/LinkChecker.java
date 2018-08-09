@@ -5,8 +5,8 @@ import org.identifiers.cloud.ws.linkchecker.channels.linkcheckresults.LinkCheckR
 import org.identifiers.cloud.ws.linkchecker.data.LinkCheckModelsHelper;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
-import org.identifiers.cloud.ws.linkchecker.data.services.LinkCheckResultsService;
 import org.identifiers.cloud.ws.linkchecker.data.services.LinkCheckResultServiceException;
+import org.identifiers.cloud.ws.linkchecker.data.services.LinkCheckResultsService;
 import org.identifiers.cloud.ws.linkchecker.strategies.LinkCheckerException;
 import org.identifiers.cloud.ws.linkchecker.strategies.LinkCheckerReport;
 import org.slf4j.Logger;
@@ -16,8 +16,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import java.util.Deque;
 import java.util.Random;
+import java.util.concurrent.BlockingDeque;
 
 /**
  * Project: link-checker
@@ -38,7 +38,7 @@ public class LinkChecker extends Thread {
     private Random random = new Random(System.currentTimeMillis());
 
     @Autowired
-    private Deque<LinkCheckRequest> linkCheckRequestQueue;
+    private BlockingDeque<LinkCheckRequest> linkCheckRequestQueue;
 
     // It may not be the best of the names... I may refactor this in the future
     @Autowired

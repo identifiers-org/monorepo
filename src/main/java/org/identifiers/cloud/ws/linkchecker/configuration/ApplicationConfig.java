@@ -19,7 +19,7 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 import org.springframework.data.redis.support.collections.DefaultRedisList;
 import org.springframework.data.redis.support.collections.RedisList;
 
-import java.util.Deque;
+import java.util.concurrent.BlockingDeque;
 
 /**
  * Project: link-checker
@@ -73,8 +73,8 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public Deque<LinkCheckRequest> linkCheckRequestQueue() {
-        RedisList<LinkCheckRequest> linkCheckRequests = new DefaultRedisList<LinkCheckRequest>(queueKeyLinkCheckRequests,
+    public BlockingDeque<LinkCheckRequest> linkCheckRequestQueue() {
+        RedisList<LinkCheckRequest> linkCheckRequests = new DefaultRedisList<>(queueKeyLinkCheckRequests,
                 linkCheckRequestRedisTemplate());
         return linkCheckRequests;
     }
