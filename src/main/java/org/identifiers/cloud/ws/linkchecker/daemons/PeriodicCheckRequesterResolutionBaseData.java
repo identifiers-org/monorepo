@@ -74,6 +74,7 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
         } else {
             logger.info("--- [START] Periodic Link Check Requester on Resolution Base Data ---");
         }
+        // TODO - Refactor this code to make it cleaner
         Random random = new Random(System.currentTimeMillis());
         while (!isShutdown() && enabled) {
             // Next random number of seconds to wait before the next iteration
