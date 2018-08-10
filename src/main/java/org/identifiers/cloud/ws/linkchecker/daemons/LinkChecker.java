@@ -18,6 +18,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.Random;
 import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Project: link-checker
@@ -103,6 +104,15 @@ public class LinkChecker extends Thread {
         }
     }
 
+    private LinkCheckRequest nextLinkCheckRequest() {
+        try {
+            return linkCheckRequestQueue.pollFirst(WAIT_TIME_POLL_LINK_CHECK_REQUEST_QUEUE_SECONDS, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            logger.warn("The Link Check Request Queue is unresponsive, operation timed out, {}", e.getMessage());
+        }
+        return null;
+    }
+
     public synchronized boolean isShutdown() {
         return shutdown;
     }
@@ -120,7 +130,7 @@ public class LinkChecker extends Thread {
             try {
                 // Pop element, if any, from the link checking request queue
                 logger.info("Polling link check request queue");
-                LinkCheckRequest linkCheckRequest = linkCheckRequestQueue.pollFirst();
+                LinkCheckRequest linkCheckRequest = nextLinkCheckRequest();
                 if (linkCheckRequest == null) {
                     // If no element is in there, wait a random amount of time before trying again
                     logger.info("No URL check request found");
