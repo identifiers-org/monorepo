@@ -23,7 +23,8 @@ import java.sql.Timestamp;
 @Component
 @Scope("prototype")
 public class SimpleLinkChecker implements LinkChecker {
-    private static final int CONNECTION_TIMEOUT_SECONDS = 10;
+    private static final int CONNECTION_TIMEOUT_SECONDS = 3;
+    private static final int READ_TIMEOUT_SECONDS = 7;
 
     @Override
     public LinkCheckerReport check(String url) {
@@ -50,6 +51,7 @@ public class SimpleLinkChecker implements LinkChecker {
         connection.setConnectTimeout(CONNECTION_TIMEOUT_SECONDS * 1000);
         connection.setUseCaches(false);
         connection.setInstanceFollowRedirects(false);
+        connection.setReadTimeout(READ_TIMEOUT_SECONDS);
         try {
             // TODO - This the operations that blocks
             report.setHttpStatus(connection.getResponseCode());
