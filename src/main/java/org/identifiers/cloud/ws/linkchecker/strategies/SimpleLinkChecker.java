@@ -48,6 +48,7 @@ public class SimpleLinkChecker implements LinkChecker {
             throw new SimpleLinkCheckerException(e.getMessage());
         }
         connection.setConnectTimeout(CONNECTION_TIMEOUT_SECONDS * 1000);
+        connection.setUseCaches(false);
         try {
             // TODO - This the operations that blocks
             report.setHttpStatus(connection.getResponseCode());
