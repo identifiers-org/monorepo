@@ -49,6 +49,7 @@ public class SimpleLinkChecker implements LinkChecker {
         }
         connection.setConnectTimeout(CONNECTION_TIMEOUT_SECONDS * 1000);
         try {
+            // TODO - This the operations that blocks
             report.setHttpStatus(connection.getResponseCode());
         } catch (IOException e) {
             throw new SimpleLinkCheckerException(String.format("IO Exception when checking '%s', reason '%s'", url, e.getMessage()));
