@@ -32,6 +32,7 @@ import java.util.concurrent.BlockingDeque;
 @Component
 public class LinkChecker extends Thread {
     private static final int WAIT_TIME_LIMIT_SECONDS = 30;
+    private static final int WAIT_TIME_POLL_LINK_CHECK_REQUEST_QUEUE_SECONDS = 3;
     private static final Logger logger = LoggerFactory.getLogger(LinkChecker.class);
 
     private boolean shutdown = false;
