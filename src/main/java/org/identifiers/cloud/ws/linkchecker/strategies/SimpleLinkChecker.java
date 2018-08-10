@@ -23,7 +23,7 @@ import java.sql.Timestamp;
 @Component
 @Scope("prototype")
 public class SimpleLinkChecker implements LinkChecker {
-    private static final int CONNECTION_TIMEOUT_SECONDS = 30;
+    private static final int CONNECTION_TIMEOUT_SECONDS = 10;
 
     @Override
     public LinkCheckerReport check(String url) {
