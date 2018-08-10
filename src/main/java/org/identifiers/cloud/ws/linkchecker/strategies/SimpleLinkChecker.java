@@ -24,7 +24,7 @@ import java.sql.Timestamp;
 @Scope("prototype")
 public class SimpleLinkChecker implements LinkChecker {
     private static final int CONNECTION_TIMEOUT_SECONDS = 3;
-    private static final int READ_TIMEOUT_SECONDS = 7;
+    private static final int READ_TIMEOUT_SECONDS = 12;
 
     @Override
     public LinkCheckerReport check(String url) {
