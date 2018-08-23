@@ -167,7 +167,39 @@ public class MetadataApiModel {
 
     public ServiceResponseFetchMetadata getMetadataFor(String selector, String compactId) {
         ServiceResponseFetchMetadata response = createDefaultResponseFetchMetadata(HttpStatus.OK, "");
-        ResolvedResource resource = ;
+        List<ResolvedResource> resolvedResources = resolveCompactId(selector, compactId, response);
+        if (response.getHttpStatus() == HttpStatus.OK) {
+            // Log a warning if there's more than one resource
+            if (resolvedResources.size() > 1) {
+                logger.warn("Using selector '{}' for Compact ID '{}' returned #{} resources!",
+                        selector, compactId, resolvedResources.size());
+            }
+            // Select the provider
+            ResolvedResource selectedResource = selectResource(compactId, resolvedResources, response);
+            if (response.getHttpStatus() != HttpStatus.OK) {
+                return response;
+            }
+            // Extract the metadata
+            try {
+                response.getPayload().setMetadata(metadataFetcher.fetchMetadataFor(selectedResource.getAccessUrl()));
+            } catch (MetadataFetcherException e) {
+                response.setErrorMessage(String.format("FAILED to fetch metadata for Compact ID '%s', " +
+                                "because '%s'",
+                        compactId,
+                        e.getMessage()));
+                // TODO I need to refine the error reporting here to correctly flag errors as client or server side
+                if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.INTERNAL_ERROR.getValue()) {
+                    response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+                } else if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.METADATA_NOT_FOUND.getValue()) {
+                    response.setHttpStatus(HttpStatus.NOT_FOUND);
+                } else if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.METADATA_INVALID.getValue()) {
+                    response.setHttpStatus(HttpStatus.UNPROCESSABLE_ENTITY);
+                } else {
+                    response.setHttpStatus(HttpStatus.BAD_REQUEST);
+                }
+            }
+        }
+        return response;
     }
 
     public ServiceResponseFetchMetadataForUrl getMetadataForUrl(ServiceRequestFetchMetadataForUrl request) {
