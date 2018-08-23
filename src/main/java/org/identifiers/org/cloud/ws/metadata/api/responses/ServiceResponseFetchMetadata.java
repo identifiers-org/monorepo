@@ -1,4 +1,4 @@
-package org.identifiers.org.cloud.ws.metadata.models.api.responses;
+package org.identifiers.org.cloud.ws.metadata.api.responses;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>

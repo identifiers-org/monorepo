@@ -2,8 +2,8 @@ package org.identifiers.org.cloud.ws.metadata.controllers;
 
 import org.identifiers.org.cloud.ws.metadata.models.MetadataApiModel;
 import org.identifiers.org.cloud.ws.metadata.api.requests.ServiceRequestFetchMetadataForUrl;
-import org.identifiers.org.cloud.ws.metadata.models.api.responses.ServiceResponseFetchMetadata;
-import org.identifiers.org.cloud.ws.metadata.models.api.responses.ServiceResponseFetchMetadataForUrl;
+import org.identifiers.org.cloud.ws.metadata.api.responses.ServiceResponseFetchMetadata;
+import org.identifiers.org.cloud.ws.metadata.api.responses.ServiceResponseFetchMetadataForUrl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
