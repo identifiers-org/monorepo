@@ -40,7 +40,8 @@ public class MetadataApiModel {
         this.idResourceSelector = idResourceSelector;
     }
 
-    private ServiceResponseFetchMetadata createDefaultResponseFetchMetadata(HttpStatus httpStatus, String errorMessage) {
+    private ServiceResponseFetchMetadata createDefaultResponseFetchMetadata(HttpStatus httpStatus, String
+            errorMessage) {
         ServiceResponseFetchMetadata response = new ServiceResponseFetchMetadata();
         response.setApiVersion(ApiCentral.apiVersion)
                 .setHttpStatus(httpStatus)
@@ -49,7 +50,8 @@ public class MetadataApiModel {
         return response;
     }
 
-    private ServiceResponseFetchMetadataForUrl createDefaultResponseFetchMetadataForUrl(HttpStatus httpStatus, String errorMessage) {
+    private ServiceResponseFetchMetadataForUrl createDefaultResponseFetchMetadataForUrl(HttpStatus httpStatus, String
+            errorMessage) {
         ServiceResponseFetchMetadataForUrl response = new ServiceResponseFetchMetadataForUrl();
         response.setApiVersion(ApiCentral.apiVersion)
                 .setHttpStatus(httpStatus)
@@ -82,7 +84,8 @@ public class MetadataApiModel {
         return resources;
     }
 
-    private List<ResolvedResource> resolveCompactId(String selector, String compactId, ServiceResponseFetchMetadata response) {
+    private List<ResolvedResource> resolveCompactId(String selector, String compactId, ServiceResponseFetchMetadata
+            response) {
         List<ResolvedResource> resources = new ArrayList<>();
         try {
             resources = idResolver.resolve(selector, compactId);
@@ -130,6 +133,30 @@ public class MetadataApiModel {
         return selectedResource;
     }
 
+    private void extractMetadata(ResolvedResource resolvedResource, ServiceResponseFetchMetadata response, String selector, String compactId) {
+        // Extract the metadata
+        try {
+            response.getPayload().setMetadata(metadataFetcher.fetchMetadataFor(resolvedResource.getAccessUrl()));
+        } catch (MetadataFetcherException e) {
+            response.setErrorMessage(String.format("FAILED to fetch metadata for Compact ID '%s', '%s'" +
+                            "because '%s'",
+                    (selector == null) ? "no selector, " : String.format("selector '%s'", selector),
+                    compactId,
+                    e.getMessage()));
+            // TODO I need to refine the error reporting here to correctly flag errors as client or server side
+            if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.INTERNAL_ERROR.getValue()) {
+                response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            } else if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.METADATA_NOT_FOUND.getValue
+                    ()) {
+                response.setHttpStatus(HttpStatus.NOT_FOUND);
+            } else if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.METADATA_INVALID.getValue()) {
+                response.setHttpStatus(HttpStatus.UNPROCESSABLE_ENTITY);
+            } else {
+                response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            }
+        }
+    }
+
     // --- API Methods ---
     public ServiceResponseFetchMetadata getMetadataFor(String compactId) {
         ServiceResponseFetchMetadata response = createDefaultResponseFetchMetadata(HttpStatus.OK, "");
@@ -142,25 +169,7 @@ public class MetadataApiModel {
         if (response.getHttpStatus() != HttpStatus.OK) {
             return response;
         }
-        // Extract the metadata
-        try {
-           response.getPayload().setMetadata(metadataFetcher.fetchMetadataFor(selectedResource.getAccessUrl()));
-        } catch (MetadataFetcherException e) {
-            response.setErrorMessage(String.format("FAILED to fetch metadata for Compact ID '%s', " +
-                            "because '%s'",
-                    compactId,
-                    e.getMessage()));
-            // TODO I need to refine the error reporting here to correctly flag errors as client or server side
-            if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.INTERNAL_ERROR.getValue()) {
-                response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-            } else if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.METADATA_NOT_FOUND.getValue()) {
-                response.setHttpStatus(HttpStatus.NOT_FOUND);
-            } else if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.METADATA_INVALID.getValue()) {
-                response.setHttpStatus(HttpStatus.UNPROCESSABLE_ENTITY);
-            } else {
-                response.setHttpStatus(HttpStatus.BAD_REQUEST);
-            }
-        }
+        extractMetadata(selectedResource, response, null, compactId);
         // return the response
         return response;
     }
@@ -193,9 +202,11 @@ public class MetadataApiModel {
                 // TODO I need to refine the error reporting here to correctly flag errors as client or server side
                 if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.INTERNAL_ERROR.getValue()) {
                     response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-                } else if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.METADATA_NOT_FOUND.getValue()) {
+                } else if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.METADATA_NOT_FOUND
+                        .getValue()) {
                     response.setHttpStatus(HttpStatus.NOT_FOUND);
-                } else if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.METADATA_INVALID.getValue()) {
+                } else if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.METADATA_INVALID
+                        .getValue()) {
                     response.setHttpStatus(HttpStatus.UNPROCESSABLE_ENTITY);
                 } else {
                     response.setHttpStatus(HttpStatus.BAD_REQUEST);
