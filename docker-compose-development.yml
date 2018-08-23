@@ -6,7 +6,7 @@
 version: "3"
 services:
     resolver:
-        image: identifiersorg/cloud-ws-resolver
+        image: identifiersorg/cloud-ws-resolver:1.0.4
         environment:
             - WS_RESOLVER_CONFIG_REDIS_HOST=redis
             - WS_RESOLVER_CONFIG_REDIS_PORT=6379
@@ -18,13 +18,25 @@ services:
         depends_on:
             - redis
             - recommender
-    redis:
-        image: redis:4.0.8-alpine
-        ports:
-            - "6379:6379"
     recommender:
         image: identifiersorg/cloud-ws-resource-recommender
         environment:
             - WS_RESOURCE_RECOMMENDER_JVM_MEMORY_MAX=1024m
         ports:
             - "8083:8083"
+        dependes_on:
+            - link-checker
+    link-checker:
+        image: identifiersorg/cloud-ws-link-checker:1.1.3
+        environment:
+            - WS_LINK_CHECKER_CONFIG_REDIS_HOST=redis
+            - WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST=localhost
+            - WS_LINK_CHECKER_CONFIG_DAEMON_PERIODIC_LINK_CHECK_REQUESTER_ENABLED=false
+        ports:
+            - "8084:8084"
+        depends_on:
+            - redis
+    redis:
+        image: redis:4.0.8-alpine
+        ports:
+            - "6379:6379"
