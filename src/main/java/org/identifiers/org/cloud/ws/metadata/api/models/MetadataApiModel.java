@@ -140,8 +140,8 @@ public class MetadataApiModel {
         } catch (MetadataFetcherException e) {
             response.setErrorMessage(String.format("FAILED to fetch metadata for Compact ID '%s', '%s'" +
                             "because '%s'",
-                    (selector == null) ? "no selector, " : String.format("selector '%s'", selector),
                     compactId,
+                    (selector == null) ? "no selector, " : String.format("selector '%s'", selector),
                     e.getMessage()));
             // TODO I need to refine the error reporting here to correctly flag errors as client or server side
             if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.INTERNAL_ERROR.getValue()) {
