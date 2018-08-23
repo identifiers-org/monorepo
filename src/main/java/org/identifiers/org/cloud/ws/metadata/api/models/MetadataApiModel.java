@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -29,7 +28,6 @@ import java.util.UUID;
 @Component
 public class MetadataApiModel {
     private static Logger logger = LoggerFactory.getLogger(MetadataApiModel.class);
-    private static String runningSessionId = UUID.randomUUID().toString();
     private IdResolver idResolver;
     private MetadataFetcher metadataFetcher;
     private IdResourceSelector idResourceSelector;
@@ -166,13 +164,4 @@ public class MetadataApiModel {
         // return the response
         return response;
     }
-
-    public String livenessCheck() {
-        return runningSessionId;
-    }
-
-    public String readinessCheck() {
-        return runningSessionId;
-    }
-
 }
