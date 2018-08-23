@@ -1,6 +1,6 @@
 package org.identifiers.org.cloud.ws.metadata.api.controllers;
 
-import org.identifiers.org.cloud.ws.metadata.models.MetadataApiModel;
+import org.identifiers.org.cloud.ws.metadata.api.models.MetadataApiModel;
 import org.identifiers.org.cloud.ws.metadata.api.requests.ServiceRequestFetchMetadataForUrl;
 import org.identifiers.org.cloud.ws.metadata.api.responses.ServiceResponseFetchMetadata;
 import org.identifiers.org.cloud.ws.metadata.api.responses.ServiceResponseFetchMetadataForUrl;
