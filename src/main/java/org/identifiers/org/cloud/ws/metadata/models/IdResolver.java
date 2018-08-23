@@ -21,5 +21,5 @@ public interface IdResolver {
     // from other providers would be translated into this one... until a differentiation aspect comes up.
     List<ResolvedResource> resolve(String compactIdParameter) throws IdResolverException;
 
-    ResolvedResource resolve(String selector, String compactId) throws IdResolverException;
+    List<ResolvedResource> resolve(String selector, String compactId) throws IdResolverException;
 }

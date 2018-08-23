@@ -1,7 +1,7 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
-import org.identifiers.cloud.libapi.services.ApiServicesFactory;
 import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
+import org.identifiers.cloud.libapi.services.ApiServicesFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,5 +34,14 @@ public class IdResolverThroughResolverWebService implements IdResolver {
                 .requestCompactIdResolution(compactIdParameter)
                 .getPayload()
                 .getResolvedResources();
+    }
+
+    @Override
+    public List<ResolvedResource> resolve(String selector, String compactId) throws IdResolverException {
+        return ApiServicesFactory.getResolverService(wsResolverHost, String.valueOf(wsResolverPort))
+                .requestCompactIdResolution(compactId, selector)
+                .getPayload()
+                .getResolvedResources();
+
     }
 }
