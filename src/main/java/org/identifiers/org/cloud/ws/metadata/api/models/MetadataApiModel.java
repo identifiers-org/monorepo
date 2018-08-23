@@ -3,6 +3,7 @@ package org.identifiers.org.cloud.ws.metadata.api.models;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
+import org.identifiers.org.cloud.ws.metadata.api.ApiCentral;
 import org.identifiers.org.cloud.ws.metadata.api.requests.ServiceRequestFetchMetadataForUrl;
 import org.identifiers.org.cloud.ws.metadata.api.responses.ResponseFetchMetadataForUrlPayload;
 import org.identifiers.org.cloud.ws.metadata.api.responses.ResponseFetchMetadataPayload;
@@ -27,7 +28,6 @@ import java.util.UUID;
  */
 @Component
 public class MetadataApiModel {
-    public static final String apiVersion = "1.0";
     private static Logger logger = LoggerFactory.getLogger(MetadataApiModel.class);
     private static String runningSessionId = UUID.randomUUID().toString();
     private IdResolver idResolver;
@@ -44,7 +44,7 @@ public class MetadataApiModel {
 
     private ServiceResponseFetchMetadata createDefaultResponseFetchMetadata(HttpStatus httpStatus, String errorMessage) {
         ServiceResponseFetchMetadata response = new ServiceResponseFetchMetadata();
-        response.setApiVersion(apiVersion)
+        response.setApiVersion(ApiCentral.apiVersion)
                 .setHttpStatus(httpStatus)
                 .setErrorMessage(errorMessage);
         response.setPayload(new ResponseFetchMetadataPayload().setMetadata(""));
@@ -53,7 +53,7 @@ public class MetadataApiModel {
 
     private ServiceResponseFetchMetadataForUrl createDefaultResponseFetchMetadataForUrl(HttpStatus httpStatus, String errorMessage) {
         ServiceResponseFetchMetadataForUrl response = new ServiceResponseFetchMetadataForUrl();
-        response.setApiVersion(apiVersion)
+        response.setApiVersion(ApiCentral.apiVersion)
                 .setHttpStatus(httpStatus)
                 .setErrorMessage(errorMessage);
         ResponseFetchMetadataForUrlPayload payload = new ResponseFetchMetadataForUrlPayload();
