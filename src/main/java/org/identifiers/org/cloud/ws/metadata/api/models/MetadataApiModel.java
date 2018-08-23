@@ -161,15 +161,13 @@ public class MetadataApiModel {
     public ServiceResponseFetchMetadata getMetadataFor(String compactId) {
         ServiceResponseFetchMetadata response = createDefaultResponseFetchMetadata(HttpStatus.OK, "");
         List<ResolvedResource> resources = resolveCompactId(compactId, response);
-        if (response.getHttpStatus() != HttpStatus.OK) {
-            return response;
+        if (response.getHttpStatus() == HttpStatus.OK) {
+            // Select the provider
+            ResolvedResource selectedResource = selectResource(compactId, resources, response);
+            if (response.getHttpStatus() == HttpStatus.OK) {
+                extractMetadata(selectedResource, response, null, compactId);
+            }
         }
-        // Select the provider
-        ResolvedResource selectedResource = selectResource(compactId, resources, response);
-        if (response.getHttpStatus() != HttpStatus.OK) {
-            return response;
-        }
-        extractMetadata(selectedResource, response, null, compactId);
         // return the response
         return response;
     }
