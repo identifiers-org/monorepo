@@ -20,4 +20,6 @@ public interface IdResolver {
     // the case of having another provider, the only burden in to the eyes, as this model will probably stay, and models
     // from other providers would be translated into this one... until a differentiation aspect comes up.
     List<ResolvedResource> resolve(String compactIdParameter) throws IdResolverException;
+
+    ResolvedResource resolve(String selector, String compactId) throws IdResolverException;
 }

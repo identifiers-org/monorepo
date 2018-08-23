@@ -82,6 +82,12 @@ public class MetadataApiModel {
         return resources;
     }
 
+    private ResolvedResource resolveCompactId(String provider, String compactId, ServiceResponseFetchMetadata response) {
+        try {
+            // TODO
+        }
+    }
+
     private ResolvedResource selectResource(String compactId,
                                             List<ResolvedResource> resources,
                                             ServiceResponseFetchMetadata response) {
@@ -142,6 +148,11 @@ public class MetadataApiModel {
         }
         // return the response
         return response;
+    }
+
+    public ServiceResponseFetchMetadata getMetadataFor(String selector, String compactId) {
+        ServiceResponseFetchMetadata response = createDefaultResponseFetchMetadata(HttpStatus.OK, "");
+        ResolvedResource resource = ;
     }
 
     public ServiceResponseFetchMetadataForUrl getMetadataForUrl(ServiceRequestFetchMetadataForUrl request) {
