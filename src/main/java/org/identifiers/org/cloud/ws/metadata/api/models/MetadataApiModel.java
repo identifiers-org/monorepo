@@ -82,10 +82,25 @@ public class MetadataApiModel {
         return resources;
     }
 
-    private ResolvedResource resolveCompactId(String provider, String compactId, ServiceResponseFetchMetadata response) {
+    private List<ResolvedResource> resolveCompactId(String selector, String compactId, ServiceResponseFetchMetadata response) {
+        List<ResolvedResource> resources = new ArrayList<>();
         try {
-            // TODO
+            resources = idResolver.resolve(selector, compactId);
+            if (resources.isEmpty()) {
+                response.setErrorMessage(String.format("FAILED to fetch metadata for Compact ID '%s', selector '%s'" +
+                        "because NO RESOURCES COULD BE FOUND", selector, compactId));
+                response.setHttpStatus(HttpStatus.NOT_FOUND);
+            }
+        } catch (IdResolverException e) {
+            response.setErrorMessage(String.format("FAILED to fetch metadata for Compact ID '%s', selector '%s', " +
+                            "because '%s'",
+                    selector,
+                    compactId,
+                    e.getMessage()));
+            // TODO I need to refine the error reporting here to correctly flag errors as client or server side
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
         }
+        return resources;
     }
 
     private ResolvedResource selectResource(String compactId,
