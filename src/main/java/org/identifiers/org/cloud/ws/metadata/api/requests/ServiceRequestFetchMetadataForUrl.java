@@ -1,9 +1,9 @@
-package org.identifiers.org.cloud.ws.metadata.models.api.requests;
+package org.identifiers.org.cloud.ws.metadata.api.requests;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * Project: metadata
- * Package: org.identifiers.org.cloud.ws.metadata.models.api.requests
+ * Package: org.identifiers.org.cloud.ws.metadata.api.requests
  * Timestamp: 2018-03-07 13:17
  * ---
  */
