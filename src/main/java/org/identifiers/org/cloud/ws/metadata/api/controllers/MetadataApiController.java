@@ -19,19 +19,19 @@ import org.springframework.web.bind.annotation.*;
 public class MetadataApiController {
 
     @Autowired
-    private MetadataApiModel metadataApiModel;
+    private MetadataApiModel model;
 
     @RequestMapping(value = "{compactId}", method = RequestMethod.GET)
     public @ResponseBody
     ResponseEntity<?> getMetadataFor(@PathVariable("compactId") String compactIdParameter) {
         // TODO
-        ServiceResponseFetchMetadata response = metadataApiModel.getMetadataFor(compactIdParameter);
+        ServiceResponseFetchMetadata response = model.getMetadataFor(compactIdParameter);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     @RequestMapping(value = "/getMetadataForUrl", method = RequestMethod.POST)
     public ResponseEntity<?> getMetadataForUrl(@RequestBody ServiceRequestFetchMetadataForUrl request) {
-        ServiceResponseFetchMetadataForUrl response = metadataApiModel.getMetadataForUrl(request);
+        ServiceResponseFetchMetadataForUrl response = model.getMetadataForUrl(request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 }
