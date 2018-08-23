@@ -174,7 +174,10 @@ public class MetadataApiModel {
                 logger.warn("Using selector '{}' for Compact ID '{}' returned #{} resources!",
                         selector, compactId, resolvedResources.size());
             }
-            // Select the provider
+            // Select the provider, note how we use the same selection method as in the case where there is no
+            // 'provider code' supplied to force the Compact ID resolution to a particular provider. We can reuse it
+            // because, even in the situation where, for some reason, we've got more than one provider when using a
+            // provider code to resolve a Compact ID.
             ResolvedResource selectedResource = selectResource(compactId, resolvedResources, response);
             if (response.getHttpStatus() != HttpStatus.OK) {
                 return response;
