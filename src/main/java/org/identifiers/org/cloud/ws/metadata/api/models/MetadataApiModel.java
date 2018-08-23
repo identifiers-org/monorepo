@@ -188,29 +188,8 @@ public class MetadataApiModel {
             // because, even in the situation where, for some reason, we've got more than one provider when using a
             // provider code to resolve a Compact ID.
             ResolvedResource selectedResource = selectResource(compactId, resolvedResources, response);
-            if (response.getHttpStatus() != HttpStatus.OK) {
-                return response;
-            }
-            // Extract the metadata
-            try {
-                response.getPayload().setMetadata(metadataFetcher.fetchMetadataFor(selectedResource.getAccessUrl()));
-            } catch (MetadataFetcherException e) {
-                response.setErrorMessage(String.format("FAILED to fetch metadata for Compact ID '%s', " +
-                                "because '%s'",
-                        compactId,
-                        e.getMessage()));
-                // TODO I need to refine the error reporting here to correctly flag errors as client or server side
-                if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.INTERNAL_ERROR.getValue()) {
-                    response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-                } else if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.METADATA_NOT_FOUND
-                        .getValue()) {
-                    response.setHttpStatus(HttpStatus.NOT_FOUND);
-                } else if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.METADATA_INVALID
-                        .getValue()) {
-                    response.setHttpStatus(HttpStatus.UNPROCESSABLE_ENTITY);
-                } else {
-                    response.setHttpStatus(HttpStatus.BAD_REQUEST);
-                }
+            if (response.getHttpStatus() == HttpStatus.OK) {
+                extractMetadata(selectedResource, response, selector, compactId);
             }
         }
         return response;
