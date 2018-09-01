@@ -26,7 +26,28 @@ info:
     url: 'http://opensource.org/licenses/MIT'
 paths:
   /{compactId}:
-  # TODO
+    get:
+      tags:
+        - resolutionAPI
+      summary: Request Compact ID resolution
+      operationId: resolve_compact_id
+      parameters:
+        - in: path
+          name: compactId
+          required: true
+          schema:
+            type: string
+          description: Compact ID to resolve
+          example: taxonomy:9606
+      responses:
+        '200':
+          description: Successful Compact ID resolution
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseResolve'
+        
+
   /{providerCode}/{compactId}:
   # TODO
 components:
