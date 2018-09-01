@@ -24,7 +24,11 @@ info:
   license:
     name: MIT
     url: 'http://opensource.org/licenses/MIT'
-# TODO - paths
+paths:
+  /{compactId}:
+  # TODO
+  /{providerCode}/{compactId}:
+  # TODO
 components:
   schemas:
     ServiceResponse:
