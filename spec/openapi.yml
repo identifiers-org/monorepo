@@ -21,3 +21,6 @@ info:
     name: Manuel Bernal Llinares
     url: http://identifiers.org
     email: mbdebian@gmail.com
+  license:
+    name: MIT
+    url: 'http://opensource.org/licenses/MIT'
