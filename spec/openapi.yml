@@ -1,4 +1,10 @@
 # OpenAPI Specification for Identifiers.org Resolution API Service
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 openapi: 3.0.0
-
+servers:
+  - url: 'http://resolver.api.identifiers.org'
+    description: Main endpoint for this service
+  - url: 'http://resolver.api.gcloud.identifiers.org'
+    description: Google Cloud API Service endpoint
+  - url: 'http://resolver.api.aws.identifiers.org'
+    description: AWS API Service endpoint
