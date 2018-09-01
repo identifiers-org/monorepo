@@ -16,3 +16,5 @@ info:
     (http://identifiers.org)
   version: "1.0"
   title: Identifiers.org Compact ID Resolution Service
+  termsOfService: https://www.ebi.ac.uk/about/terms-of-use
+  
