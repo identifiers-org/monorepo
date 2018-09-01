@@ -50,3 +50,38 @@ components:
           type: string
           description:
             An explanation around the given recommendation index
+    ResolvedResource:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the resource within the context of the given Compact ID
+        resourcePrefix:
+          type: string
+          description: This represents this resource's 'provider code' within the context of the given Compact ID
+        accessUrl:
+          type: string
+          description: Resolved URL for the given Compact ID and the current resource within the context of a Compact
+           ID resolution
+        info:
+          type: string
+          description: Some information on this resource within the context of the resolution of the given Compact ID
+        institution:
+          type: string
+          description: Information on the institution behind the given resource
+        location:
+          type: string
+          description: Location information for the given resource within the context of the current Compact ID
+          resolution
+        official:
+          type: boolean
+          description: Whether the resource is flagged as official or not
+        resourceURL:
+          type: string
+          description: URL to some description or informative landing page about the resource within the context of
+          the current Compact ID resolution
+        recommendation:
+          allOf:
+            - $ref: '#/components/schemas/Recommendation'
+            - type: object
+            
