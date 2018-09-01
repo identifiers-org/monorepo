@@ -46,6 +46,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServiceResponseResolve'
+        '404':
+          description: The Compact ID could not be resolved, it was not found in the resolver registry
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseResolve'
         
 
   /{providerCode}/{compactId}:
