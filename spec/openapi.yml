@@ -81,9 +81,7 @@ components:
           description: URL to some description or informative landing page about the resource within the context of
           the current Compact ID resolution
         recommendation:
-          allOf:
-            - $ref: '#/components/schemas/Recommendation'
-            - type: object
+          $ref: '#/components/schemas/Recommendation'
     ResponseResolvePayload:
       type: object
       properties:
