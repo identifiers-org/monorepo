@@ -84,4 +84,12 @@ components:
           allOf:
             - $ref: '#/components/schemas/Recommendation'
             - type: object
-            
+    ResponseResolvePayload:
+    # TODO
+    ServiceResponseResolve:
+      allOf:
+        - $ref: '#/components/schemas/ServiceResponse'
+        - type: object
+          properties:
+            payload:
+              $ref: '#/components/schemas/ResponseResolvePayload'
