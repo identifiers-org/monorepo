@@ -80,7 +80,24 @@ paths:
           description: Compact ID to resolve
           example: taxonomy:9606
       responses:
-
+        '200':
+          description: Successful Compact ID resolution
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseResolve'
+        '404':
+          description: The Compact ID could not be resolved, it was not found in the resolver registry
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseResolve'
+        '500':
+          description: The Compact ID could not be resolved due to an internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseResolve'
 components:
   schemas:
     ServiceResponse:
