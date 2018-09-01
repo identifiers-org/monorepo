@@ -153,7 +153,7 @@ components:
         resourceURL:
           type: string
           description:
-            URL to some description or informative landing page about the resource within the context of the current 
+            URL to some description or informative landing page about the resource within the context of the current
             Compact ID resolution
         recommendation:
           $ref: '#/components/schemas/Recommendation'
