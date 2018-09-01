@@ -108,8 +108,9 @@ components:
           description: Service API version context for this response
         errorMessage:
           type: string
-          description: A series of possible error messages regarding the validation of the different request
-          attributes, or 'null' if the are no errors to report
+          description:
+            A series of possible error messages regarding the validation of the different request attributes, or
+            'null' if the are no errors to report
         payload:
           type: object
     Recommendation:
@@ -134,8 +135,8 @@ components:
           description: This represents this resource's 'provider code' within the context of the given Compact ID
         accessUrl:
           type: string
-          description: Resolved URL for the given Compact ID and the current resource within the context of a Compact
-           ID resolution
+          description:
+            Resolved URL for the given Compact ID and the current resource within the context of a Compact ID resolution
         info:
           type: string
           description: Some information on this resource within the context of the resolution of the given Compact ID
@@ -144,15 +145,16 @@ components:
           description: Information on the institution behind the given resource
         location:
           type: string
-          description: Location information for the given resource within the context of the current Compact ID
-          resolution
+          description:
+            Location information for the given resource within the context of the current Compact ID resolution
         official:
           type: boolean
           description: Whether the resource is flagged as official or not
         resourceURL:
           type: string
-          description: URL to some description or informative landing page about the resource within the context of
-          the current Compact ID resolution
+          description:
+            URL to some description or informative landing page about the resource within the context of the current 
+            Compact ID resolution
         recommendation:
           $ref: '#/components/schemas/Recommendation'
     ResponseResolvePayload:
