@@ -39,3 +39,14 @@ components:
           attributes, or 'null' if the are no errors to report
         payload:
           type: object
+    Recommendation:
+      type: object
+      properties:
+        recommendationIndex:
+          type: integer
+          description:
+            An integer within [0,100] where '0' represents 'not recommended at all' and '100' represents 'highest recommended'
+        recommendationExplanation:
+          type: string
+          description:
+            An explanation around the given recommendation index
