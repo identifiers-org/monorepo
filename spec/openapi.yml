@@ -8,3 +8,9 @@ servers:
     description: Google Cloud API Service endpoint
   - url: 'http://resolver.api.aws.identifiers.org'
     description: AWS API Service endpoint
+info:
+  description: Identifiers.org Resolution API Service, for resolution of Compact Identfiiers (preix:id).
+    This web service is open source, released under MIT license at [https://github
+    .com/identifiers-org/cloud-ws-resolver](GitHub).
+    To find out more about Identifiers.org, please, visit our main website at [http://identifiers.org]
+    (http://identifiers.org)
