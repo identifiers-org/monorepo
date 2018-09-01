@@ -52,7 +52,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServiceResponseResolve'
-        
+        '500':
+          description: The Compact ID could not be resolved due to an internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseResolve'
 
   /{providerCode}/{compactId}:
   # TODO
