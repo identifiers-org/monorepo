@@ -17,4 +17,7 @@ info:
   version: "1.0"
   title: Identifiers.org Compact ID Resolution Service
   termsOfService: https://www.ebi.ac.uk/about/terms-of-use
-  
+  contact:
+    name: Manuel Bernal Llinares
+    url: http://identifiers.org
+    email: mbdebian@gmail.com
