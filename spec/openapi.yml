@@ -58,9 +58,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServiceResponseResolve'
-
   /{providerCode}/{compactId}:
-  # TODO
+    get:
+      tags:
+        - resolutionAPI
+      summary: Request Compact ID resolution to the resource identified by the given 'provider code'
+      operationId: resolve_compact_id_for_provider
+      parameters:
+        - in: path
+          name: providerCode
+          required: true
+          schema:
+            type: string
+          description: Provider Code
+          example: ols
+        - in: path
+          name: compactId
+          required: true
+          schema:
+            type: string
+          description: Compact ID to resolve
+          example: taxonomy:9606
+      responses:
+
 components:
   schemas:
     ServiceResponse:
