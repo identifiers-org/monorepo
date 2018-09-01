@@ -85,7 +85,13 @@ components:
             - $ref: '#/components/schemas/Recommendation'
             - type: object
     ResponseResolvePayload:
-    # TODO
+      type: object
+      properties:
+        resolvedResources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResolvedResource'
+          description: A list of providers for the given Compact ID
     ServiceResponseResolve:
       allOf:
         - $ref: '#/components/schemas/ServiceResponse'
