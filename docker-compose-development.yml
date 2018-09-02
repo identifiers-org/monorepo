@@ -1,8 +1,5 @@
 # This docker-compose file defines the development environment
-
-#														#
-# Author: Manuel Bernal Llinares <mbdebian@gmail.com>	#
-#														#
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 version: "3"
 services:
     resolver:
