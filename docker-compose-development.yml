@@ -24,7 +24,7 @@ services:
         depends_on:
             - link-checker
     link-checker:
-        image: identifiersorg/cloud-ws-link-checker:1.1.3
+        image: identifiersorg/cloud-ws-link-checker
         environment:
             - WS_LINK_CHECKER_CONFIG_REDIS_HOST=redis
             - WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST=localhost
