@@ -32,6 +32,16 @@ services:
             - WS_RESOURCE_RECOMMENDER_CONFIG_BACKEND_SERVICE_LINK_CHECKER_HOST=link-checker
         ports:
             - "8083:8083"
+    link-checker:
+        image: identifiersorg/cloud-ws-link-checker
+        environment:
+            - WS_LINK_CHECKER_CONFIG_REDIS_HOST=redis
+            - WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST=resolver
+            - WS_LINK_CHECKER_CONFIG_DAEMON_PERIODIC_LINK_CHECK_REQUESTER_ENABLED=false
+        ports:
+            - "8084:8084"
+        depends_on:
+            - redis
     redis:
         image: redis:4.0.8-alpine
         ports:
