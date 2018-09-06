@@ -5,6 +5,7 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.validation.MessageCodesResolver;
 import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -105,7 +106,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public Validator getValidator() {
-        return null;
+        return new LocalValidatorFactoryBean();
     }
 
     @Override
