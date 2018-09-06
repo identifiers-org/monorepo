@@ -30,77 +30,77 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer contentNegotiationConfigurer) {
-
+        // Default
     }
 
     @Override
     public void configureAsyncSupport(AsyncSupportConfigurer asyncSupportConfigurer) {
-
+        // Default
     }
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer defaultServletHandlerConfigurer) {
-
+        // Default
     }
 
     @Override
     public void addFormatters(FormatterRegistry formatterRegistry) {
-
+        // Default
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry interceptorRegistry) {
-
+        // Default
     }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry resourceHandlerRegistry) {
-
+        // Default
     }
 
     @Override
     public void addCorsMappings(CorsRegistry corsRegistry) {
-
+        // Default
     }
 
     @Override
     public void addViewControllers(ViewControllerRegistry viewControllerRegistry) {
-
+        // Default
     }
 
     @Override
     public void configureViewResolvers(ViewResolverRegistry viewResolverRegistry) {
-
+        // Default
     }
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> list) {
-
+        // Default
     }
 
     @Override
     public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> list) {
-
+        // Default
     }
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> list) {
-
+        // Default
     }
 
     @Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> list) {
-
+        // Default
     }
 
     @Override
     public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> list) {
-
+        // Default
     }
 
     @Override
     public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> list) {
-
+        // Default
     }
 
     @Override
