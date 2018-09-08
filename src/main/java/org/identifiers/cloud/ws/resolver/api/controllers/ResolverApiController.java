@@ -21,7 +21,7 @@ public class ResolverApiController {
     @Autowired
     private ResolverApiModel resolverApiModel;
 
-    @RequestMapping(value = "{compactId}", method = RequestMethod.GET)
+    //@RequestMapping(value = "{compactId}", method = RequestMethod.GET)
     public @ResponseBody
     ResponseEntity<?> queryByCompactId(@PathVariable("compactId") String compactId) {
         // NOTE - I don't like how this looks, if handling exceptions at controller level I think I should go for
@@ -33,7 +33,7 @@ public class ResolverApiController {
         return new ResponseEntity<>(result, result.getHttpStatus());
     }
 
-    @RequestMapping(value = "{selector}/{compactId}", method = RequestMethod.GET)
+    //@RequestMapping(value = "{selector}/{compactId}", method = RequestMethod.GET)
     public @ResponseBody
     ResponseEntity<?> queryBySelectorAndCompactId(@PathVariable("selector") String selector, @PathVariable("compactId") String compactId) {
         // NOTE - I don't like how this looks, if handling exceptions at controller level I think I should go for
