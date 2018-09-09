@@ -3,6 +3,7 @@ package org.identifiers.cloud.ws.resolver.api.controllers;
 import org.identifiers.cloud.ws.resolver.api.models.ResolverApiModel;
 import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,11 @@ public class ResolverApiController {
 
     @Autowired
     private ResolverApiModel resolverApiModel;
+
+    public ResponseEntity<?> resolve(@PathVariable String requestString) {
+        // TODO
+        return new ResponseEntity<>(requestString, HttpStatus.OK);
+    }
 
     //@RequestMapping(value = "{compactId}", method = RequestMethod.GET)
     public @ResponseBody
