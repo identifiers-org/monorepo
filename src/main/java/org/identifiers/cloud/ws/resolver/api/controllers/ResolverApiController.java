@@ -22,7 +22,7 @@ public class ResolverApiController {
     @Autowired
     private ResolverApiModel resolverApiModel;
 
-    @RequestMapping(value = "{requestString:/.*}", method = RequestMethod.GET)
+    @RequestMapping(value = "{requestString:[.*]}", method = RequestMethod.GET)
     public ResponseEntity<?> resolve(@PathVariable String requestString) {
         // TODO
         return new ResponseEntity<>(requestString, HttpStatus.OK);
