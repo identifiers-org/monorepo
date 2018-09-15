@@ -5,7 +5,7 @@
 
     <groupId>org.identifiers.cloud.ws</groupId>
     <artifactId>resolver</artifactId>
-    <version>1.0.7-SNAPSHOT</version>
+    <version>1.0.7</version>
     <packaging>jar</packaging>
 
     <name>resolver</name>
