@@ -152,15 +152,15 @@ public class MetadataApiModel {
         return selectedResource;
     }
 
-    private void extractMetadata(ResolvedResource resolvedResource, ServiceResponseFetchMetadata response, String selector, String compactId) {
+    private void extractMetadata(ResolvedResource resolvedResource, ServiceResponseFetchMetadata response, String selector, String compactIdOrRequest) {
         // Extract the metadata
         try {
             response.getPayload().setMetadata(metadataFetcher.fetchMetadataFor(resolvedResource.getAccessUrl()));
         } catch (MetadataFetcherException e) {
-            response.setErrorMessage(String.format("FAILED to fetch metadata for Compact ID '%s', %s, " +
+            response.setErrorMessage(String.format("FAILED to fetch metadata for '%s', %s, " +
                             "because '%s'",
-                    compactId,
-                    (selector == null) ? "no selector" : String.format("selector '%s'", selector),
+                    compactIdOrRequest,
+                    (selector == null) ? "no selector information extracted" : String.format("selector '%s'", selector),
                     e.getMessage()));
             // TODO I need to refine the error reporting here to correctly flag errors as client or server side
             if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.INTERNAL_ERROR.getValue()) {
