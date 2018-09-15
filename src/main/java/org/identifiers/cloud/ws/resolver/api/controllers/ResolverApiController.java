@@ -28,8 +28,8 @@ public class ResolverApiController {
     @Autowired
     private ResolverApiModel resolverApiModel;
 
-    @RequestMapping(value = "/{requestString}/**", method = RequestMethod.GET)
-    public ResponseEntity<?> resolve(@PathVariable String requestString, HttpServletRequest request) {
+    @RequestMapping(value = "/{resolutionRequest}/**", method = RequestMethod.GET)
+    public ResponseEntity<?> resolve(@PathVariable String resolutionRequest, HttpServletRequest request) {
         // TODO
         final String path =
                 request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE).toString();
@@ -47,7 +47,7 @@ public class ResolverApiController {
         }*/
 
         //return "module name is: " + moduleName;
-        return new ResponseEntity<>(requestString, HttpStatus.OK);
+        return new ResponseEntity<>(resolutionRequest, HttpStatus.OK);
     }
 
     //@RequestMapping(value = "{compactId}", method = RequestMethod.GET)
