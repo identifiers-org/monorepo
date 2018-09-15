@@ -1,6 +1,5 @@
 package org.identifiers.cloud.ws.resolver.api.controllers;
 
-import javafx.util.Pair;
 import org.identifiers.cloud.ws.resolver.api.models.ResolverApiModel;
 import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponse;
 import org.slf4j.Logger;
@@ -23,11 +22,34 @@ import javax.servlet.http.HttpServletRequest;
 public class ResolverApiController {
     private static final Logger logger = LoggerFactory.getLogger(ResolverApiController.class);
 
+    class ProviderCompactIdTuple {
+        String provider;
+        String compactIdentifier;
+
+        public String getProvider() {
+            return provider;
+        }
+
+        public ProviderCompactIdTuple setProvider(String provider) {
+            this.provider = provider;
+            return this;
+        }
+
+        public String getCompactIdentifier() {
+            return compactIdentifier;
+        }
+
+        public ProviderCompactIdTuple setCompactIdentifier(String compactIdentifier) {
+            this.compactIdentifier = compactIdentifier;
+            return this;
+        }
+    }
+
     @Autowired
     private ResolverApiModel resolverApiModel;
 
     // Compact Identifier and provider code helper
-    private Pair<String, String> extractProviderAndCompactIdentifier(String resolutionRequest) {
+    private ProviderCompactIdTuple extractProviderAndCompactIdentifier(String resolutionRequest) {
         String provider = null;
         String compactIdentifier = null;
         if (resolutionRequest.contains((":"))) {
@@ -53,7 +75,7 @@ public class ResolverApiController {
         }
         logger.info("For resolution request '{}', found provider code '{}' and compact identifier '{}'",
                 resolutionRequest, provider, compactIdentifier);
-        return new Pair<>(provider, compactIdentifier);
+        return new ProviderCompactIdTuple().setCompactIdentifier(compactIdentifier).setProvider(provider);
     }
 
     @RequestMapping(value = "/{resolutionRequest}/**", method = RequestMethod.GET)
@@ -61,13 +83,13 @@ public class ResolverApiController {
         final String path =
                 request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE).toString();
         logger.info("Resolution request, PATH '{}'", path);
-        Pair<String, String> providerAndCompactIdentifier = extractProviderAndCompactIdentifier(path.replaceFirst("/", ""));
+        ProviderCompactIdTuple providerAndCompactIdentifier = extractProviderAndCompactIdentifier(path.replaceFirst("/", ""));
         ServiceResponse result = null;
-        if (providerAndCompactIdentifier.getKey() != null) {
-            result = resolverApiModel.resolveCompactId(providerAndCompactIdentifier.getValue(),
-                    providerAndCompactIdentifier.getKey());
+        if (providerAndCompactIdentifier.getProvider() != null) {
+            result = resolverApiModel.resolveCompactId(providerAndCompactIdentifier.getCompactIdentifier(),
+                    providerAndCompactIdentifier.getProvider());
         } else {
-            result = resolverApiModel.resolveCompactId(providerAndCompactIdentifier.getValue());
+            result = resolverApiModel.resolveCompactId(providerAndCompactIdentifier.getCompactIdentifier());
         }
         return new ResponseEntity<>(result, result.getHttpStatus());
     }
