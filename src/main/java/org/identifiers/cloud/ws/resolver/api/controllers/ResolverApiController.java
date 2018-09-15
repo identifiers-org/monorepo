@@ -22,8 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class ResolverApiController {
     private static final Logger logger = LoggerFactory.getLogger(ResolverApiController.class);
-    // TODO - Prepare the ground for the endpoints implementing the new use cases
-    // TODO - Take this opportunity to refactor the health checks into its own controller
 
     @Autowired
     private ResolverApiModel resolverApiModel;
