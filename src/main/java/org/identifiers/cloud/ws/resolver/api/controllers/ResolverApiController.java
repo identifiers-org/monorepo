@@ -58,12 +58,9 @@ public class ResolverApiController {
 
     @RequestMapping(value = "/{resolutionRequest}/**", method = RequestMethod.GET)
     public ResponseEntity<?> resolve(@PathVariable String resolutionRequest, HttpServletRequest request) {
-        // TODO
         final String path =
                 request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE).toString();
-        final String bestMatchingPattern =
-                request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE).toString();
-        logger.info("Resolution request, PATH '{}' and best matching pattern '{}'", path, bestMatchingPattern);
+        logger.info("Resolution request, PATH '{}'", path);
         Pair<String, String> providerAndCompactIdentifier = extractProviderAndCompactIdentifier(path.replaceFirst("/", ""));
         ServiceResponse result = null;
         if (providerAndCompactIdentifier.getKey() != null) {
