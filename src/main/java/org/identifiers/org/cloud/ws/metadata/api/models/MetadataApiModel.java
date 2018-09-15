@@ -214,6 +214,7 @@ public class MetadataApiModel {
 
     public ServiceResponseFetchMetadata getMetadataForRawRequest(String rawRequest) {
         ServiceResponseFetchMetadata response = createDefaultResponseFetchMetadata(HttpStatus.OK, "");
+        logger.warn("Getting metadata for RAW Request '{}'", rawRequest);
         List<ResolvedResource> resources = resolveRawRequest(rawRequest, response);
         if (response.getHttpStatus() == HttpStatus.OK) {
             // Select the provider
