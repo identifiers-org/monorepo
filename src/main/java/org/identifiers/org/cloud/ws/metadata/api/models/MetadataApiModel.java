@@ -117,7 +117,6 @@ public class MetadataApiModel {
                     e.getMessage()));
             response.setHttpStatus(HttpStatus.BAD_REQUEST);
         }
-        // TODO
         return resources;
     }
 

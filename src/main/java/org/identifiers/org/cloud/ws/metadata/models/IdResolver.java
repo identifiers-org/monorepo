@@ -22,4 +22,6 @@ public interface IdResolver {
     List<ResolvedResource> resolve(String compactIdParameter) throws IdResolverException;
 
     List<ResolvedResource> resolve(String selector, String compactId) throws IdResolverException;
+
+    List<ResolvedResource> resolveRawRequest(String rawRequest throws IdResolverException;
 }
