@@ -125,16 +125,16 @@ public class MetadataApiModel {
         return resources;
     }
 
-    private ResolvedResource selectResource(String compactId,
+    private ResolvedResource selectResource(String compactIdOrRequest,
                                             List<ResolvedResource> resources,
                                             ServiceResponseFetchMetadata response) {
         ResolvedResource selectedResource = null;
         try {
             selectedResource = idResourceSelector.selectResource(resources);
         } catch (IdResourceSelectorException e) {
-            response.setErrorMessage(String.format("FAILED to fetch metadata for Compact ID '%s', " +
+            response.setErrorMessage(String.format("FAILED to fetch metadata for '%s', " +
                             "because '%s'",
-                    compactId,
+                    compactIdOrRequest,
                     e.getMessage()));
             // TODO I need to refine the error reporting here to correctly flag errors as client or server side
             response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -143,8 +143,8 @@ public class MetadataApiModel {
         // Log selection
         ObjectMapper mapper = new ObjectMapper();
         try {
-            logger.info("Mining metadata for Compact ID '{}' on selected resource '{}'",
-                    compactId,
+            logger.info("Mining metadata for '{}' on selected resource '{}'",
+                    compactIdOrRequest,
                     mapper.writeValueAsString(selectedResource));
         } catch (JsonProcessingException e) {
             // TODO will never happen ^_^
