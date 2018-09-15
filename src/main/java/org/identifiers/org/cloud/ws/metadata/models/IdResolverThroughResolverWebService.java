@@ -44,4 +44,12 @@ public class IdResolverThroughResolverWebService implements IdResolver {
                 .getResolvedResources();
 
     }
+
+    @Override
+    public List<ResolvedResource> resolveRawRequest(String rawRequest) throws IdResolverException {
+        return ApiServicesFactory.getResolverService(wsResolverHost, String.valueOf(wsResolverPort))
+                .requestResolutionRawRequest(rawRequest)
+                .getPayload()
+                .getResolvedResources();
+    }
 }
