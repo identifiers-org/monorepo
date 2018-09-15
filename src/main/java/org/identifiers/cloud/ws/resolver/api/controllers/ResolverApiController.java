@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.resolver.api.controllers;
 
+import javafx.util.Pair;
 import org.identifiers.cloud.ws.resolver.api.models.ResolverApiModel;
 import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponse;
 import org.slf4j.Logger;
@@ -28,6 +29,32 @@ public class ResolverApiController {
     @Autowired
     private ResolverApiModel resolverApiModel;
 
+    // Compact Identifier and provider code helper
+    private Pair<String, String> extractProviderAndCompactIdentifier(String resolutionRequest) {
+        String provider = null;
+        String compactIdentifier = null;
+        if (resolutionRequest.contains((":"))) {
+            // We divide based on ':' and first '/'
+            String[] splitByColon = resolutionRequest.split(":");
+            if (splitByColon[0].contains("/")) {
+                provider = splitByColon[0].split("/")[0];
+                compactIdentifier = resolutionRequest.replaceFirst(provider, "");
+            } else {
+                compactIdentifier = resolutionRequest;
+            }
+        } else if (resolutionRequest.contains("/")) {
+            // We look for the first '/' to find the provider code
+            provider = resolutionRequest.split("/")[0];
+            compactIdentifier = compactIdentifier = resolutionRequest.replaceFirst(provider, "");
+        } else {
+            // This case is very likely to be a not valid Compact Identifier
+            compactIdentifier = resolutionRequest;
+        }
+        logger.info("For resolution request '{}', found provider code '{}' and compact identifier '{}'",
+                resolutionRequest, provider, compactIdentifier);
+        return new Pair<>(provider, compactIdentifier);
+    }
+
     @RequestMapping(value = "/{resolutionRequest}/**", method = RequestMethod.GET)
     public ResponseEntity<?> resolve(@PathVariable String resolutionRequest, HttpServletRequest request) {
         // TODO
@@ -36,17 +63,7 @@ public class ResolverApiController {
         final String bestMatchingPattern =
                 request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE).toString();
         logger.info("Resolution request, PATH '{}'\n\tand best matching pattern '{}'", path, bestMatchingPattern);
-
-        /*String arguments = new AntPathMatcher().extractPathWithinPattern(bestMatchingPattern, path);
-
-        String moduleName;
-        if (null != arguments && !arguments.isEmpty()) {
-            moduleName = moduleBaseName + '/' + arguments;
-        } else {
-            moduleName = moduleBaseName;
-        }*/
-
-        //return "module name is: " + moduleName;
+        Pair<String, String> providerAndCompactIdentifier = extractProviderAndCompactIdentifier(resolutionRequest.replaceFirst("/", ""));
         return new ResponseEntity<>(resolutionRequest, HttpStatus.OK);
     }
 
