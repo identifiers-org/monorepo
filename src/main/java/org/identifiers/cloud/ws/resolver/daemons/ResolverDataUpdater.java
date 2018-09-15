@@ -59,7 +59,7 @@ public class ResolverDataUpdater extends Thread {
             if (pidEntries.size() > 0) {
                 logger.info("Resolver data update, #{} PID entries", pidEntries.size());
                 // Update data backend
-                pidEntryRepository.save(pidEntries);
+                pidEntryRepository.saveAll(pidEntries);
             } else {
                 logger.warn("EMPTY resolver data update!");
             }
