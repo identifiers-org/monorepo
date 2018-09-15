@@ -111,6 +111,11 @@ public class MetadataApiModel {
         List<ResolvedResource> resources = new ArrayList<>();
         try {
             resources = idResolver.resolveRawRequest(rawRequest);
+            if (resources.isEmpty()) {
+                response.setErrorMessage(String.format("FAILED to fetch metadata for request '%s', NO RESOURCES COULD" +
+                        " BE FOUND", rawRequest));
+                response.setHttpStatus(HttpStatus.NOT_FOUND);
+            }
             // TODO
         } catch (IdResolverException e) {
             response.setErrorMessage(String.format("FAILED to fetch metadata for requested '%s', due to '%s'",
