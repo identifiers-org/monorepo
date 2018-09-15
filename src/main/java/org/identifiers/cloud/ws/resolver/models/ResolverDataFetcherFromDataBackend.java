@@ -6,6 +6,8 @@ import org.identifiers.cloud.ws.resolver.data.repositories.PidEntryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +21,8 @@ import java.util.stream.Collectors;
  * Timestamp: 2018-01-27 9:02
  * ---
  */
+@Component
+@Scope("prototype")
 public class ResolverDataFetcherFromDataBackend implements ResolverDataFetcher {
     private static Logger logger = LoggerFactory.getLogger(ResolverDataFetcherFromDataBackend.class);
 
