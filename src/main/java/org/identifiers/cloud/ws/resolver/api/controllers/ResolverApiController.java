@@ -75,7 +75,7 @@ public class ResolverApiController {
         return new ResponseEntity<>(result, result.getHttpStatus());
     }
 
-    //@RequestMapping(value = "{compactId}", method = RequestMethod.GET)
+ /*   //@RequestMapping(value = "{compactId}", method = RequestMethod.GET)
     public @ResponseBody
     ResponseEntity<?> queryByCompactId(@PathVariable("compactId") String compactId) {
         // NOTE - I don't like how this looks, if handling exceptions at controller level I think I should go for
@@ -97,5 +97,5 @@ public class ResolverApiController {
         // mechanism and error controller, that I need to implement anyway.
         ServiceResponse result = resolverApiModel.resolveCompactId(compactId, selector);
         return new ResponseEntity<>(result, result.getHttpStatus());
-    }
+    }*/
 }
