@@ -6,7 +6,6 @@ import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.HandlerMapping;
@@ -68,7 +67,14 @@ public class ResolverApiController {
                 request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE).toString();
         logger.info("Resolution request, PATH '{}' and best matching pattern '{}'", path, bestMatchingPattern);
         Pair<String, String> providerAndCompactIdentifier = extractProviderAndCompactIdentifier(path.replaceFirst("/", ""));
-        return new ResponseEntity<>(resolutionRequest, HttpStatus.OK);
+        ServiceResponse result = null;
+        if (providerAndCompactIdentifier.getKey() != null) {
+            result = resolverApiModel.resolveCompactId(providerAndCompactIdentifier.getValue(),
+                    providerAndCompactIdentifier.getKey());
+        } else {
+            result = resolverApiModel.resolveCompactId(providerAndCompactIdentifier.getValue());
+        }
+        return new ResponseEntity<>(result, result.getHttpStatus());
     }
 
     //@RequestMapping(value = "{compactId}", method = RequestMethod.GET)
