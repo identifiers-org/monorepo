@@ -109,6 +109,14 @@ public class MetadataApiModel {
     // TODO - Resolve Raw Request
     private List<ResolvedResource> resolveRawRequest(String rawRequest, ServiceResponseFetchMetadata response) {
         List<ResolvedResource> resources = new ArrayList<>();
+        try {
+            // TODO
+        } catch (IdResolverException e) {
+            response.setErrorMessage(String.format("FAILED to fetch metadata for requested '%s', due to '%s'",
+                    rawRequest,
+                    e.getMessage()));
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        }
         // TODO
         return resources;
     }
