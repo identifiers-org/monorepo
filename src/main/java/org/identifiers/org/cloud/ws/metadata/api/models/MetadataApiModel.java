@@ -105,7 +105,7 @@ public class MetadataApiModel {
         }
         return resources;
     }
-    
+
     private List<ResolvedResource> resolveRawRequest(String rawRequest, ServiceResponseFetchMetadata response) {
         List<ResolvedResource> resources = new ArrayList<>();
         try {
@@ -189,6 +189,10 @@ public class MetadataApiModel {
         }
         // return the response
         return response;
+    }
+
+    public ServiceResponseFetchMetadata getMetadataForRawRequest(String rawRequest) {
+        // TODO
     }
 
     public ServiceResponseFetchMetadata getMetadataFor(String selector, String compactId) {
