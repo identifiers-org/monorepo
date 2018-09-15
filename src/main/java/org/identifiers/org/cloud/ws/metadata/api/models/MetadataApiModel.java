@@ -191,10 +191,6 @@ public class MetadataApiModel {
         return response;
     }
 
-    public ServiceResponseFetchMetadata getMetadataForRawRequest(String rawRequest) {
-        // TODO
-    }
-
     public ServiceResponseFetchMetadata getMetadataFor(String selector, String compactId) {
         ServiceResponseFetchMetadata response = createDefaultResponseFetchMetadata(HttpStatus.OK, "");
         List<ResolvedResource> resolvedResources = resolveCompactId(selector, compactId, response);
@@ -218,7 +214,14 @@ public class MetadataApiModel {
 
     public ServiceResponseFetchMetadata getMetadataForRawRequest(String rawRequest) {
         ServiceResponseFetchMetadata response = createDefaultResponseFetchMetadata(HttpStatus.OK, "");
-        // TODO
+        List<ResolvedResource> resources = resolveRawRequest(rawRequest, response);
+        if (response.getHttpStatus() == HttpStatus.OK) {
+            // Select the provider
+            ResolvedResource selectedResource = selectResource(rawRequest, resources, response);
+            if (response.getHttpStatus() == HttpStatus.OK) {
+                extractMetadata(selectedResource, response, null, rawRequest);
+            }
+        }
         return response;
     }
 
