@@ -195,6 +195,12 @@ public class MetadataApiModel {
         return response;
     }
 
+    public ServiceResponseFetchMetadata getMetadataForRawRequest(String rawRequest) {
+        ServiceResponseFetchMetadata response = createDefaultResponseFetchMetadata(HttpStatus.OK, "");
+        // TODO
+        return response;
+    }
+
     public ServiceResponseFetchMetadataForUrl getMetadataForUrl(ServiceRequestFetchMetadataForUrl request) {
         // TODO - Check API version?
         String url = request.getPayload().getUrl();
