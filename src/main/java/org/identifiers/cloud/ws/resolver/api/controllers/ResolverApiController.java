@@ -23,8 +23,9 @@ public class ResolverApiController {
     private ResolverApiModel resolverApiModel;
 
     @RequestMapping(value = "*", method = RequestMethod.GET)
-    public ResponseEntity<?> resolve(@PathVariable("requestString") String requestString) {
+    public ResponseEntity<?> resolve() {
         // TODO
+        String requestString = "fallback";
         return new ResponseEntity<>(requestString, HttpStatus.OK);
     }
 
