@@ -64,7 +64,7 @@ public class ResolverApiController {
                 request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE).toString();
         final String bestMatchingPattern =
                 request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE).toString();
-        logger.info("Resolution request, PATH '{}'\n\tand best matching pattern '{}'", path, bestMatchingPattern);
+        logger.info("Resolution request, PATH '{}' and best matching pattern '{}'", path, bestMatchingPattern);
         Pair<String, String> providerAndCompactIdentifier = extractProviderAndCompactIdentifier(path.replaceFirst("/", ""));
         return new ResponseEntity<>(resolutionRequest, HttpStatus.OK);
     }
