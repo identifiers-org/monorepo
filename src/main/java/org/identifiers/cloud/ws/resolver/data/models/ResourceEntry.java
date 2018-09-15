@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.resolver.data.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
 
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import java.io.Serializable;
  * ---
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@RedisHash("ResolverResourceEntries")
 public class ResourceEntry implements Serializable {
     @Id
     private String id;

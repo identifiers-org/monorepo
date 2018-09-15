@@ -15,7 +15,7 @@ import java.io.Serializable;
  * ---
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@RedisHash("pidentries")
+@RedisHash("ResolverPidEntries")
 public class PidEntry implements Serializable {
     @Id
     private String id;
