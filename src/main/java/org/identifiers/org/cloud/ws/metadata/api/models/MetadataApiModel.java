@@ -106,6 +106,8 @@ public class MetadataApiModel {
         return resources;
     }
 
+    // TODO - Resolve Raw Request
+
     private ResolvedResource selectResource(String compactId,
                                             List<ResolvedResource> resources,
                                             ServiceResponseFetchMetadata response) {
