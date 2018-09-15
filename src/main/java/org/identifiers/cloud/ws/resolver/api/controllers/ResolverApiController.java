@@ -38,7 +38,9 @@ public class ResolverApiController {
             String[] splitByColon = resolutionRequest.split(":");
             if (splitByColon[0].contains("/")) {
                 provider = splitByColon[0].split("/")[0];
-                compactIdentifier = resolutionRequest.replaceFirst(provider, "");
+                compactIdentifier = resolutionRequest
+                        .replaceFirst(provider, "")
+                        .replaceFirst("/", "");
             } else {
                 compactIdentifier = resolutionRequest;
             }
