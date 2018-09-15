@@ -2,10 +2,15 @@ package org.identifiers.cloud.ws.resolver.api.controllers;
 
 import org.identifiers.cloud.ws.resolver.api.models.ResolverApiModel;
 import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.HandlerMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -16,16 +21,32 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 public class ResolverApiController {
+    private static final Logger logger = LoggerFactory.getLogger(ResolverApiController.class);
     // TODO - Prepare the ground for the endpoints implementing the new use cases
     // TODO - Take this opportunity to refactor the health checks into its own controller
 
     @Autowired
     private ResolverApiModel resolverApiModel;
 
-    @RequestMapping(value = "*", method = RequestMethod.GET)
-    public ResponseEntity<?> resolve() {
+    @RequestMapping(value = "/{requestString}/**", method = RequestMethod.GET)
+    public ResponseEntity<?> resolve(@PathVariable String requestString, HttpServletRequest request) {
         // TODO
-        String requestString = "fallback";
+        final String path =
+                request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE).toString();
+        final String bestMatchingPattern =
+                request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE).toString();
+        logger.info("Resolution request, PATH '{}'\n\tand best matching pattern '{}'", path, bestMatchingPattern);
+
+        /*String arguments = new AntPathMatcher().extractPathWithinPattern(bestMatchingPattern, path);
+
+        String moduleName;
+        if (null != arguments && !arguments.isEmpty()) {
+            moduleName = moduleBaseName + '/' + arguments;
+        } else {
+            moduleName = moduleBaseName;
+        }*/
+
+        //return "module name is: " + moduleName;
         return new ResponseEntity<>(requestString, HttpStatus.OK);
     }
 
