@@ -45,7 +45,9 @@ public class ResolverApiController {
         } else if (resolutionRequest.contains("/")) {
             // We look for the first '/' to find the provider code
             provider = resolutionRequest.split("/")[0];
-            compactIdentifier = compactIdentifier = resolutionRequest.replaceFirst(provider, "");
+            compactIdentifier = compactIdentifier = resolutionRequest
+                    .replaceFirst(provider, "")
+                    .replaceFirst("/", "");
         } else {
             // This case is very likely to be a not valid Compact Identifier
             compactIdentifier = resolutionRequest;
