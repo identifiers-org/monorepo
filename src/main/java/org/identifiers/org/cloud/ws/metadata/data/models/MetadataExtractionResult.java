@@ -21,17 +21,22 @@ public class MetadataExtractionResult implements Serializable, Comparable<Metada
     // TODO
     @Id
     private String id;
+    // ID of the resource within the context of this resolution
     @Indexed
     private String resourceId;
+    // This is the resolved URL where the metadata will be extracted from
     @Indexed
     private String accessUrl;
     @Indexed
     private String timestamp = (new Timestamp(new Date().getTime())).toString();
     // When this check was requested (UTC)
     private String requestTimestamp;
+    // HTTP Status code that came back when retrieving the content of the access URL
     @Indexed
     private int httpStatus;
+    // Extracted metadata from the access URL
     private String metadataContent;
+    // Optional explanation of a possible error that could have happen during the metadata extraction process
     private String errorMessage;
 
     public String getResourceId() {
