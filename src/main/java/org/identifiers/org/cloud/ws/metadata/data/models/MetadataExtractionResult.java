@@ -96,4 +96,9 @@ public class MetadataExtractionResult implements Serializable, Comparable<Metada
         this.errorMessage = errorMessage;
         return this;
     }
+
+    @Override
+    public int compareTo(MetadataExtractionResult o) {
+        return getTimestamp().compareTo(o.getTimestamp());
+    }
 }
