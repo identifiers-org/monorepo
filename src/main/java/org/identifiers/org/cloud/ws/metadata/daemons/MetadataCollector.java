@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.Random;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.TimeUnit;
@@ -163,4 +164,11 @@ public class MetadataCollector extends Thread {
         }
         logger.info("--- [END] Metadata Collection Daemon ---");
     }
+
+    @PostConstruct
+    public void autoStartThread() {
+        start();
+    }
+
+
 }
