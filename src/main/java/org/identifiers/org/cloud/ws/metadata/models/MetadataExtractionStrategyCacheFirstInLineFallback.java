@@ -2,6 +2,7 @@ package org.identifiers.org.cloud.ws.metadata.models;
 
 import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
 import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionRequest;
+import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionRequestFactory;
 import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionResult;
 import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionResultBuilder;
 import org.identifiers.org.cloud.ws.metadata.data.services.MetadataExtractionResultService;
@@ -86,8 +87,9 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
             // Get metadata from cache
             metadataExtractionResult = getCachedMetadataExtractionResult(resolvedResource);
             if ((metadataExtractionResult == null) || (metadataExtractionResult.getHttpStatus() != 200)) {
-                // TODO - queue a metadata extraction request
-
+                // queue a metadata extraction request
+                metadataExtractionRequestQueue
+                        .add(MetadataExtractionRequestFactory.getMetadataExtractionRequest(resolvedResource));
                 // TODO Keep looking
                 continue;
             }
