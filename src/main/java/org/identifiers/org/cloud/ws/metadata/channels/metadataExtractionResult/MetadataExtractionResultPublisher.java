@@ -19,4 +19,14 @@ public class MetadataExtractionResultPublisher extends Publisher<String, Metadat
     private RedisTemplate<String, MetadataExtractionResult> metadataExtractionResultRedisTemplate;
     @Autowired
     private ChannelTopic channelTopicMetadataExtractionResult;
+
+    @Override
+    protected ChannelTopic getChannelTopic() {
+        return channelTopicMetadataExtractionResult;
+    }
+
+    @Override
+    protected RedisTemplate<String, MetadataExtractionResult> getRedisTemplate() {
+        return metadataExtractionResultRedisTemplate;
+    }
 }
