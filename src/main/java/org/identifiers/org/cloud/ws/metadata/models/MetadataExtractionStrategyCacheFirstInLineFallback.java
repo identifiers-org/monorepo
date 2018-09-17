@@ -10,6 +10,7 @@ import org.identifiers.org.cloud.ws.metadata.data.services.MetadataExtractionRes
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -88,14 +89,27 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
                     resolvedResource.getRecommendation().getRecommendationIndex());
             // Get metadata from cache
             MetadataExtractionResult cachedMetadataExtractionResult = getCachedMetadataExtractionResult(resolvedResource);
-            if ((cachedMetadataExtractionResult == null) || (cachedMetadataExtractionResult.getHttpStatus() != 200)) {
+            if (cachedMetadataExtractionResult == null) {
                 // queue a metadata extraction request
                 logger.info("Queuing metadata extraction request for access URL '{}' score '{}'",
                         resolvedResource.getAccessUrl(),
                         resolvedResource.getRecommendation().getRecommendationIndex());
                 metadataExtractionRequestQueue
                         .add(MetadataExtractionRequestFactory.getMetadataExtractionRequest(resolvedResource));
+                reportMessages.add(String.format("No cached metadata for access URL '%s', score '%s'",
+                        resolvedResource.getAccessUrl(),
+                        resolvedResource.getRecommendation().getRecommendationIndex()));
                 // Keep looking
+                continue;
+            } if (cachedMetadataExtractionResult.getHttpStatus() != 200) {
+                String message = String.format("Metadata Extraction Result for access URL '%s', " +
+                        "resource score '%s', " +
+                        "has HTTP Status '%s'",
+                        resolvedResource.getAccessUrl(),
+                        resolvedResource.getRecommendation().getRecommendationIndex(),
+                        HttpStatus.resolve(cachedMetadataExtractionResult.getHttpStatus()).toString());
+                logger.warn(message);
+                reportMessages.add(message);
                 continue;
             }
             // If we get here it means we got valid metadata, so keep it if, and only if, we didn't keep metadata from
