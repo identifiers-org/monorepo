@@ -35,6 +35,7 @@ public class MetadataCollector extends Thread {
     @Autowired
     private MetadataFetcher metadataFetcher;
     // TODO - Wire in a metadata extraction result publisher
+    // TODO - Wire in a persistence service for metadata extraction results
 
     // Shutdown mechanism
     public synchronized boolean isShutdown() {
