@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Random;
 import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Project: metadata
@@ -69,5 +70,15 @@ public class MetadataCollector extends Thread {
             setShutdown();
         }
     }
+
+    private MetadataExtractionRequest nextMetadataExtractionRequest() {
+        try {
+            return metadataExtractionRequestQueue.pollFirst(WAIT_TIME_POLL_METADATA_EXTRACTION_REQUEST_QUEUE_SECONDS, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            logger.warn("The Metadata Extraction Request Queue is unresponsive, operation timed out, {}", e.getMessage());
+        }
+        return null;
+    }
+
 
 }
