@@ -8,6 +8,10 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.support.collections.DefaultRedisList;
+import org.springframework.data.redis.support.collections.RedisList;
+
+import java.util.concurrent.BlockingDeque;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -46,6 +50,13 @@ public class ApplicationConfig {
         RedisTemplate<String, MetadataExtractionRequest> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
         return redisTemplate;
+    }
+
+    @Bean
+    public BlockingDeque<MetadataExtractionRequest> metadataExtractionRequestQueue() {
+        RedisList<MetadataExtractionRequest> linkCheckRequests = new DefaultRedisList<>(queueKeyMetadataExtractionRequest,
+                metadataExtractionRequestRedisTemplate());
+        return linkCheckRequests;
     }
 
 
