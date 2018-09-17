@@ -1,6 +1,7 @@
 package org.identifiers.org.cloud.ws.metadata.daemons;
 
 import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionRequest;
+import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionResult;
 import org.identifiers.org.cloud.ws.metadata.models.MetadataFetcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,4 +35,8 @@ public class MetadataCollector extends Thread {
     private MetadataFetcher metadataFetcher;
     // TODO - Wire in a metadata extraction result publisher
 
+    // Helpers
+    private MetadataExtractionResult attendMetadataExtractionRequest(MetadataExtractionRequest request) {
+        // TODO
+    }
 }
