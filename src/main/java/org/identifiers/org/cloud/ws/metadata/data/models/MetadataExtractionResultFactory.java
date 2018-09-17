@@ -34,7 +34,7 @@ public class MetadataExtractionResultFactory {
     }
 
     public static MetadataExtractionResult createResultWithoutMetadata() {
-        // TODO
+        return new MetadataExtractionResult().setTimeToLive(ttlResultWithoutMetadata);
     }
 
     // Initialize parameters parameters from service configuration
