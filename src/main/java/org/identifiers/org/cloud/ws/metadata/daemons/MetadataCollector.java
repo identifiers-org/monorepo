@@ -140,7 +140,21 @@ public class MetadataCollector extends Thread {
 
         while (!isShutdown()) {
             try {
-                // TODO
+                // Pop element, if any, from the metadata extraction request queue
+                logger.info("Polling metadata extraction request queue");
+                MetadataExtractionRequest metadataExtractionRequest = nextMetadataExtractionRequest();
+                if (metadataExtractionRequest == null) {
+                    // If no element is in there, wait a random amount of time before trying again
+                    logger.info("No Metadata Extraction request found");
+                    randomWait();
+                    continue;
+                }
+                // Process Metadata Extraction Request
+                MetadataExtractionResult metadataExtractionResult = attendMetadataExtractionRequest(metadataExtractionRequest);
+                if (metadataExtractionResult != null) {
+                    persist(metadataExtractionResult);
+                    announce(metadataExtractionResult);
+                }
             } catch (RuntimeException e) {
                 // Prevent the thread from crashing on any possible error
                 logger.error("An error has been stopped for preventing the thread from crashing, '{}'", e.getMessage());
@@ -148,6 +162,5 @@ public class MetadataCollector extends Thread {
             }
         }
         logger.info("--- [END] Metadata Collection Daemon ---");
-
     }
 }
