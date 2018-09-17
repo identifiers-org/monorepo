@@ -1,5 +1,6 @@
 package org.identifiers.org.cloud.ws.metadata.configuration;
 
+import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,6 +41,12 @@ public class ApplicationConfig {
         return template;
     }
 
+    @Bean
+    public RedisTemplate<String, MetadataExtractionRequest> metadataExtractionRequestRedisTemplate() {
+        RedisTemplate<String, MetadataExtractionRequest> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory());
+        return redisTemplate;
+    }
 
 
 }
