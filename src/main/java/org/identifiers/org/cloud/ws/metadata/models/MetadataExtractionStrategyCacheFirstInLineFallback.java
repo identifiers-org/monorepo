@@ -1,6 +1,8 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
 import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -32,6 +34,8 @@ import java.util.List;
  * Else, if we have metadata, send it back to the client including all possible logs of the process to get here.
  */
 public class MetadataExtractionStrategyCacheFirstInLineFallback implements MetadataExtractionStrategy {
+    private static final Logger logger = LoggerFactory.getLogger(MetadataExtractionStrategyCacheFirstInLineFallback
+            .class);
     @Override
     public String extractMetadata(List<ResolvedResource> resolvedResources) throws MetadataExtractionStrategyException {
         return null;
