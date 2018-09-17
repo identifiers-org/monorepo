@@ -43,4 +43,8 @@ public class MetadataCollector extends Thread {
     private MetadataExtractionResult persist(MetadataExtractionResult result) {
         // TODO
     }
+
+    private MetadataExtractionResult announce(MetadataExtractionResult result) {
+        // TODO
+    }
 }
