@@ -83,7 +83,7 @@ public class ApplicationConfig {
         return container;
     }
     // Channels
-    @Bean public ChannelTopic channelTopicMetadataExtractionResults() {
+    @Bean public ChannelTopic channelTopicMetadataExtractionResult() {
         return new ChannelTopic(channelKeyMetadataExtractionResult);
     }
 
