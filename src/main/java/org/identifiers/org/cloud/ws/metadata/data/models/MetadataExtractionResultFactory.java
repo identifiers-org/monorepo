@@ -1,5 +1,8 @@
 package org.identifiers.org.cloud.ws.metadata.data.models;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Project: metadata
  * Package: org.identifiers.org.cloud.ws.metadata.data.models
@@ -9,4 +12,6 @@ package org.identifiers.org.cloud.ws.metadata.data.models;
  * ---
  */
 public class MetadataExtractionResultFactory {
+    private static final Logger logger = LoggerFactory.getLogger(MetadataExtractionResultFactory.class);
+    
 }
