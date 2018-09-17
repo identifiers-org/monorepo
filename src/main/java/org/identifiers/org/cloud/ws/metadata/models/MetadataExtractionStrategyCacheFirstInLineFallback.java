@@ -1,8 +1,11 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
 import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
+import org.identifiers.org.cloud.ws.metadata.data.services.MetadataExtractionResultService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -33,9 +36,14 @@ import java.util.List;
  * whatever results back to the client, including all possible logs of the process to get here.
  * Else, if we have metadata, send it back to the client including all possible logs of the process to get here.
  */
+@Component
 public class MetadataExtractionStrategyCacheFirstInLineFallback implements MetadataExtractionStrategy {
     private static final Logger logger = LoggerFactory.getLogger(MetadataExtractionStrategyCacheFirstInLineFallback
             .class);
+
+    @Autowired
+    private MetadataExtractionResultService metadataExtractionResultService;
+    
     @Override
     public String extractMetadata(List<ResolvedResource> resolvedResources) throws MetadataExtractionStrategyException {
         return null;
