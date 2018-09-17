@@ -34,6 +34,18 @@ public class MetadataExtractionResultSubscriber extends Subscriber<String, Metad
         doRegisterSubscriber();
     }
 
+    @Override
+    protected RedisMessageListenerContainer getRedisContainer() {
+        return redisContainer;
+    }
 
+    @Override
+    protected ChannelTopic getChannelTopic() {
+        return channelTopicMetadataExtractionResult;
+    }
 
+    @Override
+    protected RedisTemplate<String, MetadataExtractionResult> getRedisTemplate() {
+        return metadataExtractionResultRedisTemplate;
+    }
 }
