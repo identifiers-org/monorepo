@@ -1,5 +1,7 @@
 package org.identifiers.org.cloud.ws.metadata.data.services;
 
+import org.identifiers.org.cloud.ws.metadata.data.repositories.MetadataExtractionResultRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,4 +15,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class MetadataExtractionResultService {
     // TODO
+    @Autowired
+    private MetadataExtractionResultRepository repository;
 }
