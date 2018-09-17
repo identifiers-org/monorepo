@@ -1,5 +1,7 @@
 package org.identifiers.org.cloud.ws.metadata.data.models;
 
+import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
+
 /**
  * Project: metadata
  * Package: org.identifiers.org.cloud.ws.metadata.data.models
@@ -11,5 +13,11 @@ package org.identifiers.org.cloud.ws.metadata.data.models;
 public class MetadataExtractionRequestFactory {
     public static MetadataExtractionRequest getMetadataExtractionRequest() {
         return new MetadataExtractionRequest();
+    }
+
+    public static MetadataExtractionRequest getMetadataExtractionRequest(ResolvedResource resolvedResource) {
+        return new MetadataExtractionRequest()
+                .setAccessUrl(resolvedResource.getAccessUrl())
+                .setResourceId(resolvedResource.getId());
     }
 }
