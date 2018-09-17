@@ -35,6 +35,16 @@ public class MetadataCollector extends Thread {
     private MetadataFetcher metadataFetcher;
     // TODO - Wire in a metadata extraction result publisher
 
+    // Shutdown mechanism
+    public synchronized boolean isShutdown() {
+        return shutdown;
+    }
+
+    public synchronized void setShutdown() {
+        logger.warn("--- [SHUTDOWN] REQUESTED ---");
+        this.shutdown = true;
+    }
+
     // Helpers
     private MetadataExtractionResult attendMetadataExtractionRequest(MetadataExtractionRequest request) {
         // TODO
@@ -47,4 +57,6 @@ public class MetadataCollector extends Thread {
     private MetadataExtractionResult announce(MetadataExtractionResult result) {
         // TODO
     }
+
+
 }
