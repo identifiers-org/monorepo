@@ -23,6 +23,7 @@ public interface MetadataExtractionResultBuilder {
                     .setHttpStatus(200)
                     .setMetadataContent(metadata);
         } catch (MetadataFetcherException e) {
+            metadataExtractionResult = MetadataExtractionResultFactory.createResultWithoutMetadata();
             metadataExtractionResult.setErrorMessage(String.format("FAILED to fetch metadata for resolution path '%s'," +
                             " because '%s'",
                     request.getResolutionPath(),
