@@ -88,9 +88,12 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
             metadataExtractionResult = getCachedMetadataExtractionResult(resolvedResource);
             if ((metadataExtractionResult == null) || (metadataExtractionResult.getHttpStatus() != 200)) {
                 // queue a metadata extraction request
+                logger.info("Queuing metadata extraction request for access URL '{}' score '{}'",
+                        resolvedResource.getAccessUrl(),
+                        resolvedResource.getRecommendation().getRecommendationIndex());
                 metadataExtractionRequestQueue
                         .add(MetadataExtractionRequestFactory.getMetadataExtractionRequest(resolvedResource));
-                // TODO Keep looking
+                // Keep looking
                 continue;
             }
             break;
