@@ -1,7 +1,9 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
 import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
+import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionResult;
 import org.identifiers.org.cloud.ws.metadata.data.services.MetadataExtractionResultService;
+import org.identifiers.org.cloud.ws.metadata.data.services.MetadataExtractionResultServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,17 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
     @Autowired
     private MetadataExtractionResultService metadataExtractionResultService;
 
+    // Helpers
+    private MetadataExtractionResult getCachedMetadataExtractionResult(ResolvedResource resolvedResource) {
+        try {
+            return metadataExtractionResultService.findByAccessUrl(resolvedResource.getAccessUrl());
+        } catch (MetadataExtractionResultServiceException e) {
+            logger.error("Could not locate metadata extraction result cache entry for access URL '{}' due to '{}'",
+                    resolvedResource.getAccessUrl(), e.getMessage());
+        }
+        return null;
+    }
+
     @Override
     public String extractMetadata(List<ResolvedResource> resolvedResources) throws MetadataExtractionStrategyException {
         resolvedResources.sort((r1, r2) -> {
@@ -55,6 +68,13 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
             }
             return 1;
         });
+        MetadataExtractionResult metadataExtractionResult = null;
+        for (ResolvedResource resolvedResource :
+                resolvedResources) {
+            logger.info("Processing access URL '{}' with score '{}'", resolvedResource.getAccessUrl(),
+                    resolvedResource.getRecommendation().getRecommendationIndex());
+            // TODO - Get metadata from cache
+        }
         return null;
     }
 }
