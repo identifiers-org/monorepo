@@ -13,6 +13,5 @@ import java.util.List;
  * ---
  */
 public interface MetadataExtractionStrategy {
-    // TODO
     String extractMetadata(List<ResolvedResource> resolvedResources) throws MetadataExtractionStrategyException;
 }
