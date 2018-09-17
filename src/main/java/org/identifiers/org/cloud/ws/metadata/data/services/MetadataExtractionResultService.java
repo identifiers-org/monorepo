@@ -1,5 +1,7 @@
 package org.identifiers.org.cloud.ws.metadata.data.services;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Project: metadata
  * Package: org.identifiers.org.cloud.ws.metadata.data.services
@@ -8,6 +10,7 @@ package org.identifiers.org.cloud.ws.metadata.data.services;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+@Component
 public class MetadataExtractionResultService {
     // TODO
 }

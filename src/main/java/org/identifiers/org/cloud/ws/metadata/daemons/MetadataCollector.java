@@ -3,6 +3,7 @@ package org.identifiers.org.cloud.ws.metadata.daemons;
 import org.identifiers.org.cloud.ws.metadata.channels.metadataExtractionResult.MetadataExtractionResultPublisher;
 import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionRequest;
 import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionResult;
+import org.identifiers.org.cloud.ws.metadata.data.services.MetadataExtractionResultService;
 import org.identifiers.org.cloud.ws.metadata.models.MetadataFetcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,8 @@ public class MetadataCollector extends Thread {
     @Autowired
     private MetadataExtractionResultPublisher metadataExtractionResultPublisher;
     // TODO - Wire in a persistence service for metadata extraction results
+    @Autowired
+    private MetadataExtractionResultService metadataExtractionResultService;
 
     // Shutdown mechanism
     public synchronized boolean isShutdown() {
