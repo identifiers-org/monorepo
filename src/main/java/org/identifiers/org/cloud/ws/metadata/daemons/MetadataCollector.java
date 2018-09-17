@@ -39,7 +39,7 @@ public class MetadataCollector extends Thread {
     // Wire in a metadata extraction result publisher
     @Autowired
     private MetadataExtractionResultPublisher metadataExtractionResultPublisher;
-    // TODO - Wire in a persistence service for metadata extraction results
+    // Wire in a persistence service for metadata extraction results
     @Autowired
     private MetadataExtractionResultService metadataExtractionResultService;
 
