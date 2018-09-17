@@ -1,5 +1,6 @@
 package org.identifiers.org.cloud.ws.metadata.daemons;
 
+import org.identifiers.org.cloud.ws.metadata.channels.PublisherException;
 import org.identifiers.org.cloud.ws.metadata.channels.metadataExtractionResult.MetadataExtractionResultPublisher;
 import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionRequest;
 import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionResult;
@@ -70,8 +71,13 @@ public class MetadataCollector extends Thread {
     }
 
     private MetadataExtractionResult announce(MetadataExtractionResult result) {
-        // TODO
-        return null;
+        try {
+            metadataExtractionResultPublisher.publish(result);
+        } catch (PublisherException e) {
+            logger.error("FAILED to announce metadata extraction result for Access URL '%s' due to '%s'", result
+                    .getAccessUrl(), e.getMessage());
+        }
+        return result;
     }
 
     private void randomWait() {
