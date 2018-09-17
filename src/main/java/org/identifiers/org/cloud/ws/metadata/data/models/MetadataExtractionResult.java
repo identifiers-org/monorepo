@@ -38,7 +38,7 @@ public class MetadataExtractionResult implements Serializable, Comparable<Metada
     @Indexed
     private int httpStatus;
     // Extracted metadata from the access URL
-    private String metadataContent;
+    private Object metadataContent;
     // Optional explanation of a possible error that could have happen during the metadata extraction process
     private String errorMessage;
 
@@ -87,11 +87,11 @@ public class MetadataExtractionResult implements Serializable, Comparable<Metada
         return this;
     }
 
-    public String getMetadataContent() {
+    public Object getMetadataContent() {
         return metadataContent;
     }
 
-    public MetadataExtractionResult setMetadataContent(String metadataContent) {
+    public MetadataExtractionResult setMetadataContent(Object metadataContent) {
         this.metadataContent = metadataContent;
         return this;
     }
