@@ -102,20 +102,21 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
                 // Keep looking
                 continue;
             } if (cachedMetadataExtractionResult.getHttpStatus() != 200) {
-                String message = String.format("Metadata Extraction Result for access URL '%s', " +
+                String message = String.format("Temporarily using Metadata Extraction Result for access URL '%s', " +
                         "resource score '%s', " +
-                        "has HTTP Status '%s'",
+                        "with HTTP Status '%s'",
                         resolvedResource.getAccessUrl(),
                         resolvedResource.getRecommendation().getRecommendationIndex(),
                         HttpStatus.resolve(cachedMetadataExtractionResult.getHttpStatus()).toString());
                 logger.warn(message);
                 reportMessages.add(message);
+                metadataExtractionResult = cachedMetadataExtractionResult;
                 continue;
             }
             // If we get here it means we got valid metadata, so keep it if, and only if, we didn't keep metadata from
             // previous iterations
-            if (metadataExtractionResult == null) {
-                String message = String.format("Valid Cached metadata for access URL '%s', score '%s'",
+            if ((metadataExtractionResult == null) || (metadataExtractionResult.getHttpStatus() != 200)) {
+                String message = String.format("Valid Cached metadata for access URL '%s', score '%s', overwrites previous selections",
                         resolvedResource.getAccessUrl(),
                         resolvedResource.getRecommendation().getRecommendationIndex());
                 metadataExtractionResult = cachedMetadataExtractionResult;
