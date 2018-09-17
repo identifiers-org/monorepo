@@ -17,5 +17,5 @@ public class MetadataExtractionResultFactory {
     private static Long ttlResultWithMetadata = 10L;
     private static Long ttlResultWithoutMetadata = 10L;
 
-    
+
 }

@@ -2,6 +2,7 @@ package org.identifiers.org.cloud.ws.metadata.data.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.TimeToLive;
 import org.springframework.data.redis.core.index.Indexed;
 
 import java.io.Serializable;
@@ -18,7 +19,8 @@ import java.util.Date;
  */
 @RedisHash(value = "MetadataMetadataExtractionResult")
 public class MetadataExtractionResult implements Serializable, Comparable<MetadataExtractionResult> {
-    // TODO
+    // Entry TTL (default initialization to 10 seconds)
+    @TimeToLive private Long timeToLive = 10L;
     @Id
     private String id;
     // ID of the resource within the context of this resolution
