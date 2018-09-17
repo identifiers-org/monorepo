@@ -83,5 +83,20 @@ public class MetadataCollector extends Thread {
         return null;
     }
 
+    @Override
+    public void run() {
+        logger.info("--- [START] Metadata Collection Daemon ---");
 
+        while (!isShutdown()) {
+            try {
+                // TODO
+            } catch (RuntimeException e) {
+                // Prevent the thread from crashing on any possible error
+                logger.error("An error has been stopped for preventing the thread from crashing, '{}'", e.getMessage());
+                randomWait();
+            }
+        }
+        logger.info("--- [END] Metadata Collection Daemon ---");
+
+    }
 }
