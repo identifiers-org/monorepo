@@ -63,6 +63,7 @@ public class ApplicationConfig {
         return redisTemplate;
     }
 
+    // Queues
     @Bean
     public BlockingDeque<MetadataExtractionRequest> metadataExtractionRequestQueue() {
         RedisList<MetadataExtractionRequest> linkCheckRequests = new DefaultRedisList<>(queueKeyMetadataExtractionRequest,
