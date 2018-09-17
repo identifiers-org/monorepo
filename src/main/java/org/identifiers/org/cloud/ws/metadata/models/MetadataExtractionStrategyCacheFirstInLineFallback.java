@@ -1,7 +1,9 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
 import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
+import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionRequest;
 import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionResult;
+import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionResultBuilder;
 import org.identifiers.org.cloud.ws.metadata.data.services.MetadataExtractionResultService;
 import org.identifiers.org.cloud.ws.metadata.data.services.MetadataExtractionResultServiceException;
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.BlockingDeque;
 
 /**
  * Project: metadata
@@ -45,6 +48,12 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
 
     @Autowired
     private MetadataExtractionResultService metadataExtractionResultService;
+    @Autowired
+    private MetadataFetcher metadataFetcher;
+    @Autowired
+    private MetadataExtractionResultBuilder metadataExtractionResultBuilder;
+    @Autowired
+    private BlockingDeque<MetadataExtractionRequest> metadataExtractionRequestQueue;
 
     // Helpers
     private MetadataExtractionResult getCachedMetadataExtractionResult(ResolvedResource resolvedResource) {
@@ -58,7 +67,7 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
     }
 
     @Override
-    public String extractMetadata(List<ResolvedResource> resolvedResources) throws MetadataExtractionStrategyException {
+    public MetadataExtractionResult extractMetadata(List<ResolvedResource> resolvedResources) throws MetadataExtractionStrategyException {
         resolvedResources.sort((r1, r2) -> {
             if (r1.getRecommendation().getRecommendationIndex() == r2.getRecommendation().getRecommendationIndex()) {
                 return 0;
@@ -68,6 +77,7 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
             }
             return 1;
         });
+        // Prepare result
         MetadataExtractionResult metadataExtractionResult = null;
         for (ResolvedResource resolvedResource :
                 resolvedResources) {
@@ -75,7 +85,17 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
                     resolvedResource.getRecommendation().getRecommendationIndex());
             // Get metadata from cache
             metadataExtractionResult = getCachedMetadataExtractionResult(resolvedResource);
+            if ((metadataExtractionResult == null) || (metadataExtractionResult.getHttpStatus() != 200)) {
+                // TODO - queue a metadata extraction request
+
+                // TODO Keep looking
+                continue;
+            }
+            break;
         }
-        return null;
+        if (metadataExtractionResult == null) {
+            // TODO - Do in-line metadata extraction
+        }
+        return metadataExtractionResult;
     }
 }

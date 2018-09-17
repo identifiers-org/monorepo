@@ -1,6 +1,7 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
 import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
+import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionResult;
 
 import java.util.List;
 
@@ -13,5 +14,5 @@ import java.util.List;
  * ---
  */
 public interface MetadataExtractionStrategy {
-    String extractMetadata(List<ResolvedResource> resolvedResources) throws MetadataExtractionStrategyException;
+    MetadataExtractionResult extractMetadata(List<ResolvedResource> resolvedResources) throws MetadataExtractionStrategyException;
 }
