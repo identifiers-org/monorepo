@@ -4,15 +4,13 @@ import org.identifiers.org.cloud.ws.metadata.channels.PublisherException;
 import org.identifiers.org.cloud.ws.metadata.channels.metadataExtractionResult.MetadataExtractionResultPublisher;
 import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionRequest;
 import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionResult;
-import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionResultFactory;
+import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionResultBuilder;
 import org.identifiers.org.cloud.ws.metadata.data.services.MetadataExtractionResultService;
 import org.identifiers.org.cloud.ws.metadata.data.services.MetadataExtractionResultServiceException;
 import org.identifiers.org.cloud.ws.metadata.models.MetadataFetcher;
-import org.identifiers.org.cloud.ws.metadata.models.MetadataFetcherException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -49,6 +47,9 @@ public class MetadataCollector extends Thread {
     // Wire in a persistence service for metadata extraction results
     @Autowired
     private MetadataExtractionResultService metadataExtractionResultService;
+    @Autowired
+    private MetadataExtractionResultBuilder metadataExtractionResultBuilder;
+
 
     // Shutdown mechanism
     public synchronized boolean isShutdown() {
@@ -64,36 +65,7 @@ public class MetadataCollector extends Thread {
     private MetadataExtractionResult attendMetadataExtractionRequest(MetadataExtractionRequest request) {
         logger.info("Attending metadata extraction request for Access URL '{}', resolution path '{}'", request
                 .getAccessUrl(), request.getResolutionPath());
-        Object metadata = null;
-        MetadataExtractionResult metadataExtractionResult = null;
-        try {
-            metadata = metadataFetcher.fetchMetadataFor(request.getAccessUrl());
-            metadataExtractionResult = MetadataExtractionResultFactory.createResultWithMetadata()
-                    .setHttpStatus(200)
-                    .setMetadataContent(metadata);
-        } catch (MetadataFetcherException e) {
-            metadataExtractionResult.setErrorMessage(String.format("FAILED to fetch metadata for resolution path '%s'," +
-                            " because '%s'",
-                    request.getResolutionPath(),
-                    e.getMessage()));
-            // TODO I need to refine the error reporting here to correctly flag errors as client or server side
-            if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.INTERNAL_ERROR.getValue()) {
-                metadataExtractionResult.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            } else if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.METADATA_NOT_FOUND.getValue()) {
-                metadataExtractionResult.setHttpStatus(HttpStatus.NOT_FOUND.value());
-            } else if (e.getErrorCode().getValue() == MetadataFetcherException.ErrorCode.METADATA_INVALID.getValue()) {
-                metadataExtractionResult.setHttpStatus(HttpStatus.UNPROCESSABLE_ENTITY.value());
-            } else {
-                metadataExtractionResult.setHttpStatus(HttpStatus.BAD_REQUEST.value());
-            }
-
-        }
-        metadataExtractionResult
-                .setAccessUrl(request.getAccessUrl())
-                .setRequestTimestamp(request.getTimestamp().toString())
-                .setResourceId(request.getResourceId())
-                .setResolutionPath(request.getResolutionPath());
-        return metadataExtractionResult;
+        return metadataExtractionResultBuilder.attendMetadataExtractionRequest(metadataFetcher, request);
     }
 
     private MetadataExtractionResult persist(MetadataExtractionResult result) {
