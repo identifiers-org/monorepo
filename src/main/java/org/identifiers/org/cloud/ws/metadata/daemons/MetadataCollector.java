@@ -1,10 +1,14 @@
 package org.identifiers.org.cloud.ws.metadata.daemons;
 
+import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionRequest;
+import org.identifiers.org.cloud.ws.metadata.models.MetadataFetcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
+import java.util.concurrent.BlockingDeque;
 
 /**
  * Project: metadata
@@ -24,5 +28,6 @@ public class MetadataCollector extends Thread {
     private boolean shutdown = false;
     // For random waits
     private Random random = new Random(System.currentTimeMillis());
-
+    @Autowired
+    private BlockingDeque<MetadataExtractionRequest> metadataExtractionRequestQueue;
 }
