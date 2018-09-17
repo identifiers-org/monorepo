@@ -85,8 +85,8 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
             logger.info("Processing access URL '{}' with score '{}'", resolvedResource.getAccessUrl(),
                     resolvedResource.getRecommendation().getRecommendationIndex());
             // Get metadata from cache
-            metadataExtractionResult = getCachedMetadataExtractionResult(resolvedResource);
-            if ((metadataExtractionResult == null) || (metadataExtractionResult.getHttpStatus() != 200)) {
+            MetadataExtractionResult cachedMetadataExtractionResult = getCachedMetadataExtractionResult(resolvedResource);
+            if ((cachedMetadataExtractionResult == null) || (cachedMetadataExtractionResult.getHttpStatus() != 200)) {
                 // queue a metadata extraction request
                 logger.info("Queuing metadata extraction request for access URL '{}' score '{}'",
                         resolvedResource.getAccessUrl(),
@@ -96,7 +96,12 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
                 // Keep looking
                 continue;
             }
-            break;
+            // If we get here it means we got valid metadata, so keep it if, and only if, we didn't keep metadata from
+            // previous iterations
+            if (metadataExtractionResult == null) {
+                metadataExtractionResult = cachedMetadataExtractionResult;
+            }
+            // We explore all the given resolved resources
         }
         if (metadataExtractionResult == null) {
             // TODO - Do in-line metadata extraction
