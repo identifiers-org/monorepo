@@ -12,5 +12,5 @@ import org.springframework.data.repository.CrudRepository;
  * ---
  */
 public interface MetadataExtractionResultRepository extends CrudRepository<MetadataExtractionResult, String> {
-    // TODO
+    MetadataExtractionResult findByAccessUrl(String accessUrl);
 }
