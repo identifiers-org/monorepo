@@ -1,6 +1,7 @@
 package org.identifiers.org.cloud.ws.metadata.configuration;
 
 import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionRequest;
+import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionResult;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,16 +39,26 @@ public class ApplicationConfig {
         return new JedisConnectionFactory(redisStandaloneConfiguration);
     }
 
+    // Redis Serialization templates
+    // Generic
     @Bean
     public RedisTemplate<?, ?> redisTemplate() {
         RedisTemplate<byte[], byte[]> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory());
         return template;
     }
-
+    // Metadata Extraction Request
     @Bean
     public RedisTemplate<String, MetadataExtractionRequest> metadataExtractionRequestRedisTemplate() {
         RedisTemplate<String, MetadataExtractionRequest> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory());
+        return redisTemplate;
+    }
+
+    // Metadata Extraction Result
+    @Bean
+    public RedisTemplate<String, MetadataExtractionResult> metadataExtractionResultRedisTemplate() {
+        RedisTemplate<String, MetadataExtractionResult> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
         return redisTemplate;
     }
@@ -60,5 +71,6 @@ public class ApplicationConfig {
     }
 
     // Publisher - Subscriber
+
 
 }
