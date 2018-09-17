@@ -30,7 +30,7 @@ public class MetadataExtractionResultFactory {
 
     // Factory methods
     public static MetadataExtractionResult createResultWithMetadata() {
-        // TODO
+        return new MetadataExtractionResult().setTimeToLive(ttlResultWithMetadata);
     }
 
     public static MetadataExtractionResult createResultWithoutMetadata() {
