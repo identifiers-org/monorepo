@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class ApplicationConfig {
     @Value("${spring.redis.host}")
     private String redisHost;
-    
+    @Value("${spring.redis.port}")
     private int redisPort;
     private String queueKeyMetadataExtractionRequest;
     private String channelKeyMetadataExtractionResult;
