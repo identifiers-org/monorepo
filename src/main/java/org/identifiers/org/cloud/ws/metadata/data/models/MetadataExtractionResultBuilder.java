@@ -14,7 +14,7 @@ import org.springframework.http.HttpStatus;
  */
 public interface MetadataExtractionResultBuilder {
 
-    MetadataExtractionResult attendMetadataExtractionRequest(MetadataFetcher metadataFetcher, MetadataExtractionRequest request) {
+    default MetadataExtractionResult attendMetadataExtractionRequest(MetadataFetcher metadataFetcher, MetadataExtractionRequest request) {
         Object metadata = null;
         MetadataExtractionResult metadataExtractionResult = null;
         try {
