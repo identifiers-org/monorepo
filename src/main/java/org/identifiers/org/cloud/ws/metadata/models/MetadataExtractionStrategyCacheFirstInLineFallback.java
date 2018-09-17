@@ -134,7 +134,25 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
         }
         if (metadataExtractionResult == null) {
             // TODO - Do in-line metadata extraction
+            String message = String.format("No Cached metadata found!, running in-line metadata extraction for " +
+                    "access URL '%s', score '%s'",
+                    resolvedResources.get(0).getAccessUrl(),
+                    resolvedResources.get(0).getRecommendation().getRecommendationIndex());
+            logger.warn(message);
+            reportMessages.add(message);
+            metadataExtractionResult =
+                    metadataExtractionResultBuilder
+                            .attendMetadataExtractionRequest(metadataFetcher,
+                                    MetadataExtractionRequestFactory
+                                            .getMetadataExtractionRequest(resolvedResources.get(0)));
+            if (metadataExtractionResult.getHttpStatus() != 200) {
+                // TODO - I may be duplicating error messages
+                logger.error(metadataExtractionResult.getErrorMessage());
+            }
+            reportMessages.add(metadataExtractionResult.getErrorMessage());
         }
+        // Finally, set the messages
+        metadataExtractionResult.setErrorMessage(String.join("\n", reportMessages));
         return metadataExtractionResult;
     }
 }
