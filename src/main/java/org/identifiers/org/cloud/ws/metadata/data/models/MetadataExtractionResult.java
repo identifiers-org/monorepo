@@ -104,6 +104,15 @@ public class MetadataExtractionResult implements Serializable, Comparable<Metada
         return this;
     }
 
+    public Long getTimeToLive() {
+        return timeToLive;
+    }
+
+    public MetadataExtractionResult setTimeToLive(Long timeToLive) {
+        this.timeToLive = timeToLive;
+        return this;
+    }
+
     @Override
     public int compareTo(MetadataExtractionResult o) {
         return getTimestamp().compareTo(o.getTimestamp());
