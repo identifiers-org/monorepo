@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 
 /**
  * Project: metadata
@@ -15,6 +18,7 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+@Component
 public class MetadataExtractionResultSubscriber extends Subscriber<String, MetadataExtractionResult> {
     @Autowired
     private RedisMessageListenerContainer redisContainer;
@@ -24,5 +28,12 @@ public class MetadataExtractionResultSubscriber extends Subscriber<String, Metad
 
     @Autowired
     private RedisTemplate<String, MetadataExtractionResult> metadataExtractionResultRedisTemplate;
+
+    @PostConstruct
+    public void registerSubscriber() {
+        doRegisterSubscriber();
+    }
+
+
 
 }
