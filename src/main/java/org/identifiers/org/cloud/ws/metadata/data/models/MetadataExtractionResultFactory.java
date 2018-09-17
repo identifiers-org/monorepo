@@ -13,5 +13,9 @@ import org.slf4j.LoggerFactory;
  */
 public class MetadataExtractionResultFactory {
     private static final Logger logger = LoggerFactory.getLogger(MetadataExtractionResultFactory.class);
+
+    private static Long ttlResultWithMetadata = 10L;
+    private static Long ttlResultWithoutMetadata = 10L;
+
     
 }
