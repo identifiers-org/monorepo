@@ -73,7 +73,8 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
                 resolvedResources) {
             logger.info("Processing access URL '{}' with score '{}'", resolvedResource.getAccessUrl(),
                     resolvedResource.getRecommendation().getRecommendationIndex());
-            // TODO - Get metadata from cache
+            // Get metadata from cache
+            metadataExtractionResult = getCachedMetadataExtractionResult(resolvedResource);
         }
         return null;
     }
