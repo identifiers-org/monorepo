@@ -2,6 +2,10 @@ package org.identifiers.org.cloud.ws.metadata.channels.metadataExtractionResult;
 
 import org.identifiers.org.cloud.ws.metadata.channels.Subscriber;
 import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionResult;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.ChannelTopic;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 
 /**
  * Project: metadata
@@ -12,5 +16,13 @@ import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionResul
  * ---
  */
 public class MetadataExtractionResultSubscriber extends Subscriber<String, MetadataExtractionResult> {
-    // TODO
+    @Autowired
+    private RedisMessageListenerContainer redisContainer;
+
+    @Autowired
+    private ChannelTopic channelTopicMetadataExtractionResult;
+
+    @Autowired
+    private RedisTemplate<String, MetadataExtractionResult> metadataExtractionResultRedisTemplate;
+
 }
