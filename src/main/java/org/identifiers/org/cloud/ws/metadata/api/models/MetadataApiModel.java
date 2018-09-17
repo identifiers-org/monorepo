@@ -9,6 +9,7 @@ import org.identifiers.org.cloud.ws.metadata.api.responses.ResponseFetchMetadata
 import org.identifiers.org.cloud.ws.metadata.api.responses.ResponseFetchMetadataPayload;
 import org.identifiers.org.cloud.ws.metadata.api.responses.ServiceResponseFetchMetadata;
 import org.identifiers.org.cloud.ws.metadata.api.responses.ServiceResponseFetchMetadataForUrl;
+import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionResult;
 import org.identifiers.org.cloud.ws.metadata.models.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -179,6 +180,23 @@ public class MetadataApiModel {
         }
     }
 
+    private void extractMetadata(List<ResolvedResource> resolvedResources, ServiceResponseFetchMetadata response, String rawRequest) {
+        try {
+            MetadataExtractionResult metadataExtractionResult =
+                    metadataExtractionStrategy.extractMetadata(resolvedResources);
+            response.getPayload().setMetadata(metadataExtractionResult.getMetadataContent());
+            response.setErrorMessage(metadataExtractionResult.getErrorMessage());
+        } catch (MetadataExtractionStrategyException e) {
+            String errorMessage = String.format("Error while trying to locate metadate for resolution request '%s', " +
+                            "due to '%s'",
+                    rawRequest,
+                    e.getMessage());
+            response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            response.setErrorMessage(errorMessage);
+            logger.error(errorMessage);
+        }
+    }
+
     // --- API Methods ---
     public ServiceResponseFetchMetadata getMetadataFor(String compactId) {
         ServiceResponseFetchMetadata response = createDefaultResponseFetchMetadata(HttpStatus.OK, "");
@@ -220,11 +238,12 @@ public class MetadataApiModel {
         logger.warn("Getting metadata for RAW Request '{}'", rawRequest);
         List<ResolvedResource> resources = resolveRawRequest(rawRequest, response);
         if (response.getHttpStatus() == HttpStatus.OK) {
-            // Select the provider
+            /*// Select the provider
             ResolvedResource selectedResource = selectResource(rawRequest, resources, response);
             if (response.getHttpStatus() == HttpStatus.OK) {
                 extractMetadata(selectedResource, response, null, rawRequest);
-            }
+            }*/
+            extractMetadata(resources, response, rawRequest);
         }
         return response;
     }
