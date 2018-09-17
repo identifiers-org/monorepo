@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.util.Random;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.TimeUnit;
@@ -170,5 +171,10 @@ public class MetadataCollector extends Thread {
         start();
     }
 
+    @PreDestroy
+    public void stopDaemon() {
+        logger.info("--- [STOPPING] Metadata Collector Daemon ---");
+        setShutdown();
+    }
 
 }
