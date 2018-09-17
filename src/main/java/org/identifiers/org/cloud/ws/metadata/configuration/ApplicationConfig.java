@@ -18,5 +18,6 @@ public class ApplicationConfig {
     private int redisPort;
     @Value("${org.identifiers.cloud.ws.metadata.backend.data.queue.key.metadataextractionrequest}")
     private String queueKeyMetadataExtractionRequest;
+    @Value("${org.identifiers.cloud.ws.metadata.backend.data.channel.key.metadataextractionresult}")
     private String channelKeyMetadataExtractionResult;
 }
