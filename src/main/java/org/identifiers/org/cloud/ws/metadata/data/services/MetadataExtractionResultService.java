@@ -1,5 +1,6 @@
 package org.identifiers.org.cloud.ws.metadata.data.services;
 
+import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionResult;
 import org.identifiers.org.cloud.ws.metadata.data.repositories.MetadataExtractionResultRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,4 +18,13 @@ public class MetadataExtractionResultService {
     // TODO
     @Autowired
     private MetadataExtractionResultRepository repository;
+
+    public MetadataExtractionResult findByAccessUrl(String accessUrl) throws MetadataExtractionResultServiceException {
+        try {
+            return repository.findByAccessUrl(accessUrl);
+        } catch (RuntimeException e) {
+            throw new MetadataExtractionResultServiceException(String.format("Could not retrieve information on " +
+                    "Access URL '%s' due to '%s'", accessUrl, e.getMessage()));
+        }
+    }
 }
