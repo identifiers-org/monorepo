@@ -58,5 +58,16 @@ public class MetadataCollector extends Thread {
         // TODO
     }
 
+    private void randomWait() {
+        try {
+            long waitTimeSeconds = random.nextInt(WAIT_TIME_LIMIT_SECONDS);
+            logger.info("Random wait {}s", waitTimeSeconds);
+            Thread.sleep(waitTimeSeconds * 1000);
+        } catch (InterruptedException e) {
+            logger.warn("The Metadata Collector Daemon has been interrupted while waiting for " +
+                    "another iteration. Stopping the daemon, no more metadata extraction requests will be processed");
+            setShutdown();
+        }
+    }
 
 }
