@@ -31,13 +31,16 @@ public class MetadataApiModel {
     private IdResolver idResolver;
     private MetadataFetcher metadataFetcher;
     private IdResourceSelector idResourceSelector;
+    private MetadataExtractionStrategy metadataExtractionStrategy;
 
     public MetadataApiModel(IdResolver idResolver,
                             MetadataFetcher metadataFetcher,
-                            IdResourceSelector idResourceSelector) {
+                            IdResourceSelector idResourceSelector,
+                            MetadataExtractionStrategy metadataExtractionStrategy) {
         this.idResolver = idResolver;
         this.metadataFetcher = metadataFetcher;
         this.idResourceSelector = idResourceSelector;
+        this.metadataExtractionStrategy = metadataExtractionStrategy;
     }
 
     private ServiceResponseFetchMetadata createDefaultResponseFetchMetadata(HttpStatus httpStatus, String
