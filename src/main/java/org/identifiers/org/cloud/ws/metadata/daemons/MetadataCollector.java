@@ -39,4 +39,8 @@ public class MetadataCollector extends Thread {
     private MetadataExtractionResult attendMetadataExtractionRequest(MetadataExtractionRequest request) {
         // TODO
     }
+
+    private MetadataExtractionResult persist(MetadataExtractionResult result) {
+        // TODO
+    }
 }
