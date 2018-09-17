@@ -23,6 +23,7 @@ public class MetadataExtractionResult implements Serializable, Comparable<Metada
     @TimeToLive private Long timeToLive = 10L;
     @Id
     private String id;
+    @Indexed private String resolutionPath;
     // ID of the resource within the context of this resolution
     @Indexed
     private String resourceId;
@@ -110,6 +111,15 @@ public class MetadataExtractionResult implements Serializable, Comparable<Metada
 
     public MetadataExtractionResult setTimeToLive(Long timeToLive) {
         this.timeToLive = timeToLive;
+        return this;
+    }
+
+    public String getResolutionPath() {
+        return resolutionPath;
+    }
+
+    public MetadataExtractionResult setResolutionPath(String resolutionPath) {
+        this.resolutionPath = resolutionPath;
         return this;
     }
 
