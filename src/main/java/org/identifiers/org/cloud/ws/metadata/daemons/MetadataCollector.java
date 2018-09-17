@@ -1,5 +1,6 @@
 package org.identifiers.org.cloud.ws.metadata.daemons;
 
+import org.identifiers.org.cloud.ws.metadata.channels.metadataExtractionResult.MetadataExtractionResultPublisher;
 import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionRequest;
 import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionResult;
 import org.identifiers.org.cloud.ws.metadata.models.MetadataFetcher;
@@ -34,7 +35,9 @@ public class MetadataCollector extends Thread {
     private BlockingDeque<MetadataExtractionRequest> metadataExtractionRequestQueue;
     @Autowired
     private MetadataFetcher metadataFetcher;
-    // TODO - Wire in a metadata extraction result publisher
+    // Wire in a metadata extraction result publisher
+    @Autowired
+    private MetadataExtractionResultPublisher metadataExtractionResultPublisher;
     // TODO - Wire in a persistence service for metadata extraction results
 
     // Shutdown mechanism
