@@ -2,6 +2,8 @@ package org.identifiers.org.cloud.ws.metadata.data.models;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * Project: metadata
@@ -11,11 +13,18 @@ import org.slf4j.LoggerFactory;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+@Component
 public class MetadataExtractionResultFactory {
     private static final Logger logger = LoggerFactory.getLogger(MetadataExtractionResultFactory.class);
 
     private static Long ttlResultWithMetadata = 10L;
     private static Long ttlResultWithoutMetadata = 10L;
+
+    // Values from service configuration
+    @Value("${org.identifiers.cloud.ws.metadata.backend.data.metadataextractionresults.with.content.ttl.seconds}")
+    private Long configTtlResultWithMetadata;
+    @Value("${org.identifiers.cloud.ws.metadata.backend.data.metadataextractionresults.without.content.ttl.seconds}")
+    private Long configTtlResultWithoutMetadata;
 
     // Factory methods
     public static MetadataExtractionResult createResultWithMetadata() {
@@ -25,4 +34,6 @@ public class MetadataExtractionResultFactory {
     public static MetadataExtractionResult createResultWithoutMetadata() {
         // TODO
     }
+
+    // Initialize parameters parameters from service configuration
 }
