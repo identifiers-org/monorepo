@@ -27,4 +27,14 @@ public class MetadataExtractionResultService {
                     "Access URL '%s' due to '%s'", accessUrl, e.getMessage()));
         }
     }
+
+    public MetadataExtractionResult save(MetadataExtractionResult metadataExtractionResult) throws MetadataExtractionResultServiceException {
+        try {
+            repository.save(metadataExtractionResult);
+        } catch (RuntimeException e) {
+            throw new MetadataExtractionResultServiceException(String.format("Could not save metadata extraction " +
+                    "result for Access URL '%s' due to '%s'", metadataExtractionResult.getAccessUrl(), e.getMessage()));
+        }
+        return metadataExtractionResult;
+    }
 }
