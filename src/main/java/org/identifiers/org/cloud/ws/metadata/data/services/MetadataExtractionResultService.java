@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MetadataExtractionResultService {
-    // TODO
     @Autowired
     private MetadataExtractionResultRepository repository;
 
