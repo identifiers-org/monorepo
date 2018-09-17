@@ -30,4 +30,7 @@ public class MetadataCollector extends Thread {
     private Random random = new Random(System.currentTimeMillis());
     @Autowired
     private BlockingDeque<MetadataExtractionRequest> metadataExtractionRequestQueue;
+    @Autowired
+    private MetadataFetcher metadataFetcher;
+
 }
