@@ -5,6 +5,7 @@ import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionResul
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
+import org.springframework.stereotype.Component;
 
 /**
  * Project: metadata
@@ -14,6 +15,7 @@ import org.springframework.data.redis.listener.ChannelTopic;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+@Component
 public class MetadataExtractionResultPublisher extends Publisher<String, MetadataExtractionResult> {
     @Autowired
     private RedisTemplate<String, MetadataExtractionResult> metadataExtractionResultRedisTemplate;
