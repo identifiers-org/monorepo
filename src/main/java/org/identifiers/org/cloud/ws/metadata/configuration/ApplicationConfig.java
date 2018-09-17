@@ -9,6 +9,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.support.collections.DefaultRedisList;
 import org.springframework.data.redis.support.collections.RedisList;
@@ -81,6 +82,9 @@ public class ApplicationConfig {
         container.start();
         return container;
     }
-
+    // Channels
+    @Bean public ChannelTopic channelTopicMetadataExtractionResults() {
+        return new ChannelTopic(channelKeyMetadataExtractionResult);
+    }
 
 }
