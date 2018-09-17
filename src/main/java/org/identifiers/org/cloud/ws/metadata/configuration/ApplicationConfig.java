@@ -16,6 +16,7 @@ public class ApplicationConfig {
     private String redisHost;
     @Value("${spring.redis.port}")
     private int redisPort;
+    @Value("${org.identifiers.cloud.ws.metadata.backend.data.queue.key.metadataextractionrequest}")
     private String queueKeyMetadataExtractionRequest;
     private String channelKeyMetadataExtractionResult;
 }
