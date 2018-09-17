@@ -231,6 +231,7 @@ public class MetadataApiModel {
 
     public ServiceResponseFetchMetadataForUrl getMetadataForUrl(ServiceRequestFetchMetadataForUrl request) {
         // TODO - Check API version?
+        // TODO - This will need to be re-addressed, as it will still do in-line metadata extraction
         String url = request.getPayload().getUrl();
         // Prepare default response
         ServiceResponseFetchMetadataForUrl response =
