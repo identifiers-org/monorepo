@@ -4,6 +4,7 @@ import org.identifiers.org.cloud.ws.metadata.channels.metadataExtractionResult.M
 import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionRequest;
 import org.identifiers.org.cloud.ws.metadata.data.models.MetadataExtractionResult;
 import org.identifiers.org.cloud.ws.metadata.data.services.MetadataExtractionResultService;
+import org.identifiers.org.cloud.ws.metadata.data.services.MetadataExtractionResultServiceException;
 import org.identifiers.org.cloud.ws.metadata.models.MetadataFetcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,8 +61,12 @@ public class MetadataCollector extends Thread {
     }
 
     private MetadataExtractionResult persist(MetadataExtractionResult result) {
-        // TODO
-        return null;
+        try {
+            metadataExtractionResultService.save(result);
+        } catch (MetadataExtractionResultServiceException e) {
+            logger.error(String.format("FAILED to persist metadata extraction result due to '%s'", e.getMessage()));
+        }
+        return result;
     }
 
     private MetadataExtractionResult announce(MetadataExtractionResult result) {
