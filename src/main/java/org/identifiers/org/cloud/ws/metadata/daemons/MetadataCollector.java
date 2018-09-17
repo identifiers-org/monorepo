@@ -32,5 +32,6 @@ public class MetadataCollector extends Thread {
     private BlockingDeque<MetadataExtractionRequest> metadataExtractionRequestQueue;
     @Autowired
     private MetadataFetcher metadataFetcher;
+    // TODO - Wire in a metadata extraction result publisher
 
 }
