@@ -49,14 +49,17 @@ public class MetadataCollector extends Thread {
     // Helpers
     private MetadataExtractionResult attendMetadataExtractionRequest(MetadataExtractionRequest request) {
         // TODO
+        return null;
     }
 
     private MetadataExtractionResult persist(MetadataExtractionResult result) {
         // TODO
+        return null;
     }
 
     private MetadataExtractionResult announce(MetadataExtractionResult result) {
         // TODO
+        return null;
     }
 
     private void randomWait() {
