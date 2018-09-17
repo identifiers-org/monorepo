@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingDeque;
 
@@ -80,6 +81,7 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
         });
         // Prepare result
         MetadataExtractionResult metadataExtractionResult = null;
+        List<String> reportMessages = new ArrayList<>();
         for (ResolvedResource resolvedResource :
                 resolvedResources) {
             logger.info("Processing access URL '{}' with score '{}'", resolvedResource.getAccessUrl(),
