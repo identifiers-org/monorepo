@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+
 /**
  * Project: metadata
  * Package: org.identifiers.org.cloud.ws.metadata.data.models
@@ -36,4 +38,11 @@ public class MetadataExtractionResultFactory {
     }
 
     // Initialize parameters parameters from service configuration
+    @PostConstruct
+    private void init() {
+        logger.info("Setting metadata extraction results TTL to '{}s' and '{}s' for results with and without content",
+                configTtlResultWithMetadata, configTtlResultWithoutMetadata);
+        ttlResultWithMetadata = configTtlResultWithMetadata;
+        ttlResultWithoutMetadata = configTtlResultWithoutMetadata;
+    }
 }
