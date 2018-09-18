@@ -59,7 +59,13 @@ public class MetadataFetcherChromeEngineBased implements MetadataFetcher {
     public Object fetchMetadataFor(String url) throws MetadataFetcherException {
         logger.info("Connecting to google chrome driver");
         WebDriver driver = new RemoteWebDriver(chromeDriverService.getUrl(), chromeOptions);
-
+        try {
+            logger.info("Using Google Chrome driver to get URL '{}' content", url);
+            driver.get(url);
+            logger.info("Google Chrome driver for URL '{}', content\n{}", url, driver.getPageSource());
+        } finally {
+            driver.quit();
+        }
         return null;
     }
 }
