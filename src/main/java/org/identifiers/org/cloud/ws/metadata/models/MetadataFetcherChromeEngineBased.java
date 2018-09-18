@@ -65,8 +65,8 @@ public class MetadataFetcherChromeEngineBased implements MetadataFetcher {
             logger.info("Using Google Chrome driver to get URL '{}' content", url);
             driver.get(url);
             //logger.info("Google Chrome driver for URL '{}', content\n{}", url, driver.getPageSource());
-            String jsonLdXpath = "//*/script[type='application/ld+json']";
-            List<WebElement> jsonLdWebElements = ((RemoteWebDriver) driver).findElementsByXPath(jsonLdXpath);
+            String jsonLdCssSelector = "script[type='application/ld+json']";
+            List<WebElement> jsonLdWebElements = ((RemoteWebDriver) driver).findElementsByXPath(jsonLdCssSelector);
             logger.info("For URL '{}', #{} JSON-LD formatted elements found!", url, jsonLdWebElements.size());
         } finally {
             driver.quit();
