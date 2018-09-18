@@ -5,7 +5,7 @@ FROM anapsix/alpine-java:8_server-jre_unlimited
 LABEL maintainer="Manuel Bernal Llinares <mbdebian@gmail.com>"
 
 # Add chrome driver
-RUN apk --no-cache upgrade && apk add chromium-chromedriver
+RUN apk --no-cache upgrade && apk add chromium chromium-chromedriver
 
 # Environment - defaults
 ENV WS_METADATA_JVM_MEMORY_MAX 1024m
