@@ -143,7 +143,7 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
                 // We explore all the given resolved resources
             }
             if (metadataExtractionResult == null) {
-                // TODO - Do in-line metadata extraction
+                // Do in-line metadata extraction
                 String message = String.format("No Cached metadata found!, running in-line metadata extraction for " +
                                 "access URL '%s', score '%s'",
                         resolvedResources.get(0).getAccessUrl(),
