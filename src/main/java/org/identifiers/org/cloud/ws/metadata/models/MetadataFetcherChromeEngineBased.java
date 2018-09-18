@@ -1,6 +1,7 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -13,6 +14,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Project: metadata
@@ -62,7 +64,10 @@ public class MetadataFetcherChromeEngineBased implements MetadataFetcher {
         try {
             logger.info("Using Google Chrome driver to get URL '{}' content", url);
             driver.get(url);
-            logger.info("Google Chrome driver for URL '{}', content\n{}", url, driver.getPageSource());
+            //logger.info("Google Chrome driver for URL '{}', content\n{}", url, driver.getPageSource());
+            String jsonLdXpath = "//*/script[type='application/ld+json']";
+            List<WebElement> jsonLdWebElements = ((RemoteWebDriver) driver).findElementsByXPath(jsonLdXpath);
+            logger.info("For URL '{}', #{} JSON-LD formatted elements found!", url, jsonLdWebElements.size());
         } finally {
             driver.quit();
         }
