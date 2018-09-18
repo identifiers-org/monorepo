@@ -1,6 +1,7 @@
 # This Dockerfile builds the container for the metadata service
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
-FROM identifiersorg/linux-java8
+#FROM identifiersorg/linux-java8
+FROM anapsix/alpine-java:8_server-jre_unlimited
 LABEL maintainer="Manuel Bernal Llinares <mbdebian@gmail.com>"
 
 # Add chrome driver
