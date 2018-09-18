@@ -186,6 +186,7 @@ public class MetadataApiModel {
                     metadataExtractionStrategy.extractMetadata(resolvedResources);
             response.getPayload().setMetadata(metadataExtractionResult.getMetadataContent());
             response.setErrorMessage(metadataExtractionResult.getErrorMessage());
+            response.setHttpStatus(HttpStatus.valueOf(metadataExtractionResult.getHttpStatus()));
         } catch (MetadataExtractionStrategyException e) {
             String errorMessage = String.format("Error while trying to locate metadate for resolution request '%s', " +
                             "due to '%s'",
