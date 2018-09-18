@@ -1,6 +1,9 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +30,7 @@ public class MetadataFetcherChromeEngineBased implements MetadataFetcher {
     private String pathChromedriver;
 
     private ChromeDriverService chromeDriverService;
+    private ChromeOptions chromeOptions = new ChromeOptions().setHeadless(true);
 
     @PostConstruct
     private void init() {
@@ -37,6 +41,7 @@ public class MetadataFetcherChromeEngineBased implements MetadataFetcher {
                 .build();
         try {
             chromeDriverService.start();
+            // TODO create a watchdog that makes sure the chrome driver service is running
         } catch (IOException e) {
             String errorMessage = String.format("Could not start Google Chrome Driver Service due to '%s'!", e.getMessage());
             logger.error(errorMessage);
@@ -52,7 +57,9 @@ public class MetadataFetcherChromeEngineBased implements MetadataFetcher {
 
     @Override
     public Object fetchMetadataFor(String url) throws MetadataFetcherException {
-        
+        logger.info("Connecting to google chrome driver");
+        WebDriver driver = new RemoteWebDriver(chromeDriverService.getUrl(), chromeOptions);
+
         return null;
     }
 }
