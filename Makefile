@@ -4,7 +4,14 @@
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>	#
 #														#
 
-# Container name
+# Environment
+# Google Chrome Driver
+version_latest_chrome_driver = 2.42
+url_base_chrome_driver = http://chromedriver.storage.googleapis.com/
+binary_linux_chromedriver = chromedriver_linux64.zip
+binary_mac_chromedriver = chromedriver_mac64.zip
+binary_windows_chromedriver = chromedriver_win32.zip
+# Development support
 container_name = identifiersorg/cloud-ws-metadata
 docker_compose_development_file = docker-compose-development.yml
 springboot_development_profile = development
