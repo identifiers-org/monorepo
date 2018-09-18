@@ -3,6 +3,9 @@
 FROM identifiersorg/linux-java8
 LABEL maintainer="Manuel Bernal Llinares <mbdebian@gmail.com>"
 
+# Add chrome driver
+RUN apk --no-cache upgrade && apk add chromium-chromedriver
+
 # Environment - defaults
 ENV WS_METADATA_JVM_MEMORY_MAX 1024m
 ENV WS_METADATA_CONFIG_REDIS_HOST redis
