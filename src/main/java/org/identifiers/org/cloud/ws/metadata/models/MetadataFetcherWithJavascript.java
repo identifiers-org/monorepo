@@ -10,6 +10,7 @@ import com.gargoylesoftware.htmlunit.html.DomNodeList;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.NodeList;
@@ -28,6 +29,7 @@ import java.util.stream.IntStream;
  */
 @Component
 @Scope("prototype")
+@Profile("disabled")
 public class MetadataFetcherWithJavascript implements MetadataFetcher {
     private Logger logger = LoggerFactory.getLogger(MetadataFetcherWithJavascript.class);
 
