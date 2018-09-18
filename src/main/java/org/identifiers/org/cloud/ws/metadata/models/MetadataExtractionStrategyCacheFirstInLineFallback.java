@@ -70,7 +70,8 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
     }
 
     @Override
-    public MetadataExtractionResult extractMetadata(List<ResolvedResource> resolvedResources) throws MetadataExtractionStrategyException {
+    public MetadataExtractionResult extractMetadata(List<ResolvedResource> resolvedResources) throws
+            MetadataExtractionStrategyException {
         resolvedResources.sort((r1, r2) -> {
             if (r1.getRecommendation().getRecommendationIndex() == r2.getRecommendation().getRecommendationIndex()) {
                 return 0;
@@ -88,7 +89,8 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
             logger.info("Processing access URL '{}' with score '{}'", resolvedResource.getAccessUrl(),
                     resolvedResource.getRecommendation().getRecommendationIndex());
             // Get metadata from cache
-            MetadataExtractionResult cachedMetadataExtractionResult = getCachedMetadataExtractionResult(resolvedResource);
+            MetadataExtractionResult cachedMetadataExtractionResult = getCachedMetadataExtractionResult
+                    (resolvedResource);
             if (cachedMetadataExtractionResult == null) {
                 // queue a metadata extraction request
                 logger.info("Queuing metadata extraction request for access URL '{}' score '{}'",
@@ -101,59 +103,66 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
                         resolvedResource.getRecommendation().getRecommendationIndex()));
                 // Keep looking
                 continue;
-            } if (cachedMetadataExtractionResult.getHttpStatus() != 200) {
-                String message = String.format("Temporarily using Metadata Extraction Result for access URL '%s', " +
-                        "resource score '%s', " +
-                        "with HTTP Status '%s'",
-                        resolvedResource.getAccessUrl(),
-                        resolvedResource.getRecommendation().getRecommendationIndex(),
-                        HttpStatus.resolve(cachedMetadataExtractionResult.getHttpStatus()).toString());
-                logger.warn(message);
-                reportMessages.add(message);
-                metadataExtractionResult = cachedMetadataExtractionResult;
-                continue;
             }
-            // If we get here it means we got valid metadata, so keep it if, and only if, we didn't keep metadata from
+            if (cachedMetadataExtractionResult.getHttpStatus() != 200) {
+                if (metadataExtractionResult == null) {
+                    String message = String.format("Temporarily using Metadata Extraction Result for access URL '%s'," +
+                                    " " +
+                                    "resource score '%s', " +
+                                    "with HTTP Status '%s'",
+                            resolvedResource.getAccessUrl(),
+                            resolvedResource.getRecommendation().getRecommendationIndex(),
+                            HttpStatus.resolve(cachedMetadataExtractionResult.getHttpStatus()).toString());
+                    logger.warn(message);
+                    reportMessages.add(message);
+                    metadataExtractionResult = cachedMetadataExtractionResult;
+                    continue;
+                }
+            }
+            // If we get here it means we got something, so keep it if, and only if, we didn't keep metadata from
             // previous iterations
-            if ((metadataExtractionResult == null) || (metadataExtractionResult.getHttpStatus() != 200)) {
-                String message = String.format("Valid Cached metadata for access URL '%s', score '%s', overwrites previous selections",
-                        resolvedResource.getAccessUrl(),
-                        resolvedResource.getRecommendation().getRecommendationIndex());
-                metadataExtractionResult = cachedMetadataExtractionResult;
-                logger.info(message);
-                reportMessages.add(message);
-            } else {
-                String message = String.format("Ignoring valid Cached metadata for access URL '%s', score '%s' " +
-                        "as we have already found cached metadata for a higher scoring resource at access URL '%s'",
-                        resolvedResource.getAccessUrl(),
-                        resolvedResource.getRecommendation().getRecommendationIndex(),
-                        metadataExtractionResult.getAccessUrl());
+            if (cachedMetadataExtractionResult.getHttpStatus() == 200) {
+                if ((metadataExtractionResult == null) || (metadataExtractionResult.getHttpStatus() != 200)) {
+                    String message = String.format("Valid Cached metadata for access URL '%s', score '%s', overwrites" +
+                                    " previous selections",
+                            resolvedResource.getAccessUrl(),
+                            resolvedResource.getRecommendation().getRecommendationIndex());
+                    metadataExtractionResult = cachedMetadataExtractionResult;
+                    logger.info(message);
+                    reportMessages.add(message);
+                } else {
+                    String message = String.format("Ignoring valid Cached metadata for access URL '%s', score '%s' " +
+                                    "as we have already found cached metadata for a higher scoring resource at access" +
+                                    " URL '%s'",
+                            resolvedResource.getAccessUrl(),
+                            resolvedResource.getRecommendation().getRecommendationIndex(),
+                            metadataExtractionResult.getAccessUrl());
+                    logger.warn(message);
+                    reportMessages.add(message);
+                }
+                // We explore all the given resolved resources
+            }
+            if (metadataExtractionResult == null) {
+                // TODO - Do in-line metadata extraction
+                String message = String.format("No Cached metadata found!, running in-line metadata extraction for " +
+                                "access URL '%s', score '%s'",
+                        resolvedResources.get(0).getAccessUrl(),
+                        resolvedResources.get(0).getRecommendation().getRecommendationIndex());
                 logger.warn(message);
                 reportMessages.add(message);
+                metadataExtractionResult =
+                        metadataExtractionResultBuilder
+                                .attendMetadataExtractionRequest(metadataFetcher,
+                                        MetadataExtractionRequestFactory
+                                                .getMetadataExtractionRequest(resolvedResources.get(0)));
+                if (metadataExtractionResult.getHttpStatus() != 200) {
+                    // TODO - I may be duplicating error messages
+                    logger.error(metadataExtractionResult.getErrorMessage());
+                }
+                reportMessages.add(metadataExtractionResult.getErrorMessage());
             }
-            // We explore all the given resolved resources
+            // Finally, set the messages
+            metadataExtractionResult.setErrorMessage(String.join("\n", reportMessages));
+            return metadataExtractionResult;
         }
-        if (metadataExtractionResult == null) {
-            // TODO - Do in-line metadata extraction
-            String message = String.format("No Cached metadata found!, running in-line metadata extraction for " +
-                    "access URL '%s', score '%s'",
-                    resolvedResources.get(0).getAccessUrl(),
-                    resolvedResources.get(0).getRecommendation().getRecommendationIndex());
-            logger.warn(message);
-            reportMessages.add(message);
-            metadataExtractionResult =
-                    metadataExtractionResultBuilder
-                            .attendMetadataExtractionRequest(metadataFetcher,
-                                    MetadataExtractionRequestFactory
-                                            .getMetadataExtractionRequest(resolvedResources.get(0)));
-            if (metadataExtractionResult.getHttpStatus() != 200) {
-                // TODO - I may be duplicating error messages
-                logger.error(metadataExtractionResult.getErrorMessage());
-            }
-            reportMessages.add(metadataExtractionResult.getErrorMessage());
-        }
-        // Finally, set the messages
-        metadataExtractionResult.setErrorMessage(String.join("\n", reportMessages));
-        return metadataExtractionResult;
     }
-}
