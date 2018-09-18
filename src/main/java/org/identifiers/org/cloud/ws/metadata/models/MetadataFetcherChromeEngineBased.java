@@ -21,9 +21,10 @@ public class MetadataFetcherChromeEngineBased implements MetadataFetcher {
 
     @Value("${org.identifiers.cloud.ws.metadata.backend.selenium.driver.chrome.path.bin}")
     private String pathChromedriver;
-    
+
     @Override
     public Object fetchMetadataFor(String url) throws MetadataFetcherException {
+
         return null;
     }
 }
