@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Scope("Prototype")
 public class MetadataFetcherChromeEngineBased implements MetadataFetcher {
     private static final Logger logger = LoggerFactory.getLogger(MetadataFetcherChromeEngineBased.class);
-    
+
     @Override
     public Object fetchMetadataFor(String url) throws MetadataFetcherException {
         return null;
