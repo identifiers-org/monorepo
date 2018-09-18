@@ -35,7 +35,11 @@ public class MetadataFetcherChromeEngineBased implements MetadataFetcher {
     private String pathChromedriver;
 
     private ChromeDriverService chromeDriverService;
-    private ChromeOptions chromeOptions = new ChromeOptions().setHeadless(true);
+    private ChromeOptions chromeOptions =
+            new ChromeOptions()
+                    .setHeadless(true)
+                    .addArguments("--disable-gpu",
+                            "--no-sandbox");
 
     @PostConstruct
     private void init() {

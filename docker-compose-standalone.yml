@@ -5,8 +5,8 @@ services:
     metadata:
         image: identifiersorg/cloud-ws-metadata
         environment:
-            - WS_METADATA_CONFIG_RESOLVER_HOST=resolver
-            - WS_METADATA_CONFIG_RESOLVER_PORT=8080
+            - WS_METADATA_CONFIG_RESOLVER_HOST=resolver.api.identifiers.org
+            - WS_METADATA_CONFIG_RESOLVER_PORT=80
             - WS_METADATA_JVM_MEMORY_MAX=1024m
             - WS_METADATA_CONFIG_REDIS_HOST=redis
         ports:
