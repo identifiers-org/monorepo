@@ -76,4 +76,14 @@ container_production_push: container_production_build
 	@docker push $(container_name):$(tag_version)
 	@docker push $(container_name):latest
 
+# Folders
+tmp:
+	@echo "<===|DEVOPS|===> [FOLDER] Preparing temporary folder"
+	@mkdir tmp
+
+bin/selenium:
+	@echo "<===|DEVOPS|===> [FOLDER] Preparing selenium folder for binaries"
+	@mkdir -p bin/selenium
+# END - Folders
+
 .PHONY: all clean development_run_tests app_structure container_production_build container_production_push deploy release sync_project_version set_next_development_version
