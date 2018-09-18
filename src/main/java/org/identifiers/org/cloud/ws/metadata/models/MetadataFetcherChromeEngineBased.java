@@ -1,5 +1,6 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriverService;
@@ -16,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Project: metadata
@@ -62,18 +64,28 @@ public class MetadataFetcherChromeEngineBased implements MetadataFetcher {
     public Object fetchMetadataFor(String url) throws MetadataFetcherException {
         logger.info("Connecting to google chrome driver");
         WebDriver driver = new RemoteWebDriver(chromeDriverService.getUrl(), chromeOptions);
+        List<Object> metadataObjects = new ArrayList<>();
         try {
             logger.info("Using Google Chrome driver to get URL '{}' content", url);
             driver.get(url);
             //logger.info("Google Chrome driver for URL '{}', content\n{}", url, driver.getPageSource());
             String jsonLdXpathQuery = "//script[@type='application/ld+json']";
             List<WebElement> jsonLdWebElements = ((RemoteWebDriver) driver).findElementsByXPath(jsonLdXpathQuery);
-            logger.info("For URL '{}', #{} JSON-LD formatted elements found!", url, jsonLdWebElements.size());
-            List<Object> metadataObjects = new ArrayList<>();
-            jsonLdWebElements.stream().forEach(webElement -> logger.info("Metadata element: '{}'", webElement.getText()));
+            //logger.info("For URL '{}', #{} JSON-LD formatted elements found!", url, jsonLdWebElements.size());
+            ObjectMapper mapper = new ObjectMapper();
+            metadataObjects = jsonLdWebElements.stream().map(webElement -> {
+                try {
+                    return mapper.readTree(webElement.getAttribute("innerText"));
+                } catch (IOException e) {
+                    logger.error("MALFORMED METADATA for URL '{}', metadata '{}'", url, webElement.getAttribute("innerText"));
+                }
+                return null;
+            }).filter(item -> item != null).collect(Collectors.toList());
+            logger.info("For URL '{}', #{} metadata entries recovered, out of #{} metadata entries",
+                    url, metadataObjects.size(), jsonLdWebElements.size());
         } finally {
             driver.quit();
         }
-        return null;
+        return metadataObjects;
     }
 }
