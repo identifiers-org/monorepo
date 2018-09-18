@@ -14,7 +14,6 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.support.collections.DefaultRedisList;
 import org.springframework.data.redis.support.collections.RedisList;
 
-import javax.annotation.PostConstruct;
 import java.util.concurrent.BlockingDeque;
 
 /**
@@ -34,9 +33,6 @@ public class ApplicationConfig {
     private String queueKeyMetadataExtractionRequest;
     @Value("${org.identifiers.cloud.ws.metadata.backend.data.channel.key.metadataextractionresult}")
     private String channelKeyMetadataExtractionResult;
-    // TODO refactor this out when it's working
-    @Value("${org.identifiers.cloud.ws.metadata.backend.selenium.driver.chrome.path.bin}")
-    private String pathChromedriver;
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
@@ -89,13 +85,5 @@ public class ApplicationConfig {
     // Channels
     @Bean public ChannelTopic channelTopicMetadataExtractionResult() {
         return new ChannelTopic(channelKeyMetadataExtractionResult);
-    }
-
-    // Post configuration
-    @PostConstruct
-    private void init() {
-        // TODO refactor this out when it works
-        // Set Selenium configuration
-        System.setProperty("webdriver.chrome.driver", pathChromedriver);
     }
 }
