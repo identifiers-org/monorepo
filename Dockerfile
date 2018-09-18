@@ -9,6 +9,7 @@ RUN apk --no-cache upgrade && apk add chromium-chromedriver
 # Environment - defaults
 ENV WS_METADATA_JVM_MEMORY_MAX 1024m
 ENV WS_METADATA_CONFIG_REDIS_HOST redis
+ENV WS_METADSTA_CONFIG_BACKEND_SELENIUM_DRIVER_CHROME_PATH_BIN /usr/bin/chromedriver
 
 # Prepare the application folder
 RUN mkdir -p /home/app
