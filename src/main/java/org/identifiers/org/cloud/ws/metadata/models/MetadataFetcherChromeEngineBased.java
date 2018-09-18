@@ -1,5 +1,7 @@
 package org.identifiers.org.cloud.ws.metadata.models;
 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +26,7 @@ public class MetadataFetcherChromeEngineBased implements MetadataFetcher {
 
     @Override
     public Object fetchMetadataFor(String url) throws MetadataFetcherException {
-
+        WebDriver driver = new ChromeDriver();
         return null;
     }
 }
