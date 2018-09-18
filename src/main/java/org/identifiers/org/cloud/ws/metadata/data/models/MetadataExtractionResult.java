@@ -1,10 +1,13 @@
 package org.identifiers.org.cloud.ws.metadata.data.models;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
 import org.springframework.data.redis.core.index.Indexed;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -38,7 +41,7 @@ public class MetadataExtractionResult implements Serializable, Comparable<Metada
     @Indexed
     private int httpStatus;
     // Extracted metadata from the access URL
-    private Object metadataContent;
+    private String metadataContent;
     // Optional explanation of a possible error that could have happen during the metadata extraction process
     private String errorMessage;
 
@@ -88,11 +91,22 @@ public class MetadataExtractionResult implements Serializable, Comparable<Metada
     }
 
     public Object getMetadataContent() {
-        return metadataContent;
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.readTree(metadataContent);
+        } catch (IOException e) {
+            // TODO - ignore this right now
+        }
+        return null;
     }
 
     public MetadataExtractionResult setMetadataContent(Object metadataContent) {
-        this.metadataContent = metadataContent;
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            this.metadataContent = mapper.writeValueAsString(metadataContent);
+        } catch (JsonProcessingException e) {
+            // TODO - Ignore this right now
+        }
         return this;
     }
 

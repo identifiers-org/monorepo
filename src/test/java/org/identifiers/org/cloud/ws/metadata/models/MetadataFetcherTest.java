@@ -23,6 +23,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @SpringBootTest
 public class MetadataFetcherTest {
 
+    // TODO - Fix this unit test or kill it
     @Autowired
     private MetadataFetcher metadataFetcher;
 
