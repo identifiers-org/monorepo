@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,9 +66,11 @@ public class MetadataFetcherChromeEngineBased implements MetadataFetcher {
             logger.info("Using Google Chrome driver to get URL '{}' content", url);
             driver.get(url);
             //logger.info("Google Chrome driver for URL '{}', content\n{}", url, driver.getPageSource());
-            String jsonLdCssSelector = "script[type='application/ld+json']";
-            List<WebElement> jsonLdWebElements = ((RemoteWebDriver) driver).findElementsByXPath(jsonLdCssSelector);
+            String jsonLdXpathQuery = "//script[@type='application/ld+json']";
+            List<WebElement> jsonLdWebElements = ((RemoteWebDriver) driver).findElementsByXPath(jsonLdXpathQuery);
             logger.info("For URL '{}', #{} JSON-LD formatted elements found!", url, jsonLdWebElements.size());
+            List<Object> metadataObjects = new ArrayList<>();
+            jsonLdWebElements.stream().forEach(webElement -> logger.info("Metadata element: '{}'", webElement.getText()));
         } finally {
             driver.quit();
         }
