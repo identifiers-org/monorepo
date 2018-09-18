@@ -12,10 +12,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.w3c.dom.NodeList;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -47,6 +49,11 @@ public class MetadataFetcherWithJavascript implements MetadataFetcher {
                     MetadataFetcherException.ErrorCode.INTERNAL_ERROR);
         }
         logger.debug("Retrieved content from URL '{}', titled '{}'", url, page.getTitleText());
+        logger.info("Webpage content for URL '{}', text content \n{}", url, page.getTextContent());
+        logger.info("Webpage content for URL '{}', xml content \n{}", url, page.asXml());
+        NodeList documentNodes = page.getOwnerDocument().getChildNodes();
+        List<String> documentChildNodes = IntStream.range(0, documentNodes.getLength()).mapToObj(i -> String.format("\tChild node name '%s', value '%s'", documentNodes.item(i).getNodeName(), documentNodes.item(i).getNodeValue())).collect(Collectors.toList());
+        logger.info("Parent document for URL '{}', xml content \n{}", url, String.join("\n", documentChildNodes));
         // Look for JSON-LD
         String jsonldSelector = "script[type='application/ld+json']";
         DomNodeList<DomNode> jsonldDomNodes = page.querySelectorAll(jsonldSelector);
