@@ -4,7 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -17,12 +16,9 @@ import org.springframework.stereotype.Component;
  * ---
  */
 @Component
-@Scope("Prototype")
+@Scope("prototype")
 public class MetadataFetcherChromeEngineBased implements MetadataFetcher {
     private static final Logger logger = LoggerFactory.getLogger(MetadataFetcherChromeEngineBased.class);
-
-    @Value("${org.identifiers.cloud.ws.metadata.backend.selenium.driver.chrome.path.bin}")
-    private String pathChromedriver;
 
     @Override
     public Object fetchMetadataFor(String url) throws MetadataFetcherException {
