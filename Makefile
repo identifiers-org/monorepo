@@ -86,4 +86,14 @@ bin/selenium:
 	@mkdir -p bin/selenium
 # END - Folders
 
-.PHONY: all clean development_run_tests app_structure container_production_build container_production_push deploy release sync_project_version set_next_development_version
+# House keeping tasks
+clean_tmp:
+	@echo "<===|DEVOPS|===> [HOUSEKEEPING] Removing temporary folder"
+	@rm -rf tmp
+
+clean_bin:
+	@echo "<===|DEVOPS|===> [HOUSEKEEPING] Cleaning external binaries"
+	@rm -rf bin/*
+	@touch bin/empty
+
+.PHONY: all clean development_run_tests app_structure container_production_build container_production_push deploy release sync_project_version set_next_development_version clean_tmp clean_bin
