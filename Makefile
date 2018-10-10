@@ -64,3 +64,8 @@ container_production_push: container_production_build
 
 dev_container_build: clean container_production_build
 	@echo "<===|DEVOPS|===> [DEV] Preparing local container"
+
+clean:
+	@echo "<===|DEVOPS|===> [CLEAN] Cleaning the space"
+	@mvn clean > /dev/null
+	@mvn versions:commit
