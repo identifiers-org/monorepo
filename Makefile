@@ -52,3 +52,15 @@ app_structure:
 	@mkdir -p target/app/log
 	@mkdir -p target/app/tmp
 	@cp target/hq-registry-$(shell mvn help:evaluate -Dexpression=project.version | grep -v '^\[').jar target/app/service.jar
+
+container_production_build: app_structure
+	@echo "<===|DEVOPS|===> [BUILD] Production container $(container_name):$(tag_version)"
+	@docker build -t $(container_name):$(tag_version) -t $(container_name):latest .
+
+container_production_push: container_production_build
+	@echo "<===|DEVOPS|===> [PUBLISH]> Production container $(container_name):$(tag_version)"
+	@docker push $(container_name):$(tag_version)
+	@docker push $(container_name):latest
+
+dev_container_build: clean container_production_build
+	@echo "<===|DEVOPS|===> [DEV] Preparing local container"
