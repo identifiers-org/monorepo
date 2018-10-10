@@ -23,3 +23,6 @@ sync_project_version:
 set_next_development_version:
 	@echo "<===|DEVOPS|===> [SYNC] Setting the new development version, current ${tag_version}"
 	@mvn versions:set -DnewVersion=$(shell ./increment_version.sh -p ${tag_version})-SNAPSHOT
+
+deploy: clean container_production_push
+	@echo "<===|DEVOPS|===> [DEPLOY] Deploying service container version ${tag_version}"
