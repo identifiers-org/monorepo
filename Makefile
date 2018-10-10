@@ -26,3 +26,17 @@ set_next_development_version:
 
 deploy: clean container_production_push
 	@echo "<===|DEVOPS|===> [DEPLOY] Deploying service container version ${tag_version}"
+
+development_env_up:
+	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing development environment UP"
+	@docker-compose -f $(docker_compose_development_file) up -d
+	@# TODO Clean this way of referencing the target name in future iterations
+	@rm -f development_env_down
+	@touch development_env_up
+
+development_env_down:
+	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing development environment DOWN"
+	@docker-compose -f $(docker_compose_development_file) down
+	@# TODO Clean this way of referencing the target name in future iterations
+	@rm -f development_env_up
+	@touch development_env_down
