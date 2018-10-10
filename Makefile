@@ -15,3 +15,7 @@ release: deploy set_next_development_version
 	@git add pom.xml
 	@git commit -am "Next project development version prepared"
 	@git push
+
+sync_project_version:
+	@echo "<===|DEVOPS|===> [SYNC] Synchronizing project version to version '${tag_version}'"
+	@mvn versions:set -DnewVersion=${tag_version}
