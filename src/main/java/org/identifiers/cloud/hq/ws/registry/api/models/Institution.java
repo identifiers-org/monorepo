@@ -18,4 +18,31 @@ public class Institution {
     @Id private BigInteger id;
     private String name;
     private String description;
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public Institution setId(BigInteger id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Institution setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Institution setDescription(String description) {
+        this.description = description;
+        return this;
+    }
 }
