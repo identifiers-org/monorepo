@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
@@ -15,6 +16,7 @@ import java.sql.Timestamp;
  *
  * This entity models a Prefix (or namespace) in the registry
  */
+@Document
 public class Namespace {
     @Id private BigInteger id;
     private String name;
