@@ -28,4 +28,6 @@ public class Namespace {
     private String description;
     private Timestamp created;
     private Timestamp modified;
+    private boolean deprecated = false;
+    private Timestamp deprecationDate;
 }
