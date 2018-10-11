@@ -2,9 +2,11 @@ package org.identifiers.cloud.hq.ws.registry.data.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigInteger;
+import java.util.List;
 
 /**
  * Project: registry
@@ -19,8 +21,13 @@ import java.math.BigInteger;
 @Document
 public class Institution {
     @Id private BigInteger id;
+
     @Indexed private String name;
+
     private String description;
+
+    @DBRef
+    private List<Resource> resources;
 
     public BigInteger getId() {
         return id;
@@ -46,6 +53,15 @@ public class Institution {
 
     public Institution setDescription(String description) {
         this.description = description;
+        return this;
+    }
+
+    public List<Resource> getResources() {
+        return resources;
+    }
+
+    public Institution setResources(List<Resource> resources) {
+        this.resources = resources;
         return this;
     }
 }
