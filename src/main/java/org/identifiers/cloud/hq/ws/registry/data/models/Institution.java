@@ -12,6 +12,8 @@ import java.math.BigInteger;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This document models an Institution than potentially owns resources (providers) in the registry.
  */
 @Document
 public class Institution {
