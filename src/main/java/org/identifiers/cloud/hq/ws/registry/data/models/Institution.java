@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigInteger;
@@ -18,7 +19,7 @@ import java.math.BigInteger;
 @Document
 public class Institution {
     @Id private BigInteger id;
-    private String name;
+    @Indexed private String name;
     private String description;
 
     public BigInteger getId() {
