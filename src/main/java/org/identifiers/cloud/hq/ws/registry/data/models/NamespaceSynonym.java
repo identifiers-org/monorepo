@@ -1,6 +1,10 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.math.BigInteger;
 
 /**
  * Project: registry
@@ -14,5 +18,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document
 public class NamespaceSynonym {
-
+    @Id private BigInteger id;
+    @Indexed(unique = true) private String synonym;
 }
