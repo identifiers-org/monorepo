@@ -18,7 +18,7 @@ import java.sql.Timestamp;
  */
 @Document
 public class Namespace {
-    @Id @NotNull(message = "A prefix must be provided")
+    @Id @NotNull(message = "The prefix itself must be provided, otherwise the entry makes no sense")
     private String prefix;
     private String name;
     private String pattern;
