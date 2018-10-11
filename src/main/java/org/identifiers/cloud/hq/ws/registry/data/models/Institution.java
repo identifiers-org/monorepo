@@ -1,4 +1,4 @@
-package org.identifiers.cloud.hq.ws.registry.api.models;
+package org.identifiers.cloud.hq.ws.registry.data.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
