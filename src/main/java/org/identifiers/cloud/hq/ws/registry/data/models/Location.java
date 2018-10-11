@@ -17,4 +17,22 @@ import java.math.BigInteger;
 public class Location {
     @Id private BigInteger id;
     private String countryCode;
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public Location setId(BigInteger id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public Location setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+        return this;
+    }
 }
