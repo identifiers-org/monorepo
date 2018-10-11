@@ -7,6 +7,9 @@ package org.identifiers.cloud.hq.ws.registry.data.models;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This is a data model for a Resource (Provider) in the registry.
  */
+
 public class Resource {
 }
