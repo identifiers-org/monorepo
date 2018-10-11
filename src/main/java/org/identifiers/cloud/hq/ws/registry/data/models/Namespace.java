@@ -3,7 +3,7 @@ package org.identifiers.cloud.hq.ws.registry.data.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.math.BigInteger;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 /**
@@ -18,8 +18,10 @@ import java.sql.Timestamp;
  */
 @Document
 public class Namespace {
-    @Id private BigInteger id;
+    @Id @NotNull(message = "A prefix must be provided")
+    private String prefix;
     private String name;
+    private String pattern;
     private String description;
     private Timestamp created;
     private Timestamp modified;
