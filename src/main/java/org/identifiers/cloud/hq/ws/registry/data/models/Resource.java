@@ -26,4 +26,5 @@ public class Resource {
     private String resourcePrefix;
     private String localId;
     private String resourceUrl;
+    private BigInteger location_id;
 }
