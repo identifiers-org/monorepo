@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 
 /**
@@ -18,7 +19,8 @@ import java.sql.Timestamp;
  */
 @Document
 public class Namespace {
-    @Id @NotNull(message = "The prefix itself must be provided, otherwise the entry makes no sense")
+    @Id private BigInteger id;
+    @NotNull(message = "The prefix itself must be provided, otherwise the entry makes no sense")
     private String prefix;
     private String mirId;
     private String name;
