@@ -18,5 +18,12 @@ import java.math.BigInteger;
 @Document
 public class Resource {
     @Id private BigInteger id;
-    
+    private String mirId;
+    private String accessUrl;
+    private String info;
+    private BigInteger institution_id;
+    private boolean official;
+    private String resourcePrefix;
+    private String localId;
+    private String resourceUrl;
 }
