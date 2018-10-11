@@ -23,8 +23,11 @@ public class Resource {
     private String info;
     private BigInteger institution_id;
     private boolean official;
+    // TODO This should be a provider code
     private String resourcePrefix;
+    // TODO This should be Sample ID
     private String localId;
+    // TODO This should be Resource Home URL
     private String resourceUrl;
     private BigInteger location_id;
     private BigInteger namespace_id;

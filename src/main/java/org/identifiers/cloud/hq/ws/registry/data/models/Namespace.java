@@ -20,6 +20,7 @@ import java.sql.Timestamp;
 public class Namespace {
     @Id @NotNull(message = "The prefix itself must be provided, otherwise the entry makes no sense")
     private String prefix;
+    private String mirId;
     private String name;
     private String pattern;
     private String description;
