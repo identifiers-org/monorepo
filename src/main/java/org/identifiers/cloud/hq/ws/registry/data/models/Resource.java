@@ -27,4 +27,5 @@ public class Resource {
     private String localId;
     private String resourceUrl;
     private BigInteger location_id;
+    private BigInteger namespace_id;
 }
