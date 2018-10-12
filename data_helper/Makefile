@@ -31,3 +31,7 @@ update_requirements_file: dev_environment
 clean_dev:
 	@echo "<===|DEVOPS|===> [CLEAN] Removing Python Virtual Environment"
 	@rm -rf python_install
+
+clean_logs:
+	@echo "<===|DEVOPS|===> [CLEAN] Removing logs"
+	@rm -rf logs/*log
