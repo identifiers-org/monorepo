@@ -23,7 +23,7 @@ class NamespaceSynonym:
 
 class Namespace:
     def __init__(self):
-        self.id = None
+        self._id = None
         self.prefix = None
         self.mirId = None
         self.name = None
