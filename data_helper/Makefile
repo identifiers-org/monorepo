@@ -42,3 +42,6 @@ clean_tmp:
 
 clean: clean_logs clean_tmp
 	@echo "<===|DEVOPS|===> [CLEAN] Housekeeping"
+
+clean_all: clean clean_dev
+	@echo "<===|DEVOPS|===> [CLEAN] Housekeeping, clean all"
