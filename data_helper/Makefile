@@ -12,3 +12,7 @@ python_install:
 	@echo "<===|DEVOPS|===> [INSTALL] Python Virtual Environment"
 	@pip install --user virtualenv
 	@virtualenv python_install
+
+tmp:
+	@echo "<===|DEVOPS|===> [MKDIR] Temporary folder"
+	@mkdir tmp
