@@ -3,7 +3,7 @@
 
 class Institution:
     def __init__(self):
-        self.id = None
+        self._id = None
         self.name = None
         self.description = None
 
