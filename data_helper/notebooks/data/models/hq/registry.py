@@ -16,6 +16,7 @@ class Location:
 
 class NamespaceSynonym:
     def __init__(self):
+        self._id
         self.synonym = None
         # DBRef
         self.namespace = None
