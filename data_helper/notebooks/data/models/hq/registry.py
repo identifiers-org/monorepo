@@ -9,9 +9,9 @@ class Institution:
 
 
 class Location:
-    def __init__(self):
-        self._id = None
-        self.countryCode = None
+    def __init__(self, id=None, countryCode=None):
+        self._id = id
+        self.countryCode = countryCode
 
 
 class NamespaceSynonym:
