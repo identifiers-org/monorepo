@@ -51,7 +51,7 @@ class Namespace:
 
 class Resource:
     def __init__(self):
-        self.id = None
+        self._id = None
         self.mirId = None
         self.accessUrl = None
         self.info = None
