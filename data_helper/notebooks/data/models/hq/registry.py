@@ -2,10 +2,10 @@
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 
 class Institution:
-    def __init__(self):
-        self._id = None
-        self.name = None
-        self.description = None
+    def __init__(self, id=None, name=None, description=None):
+        self._id = id
+        self.name = name
+        self.description = description
 
 
 class Location:
