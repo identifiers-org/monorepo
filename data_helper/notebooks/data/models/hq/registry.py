@@ -15,11 +15,11 @@ class Location:
 
 
 class NamespaceSynonym:
-    def __init__(self):
-        self._id
-        self.__synonym = None
+    def __init__(self, synonym=None, namespace=None):
+        self._id = None
+        self.__synonym = synonym
         # DBRef
-        self.namespace = None
+        self.namespace = namespace
 
     @property
     def synonym(self):
