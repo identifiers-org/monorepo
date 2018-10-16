@@ -9,4 +9,5 @@ package org.identifiers.cloud.hq.ws.registry.configuration;
  * ---
  */
 public class ApplicationConfiguration {
+    // TODO
 }
