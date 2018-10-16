@@ -1,5 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.data.services;
 
+import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,5 +14,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class NamespaceService {
-    // TODO
+    @Autowired
+    private NamespaceRepository namespaceRepository;
+    
 }
