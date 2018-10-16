@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
+import org.identifiers.cloud.hq.ws.registry.api.responses.ResolverDatasetPayload;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseGetResolverDataset;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +14,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ResolutionApiModel {
-
+    // Model API
     public ServiceResponseGetResolverDataset getResolverDataset() {
+        // Default response
+        ServiceResponseGetResolverDataset response = new ServiceResponseGetResolverDataset();
+        response.setPayload(new ResolverDatasetPayload());
         // TODO
+        // Return response
+        return response;
     }
 }
