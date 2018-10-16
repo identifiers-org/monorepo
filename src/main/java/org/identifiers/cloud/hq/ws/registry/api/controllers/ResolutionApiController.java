@@ -1,8 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.api.controllers;
 
 import org.identifiers.cloud.hq.ws.registry.api.models.ResolutionApiModel;
+import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseGetResolverDataset;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,7 +24,7 @@ public class ResolutionApiController {
 
     @RequestMapping(value = "getResolverDataset", method = RequestMethod.GET)
     public ResponseEntity<?> getResolverDataset() {
-        // TODO
-        return new ResponseEntity<>("Resolver Dataset", HttpStatus.OK);
+        ServiceResponseGetResolverDataset response = model.getResolverDataset();
+        return new ResponseEntity<>(response, response.getHttpStatus());
     }
 }
