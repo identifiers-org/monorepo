@@ -1,8 +1,11 @@
 package org.identifiers.cloud.hq.ws.registry.data.services;
 
+import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * Project: registry
@@ -16,5 +19,8 @@ import org.springframework.stereotype.Component;
 public class NamespaceService {
     @Autowired
     private NamespaceRepository namespaceRepository;
-    
+
+    public List<Namespace> getNamespaceTreeDownToLeaves() {
+        return namespaceRepository.findAll();
+    }
 }
