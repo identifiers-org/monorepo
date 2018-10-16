@@ -8,5 +8,5 @@ package org.identifiers.cloud.hq.ws.registry.api.responses;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-public class ServerResponseGetResolverDataset extends ServiceResponse<ResolverDatasetPayload> {
+public class ServiceResponseGetResolverDataset extends ServiceResponse<ResolverDatasetPayload> {
 }
