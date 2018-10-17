@@ -6,6 +6,7 @@ class Institution:
         self._id = id
         self.name = name
         self.description = description
+        # BigInteger Foreign Key
         self.resourcesFk = resourcesFk
 
 
@@ -19,7 +20,7 @@ class NamespaceSynonym:
     def __init__(self, synonym=None, namespaceFk=None):
         self._id = None
         self.__synonym = synonym
-        # DBRef
+        # BigInteger Foreign Key
         self.namespaceFk = namespaceFk
 
     @property
