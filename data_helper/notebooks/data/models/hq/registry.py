@@ -2,10 +2,11 @@
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 
 class Institution:
-    def __init__(self, id=None, name=None, description=None):
+    def __init__(self, id=None, name=None, description=None, resourcesFk=[]):
         self._id = id
         self.name = name
         self.description = description
+        self.resourcesFk = resourcesFk
 
 
 class Location:
