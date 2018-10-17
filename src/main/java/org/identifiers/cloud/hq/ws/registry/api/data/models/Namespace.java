@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -24,6 +25,7 @@ public class Namespace implements Serializable {
     private String mirId;
     private String name;
     private String pattern;
+    @JsonSerialize
     @JsonProperty("definition")
     private String description;
     private Timestamp created;
