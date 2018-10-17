@@ -2,12 +2,12 @@
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 
 class Institution:
-    def __init__(self, id=None, name=None, description=None, resourcesFk=[]):
+    def __init__(self, id=None, name=None, description=None):
         self._id = id
         self.name = name
         self.description = description
         # BigInteger Foreign Key
-        self.resourcesFk = resourcesFk
+        self.resourcesFk = []
 
 
 class Location:
