@@ -1,8 +1,10 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.math.BigInteger;
 
 /**
  * Project: registry
@@ -17,6 +19,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class NamespaceSynonym {
     @Id private String synonym;
+    private BigInteger namespaceFk;
+    @Transient private Namespace namespace;
 
-    @DBRef private Namespace namespace;
+    
 }

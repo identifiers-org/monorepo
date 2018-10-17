@@ -39,7 +39,7 @@ public class Namespace {
     private Timestamp deprecationDate;
     @DBRef private List<Resource> resources;
     @DBRef private List<NamespaceSynonym> namespaceSynonyms;
-    
+
     public List<NamespaceSynonym> getNamespaceSynonyms() {
         return namespaceSynonyms;
     }
