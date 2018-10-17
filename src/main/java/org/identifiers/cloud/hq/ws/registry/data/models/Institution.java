@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -23,7 +24,8 @@ public class Institution {
     @Indexed private String name;
     private String description;
     private List<BigInteger> resourcesFk;
-    
+    @Transient List<Resource> resources;
+
     public BigInteger getId() {
         return id;
     }
@@ -57,6 +59,20 @@ public class Institution {
 
     public Institution setResourcesFk(List<BigInteger> resourcesFk) {
         this.resourcesFk = resourcesFk;
+        return this;
+    }
+
+    public List<Resource> getResources() {
+        return resources;
+    }
+
+    public Institution setResources(List<Resource> resources) {
+        this.resources = resources;
+        return this;
+    }
+
+    public Institution addResources(List<Resource> resources) {
+        this.resources.addAll(resources);
         return this;
     }
 }
