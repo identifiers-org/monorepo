@@ -22,5 +22,30 @@ public class NamespaceSynonym {
     private BigInteger namespaceFk;
     @Transient private Namespace namespace;
 
-    
+    public String getSynonym() {
+        return synonym;
+    }
+
+    public NamespaceSynonym setSynonym(String synonym) {
+        this.synonym = synonym;
+        return this;
+    }
+
+    public BigInteger getNamespaceFk() {
+        return namespaceFk;
+    }
+
+    public NamespaceSynonym setNamespaceFk(BigInteger namespaceFk) {
+        this.namespaceFk = namespaceFk;
+        return this;
+    }
+
+    public Namespace getNamespace() {
+        return namespace;
+    }
+
+    public NamespaceSynonym setNamespace(Namespace namespace) {
+        this.namespace = namespace;
+        return this;
+    }
 }
