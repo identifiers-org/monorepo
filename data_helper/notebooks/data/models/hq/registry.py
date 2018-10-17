@@ -2,7 +2,7 @@
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 
 class Institution:
-    def __init__(self, id=None, name=None, description=None, resourcesFk=set()):
+    def __init__(self, id=None, name=None, description=None, resourcesFk=[]):
         self._id = id
         self.name = name
         self.description = description
@@ -46,9 +46,9 @@ class Namespace:
         self.deprecated = None
         self.deprecationDate = None
         # DBRef
-        self.resources = set()
+        self.resources = []
         # DBRef
-        self.namespaceSynonmyns = set()
+        self.namespaceSynonmyns = []
 
 
 class Resource:
