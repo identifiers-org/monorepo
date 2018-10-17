@@ -17,13 +17,11 @@ import java.util.stream.Collectors;
  * This is a data helper in the context of the Resolution API data models
  */
 public class ResolutionApiHelper {
-    // TODO
     // NOTE - I don't totally like to have two models with the same name, as it makes the coding more prone to
     // making mistakes, but, at the same time, this is the meaning of it, and that's why we have packages,
     // right?
-    public static List<Namespace> getFrom(List<org.identifiers.cloud.hq.ws.registry.data.models.Namespace> namespaces) {
+    public static List<Namespace> getResolutionDatasetFrom(List<org.identifiers.cloud.hq.ws.registry.data.models.Namespace> namespaces) {
         return namespaces.parallelStream().map(namespace -> {
-            // TODO
             Namespace resultNamespace = new Namespace()
                     .setId(namespace.getId())
                     .setMirId(namespace.getMirId())
@@ -33,8 +31,19 @@ public class ResolutionApiHelper {
                     .setPrefix(namespace.getPrefix());
             for (org.identifiers.cloud.hq.ws.registry.data.models.Resource resource :
                     namespace.getResources()) {
-                // TODO
-                resultNamespace.getResources().add(new Resource().setId(resource.getId()).setMirId(resource.getMirId()));
+                resultNamespace.getResources().add(
+                        new Resource()
+                                .setId(resource.getId())
+                                .setMirId(resource.getMirId())
+                                .setAccessUrl(resource.getAccessUrl())
+                                .setInfo(resource.getInfo())
+                                .setInstitution(resource.getInstitution().getName())
+                                .setLocation(resource.getLocation().getCountryCode())
+                                .setOfficial(resource.isOfficial())
+                                .setResourcePrefix(resource.getResourcePrefix())
+                                .setLocalId(resource.getLocalId())
+                                .setResourceUrl(resource.getResourceUrl())
+                );
             }
             return resultNamespace;
         }).collect(Collectors.toList());
