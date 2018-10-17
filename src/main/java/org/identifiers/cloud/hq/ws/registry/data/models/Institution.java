@@ -24,7 +24,7 @@ public class Institution {
     @Indexed private String name;
     private String description;
     private List<BigInteger> resourcesFk;
-    @Transient List<Resource> resources;
+    @Transient private List<Resource> resources;
 
     public BigInteger getId() {
         return id;
