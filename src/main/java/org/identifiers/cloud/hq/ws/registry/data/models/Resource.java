@@ -45,7 +45,7 @@ public class Resource {
 
     @DBRef private Location location;
 
-    @DBRef private Namespace namespace;
+    private BigInteger namespaceFk;
 
     public BigInteger getId() {
         return id;
@@ -137,12 +137,12 @@ public class Resource {
         return this;
     }
 
-    public Namespace getNamespace() {
-        return namespace;
+    public BigInteger getNamespaceFk() {
+        return namespaceFk;
     }
 
-    public Resource setNamespace(Namespace namespace) {
-        this.namespace = namespace;
+    public Resource setNamespaceFk(BigInteger namespaceFk) {
+        this.namespaceFk = namespaceFk;
         return this;
     }
 }
