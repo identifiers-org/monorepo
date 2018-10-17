@@ -14,6 +14,8 @@ import java.util.List;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This class models how the microservice exposes information about namespaces in the registry through its Resolution API.
  */
 public class Namespace implements Serializable {
     private BigInteger id;
