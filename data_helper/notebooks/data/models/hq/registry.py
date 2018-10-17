@@ -64,5 +64,5 @@ class Resource:
         self.institution = None
         # DBRef
         self.location = None
-        # DBRef
-        self.namespace = None
+        # BigInteger Foreign Key
+        self.namespaceFk = None
