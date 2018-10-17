@@ -3,6 +3,7 @@ package org.identifiers.cloud.hq.ws.registry.api.data.models;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ public class Namespace implements Serializable {
     private Timestamp modified;
     private boolean deprecated = false;
     private Timestamp deprecationDate;
-    private List<Resource> resources;
+    private List<Resource> resources = new ArrayList<>();
 
     public BigInteger getId() {
         return id;
