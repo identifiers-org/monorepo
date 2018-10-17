@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,32 +21,23 @@ import java.math.BigInteger;
 @Document
 public class Resource {
     @Id private BigInteger id;
-
     @Indexed(unique = true)
     private String mirId;
-
     private String accessUrl;
-
     private String info;
-
     @Indexed
     private boolean official;
-
     // TODO This should be a provider code
     @Indexed
     private String resourcePrefix;
-
     // TODO This should be Sample ID
     private String localId;
-
     // TODO This should be Resource Home URL
     private String resourceUrl;
-
     @DBRef private Institution institution;
-
     @DBRef private Location location;
-
     private BigInteger namespaceFk;
+    @Transient Namespace namespace;
 
     public BigInteger getId() {
         return id;
@@ -143,6 +135,15 @@ public class Resource {
 
     public Resource setNamespaceFk(BigInteger namespaceFk) {
         this.namespaceFk = namespaceFk;
+        return this;
+    }
+
+    public Namespace getNamespace() {
+        return namespace;
+    }
+
+    public Resource setNamespace(Namespace namespace) {
+        this.namespace = namespace;
         return this;
     }
 }
