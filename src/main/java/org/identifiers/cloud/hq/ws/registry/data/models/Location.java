@@ -19,7 +19,6 @@ import java.math.BigInteger;
 @Document
 public class Location {
     @Id private BigInteger id;
-
     // ISO 3166/MA Alpha-2 Country Codes
     // TODO Use an internationalization library on maven (com.neovisionaries.nv-i18n) in the setter for further checks.
     @Indexed private String countryCode;
