@@ -38,7 +38,7 @@ public class ResolutionApiHelper {
                                 .setAccessUrl(resource.getAccessUrl())
                                 .setInfo(resource.getInfo())
                                 .setInstitution((resource.getInstitution() != null ? resource.getInstitution().getName() : null))
-                                .setLocation(resource.getLocation().getCountryCode())
+                                .setLocation((resource.getLocation() != null ? resource.getLocation().getCountryCode() : null))
                                 .setOfficial(resource.isOfficial())
                                 .setResourcePrefix(resource.getResourcePrefix())
                                 .setLocalId(resource.getLocalId())
