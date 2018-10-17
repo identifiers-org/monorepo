@@ -2,6 +2,7 @@ package org.identifiers.cloud.hq.ws.registry.api.data.models;
 
 import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-public class Namespace {
+public class Namespace implements Serializable {
     private BigInteger id;
     private String prefix;
     private String mirId;
