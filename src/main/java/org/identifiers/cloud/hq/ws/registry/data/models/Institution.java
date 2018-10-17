@@ -2,7 +2,6 @@ package org.identifiers.cloud.hq.ws.registry.data.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigInteger;
@@ -21,14 +20,10 @@ import java.util.List;
 @Document
 public class Institution {
     @Id private BigInteger id;
-
     @Indexed private String name;
-
     private String description;
-
-    @DBRef
-    private List<Resource> resources;
-
+    private List<BigInteger> resourcesFk;
+    
     public BigInteger getId() {
         return id;
     }
@@ -56,12 +51,12 @@ public class Institution {
         return this;
     }
 
-    public List<Resource> getResources() {
-        return resources;
+    public List<BigInteger> getResourcesFk() {
+        return resourcesFk;
     }
 
-    public Institution setResources(List<Resource> resources) {
-        this.resources = resources;
+    public Institution setResourcesFk(List<BigInteger> resourcesFk) {
+        this.resourcesFk = resourcesFk;
         return this;
     }
 }
