@@ -27,29 +27,19 @@ public class Namespace {
     @NotNull(message = "The prefix itself must be provided, otherwise the entry makes no sense")
     @Indexed(unique = true)
     private String prefix;
-
     @Indexed(unique = true)
     private String mirId;
-
     @Indexed
     private String name;
-
     private String pattern;
-
     private String description;
-
     private Timestamp created;
-
     private Timestamp modified;
-
     private boolean deprecated = false;
-
     private Timestamp deprecationDate;
-
     @DBRef private List<Resource> resources;
-
     @DBRef private List<NamespaceSynonym> namespaceSynonyms;
-
+    
     public List<NamespaceSynonym> getNamespaceSynonyms() {
         return namespaceSynonyms;
     }
