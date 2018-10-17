@@ -37,7 +37,7 @@ public class Resource {
     @DBRef private Institution institution;
     @DBRef private Location location;
     private BigInteger namespaceFk;
-    @Transient Namespace namespace;
+    @Transient private Namespace namespace;
 
     public BigInteger getId() {
         return id;
