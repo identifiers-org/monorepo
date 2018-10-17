@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
+import org.identifiers.cloud.hq.ws.registry.api.data.helpers.ResolutionApiHelper;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ResolverDatasetPayload;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseGetResolverDataset;
 import org.identifiers.cloud.hq.ws.registry.data.services.NamespaceService;
@@ -27,7 +28,7 @@ public class ResolutionApiModel {
         response.setHttpStatus(HttpStatus.OK);
         response.setPayload(new ResolverDatasetPayload());
         // TODO
-        response.getPayload().setNamespaces(namespaceService.getNamespaceTreeDownToLeaves());
+        response.getPayload().setNamespaces(ResolutionApiHelper.getResolutionDatasetFrom(namespaceService.getNamespaceTreeDownToLeaves()));
         // Return response
         return response;
     }

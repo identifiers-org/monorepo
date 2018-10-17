@@ -1,6 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.api.responses;
 
-import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
+import org.identifiers.cloud.hq.ws.registry.api.data.models.Namespace;
 
 import java.io.Serializable;
 import java.util.ArrayList;
