@@ -1,5 +1,11 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.helpers;
 
+import org.identifiers.cloud.hq.ws.registry.api.data.models.Namespace;
+import org.identifiers.cloud.hq.ws.registry.api.data.models.Resource;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.api.data.helpers
@@ -12,4 +18,25 @@ package org.identifiers.cloud.hq.ws.registry.api.data.helpers;
  */
 public class ResolutionApiHelper {
     // TODO
+    // NOTE - I don't totally like to have two models with the same name, as it makes the coding more prone to
+    // making mistakes, but, at the same time, this is the meaning of it, and that's why we have packages,
+    // right?
+    public static List<Namespace> getFrom(List<org.identifiers.cloud.hq.ws.registry.data.models.Namespace> namespaces) {
+        return namespaces.parallelStream().map(namespace -> {
+            // TODO
+            Namespace resultNamespace = new Namespace()
+                    .setId(namespace.getId())
+                    .setMirId(namespace.getMirId())
+                    .setName(namespace.getName())
+                    .setPattern(namespace.getPattern())
+                    .setDescription(namespace.getDescription())
+                    .setPrefix(namespace.getPrefix());
+            for (org.identifiers.cloud.hq.ws.registry.data.models.Resource resource :
+                    namespace.getResources()) {
+                // TODO
+                resultNamespace.getResources().add(new Resource().setId(resource.getId()).setMirId(resource.getMirId()));
+            }
+            return resultNamespace;
+        }).collect(Collectors.toList());
+    }
 }

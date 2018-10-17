@@ -1,7 +1,5 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.models;
 
-import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
-
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.Timestamp;
