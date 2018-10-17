@@ -10,6 +10,8 @@ import java.math.BigInteger;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This class models how the microservice exposes information about resources in the registry through its Resolution API.
  */
 public class Resource implements Serializable {
     private BigInteger id;
