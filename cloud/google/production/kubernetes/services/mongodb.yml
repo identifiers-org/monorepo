@@ -38,4 +38,16 @@ spec:
             containers:
               - name: mongod-container
                 image: mongo
-                
+                command:
+                  - "mongod"
+                  - "--bind_ip"
+                  - "0.0.0.0"
+                  - "--replSet"
+                  - "MainRepSet"
+                  - "--auth"
+                  - "--clusterAuthMode"
+                  - "keyFile"
+                  - "--keyFile"
+                  - "/etc/secrets_volume/iorg-hq-eu-mongodb.keyfile"
+                  - "--setParameter"
+                  - "authenticationMechanisms=SCRAM-SHA-1"
