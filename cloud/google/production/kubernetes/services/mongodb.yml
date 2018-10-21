@@ -35,4 +35,7 @@ spec:
                 secret:
                     secretName: mongodb-auth-bootstrap-data
                     defaultMode: 256
-            
+            containers:
+              - name: mongod-container
+                image: mongo
+                
