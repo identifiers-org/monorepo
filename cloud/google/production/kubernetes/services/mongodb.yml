@@ -30,4 +30,9 @@ spec:
                 replicaSet: MainRepSet
         spec:
             terminationGracePeriodSeconds: 10
+            volumes:
+              - name: secrets_volume
+                secret:
+                    secretName: mongodb-auth-bootstrap-data
+                    defaultMode: 256
             
