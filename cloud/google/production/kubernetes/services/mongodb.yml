@@ -30,10 +30,6 @@ spec:
                 replicaSet: MainRepSet
         spec:
             terminationGracePeriodSeconds: 10
-            volumes:
-              - name: secrets_volume
-                secret:
-                    secretName: mongodb-auth-bootstrap-data
             containers:
               - name: mongod-container
                 image: mongo
@@ -58,6 +54,10 @@ spec:
                     mountPath: /etc/secrets_volume
                    - name: mongodb-presistent-storage-claim
                     mountPath: /data/db
+        volumes:
+        - name: secrets_volume
+            secret:
+                secretName: mongodb-auth-bootstrap-data
 VolumeClaimTemplates:
 - metadata:
     name: mongodb-presistent-storage-claim
