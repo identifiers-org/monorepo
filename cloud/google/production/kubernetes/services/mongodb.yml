@@ -28,3 +28,6 @@ spec:
                 environment: production
                 tier: data-backend
                 replicaSet: MainRepSet
+        spec:
+            terminationGracePeriodSeconds: 10
+            
