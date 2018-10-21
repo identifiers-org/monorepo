@@ -19,8 +19,11 @@ kind: StatefulSet
 metadata:
     name: mongod
 spec:
-    serviceName: mongodb-service
+    serviceName: "mongodb-service"
     replicas: 3
+    selector:
+        matchLabels:
+            app: mongo
     template:
         metadata:
             labels:
