@@ -1,0 +1,15 @@
+# MongoDB persistent volume definition
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: "v1"
+kind: "PersistentVolume"
+metadata:
+    name: mongodb-data-volume2
+spec:
+    capacity:
+        storage: 100Gi
+    accessModes:
+        - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Retain
+    storageClassName: gce-fast-storage
+    gcePersistentDisk:
+        pdName: iorg-eu-hq-mongodb-disk-2
