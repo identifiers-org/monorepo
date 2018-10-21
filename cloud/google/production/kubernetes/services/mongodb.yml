@@ -59,3 +59,13 @@ spec:
                     mountPath: /etc/secrets_volume
                    - name: mongodb-presistent-storage-claim
                     mountPath: /data/db
+VolumeClaimTemplates:
+- metadata:
+    name: mongodb-presistent-storage-claim
+    annotations:
+        volume.beta.kubernetes.io/storage-class: "gce-fast-storage"
+  spec:
+    accessModes: [ "ReadWriteOnce" ]
+    resources:
+        requests:
+            storage: 100Gi
