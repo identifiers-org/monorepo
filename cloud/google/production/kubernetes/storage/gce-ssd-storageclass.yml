@@ -1,2 +1,9 @@
 # GCE SSD Storage
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+    name: gce-fast-storage
+provisioner: kubernetes.io/gce-pd
+parameters:
+    type: pd-ssd
