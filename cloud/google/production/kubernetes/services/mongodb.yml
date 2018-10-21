@@ -51,3 +51,11 @@ spec:
                   - "/etc/secrets_volume/iorg-hq-eu-mongodb.keyfile"
                   - "--setParameter"
                   - "authenticationMechanisms=SCRAM-SHA-1"
+                 ports:
+                   - containerPort: 27017
+                 volumeMounts:
+                   - name: secrets_volume
+                    readOnly: true
+                    mountPath: /etc/secrets_volume
+                   - name: mongodb-presistent-storage-claim
+                    mountPath: /data/db
