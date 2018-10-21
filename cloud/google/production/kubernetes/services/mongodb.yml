@@ -12,9 +12,19 @@ spec:
       targetPort: 27017
     clusterIP: None
     selector:
-        role: mongo
+        app: mongo
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
     name: mongod
+spec:
+    serviceName: mongodb-service
+    replicas: 3
+    template:
+        metadata:
+            labels:
+                app: mongo
+                environment: production
+                tier: data-backend
+                replicaSet: MainRepSet
