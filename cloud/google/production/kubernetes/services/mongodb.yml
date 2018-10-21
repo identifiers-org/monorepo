@@ -32,7 +32,6 @@ spec:
                 tier: data-backend
                 replicaSet: MainRepSet
         spec:
-            terminationGracePeriodSeconds: 10
             containers:
               - name: mongod-container
                 image: mongo
