@@ -3,9 +3,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-    name: mongodb-service
+    name: mongodb
     labels:
-        name: mongo
+        app: mongo
 spec:
     ports:
     - port: 27017
@@ -19,7 +19,7 @@ kind: StatefulSet
 metadata:
     name: mongod
 spec:
-    serviceName: "mongodb-service"
+    serviceName: "mongodb"
     replicas: 3
     selector:
         matchLabels:
@@ -33,9 +33,10 @@ spec:
                 replicaSet: MainRepSet
         spec:
             containers:
-              - name: mongod-container
-                image: mongo
-                command:
+            - name: mongod-container
+              image: mongo
+              imagePullPolicy: Always
+              command:
                   - "mongod"
                   - "--bind_ip"
                   - "0.0.0.0"
@@ -48,14 +49,14 @@ spec:
                   - "/etc/secrets_volume/iorg-hq-eu-mongodb.keyfile"
                   - "--setParameter"
                   - "authenticationMechanisms=SCRAM-SHA-1"
-                 ports:
-                   - containerPort: 27017
-                 volumeMounts:
-                   - name: secrets_volume
-                    readOnly: true
-                    mountPath: /etc/secrets_volume
-                   - name: mongodb-presistent-storage-claim
-                    mountPath: /data/db
+              ports:
+                - containerPort: 27017
+              volumeMounts:
+              - name: secrets_volume
+                readOnly: true
+                mountPath: /etc/secrets_volume
+              - name: mongodb-presistent-storage-claim
+                mountPath: /data/db
         volumes:
         - name: secrets_volume
             secret:
