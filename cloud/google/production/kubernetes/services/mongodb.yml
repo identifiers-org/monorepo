@@ -52,3 +52,5 @@ spec:
               - "/etc/secrets_volume/iorg-hq-eu-mongodb.keyfile"
               - "--setParameter"
               - "authenticationMechanisms=SCRAM-SHA-1"
+              ports:
+              - containerPort: 27017
