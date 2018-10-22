@@ -54,3 +54,11 @@ spec:
               - "authenticationMechanisms=SCRAM-SHA-1"
               ports:
               - containerPort: 27017
+              volumeMounts:
+              - name: secrets_volume
+                readOnly: true
+                mountPath: /etc/secrets_volume
+        volumes:
+        - name: secrets_volume
+          secret:
+              secretName: mongodb-auth-bootstrap-data
