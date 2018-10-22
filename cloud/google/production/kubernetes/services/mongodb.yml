@@ -58,6 +58,8 @@ spec:
               - name: secrets_volume
                 readOnly: true
                 mountPath: /etc/secrets_volume
+              - name: mongodb-presistent-storage-claim
+                mountPath: /data/db
             volumes:
             - name: secrets_volume
               secret:
