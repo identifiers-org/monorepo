@@ -21,11 +21,12 @@ kind: StatefulSet
 metadata:
     name: mongod
 spec:
-    serviceName: "mongodb"
-    replicas: 3
+    serviceName: mongodb
     selector:
         matchLabels:
             app: mongo
+            environment: production
+            tier: data_backend
     template:
         metadata:
             labels:
@@ -33,43 +34,3 @@ spec:
                 environment: production
                 tier: data_backend
                 replicaSet: MainRepSet
-        spec:
-            containers:
-            - name: mongod-container
-              image: mongo
-              imagePullPolicy: Always
-              command:
-                  - "mongod"
-                  - "--bind_ip"
-                  - "0.0.0.0"
-                  - "--replSet"
-                  - "MainRepSet"
-                  - "--auth"
-                  - "--clusterAuthMode"
-                  - "keyFile"
-                  - "--keyFile"
-                  - "/etc/secrets_volume/iorg-hq-eu-mongodb.keyfile"
-                  - "--setParameter"
-                  - "authenticationMechanisms=SCRAM-SHA-1"
-              ports:
-              - containerPort: 27017
-              volumeMounts:
-              - name: secrets_volume
-                readOnly: true
-                mountPath: /etc/secrets_volume
-              - name: mongodb-presistent-storage-claim
-                mountPath: /data/db
-        volumes:
-        - name: secrets_volume
-            secret:
-                secretName: mongodb-auth-bootstrap-data
-    VolumeClaimTemplates:
-    - metadata:
-        name: mongodb-presistent-storage-claim
-        annotations:
-            volume.beta.kubernetes.io/storage-class: "gce-fast-storage"
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        resources:
-            requests:
-                storage: 100Gi
