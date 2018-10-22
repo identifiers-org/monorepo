@@ -61,13 +61,13 @@ spec:
         - name: secrets_volume
             secret:
                 secretName: mongodb-auth-bootstrap-data
-VolumeClaimTemplates:
-- metadata:
-    name: mongodb-presistent-storage-claim
-    annotations:
-        volume.beta.kubernetes.io/storage-class: "gce-fast-storage"
-  spec:
-    accessModes: [ "ReadWriteOnce" ]
-    resources:
-        requests:
-            storage: 100Gi
+    VolumeClaimTemplates:
+    - metadata:
+        name: mongodb-presistent-storage-claim
+        annotations:
+            volume.beta.kubernetes.io/storage-class: "gce-fast-storage"
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+            requests:
+                storage: 100Gi
