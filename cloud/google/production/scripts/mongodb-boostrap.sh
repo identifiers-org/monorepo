@@ -4,3 +4,7 @@ source tinylogger.bash
 
 # Set the logging level
 LOGGER_LVL=debug
+
+# Environment configuration
+
+tlog info "[--- MongoDB Backend Bootstrap ---]"
