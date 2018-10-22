@@ -50,7 +50,7 @@ spec:
                   - "--setParameter"
                   - "authenticationMechanisms=SCRAM-SHA-1"
               ports:
-                - containerPort: 27017
+              - containerPort: 27017
               volumeMounts:
               - name: secrets_volume
                 readOnly: true
