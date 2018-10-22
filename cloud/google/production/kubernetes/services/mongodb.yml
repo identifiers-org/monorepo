@@ -50,7 +50,7 @@ spec:
               - "--clusterAuthMode"
               - "keyFile"
               - "--keyFile"
-              - "/etc/secrets_volume/iorg-hq-eu-mongodb.keyfile"
+              - "/etc/secrets-volume/iorg-hq-eu-mongodb.keyfile"
               - "--setParameter"
               - "authenticationMechanisms=SCRAM-SHA-1"
               ports:
@@ -58,11 +58,11 @@ spec:
               volumeMounts:
               - name: secrets_volume
                 readOnly: true
-                mountPath: /etc/secrets_volume
+                mountPath: /etc/secrets-volume
               - name: mongodb-presistent-storage-claim
                 mountPath: /data/db
             volumes:
-            - name: secrets_volume
+            - name: secrets-volume
               secret:
                   secretName: mongodb-auth-bootstrap-data
     volumeClaimTemplates:
