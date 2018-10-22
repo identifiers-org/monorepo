@@ -13,6 +13,8 @@ spec:
     clusterIP: None
     selector:
         app: mongo
+        environment: production
+        tier: data_backend
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -29,13 +31,26 @@ spec:
             labels:
                 app: mongo
                 environment: production
-                tier: data-backend
+                tier: data_backend
                 replicaSet: MainRepSet
         spec:
             containers:
             - name: mongod-container
               image: mongo
               imagePullPolicy: Always
+              command:
+                  - "mongod"
+                  - "--bind_ip"
+                  - "0.0.0.0"
+                  - "--replSet"
+                  - "MainRepSet"
+                  - "--auth"
+                  - "--clusterAuthMode"
+                  - "keyFile"
+                  - "--keyFile"
+                  - "/etc/secrets_volume/iorg-hq-eu-mongodb.keyfile"
+                  - "--setParameter"
+                  - "authenticationMechanisms=SCRAM-SHA-1"
               ports:
               - containerPort: 27017
               volumeMounts:
