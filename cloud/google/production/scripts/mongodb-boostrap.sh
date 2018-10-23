@@ -25,6 +25,7 @@ MONGODB_BOOTSTRAP_MONGODB_ADMIN_USERNAME=${MONGODB_BOOTSTRAP_MONGODB_ADMIN_USERN
 MONGODB_BOOTSTRAP_MONGODB_ADMIN_PASSWORD=${MONGODB_BOOTSTRAP_MONGODB_ADMIN_PASSWORD:=`uuidgen`}
 # MongoDB Kubernetes definition file
 MONGODB_BOOTSTRAP_FILE_KUBERNETES_DEFINITION=${MONGODB_BOOTSTRAP_FILE_KUBERNETES_DEFINITION:="kubernetes/services/mongodb.yml"}
+MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_CLASS=${MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_CLASS:="kubernetes/storage/gce-ssd-storageclass.yml"}
 
 # Helpers
 function info() {
@@ -36,6 +37,7 @@ function info() {
         tlog info "[DEVOPS] Admin Credentials file: ${MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS}"
     fi
     tlog info "[DEVOPS] MongoDB kubernetes definition at ${MONGODB_BOOTSTRAP_FILE_KUBERNETES_DEFINITION}"
+    tlog info "[DEVOPS] Kubernetes Storage Class Definition at ${MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_CLASS}"
 }
 
 # General Information before we start deploying MongoDB for the given configuration
