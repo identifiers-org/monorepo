@@ -39,7 +39,7 @@ function info() {
 tlog info "[--- MongoDB Backend Bootstrap ---]"
 info
 if [ "$FLAG_DUMP_ADMIN_CREDENTIALS" == 1 ]; then
-    tlog info "Dumping user credentials to $MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS"
+    tlog info "Dumping Administrator credentials to $MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS"
     echo "username: $MONGODB_BOOTSTRAP_MONGODB_ADMIN_USERNAME" >> $MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS
     echo "password: $MONGODB_BOOTSTRAP_MONGODB_ADMIN_PASSWORD" >> $MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS
 fi
