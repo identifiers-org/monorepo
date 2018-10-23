@@ -57,7 +57,16 @@ function dump_admin_credentials() {
 
 function setup_storage_class() {
     tlog info "[${MONGODB_BOOTSTRAP_KUBERNETES_CLUSTER_NAME}] Setting up Storage class '${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_CLASS_NAME}'"
+    # TODO actually do it
     #kubectl apply -f "${MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_CLASS}"
+}
+
+function create_persistent_disks() {
+    VOLUME_NAME_PREFIX='mongodb-data-volume'
+    for i in $(seq 1 $MONGODB_BOOTSTRAP_N_REPLICAS); do
+        DISK_NAME="${MONGODB_BOOTSTRAP_KUBERNETES_CLUSTER_NAME}-mongodb-disk-$i"
+        tlog info "[CLOUD] Creating Persistent Disk #$i - $DISK_NAME"
+    done
 }
 
 
@@ -70,6 +79,7 @@ dump_admin_credentials
 # TODO - Setup the Storage Class
 setup_storage_class
 # TODO - Create Persistent Disks
+create_persistent_disks
 # TODO - Create Secrets for MondoDB communication
 # TODO - Launch StatefulSet
 # TODO - Init the MongoDB cluster
