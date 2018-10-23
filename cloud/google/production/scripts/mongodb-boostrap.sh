@@ -21,6 +21,8 @@ HQ_MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS=${HQ_MONGODB_BOOTSTRAP_FILE_
 # MongoDB admin credentials
 HQ_MONGODB_BOOTSTRAP_MONGODB_ADMIN_USERNAME=${HQ_MONGODB_BOOTSTRAP_MONGODB_ADMIN_USERNAME:="mongadmin"}
 HQ_MONGODB_BOOTSTRAP_MONGODB_ADMIN_PASSWORD=${HQ_MONGODB_BOOTSTRAP_MONGODB_ADMIN_PASSWORD:=`uuidgen`}
+# MongoDB Kubernetes definition file
+HQ_MONGODB_BOOTSTRAP_FILE_KUBERNETES_DEFINITION=${HQ_MONGODB_BOOTSTRAP_FILE_KUBERNETES_DEFINITION:="../kubernetes/services/mongodb.yml"}
 
 # Helpers
 function info() {
@@ -28,8 +30,9 @@ function info() {
     tlog info "[DEVOPS] Kubernetes Cluster: ${HQ_MONGODB_BOOTSTRAP_KUBERNETES_CLUSTER_NAME}"
     tlog info "[DEVOPS] Kubernetes Region: ${HQ_MONGODB_BOOTSTRAP_KUBERNETES_CLUSTER_REGION}"
     if [ "$FLAG_DUMP_ADMIN_CREDENTIALS" == 1 ]; then
-        tlog info "[DEVOPS] Admin Credentials file: $HQ_MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS"
+        tlog info "[DEVOPS] Admin Credentials file: ${HQ_MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS}"
     fi
+    tlog info "[DEVOPS] MongoDB kubernetes definition at ${HQ_MONGODB_BOOTSTRAP_FILE_KUBERNETES_DEFINITION}"
 }
 
 # General Information before we start deploying MongoDB for the given configuration
