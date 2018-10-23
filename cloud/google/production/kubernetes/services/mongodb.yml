@@ -22,7 +22,7 @@ metadata:
     name: mongod
 spec:
     serviceName: mongodb
-    replicas: 3
+    replicas: PLACEHOLDER_MONGODB_REPLICAS
     selector:
         matchLabels:
             app: mongo
