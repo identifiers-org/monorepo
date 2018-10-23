@@ -65,11 +65,15 @@ function setup_storage_class() {
 
 function create_persistent_disks() {
     VOLUME_NAME_PREFIX='mongodb-data-volume'
+    zones=( a b c )
     for i in $(seq 1 $MONGODB_BOOTSTRAP_N_REPLICAS); do
+        zone_idx=`echo "$i % 3" | bc`
+        DISK_ZONE="${MONGODB_BOOTSTRAP_KUBERNETES_CLUSTER_REGION}-${zones[$zone_idx]}"
         DISK_NAME="${MONGODB_BOOTSTRAP_KUBERNETES_CLUSTER_NAME}-mongodb-disk-$i"
-        tlog info "[CLOUD] Creating Persistent Disk #$i (${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE}) - $DISK_NAME"
-        gcloud compute disks create --size ${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE} --type
+        tlog info "[CLOUD] Creating Persistent Disk (${DISK_ZONE}) #$i (${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE}) - $DISK_NAME"
+        #gcloud compute disks create --size ${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE} --type ${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_TYPE} ${DISK_NAME}
     done
+
 }
 
 
