@@ -23,8 +23,16 @@ function info() {
     tlog info "[DEVOPS] Replicas: ${HQ_MONGODB_BOOTSTRAP_N_REPLICAS}"
     tlog info "[DEVOPS] Kubernetes Cluster: ${HQ_MONGODB_BOOTSTRAP_KUBERNETES_CLUSTER_NAME}"
     tlog info "[DEVOPS] Kubernetes Region: ${HQ_MONGODB_BOOTSTRAP_KUBERNETES_CLUSTER_REGION}"
+    if [ "$FLAG_DUMP_ADMIN_CREDENTIALS" == 1 ]; then
+        tlog info "[DEVOPS] Admin Credentials file: $HQ_MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS"
+    fi
 }
 
 # General Information before we start deploying MongoDB for the given configuration
 tlog info "[--- MongoDB Backend Bootstrap ---]"
 info
+if [ "$FLAG_DUMP_ADMIN_CREDENTIALS" == 1 ]; then
+    tlog info "Dumping user credentials to $HQ_MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS"
+    echo "username: $HQ_MONGODB_BOOTSTRAP_MONGODB_ADMIN_USERNAME" >> $HQ_MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS
+    echo "password: $HQ_MONGODB_BOOTSTRAP_MONGODB_ADMIN_PASSWORD" >> $HQ_MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS
+fi
