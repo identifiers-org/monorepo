@@ -46,6 +46,7 @@ function info() {
     tlog info "[DEVOPS] Kubernetes MongoDB Storage Volumes capacity, ${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE}"
 }
 
+# Steps
 function dump_admin_credentials() {
     if [ "$FLAG_DUMP_ADMIN_CREDENTIALS" == 1 ]; then
         tlog info "Dumping Administrator credentials to $MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS"
@@ -54,6 +55,10 @@ function dump_admin_credentials() {
     fi
 }
 
+function setup_storage_class() {
+    tlog info ("[${MONGODB_BOOTSTRAP_KUBERNETES_CLUSTER_NAME}] Setting up Storage class '${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_CLASS_NAME}'")
+    #kubectl apply -f "${MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_CLASS}"
+}
 
 
 # --- START ---
@@ -63,6 +68,7 @@ info
 # Dump admin credentials
 dump_admin_credentials
 # TODO - Setup the Storage Class
+setup_storage_class
 # TODO - Create Persistent Disks
 # TODO - Create Secrets for MondoDB communication
 # TODO - Launch StatefulSet
