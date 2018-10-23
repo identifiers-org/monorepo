@@ -26,6 +26,7 @@ MONGODB_BOOTSTRAP_MONGODB_ADMIN_PASSWORD=${MONGODB_BOOTSTRAP_MONGODB_ADMIN_PASSW
 # MongoDB Kubernetes definition file
 MONGODB_BOOTSTRAP_FILE_KUBERNETES_DEFINITION=${MONGODB_BOOTSTRAP_FILE_KUBERNETES_DEFINITION:="kubernetes/services/mongodb.yml"}
 MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_CLASS=${MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_CLASS:="kubernetes/storage/gce-ssd-storageclass.yml"}
+MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_VOLUME_TEMPLATE=${MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_VOLUME_TEMPLATE:="kubernetes/storage/mongodb_volume_template.yml"}
 
 # Helpers
 function info() {
@@ -38,6 +39,7 @@ function info() {
     fi
     tlog info "[DEVOPS] MongoDB kubernetes definition at ${MONGODB_BOOTSTRAP_FILE_KUBERNETES_DEFINITION}"
     tlog info "[DEVOPS] Kubernetes Storage Class Definition at ${MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_CLASS}"
+    tlog info "[DEVOPS] Kubernetes MongoDB Storage Volumes Template at ${MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_VOLUME_TEMPLATE}"
 }
 
 # General Information before we start deploying MongoDB for the given configuration
