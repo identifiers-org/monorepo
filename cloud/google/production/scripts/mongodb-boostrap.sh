@@ -6,6 +6,7 @@ source tinylogger.bash
 LOGGER_LVL=debug
 
 # Environment configuration
+MONGODB_BOOTSTRAP_FOLDER_TMP=${MONGODB_BOOTSTRAP_FOLDER_TMP:="tmp"}
 # Replicas
 MONGODB_BOOTSTRAP_N_REPLICAS=${MONGODB_BOOTSTRAP_N_REPLICAS:="3"}
 # Destination Kubernetes cluster coordinates
