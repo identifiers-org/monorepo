@@ -53,9 +53,18 @@ function dump_admin_credentials() {
         echo "password: $MONGODB_BOOTSTRAP_MONGODB_ADMIN_PASSWORD" >> $MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS
     fi
 }
+
+
+
 # --- START ---
 tlog info "[ [START]--- MongoDB Backend Bootstrap ---[START] ]"
 # Print out a description of what's gonna happen
 info
 # Dump admin credentials
 dump_admin_credentials
+# TODO - Setup the Storage Class
+# TODO - Create Persistent Disks
+# TODO - Create Secrets for MondoDB communication
+# TODO - Launch StatefulSet
+# TODO - Init the MongoDB cluster
+# TODO - Setup the admin user
