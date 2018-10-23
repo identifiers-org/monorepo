@@ -46,9 +46,11 @@ function info() {
     tlog info "[DEVOPS] Kubernetes MongoDB Storage Volumes capacity, ${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE}"
 }
 
-# General Information before we start deploying MongoDB for the given configuration
-tlog info "[--- MongoDB Backend Bootstrap ---]"
+# --- START ---
+tlog info "[ [START]--- MongoDB Backend Bootstrap ---[START] ]"
+# Print out a description of what's gonna happen
 info
+# Dump admin credentials
 if [ "$FLAG_DUMP_ADMIN_CREDENTIALS" == 1 ]; then
     tlog info "Dumping Administrator credentials to $MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS"
     echo "username: $MONGODB_BOOTSTRAP_MONGODB_ADMIN_USERNAME" > $MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS
