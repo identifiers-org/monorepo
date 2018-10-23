@@ -61,9 +61,9 @@ function setup_storage_class() {
     tlog info "[${MONGODB_BOOTSTRAP_KUBERNETES_CLUSTER_NAME}] Setting up Storage class '${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_CLASS_NAME}'"
     # TODO actually do it
     #kubectl apply -f "${MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_CLASS}"
-    tlog info "---"
+    tlog info "------------------------------------------------------------------------------------------------------"
     kubectl get all
-    tlog info "---"
+    tlog info "------------------------------------------------------------------------------------------------------"
 }
 
 function create_persistent_disks() {
@@ -76,9 +76,9 @@ function create_persistent_disks() {
         tlog info "[CLOUD] Creating Persistent Disk (${DISK_ZONE}) #$i (${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE}) - $DISK_NAME"
         #gcloud compute disks create --size ${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE} --type ${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_TYPE} ${DISK_NAME} --zone=${DISK_ZONE}
     done
-    tlog info "---"
+    tlog info "------------------------------------------------------------------------------------------------------"
     gcloud compute disks list
-    tlog info "---"
+    tlog info "------------------------------------------------------------------------------------------------------"
 }
 
 
