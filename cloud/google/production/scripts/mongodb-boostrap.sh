@@ -75,6 +75,18 @@ function create_persistent_disks() {
         DISK_NAME="${MONGODB_BOOTSTRAP_KUBERNETES_CLUSTER_NAME}-mongodb-disk-$i"
         tlog info "[CLOUD] Creating Persistent Disk (${DISK_ZONE}) #$i (${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE}) - $DISK_NAME"
         #gcloud compute disks create --size ${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE} --type ${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_TYPE} ${DISK_NAME} --zone=${DISK_ZONE}
+        KUBERNETES_DATA_VOLUME_FILE="${MONGODB_BOOTSTRAP_FOLDER_TMP}/${VOLUME_NAME_PREFIX}-$i.yml"
+        KUBERNETES_DATA_VOLUME_NAME="${VOLUME_NAME_PREFIX}-$i"
+        tlog info "[CLOUD] Preparing Kubernetes Volume ${KUBERNETES_DATA_VOLUME_NAME}"
+        cp "${MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_VOLUME_TEMPLATE}" "${KUBERNETES_DATA_VOLUME_FILE}"
+        tlog debug "[CLOUD] Set volume name to ${KUBERNETES_DATA_VOLUME_NAME}"
+        sed -i 's/METADATA_NAME/'"${KUBERNETES_DATA_VOLUME_NAME}"'/g' ${KUBERNETES_DATA_VOLUME_FILE}
+        tlog debug "[CLOUD] Set the Capacity to ${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE}"
+        sed -i 's/SPEC_CAPACITY_STORAGE/'"${KUBERNETES_DATA_VOLUME_NAME}"'/g' ${KUBERNETES_DATA_VOLUME_FILE}
+        tlog debug "[CLOUD] Set the Storage Class to ${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_CLASS_NAME}"
+        sed -i 's/SPEC_STORAGE_CLASS_NAME/'"${KUBERNETES_DATA_VOLUME_NAME}"'/g' ${KUBERNETES_DATA_VOLUME_FILE}
+        tlog debug "[CLOUD] Set the Persistent Disk Name to ${DISK_NAME}"
+        sed -i 's/SPEC_GCE_PERSISTENT_DISK_PD_NAME/'"${KUBERNETES_DATA_VOLUME_NAME}"'/g' ${KUBERNETES_DATA_VOLUME_FILE}
     done
     tlog info "------------------------------------------------------------------------------------------------------"
     gcloud compute disks list
