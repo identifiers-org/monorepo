@@ -84,11 +84,11 @@ function create_persistent_disks() {
         tlog debug "[CLOUD] Set volume name to ${KUBERNETES_DATA_VOLUME_NAME}"
         sed -i 's/METADATA_NAME/'"${KUBERNETES_DATA_VOLUME_NAME}"'/g' ${KUBERNETES_DATA_VOLUME_FILE}
         tlog debug "[CLOUD] Set the Capacity to ${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE}"
-        sed -i 's/SPEC_CAPACITY_STORAGE/'"${KUBERNETES_DATA_VOLUME_NAME}"'/g' ${KUBERNETES_DATA_VOLUME_FILE}
+        sed -i 's/SPEC_CAPACITY_STORAGE/'"${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE}"'/g' ${KUBERNETES_DATA_VOLUME_FILE}
         tlog debug "[CLOUD] Set the Storage Class to ${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_CLASS_NAME}"
-        sed -i 's/SPEC_STORAGE_CLASS_NAME/'"${KUBERNETES_DATA_VOLUME_NAME}"'/g' ${KUBERNETES_DATA_VOLUME_FILE}
+        sed -i 's/SPEC_STORAGE_CLASS_NAME/'"${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_CLASS_NAME}"'/g' ${KUBERNETES_DATA_VOLUME_FILE}
         tlog debug "[CLOUD] Set the Persistent Disk Name to ${DISK_NAME}"
-        sed -i 's/SPEC_GCE_PERSISTENT_DISK_PD_NAME/'"${KUBERNETES_DATA_VOLUME_NAME}"'/g' ${KUBERNETES_DATA_VOLUME_FILE}
+        sed -i 's/SPEC_GCE_PERSISTENT_DISK_PD_NAME/'"${DISK_NAME}"'/g' ${KUBERNETES_DATA_VOLUME_FILE}
         #kubectl apply -f ${KUBERNETES_DATA_VOLUME_FILE}
     done
     tlog info "------------------------------------------------------------------------------------------------------"
