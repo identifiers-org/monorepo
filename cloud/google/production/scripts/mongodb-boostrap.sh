@@ -102,6 +102,10 @@ function create_secrets_for_mongodb_cluster() {
     #kubectl create secret generic ${MONGODB_BOOTSTRAP_SECRET_NAME_MONGODB_AUTH} --from-file="${MONGODB_BOOTSTRAP_SECRET_KEYFILE_MONGODB_AUTH}"
 }
 
+function launch_stateful_set() {
+
+}
+
 # --- START ---
 tlog info "[ [START]--- MongoDB Backend Bootstrap ---[START] ]"
 # Print out a description of what's gonna happen
@@ -115,5 +119,6 @@ create_persistent_disks
 # TODO - Create Secrets for MondoDB communication
 create_secrets_for_mongodb_cluster
 # TODO - Launch StatefulSet
+launch_stateful_set
 # TODO - Init the MongoDB cluster
 # TODO - Setup the admin user
