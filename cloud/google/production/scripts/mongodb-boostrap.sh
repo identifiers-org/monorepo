@@ -79,16 +79,17 @@ function create_persistent_disks() {
         #gcloud compute disks create --size ${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE} --type ${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_TYPE} ${DISK_NAME} --zone=${DISK_ZONE}
         KUBERNETES_DATA_VOLUME_FILE="${MONGODB_BOOTSTRAP_FOLDER_TMP}/${VOLUME_NAME_PREFIX}-$i.yml"
         KUBERNETES_DATA_VOLUME_NAME="${VOLUME_NAME_PREFIX}-$i"
-        tlog info "[CLOUD] Preparing Kubernetes Volume ${KUBERNETES_DATA_VOLUME_NAME}"
+        tlog info "[DEVOPS] Preparing Kubernetes Volume ${KUBERNETES_DATA_VOLUME_NAME}"
         cp "${MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_VOLUME_TEMPLATE}" "${KUBERNETES_DATA_VOLUME_FILE}"
-        tlog debug "[CLOUD] Set volume name to ${KUBERNETES_DATA_VOLUME_NAME}"
+        tlog debug "[DEVOPS] Set volume name to ${KUBERNETES_DATA_VOLUME_NAME}"
         sed -i 's/METADATA_NAME/'"${KUBERNETES_DATA_VOLUME_NAME}"'/g' ${KUBERNETES_DATA_VOLUME_FILE}
-        tlog debug "[CLOUD] Set the Capacity to ${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE}"
+        tlog debug "[DEVOPS] Set the Capacity to ${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE}"
         sed -i 's/SPEC_CAPACITY_STORAGE/'"${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE}"'/g' ${KUBERNETES_DATA_VOLUME_FILE}
-        tlog debug "[CLOUD] Set the Storage Class to ${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_CLASS_NAME}"
+        tlog debug "[DEVOPS] Set the Storage Class to ${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_CLASS_NAME}"
         sed -i 's/SPEC_STORAGE_CLASS_NAME/'"${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_CLASS_NAME}"'/g' ${KUBERNETES_DATA_VOLUME_FILE}
-        tlog debug "[CLOUD] Set the Persistent Disk Name to ${DISK_NAME}"
+        tlog debug "[DEVOPS] Set the Persistent Disk Name to ${DISK_NAME}"
         sed -i 's/SPEC_GCE_PERSISTENT_DISK_PD_NAME/'"${DISK_NAME}"'/g' ${KUBERNETES_DATA_VOLUME_FILE}
+        tlog info "[CLOUD] Create Kubernetes Volume ${KUBERNETES_DATA_VOLUME_NAME}"
         #kubectl apply -f ${KUBERNETES_DATA_VOLUME_FILE}
     done
     tlog info "------------------------------------------------------------------------------------------------------"
@@ -104,7 +105,8 @@ function create_secrets_for_mongodb_cluster() {
 
 function launch_stateful_set() {
     FILE_MONGODB_KUBERNETES_DEFINITION="${MONGODB_BOOTSTRAP_FOLDER_TMP}/mongodb.yml"
-    cp
+    cp "${MONGODB_BOOTSTRAP_FILE_TEMPLATE_KUBERNETES_DEFINITION}" "${FILE_MONGODB_KUBERNETES_DEFINITION}"
+    tlog debug "[CLOUD]"
 }
 
 # --- START ---
