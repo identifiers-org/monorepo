@@ -134,7 +134,20 @@ function launch_stateful_set() {
 }
 
 function init_mongodb_cluster() {
-    tlog info
+    tlog info "[DEVOPS] Preparing to initialize the MongoDB cluster"
+    MONGODB_CLUSTER_DOMAIN=`kubectl exec -it mongod-0 -- hostname -f | sed 's/mongod-0.//g'`
+    FILE_INIT_COMMAND="${MONGODB_BOOTSTRAP_FOLDER_TMP}/cluster_init.command"
+    N_MINUS_ONE_REPLICAS=`echo "${MONGODB_BOOTSTRAP_N_REPLICAS} - 1" | bc`
+    echo 'rs.initiate({_id: "MainRepSet", version: 1, members: [' > ${FILE_INIT_COMMAND}
+    for i in $(seq 0 ${N_MINUS_ONE_REPLICAS}); do
+        echo -ne "\t{_id: $i, host:\"mongod-$i.${MONGODB_CLUSTER_DOMAIN}:27017\"}" >> ${FILE_INIT_COMMAND}
+        if [ "${i}" != "${N_MINUS_ONE_REPLICAS}"]; then
+            echo "," >> ${FILE_INIT_COMMAND}
+        fi
+    done
+    echo "]});" >> ${FILE_INIT_COMMAND}
+    tlog info "[CLOUD] Initialize MongoDB Cluster"
+    cat ${FILE_INIT_COMMAND} | kubectl exec -it mongod-0 -- mongo
 }
 
 # --- START ---
@@ -152,4 +165,5 @@ create_secrets_for_mongodb_cluster
 # TODO - Launch StatefulSet
 launch_stateful_set
 # TODO - Init the MongoDB cluster
+init_mongodb_cluster
 # TODO - Setup the admin user
