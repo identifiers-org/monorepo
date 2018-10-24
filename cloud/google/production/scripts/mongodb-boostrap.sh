@@ -169,7 +169,10 @@ function init_mongodb_cluster() {
 
 function setup_admin_user() {
     tlog info "[DEVOPS] Configuring general 'admin' user"
-    echo "db.getSiblingDB(\"admin\").createUser({user : \"${MONGODB_BOOTSTRAP_MONGODB_ADMIN_USERNAME}\", pwd : \"${MONGODB_BOOTSTRAP_MONGODB_ADMIN_PASSWORD}\", roles: [{role: \"root\", db: \"admin\"}]});" | kubectl exec -it mongod-0 -- mongo
+    # Find who is the master
+    KUBERNETES_DEPLOYED_MONGODB_MASTER_NODE=`kubectl exec -it mongod-0 -- mongo --quiet --eval 'JSON.stringify(db.isMaster())' 2> /dev/null | jq .primary | tr -d '\r' | sed 's/"//g' | cut -f1 -d'.'`
+    tlog info "[DEVOPS] Contacting master node ${KUBERNETES_DEPLOYED_MONGODB_MASTER_NODE}"
+    echo "db.getSiblingDB(\"admin\").createUser({user : \"${MONGODB_BOOTSTRAP_MONGODB_ADMIN_USERNAME}\", pwd : \"${MONGODB_BOOTSTRAP_MONGODB_ADMIN_PASSWORD}\", roles: [{role: \"root\", db: \"admin\"}]});" | kubectl exec -it ${KUBERNETES_DEPLOYED_MONGODB_MASTER_NODE} -- mongo
 }
 
 # --- START ---
