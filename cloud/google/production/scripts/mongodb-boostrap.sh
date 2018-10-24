@@ -133,6 +133,7 @@ function launch_stateful_set() {
         tlog info "[CLOUD] Only #`kubectl get statefulset/mongod -o yaml | yq .status.currentReplicas` out of #${MONGODB_BOOTSTRAP_N_REPLICAS} are up, waiting..."
         sleep 3
     done
+    tlog info "[DEVOPS] MongoDB StatefulSet is UP AND RUNNING"
     tlog info "------------------------------------------------------------------------------------------------------"
     kubectl get all
     tlog info "------------------------------------------------------------------------------------------------------"
