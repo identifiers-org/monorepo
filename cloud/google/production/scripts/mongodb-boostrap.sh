@@ -105,6 +105,9 @@ function create_secrets_for_mongodb_cluster() {
     KEY_FILE=`basename ${MONGODB_BOOTSTRAP_SECRET_KEYFILE_MONGODB_AUTH}`
     #kubectl create secret generic ${MONGODB_BOOTSTRAP_SECRET_NAME_MONGODB_AUTH} --from-file="${KEY_FILE}"
     cd $current_folder
+    tlog info "------------------------------------------------------------------------------------------------------"
+    kubectl get secrets
+    tlog info "------------------------------------------------------------------------------------------------------"
 }
 
 function launch_stateful_set() {
@@ -123,6 +126,10 @@ function launch_stateful_set() {
     sed -i 's/STORAGE_SIZE/'"${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE}"'/g' ${FILE_MONGODB_KUBERNETES_DEFINITION}
     tlog info "[CLOUD] Launch MongoDB Stateful Set"
     #kubectl apply -f ${FILE_MONGODB_KUBERNETES_DEFINITION}
+}
+
+function init_mongodb_cluster() {
+    tlog info
 }
 
 # --- START ---
