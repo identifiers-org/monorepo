@@ -141,9 +141,9 @@ function launch_stateful_set() {
 
 function init_mongodb_cluster() {
     tlog info "[DEVOPS] Preparing to initialize the MongoDB cluster"
-    MONGODB_CLUSTER_DOMAIN=`kubectl exec -it mongod-0 -- hostname -f | sed 's/mongod-0.//g'`
+    MONGODB_CLUSTER_DOMAIN=`kubectl exec -it mongod-0 -- hostname -f | sed 's/mongod-0.//g' | tr -d '\r'`
     FILE_INIT_COMMAND="${MONGODB_BOOTSTRAP_FOLDER_TMP}/cluster_init.command"
-    N_MINUS_ONE_REPLICAS=`echo "${MONGODB_BOOTSTRAP_N_REPLICAS} - 1" | bc`
+    N_MINUS_ONE_REPLICAS=`echo -n "${MONGODB_BOOTSTRAP_N_REPLICAS} - 1" | bc`
     echo 'rs.initiate({_id: "MainRepSet", version: 1, members: [' > ${FILE_INIT_COMMAND}
     for i in $(seq 0 ${N_MINUS_ONE_REPLICAS}); do
         echo -ne "{ _id: $i, host : \"mongod-$i.${MONGODB_CLUSTER_DOMAIN}:27017\" }" >> ${FILE_INIT_COMMAND}
@@ -155,7 +155,7 @@ function init_mongodb_cluster() {
     done
     echo "]});" >> ${FILE_INIT_COMMAND}
     tlog info "[DEVOPS] Initialize MongoDB Cluster"
-    cat ${FILE_INIT_COMMAND} | kubectl exec -it mongod-0 -- mongo
+    #cat ${FILE_INIT_COMMAND} | kubectl exec -it mongod-0 -- mongo
     # Wait until replica status is Ok.
     tlog info "[DEVOPS] Waiting for the Replica Set to complete Initialization"
     while [ "`kubectl exec -it mongod-0 -- mongo -eval 'rs.status().ok' --quiet 2> /dev/null | tr -d '\r'`" != "1" ]; do
