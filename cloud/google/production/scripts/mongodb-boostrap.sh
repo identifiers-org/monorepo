@@ -100,7 +100,11 @@ function create_persistent_disks() {
 function create_secrets_for_mongodb_cluster() {
     tlog info "[CLOUD] Creating Auth Secret for MongoDB cluster authentication"
     openssl rand -base64 741 > "${MONGODB_BOOTSTRAP_SECRET_KEYFILE_MONGODB_AUTH}"
-    #kubectl create secret generic ${MONGODB_BOOTSTRAP_SECRET_NAME_MONGODB_AUTH} --from-file="${MONGODB_BOOTSTRAP_SECRET_KEYFILE_MONGODB_AUTH}"
+    current_folder=`pwd`
+    cd `dirname ${MONGODB_BOOTSTRAP_SECRET_KEYFILE_MONGODB_AUTH}`
+    KEY_FILE=`basename ${MONGODB_BOOTSTRAP_SECRET_KEYFILE_MONGODB_AUTH}`
+    #kubectl create secret generic ${MONGODB_BOOTSTRAP_SECRET_NAME_MONGODB_AUTH} --from-file="${KEY_FILE}"
+    cd $current_folder
 }
 
 function launch_stateful_set() {
@@ -109,7 +113,8 @@ function launch_stateful_set() {
     tlog info "[DEVOPS] Preapre MongoDB Kubernetes definition at ${FILE_MONGODB_KUBERNETES_DEFINITION}"
     tlog debug "[DEVOPS] Set replicas to #${MONGODB_BOOTSTRAP_N_REPLICAS}"
     sed -i 's/PLACEHOLDER_MONGODB_REPLICAS/'"${MONGODB_BOOTSTRAP_N_REPLICAS}"'/g' ${FILE_MONGODB_KUBERNETES_DEFINITION}
-    
+    tlog debug "[DEVOPS] Set the authentication keyfile"
+    sed -i 's/AUTH_KEY_FILE/'"`basename ${MONGODB_BOOTSTRAP_SECRET_KEYFILE_MONGODB_AUTH}`"'/g' ${FILE_MONGODB_KUBERNETES_DEFINITION}
 }
 
 # --- START ---
