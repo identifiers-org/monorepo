@@ -175,9 +175,9 @@ dump_admin_credentials
 # TODO - Create Persistent Disks
 #create_persistent_disks
 # TODO - Create Secrets for MondoDB communication
-create_secrets_for_mongodb_cluster
+#create_secrets_for_mongodb_cluster
 # TODO - Launch StatefulSet
-#launch_stateful_set
+launch_stateful_set
 # TODO - Init the MongoDB cluster
 #init_mongodb_cluster
 # TODO - Setup the admin user
