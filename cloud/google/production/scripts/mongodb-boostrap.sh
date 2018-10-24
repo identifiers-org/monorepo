@@ -19,7 +19,7 @@ if [ -z ${MONGODB_BOOTSTRAP_MONGODB_ADMIN_USERNAME+x} ]; then
     FLAG_DUMP_ADMIN_CREDENTIALS=1
 fi
 # File for dumping admin credentials
-MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS=${MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS:="${MONGODB_BOOTSTRAP_KUBERNETES_CLUSTER_NAME}-mongodb-admin-credentials.yml"}
+MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS=${MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS:="${MONGODB_BOOTSTRAP_FOLDER_TMP}/${MONGODB_BOOTSTRAP_KUBERNETES_CLUSTER_NAME}-mongodb-admin-credentials.yml"}
 # MongoDB admin credentials
 MONGODB_BOOTSTRAP_MONGODB_ADMIN_USERNAME=${MONGODB_BOOTSTRAP_MONGODB_ADMIN_USERNAME:="mongadmin"}
 MONGODB_BOOTSTRAP_MONGODB_ADMIN_PASSWORD=${MONGODB_BOOTSTRAP_MONGODB_ADMIN_PASSWORD:=`uuidgen`}
@@ -183,8 +183,8 @@ dump_admin_credentials
 # TODO - Create Secrets for MondoDB communication
 #create_secrets_for_mongodb_cluster
 # TODO - Launch StatefulSet
-launch_stateful_set
+#launch_stateful_set
 # TODO - Init the MongoDB cluster
-#init_mongodb_cluster
+init_mongodb_cluster
 # TODO - Setup the admin user
 #setup_admin_user
