@@ -50,7 +50,7 @@ spec:
               - "--clusterAuthMode"
               - "keyFile"
               - "--keyFile"
-              - "/etc/secrets-volume/iorg-hq-eu-mongodb.keyfile"
+              - "/etc/secrets-volume/AUTH_KEY_FILE"
               - "--setParameter"
               - "authenticationMechanisms=SCRAM-SHA-1"
               ports:
