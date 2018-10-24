@@ -87,6 +87,7 @@ function create_persistent_disks() {
         sed -i 's/SPEC_STORAGE_CLASS_NAME/'"${KUBERNETES_DATA_VOLUME_NAME}"'/g' ${KUBERNETES_DATA_VOLUME_FILE}
         tlog debug "[CLOUD] Set the Persistent Disk Name to ${DISK_NAME}"
         sed -i 's/SPEC_GCE_PERSISTENT_DISK_PD_NAME/'"${KUBERNETES_DATA_VOLUME_NAME}"'/g' ${KUBERNETES_DATA_VOLUME_FILE}
+        #kubectl apply -f ${KUBERNETES_DATA_VOLUME_FILE}
     done
     tlog info "------------------------------------------------------------------------------------------------------"
     gcloud compute disks list
