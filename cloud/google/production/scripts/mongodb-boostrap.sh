@@ -129,7 +129,7 @@ function launch_stateful_set() {
     tlog info "[CLOUD] Launch MongoDB Stateful Set"
     kubectl apply -f ${FILE_MONGODB_KUBERNETES_DEFINITION}
     tlog info "[CLOUD] Wait for the StatefulSet to be ready"
-    while [ "`kubectl get statefulset/mongod -o yaml | yq .status.currentReplicas`" != "${MONGODB_BOOTSTRAP_N_REPLICAS}" ]; do
+    while [ "`kubectl get statefulset/mongod -o yaml | yq .status.readyReplicas`" != "${MONGODB_BOOTSTRAP_N_REPLICAS}" ]; do
         tlog info "[CLOUD] Only #`kubectl get statefulset/mongod -o yaml | yq .status.currentReplicas` out of #${MONGODB_BOOTSTRAP_N_REPLICAS} are up, waiting..."
         sleep 3
     done
