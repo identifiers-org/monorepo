@@ -64,7 +64,7 @@ spec:
             volumes:
             - name: secrets-volume
               secret:
-                  secretName: mongodb-auth-bootstrap-data
+                  secretName: MONGODB_AUTH_SECRET_NAME
                   defaultMode: 256
     volumeClaimTemplates:
     - metadata:

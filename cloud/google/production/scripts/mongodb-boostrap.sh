@@ -115,6 +115,7 @@ function launch_stateful_set() {
     sed -i 's/PLACEHOLDER_MONGODB_REPLICAS/'"${MONGODB_BOOTSTRAP_N_REPLICAS}"'/g' ${FILE_MONGODB_KUBERNETES_DEFINITION}
     tlog debug "[DEVOPS] Set the authentication keyfile"
     sed -i 's/AUTH_KEY_FILE/'"`basename ${MONGODB_BOOTSTRAP_SECRET_KEYFILE_MONGODB_AUTH}`"'/g' ${FILE_MONGODB_KUBERNETES_DEFINITION}
+    
 }
 
 # --- START ---
