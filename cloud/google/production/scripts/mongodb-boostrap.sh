@@ -61,8 +61,7 @@ function dump_admin_credentials() {
 
 function setup_storage_class() {
     tlog info "[${MONGODB_BOOTSTRAP_KUBERNETES_CLUSTER_NAME}] Setting up Storage class '${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_CLASS_NAME}'"
-    # TODO actually do it
-    #kubectl apply -f "${MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_CLASS}"
+    kubectl apply -f "${MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_CLASS}"
     tlog info "------------------------------------------------------------------------------------------------------"
     kubectl get all
     tlog info "------------------------------------------------------------------------------------------------------"
