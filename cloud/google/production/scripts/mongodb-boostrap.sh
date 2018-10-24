@@ -176,14 +176,14 @@ info
 # Dump admin credentials
 dump_admin_credentials
 # TODO - Setup the Storage Class
-#setup_storage_class
+setup_storage_class
 # TODO - Create Persistent Disks
-#create_persistent_disks
+create_persistent_disks
 # TODO - Create Secrets for MondoDB communication
-#create_secrets_for_mongodb_cluster
+create_secrets_for_mongodb_cluster
 # TODO - Launch StatefulSet
-#launch_stateful_set
+launch_stateful_set
 # TODO - Init the MongoDB cluster
-#init_mongodb_cluster
+init_mongodb_cluster
 # TODO - Setup the admin user
 setup_admin_user
