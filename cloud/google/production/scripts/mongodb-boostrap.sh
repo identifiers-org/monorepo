@@ -28,7 +28,7 @@ MONGODB_BOOTSTRAP_FILE_TEMPLATE_KUBERNETES_DEFINITION=${MONGODB_BOOTSTRAP_FILE_T
 MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_CLASS=${MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_CLASS:="kubernetes/storage/gce-ssd-storageclass.yml"}
 MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_VOLUME_TEMPLATE=${MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_VOLUME_TEMPLATE:="kubernetes/storage/mongodb_volume_template.yml"}
 MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_CLASS_NAME=${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_CLASS_NAME:=`yq -r .metadata.name ${MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_CLASS}`}
-MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_TYPE=${:=`yq -r .parameters.type ${MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_CLASS}`}
+MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_TYPE=${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_TYPE:=`yq -r .parameters.type ${MONGODB_BOOTSTRAP_FILE_KUBERNETES_STORAGE_CLASS}`}
 MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE=${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE:=100Gi}
 MONGODB_BOOTSTRAP_SECRET_NAME_MONGODB_AUTH="${MONGODB_BOOTSTRAP_KUBERNETES_CLUSTER_NAME}-mongodb"
 MONGODB_BOOTSTRAP_SECRET_KEYFILE_MONGODB_AUTH="${MONGODB_BOOTSTRAP_FOLDER_TMP}/${MONGODB_BOOTSTRAP_SECRET_NAME_MONGODB_AUTH}.keyfile"
@@ -171,14 +171,14 @@ info
 # Dump admin credentials
 dump_admin_credentials
 # TODO - Setup the Storage Class
-setup_storage_class
+#setup_storage_class
 # TODO - Create Persistent Disks
-create_persistent_disks
+#create_persistent_disks
 # TODO - Create Secrets for MondoDB communication
-create_secrets_for_mongodb_cluster
+#create_secrets_for_mongodb_cluster
 # TODO - Launch StatefulSet
-launch_stateful_set
+#launch_stateful_set
 # TODO - Init the MongoDB cluster
-init_mongodb_cluster
+#init_mongodb_cluster
 # TODO - Setup the admin user
-setup_admin_user
+#setup_admin_user
