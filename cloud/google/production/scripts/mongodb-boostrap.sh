@@ -105,7 +105,7 @@ function create_secrets_for_mongodb_cluster() {
     current_folder=`pwd`
     cd `dirname ${MONGODB_BOOTSTRAP_SECRET_KEYFILE_MONGODB_AUTH}`
     KEY_FILE=`basename ${MONGODB_BOOTSTRAP_SECRET_KEYFILE_MONGODB_AUTH}`
-    #kubectl create secret generic ${MONGODB_BOOTSTRAP_SECRET_NAME_MONGODB_AUTH} --from-file="${KEY_FILE}"
+    kubectl create secret generic ${MONGODB_BOOTSTRAP_SECRET_NAME_MONGODB_AUTH} --from-file="${KEY_FILE}"
     cd $current_folder
     tlog info "------------------------------------------------------------------------------------------------------"
     kubectl get secrets
@@ -175,7 +175,7 @@ dump_admin_credentials
 # TODO - Create Persistent Disks
 #create_persistent_disks
 # TODO - Create Secrets for MondoDB communication
-#create_secrets_for_mongodb_cluster
+create_secrets_for_mongodb_cluster
 # TODO - Launch StatefulSet
 #launch_stateful_set
 # TODO - Init the MongoDB cluster
