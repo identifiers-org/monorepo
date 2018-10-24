@@ -81,6 +81,10 @@ function create_persistent_disks() {
     tlog info "------------------------------------------------------------------------------------------------------"
 }
 
+function create_secrets_for_mongodb_cluster() {
+    FILE_SECRET="${MONGODB_BOOTSTRAP_KUBERNETES_CLUSTER_NAME}-mongodb.keyfile"
+    # TODO
+}
 
 # --- START ---
 tlog info "[ [START]--- MongoDB Backend Bootstrap ---[START] ]"
