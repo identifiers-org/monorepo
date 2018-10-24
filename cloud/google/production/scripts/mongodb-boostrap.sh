@@ -173,7 +173,7 @@ dump_admin_credentials
 # TODO - Setup the Storage Class
 #setup_storage_class
 # TODO - Create Persistent Disks
-create_persistent_disks
+#create_persistent_disks
 # TODO - Create Secrets for MondoDB communication
 #create_secrets_for_mongodb_cluster
 # TODO - Launch StatefulSet
