@@ -184,6 +184,6 @@ dump_admin_credentials
 # TODO - Launch StatefulSet
 #launch_stateful_set
 # TODO - Init the MongoDB cluster
-init_mongodb_cluster
+#init_mongodb_cluster
 # TODO - Setup the admin user
-#setup_admin_user
+setup_admin_user
