@@ -181,3 +181,4 @@ launch_stateful_set
 # TODO - Init the MongoDB cluster
 init_mongodb_cluster
 # TODO - Setup the admin user
+setup_admin_user
