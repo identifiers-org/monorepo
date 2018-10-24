@@ -74,7 +74,7 @@ function create_persistent_disks() {
         zone_idx=`echo "$i % 3" | bc`
         DISK_ZONE="${MONGODB_BOOTSTRAP_KUBERNETES_CLUSTER_REGION}-${zones[$zone_idx]}"
         DISK_NAME="${MONGODB_BOOTSTRAP_KUBERNETES_CLUSTER_NAME}-mongodb-disk-$i"
-        tlog info "[CLOUD] Creating Persistent Disk (${DISK_ZONE}) #$i (${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE}) - $DISK_NAME"
+        tlog info "[CLOUD] Creating Persistent Disk #$i (${DISK_ZONE}) (${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE}) - $DISK_NAME"
         #gcloud compute disks create --size ${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE} --type ${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_TYPE} ${DISK_NAME} --zone=${DISK_ZONE}
         KUBERNETES_DATA_VOLUME_FILE="${MONGODB_BOOTSTRAP_FOLDER_TMP}/${VOLUME_NAME_PREFIX}-$i.yml"
         KUBERNETES_DATA_VOLUME_NAME="${VOLUME_NAME_PREFIX}-$i"
@@ -92,6 +92,7 @@ function create_persistent_disks() {
         #kubectl apply -f ${KUBERNETES_DATA_VOLUME_FILE}
     done
     tlog info "------------------------------------------------------------------------------------------------------"
+    # TODO - Show only disks in the current region
     gcloud compute disks list
     tlog info "------------------------------------------------------------------------------------------------------"
     kubectl get persistentVolumes
