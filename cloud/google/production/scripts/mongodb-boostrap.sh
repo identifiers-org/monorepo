@@ -143,8 +143,8 @@ function init_mongodb_cluster() {
     tlog info "[DEVOPS] Preparing to initialize the MongoDB cluster"
     MONGODB_CLUSTER_DOMAIN=`kubectl exec -it mongod-0 -- hostname -f | sed 's/mongod-0.//g' | tr -d '\r'`
     FILE_INIT_COMMAND="${MONGODB_BOOTSTRAP_FOLDER_TMP}/cluster_init.command"
-    N_MINUS_ONE_REPLICAS=`echo -n "${MONGODB_BOOTSTRAP_N_REPLICAS} - 1" | bc`
-    echo 'rs.initiate({_id: "MainRepSet", version: 1, members: [' > ${FILE_INIT_COMMAND}
+    N_MINUS_ONE_REPLICAS=`echo "${MONGODB_BOOTSTRAP_N_REPLICAS} - 1" | bc`
+    echo -n 'rs.initiate({_id: "MainRepSet", version: 1, members: [' > ${FILE_INIT_COMMAND}
     for i in $(seq 0 ${N_MINUS_ONE_REPLICAS}); do
         echo -ne "{ _id: $i, host : \"mongod-$i.${MONGODB_CLUSTER_DOMAIN}:27017\" }" >> ${FILE_INIT_COMMAND}
         if [ "${i}" != "${N_MINUS_ONE_REPLICAS}" ]; then
