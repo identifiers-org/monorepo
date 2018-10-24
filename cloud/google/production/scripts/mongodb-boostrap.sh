@@ -146,10 +146,10 @@ function init_mongodb_cluster() {
         fi
     done
     echo "]});" >> ${FILE_INIT_COMMAND}
-    tlog info "[CLOUD] Initialize MongoDB Cluster"
+    tlog info "[DEVOPS] Initialize MongoDB Cluster"
     cat ${FILE_INIT_COMMAND} | kubectl exec -it mongod-0 -- mongo
     # Wait until replica status is Ok.
-    tlog info "[CLOUD] Waiting for the Replica Set to complete Initialization"
+    tlog info "[DEVOPS] Waiting for the Replica Set to complete Initialization"
     #rs_ok=`kubectl exec -it mongod-0 -- mongo -u iorgmainadmin -p 5A5C09E2-4E4E-422F-88C7-1E8D722DA209 -eval 'rs.status().ok' --quiet admin 2> /dev/null`
     while [ "`kubectl exec -it mongod-0 -- mongo -eval 'rs.status().ok' --quiet 2> /dev/null | tr -d '\r'`" != "1" ]; do
         tlog debug "[DEVOPS] Not ready yet"
