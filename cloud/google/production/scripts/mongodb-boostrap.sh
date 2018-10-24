@@ -147,7 +147,7 @@ function init_mongodb_cluster() {
     echo 'rs.initiate({_id: "MainRepSet", version: 1, members: [' > ${FILE_INIT_COMMAND}
     for i in $(seq 0 ${N_MINUS_ONE_REPLICAS}); do
         echo -ne "\t{_id: $i, host:\"mongod-$i.${MONGODB_CLUSTER_DOMAIN}:27017\"}" >> ${FILE_INIT_COMMAND}
-        if [ "${i}" != "${N_MINUS_ONE_REPLICAS}"]; then
+        if [ "${i}" != "${N_MINUS_ONE_REPLICAS}" ]; then
             echo "," >> ${FILE_INIT_COMMAND}
         fi
     done
