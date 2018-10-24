@@ -126,6 +126,9 @@ function launch_stateful_set() {
     sed -i 's/STORAGE_SIZE/'"${MONGODB_BOOTSTRAP_KUBERNETES_STORAGE_VOLUME_SIZE}"'/g' ${FILE_MONGODB_KUBERNETES_DEFINITION}
     tlog info "[CLOUD] Launch MongoDB Stateful Set"
     #kubectl apply -f ${FILE_MONGODB_KUBERNETES_DEFINITION}
+    tlog info "------------------------------------------------------------------------------------------------------"
+    kubectl get all
+    tlog info "------------------------------------------------------------------------------------------------------"
 }
 
 function init_mongodb_cluster() {
