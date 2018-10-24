@@ -97,8 +97,9 @@ function create_persistent_disks() {
 }
 
 function create_secrets_for_mongodb_cluster() {
-    FILE_SECRET="${MONGODB_BOOTSTRAP_KUBERNETES_CLUSTER_NAME}-mongodb.keyfile"
-    # TODO
+    tlog info "[CLOUD] Creating Auth Secret for MongoDB cluster authentication"
+    openssl rand -base64 741 > "${MONGODB_BOOTSTRAP_SECRET_KEYFILE_MONGODB_AUTH}"
+    #kubectl create secret generic ${MONGODB_BOOTSTRAP_SECRET_NAME_MONGODB_AUTH} --from-file="${MONGODB_BOOTSTRAP_SECRET_KEYFILE_MONGODB_AUTH}"
 }
 
 # --- START ---
@@ -112,6 +113,7 @@ setup_storage_class
 # TODO - Create Persistent Disks
 create_persistent_disks
 # TODO - Create Secrets for MondoDB communication
+create_secrets_for_mongodb_cluster
 # TODO - Launch StatefulSet
 # TODO - Init the MongoDB cluster
 # TODO - Setup the admin user
