@@ -133,7 +133,7 @@ function launch_stateful_set() {
         tlog info "[CLOUD] Only #`kubectl get statefulset/mongod -o yaml | yq .status.currentReplicas` out of #${MONGODB_BOOTSTRAP_N_REPLICAS} are up, waiting..."
         sleep 3
     done
-    sleep 12
+    sleep 18
     tlog info "[DEVOPS] MongoDB StatefulSet is UP AND RUNNING"
     tlog info "------------------------------------------------------------------------------------------------------"
     kubectl get all
@@ -163,6 +163,8 @@ function init_mongodb_cluster() {
         tlog debug "[DEVOPS] Not ready yet"
         sleep 3
     done
+    sleep 12
+    tlog info "[DEVOPS] Replica Set is supposed to be initialized now"
 }
 
 function setup_admin_user() {
@@ -175,13 +177,13 @@ tlog info "[ [START]--- MongoDB Backend Bootstrap ---[START] ]"
 # Print out a description of what's gonna happen
 info
 # Dump admin credentials
-dump_admin_credentials
+#dump_admin_credentials
 # Setup the Storage Class
-setup_storage_class
+#setup_storage_class
 # Create Persistent Disks
-create_persistent_disks
+#create_persistent_disks
 # Create Secrets for MondoDB communication
-create_secrets_for_mongodb_cluster
+#create_secrets_for_mongodb_cluster
 # Launch StatefulSet
 launch_stateful_set
 # Init the MongoDB cluster
