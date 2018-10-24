@@ -106,7 +106,10 @@ function create_secrets_for_mongodb_cluster() {
 function launch_stateful_set() {
     FILE_MONGODB_KUBERNETES_DEFINITION="${MONGODB_BOOTSTRAP_FOLDER_TMP}/mongodb.yml"
     cp "${MONGODB_BOOTSTRAP_FILE_TEMPLATE_KUBERNETES_DEFINITION}" "${FILE_MONGODB_KUBERNETES_DEFINITION}"
-    tlog debug "[CLOUD]"
+    tlog info "[DEVOPS] Preapre MongoDB Kubernetes definition at ${FILE_MONGODB_KUBERNETES_DEFINITION}"
+    tlog debug "[DEVOPS] Set replicas to #${MONGODB_BOOTSTRAP_N_REPLICAS}"
+    sed -i 's/PLACEHOLDER_MONGODB_REPLICAS/'"${MONGODB_BOOTSTRAP_N_REPLICAS}"'/g' ${FILE_MONGODB_KUBERNETES_DEFINITION}
+    
 }
 
 # --- START ---
