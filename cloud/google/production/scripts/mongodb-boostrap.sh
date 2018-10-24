@@ -53,7 +53,7 @@ function info() {
 # Steps
 function dump_admin_credentials() {
     if [ "$FLAG_DUMP_ADMIN_CREDENTIALS" == 1 ]; then
-        tlog info "Dumping Administrator credentials to $MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS"
+        tlog info "[DEVOPS] Dumping Administrator credentials to $MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS"
         echo "username: $MONGODB_BOOTSTRAP_MONGODB_ADMIN_USERNAME" > $MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS
         echo "password: $MONGODB_BOOTSTRAP_MONGODB_ADMIN_PASSWORD" >> $MONGODB_BOOTSTRAP_FILE_MONGODB_ADMIN_CREDENTIALS
     fi
@@ -171,7 +171,7 @@ info
 # Dump admin credentials
 dump_admin_credentials
 # TODO - Setup the Storage Class
-#setup_storage_class
+setup_storage_class
 # TODO - Create Persistent Disks
 #create_persistent_disks
 # TODO - Create Secrets for MondoDB communication
