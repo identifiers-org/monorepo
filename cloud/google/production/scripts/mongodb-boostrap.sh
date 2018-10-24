@@ -175,15 +175,15 @@ tlog info "[ [START]--- MongoDB Backend Bootstrap ---[START] ]"
 info
 # Dump admin credentials
 dump_admin_credentials
-# TODO - Setup the Storage Class
+# Setup the Storage Class
 setup_storage_class
-# TODO - Create Persistent Disks
+# Create Persistent Disks
 create_persistent_disks
-# TODO - Create Secrets for MondoDB communication
+# Create Secrets for MondoDB communication
 create_secrets_for_mongodb_cluster
-# TODO - Launch StatefulSet
+# Launch StatefulSet
 launch_stateful_set
-# TODO - Init the MongoDB cluster
+# Init the MongoDB cluster
 init_mongodb_cluster
-# TODO - Setup the admin user
+# Setup the admin user
 setup_admin_user
