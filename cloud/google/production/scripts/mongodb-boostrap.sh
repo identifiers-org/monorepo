@@ -148,6 +148,20 @@ function init_mongodb_cluster() {
     echo "]});" >> ${FILE_INIT_COMMAND}
     tlog info "[CLOUD] Initialize MongoDB Cluster"
     cat ${FILE_INIT_COMMAND} | kubectl exec -it mongod-0 -- mongo
+    # Wait until replica status is Ok.
+    tlog info "[CLOUD] Waiting for the Replica Set to complete Initialization"
+    #rs_ok=`kubectl exec -it mongod-0 -- mongo -u iorgmainadmin -p 5A5C09E2-4E4E-422F-88C7-1E8D722DA209 -eval 'rs.status().ok' --quiet admin 2> /dev/null`
+    while [ "`kubectl exec -it mongod-0 -- mongo -eval 'rs.status().ok' --quiet 2> /dev/null | tr -d '\r'`" != "1" ]; do
+        tlog debug "[DEVOPS] Not ready yet"
+        sleep 3
+        #rs_ok=`kubectl exec -it mongod-0 -- mongo -u iorgmainadmin -p 5A5C09E2-4E4E-422F-88C7-1E8D722DA209 -eval 'rs.status().ok' --quiet admin 2> /dev/null | tr -d '\r'`
+        #tlog debug "Status: --- '$rs_ok' ---"
+    done
+}
+
+function setup_admin_user() {
+    tlog info "[DEVOPS] Configuring general 'admin' user"
+    echo "db.getSiblingDB(\"admin\").createUser({user : \"${MONGODB_BOOTSTRAP_MONGODB_ADMIN_USERNAME}\", pwd : \"${MONGODB_BOOTSTRAP_MONGODB_ADMIN_PASSWORD}\", roles: [{role: \"root\", db: \"admin\"}]});" | kubectl exec -it mongod-0 -- mongo
 }
 
 # --- START ---
