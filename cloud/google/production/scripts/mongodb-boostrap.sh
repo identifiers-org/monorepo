@@ -153,7 +153,7 @@ function init_mongodb_cluster() {
     done
     echo "]});" >> ${FILE_INIT_COMMAND}
     tlog info "[DEVOPS] Initialize MongoDB Cluster"
-    #cat ${FILE_INIT_COMMAND} | kubectl exec -it mongod-0 -- mongo
+    cat ${FILE_INIT_COMMAND} | kubectl exec -it mongod-0 -- mongo
     # Wait until replica status is Ok.
     tlog info "[DEVOPS] Waiting for the Replica Set to complete Initialization"
     while [ "`kubectl exec -it mongod-0 -- mongo -eval 'rs.status().ok' --quiet 2> /dev/null | tr -d '\r'`" != "1" ]; do
