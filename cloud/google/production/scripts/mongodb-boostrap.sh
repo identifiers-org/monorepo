@@ -180,13 +180,13 @@ tlog info "[ [START]--- MongoDB Backend Bootstrap ---[START] ]"
 # Print out a description of what's gonna happen
 info
 # Dump admin credentials
-#dump_admin_credentials
+dump_admin_credentials
 # Setup the Storage Class
-#setup_storage_class
+setup_storage_class
 # Create Persistent Disks
-#create_persistent_disks
+create_persistent_disks
 # Create Secrets for MondoDB communication
-#create_secrets_for_mongodb_cluster
+create_secrets_for_mongodb_cluster
 # Launch StatefulSet
 launch_stateful_set
 # Init the MongoDB cluster
