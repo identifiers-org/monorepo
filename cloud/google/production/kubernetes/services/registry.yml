@@ -8,4 +8,10 @@ metadata:
         environment: production
         tier: api
         app: registry
-        
+spec:
+    ports:
+    - port: 8180
+    selector:
+        environment: production
+        tier: api
+        app: registry
