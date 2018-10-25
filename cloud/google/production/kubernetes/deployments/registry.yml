@@ -10,36 +10,36 @@ spec:
             environment: production
             tier: api
             app: registry
-        replicas: 1
-        template:
-            metadata:
-                labels:
-                    environment: production
-                    tier: api
-                    app: registry
-            spec:
-                containers:
-                    - name: cloud-hq-ws-registry
-                      image: identifiersorg/cloud-hq-ws-registry:0.0.1
-                      resources:
-                          requests:
-                              memory: 640Mi
-                      env:
-                      - name: HQ_WS_REGISTRY_CONFIG_MONGODB_HOST
-                        value: "mongodb"
-                      - name: HQ_WS_REGISTRY_CONFIG_MONGODB_DATABASE
-                        value: "hqregistry"
-                      - name: HQ_WS_REGISTRY_CONFIG_MONGODB_USERNAME
-                        valueFrom:
-                            secretKeyRef:
-                                name: hq-registry-mongodb-credentials
-                                key: username
-                      - name: HQ_WS_REGISTRY_CONFIG_MONGODB_PASSWORD
-                        valueFrom:
-                            secretKeyRef:
-                                name: hq-registry-mongodb-credentials
-                                key: password
-                      - name: HQ_WS_REGISTRY_JVM_MEMORY_MAX
-                        value: "512m"
-                      ports:
-                      - containerPort: 8180
+    replicas: 1
+    template:
+        metadata:
+            labels:
+                environment: production
+                tier: api
+                app: registry
+        spec:
+            containers:
+                - name: cloud-hq-ws-registry
+                  image: identifiersorg/cloud-hq-ws-registry:0.0.1
+                  resources:
+                      requests:
+                          memory: 640Mi
+                  env:
+                  - name: HQ_WS_REGISTRY_CONFIG_MONGODB_HOST
+                    value: "mongodb"
+                  - name: HQ_WS_REGISTRY_CONFIG_MONGODB_DATABASE
+                    value: "hqregistry"
+                  - name: HQ_WS_REGISTRY_CONFIG_MONGODB_USERNAME
+                    valueFrom:
+                        secretKeyRef:
+                            name: hq-registry-mongodb-credentials
+                            key: username
+                  - name: HQ_WS_REGISTRY_CONFIG_MONGODB_PASSWORD
+                    valueFrom:
+                        secretKeyRef:
+                            name: hq-registry-mongodb-credentials
+                            key: password
+                  - name: HQ_WS_REGISTRY_JVM_MEMORY_MAX
+                    value: "512m"
+                  ports:
+                  - containerPort: 8180
