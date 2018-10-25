@@ -17,4 +17,7 @@ spec:
                     environment: production
                     tier: api
                     app: registry
-                    
+            spec:
+                containers:
+                    - name: cloud-hq-ws-registry
+                      image: identifiersorg/cloud-hq-ws-registry:0.0.1
