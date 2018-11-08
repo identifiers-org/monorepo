@@ -6,6 +6,7 @@ metadata:
     name: ext-registry
     branch: production
     deployment: hq
+    serviceArea: eu
 spec:
     backend:
         serviceName: registry
