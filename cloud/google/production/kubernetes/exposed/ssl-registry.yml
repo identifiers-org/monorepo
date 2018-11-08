@@ -6,5 +6,5 @@ metadata:
     name: ing-registry
 spec:
     backend:
-        serviceName: registry
+        serviceName: ext-registry
         servicePort: 8180
