@@ -7,4 +7,4 @@ metadata:
 spec:
     backend:
         serviceName: ext-registry
-        servicePort: 8180
+        servicePort: 80
