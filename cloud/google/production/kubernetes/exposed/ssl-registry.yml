@@ -4,3 +4,9 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
     name: ext-registry
+    branch: production
+    deployment: hq
+spec:
+    backend:
+        serviceName: registry
+        servicePort: 80
