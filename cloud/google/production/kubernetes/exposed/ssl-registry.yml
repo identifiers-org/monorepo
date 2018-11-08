@@ -4,9 +4,6 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
     name: ext-registry
-    branch: production
-    deployment: hq
-    serviceArea: eu
 spec:
     backend:
         serviceName: registry
