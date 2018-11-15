@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonLdExporter implements Exporter {
     private static final Logger logger = LoggerFactory.getLogger(JsonLdExporter.class);
-    
+
     private JsonLdDocument document = new JsonLdDocument();
 
     public JsonLdExporter() {
@@ -30,11 +30,11 @@ public class JsonLdExporter implements Exporter {
 
     @Override
     public void build(Namespace namespace) throws ExporterException {
-
+        // TODO
     }
 
     @Override
     public ExportedDocument getDocument() throws ExporterException {
-        return null;
+        return document;
     }
 }

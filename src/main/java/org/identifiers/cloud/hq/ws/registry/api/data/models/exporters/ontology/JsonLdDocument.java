@@ -16,7 +16,7 @@ import java.util.Map;
  * ---
  */
 public class JsonLdDocument extends ExportedDocument implements Serializable {
-    @JsonProperty(value = "context")
+    @JsonProperty(value = "@context")
     private Map<String, String> contexts = new HashMap<>();
 
     public String addContext(String key, String value) {
