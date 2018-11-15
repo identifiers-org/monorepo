@@ -1,5 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.api.controllers;
 
+import org.identifiers.cloud.hq.ws.registry.api.models.SemanticApiModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,4 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("semanticApi")
 public class SemanticApiController {
+    @Autowired
+    private SemanticApiModel model;
+
+    
 }
