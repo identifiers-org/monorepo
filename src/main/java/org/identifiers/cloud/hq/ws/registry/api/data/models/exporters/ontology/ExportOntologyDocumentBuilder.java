@@ -2,6 +2,8 @@ package org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ontology;
 
 import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ExportDocumentBuilder;
 
+import java.io.Serializable;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ontology
@@ -12,4 +14,5 @@ import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ExportDocu
  */
 public interface ExportOntologyDocumentBuilder extends ExportDocumentBuilder {
     void buildContext(String namespace, String reference) throws ExportOntologyDocumentBuilderException;
+    void build(Serializable entry) throws ExportOntologyDocumentBuilderException;
 }
