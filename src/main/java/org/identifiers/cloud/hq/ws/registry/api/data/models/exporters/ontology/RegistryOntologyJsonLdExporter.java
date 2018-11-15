@@ -97,6 +97,25 @@ public class RegistryOntologyJsonLdExporter implements RegistryExporter {
         subentry.put("@id", "http://semanticscience.org/resource/SIO_000001");
         entry.put("skos:narrower", subentry);
         documentBuilder.build((Serializable) entry);
+        // Entry for link_to
+        entry = new HashMap<>();
+        entry.put("@id", "http://rdf.identifiers.org/ontology/link_to");
+        entry.put("@type", "owl:ObjectProperty");
+        entry.put("rdfs:label", "has a link to");
+        entry.put("rdfs:comment", "A predicate for describing that a DataResource has a cross reference to another DataResource.");
+        subentry = new HashMap<>();
+        subentry.put("@id", "http://rdf.identifiers.org/ontology/DataResource");
+        entry.put("rdfs:domain", subentry);
+        subentry = new HashMap<>();
+        subentry.put("@id", "http://rdf.identifiers.org/ontology/DataResource");
+        entry.put("rdfs:range", subentry);
+        subentry = new HashMap<>();
+        subentry.put("@id", "http://semanticscience.org/resource/SIO_000628");
+        entry.put("skos:narrower", subentry);
+        subentry = new HashMap<>();
+        subentry.put("@id", "http://rdf.identifiers.org/ontology/link");
+        entry.put("owl:subPropertyOf", subentry);
+        documentBuilder.build((Serializable) entry);
     }
 
     private void addNamespaces(List<Namespace> namespaces) {
