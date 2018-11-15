@@ -3,9 +3,11 @@ package org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ontology;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ExportedDocument;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.RegistryExporter;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.RegistryExporterException;
+import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -84,7 +86,7 @@ public class RegistryOntologyJsonLdExporter implements RegistryExporter {
     }
 
     @Override
-    public ExportedDocument export() throws RegistryExporterException {
+    public ExportedDocument export(List<Namespace> namespaces) throws RegistryExporterException {
         // Set the contexts
         addContext();
         // Add the fixed items of the graph
