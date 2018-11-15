@@ -41,6 +41,16 @@ public class RegistryOntologyJsonLdExporter implements RegistryExporter {
         entry.put("rdfs:comment", "Ontology for describing databases and entries in the Identifiers.org repository.");
         entry.put("rdfs:label", "Identifiers.org ontology");
         documentBuilder.build((Serializable) entry);
+        // Another
+        entry = new HashMap<>();
+        entry.put("@id", "http://rdf.identifiers.org/ontology/DataCollection");
+        entry.put("@type", "owl:Class");
+        entry.put("rdfs:comment", "An instance of a database described with an Identifiers.org URI.");
+        entry.put("rdfs:label", "DataCollection");
+        subentry = new HashMap<>();
+        subentry.put("@id", "http://semanticscience.org/resource/SIO_000089");
+        entry.put("skos:narrower", subentry);
+        // Another
     }
 
     public RegistryOntologyJsonLdExporter(ExportOntologyDocumentBuilder documentBuilder) {
