@@ -1,7 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ontology;
 
 import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ExportedDocument;
-import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.Exporter;
+import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ExportDocumentBuilder;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ExporterException;
 import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.slf4j.Logger;
@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-public class JsonLdExporter implements Exporter {
+public class JsonLdExporter implements ExportDocumentBuilder {
     private static final Logger logger = LoggerFactory.getLogger(JsonLdExporter.class);
 
     private JsonLdDocument document = new JsonLdDocument();

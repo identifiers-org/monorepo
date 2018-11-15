@@ -10,7 +10,7 @@ import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-public interface Exporter {
+public interface ExportDocumentBuilder {
 
     void build(Namespace namespace) throws ExporterException;
 
