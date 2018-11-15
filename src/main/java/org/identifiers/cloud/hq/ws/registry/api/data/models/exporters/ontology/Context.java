@@ -1,10 +1,10 @@
-package org.identifiers.cloud.hq.ws.registry.api.data.models.ontology;
+package org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ontology;
 
 import java.io.Serializable;
 
 /**
  * Project: registry
- * Package: org.identifiers.cloud.hq.ws.registry.api.data.models.ontology
+ * Package: org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ontology
  * Timestamp: 2018-11-15 12:10
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
