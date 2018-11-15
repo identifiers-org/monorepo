@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Project: registry
@@ -81,6 +82,24 @@ public class RegistryOntologyJsonLdExporter implements RegistryExporter {
         documentBuilder.build((Serializable) entry);
     }
 
+    private void addNamespaces(List<Namespace> namespaces) {
+        // DISCLAIMER NOTE - My eyes are BLEEDING by looking at this disaster, but let's get this done for the
+        // biohackathon and we can polish it later
+        namespaces.stream().forEach(namespace -> {
+            Map<String, Object> entry = new HashMap<>();
+            entry.put("@id", String.format("http://identifiers.org/%s", namespace.getPrefix()));
+            entry.put("@type", "http://rdf.identifiers.org/ontology/DataCollection");
+            entry.put("rdfs:comment", namespace.getDescription());
+            entry.put("rdfs:label", namespace.getName());
+            entry.put("foaf:homepage", namespace.getResources().stream().map(resource -> {
+                Map<String, String> foafEntry = new HashMap<>();
+                foafEntry.put("@id", resource.getResourceUrl());
+                return foafEntry;
+            }).collect(Collectors.toList()));
+            documentBuilder.build((Serializable) entry);
+        });
+    }
+
     public RegistryOntologyJsonLdExporter(ExportOntologyDocumentBuilder documentBuilder) {
         this.documentBuilder = documentBuilder;
     }
@@ -91,7 +110,9 @@ public class RegistryOntologyJsonLdExporter implements RegistryExporter {
         addContext();
         // Add the fixed items of the graph
         addFixedTrail();
-        // TODO - Add the namespaces
+        // Add the namespaces
+        addNamespaces(namespaces);
         return documentBuilder.getDocument();
     }
+
 }
