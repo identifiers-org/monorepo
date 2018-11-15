@@ -1,8 +1,5 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.models.exporters;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.api.data.models.exporters
@@ -13,7 +10,6 @@ import org.slf4j.LoggerFactory;
  *
  * This is the director of the export process for the registry data
  */
-public class RegistryOntologyExporter {
-    // TODO
-    private static final Logger logger = LoggerFactory.getLogger(RegistryOntologyExporter.class);
+public interface RegistryExporter {
+    ExportedDocument export() throws RegistryExporterException;
 }
