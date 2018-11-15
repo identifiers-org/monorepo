@@ -27,6 +27,10 @@ public class JsonLdDocument extends ExportedDocument implements Serializable {
         return getContexts().put(key, value);
     }
 
+    public void addEntry(Serializable entry) {
+        graphEntries.add(entry);
+    }
+
     public Map<String, String> getContexts() {
         return contexts;
     }
