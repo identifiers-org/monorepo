@@ -33,13 +33,14 @@ public class RegistryOntologyJsonLdExporter implements RegistryExporter {
         // YES, this is as dirty as it looks, it will be cleaned later on
         Map<String, Object> entry = new HashMap<>();
         entry.put("@id", "http://rdf.identifiers.org/ontology/");
-        entry.put("@type", "owl:Ontology",);
+        entry.put("@type", "owl:Ontology");
         Map<String, Object> subentry = new HashMap<>();
         subentry.put("@id", "http://creativecommons.org/publicdomain/zero/1.0/");
         entry.put("dc:license", subentry);
         entry.put("owl:versionInfo", "Created on 2018-03-22");
         entry.put("rdfs:comment", "Ontology for describing databases and entries in the Identifiers.org repository.");
         entry.put("rdfs:label", "Identifiers.org ontology");
+        documentBuilder.build((Serializable) entry);
     }
 
     public RegistryOntologyJsonLdExporter(ExportOntologyDocumentBuilder documentBuilder) {
@@ -50,7 +51,8 @@ public class RegistryOntologyJsonLdExporter implements RegistryExporter {
     public ExportedDocument export() throws RegistryExporterException {
         // Set the contexts
         addContext();
-        // TODO - Add the fixed items of the graph
+        // Add the fixed items of the graph
+        addFixedTrail();
         // TODO - Add the namespaces
         return documentBuilder.getDocument();
     }
