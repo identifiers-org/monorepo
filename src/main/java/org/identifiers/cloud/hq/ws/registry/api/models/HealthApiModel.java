@@ -1,4 +1,4 @@
-package org.identifiers.cloud.hq.ws.registry.api.data.models;
+package org.identifiers.cloud.hq.ws.registry.api.models;
 
 import org.springframework.stereotype.Component;
 
