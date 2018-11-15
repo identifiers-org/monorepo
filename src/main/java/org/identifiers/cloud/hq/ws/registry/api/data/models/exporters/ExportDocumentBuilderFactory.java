@@ -10,6 +10,6 @@ package org.identifiers.cloud.hq.ws.registry.api.data.models.exporters;
  *
  * Abstract Factory of exporters
  */
-public class ExporterFactory {
+public class ExportDocumentBuilderFactory {
     // TODO
 }
