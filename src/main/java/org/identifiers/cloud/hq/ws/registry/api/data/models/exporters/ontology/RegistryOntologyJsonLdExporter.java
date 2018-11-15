@@ -17,6 +17,14 @@ import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.RegistryEx
 public class RegistryOntologyJsonLdExporter implements RegistryExporter {
     private ExportOntologyDocumentBuilder documentBuilder = null;
 
+    private void addContext() {
+        documentBuilder.buildContext("dc", "http://purl.org/dc/terms/");
+        documentBuilder.buildContext("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
+        documentBuilder.buildContext("foaf", "http://xmlns.com/foaf/0.1/");
+        documentBuilder.buildContext("owl", "http://www.w3.org/2002/07/owl#");
+        documentBuilder.buildContext("skos", "http://www.w3.org/2004/02/skos/core#");
+    }
+
     public RegistryOntologyJsonLdExporter(ExportOntologyDocumentBuilder documentBuilder) {
         this.documentBuilder = documentBuilder;
     }
@@ -24,11 +32,7 @@ public class RegistryOntologyJsonLdExporter implements RegistryExporter {
     @Override
     public ExportedDocument export() throws RegistryExporterException {
         // Set the contexts
-        documentBuilder.buildContext("dc", "http://purl.org/dc/terms/");
-        documentBuilder.buildContext("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
-        documentBuilder.buildContext("foaf", "http://xmlns.com/foaf/0.1/");
-        documentBuilder.buildContext("owl", "http://www.w3.org/2002/07/owl#");
-        documentBuilder.buildContext("skos", "http://www.w3.org/2004/02/skos/core#");
+        addContext();
         // TODO - Add the fixed items of the graph
         // TODO - Add the namespaces
         return documentBuilder.getDocument();
