@@ -34,6 +34,7 @@ public class RegistryOntologyJsonLdExporter implements RegistryExporter {
 
     private void addFixedTrail() {
         // YES, this is as dirty as it looks, it will be cleaned later on
+        // Entry for Ontology
         Map<String, Object> entry = new HashMap<>();
         entry.put("@id", "http://rdf.identifiers.org/ontology/");
         entry.put("@type", "owl:Ontology");
@@ -44,7 +45,7 @@ public class RegistryOntologyJsonLdExporter implements RegistryExporter {
         entry.put("rdfs:comment", "Ontology for describing databases and entries in the Identifiers.org repository.");
         entry.put("rdfs:label", "Identifiers.org ontology");
         documentBuilder.build((Serializable) entry);
-        // Another
+        // Entry for Data Collection
         entry = new HashMap<>();
         entry.put("@id", "http://rdf.identifiers.org/ontology/DataCollection");
         entry.put("@type", "owl:Class");
@@ -54,7 +55,7 @@ public class RegistryOntologyJsonLdExporter implements RegistryExporter {
         subentry.put("@id", "http://semanticscience.org/resource/SIO_000089");
         entry.put("skos:narrower", subentry);
         documentBuilder.build((Serializable) entry);
-        // Another
+        // Entry for Data Resource
         entry = new HashMap<>();
         entry.put("@id", "http://rdf.identifiers.org/ontology/DataResource");
         entry.put("@type", "owl:Class");
@@ -64,7 +65,7 @@ public class RegistryOntologyJsonLdExporter implements RegistryExporter {
         subentry.put("@id", "http://semanticscience.org/resource/SIO_000756");
         entry.put("skos:narrower", subentry);
         documentBuilder.build((Serializable) entry);
-        // Another
+        // Entry for Database
         entry = new HashMap<>();
         entry.put("@id", "http://rdf.identifiers.org/ontology/database");
         entry.put("@type", "owl:ObjectProperty");
@@ -79,6 +80,22 @@ public class RegistryOntologyJsonLdExporter implements RegistryExporter {
         subentry = new HashMap<>();
         subentry.put("@id", "http://rdf.identifiers.org/ontology/DataResource");
         entry.put("rdfs:range", subentry);
+        documentBuilder.build((Serializable) entry);
+        // Entry for Link
+        entry = new HashMap<>();
+        entry.put("@id", "http://rdf.identifiers.org/ontology/link");
+        entry.put("@type", "owl:ObjectProperty");
+        entry.put("rdfs:label", "has relation");
+        entry.put("rdfs:comment", "A predicate for describing that a DataResource has a relation to another DataResource.");
+        subentry = new HashMap<>();
+        subentry.put("@id", "http://rdf.identifiers.org/ontology/DataResource");
+        entry.put("rdfs:domain", subentry);
+        subentry = new HashMap<>();
+        subentry.put("@id", "http://rdf.identifiers.org/ontology/DataResource");
+        entry.put("rdfs:range", subentry);
+        subentry = new HashMap<>();
+        subentry.put("@id", "http://semanticscience.org/resource/SIO_000001");
+        entry.put("skos:narrower", subentry);
         documentBuilder.build((Serializable) entry);
     }
 
