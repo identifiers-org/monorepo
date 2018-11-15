@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ExportedDocument;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,6 +20,8 @@ import java.util.Map;
 public class JsonLdDocument extends ExportedDocument implements Serializable {
     @JsonProperty(value = "@context")
     private Map<String, String> contexts = new HashMap<>();
+    @JsonProperty(value = "@graph")
+    private List<Serializable> graphEntries = new ArrayList<>();
 
     public String addContext(String key, String value) {
         return getContexts().put(key, value);
