@@ -6,6 +6,8 @@ import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ontology
@@ -22,6 +24,11 @@ public class JsonLdDocumentBuilder implements ExportOntologyDocumentBuilder {
     @Override
     public void buildContext(String namespace, String reference) throws ExportOntologyDocumentBuilderException {
         document.addContext(namespace, reference);
+    }
+
+    @Override
+    public void build(Serializable entry) throws ExportOntologyDocumentBuilderException {
+        document.addEntry(entry);
     }
 
     @Override
