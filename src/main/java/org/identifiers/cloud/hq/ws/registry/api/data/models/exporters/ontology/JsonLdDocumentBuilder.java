@@ -15,12 +15,12 @@ import org.slf4j.LoggerFactory;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-public class JsonLdExporter implements ExportDocumentBuilder {
+public class JsonLdDocumentBuilder implements ExportDocumentBuilder {
     private static final Logger logger = LoggerFactory.getLogger(JsonLdExporter.class);
 
     private JsonLdDocument document = new JsonLdDocument();
 
-    public JsonLdExporter() {
+    public JsonLdDocumentBuilder() {
         document.addContext("dc", "http://purl.org/dc/terms/");
         document.addContext("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
         document.addContext("foaf", "http://xmlns.com/foaf/0.1/");
