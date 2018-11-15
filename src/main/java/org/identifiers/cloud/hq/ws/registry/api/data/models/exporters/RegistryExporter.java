@@ -1,5 +1,9 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.models.exporters;
 
+import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
+
+import java.util.List;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.api.data.models.exporters
@@ -11,5 +15,5 @@ package org.identifiers.cloud.hq.ws.registry.api.data.models.exporters;
  * This is the director of the export process for the registry data
  */
 public interface RegistryExporter {
-    ExportedDocument export() throws RegistryExporterException;
+    ExportedDocument export(List<Namespace> namespaces) throws RegistryExporterException;
 }
