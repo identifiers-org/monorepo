@@ -10,6 +10,7 @@ package org.identifiers.cloud.hq.ws.registry.api.data.models.exporters;
  *
  * This is the director of the export process for the registry data
  */
-public class RegistryExporter {
+public class RegistryOntologyExporter {
     // TODO
+
 }
