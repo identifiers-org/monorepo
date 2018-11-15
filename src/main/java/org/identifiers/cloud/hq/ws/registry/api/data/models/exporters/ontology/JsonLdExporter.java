@@ -4,6 +4,8 @@ import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ExportedDo
 import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.Exporter;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ExporterException;
 import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Project: registry
@@ -14,6 +16,7 @@ import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
  * ---
  */
 public class JsonLdExporter implements Exporter {
+    private static final Logger logger = LoggerFactory.getLogger(JsonLdExporter.class);
     
     private JsonLdDocument document = new JsonLdDocument();
 
