@@ -18,4 +18,17 @@ import java.util.Map;
 public class JsonLdDocument extends ExportedDocument implements Serializable {
     @JsonProperty(value = "context")
     private Map<String, String> contexts = new HashMap<>();
+
+    public String addContext(String key, String value) {
+        return getContexts().put(key, value);
+    }
+
+    public Map<String, String> getContexts() {
+        return contexts;
+    }
+
+    public JsonLdDocument setContexts(Map<String, String> contexts) {
+        this.contexts = contexts;
+        return this;
+    }
 }

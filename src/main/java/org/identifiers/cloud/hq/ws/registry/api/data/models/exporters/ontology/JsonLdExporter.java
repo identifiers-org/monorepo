@@ -14,7 +14,17 @@ import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
  * ---
  */
 public class JsonLdExporter implements Exporter {
-    private
+    
+    private JsonLdDocument document = new JsonLdDocument();
+
+    public JsonLdExporter() {
+        document.addContext("dc", "http://purl.org/dc/terms/");
+        document.addContext("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
+        document.addContext("foaf", "http://xmlns.com/foaf/0.1/");
+        document.addContext("owl", "http://www.w3.org/2002/07/owl#");
+        document.addContext("skos", "http://www.w3.org/2004/02/skos/core#");
+    }
+
     @Override
     public void build(Namespace namespace) throws ExporterException {
 
