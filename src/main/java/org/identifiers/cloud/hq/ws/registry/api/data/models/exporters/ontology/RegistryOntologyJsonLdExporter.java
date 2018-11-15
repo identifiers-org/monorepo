@@ -50,7 +50,33 @@ public class RegistryOntologyJsonLdExporter implements RegistryExporter {
         subentry = new HashMap<>();
         subentry.put("@id", "http://semanticscience.org/resource/SIO_000089");
         entry.put("skos:narrower", subentry);
+        documentBuilder.build((Serializable) entry);
         // Another
+        entry = new HashMap<>();
+        entry.put("@id", "http://rdf.identifiers.org/ontology/DataResource");
+        entry.put("@type", "owl:Class");
+        entry.put("rdfs:comment", "An instance of a database described with an Identifiers.org URI.");
+        entry.put("rdfs:label", "DataResource");
+        subentry = new HashMap<>();
+        subentry.put("@id", "http://semanticscience.org/resource/SIO_000756");
+        entry.put("skos:narrower", subentry);
+        documentBuilder.build((Serializable) entry);
+        // Another
+        entry = new HashMap<>();
+        entry.put("@id", "http://rdf.identifiers.org/ontology/database");
+        entry.put("@type", "owl:ObjectProperty");
+        subentry = new HashMap<>();
+        subentry.put("@id", "http://semanticscience.org/resource/SIO_000068");
+        entry.put("owl:subPropertyOf", subentry);
+        entry.put("rdfs:comment", "A predicate for describing that a DataResource belongs to a DataCollection.");
+        subentry = new HashMap<>();
+        subentry.put("@id", "http://rdf.identifiers.org/ontology/DataCollection");
+        entry.put("rdfs:domain", subentry);
+        entry.put("rdfs:label", "is entry of");
+        subentry = new HashMap<>();
+        subentry.put("@id", "http://rdf.identifiers.org/ontology/DataResource");
+        entry.put("rdfs:range", subentry);
+        documentBuilder.build((Serializable) entry);
     }
 
     public RegistryOntologyJsonLdExporter(ExportOntologyDocumentBuilder documentBuilder) {
