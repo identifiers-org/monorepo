@@ -1,5 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.models.exporters;
 
+import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ontology.JsonLdDocumentBuilder;
+import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ontology.RegistryOntologyJsonLdExporter;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.api.data.models.exporters
@@ -8,8 +11,11 @@ package org.identifiers.cloud.hq.ws.registry.api.data.models.exporters;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  *
- * Abstract Factory of exporters
+ * Abstract factory for registry exporters
  */
-public class ExportDocumentBuilderFactory {
+public class RegistryExporterFactory {
     // TODO
+    public static RegistryExporter getForJsonLdOntology() {
+        return new RegistryOntologyJsonLdExporter(new JsonLdDocumentBuilder());
+    }
 }
