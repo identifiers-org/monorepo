@@ -31,6 +31,6 @@ public class RegistryOntologyJsonLdExporter implements RegistryExporter {
         documentBuilder.buildContext("skos", "http://www.w3.org/2004/02/skos/core#");
         // TODO - Add the fixed items of the graph
         // TODO - Add the namespaces
-        return null;
+        return documentBuilder.getDocument();
     }
 }
