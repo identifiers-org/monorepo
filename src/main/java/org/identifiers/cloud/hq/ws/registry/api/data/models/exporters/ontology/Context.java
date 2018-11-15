@@ -1,6 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ontology;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Project: registry
@@ -15,9 +17,14 @@ import java.io.Serializable;
  * concept of exporters or multiple views of the registry.
  */
 public class Context implements Serializable {
-    private String dc = "";
-    private String rdfs = "";
-    private String foaf = "";
-    private String owl = "";
-    private String skos = "";
+    private Map<String, String> contexts = new HashMap<>();
+
+    public Context() {
+        contexts.put("dc", "");
+        contexts.put("rdfs", "");
+        contexts.put("foaf", "");
+        contexts.put("owl", "");
+        contexts.put("skos", "");
+    }
+
 }
