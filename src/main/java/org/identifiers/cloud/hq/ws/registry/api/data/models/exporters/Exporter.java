@@ -11,6 +11,8 @@ import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
  * ---
  */
 public interface Exporter {
-    // TODO
+    
     void build(Namespace namespace) throws ExporterException;
+
+    ExportedDocument getDocument() throws ExporterException;
 }
