@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * ---
  */
 public class JsonLdDocumentBuilder implements ExportDocumentBuilder {
-    private static final Logger logger = LoggerFactory.getLogger(JsonLdExporter.class);
+    private static final Logger logger = LoggerFactory.getLogger(JsonLdDocumentBuilder.class);
 
     private JsonLdDocument document = new JsonLdDocument();
 
