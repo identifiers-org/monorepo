@@ -93,7 +93,7 @@ public class RegistryOntologyJsonLdExporter implements RegistryExporter {
             entry.put("rdfs:label", namespace.getName());
             entry.put("foaf:homepage", namespace.getResources().stream().map(resource -> {
                 Map<String, String> foafEntry = new HashMap<>();
-                foafEntry.put("@id", resource.getResourceUrl());
+                foafEntry.put("@id", resource.getResourceUrl().trim());
                 return foafEntry;
             }).collect(Collectors.toList()));
             documentBuilder.build((Serializable) entry);
