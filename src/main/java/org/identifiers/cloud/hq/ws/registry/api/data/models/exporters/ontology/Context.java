@@ -20,11 +20,11 @@ public class Context implements Serializable {
     private Map<String, String> contexts = new HashMap<>();
 
     public Context() {
-        contexts.put("dc", "");
-        contexts.put("rdfs", "");
-        contexts.put("foaf", "");
-        contexts.put("owl", "");
-        contexts.put("skos", "");
+        contexts.put("dc", "http://purl.org/dc/terms/");
+        contexts.put("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
+        contexts.put("foaf", "http://xmlns.com/foaf/0.1/");
+        contexts.put("owl", "http://www.w3.org/2002/07/owl#");
+        contexts.put("skos", "http://www.w3.org/2004/02/skos/core#");
     }
 
 }
