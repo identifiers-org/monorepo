@@ -1,7 +1,9 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
-import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ExportedDocument;
+import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.RegistryExporterException;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.RegistryExporterFactory;
+import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseSemanticExportRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,7 +17,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class SemanticApiModel {
 
-    public ExportedDocument getRegistryOntology() {
-        return RegistryExporterFactory.getForJsonLdOntology().export();
+    public ServiceResponseSemanticExportRequest getRegistryOntology() {
+        // Default response
+        ServiceResponseSemanticExportRequest response = new ServiceResponseSemanticExportRequest();
+        response.setHttpStatus(HttpStatus.OK);
+        // No default payload this time
+        try {
+            response.setPayload(RegistryExporterFactory.getForJsonLdOntology().export());
+        } catch (RegistryExporterException e) {
+            response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            response.setErrorMessage(e.getMessage());
+        }
+        return response;
     }
 }
