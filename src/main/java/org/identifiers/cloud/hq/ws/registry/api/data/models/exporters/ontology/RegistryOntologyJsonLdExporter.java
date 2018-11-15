@@ -163,7 +163,7 @@ public class RegistryOntologyJsonLdExporter implements RegistryExporter {
         namespaces.stream().forEach(namespace -> {
             Map<String, Object> entry = new HashMap<>();
             entry.put("@id", String.format("http://identifiers.org/%s", namespace.getPrefix()));
-            entry.put("@type", "http://rdf.identifiers.org/ontology/DataCollection");
+            entry.put("@type", String.format("%sDataCollection", URL_ONTOLOGY_IDENTIFIERS_ORG));
             entry.put("rdfs:comment", namespace.getDescription());
             entry.put("rdfs:label", namespace.getName());
             entry.put("foaf:homepage", namespace.getResources().stream().map(resource -> {
