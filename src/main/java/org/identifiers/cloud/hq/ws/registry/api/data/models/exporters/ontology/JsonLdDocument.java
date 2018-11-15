@@ -15,7 +15,7 @@ import java.util.Map;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-public class jsonLdDocument extends ExportedDocument implements Serializable {
+public class JsonLdDocument extends ExportedDocument implements Serializable {
     @JsonProperty(value = "context")
     private Map<String, String> contexts = new HashMap<>();
 }
