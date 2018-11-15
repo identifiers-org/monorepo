@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * ---
  */
 @RestController
+@RequestMapping("healthApi")
 public class HealthApiController {
     @Autowired
     private HealthApiModel model;
