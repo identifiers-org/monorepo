@@ -2,7 +2,7 @@ package org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ontology;
 
 import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ExportedDocument;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ExportDocumentBuilder;
-import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ExporterException;
+import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ExportDocumentBuilderException;
 import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,12 +29,12 @@ public class JsonLdExporter implements ExportDocumentBuilder {
     }
 
     @Override
-    public void build(Namespace namespace) throws ExporterException {
+    public void build(Namespace namespace) throws ExportDocumentBuilderException {
         // TODO
     }
 
     @Override
-    public ExportedDocument getDocument() throws ExporterException {
+    public ExportedDocument getDocument() throws ExportDocumentBuilderException {
         return document;
     }
 }

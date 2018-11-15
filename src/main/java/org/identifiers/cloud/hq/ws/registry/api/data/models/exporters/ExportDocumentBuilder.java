@@ -12,7 +12,7 @@ import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
  */
 public interface ExportDocumentBuilder {
 
-    void build(Namespace namespace) throws ExporterException;
+    void build(Namespace namespace) throws ExportDocumentBuilderException;
 
-    ExportedDocument getDocument() throws ExporterException;
+    ExportedDocument getDocument() throws ExportDocumentBuilderException;
 }

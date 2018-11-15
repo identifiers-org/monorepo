@@ -8,8 +8,8 @@ package org.identifiers.cloud.hq.ws.registry.api.data.models.exporters;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-public class ExporterException extends RuntimeException {
-    public ExporterException(String message) {
+public class ExportDocumentBuilderException extends RuntimeException {
+    public ExportDocumentBuilderException(String message) {
         super(message);
     }
 }
