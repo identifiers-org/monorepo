@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
+import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ExportedDocument;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,4 +13,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SemanticApiModel {
+
+    public ExportedDocument getRegistryOntology() {
+        // TODO
+    }
 }

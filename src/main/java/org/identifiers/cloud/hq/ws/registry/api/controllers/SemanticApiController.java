@@ -23,7 +23,7 @@ public class SemanticApiController {
     private SemanticApiModel model;
 
     @RequestMapping(value = "getRegistryOntology", method = RequestMethod.GET)
-    public ResponseEntity<?> getResolverDataset() {
+    public ResponseEntity<?> getRegistryOntology() {
         // TODO
         return new ResponseEntity<>("This is the ontology!", HttpStatus.OK);
     }
