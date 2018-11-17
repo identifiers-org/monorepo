@@ -6,5 +6,5 @@ metadata:
     name: ing-registry
 spec:
     backend:
-        serviceName: ext-registry
+        serviceName: np-registry
         servicePort: 80
