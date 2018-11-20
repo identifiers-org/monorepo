@@ -20,7 +20,7 @@ spec:
         spec:
             containers:
                 - name: cloud-hq-ws-registry
-                  image: identifiersorg/cloud-hq-ws-registry:0.0.1
+                  image: identifiersorg/cloud-hq-ws-registry:0.1.3
                   resources:
                       requests:
                           memory: 640Mi
