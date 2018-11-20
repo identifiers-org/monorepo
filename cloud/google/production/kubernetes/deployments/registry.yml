@@ -43,15 +43,3 @@ spec:
                     value: "512m"
                   ports:
                   - containerPort: 8180
-                  livenessProbe:
-                      httpGet:
-                          path: /healthApi/liveness_check
-                          port: 8180
-                      initialDelaySeconds: 3
-                      periodSeconds: 3
-                  readinessProbe:
-                      httpGet:
-                          path: /healthApi/readiness_check
-                          port: 8180
-                      initialDelaySeconds: 5
-                      periodSeconds: 10
