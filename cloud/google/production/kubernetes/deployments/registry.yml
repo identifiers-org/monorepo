@@ -24,18 +24,6 @@ spec:
                   resources:
                       requests:
                           memory: 640Mi
-                livenessProbe:
-                    httpGet:
-                        path: /healthApi/liveness_check
-                        port: 8180
-                    initialDelaySeconds: 3
-                    periodSeconds: 3
-                readinessProbe:
-                    httpGet:
-                        path: /healthApi/readiness_check
-                        port: 8180
-                    initialDelaySeconds: 5
-                    periodSeconds: 10
                   env:
                   - name: HQ_WS_REGISTRY_CONFIG_MONGODB_HOST
                     value: "mongodb"
@@ -55,3 +43,15 @@ spec:
                     value: "512m"
                   ports:
                   - containerPort: 8180
+                  livenessProbe:
+                      httpGet:
+                          path: /healthApi/liveness_check
+                          port: 8180
+                      initialDelaySeconds: 3
+                      periodSeconds: 3
+                  readinessProbe:
+                      httpGet:
+                          path: /healthApi/readiness_check
+                          port: 8180
+                      initialDelaySeconds: 5
+                      periodSeconds: 10
