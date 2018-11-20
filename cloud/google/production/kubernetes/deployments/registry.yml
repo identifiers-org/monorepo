@@ -46,5 +46,6 @@ spec:
                   readinessProbe:
                       httpGet:
                           path: /healthApi/readiness_check
+                          port: 8180
                       initialDelaySeconds: 5
                       periodSeconds: 10
