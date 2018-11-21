@@ -4,6 +4,8 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
     name: in-registry
+    annotations:
+        ingress.gcp.kubernetes.io/pre-shared-cert: 'hq-ws-registry'
 spec:
     backend:
         serviceName: np-registry
