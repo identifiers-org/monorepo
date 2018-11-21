@@ -6,6 +6,7 @@ metadata:
     name: in-registry
     annotations:
         ingress.gcp.kubernetes.io/pre-shared-cert: 'hq-ws-registry'
+        kubernetes.io/ingress.allow-http: "false"
 spec:
     backend:
         serviceName: np-registry
