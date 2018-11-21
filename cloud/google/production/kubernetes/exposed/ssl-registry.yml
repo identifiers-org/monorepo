@@ -5,7 +5,7 @@ kind: Ingress
 metadata:
     name: in-registry
     annotations:
-        ingress.gcp.kubernetes.io/pre-shared-cert: 'hq-ws-registry'
+        ingress.gcp.kubernetes.io/pre-shared-cert: 'hq-ws-registry-test'
         kubernetes.io/ingress.allow-http: "false"
 spec:
     backend:
