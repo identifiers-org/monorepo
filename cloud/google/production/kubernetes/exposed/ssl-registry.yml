@@ -1,5 +1,6 @@
 # This is the definition for an SSL load balancer for the registry service.
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+# TODO It looks like disabling HTTP has no effect if the ingress has already been created
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
