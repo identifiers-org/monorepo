@@ -252,6 +252,7 @@ public class MetadataApiModel {
     public ServiceResponseFetchMetadataForUrl getMetadataForUrl(ServiceRequestFetchMetadataForUrl request) {
         // TODO - Check API version?
         // TODO - This will need to be re-addressed, as it will still do in-line metadata extraction
+        // TODO - Metadata collection for URLs is performed in-line, a different strategy could be useful in the future.
         String url = request.getPayload().getUrl();
         // Prepare default response
         ServiceResponseFetchMetadataForUrl response =
@@ -259,6 +260,13 @@ public class MetadataApiModel {
         // Extract the metadata
         try {
             response.getPayload().setMetadata(metadataFetcher.fetchMetadataFor(url));
+            // Check if there's any metadata in the payload
+            // TODO - I know, it's a quick hack, just to test it, I need to use an extraction strategy in the future, so
+            // TODO - this way of getting metadata is scheduled to disappear
+            if ((response.getPayload() == null) || (((List<Object<)response.getPayload().getMetadata()).isEmpty())) {
+                response.setHttpStatus(HttpStatus.NOT_FOUND);
+                response.setErrorMessage(String.format("No metadata found for URL '%s'", url));
+            }
         } catch (MetadataFetcherException e) {
             response.setErrorMessage(String.format("FAILED to fetch metadata for URL '%s', " +
                             "because '%s'",
