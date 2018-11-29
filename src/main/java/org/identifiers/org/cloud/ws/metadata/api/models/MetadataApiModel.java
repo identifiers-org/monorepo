@@ -263,7 +263,7 @@ public class MetadataApiModel {
             // Check if there's any metadata in the payload
             // TODO - I know, it's a quick hack, just to test it, I need to use an extraction strategy in the future, so
             // TODO - this way of getting metadata is scheduled to disappear
-            if ((response.getPayload() == null) || (((List<Object<)response.getPayload().getMetadata()).isEmpty())) {
+            if ((response.getPayload() == null) || (((List<Object>)response.getPayload().getMetadata()).isEmpty())) {
                 response.setHttpStatus(HttpStatus.NOT_FOUND);
                 response.setErrorMessage(String.format("No metadata found for URL '%s'", url));
             }
