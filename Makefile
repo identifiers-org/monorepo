@@ -9,3 +9,9 @@ tag_version = $(shell cat VERSION)
 
 # Default target
 all: deploy
+
+release: deploy set_next_development_version
+	@echo "<===|DEVOPS|===> [RELEASE] New Software Release, and next development version prepared"
+	@git add pom.xml
+	@git commit -am "Next project development version prepared"
+	@git push
