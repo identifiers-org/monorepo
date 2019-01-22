@@ -2,10 +2,10 @@
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 version: "3"
 services:
-    postgresql:
-        image: postgres
-        environment:
-            - POSTGRES_USER=devusername
-            - POSTGRES_PASSWORD=devpassword
-        ports:
-            - "5432:5432"
+  postgresql:
+    image: postgres
+    environment:
+      - POSTGRES_USER=devusername
+      - POSTGRES_PASSWORD=devpassword
+    ports:
+      - "5432:5432"
