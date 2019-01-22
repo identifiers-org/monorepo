@@ -69,3 +69,8 @@ dev_container_build: clean container_production_build
 tmp:
 	@echo "<===|DEVOPS|===> [FOLDER] Creating root folder for temporary data"
 	@mkdir tmp
+
+clean:
+	@echo "<===|DEVOPS|===> [CLEAN] Cleaning the space"
+	@mvn clean > /dev/null
+	@mvn versions:commit
