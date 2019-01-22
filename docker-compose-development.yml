@@ -1,4 +1,4 @@
-# Development environment HQ User Management API Service
+# Development environment HQ MIR ID Controller API Service
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 version: "3"
 services:
