@@ -16,4 +16,7 @@ import javax.transaction.Transactional;
 public interface ReturnedMirIdRepository extends JpaRepository<ReturnedMirId, Long> {
     // TODO
     ReturnedMirId findByMirId(Long id);
+
+    ReturnedMirId findTopByOrderByCreatedAsc();
+
 }
