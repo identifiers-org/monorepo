@@ -56,5 +56,4 @@ public class MirIdDeactivationLogEntry {
     // Some additional information regarding the deactivation entry. This piece of information is left out as optional
     // right now
     private String additionalInformation;
-    // TODO
 }
