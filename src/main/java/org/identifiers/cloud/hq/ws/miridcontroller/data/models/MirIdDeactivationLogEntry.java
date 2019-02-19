@@ -45,7 +45,8 @@ public class MirIdDeactivationLogEntry {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date created;
 
-    // When the MIR ID was minted
+    // When the MIR ID was minted, once this value is set, it makes no sense to update it.
+    @Column(nullable = false, updatable = false)
     private Date minted;
 
     // When the MIR ID was last confirmed
