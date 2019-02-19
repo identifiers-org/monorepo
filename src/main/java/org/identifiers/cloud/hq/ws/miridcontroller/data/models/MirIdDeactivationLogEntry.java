@@ -7,6 +7,8 @@ package org.identifiers.cloud.hq.ws.miridcontroller.data.models;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This model represents log entries with information on when a MIR ID is "returned", i.e. deactivated.
  */
 public class MirIdDeactivationLogEntry {
 }
