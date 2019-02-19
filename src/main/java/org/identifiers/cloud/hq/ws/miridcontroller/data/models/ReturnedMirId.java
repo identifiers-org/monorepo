@@ -5,8 +5,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 import java.util.Date;
 
@@ -26,11 +28,12 @@ import java.util.Date;
 @EqualsAndHashCode
 @Accessors(chain = true)
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class ReturnedMirId {
     @Id
     private long mirId;
 
-    
+
     private Date created;
     // TODO
 }
