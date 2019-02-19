@@ -4,7 +4,7 @@ import org.identifiers.cloud.hq.ws.miridcontroller.data.models.ActiveMirId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.math.BigInteger;
+import javax.transaction.Transactional;
 
 /**
  * Project: mirid-controller
@@ -17,8 +17,9 @@ import java.math.BigInteger;
 public interface ActiveMirIdRepository extends JpaRepository<ActiveMirId, Long> {
 
     // Exported methods on the REST API interface, although I may shut down some of them
-    ActiveMirId findByMirId(BigInteger id);
+    ActiveMirId findByMirId(long id);
 
     @Query("select coalesce(max(mirId), 0) from ActiveMirId")
-    BigInteger getMaxMirId();
+    long getMaxMirId();
+
 }
