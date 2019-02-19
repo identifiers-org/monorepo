@@ -49,7 +49,8 @@ public class MirIdDeactivationLogEntry {
     @Column(nullable = false, updatable = false)
     private Date minted;
 
-    // When the MIR ID was last confirmed
+    // When the MIR ID was last confirmed, once this value is set, it makes no sense to update it.
+    @Column(nullable = false, updatable = false)
     private Date lastConfirmed;
 
     // Some additional information regarding the deactivation entry
