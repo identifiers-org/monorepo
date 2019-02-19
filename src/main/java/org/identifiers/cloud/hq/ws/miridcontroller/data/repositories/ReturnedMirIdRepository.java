@@ -19,4 +19,6 @@ public interface ReturnedMirIdRepository extends JpaRepository<ReturnedMirId, Lo
 
     ReturnedMirId findTopByOrderByCreatedAsc();
 
+    @Transactional
+    void deleteByMirId(Long id);
 }
