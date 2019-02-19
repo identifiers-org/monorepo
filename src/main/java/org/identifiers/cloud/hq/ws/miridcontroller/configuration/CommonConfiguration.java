@@ -1,5 +1,8 @@
 package org.identifiers.cloud.hq.ws.miridcontroller.configuration;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
 /**
  * Project: mirid-controller
  * Package: org.identifiers.cloud.hq.ws.miridcontroller.configuration
@@ -10,5 +13,8 @@ package org.identifiers.cloud.hq.ws.miridcontroller.configuration;
  *
  * Common configuration
  */
+@Configuration
+@EnableJpaAuditing
 public class CommonConfiguration {
+    // TODO
 }
