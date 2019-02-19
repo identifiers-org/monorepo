@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import java.util.Date;
 
 /**
  * Project: mirid-controller
@@ -28,4 +29,11 @@ import javax.persistence.EntityListeners;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class MirIdDeactivationLogEntry {
+    private long id;
+    private long mirId;
+    private Date created;
+    private Date minted;
+    private Date lastConfirmed;
+    private String additionalInformation;
+    // TODO
 }
