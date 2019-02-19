@@ -5,6 +5,8 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Date;
 
 /**
@@ -22,7 +24,12 @@ import java.util.Date;
 @Accessors(chain = true)
 @Entity
 public class ActiveMirId {
+
+    @Id
+    @GeneratedValue
     private long id;
+
+    
     private Date created;
     private Date lastConfirmed;
     // TODO
