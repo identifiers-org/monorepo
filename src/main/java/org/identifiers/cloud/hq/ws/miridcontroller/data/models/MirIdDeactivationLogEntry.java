@@ -53,7 +53,8 @@ public class MirIdDeactivationLogEntry {
     @Column(nullable = false, updatable = false)
     private Date lastConfirmed;
 
-    // Some additional information regarding the deactivation entry
+    // Some additional information regarding the deactivation entry. This piece of information is left out as optional
+    // right now
     private String additionalInformation;
     // TODO
 }
