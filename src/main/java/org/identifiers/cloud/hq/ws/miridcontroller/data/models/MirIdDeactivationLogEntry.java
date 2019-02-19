@@ -29,11 +29,22 @@ import java.util.Date;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class MirIdDeactivationLogEntry {
+    // Internal ID for the entry
     private long id;
+
+    // MIR ID
     private long mirId;
+
+    // When the log entry was created
     private Date created;
+
+    // When the MIR ID was minted
     private Date minted;
+
+    // When the MIR ID was last confirmed
     private Date lastConfirmed;
+
+    // Some additional information regarding the deactivation entry
     private String additionalInformation;
     // TODO
 }
