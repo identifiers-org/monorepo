@@ -7,6 +7,8 @@ package org.identifiers.cloud.hq.ws.miridcontroller.configuration;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * Common configuration
  */
 public class CommonConfiguration {
 }
