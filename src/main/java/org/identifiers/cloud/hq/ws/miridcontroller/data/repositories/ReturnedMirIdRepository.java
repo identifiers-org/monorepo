@@ -3,6 +3,8 @@ package org.identifiers.cloud.hq.ws.miridcontroller.data.repositories;
 import org.identifiers.cloud.hq.ws.miridcontroller.data.models.ReturnedMirId;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import javax.transaction.Transactional;
+
 /**
  * Project: mirid-controller
  * Package: org.identifiers.cloud.hq.ws.miridcontroller.data.repositories
@@ -13,4 +15,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface ReturnedMirIdRepository extends JpaRepository<ReturnedMirId, Long> {
     // TODO
+    ReturnedMirId findByMirId(Long id);
 }
