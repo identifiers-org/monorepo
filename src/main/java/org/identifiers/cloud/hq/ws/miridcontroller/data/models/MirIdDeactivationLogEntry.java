@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -36,7 +33,8 @@ public class MirIdDeactivationLogEntry {
     @GeneratedValue
     private long id;
 
-    // MIR ID
+    // MIR ID, once the entry has been created, it makes no sense to update it.
+    @Column(nullable = false, updatable = false)
     private long mirId;
 
     // When the log entry was created
