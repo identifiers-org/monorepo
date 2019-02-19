@@ -40,5 +40,4 @@ public class ReturnedMirId {
     @CreatedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date created;
-    // TODO
 }
