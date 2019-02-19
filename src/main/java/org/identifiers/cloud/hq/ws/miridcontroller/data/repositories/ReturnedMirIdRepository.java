@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
  * ---
  */
 public interface ReturnedMirIdRepository extends JpaRepository<ReturnedMirId, Long> {
-    // TODO
+
     ReturnedMirId findByMirId(Long id);
 
     // This method will return the oldest deactivated MIR ID, i.e. the returned MIR ID that's been sitting there the
