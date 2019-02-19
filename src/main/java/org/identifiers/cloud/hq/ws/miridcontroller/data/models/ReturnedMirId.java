@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Date;
 
 /**
@@ -26,7 +27,10 @@ import java.util.Date;
 @Accessors(chain = true)
 @Entity
 public class ReturnedMirId {
+    @Id
     private long mirId;
+
+    
     private Date created;
     // TODO
 }
