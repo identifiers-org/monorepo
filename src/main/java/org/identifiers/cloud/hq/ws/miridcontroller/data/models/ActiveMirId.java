@@ -5,7 +5,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Date;
 
@@ -26,10 +25,9 @@ import java.util.Date;
 public class ActiveMirId {
 
     @Id
-    @GeneratedValue
-    private long id;
+    private long mirId;
 
-    
+
     private Date created;
     private Date lastConfirmed;
     // TODO
