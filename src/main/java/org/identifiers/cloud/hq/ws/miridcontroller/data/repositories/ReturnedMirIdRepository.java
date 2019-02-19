@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
  * ---
  */
 public interface ReturnedMirIdRepository extends JpaRepository<ReturnedMirId, Long> {
+    // TODO - Hide this from the REST API
 
     ReturnedMirId findByMirId(Long id);
 
