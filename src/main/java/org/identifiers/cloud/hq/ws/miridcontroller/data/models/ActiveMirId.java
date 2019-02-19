@@ -27,6 +27,7 @@ import java.util.Date;
 @EntityListeners(AuditingEntityListener.class)
 public class ActiveMirId {
 
+    // We use numerical representation of MIR IDs
     @Id
     private long mirId;
 
