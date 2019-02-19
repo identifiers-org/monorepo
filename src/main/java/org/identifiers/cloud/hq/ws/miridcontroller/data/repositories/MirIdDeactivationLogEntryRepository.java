@@ -14,6 +14,6 @@ import java.util.List;
  * ---
  */
 public interface MirIdDeactivationLogEntryRepository extends JpaRepository<MirIdDeactivationLogEntry, Long> {
-    // TODO
+    // TODO - Take this repository out of the REST API
     List<MirIdDeactivationLogEntry> findByMirId(long id);
 }
