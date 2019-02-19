@@ -1,5 +1,9 @@
 package org.identifiers.cloud.hq.ws.miridcontroller.data.models;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
 /**
  * Project: mirid-controller
  * Package: org.identifiers.cloud.hq.ws.miridcontroller.data.models
@@ -10,5 +14,8 @@ package org.identifiers.cloud.hq.ws.miridcontroller.data.models;
  *
  * This model represents a MIR ID that is in use.
  */
+@Data
+@EqualsAndHashCode
+@Accessors(chain = true)
 public class ActiveMirId {
 }
