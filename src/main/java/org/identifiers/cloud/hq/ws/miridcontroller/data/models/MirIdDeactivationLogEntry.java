@@ -1,5 +1,15 @@
 package org.identifiers.cloud.hq.ws.miridcontroller.data.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+
 /**
  * Project: mirid-controller
  * Package: org.identifiers.cloud.hq.ws.miridcontroller.data.models
@@ -10,5 +20,12 @@ package org.identifiers.cloud.hq.ws.miridcontroller.data.models;
  *
  * This model represents log entries with information on when a MIR ID is "returned", i.e. deactivated.
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@Accessors(chain = true)
+@Entity
+@EntityListeners(AuditingEntityListener.class)
 public class MirIdDeactivationLogEntry {
 }
