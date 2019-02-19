@@ -22,4 +22,6 @@ public interface ActiveMirIdRepository extends JpaRepository<ActiveMirId, Long> 
     @Query("select coalesce(max(mirId), 0) from ActiveMirId")
     long getMaxMirId();
 
+    @Transactional
+    void deleteByMirId(long id);
 }
