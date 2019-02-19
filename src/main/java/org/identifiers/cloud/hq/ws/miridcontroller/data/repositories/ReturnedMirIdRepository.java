@@ -17,6 +17,8 @@ public interface ReturnedMirIdRepository extends JpaRepository<ReturnedMirId, Lo
     // TODO
     ReturnedMirId findByMirId(Long id);
 
+    // This method will return the oldest deactivated MIR ID, i.e. the returned MIR ID that's been sitting there the
+    // longest
     ReturnedMirId findTopByOrderByCreatedAsc();
 
     @Transactional
