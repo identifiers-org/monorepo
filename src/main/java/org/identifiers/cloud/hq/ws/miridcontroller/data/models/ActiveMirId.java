@@ -31,7 +31,7 @@ public class ActiveMirId {
     @Id
     private long mirId;
 
-
+    // This is the date this particular MIR ID was created
     private Date created;
     private Date lastConfirmed;
     // TODO
