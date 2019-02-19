@@ -1,8 +1,10 @@
 package org.identifiers.cloud.hq.ws.miridcontroller.data.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -24,6 +26,8 @@ import java.util.Date;
  * This model represents a MIR ID that is in use.
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 @Accessors(chain = true)
 @Entity
