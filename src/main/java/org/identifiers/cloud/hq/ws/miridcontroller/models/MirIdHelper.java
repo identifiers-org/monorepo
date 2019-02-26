@@ -23,7 +23,6 @@ public class MirIdHelper {
     }
 
     public static long parseMirId(String mirId) throws MirIdHelperException {
-        // TODO
         try {
             return Long.parseLong(mirId.split(":")[1]);
         } catch (NumberFormatException e) {
