@@ -2,6 +2,7 @@ package org.identifiers.cloud.hq.ws.miridcontroller.data.repositories;
 
 import org.identifiers.cloud.hq.ws.miridcontroller.data.models.ReturnedMirId;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.transaction.Transactional;
 
@@ -22,6 +23,8 @@ public interface ReturnedMirIdRepository extends JpaRepository<ReturnedMirId, Lo
     // longest
     ReturnedMirId findTopByOrderByCreatedAsc();
 
+    // I don't want removal operations available on the REST interface
+    @RestResource(exported = false)
     @Transactional
     void deleteByMirId(Long id);
 }
