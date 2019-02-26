@@ -21,5 +21,9 @@ public class MirIdHelper {
     public static String prettyPrintMirId(long mirId) {
         return String.format("MIR:%08d", mirId);
     }
+
+    public static long parseMirId(String mirId) {
+        // TODO
+    }
     // TODO
 }
