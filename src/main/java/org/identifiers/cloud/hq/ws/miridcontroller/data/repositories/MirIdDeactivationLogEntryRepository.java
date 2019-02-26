@@ -1,6 +1,8 @@
 package org.identifiers.cloud.hq.ws.miridcontroller.data.repositories;
 
 import org.identifiers.cloud.hq.ws.miridcontroller.data.models.MirIdDeactivationLogEntry;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RestResource;
 
@@ -27,4 +29,6 @@ public interface MirIdDeactivationLogEntryRepository extends JpaRepository<MirId
     // Allow segmented listing
     @RestResource(exported = false)
     List<MirIdDeactivationLogEntry> findAll();
+    Page<MirIdDeactivationLogEntry> findAll(Pageable pageable);
+    
 }
