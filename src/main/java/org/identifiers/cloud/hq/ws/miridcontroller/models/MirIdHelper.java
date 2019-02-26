@@ -15,8 +15,8 @@ public class MirIdHelper {
     /**
      * Given a number representation of a MIR ID, get the pretty representation, a.k.a. official MIR ID representation,
      * i.e. 345800 -> MIR:00345800
-     * @param mirId
-     * @return
+     * @param mirId to format
+     * @return a formatted representation of the given MIR ID
      */
     public static String prettyPrintMirId(long mirId) {
         return String.format("MIR:%08d", mirId);
