@@ -35,6 +35,10 @@ public interface ReturnedMirIdRepository extends JpaRepository<ReturnedMirId, Lo
     @RestResource(exported = false)
     ReturnedMirId save(ReturnedMirId returnedMirId);
 
+    // Do not allow deletion through REST API
+    @RestResource(exported = false)
+    void deleteByMirId(long mirId);
+
     // Allow paginated listing of returned IDs
     Page<ReturnedMirId> findAll(Pageable pageable);
 
