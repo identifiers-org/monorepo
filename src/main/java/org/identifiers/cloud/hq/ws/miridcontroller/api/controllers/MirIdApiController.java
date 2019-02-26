@@ -1,5 +1,7 @@
 package org.identifiers.cloud.hq.ws.miridcontroller.api.controllers;
 
+import org.identifiers.cloud.hq.ws.miridcontroller.api.models.MirIdApiModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,5 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("mirIdApi")
 public class MirIdApiController {
+    @Autowired
+    private MirIdApiModel model;
+    
     // TODO
 }
