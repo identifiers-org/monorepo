@@ -22,8 +22,13 @@ public class MirIdHelper {
         return String.format("MIR:%08d", mirId);
     }
 
-    public static long parseMirId(String mirId) {
+    public static long parseMirId(String mirId) throws MirIdHelperException {
         // TODO
+        try {
+            return Long.parseLong(mirId.split(":")[1]);
+        } catch (NumberFormatException e) {
+            throw new MirIdHelperException(String.format("Error parsing MIR ID from '%s', due to '%s'", mirId, e.getMessage()));
+        }
     }
     // TODO
 }
