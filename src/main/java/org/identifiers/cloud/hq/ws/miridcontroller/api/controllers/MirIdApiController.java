@@ -1,5 +1,8 @@
 package org.identifiers.cloud.hq.ws.miridcontroller.api.controllers;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 /**
  * Project: mirid-controller
  * Package: org.identifiers.cloud.hq.ws.miridcontroller.api.controllers
@@ -8,5 +11,8 @@ package org.identifiers.cloud.hq.ws.miridcontroller.api.controllers;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+@RestController
+@RequestMapping("mirIdApi")
 public class MirIdApiController {
+    // TODO
 }
