@@ -36,6 +36,10 @@ public interface ActiveMirIdRepository extends JpaRepository<ActiveMirId, Long> 
     @RestResource(exported = false)
     ActiveMirId save(ActiveMirId activeMirId);
 
+    // Do not allow unsegmented listing of active MIR IDs
+    @RestResource(exported = false)
+    List<ActiveMirId> findAll();
+
     // Allow listing of all Active MIR IDs, sorted
     List<ActiveMirId> findAll(Sort sort);
 
