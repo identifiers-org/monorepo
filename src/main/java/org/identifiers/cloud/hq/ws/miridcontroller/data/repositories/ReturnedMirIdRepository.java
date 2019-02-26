@@ -27,4 +27,8 @@ public interface ReturnedMirIdRepository extends JpaRepository<ReturnedMirId, Lo
     @RestResource(exported = false)
     @Transactional
     void deleteByMirId(Long id);
+
+    // I don't want new entries through REST API
+    @RestResource(exported = false)
+    ReturnedMirId save(ReturnedMirId returnedMirId);
 }
