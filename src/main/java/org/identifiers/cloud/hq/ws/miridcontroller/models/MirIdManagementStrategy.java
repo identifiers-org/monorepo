@@ -31,5 +31,11 @@ public interface MirIdManagementStrategy {
      * @throws MirIdManagementStrategyException
      */
     void loadId(long id) throws MirIdManagementStrategyException;
+
+    /**
+     * Request deactivation of a given MIR ID to the MIR ID management subsystem.
+     * @param id MIR ID to be deactivated
+     * @throws MirIdManagementStrategyException
+     */
     void returnId(long id) throws MirIdManagementStrategyException;
 }
