@@ -47,5 +47,4 @@ public class ActiveMirId {
     // This column holds information on when a "keep alive" request on this MIR ID was seen for the last time
     @Column(nullable = false)
     private Date lastConfirmed;
-    // TODO
 }
