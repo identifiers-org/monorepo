@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.miridcontroller.data.repositories;
 
 import org.identifiers.cloud.hq.ws.miridcontroller.data.models.ActiveMirId;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -30,6 +31,9 @@ public interface ActiveMirIdRepository extends JpaRepository<ActiveMirId, Long> 
     @Transactional
     void deleteByMirId(long id);
 
-    // Allow listing of all Active MIR IDs
+    // Allow listing of all Active MIR IDs, sorted
     List<ActiveMirId> findAll(Sort sort);
+
+    // Allow paginated listing of all Active MIR IDs
+    List<ActiveMirId> findAll(Pageable pageable);
 }
