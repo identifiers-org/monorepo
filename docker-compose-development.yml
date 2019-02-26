@@ -5,6 +5,7 @@ services:
   postgresql:
     image: postgres
     environment:
+      - POSTGRES_DB=devdatabase
       - POSTGRES_USER=devusername
       - POSTGRES_PASSWORD=devpassword
     ports:
