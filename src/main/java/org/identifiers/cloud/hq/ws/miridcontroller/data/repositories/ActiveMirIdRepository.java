@@ -34,7 +34,7 @@ public interface ActiveMirIdRepository extends JpaRepository<ActiveMirId, Long> 
 
     // Disable PUT and PATCH
     @RestResource(exported = false)
-    void save(ActiveMirId activeMirId);
+    ActiveMirId save(ActiveMirId activeMirId);
 
     // Allow listing of all Active MIR IDs, sorted
     List<ActiveMirId> findAll(Sort sort);
