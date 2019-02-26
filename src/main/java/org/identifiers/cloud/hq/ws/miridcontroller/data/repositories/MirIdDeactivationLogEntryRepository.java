@@ -2,6 +2,7 @@ package org.identifiers.cloud.hq.ws.miridcontroller.data.repositories;
 
 import org.identifiers.cloud.hq.ws.miridcontroller.data.models.MirIdDeactivationLogEntry;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import java.util.List;
 
@@ -16,4 +17,8 @@ import java.util.List;
 public interface MirIdDeactivationLogEntryRepository extends JpaRepository<MirIdDeactivationLogEntry, Long> {
     // NOTE - Just restrict some operations on the REST API
     List<MirIdDeactivationLogEntry> findByMirId(long id);
+
+    // Do not allow changes through the REST API
+    @RestResource(exported = false)
+    MirIdDeactivationLogEntry save(MirIdDeactivationLogEntry entry);
 }
