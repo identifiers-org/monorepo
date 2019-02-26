@@ -3,6 +3,7 @@ package org.identifiers.cloud.hq.ws.miridcontroller.data.repositories;
 import org.identifiers.cloud.hq.ws.miridcontroller.data.models.ActiveMirId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.transaction.Transactional;
 
@@ -22,6 +23,8 @@ public interface ActiveMirIdRepository extends JpaRepository<ActiveMirId, Long> 
     @Query("select coalesce(max(mirId), 0) from ActiveMirId")
     long getMaxMirId();
 
+    // Hide this from the REST interface
+    @RestResource(exported = false)
     @Transactional
     void deleteByMirId(long id);
 }
