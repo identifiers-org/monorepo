@@ -12,6 +12,10 @@ package org.identifiers.cloud.hq.ws.miridcontroller.models;
  */
 public interface MirIdManagementStrategy {
 
+    /**
+     * Mint a MIR ID
+     * @return a newly minted MIR ID
+     */
     long mintId();
     void keepAlive(long id);
     void loadId(long id);
