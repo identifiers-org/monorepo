@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.miridcontroller.data.repositories;
 
 import org.identifiers.cloud.hq.ws.miridcontroller.data.models.ActiveMirId;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -35,5 +36,5 @@ public interface ActiveMirIdRepository extends JpaRepository<ActiveMirId, Long> 
     List<ActiveMirId> findAll(Sort sort);
 
     // Allow paginated listing of all Active MIR IDs
-    List<ActiveMirId> findAll(Pageable pageable);
+    Page<ActiveMirId> findAll(Pageable pageable);
 }
