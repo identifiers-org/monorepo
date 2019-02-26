@@ -1,5 +1,7 @@
 package org.identifiers.cloud.hq.ws.miridcontroller.api.models;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Project: mirid-controller
  * Package: org.identifiers.cloud.hq.ws.miridcontroller.api.models
@@ -8,5 +10,6 @@ package org.identifiers.cloud.hq.ws.miridcontroller.api.models;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+@Component
 public class MirIdApiModel {
 }
