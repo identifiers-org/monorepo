@@ -23,4 +23,8 @@ public interface MirIdDeactivationLogEntryRepository extends JpaRepository<MirId
     MirIdDeactivationLogEntry save(MirIdDeactivationLogEntry entry);
     @RestResource(exported = false)
     void deleteById(long id);
+
+    // Allow segmented listing
+    @RestResource(exported = false)
+    List<MirIdDeactivationLogEntry> findAll();
 }
