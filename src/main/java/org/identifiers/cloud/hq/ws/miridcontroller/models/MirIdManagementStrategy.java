@@ -18,7 +18,7 @@ public interface MirIdManagementStrategy {
      */
     long mintId() throws MirIdManagementStrategyException;
 
-    void keepAlive(long id);
-    void loadId(long id);
-    void returnId(long id);
+    void keepAlive(long id) throws MirIdManagementStrategyException;
+    void loadId(long id) throws MirIdManagementStrategyException;
+    void returnId(long id) throws MirIdManagementStrategyException;
 }
