@@ -33,6 +33,8 @@ import java.util.Date;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class ReturnedMirId {
+
+    // Numerical representation of a MIR ID that has been deactivated
     @Id
     private long mirId;
 
