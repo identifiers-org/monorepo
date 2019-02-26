@@ -7,6 +7,8 @@ package org.identifiers.cloud.hq.ws.miridcontroller.models;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This is the interface of any MIR ID Management strategy
  */
 public interface MirIdManagementStrategy {
 }
