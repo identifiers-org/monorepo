@@ -29,5 +29,4 @@ public class MirIdHelper {
             throw new MirIdHelperException(String.format("Error parsing MIR ID from '%s', due to '%s'", mirId, e.getMessage()));
         }
     }
-    // TODO
 }
