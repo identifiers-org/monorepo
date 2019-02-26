@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Project: mirid-controller
@@ -36,4 +37,8 @@ public interface ReturnedMirIdRepository extends JpaRepository<ReturnedMirId, Lo
 
     // Allow paginated listing of returned IDs
     Page<ReturnedMirId> findAll(Pageable pageable);
+
+    // Do not allow general listing of returned IDs
+    @RestResource(exported = false)
+    List<ReturnedMirId> findAll();
 }
