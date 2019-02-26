@@ -7,6 +7,8 @@ package org.identifiers.cloud.hq.ws.miridcontroller.models;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This helper was created with the initial intention of handling MIR ID formatting
  */
 public class MirIdHelper {
 }
