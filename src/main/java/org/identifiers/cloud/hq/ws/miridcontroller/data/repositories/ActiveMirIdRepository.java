@@ -20,7 +20,7 @@ import java.util.List;
  * ---
  */
 public interface ActiveMirIdRepository extends JpaRepository<ActiveMirId, Long> {
-    // TODO - Take this repository out of the REST API
+    // NOTE - Should I take everything off the REST interface?
     // Exported methods on the REST API interface, although I may shut down some of them
     ActiveMirId findByMirId(long id);
 
