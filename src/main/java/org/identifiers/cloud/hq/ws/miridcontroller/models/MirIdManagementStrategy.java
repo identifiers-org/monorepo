@@ -11,4 +11,9 @@ package org.identifiers.cloud.hq.ws.miridcontroller.models;
  * This is the interface of any MIR ID Management strategy
  */
 public interface MirIdManagementStrategy {
+
+    long mintId();
+    void keepAlive(long id);
+    void loadId(long id);
+    void returnId(long id);
 }
