@@ -1,6 +1,8 @@
 package org.identifiers.cloud.hq.ws.miridcontroller.data.repositories;
 
 import org.identifiers.cloud.hq.ws.miridcontroller.data.models.ReturnedMirId;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RestResource;
 
@@ -31,4 +33,7 @@ public interface ReturnedMirIdRepository extends JpaRepository<ReturnedMirId, Lo
     // I don't want new entries through REST API
     @RestResource(exported = false)
     ReturnedMirId save(ReturnedMirId returnedMirId);
+
+    // Allow paginated listing of returned IDs
+    Page<ReturnedMirId> findAll(Pageable pageable);
 }
