@@ -21,4 +21,6 @@ public interface MirIdDeactivationLogEntryRepository extends JpaRepository<MirId
     // Do not allow changes through the REST API
     @RestResource(exported = false)
     MirIdDeactivationLogEntry save(MirIdDeactivationLogEntry entry);
+    @RestResource(exported = false)
+    void deleteById(long id);
 }
