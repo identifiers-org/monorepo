@@ -24,6 +24,12 @@ public interface MirIdManagementStrategy {
      * @throws MirIdManagementStrategyException
      */
     void keepAlive(long id) throws MirIdManagementStrategyException;
+
+    /**
+     * Tell the MIR ID management subsystem to load a particular MIR ID as 'active', i.e. 'in use' ID
+     * @param id MIR ID
+     * @throws MirIdManagementStrategyException
+     */
     void loadId(long id) throws MirIdManagementStrategyException;
     void returnId(long id) throws MirIdManagementStrategyException;
 }
