@@ -38,6 +38,7 @@ public class ReturnedMirId {
     @Id
     private long mirId;
 
+    // This field holds information on when the MIR ID was deactivated
     @Column(nullable = false, updatable = false)
     @CreatedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
