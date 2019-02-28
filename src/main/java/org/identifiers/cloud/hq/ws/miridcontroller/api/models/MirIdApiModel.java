@@ -33,7 +33,7 @@ public class MirIdApiModel {
         try {
             return new ResponseEntity<>(MirIdHelper.prettyPrintMirId(mirIdManager.mintId()), HttpStatus.OK);
         } catch (MirIdManagementStrategyException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
