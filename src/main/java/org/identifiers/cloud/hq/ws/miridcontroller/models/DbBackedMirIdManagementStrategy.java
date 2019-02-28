@@ -37,6 +37,7 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
         // Check if we can use one from the returned IDs
         Date now = new Date(System.currentTimeMillis());
         ReturnedMirId returnedMirId = returnedMirIdRepository.findTopByOrderByCreatedAsc();
+        ActiveMirId mintedId = new ActiveMirId().setCreated(now).setLastConfirmed(now);
         // TODO
     }
 
