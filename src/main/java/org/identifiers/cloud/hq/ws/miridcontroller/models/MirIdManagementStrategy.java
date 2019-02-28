@@ -28,8 +28,7 @@ public interface MirIdManagementStrategy {
     /**
      * Tell the MIR ID management subsystem that a particular MIR ID has been confirmed as 'still active'
      * @param id MIR ID
-     * @return the given MIR ID if the request was completed successfully or 'null' if it was a bad request, e.g. the
-     * MIR ID is not active, thus, it cannot be kept alive
+     * @return a report object on the request success
      * @throws MirIdManagementStrategyException
      */
     MirIdManagementStrategyOperationReport keepAlive(long id) throws MirIdManagementStrategyException;
@@ -37,8 +36,7 @@ public interface MirIdManagementStrategy {
     /**
      * Tell the MIR ID management subsystem to load a particular MIR ID as 'active', i.e. 'in use' ID
      * @param id MIR ID
-     * @return the given MIR ID if the request was completed successfully or 'null' if it was a bad request, e.g. the
-     * MIR ID to be loaded was already active.
+     * @return a report object on the request success
      * @throws MirIdManagementStrategyException
      */
     MirIdManagementStrategyOperationReport loadId(long id) throws MirIdManagementStrategyException;
@@ -46,8 +44,7 @@ public interface MirIdManagementStrategy {
     /**
      * Request deactivation of a given MIR ID to the MIR ID management subsystem.
      * @param id MIR ID to be deactivated
-     * @return the given MIR ID if the request was completed successfully or 'null' if it was a bad request, e.g. the
-     * given ID was not active, thus it cannot be returned
+     * @return a report object on the request success
      * @throws MirIdManagementStrategyException
      */
     MirIdManagementStrategyOperationReport returnId(long id) throws MirIdManagementStrategyException;
