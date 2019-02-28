@@ -106,7 +106,6 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
                 registeredId.getLastConfirmed());
         log.info(msg);
         report.setReportContent(msg);
-        // TODO
         return report;
     }
 
