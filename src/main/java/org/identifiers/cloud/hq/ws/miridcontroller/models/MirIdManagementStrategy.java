@@ -32,7 +32,7 @@ public interface MirIdManagementStrategy {
      * MIR ID is not active, thus, it cannot be kept alive
      * @throws MirIdManagementStrategyException
      */
-    long keepAlive(long id) throws MirIdManagementStrategyException;
+    MirIdManagementStrategyOperationReport keepAlive(long id) throws MirIdManagementStrategyException;
 
     /**
      * Tell the MIR ID management subsystem to load a particular MIR ID as 'active', i.e. 'in use' ID
@@ -41,7 +41,7 @@ public interface MirIdManagementStrategy {
      * MIR ID to be loaded was already active.
      * @throws MirIdManagementStrategyException
      */
-    long loadId(long id) throws MirIdManagementStrategyException;
+    MirIdManagementStrategyOperationReport loadId(long id) throws MirIdManagementStrategyException;
 
     /**
      * Request deactivation of a given MIR ID to the MIR ID management subsystem.
@@ -50,5 +50,5 @@ public interface MirIdManagementStrategy {
      * given ID was not active, thus it cannot be returned
      * @throws MirIdManagementStrategyException
      */
-    long returnId(long id) throws MirIdManagementStrategyException;
+    MirIdManagementStrategyOperationReport returnId(long id) throws MirIdManagementStrategyException;
 }
