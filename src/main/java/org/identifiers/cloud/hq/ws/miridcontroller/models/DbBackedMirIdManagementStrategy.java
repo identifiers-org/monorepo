@@ -36,6 +36,7 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     public long mintId() throws MirIdManagementStrategyException {
         // Check if we can use one from the returned IDs
         Date now = new Date(System.currentTimeMillis());
+        ReturnedMirId returnedMirId = returnedMirIdRepository.findTopByOrderByCreatedAsc();
         // TODO
     }
 
