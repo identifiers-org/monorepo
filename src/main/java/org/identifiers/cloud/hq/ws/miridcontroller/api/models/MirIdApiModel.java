@@ -1,5 +1,7 @@
 package org.identifiers.cloud.hq.ws.miridcontroller.api.models;
 
+import org.identifiers.cloud.hq.ws.miridcontroller.models.MirIdManagementStrategy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -19,6 +21,9 @@ public class MirIdApiModel {
     // just going to return the responses in either simple ways, e.g. when minting an ID, I will return the minted ID,
     // when loading an ID, response and some message... etc. This microservice API is simple enough to give this
     // approach a try out.
+
+    @Autowired
+    MirIdManagementStrategy mirIdManager;
 
     // --- API ---
     // TODO
