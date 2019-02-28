@@ -38,5 +38,4 @@ public class MirIdApiController {
     public @ResponseBody ResponseEntity<?> returnId(@PathVariable String mirId) {
         return model.returnId(mirId);
     }
-    // TODO
 }
