@@ -79,6 +79,16 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     public MirIdManagementStrategyOperationReport loadId(long id) throws MirIdManagementStrategyException {
         MirIdManagementStrategyOperationReport report = new MirIdManagementStrategyOperationReport()
                 .setStatus(MirIdManagementStrategyOperationReport.Status.SUCCESS);
+        // Check the ID is not active
+        ActiveMirId activeMirId = activeMirIdRepository.findByMirId(id);
+        if (activeMirId != null) {
+            String msg = String.format("Load MIR ID, %d, found to be ACTIVE since %s, last confirmed %s", id,
+                    activeMirId.getCreated(), activeMirId.getLastConfirmed());
+            log.error(msg);
+            report.setStatus(MirIdManagementStrategyOperationReport.Status.BAD_REQUEST).setReportContent(msg);
+        } else {
+            // TODO
+        }
         // TODO
         return report;
     }
