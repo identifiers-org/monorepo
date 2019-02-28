@@ -1,5 +1,8 @@
 package org.identifiers.cloud.hq.ws.miridcontroller.models;
 
+import lombok.extern.slf4j.Slf4j;
+import org.identifiers.cloud.hq.ws.miridcontroller.data.models.ActiveMirId;
+import org.identifiers.cloud.hq.ws.miridcontroller.data.models.ReturnedMirId;
 import org.identifiers.cloud.hq.ws.miridcontroller.data.repositories.ActiveMirIdRepository;
 import org.identifiers.cloud.hq.ws.miridcontroller.data.repositories.MirIdDeactivationLogEntryRepository;
 import org.identifiers.cloud.hq.ws.miridcontroller.data.repositories.ReturnedMirIdRepository;
@@ -7,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 
 /**
  * Project: mirid-controller
@@ -17,6 +21,7 @@ import javax.transaction.Transactional;
  * ---
  */
 @Component
+@Slf4j
 public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy {
 
     @Autowired
@@ -30,7 +35,6 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     @Override
     public long mintId() throws MirIdManagementStrategyException {
         // TODO
-        return 0;
     }
 
     @Transactional
