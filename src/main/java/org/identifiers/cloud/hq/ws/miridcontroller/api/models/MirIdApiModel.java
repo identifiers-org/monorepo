@@ -1,5 +1,7 @@
 package org.identifiers.cloud.hq.ws.miridcontroller.api.models;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,4 +15,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class MirIdApiModel {
     // TODO
+    public ResponseEntity<?> mintId() {
+        // TODO
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
 }
