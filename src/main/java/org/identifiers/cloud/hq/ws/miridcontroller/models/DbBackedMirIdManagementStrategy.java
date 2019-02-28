@@ -131,6 +131,8 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
             return report;
         }
         // TODO - Return the ID
+        // remove ID from active IDs
+        activeMirIdRepository.delete(activeMirId);
         return report;
     }
 }
