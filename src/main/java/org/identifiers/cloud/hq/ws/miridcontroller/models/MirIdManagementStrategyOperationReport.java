@@ -12,4 +12,5 @@ package org.identifiers.cloud.hq.ws.miridcontroller.models;
  * clients to get insight informatino for more detailed error reporting back to requester
  */
 public class MirIdManagementStrategyOperationReport {
+    // TODO
 }
