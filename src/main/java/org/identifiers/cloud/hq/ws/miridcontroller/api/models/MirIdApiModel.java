@@ -1,8 +1,6 @@
 package org.identifiers.cloud.hq.ws.miridcontroller.api.models;
 
-import org.identifiers.cloud.hq.ws.miridcontroller.models.MirIdHelper;
-import org.identifiers.cloud.hq.ws.miridcontroller.models.MirIdManagementStrategy;
-import org.identifiers.cloud.hq.ws.miridcontroller.models.MirIdManagementStrategyException;
+import org.identifiers.cloud.hq.ws.miridcontroller.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +36,18 @@ public class MirIdApiModel {
     }
 
     public ResponseEntity<?> keepAlive(String mirId) {
-        // TODO
-        return new ResponseEntity<>("", HttpStatus.OK);
+        try {
+            MirIdManagementStrategyOperationReport report = mirIdManager.keepAlive(MirIdHelper.parseMirId(mirId));
+            if (report.getStatus() == MirIdManagementStrategyOperationReport.Status.BAD_REQUEST) {
+                return new ResponseEntity<>(report.getReportContent(), HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>((report.getReportContent() != null ? report.getReportContent() : "Ok"),
+                    HttpStatus.OK);
+        } catch (MirIdHelperException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (MirIdManagementStrategyException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     public ResponseEntity<?> loadId(String mirId) {
