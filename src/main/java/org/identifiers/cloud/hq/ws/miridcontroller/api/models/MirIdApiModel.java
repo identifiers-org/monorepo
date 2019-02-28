@@ -67,7 +67,13 @@ public class MirIdApiModel {
     }
 
     public ResponseEntity<?> returnId(String mirId) {
-        // TODO
-        return new ResponseEntity<>("", HttpStatus.OK);
+        try {
+            MirIdManagementStrategyOperationReport report = mirIdManager.returnId(MirIdHelper.parseMirId(mirId));
+            return reportBasedReply(report);
+        } catch (MirIdHelperException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (MirIdManagementStrategyException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
