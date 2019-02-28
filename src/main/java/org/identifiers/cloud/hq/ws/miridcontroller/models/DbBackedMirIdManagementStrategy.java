@@ -41,7 +41,6 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
         // TODO
         activeMirIdRepository.save(mintedId);
         return mintedId.getMirId();
-        // TODO
     }
 
     @Transactional
