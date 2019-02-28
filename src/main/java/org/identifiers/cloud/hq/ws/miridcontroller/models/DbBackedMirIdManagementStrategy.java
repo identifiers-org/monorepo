@@ -71,7 +71,6 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
             report.setReportContent(msg);
             log.info(msg);
         }
-        // TODO
         return report;
     }
 
