@@ -1,6 +1,8 @@
 package org.identifiers.cloud.hq.ws.miridcontroller.api.models;
 
+import org.identifiers.cloud.hq.ws.miridcontroller.models.MirIdHelper;
 import org.identifiers.cloud.hq.ws.miridcontroller.models.MirIdManagementStrategy;
+import org.identifiers.cloud.hq.ws.miridcontroller.models.MirIdManagementStrategyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +30,11 @@ public class MirIdApiModel {
     // --- API ---
     // TODO
     public ResponseEntity<?> mintId() {
-        // TODO
-        return new ResponseEntity<>("", HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(MirIdHelper.prettyPrintMirId(mirIdManager.mintId()), HttpStatus.OK);
+        } catch (MirIdManagementStrategyException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+        }
     }
 
     public ResponseEntity<?> keepAlive(String mirId) {
