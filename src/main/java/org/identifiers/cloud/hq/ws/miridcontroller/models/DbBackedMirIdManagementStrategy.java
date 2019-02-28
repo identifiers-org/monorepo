@@ -88,7 +88,14 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
             report.setStatus(MirIdManagementStrategyOperationReport.Status.BAD_REQUEST).setReportContent(msg);
             return report;
         }
-        // TODO - Check it is not in 'returned' state
+        // Check it is not in 'returned' state
+        ReturnedMirId returnedMirId = returnedMirIdRepository.findByMirId(id);
+        if (returnedMirId != null) {
+            String msg = String.format("Load MIR ID, %d, found to be in the POOL OF RETURNED IDs, CUSTOM MINTING of MIR IDs is NOT ALLOWED!", id);
+            log.error(msg);
+            report.setReportContent(msg).setStatus(MirIdManagementStrategyOperationReport.Status.BAD_REQUEST);
+            return report;
+        }
         // TODO - Load the ID
         // TODO
         return report;
