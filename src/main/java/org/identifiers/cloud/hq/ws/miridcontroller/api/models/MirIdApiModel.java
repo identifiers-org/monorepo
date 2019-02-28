@@ -26,7 +26,6 @@ public class MirIdApiModel {
     MirIdManagementStrategy mirIdManager;
 
     // --- API ---
-    // TODO
     public ResponseEntity<?> mintId() {
         try {
             return new ResponseEntity<>(MirIdHelper.prettyPrintMirId(mirIdManager.mintId()), HttpStatus.OK);
@@ -51,8 +50,18 @@ public class MirIdApiModel {
     }
 
     public ResponseEntity<?> loadId(String mirId) {
-        // TODO
-        return new ResponseEntity<>("", HttpStatus.OK);
+        try {
+            MirIdManagementStrategyOperationReport report = mirIdManager.loadId(MirIdHelper.parseMirId(mirId));
+            if (report.getStatus() == MirIdManagementStrategyOperationReport.Status.BAD_REQUEST) {
+                return new ResponseEntity<>(report.getReportContent(), HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>((report.getReportContent() != null ? report.getReportContent() : "Ok"),
+                    HttpStatus.OK);
+        } catch (MirIdHelperException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (MirIdManagementStrategyException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     public ResponseEntity<?> returnId(String mirId) {
