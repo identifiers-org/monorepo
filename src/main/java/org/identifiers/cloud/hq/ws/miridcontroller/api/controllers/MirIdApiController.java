@@ -29,12 +29,12 @@ public class MirIdApiController {
         return model.keepAlive(mirId);
     }
 
-    @GetMapping("/keepAlive/{mirId}")
+    @GetMapping("/loadId/{mirId}")
     public @ResponseBody ResponseEntity<?> loadId(@PathVariable String mirId) {
         return model.loadId(mirId);
     }
 
-    @GetMapping("/keepAlive/{mirId}")
+    @GetMapping("/returnId/{mirId}")
     public @ResponseBody ResponseEntity<?> returnId(@PathVariable String mirId) {
         return model.returnId(mirId);
     }
