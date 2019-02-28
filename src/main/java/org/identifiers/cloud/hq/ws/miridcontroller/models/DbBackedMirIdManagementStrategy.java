@@ -56,20 +56,20 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     @Override
     public MirIdManagementStrategyOperationReport keepAlive(long id) throws MirIdManagementStrategyException {
         // TODO
-        return id;
+        return null;
     }
 
     @Transactional
     @Override
     public MirIdManagementStrategyOperationReport loadId(long id) throws MirIdManagementStrategyException {
         // TODO
-        return id;
+        return null;
     }
 
     @Transactional
     @Override
     public MirIdManagementStrategyOperationReport returnId(long id) throws MirIdManagementStrategyException {
         // TODO
-        return id;
+        return null;
     }
 }
