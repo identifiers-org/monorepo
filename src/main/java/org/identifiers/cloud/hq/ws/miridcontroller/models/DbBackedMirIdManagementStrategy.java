@@ -2,6 +2,7 @@ package org.identifiers.cloud.hq.ws.miridcontroller.models;
 
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.miridcontroller.data.models.ActiveMirId;
+import org.identifiers.cloud.hq.ws.miridcontroller.data.models.MirIdDeactivationLogEntry;
 import org.identifiers.cloud.hq.ws.miridcontroller.data.models.ReturnedMirId;
 import org.identifiers.cloud.hq.ws.miridcontroller.data.repositories.ActiveMirIdRepository;
 import org.identifiers.cloud.hq.ws.miridcontroller.data.repositories.MirIdDeactivationLogEntryRepository;
@@ -135,7 +136,22 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
         activeMirIdRepository.delete(activeMirId);
         // Put it in the pool of returned IDs
         returnedMirId = new ReturnedMirId().setMirId(id);
-        returnedMirIdRepository.save(returnedMirId);
+        returnedMirId = returnedMirIdRepository.save(returnedMirId);
+        // Log the deactivation
+        // log the return
+        MirIdDeactivationLogEntry mirIdDeactivationLogEntry =
+                new MirIdDeactivationLogEntry()
+                        .setMirId(id)
+                        .setMinted(activeMirId.getCreated())
+                        .setLastConfirmed(activeMirId.getLastConfirmed());
+        mirIdDeactivationLogEntryRepository.save(mirIdDeactivationLogEntry);
+        String msg = String.format("RETURNED MIR ID, %d, on %s, minted on %s, and last confirmed on %s",
+                id,
+                returnedMirId.getCreated(),
+                activeMirId.getCreated(),
+                activeMirId.getLastConfirmed());
+        log.info(msg);
+        report.setReportContent(msg);
         return report;
     }
 }
