@@ -6,6 +6,8 @@ import org.identifiers.cloud.hq.ws.miridcontroller.data.repositories.ReturnedMir
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
+
 /**
  * Project: mirid-controller
  * Package: org.identifiers.cloud.hq.ws.miridcontroller.models
@@ -24,22 +26,26 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     @Autowired
     private ReturnedMirIdRepository returnedMirIdRepository;
 
+    @Transactional
     @Override
     public long mintId() throws MirIdManagementStrategyException {
         // TODO
         return 0;
     }
 
+    @Transactional
     @Override
     public void keepAlive(long id) throws MirIdManagementStrategyException {
         // TODO
     }
 
+    @Transactional
     @Override
     public void loadId(long id) throws MirIdManagementStrategyException {
         // TODO
     }
 
+    @Transactional
     @Override
     public void returnId(long id) throws MirIdManagementStrategyException {
         // TODO
