@@ -55,8 +55,22 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     @Transactional
     @Override
     public MirIdManagementStrategyOperationReport keepAlive(long id) throws MirIdManagementStrategyException {
-        MirIdManagementStrategyOperationReport report = new MirIdManagementStrategyOperationReport()
-                .setStatus(MirIdManagementStrategyOperationReport.Status.SUCCESS);
+        MirIdManagementStrategyOperationReport report = new MirIdManagementStrategyOperationReport().setStatus(MirIdManagementStrategyOperationReport.Status.SUCCESS);
+        // Check if the ID is active
+        // If active, update "last confirmed" date
+        ActiveMirId activeMirId = activeMirIdRepository.findByMirId(id);
+        if (activeMirId == null) {
+            String msg = String.format("Keep alive MIR ID, %d, is [NOT ACTIVE], KEEPING ALIVE is NOT POSSIBLE", id);
+            report.setStatus(MirIdManagementStrategyOperationReport.Status.BAD_REQUEST).setReportContent(msg);
+            log.error(msg);
+        } else {
+            activeMirId.setLastConfirmed(new Date(System.currentTimeMillis()));
+            activeMirIdRepository.save(activeMirId);
+            String msg = String.format("KEEP ALIVE MIR ID, %d, minted on %s, confirmed on %s",
+                    id, activeMirId.getCreated(), activeMirId.getLastConfirmed());
+            report.setReportContent(msg);
+            log.info(msg);
+        }
         // TODO
         return report;
     }
