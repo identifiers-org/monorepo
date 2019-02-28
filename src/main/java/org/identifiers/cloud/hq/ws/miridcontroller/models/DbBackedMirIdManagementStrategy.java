@@ -34,6 +34,8 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     @Transactional
     @Override
     public long mintId() throws MirIdManagementStrategyException {
+        // Check if we can use one from the returned IDs
+        Date now = new Date(System.currentTimeMillis());
         // TODO
     }
 
