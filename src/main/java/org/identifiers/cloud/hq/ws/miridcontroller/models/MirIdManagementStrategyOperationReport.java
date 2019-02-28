@@ -7,6 +7,9 @@ package org.identifiers.cloud.hq.ws.miridcontroller.models;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This models a report on how the MIR ID Management strategy completed the requested operation. This report will allow
+ * clients to get insight informatino for more detailed error reporting back to requester
  */
 public class MirIdManagementStrategyOperationReport {
 }
