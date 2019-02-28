@@ -48,7 +48,6 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
             mintedId.setMirId(activeMirIdRepository.getMaxMirId() + 1L);
             log.info(String.format("ID Minted on %s, as a NEW ID %d - COMPLETED", now.toString(), mintedId.getMirId()));
         }
-        // TODO
         activeMirIdRepository.save(mintedId);
         return mintedId.getMirId();
     }
