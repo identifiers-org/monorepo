@@ -73,7 +73,9 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     @Transactional
     @Override
     public MirIdManagementStrategyOperationReport returnId(long id) throws MirIdManagementStrategyException {
+        MirIdManagementStrategyOperationReport report = new MirIdManagementStrategyOperationReport()
+                .setStatus(MirIdManagementStrategyOperationReport.Status.SUCCESS);
         // TODO
-        return null;
+        return report;
     }
 }
