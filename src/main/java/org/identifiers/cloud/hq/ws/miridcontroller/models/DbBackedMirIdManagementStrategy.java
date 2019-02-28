@@ -122,7 +122,14 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
             report.setStatus(MirIdManagementStrategyOperationReport.Status.BAD_REQUEST).setReportContent(msg);
             return report;
         }
-        // TODO - Check if it already was returned
+        // Check if it already was returned
+        ReturnedMirId returnedMirId = returnedMirIdRepository.findByMirId(id);
+        if (returnedMirId != null) {
+            String msg = String.format("Return MIR ID, %d, NOT POSSIBLE for ALREADY RETURNED IDs", id);
+            log.error(msg);
+            report.setStatus(MirIdManagementStrategyOperationReport.Status.BAD_REQUEST).setReportContent(msg);
+            return report;
+        }
         return report;
     }
 }
