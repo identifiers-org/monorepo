@@ -26,4 +26,6 @@ public class MirIdManagementStrategyOperationReport {
         BAD_REQUEST;
     }
 
+    private Status status;
+    private String reportContent;
 }
