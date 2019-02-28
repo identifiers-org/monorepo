@@ -131,7 +131,7 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
             report.setStatus(MirIdManagementStrategyOperationReport.Status.BAD_REQUEST).setReportContent(msg);
             return report;
         }
-        // TODO - Return the ID
+        // Return the ID
         // remove ID from active IDs
         activeMirIdRepository.delete(activeMirId);
         // Put it in the pool of returned IDs
