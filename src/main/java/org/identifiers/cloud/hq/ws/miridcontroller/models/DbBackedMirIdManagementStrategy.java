@@ -114,7 +114,8 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     public MirIdManagementStrategyOperationReport returnId(long id) throws MirIdManagementStrategyException {
         MirIdManagementStrategyOperationReport report = new MirIdManagementStrategyOperationReport()
                 .setStatus(MirIdManagementStrategyOperationReport.Status.SUCCESS);
-        // TODO
+        // TODO - Check if the ID is active
+        // TODO - Check if it already was returned
         return report;
     }
 }
