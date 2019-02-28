@@ -29,5 +29,10 @@ public class MirIdApiController {
     public @ResponseBody ResponseEntity<?> keepAlive(@PathVariable String mirId) {
         return model.keepAlive(mirId);
     }
+
+    @GetMapping("/keepAlive/{mirId}")
+    public @ResponseBody ResponseEntity<?> loadId(@PathVariable String mirId) {
+        return model.loadId(mirId);
+    }
     // TODO
 }
