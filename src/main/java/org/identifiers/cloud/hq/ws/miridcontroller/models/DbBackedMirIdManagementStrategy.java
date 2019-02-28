@@ -114,7 +114,7 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     public MirIdManagementStrategyOperationReport returnId(long id) throws MirIdManagementStrategyException {
         MirIdManagementStrategyOperationReport report = new MirIdManagementStrategyOperationReport()
                 .setStatus(MirIdManagementStrategyOperationReport.Status.SUCCESS);
-        // TODO - Check if the ID is active
+        // Check if the ID is active
         ActiveMirId activeMirId = activeMirIdRepository.findByMirId(id);
         if (activeMirId == null) {
             String msg = String.format("Return MIR ID, %d, NOT POSSIBLE for NON ACTIVE MIR IDs", id);
