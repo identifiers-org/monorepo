@@ -39,6 +39,9 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
         ReturnedMirId returnedMirId = returnedMirIdRepository.findTopByOrderByCreatedAsc();
         ActiveMirId mintedId = new ActiveMirId().setCreated(now).setLastConfirmed(now);
         // TODO
+        activeMirIdRepository.save(mintedId);
+        return mintedId.getMirId();
+        // TODO
     }
 
     @Transactional
