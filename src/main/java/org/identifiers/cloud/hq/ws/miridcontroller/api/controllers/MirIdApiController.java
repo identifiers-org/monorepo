@@ -20,8 +20,7 @@ public class MirIdApiController {
     private MirIdApiModel model;
 
     @GetMapping("/mintId")
-    public @ResponseBody
-    ResponseEntity<?> mintId() {
+    public @ResponseBody ResponseEntity<?> mintId() {
         return model.mintId();
     }
 
@@ -33,6 +32,11 @@ public class MirIdApiController {
     @GetMapping("/keepAlive/{mirId}")
     public @ResponseBody ResponseEntity<?> loadId(@PathVariable String mirId) {
         return model.loadId(mirId);
+    }
+
+    @GetMapping("/keepAlive/{mirId}")
+    public @ResponseBody ResponseEntity<?> returnId(@PathVariable String mirId) {
+        return model.returnId(mirId);
     }
     // TODO
 }
