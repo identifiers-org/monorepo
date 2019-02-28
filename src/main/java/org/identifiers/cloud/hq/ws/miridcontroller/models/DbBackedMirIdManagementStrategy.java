@@ -88,6 +88,8 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
             report.setStatus(MirIdManagementStrategyOperationReport.Status.BAD_REQUEST).setReportContent(msg);
             return report;
         }
+        // TODO - Check it is not in 'returned' state
+        // TODO - Load the ID
         // TODO
         return report;
     }
