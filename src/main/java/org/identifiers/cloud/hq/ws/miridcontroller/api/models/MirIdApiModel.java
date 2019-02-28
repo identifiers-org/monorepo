@@ -14,6 +14,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MirIdApiModel {
+    // NOTE - With this microservice, I'm going to try a different approach when it comes to API exposure and
+    // management, instead of using the ServerRequest and ServerResponse objects I modelled for other microservices, I'm
+    // just going to return the responses in either simple ways, e.g. when minting an ID, I will return the minted ID,
+    // when loading an ID, response and some message... etc. This microservice API is simple enough to give this
+    // approach a try out.
     // TODO
     public ResponseEntity<?> mintId() {
         // TODO
