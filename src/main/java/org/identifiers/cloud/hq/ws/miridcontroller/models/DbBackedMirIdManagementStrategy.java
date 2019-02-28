@@ -96,7 +96,16 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
             report.setReportContent(msg).setStatus(MirIdManagementStrategyOperationReport.Status.BAD_REQUEST);
             return report;
         }
-        // TODO - Load the ID
+        // Load the ID
+        Date now = new Date(System.currentTimeMillis());
+        ActiveMirId newId = new ActiveMirId().setMirId(id).setCreated(now).setLastConfirmed(now);
+        ActiveMirId registeredId = activeMirIdRepository.save(newId);
+        String msg = String.format("Load MIR ID %d, on %s, last confirmed %s - COMPLETED",
+                id,
+                registeredId.getCreated(),
+                registeredId.getLastConfirmed());
+        log.info(msg);
+        report.setReportContent(msg);
         // TODO
         return report;
     }
