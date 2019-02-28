@@ -86,8 +86,7 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
                     activeMirId.getCreated(), activeMirId.getLastConfirmed());
             log.error(msg);
             report.setStatus(MirIdManagementStrategyOperationReport.Status.BAD_REQUEST).setReportContent(msg);
-        } else {
-            // TODO
+            return report;
         }
         // TODO
         return report;
