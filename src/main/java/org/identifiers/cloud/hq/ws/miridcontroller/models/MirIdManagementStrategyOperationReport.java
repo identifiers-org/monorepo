@@ -23,7 +23,8 @@ import lombok.experimental.Accessors;
 public class MirIdManagementStrategyOperationReport {
     // TODO
     public enum Status {
-        BAD_REQUEST;
+        BAD_REQUEST,
+        SUCCESS;
     }
 
     private Status status;
