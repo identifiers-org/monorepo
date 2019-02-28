@@ -36,4 +36,9 @@ public class MirIdApiModel {
         // TODO
         return new ResponseEntity<>("", HttpStatus.OK);
     }
+
+    public ResponseEntity<?> returnId(String mirId) {
+        // TODO
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
 }
