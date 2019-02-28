@@ -13,4 +13,7 @@ package org.identifiers.cloud.hq.ws.miridcontroller.models;
  */
 public class MirIdManagementStrategyOperationReport {
     // TODO
+    public enum Status {
+        BAD_REQUEST;
+    }
 }
