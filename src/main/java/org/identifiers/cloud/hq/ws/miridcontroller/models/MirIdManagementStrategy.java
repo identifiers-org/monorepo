@@ -18,6 +18,13 @@ public interface MirIdManagementStrategy {
      */
     long mintId() throws MirIdManagementStrategyException;
 
+    // NOTE - I know that using the return value as a mechanism to inform the client of possible situations that may
+    // have happened is not a good idea, and this should have been done via a different mechanism, e.g. using different
+    // exceptions, but then, the client code would have been using try - catch as if - else, so a return object with
+    // different return statuses should have been modeled here to report back to the calling client. For this iteration
+    // of the microservice we don't need that much information, so it is ok doing it this way, despite being this an
+    // interface and future changes potentially affecting implementations, the thing is the scope of the consequences is
+    // very little, and the need for extended information on 'bad requests' situations is not clear at this point.
     /**
      * Tell the MIR ID management subsystem that a particular MIR ID has been confirmed as 'still active'
      * @param id MIR ID
