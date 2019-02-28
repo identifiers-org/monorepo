@@ -19,8 +19,15 @@ public class MirIdApiModel {
     // just going to return the responses in either simple ways, e.g. when minting an ID, I will return the minted ID,
     // when loading an ID, response and some message... etc. This microservice API is simple enough to give this
     // approach a try out.
+
+    // --- API ---
     // TODO
     public ResponseEntity<?> mintId() {
+        // TODO
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> keepAlive(String mirId) {
         // TODO
         return new ResponseEntity<>("", HttpStatus.OK);
     }
