@@ -3,6 +3,7 @@ package org.identifiers.cloud.hq.ws.miridcontroller.api.controllers;
 import org.identifiers.cloud.hq.ws.miridcontroller.api.models.HealthApiModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Project: mirid-controller
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  * This controller offers the endpoints that provide health checks for the service, e.g. liveness and health check
  */
+@RestController
 public class HealthApiController {
     // TODO
     @Autowired
