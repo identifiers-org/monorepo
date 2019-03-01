@@ -1,5 +1,9 @@
 package org.identifiers.cloud.hq.ws.miridcontroller.api.controllers;
 
+import org.identifiers.cloud.hq.ws.miridcontroller.api.models.HealthApiModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 /**
  * Project: mirid-controller
  * Package: org.identifiers.cloud.hq.ws.miridcontroller.api.controllers
@@ -12,4 +16,8 @@ package org.identifiers.cloud.hq.ws.miridcontroller.api.controllers;
  */
 public class HealthApiController {
     // TODO
+    @Autowired
+    private HealthApiModel model;
+
+    
 }
