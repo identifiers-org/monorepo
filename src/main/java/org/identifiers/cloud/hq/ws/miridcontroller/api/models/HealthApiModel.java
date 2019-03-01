@@ -14,7 +14,6 @@ import java.util.UUID;
  */
 @Component
 public class HealthApiModel {
-    // TODO
     private static String runningSessionId = UUID.randomUUID().toString();
 
     public String livenessCheck() {
