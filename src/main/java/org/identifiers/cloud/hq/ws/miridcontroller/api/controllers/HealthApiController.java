@@ -9,4 +9,5 @@ package org.identifiers.cloud.hq.ws.miridcontroller.api.controllers;
  * ---
  */
 public class HealthApiController {
+    // TODO
 }
