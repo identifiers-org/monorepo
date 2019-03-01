@@ -19,5 +19,15 @@ public class HealthApiController {
     @Autowired
     private HealthApiModel model;
 
-    
+    // liveness probe
+    @RequestMapping(value = "/liveness_check")
+    public String livenessCheck() {
+        return model.livenessCheck();
+    }
+
+    // Readiness check
+    @RequestMapping(value = "/readiness_check")
+    public String readinessCheck() {
+        return model.readinessCheck();
+    }
 }
