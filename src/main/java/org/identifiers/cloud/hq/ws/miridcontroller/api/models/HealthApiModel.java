@@ -11,6 +11,8 @@ import java.util.UUID;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * Health Check API Controller model.
  */
 @Component
 public class HealthApiModel {
