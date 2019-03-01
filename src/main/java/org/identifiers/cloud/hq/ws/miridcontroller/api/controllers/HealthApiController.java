@@ -7,6 +7,8 @@ package org.identifiers.cloud.hq.ws.miridcontroller.api.controllers;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This controller offers the endpoints that provide health checks for the service, e.g. liveness and health check
  */
 public class HealthApiController {
     // TODO
