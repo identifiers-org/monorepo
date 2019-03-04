@@ -1,3 +1,6 @@
 # Standalone environment for running the Link Checker
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 version: "3"
+services:
+    link-checker:
+        image: identifiersorg/cloud-ws-link-checker
