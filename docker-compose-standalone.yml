@@ -1,2 +1,3 @@
 # Standalone environment for running the Link Checker
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+version: "3"
