@@ -73,7 +73,8 @@ public class SimpleLinkChecker implements LinkChecker {
                 // TODO Improve this in the future, do not blindly accept this
                 report.setUrlAssessmentOk(true);
             }
-            // TODO - Log HTTP 3xx redirection destinations
+            // Log HTTP 3xx redirection destinations
+            logger.warn(String.format("[HTTP %d] For URL %s", report.getHttpStatus(), report.getUrl()));
         }
         return report;
     }
