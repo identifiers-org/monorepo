@@ -65,7 +65,9 @@ public class SimpleLinkChecker implements LinkChecker {
         if (report.getHttpStatus() == 200) {
             report.setUrlAssessmentOk(true);
         }
-        
+        if ((report.getHttpStatus() >= 300) || (report.getHttpStatus() <= 399)) {
+            // TODO
+        }
         // TODO - Log HTTP 3xx redirection destinations
         return report;
     }
