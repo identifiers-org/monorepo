@@ -29,3 +29,5 @@ services:
         depends_on:
             - redis
             - recommender
+    redis:
+        image: redis:4.0.8-alpine
