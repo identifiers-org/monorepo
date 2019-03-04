@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.strategies;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +25,7 @@ import java.sql.Timestamp;
 @Component
 @Scope("prototype")
 public class SimpleLinkChecker implements LinkChecker {
+    private static final Logger logger = LoggerFactory.getLogger(SimpleLinkChecker.class);
     private static final int CONNECTION_TIMEOUT_SECONDS = 3;
     private static final int READ_TIMEOUT_SECONDS = 12;
 
@@ -66,7 +69,6 @@ public class SimpleLinkChecker implements LinkChecker {
             report.setUrlAssessmentOk(true);
         }
         if ((report.getHttpStatus() >= 300) || (report.getHttpStatus() <= 399)) {
-            // TODO
             if (report.getHttpStatus() == 301) {
                 // TODO Improve this in the future, do not blindly accept this
                 report.setUrlAssessmentOk(true);
