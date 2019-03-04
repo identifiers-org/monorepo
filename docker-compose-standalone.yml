@@ -15,3 +15,5 @@ services:
             depends_on:
                 - redis
                 - recommender
+    resolver:
+        image: identifiersorg/cloud-ws-resolver
