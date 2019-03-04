@@ -5,16 +5,15 @@ services:
     link-checker:
         image: identifiersorg/cloud-ws-link-checker
         environment:
-            environment:
-                - WS_LINK_CHECKER_JVM_MEMORY_MAX=1024m
-                - WS_LINK_CHECKER_CONFIG_REDIS_HOST=redis
-                - WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST=resolver
-                - WS_LINK_CHECKER_CONFIG_DAEMON_PERIODIC_LINK_CHECK_REQUESTER_ENABLED=false
-            ports:
-                - "8084:8084"
-            depends_on:
-                - redis
-                - recommender
+            - WS_LINK_CHECKER_JVM_MEMORY_MAX=1024m
+            - WS_LINK_CHECKER_CONFIG_REDIS_HOST=redis
+            - WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST=resolver
+            - WS_LINK_CHECKER_CONFIG_DAEMON_PERIODIC_LINK_CHECK_REQUESTER_ENABLED=false
+        ports:
+            - "8084:8084"
+        depends_on:
+            - redis
+            - recommender
     resolver:
         image: identifiersorg/cloud-ws-resolver
         environment:
