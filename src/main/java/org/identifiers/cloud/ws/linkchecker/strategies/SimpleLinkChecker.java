@@ -72,6 +72,8 @@ public class SimpleLinkChecker implements LinkChecker {
             if (report.getHttpStatus() == 301) {
                 // TODO Improve this in the future, do not blindly accept this
                 report.setUrlAssessmentOk(true);
+                logger.warn(String.format("[HTTP %d] ACCEPTED AS OK For URL %s",
+                        report.getHttpStatus(), report.getUrl()));
             }
             // Log HTTP 3xx redirection destinations
             logger.warn(String.format("[HTTP %d] For URL %s", report.getHttpStatus(), report.getUrl()));
