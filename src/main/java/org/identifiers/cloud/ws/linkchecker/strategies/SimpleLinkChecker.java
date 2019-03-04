@@ -67,8 +67,11 @@ public class SimpleLinkChecker implements LinkChecker {
         }
         if ((report.getHttpStatus() >= 300) || (report.getHttpStatus() <= 399)) {
             // TODO
+            if (report.getHttpStatus() == 301) {
+                report.setUrlAssessmentOk(true);
+            }
+            // TODO - Log HTTP 3xx redirection destinations
         }
-        // TODO - Log HTTP 3xx redirection destinations
         return report;
     }
 }
