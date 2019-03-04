@@ -74,9 +74,11 @@ public class SimpleLinkChecker implements LinkChecker {
                 report.setUrlAssessmentOk(true);
                 logger.warn(String.format("[HTTP %d] ACCEPTED AS OK For URL %s",
                         report.getHttpStatus(), report.getUrl()));
+            } else {
+                // Enclosed here to avoid double logging of this status code
+                // Log HTTP 3xx redirection destinations
+                logger.warn(String.format("[HTTP %d] For URL %s", report.getHttpStatus(), report.getUrl()));
             }
-            // Log HTTP 3xx redirection destinations
-            logger.warn(String.format("[HTTP %d] For URL %s", report.getHttpStatus(), report.getUrl()));
         }
         return report;
     }
