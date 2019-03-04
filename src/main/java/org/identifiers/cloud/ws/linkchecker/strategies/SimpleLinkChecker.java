@@ -60,9 +60,12 @@ public class SimpleLinkChecker implements LinkChecker {
         } finally {
             connection.disconnect();
         }
+        // We accept HTTP OK, although this is the place where the NLP based prototype from Paris Biohackathon should
+        // improve the link checker accuracy
         if (report.getHttpStatus() == 200) {
             report.setUrlAssessmentOk(true);
         }
+        
         // TODO - Log HTTP 3xx redirection destinations
         return report;
     }
