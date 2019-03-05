@@ -17,6 +17,7 @@ import java.math.BigInteger;
  * This data model holds just enough information about a location, used in the registry
  */
 @Document
+// TODO - refactoring to relational
 public class Location {
     @Id private BigInteger id;
     // ISO 3166/MA Alpha-2 Country Codes
