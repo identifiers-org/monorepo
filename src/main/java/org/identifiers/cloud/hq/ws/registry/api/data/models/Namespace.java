@@ -16,6 +16,7 @@ import java.util.List;
  *
  * This class models how the microservice exposes information about namespaces in the registry through its Resolution API.
  */
+// TODO Refactor with lombok
 public class Namespace implements Serializable {
     private BigInteger id;
     private String prefix;
