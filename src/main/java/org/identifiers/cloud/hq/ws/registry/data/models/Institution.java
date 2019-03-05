@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 /**
  * Project: registry
@@ -26,8 +26,16 @@ import javax.persistence.Entity;
 @Entity
 // TODO - refactoring to relational
 public class Institution {
+    @Id
+    @GeneratedValue
     private long id;
+
+    @Column(unique = true, nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String description;
+
+    @ManyToOne(optional = false)
     private Location location;
 }
