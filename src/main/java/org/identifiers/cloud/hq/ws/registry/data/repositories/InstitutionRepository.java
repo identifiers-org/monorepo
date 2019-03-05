@@ -11,5 +11,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+// TODO - refactoring to relational
 public interface InstitutionRepository extends MongoRepository<Institution, String> {
 }
