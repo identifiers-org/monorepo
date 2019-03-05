@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * Project: registry
@@ -29,5 +30,6 @@ public class Location {
     // ISO 3166/MA Alpha-2 Country Codes
     // TODO Use an internationalization library on maven (com.neovisionaries.nv-i18n) in the setter for further checks.
     // Country codes are supposed to be unique, so I can use them as primary key for this entity
+    @Id
     private String countryCode;
 }
