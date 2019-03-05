@@ -32,8 +32,14 @@ public class Namespace {
 
     // This is the prefix itself, i.e. what is actually used in the compact identifier.
     private String prefix;
+
+    // MIR ID associated with this namespace
     private String mirId;
+
+    // Name for this namespace, this part does not have anything to do with the prefix in the compact identifier
     private String name;
+
+    // This is the regular expression that describes the IDs within the ID space scoped by this namespace
     private String pattern;
     private String description;
     private Timestamp created;
