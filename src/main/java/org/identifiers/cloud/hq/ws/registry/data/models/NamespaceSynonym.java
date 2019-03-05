@@ -17,6 +17,7 @@ import java.math.BigInteger;
  * Data model for namespace synonyms
  */
 @Document
+// TODO - refactoring to relational
 public class NamespaceSynonym {
     @Id private String synonym;
     private BigInteger namespaceFk;
