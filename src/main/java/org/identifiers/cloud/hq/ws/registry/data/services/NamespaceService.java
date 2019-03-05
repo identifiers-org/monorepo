@@ -16,6 +16,7 @@ import java.util.List;
  * ---
  */
 @Component
+// TODO - Affected by relational refactoring
 public class NamespaceService {
     @Autowired
     private NamespaceRepository namespaceRepository;
