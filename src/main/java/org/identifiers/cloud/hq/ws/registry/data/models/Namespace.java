@@ -21,6 +21,7 @@ import java.util.List;
  * This entity models a Prefix (or namespace) in the registry
  */
 @Document
+// TODO - refactoring to relational
 public class Namespace {
     @Id private BigInteger id;
 
