@@ -25,7 +25,6 @@ import javax.persistence.*;
 @Accessors(chain = true)
 @Entity
 @Table(indexes = {@Index(name = "idx_name", columnList = "name", unique = true)})
-// TODO - refactoring to relational
 public class Institution {
     @Id
     @GeneratedValue
