@@ -69,14 +69,15 @@ public class SimpleLinkChecker implements LinkChecker {
             report.setUrlAssessmentOk(true);
         }
         if ((report.getHttpStatus() >= 300) || (report.getHttpStatus() <= 399)) {
-            if (report.getHttpStatus() == 301) {
+            // Let's accept 302 temporarily
+            if (report.getHttpStatus() == 302) {
                 // TODO Improve this in the future, do not blindly accept this
                 report.setUrlAssessmentOk(true);
                 logger.warn(String.format("[HTTP %d] ACCEPTED AS OK For URL %s",
                         report.getHttpStatus(), report.getUrl()));
             } else {
-                // Enclosed here to avoid double logging of this status code
-                // Log HTTP 3xx redirection destinations
+                // This will log all reponse codes but the 302
+                // But other codes like 301 should not be considered valid
                 logger.warn(String.format("[HTTP %d] For URL %s", report.getHttpStatus(), report.getUrl()));
             }
         }
