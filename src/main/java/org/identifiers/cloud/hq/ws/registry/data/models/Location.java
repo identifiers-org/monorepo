@@ -1,10 +1,12 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
-import java.math.BigInteger;
+import javax.persistence.Entity;
 
 /**
  * Project: registry
@@ -16,29 +18,16 @@ import java.math.BigInteger;
  *
  * This data model holds just enough information about a location, used in the registry
  */
-@Document
-// TODO - refactoring to relational
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@Accessors(chain = true)
+@Entity
 public class Location {
-    @Id private BigInteger id;
+
     // ISO 3166/MA Alpha-2 Country Codes
     // TODO Use an internationalization library on maven (com.neovisionaries.nv-i18n) in the setter for further checks.
-    @Indexed private String countryCode;
-
-    public BigInteger getId() {
-        return id;
-    }
-
-    public Location setId(BigInteger id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getCountryCode() {
-        return countryCode;
-    }
-
-    public Location setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
-        return this;
-    }
+    // Country codes are supposed to be unique, so I can use them as primary key for this entity
+    private String countryCode;
 }
