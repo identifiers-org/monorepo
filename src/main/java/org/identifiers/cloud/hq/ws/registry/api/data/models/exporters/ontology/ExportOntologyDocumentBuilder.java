@@ -12,6 +12,7 @@ import java.io.Serializable;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+// TODO - Affected by relational refactoring
 public interface ExportOntologyDocumentBuilder extends ExportDocumentBuilder {
     void buildContext(String namespace, String reference) throws ExportOntologyDocumentBuilderException;
     void build(Serializable entry) throws ExportOntologyDocumentBuilderException;
