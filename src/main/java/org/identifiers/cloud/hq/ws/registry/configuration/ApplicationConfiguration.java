@@ -1,5 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.configuration;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.configuration
@@ -8,6 +11,8 @@ package org.identifiers.cloud.hq.ws.registry.configuration;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+@Configuration
+@EnableJpaAuditing
 public class ApplicationConfiguration {
     // TODO
 }
