@@ -13,6 +13,7 @@ import java.math.BigInteger;
  *
  * This class models how the microservice exposes information about resources in the registry through its Resolution API.
  */
+// TODO Refactor with lombok
 public class Resource implements Serializable {
     private BigInteger id;
     private String mirId;
