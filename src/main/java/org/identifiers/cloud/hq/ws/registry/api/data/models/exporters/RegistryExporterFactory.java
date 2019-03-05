@@ -13,6 +13,7 @@ import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ontology.R
  *
  * Abstract factory for registry exporters
  */
+// TODO - Affected by relational refactoring ????
 public class RegistryExporterFactory {
     // TODO
     public static RegistryExporter getForJsonLdOntology() {
