@@ -2,10 +2,5 @@
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 version: "3"
 services:
-    mongo:
-        image: mongo
-        environment:
-            - MONGO_INITDB_ROOT_USERNAME=devusername
-            - MONGO_INITDB_ROOT_PASSWORD=devpassword
-        ports:
-            - "27017:27017"
+    postgresql:
+        image: postgres
