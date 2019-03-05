@@ -19,6 +19,7 @@ import java.util.List;
  * This document models an Institution than potentially owns resources (providers) in the registry.
  */
 @Document
+// TODO - refactoring to relational
 public class Institution {
     @Id private BigInteger id;
     @Indexed private String name;
