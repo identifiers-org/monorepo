@@ -1,10 +1,15 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.Entity;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -18,7 +23,12 @@ import java.util.List;
  *
  * This document models an Institution than potentially owns resources (providers) in the registry.
  */
-@Document
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@Accessors(chain = true)
+@Entity
 // TODO - refactoring to relational
 public class Institution {
     @Id private BigInteger id;
