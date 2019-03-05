@@ -8,3 +8,5 @@ services:
             - POSTGRES_DB=devdatabase
             - POSTGRES_USER=devusername
             - POSTGRES_PASSWORD=devpassword
+        ports:
+            - "5432:5432"
