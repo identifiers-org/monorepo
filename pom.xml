@@ -5,7 +5,7 @@
 
     <groupId>org.identifiers.cloud.ws</groupId>
     <artifactId>link-checker</artifactId>
-    <version>1.1.6-SNAPSHOT</version>
+    <version>1.1.6</version>
     <packaging>jar</packaging>
 
     <name>link-checker</name>
