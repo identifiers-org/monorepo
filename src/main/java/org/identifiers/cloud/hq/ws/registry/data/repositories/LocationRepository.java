@@ -11,5 +11,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+// TODO - refactoring to JPA repository
 public interface LocationRepository extends MongoRepository<Location, String> {
 }
