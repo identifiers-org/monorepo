@@ -24,6 +24,8 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @Accessors(chain = true)
 @Entity
+@Table(indexes = {@Index(name = "idx_mir_id", columnList = "mirId", unique = true),
+        @Index(name = "idx_official", columnList = "official", unique = true)})
 public class Resource {
     @Id
     @GeneratedValue
