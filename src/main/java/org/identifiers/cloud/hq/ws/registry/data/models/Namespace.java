@@ -27,7 +27,10 @@ import java.sql.Timestamp;
 @Entity
 // TODO - refactoring to relational
 public class Namespace {
+    // Main internal ID for this namespace
     private long id;
+
+    // This is the prefix itself, i.e. what is actually used in the compact identifier.
     private String prefix;
     private String mirId;
     private String name;
