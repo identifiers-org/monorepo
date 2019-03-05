@@ -1,12 +1,12 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
-import java.math.BigInteger;
+import javax.persistence.*;
 
 /**
  * Project: registry
@@ -18,133 +18,44 @@ import java.math.BigInteger;
  *
  * This is a data model for a Resource (Provider) in the registry.
  */
-@Document
-// TODO - refactoring to relational
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@Accessors(chain = true)
+@Entity
 public class Resource {
-    @Id private BigInteger id;
-    @Indexed(unique = true)
+    @Id
+    @GeneratedValue
+    private long id;
+
+    @Column(nullable = false, unique = true)
     private String mirId;
+
+    @Column(nullable = false)
     private String accessUrl;
+
+    @Column(nullable = false)
     private String info;
-    @Indexed
+
+    @Column(nullable = false)
     private boolean official;
-    // TODO This should be a provider code
-    @Indexed
-    private String resourcePrefix;
-    // TODO This should be Sample ID
-    private String localId;
-    // TODO This should be Resource Home URL
+
+    // We should require every provider to have a code
+    private String providerCode;
+
+    // This is a sample ID at provider level
+    private String sampleId;
+
+    @Column(nullable = false)
     private String resourceUrl;
-    @DBRef private Institution institution;
-    @DBRef private Location location;
-    private BigInteger namespaceFk;
-    @Transient private Namespace namespace;
 
-    public BigInteger getId() {
-        return id;
-    }
+    @ManyToOne(optional = false)
+    private Institution institution;
 
-    public Resource setId(BigInteger id) {
-        this.id = id;
-        return this;
-    }
+    @ManyToOne(optional = false)
+    private Location location;
 
-    public String getMirId() {
-        return mirId;
-    }
-
-    public Resource setMirId(String mirId) {
-        this.mirId = mirId;
-        return this;
-    }
-
-    public String getAccessUrl() {
-        return accessUrl;
-    }
-
-    public Resource setAccessUrl(String accessUrl) {
-        this.accessUrl = accessUrl;
-        return this;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public Resource setInfo(String info) {
-        this.info = info;
-        return this;
-    }
-
-    public boolean isOfficial() {
-        return official;
-    }
-
-    public Resource setOfficial(boolean official) {
-        this.official = official;
-        return this;
-    }
-
-    public String getResourcePrefix() {
-        return resourcePrefix;
-    }
-
-    public Resource setResourcePrefix(String resourcePrefix) {
-        this.resourcePrefix = resourcePrefix;
-        return this;
-    }
-
-    public String getLocalId() {
-        return localId;
-    }
-
-    public Resource setLocalId(String localId) {
-        this.localId = localId;
-        return this;
-    }
-
-    public String getResourceUrl() {
-        return resourceUrl;
-    }
-
-    public Resource setResourceUrl(String resourceUrl) {
-        this.resourceUrl = resourceUrl;
-        return this;
-    }
-
-    public Institution getInstitution() {
-        return institution;
-    }
-
-    public Resource setInstitution(Institution institution) {
-        this.institution = institution;
-        return this;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public Resource setLocation(Location location) {
-        this.location = location;
-        return this;
-    }
-
-    public BigInteger getNamespaceFk() {
-        return namespaceFk;
-    }
-
-    public Resource setNamespaceFk(BigInteger namespaceFk) {
-        this.namespaceFk = namespaceFk;
-        return this;
-    }
-
-    public Namespace getNamespace() {
-        return namespace;
-    }
-
-    public Resource setNamespace(Namespace namespace) {
-        this.namespace = namespace;
-        return this;
-    }
+    @ManyToOne(optional = false)
+    private Namespace namespace;
 }
