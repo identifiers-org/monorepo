@@ -19,6 +19,7 @@ import java.math.BigInteger;
  * This is a data model for a Resource (Provider) in the registry.
  */
 @Document
+// TODO - refactoring to relational
 public class Resource {
     @Id private BigInteger id;
     @Indexed(unique = true)
