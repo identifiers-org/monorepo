@@ -1,10 +1,12 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -55,6 +57,9 @@ public class Namespace {
     private String description;
 
     // When the namespace was created (registered)
+    @Column(nullable = false, updatable = false)
+    @CreatedDate
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date created;
 
     // This field holds information on the last time a namespace was modified
