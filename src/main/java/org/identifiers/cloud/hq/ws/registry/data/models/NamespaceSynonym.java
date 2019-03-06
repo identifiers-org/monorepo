@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import java.math.BigInteger;
 
 /**
@@ -27,6 +29,7 @@ import java.math.BigInteger;
 @EqualsAndHashCode
 @Accessors(chain = true)
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 // TODO - refactoring to relational
 public class NamespaceSynonym {
     @Id private String synonym;
