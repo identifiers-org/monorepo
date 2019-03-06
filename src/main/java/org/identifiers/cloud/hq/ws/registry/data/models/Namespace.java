@@ -53,6 +53,10 @@ public class Namespace {
 
     // This field flags whether the namespace has been deprecated or not
     private boolean deprecated = false;
+
+    // Information on when this namespace was deprecated
     private Timestamp deprecationDate;
+
+    // A namespace level sample ID
     private String sampleId;
 }
