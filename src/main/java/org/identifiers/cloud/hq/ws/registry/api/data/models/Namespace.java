@@ -1,7 +1,12 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +21,14 @@ import java.util.List;
  *
  * This class models how the microservice exposes information about namespaces in the registry through its Resolution API.
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@Accessors(chain = true)
 // TODO Refactor with lombok
 public class Namespace implements Serializable {
-    private BigInteger id;
+    private long id;
     private String prefix;
     private String mirId;
     private String name;
@@ -29,103 +39,4 @@ public class Namespace implements Serializable {
     private boolean deprecated = false;
     private Timestamp deprecationDate;
     private List<Resource> resources = new ArrayList<>();
-
-    public BigInteger getId() {
-        return id;
-    }
-
-    public Namespace setId(BigInteger id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public Namespace setPrefix(String prefix) {
-        this.prefix = prefix;
-        return this;
-    }
-
-    public String getMirId() {
-        return mirId;
-    }
-
-    public Namespace setMirId(String mirId) {
-        this.mirId = mirId;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Namespace setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public String getPattern() {
-        return pattern;
-    }
-
-    public Namespace setPattern(String pattern) {
-        this.pattern = pattern;
-        return this;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Namespace setDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public Timestamp getCreated() {
-        return created;
-    }
-
-    public Namespace setCreated(Timestamp created) {
-        this.created = created;
-        return this;
-    }
-
-    public Timestamp getModified() {
-        return modified;
-    }
-
-    public Namespace setModified(Timestamp modified) {
-        this.modified = modified;
-        return this;
-    }
-
-    public boolean isDeprecated() {
-        return deprecated;
-    }
-
-    public Namespace setDeprecated(boolean deprecated) {
-        this.deprecated = deprecated;
-        return this;
-    }
-
-    public Timestamp getDeprecationDate() {
-        return deprecationDate;
-    }
-
-    public Namespace setDeprecationDate(Timestamp deprecationDate) {
-        this.deprecationDate = deprecationDate;
-        return this;
-    }
-
-    public List<Resource> getResources() {
-        return resources;
-    }
-
-    public Namespace setResources(List<Resource> resources) {
-        this.resources = resources;
-        return this;
-    }
 }
