@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * Project: registry
@@ -35,5 +36,7 @@ public class NamespaceSynonym {
     @Id
     private String synonym;
 
+    // The namespace this is a synonym of
+    @ManyToOne(optional = false)
     private Namespace namespace;
 }
