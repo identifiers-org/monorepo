@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -45,6 +46,9 @@ public class Institution {
     @CreatedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date created;
+
+    @LastModifiedDate
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date modified;
 
     @ManyToOne(optional = false)
