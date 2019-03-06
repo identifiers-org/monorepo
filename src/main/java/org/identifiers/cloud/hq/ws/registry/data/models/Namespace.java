@@ -41,9 +41,17 @@ public class Namespace {
 
     // This is the regular expression that describes the IDs within the ID space scoped by this namespace
     private String pattern;
+
+    // Some literal description of the namespace
     private String description;
+
+    // When the namespace was created (registered)
     private Timestamp created;
+
+    // This field holds information on the last time a namespace was modified
     private Timestamp modified;
+
+    
     private boolean deprecated = false;
     private Timestamp deprecationDate;
     private String sampleId;
