@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 
@@ -24,6 +25,7 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @Accessors(chain = true)
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(indexes = {@Index(name = "idx_mir_id", columnList = "mirId", unique = true),
         @Index(name = "idx_official", columnList = "official", unique = true)})
 public class Resource {
