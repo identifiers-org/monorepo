@@ -1,7 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.data.repositories;
 
 import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Project: registry
@@ -11,6 +11,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-// TODO - refactoring to JPA repository
-public interface NamespaceRepository extends MongoRepository<Namespace, String> {
+public interface NamespaceRepository extends JpaRepository<Namespace, Long> {
 }
