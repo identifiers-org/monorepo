@@ -74,6 +74,7 @@ public class Namespace {
     private boolean deprecated = false;
 
     // Information on when this namespace was deprecated
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date deprecationDate;
 
     // A namespace level sample ID
