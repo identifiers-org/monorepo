@@ -30,6 +30,9 @@ import java.util.Date;
 @Accessors(chain = true)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@Table(indexes = {@Index(name = "idx_mir_id", columnList = "mirId", unique = true),
+                    @Index(name = "idx_name", columnList = "name"),
+                    @Index(name = "idx_prefix", columnList = "prefix", unique = true)})
 public class Namespace {
     // Main internal ID for this namespace
     @Id
