@@ -52,6 +52,7 @@ public class Namespace {
     private String pattern;
 
     // Some literal description of the namespace
+    @Column(nullable = false)
     private String description;
 
     // When the namespace was created (registered)
