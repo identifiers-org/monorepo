@@ -1,9 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
-import org.identifiers.cloud.hq.ws.registry.api.data.helpers.ResolutionApiHelper;
+import org.identifiers.cloud.hq.ws.registry.api.data.services.NamespaceApiService;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ResolverDatasetPayload;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseGetResolverDataset;
-import org.identifiers.cloud.hq.ws.registry.data.services.NamespaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -19,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ResolutionApiModel {
     @Autowired
-    private NamespaceService namespaceService;
+    private NamespaceApiService namespaceApiService;
 
     // Model API
     public ServiceResponseGetResolverDataset getResolverDataset() {
@@ -27,8 +26,8 @@ public class ResolutionApiModel {
         ServiceResponseGetResolverDataset response = new ServiceResponseGetResolverDataset();
         response.setHttpStatus(HttpStatus.OK);
         response.setPayload(new ResolverDatasetPayload());
-        // TODO
-        response.getPayload().setNamespaces(ResolutionApiHelper.getResolutionDatasetFrom(namespaceService.getNamespaceTreeDownToLeaves()));
+        // TODO - Refactoring
+        //response.getPayload().setNamespaces(ResolutionApiHelper.getResolutionDatasetFrom(namespaceApiService.getNamespaceTreeDownToLeaves()));
         // Return response
         return response;
     }

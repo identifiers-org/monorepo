@@ -1,5 +1,11 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.services;
 
+import org.identifiers.cloud.hq.ws.registry.api.data.models.Namespace;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.api.data.services
@@ -11,5 +17,10 @@ package org.identifiers.cloud.hq.ws.registry.api.data.services;
  * This is a service for working with Namespace model within the API models context, i.e. it works with API Namespace
  * model
  */
-public class NamespaceService {
+@Component
+public class NamespaceApiService {
+    public List<Namespace> getNamespaceTreeDownToLeaves() {
+        // TODO
+        return new ArrayList<>();
+    }
 }
