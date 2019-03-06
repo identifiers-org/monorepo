@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
  *
  * This is a data helper in the context of the Resolution API data models
  */
+// TODO this is affected by the refactoring
 public class ResolutionApiHelper {
     // NOTE - I don't totally like to have two models with the same name, as it makes the coding more prone to
     // making mistakes, but, at the same time, this is the meaning of it, and that's why we have packages,
