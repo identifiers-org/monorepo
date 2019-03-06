@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -25,6 +26,7 @@ import java.util.Date;
 @EqualsAndHashCode
 @Accessors(chain = true)
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(indexes = {@Index(name = "idx_name", columnList = "name", unique = true)})
 public class Institution {
     @Id
