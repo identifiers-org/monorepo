@@ -1,5 +1,11 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 import java.math.BigInteger;
 
@@ -13,9 +19,14 @@ import java.math.BigInteger;
  *
  * This class models how the microservice exposes information about resources in the registry through its Resolution API.
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@Accessors(chain = true)
 // TODO Refactor with lombok
 public class Resource implements Serializable {
-    private BigInteger id;
+    private long id;
     private String mirId;
     private String accessUrl;
     private String info;
