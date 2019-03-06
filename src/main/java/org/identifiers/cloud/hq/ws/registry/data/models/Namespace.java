@@ -40,6 +40,7 @@ public class Namespace {
     private String prefix;
 
     // MIR ID associated with this namespace
+    @Column(nullable = false, unique = true)
     private String mirId;
 
     // Name for this namespace, this part does not have anything to do with the prefix in the compact identifier
