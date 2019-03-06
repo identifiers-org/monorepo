@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.Id;
 
 /**
  * Project: registry
@@ -29,6 +30,10 @@ import javax.persistence.EntityListeners;
 @EntityListeners(AuditingEntityListener.class)
 // TODO - refactoring to relational
 public class NamespaceSynonym {
+    // This is the Synonym itself, obviously, it must be unique, otherwise we could not go from the synonym back to the
+    // namespace
+    @Id
     private String synonym;
+
     private Namespace namespace;
 }
