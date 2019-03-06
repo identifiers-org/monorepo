@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -63,6 +64,8 @@ public class Namespace {
     private Date created;
 
     // This field holds information on the last time a namespace was modified
+    @LastModifiedDate
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date modified;
 
     // This field flags whether the namespace has been deprecated or not
