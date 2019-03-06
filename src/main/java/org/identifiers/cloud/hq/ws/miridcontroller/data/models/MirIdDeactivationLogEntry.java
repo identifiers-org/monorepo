@@ -29,6 +29,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@Table(indexes = {@Index(name = "idx_mir_id", columnList = "mirId")})
 public class MirIdDeactivationLogEntry {
     // Internal ID for the entry
     @Id
