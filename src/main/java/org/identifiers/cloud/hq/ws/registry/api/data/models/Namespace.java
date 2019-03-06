@@ -26,7 +26,6 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Accessors(chain = true)
-// TODO Refactor with lombok
 public class Namespace implements Serializable {
     private long id;
     private String prefix;
