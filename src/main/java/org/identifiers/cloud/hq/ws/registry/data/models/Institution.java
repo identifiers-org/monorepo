@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Project: registry
@@ -35,6 +36,9 @@ public class Institution {
 
     @Column(nullable = false)
     private String description;
+
+    private Date created;
+    private Date modified;
 
     @ManyToOne(optional = false)
     private Location location;
