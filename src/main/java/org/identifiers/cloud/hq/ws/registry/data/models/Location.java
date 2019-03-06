@@ -1,15 +1,19 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Id;
+import java.util.Date;
 
 /**
  * Project: registry
@@ -35,4 +39,9 @@ public class Location {
     // Country codes are supposed to be unique, so I can use them as primary key for this entity
     @Id
     private String countryCode;
+
+    @Column(nullable = false, updatable = false)
+    @CreatedDate
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Date created;
 }
