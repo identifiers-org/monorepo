@@ -78,5 +78,6 @@ public class Namespace {
     private Date deprecationDate;
 
     // A namespace level sample ID
+    @Column(nullable = false)
     private String sampleId;
 }
