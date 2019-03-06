@@ -5,8 +5,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Id;
 
 /**
@@ -25,6 +27,7 @@ import javax.persistence.Id;
 @EqualsAndHashCode
 @Accessors(chain = true)
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Location {
 
     // ISO 3166/MA Alpha-2 Country Codes
