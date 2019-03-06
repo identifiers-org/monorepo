@@ -29,7 +29,6 @@ import java.util.Date;
 @Accessors(chain = true)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-// TODO - refactoring to relational
 public class NamespaceSynonym {
     // This is the Synonym itself, obviously, it must be unique, otherwise we could not go from the synonym back to the
     // namespace
