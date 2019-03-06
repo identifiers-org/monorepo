@@ -5,13 +5,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import java.math.BigInteger;
 
 /**
  * Project: registry
@@ -32,34 +29,6 @@ import java.math.BigInteger;
 @EntityListeners(AuditingEntityListener.class)
 // TODO - refactoring to relational
 public class NamespaceSynonym {
-    @Id private String synonym;
-    private BigInteger namespaceFk;
-    @Transient private Namespace namespace;
-
-    public String getSynonym() {
-        return synonym;
-    }
-
-    public NamespaceSynonym setSynonym(String synonym) {
-        this.synonym = synonym;
-        return this;
-    }
-
-    public BigInteger getNamespaceFk() {
-        return namespaceFk;
-    }
-
-    public NamespaceSynonym setNamespaceFk(BigInteger namespaceFk) {
-        this.namespaceFk = namespaceFk;
-        return this;
-    }
-
-    public Namespace getNamespace() {
-        return namespace;
-    }
-
-    public NamespaceSynonym setNamespace(Namespace namespace) {
-        this.namespace = namespace;
-        return this;
-    }
+    private String synonym;
+    private Namespace namespace;
 }
