@@ -48,6 +48,7 @@ public class Namespace {
     private String name;
 
     // This is the regular expression that describes the IDs within the ID space scoped by this namespace
+    @Column(nullable = false)
     private String pattern;
 
     // Some literal description of the namespace
