@@ -69,6 +69,7 @@ public class Namespace {
     private Date modified;
 
     // This field flags whether the namespace has been deprecated or not
+    @Column(nullable = false)
     private boolean deprecated = false;
 
     // Information on when this namespace was deprecated
