@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Date;
 
 /**
@@ -28,6 +30,8 @@ import java.util.Date;
 // TODO - refactoring to relational
 public class Namespace {
     // Main internal ID for this namespace
+    @Id
+    @GeneratedValue
     private long id;
 
     // This is the prefix itself, i.e. what is actually used in the compact identifier.
