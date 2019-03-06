@@ -30,7 +30,6 @@ import java.util.Date;
 @Accessors(chain = true)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-// TODO - refactoring to relational
 public class Namespace {
     // Main internal ID for this namespace
     @Id
