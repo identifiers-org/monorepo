@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.persistence.Entity;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Project: registry
@@ -46,16 +46,16 @@ public class Namespace {
     private String description;
 
     // When the namespace was created (registered)
-    private Timestamp created;
+    private Date created;
 
     // This field holds information on the last time a namespace was modified
-    private Timestamp modified;
+    private Date modified;
 
     // This field flags whether the namespace has been deprecated or not
     private boolean deprecated = false;
 
     // Information on when this namespace was deprecated
-    private Timestamp deprecationDate;
+    private Date deprecationDate;
 
     // A namespace level sample ID
     private String sampleId;
