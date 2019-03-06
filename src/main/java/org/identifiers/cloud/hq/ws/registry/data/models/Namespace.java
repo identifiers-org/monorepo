@@ -70,6 +70,7 @@ public class Namespace {
 
     // This field flags whether the namespace has been deprecated or not
     @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private boolean deprecated = false;
 
     // Information on when this namespace was deprecated
