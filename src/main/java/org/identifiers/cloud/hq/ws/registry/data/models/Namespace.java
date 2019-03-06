@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -35,6 +36,7 @@ public class Namespace {
     private long id;
 
     // This is the prefix itself, i.e. what is actually used in the compact identifier.
+    @Column(nullable = false, unique = true)
     private String prefix;
 
     // MIR ID associated with this namespace
