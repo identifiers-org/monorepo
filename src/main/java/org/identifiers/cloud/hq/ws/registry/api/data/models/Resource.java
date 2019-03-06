@@ -23,7 +23,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Accessors(chain = true)
-// TODO Refactor with lombok
 public class Resource implements Serializable {
     private long id;
     private String mirId;
