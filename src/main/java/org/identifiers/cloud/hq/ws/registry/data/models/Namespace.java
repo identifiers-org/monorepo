@@ -44,6 +44,7 @@ public class Namespace {
     private String mirId;
 
     // Name for this namespace, this part does not have anything to do with the prefix in the compact identifier
+    @Column(nullable = false)
     private String name;
 
     // This is the regular expression that describes the IDs within the ID space scoped by this namespace
