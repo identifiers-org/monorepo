@@ -51,7 +51,7 @@ public class Namespace {
     // This field holds information on the last time a namespace was modified
     private Timestamp modified;
 
-    
+    // This field flags whether the namespace has been deprecated or not
     private boolean deprecated = false;
     private Timestamp deprecationDate;
     private String sampleId;
