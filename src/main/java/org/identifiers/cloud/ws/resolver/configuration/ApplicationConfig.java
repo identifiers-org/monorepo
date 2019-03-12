@@ -48,6 +48,7 @@ public class ApplicationConfig {
         return template;
     }
 
+    // TODO - I should probably use @Component for this
     @Bean
     public ResolverDataSourcer resolverDataSourcer() {
         return new ResolverDataSourcerFromWs();
