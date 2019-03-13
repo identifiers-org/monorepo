@@ -11,4 +11,5 @@ import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ExportedDo
  * ---
  */
 public class ServiceResponseSemanticExportRequest extends ServiceResponse<ExportedDocument> {
+    // TODO - I may go for the option of versioning the API via the URL - REMOVE THIS
 }
