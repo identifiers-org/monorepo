@@ -22,5 +22,6 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode
 @Accessors(chain = true)
 public class Person {
-    // TODO
+    private String fullName;
+    private String email;
 }
