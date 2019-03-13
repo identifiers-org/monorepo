@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Project: registry
@@ -166,11 +165,11 @@ public class RegistryOntologyJsonLdExporter implements RegistryExporter {
             entry.put("@type", String.format("%sDataCollection", URL_ONTOLOGY_IDENTIFIERS_ORG));
             entry.put("rdfs:comment", namespace.getDescription());
             entry.put("rdfs:label", namespace.getName());
-            entry.put("foaf:homepage", namespace.getResources().stream().map(resource -> {
+            /*entry.put("foaf:homepage", namespace.getResources().stream().map(resource -> {
                 Map<String, String> foafEntry = new HashMap<>();
                 foafEntry.put("@id", resource.getResourceUrl().trim());
                 return foafEntry;
-            }).collect(Collectors.toList()));
+            }).collect(Collectors.toList()));*/
             documentBuilder.build((Serializable) entry);
         });
     }

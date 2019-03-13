@@ -1,10 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.helpers;
 
 import org.identifiers.cloud.hq.ws.registry.api.data.models.Namespace;
-import org.identifiers.cloud.hq.ws.registry.api.data.models.Resource;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Project: registry
@@ -22,7 +20,8 @@ public class ResolutionApiHelper {
     // making mistakes, but, at the same time, this is the meaning of it, and that's why we have packages,
     // right?
     public static List<Namespace> getResolutionDatasetFrom(List<org.identifiers.cloud.hq.ws.registry.data.models.Namespace> namespaces) {
-        return namespaces.parallelStream().map(namespace -> {
+        return null;
+        /*namespaces.parallelStream().map(namespace -> {
             Namespace resultNamespace = new Namespace()
                     .setId(namespace.getId())
                     .setMirId(namespace.getMirId())
@@ -47,6 +46,6 @@ public class ResolutionApiHelper {
                 );
             }
             return resultNamespace;
-        }).collect(Collectors.toList());
+        }).collect(Collectors.toList());*/
     }
 }
