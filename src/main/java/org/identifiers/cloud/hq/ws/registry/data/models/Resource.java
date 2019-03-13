@@ -44,7 +44,7 @@ public class Resource {
     private String accessUrl;
 
     @Column(nullable = false)
-    private String info;
+    private String description;
 
     @Column(nullable = false)
     private boolean official;
