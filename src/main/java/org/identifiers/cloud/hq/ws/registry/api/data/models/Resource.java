@@ -31,8 +31,7 @@ public class Resource implements Serializable {
     private boolean official;
     private String providerCode;
     private String sampleId;
-    // TODO This should be Resource Home URL
-    private String resourceUrl;
+    private String resourceHomeUrl;
     private String institution;
     private String location;
 }
