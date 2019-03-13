@@ -11,6 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-public interface PersonRepository extends JpaRepository<Person, String> {
+public interface PersonRepository extends JpaRepository<Person, Long> {
     // TODO
 }
