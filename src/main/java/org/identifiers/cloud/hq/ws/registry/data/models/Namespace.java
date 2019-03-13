@@ -82,4 +82,7 @@ public class Namespace {
     // A namespace level sample ID
     @Column(nullable = false)
     private String sampleId;
+
+    @ManyToOne
+    private Person contactPerson;
 }
