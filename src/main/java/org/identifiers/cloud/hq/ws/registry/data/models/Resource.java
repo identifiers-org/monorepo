@@ -81,4 +81,7 @@ public class Resource {
 
     @ManyToOne(optional = false)
     private Namespace namespace;
+
+    @ManyToOne
+    private Person contactPerson;
 }
