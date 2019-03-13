@@ -9,4 +9,5 @@ package org.identifiers.cloud.hq.ws.registry.api.responses;
  * ---
  */
 public class ServiceResponseGetResolverDataset extends ServiceResponse<ResolverDatasetPayload> {
+    // TODO - I may go for the option of versioning the API via the URL - REMOVE THIS
 }
