@@ -15,6 +15,7 @@ import java.util.List;
  * ---
  */
 public class ResolverDatasetPayload implements Serializable {
+    // TODO - I may go for the option of versioning the API via the URL - REMOVE THIS
     private List<Namespace> namespaces = new ArrayList<>();
 
     public List<Namespace> getNamespaces() {
