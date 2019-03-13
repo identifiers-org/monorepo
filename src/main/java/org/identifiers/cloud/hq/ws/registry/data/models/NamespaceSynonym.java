@@ -29,6 +29,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@Table(indexes = {@Index(name = "idx_synonym", columnList = "synonym", unique = true)})
 public class NamespaceSynonym {
 
     @Id
