@@ -37,7 +37,10 @@ public class Location {
     // ISO 3166/MA Alpha-2 Country Codes
     // TODO Use an internationalization library on maven (com.neovisionaries.nv-i18n) in the setter for further checks.
     // Country codes are supposed to be unique, so I can use them as primary key for this entity
+    // And it makes sense that we should not be able to modify a country code once it's in the system, because it comes
+    // from the ISO that already has all of them
     @Id
+    @Column(updatable = false)
     private String countryCode;
 
     @Column(nullable = false, updatable = false)
