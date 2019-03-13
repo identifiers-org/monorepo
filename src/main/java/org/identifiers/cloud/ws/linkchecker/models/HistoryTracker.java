@@ -63,7 +63,7 @@ public abstract class HistoryTracker implements Serializable {
     }
 
     public enum HistoryStats implements Serializable {
-        SIMPLE(CheckedUrlHistoryStatsSimple::new, "Simple UP/DOWN history tracking", "simple");
+        SIMPLE(CheckedUrlHistoryStatsSimple::new, "simple", "Simple UP/DOWN history tracking");
 
         private Supplier<CheckedUrlHistoryStats> factoryMethod;
         private String key;
