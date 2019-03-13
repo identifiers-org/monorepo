@@ -30,9 +30,14 @@ import java.util.Date;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class NamespaceSynonym {
+
+    @Id
+    @GeneratedValue
+    private long id;
+
     // This is the Synonym itself, obviously, it must be unique, otherwise we could not go from the synonym back to the
     // namespace
-    @Id
+    @Column(nullable = false, unique = true)
     private String synonym;
 
     // The namespace this is a synonym of
