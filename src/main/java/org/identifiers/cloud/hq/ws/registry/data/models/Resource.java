@@ -47,6 +47,7 @@ public class Resource {
     @Column(nullable = false)
     private String name;
 
+    // Now you can optionally provide a description
     private String description;
 
     @Column(nullable = false)
