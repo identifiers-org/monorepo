@@ -60,8 +60,9 @@ public class Resource {
     // This is a sample ID at provider level
     private String sampleId;
 
+    // This is a home URL for this resource within the context of the namespace it belongs to
     @Column(nullable = false)
-    private String resourceUrl;
+    private String resourceHomeUrl;
 
     @Column(nullable = false, updatable = false)
     @CreatedDate
