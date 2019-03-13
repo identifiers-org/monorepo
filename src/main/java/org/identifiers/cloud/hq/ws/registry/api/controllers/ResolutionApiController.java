@@ -22,7 +22,7 @@ public class ResolutionApiController {
     @Autowired
     private ResolutionApiModel model;
 
-    @RequestMapping(value = "getResolverDataset", method = RequestMethod.GET)
+    @RequestMapping(value = "/getResolverDataset", method = RequestMethod.GET)
     public ResponseEntity<?> getResolverDataset() {
         ServiceResponseGetResolverDataset response = model.getResolverDataset();
         return new ResponseEntity<>(response, response.getHttpStatus());
