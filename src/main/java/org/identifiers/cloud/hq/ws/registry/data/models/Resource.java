@@ -40,6 +40,7 @@ public class Resource {
     @Column(nullable = false, unique = true)
     private String mirId;
 
+    // URL with the '{$id}' placeholder
     @Column(nullable = false)
     private String accessUrl;
 
