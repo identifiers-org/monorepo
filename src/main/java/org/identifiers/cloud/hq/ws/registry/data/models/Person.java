@@ -30,9 +30,14 @@ import java.util.Date;
 @Accessors(chain = true)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(indexes = {@Index(name = "idx_fullname", columnList = "fullName")})
+@Table(indexes = {@Index(name = "idx_fullname", columnList = "fullName"),
+                    @Index(name = "idx_email", columnList = "email", unique = true)})
 public class Person {
     @Id
+    @GeneratedValue
+    private long id;
+
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
