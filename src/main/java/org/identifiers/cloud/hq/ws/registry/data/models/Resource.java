@@ -43,9 +43,10 @@ public class Resource {
     @Column(nullable = false)
     private String accessUrl;
 
+    // This is known as 'info' in the old data model from the EBI platform
     @Column(nullable = false)
     private String name;
-    
+
     private String description;
 
     @Column(nullable = false)
