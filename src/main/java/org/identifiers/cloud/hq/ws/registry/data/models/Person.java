@@ -7,6 +7,8 @@ package org.identifiers.cloud.hq.ws.registry.data.models;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This model represents a person's contact details (minimum)
  */
 public class Person {
 }
