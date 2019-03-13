@@ -44,6 +44,9 @@ public class Resource {
     private String accessUrl;
 
     @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
     private String description;
 
     @Column(nullable = false)
