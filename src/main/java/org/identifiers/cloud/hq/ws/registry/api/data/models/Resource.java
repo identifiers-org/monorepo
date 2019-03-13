@@ -29,8 +29,7 @@ public class Resource implements Serializable {
     private String accessUrl;
     private String info;
     private boolean official;
-    // TODO This should be a provider code
-    private String resourcePrefix;
+    private String providerCode;
     // TODO This should be Sample ID
     private String localId;
     // TODO This should be Resource Home URL
