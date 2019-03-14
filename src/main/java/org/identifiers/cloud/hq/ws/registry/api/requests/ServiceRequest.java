@@ -14,7 +14,6 @@ import java.io.Serializable;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ServiceRequest<T> implements Serializable {
-    // TODO - I may go for the option of versioning the API via the URL - REMOVE THIS
     private String apiVersion;
     private T payload;
 
