@@ -9,6 +9,8 @@ import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterP
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This interface models the contract that every validator around a prefix registration request (payload) should fullfil
  */
 public interface PrefixRegistrationRequestValidator {
     // Well, this default implementation doesn't really bring anything on the table but semantic sugar
