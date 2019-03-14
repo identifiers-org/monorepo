@@ -1,5 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators;
 
+import org.identifiers.cloud.hq.ws.registry.api.data.models.Requester;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.models.validators
@@ -9,4 +11,5 @@ package org.identifiers.cloud.hq.ws.registry.models.validators;
  * ---
  */
 public interface RequesterValidator {
+    boolean validate(Requester requester) throws RequesterValidatorException;
 }
