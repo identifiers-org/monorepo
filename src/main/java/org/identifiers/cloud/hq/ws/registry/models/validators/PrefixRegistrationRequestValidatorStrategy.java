@@ -7,6 +7,8 @@ package org.identifiers.cloud.hq.ws.registry.models.validators;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This is the interface of any validation strategy for prefix registration validation requests (payload)
  */
 public interface PrefixRegistrationRequestValidatorStrategy extends PrefixRegistrationRequestValidator {
     // TODO
