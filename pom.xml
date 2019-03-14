@@ -23,6 +23,21 @@
         <url>https://ebi.ac.uk</url>
     </organization>
 
+    <developers>
+        <developer>
+            <id>mbernal</id>
+            <name>Manuel Bernal-Llinares</name>
+            <email>mbdebian@gmail.com</email>
+            <organization>EMBL-European Bioinformatics Institute</organization>
+            <organizationUrl>http://ebi.ac.uk/</organizationUrl>
+            <timezone>Europe/London</timezone>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
