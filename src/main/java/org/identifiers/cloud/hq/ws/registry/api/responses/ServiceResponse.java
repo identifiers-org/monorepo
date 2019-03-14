@@ -15,7 +15,6 @@ import java.io.Serializable;
  */
 @JsonIgnoreProperties(ignoreUnknown = true, value = {"httpStatus"})
 public class ServiceResponse<T> implements Serializable {
-    // TODO - I may go for the option of versioning the API via the URL - REMOVE THIS
     private String apiVersion;
     private String errorMessage;
     private HttpStatus httpStatus = HttpStatus.OK;
