@@ -7,3 +7,6 @@ ENV HQ_WEB_FRONTEND_JVM_MEMORY_MAX 1024m
 
 # Prepare the application folder
 RUN mkdir -p /home/app
+
+# Add the application structure
+ADD target/app/. /home/app
