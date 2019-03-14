@@ -1,5 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators;
 
+import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.models.validators
@@ -9,4 +11,8 @@ package org.identifiers.cloud.hq.ws.registry.models.validators;
  * ---
  */
 public interface PrefixRegistrationRequestValidator {
+    // Well, this default implementation doesn't really bring anything on the table but semantic sugar
+    default boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
+        return false;
+    }
 }
