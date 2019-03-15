@@ -37,10 +37,12 @@ public class PrefixRegistrationSessionEvent {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String eventName;
 
+    // This attribute should contain information on who triggered / created a particular event (it will usually be the
+    // 'curator' that's working on the associated prefix registration session)
     @Column(nullable = false)
     private String actor;
 
-    
+    // Providing information associated with a particular event is useful, but optional
     private String additionalInformation;
     private PrefixRegistrationSession prefixRegistrationSession;
     private Date created;
