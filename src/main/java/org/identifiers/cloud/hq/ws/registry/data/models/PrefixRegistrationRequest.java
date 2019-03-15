@@ -28,7 +28,8 @@ import javax.persistence.EntityListeners;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class PrefixRegistrationRequest {
-    // TODO
+    // TODO - There is more to refactor here for collecting information on both a namespace, a provider and the
+    //  institution the provider (resource) belongs to
     private long id;
     // Name, ported from the original identifiers.org form at https://identifiers.org/request/prefix
     private String name;

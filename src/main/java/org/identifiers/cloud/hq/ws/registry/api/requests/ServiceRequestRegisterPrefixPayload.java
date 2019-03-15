@@ -26,6 +26,7 @@ import java.io.Serializable;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ServiceRequestRegisterPrefixPayload implements Serializable {
     // TODO - Refactor this API model to collect information for resource (provider) and institution as well.
+    //
     private String name;
     private String description;
     private String homePage;
