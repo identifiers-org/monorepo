@@ -28,41 +28,63 @@ import javax.persistence.EntityListeners;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class PrefixRegistrationRequest {
-    // TODO - There is more to refactor here for collecting information on both a namespace, a provider and the
-    //  institution the provider (resource) belongs to
     private long id;
-    // Name, ported from the original identifiers.org form at https://identifiers.org/request/prefix
+    // Name for the prefix being registered, ported from the original identifiers.org form at https://identifiers.org/request/prefix
     private String name;
-    // A sensible description for this request, ported from the original identifiers.org form at https://identifiers.org/request/prefix
+
+    // This is a description for the namespace being registered, ported from the original identifiers.org form at https://identifiers.org/request/prefix
     private String description;
-    // Home page of this first resource / provider within the context of this new prefix, ported from the original identifiers.org form at https://identifiers.org/request/prefix
-    private String homePage;
-    // Organization, ported from the original identifiers.org form at https://identifiers.org/request/prefix
-    private String organization;
-    // WARNING - This is missing in the original identifiers.org form at https://identifiers.org/request/prefix,
-    // because I understand things where done by hand, but it is no longer the case
-    private String organizationDescription;
-    // WARNING - This is missing in the original identifiers.org form at https://identifiers.org/request/prefix,
-    // because I understand things where done by hand, but it is no longer the case
-    private String organizationLocation;
-    // This is from 'preferredPrefix', ported from the original identifiers.org form at https://identifiers.org/request/prefix
+
+    // Home URL for a first provider of this namespace being registered
+    private String providerHomeUrl;
+
+    // Name for the provider being registered along this prefix
+    private String providerName;
+
+    // Description for the provider being registered along this prefix
+    private String providerDescription;
+
+    // Location Associated with the provider being registered along this prefix
+    private String providerLocation;
+
+    // Unique identifier for this provider within the namespace for provider selection when resolving compact identifiers
+    // belonging to the namespace being registered
+    private String providerCode;
+
+    // This is the name of the institution that owns the resource that's being registered as first provider for this namespace
+    private String institutionName;
+
+    // A description related to the institution that owns the resource that's being registered as first provider for this namespace
+    private String institutionDescription;
+
+    // Location of the institution that owns the resource that's being registered as first provider for this namespace
+    private String institutionLocation;
+
+    // Originally called 'preferredPrefix', ported from the original identifiers.org form at https://identifiers.org/request/prefix
     private String requestedPrefix;
-    // Originally called 'resourceAccessUrl', ported from the original identifiers.org form at https://identifiers.org/request/prefix
-    private String urlPattern;
+
+    // Originally called 'resourceAccessRule', ported from the original identifiers.org form at https://identifiers.org/request/prefix
+    private String providerUrlPattern;
+
     // Originally called 'exampleIdentifier', ported from the original identifiers.org form at https://identifiers.org/request/prefix
     private String sampleId;
-    // Originally called regexPattern, ported from the original identifiers.org form at https://identifiers.org/request/prefix
+
+    // Originally called 'regexPattern', ported from the original identifiers.org form at https://identifiers.org/request/prefix
     private String idRegexPattern;
+
     // Originally called 'references', but, apparently, when hibernate produces the DDL, it doesn't do it very well and
     // the attribute name clashes with the reserved keyword 'references' of the SQL dialect used by the RDBMS backend,
     // ported from the original identifiers.org form at https://identifiers.org/request/prefix
     private String supportingReferences;
+
     // Additional information to be included as part of the request, ported from the original identifiers.org form at
     // https://identifiers.org/request/prefix
     private String additionalInformation;
+
     // Contact person for this request, ported from the original identifiers.org form at
     // https://identifiers.org/request/prefix
     private String requesterName;
+
     // Contact person for this request, ported from the original identifiers.org form at
     // https://identifiers.org/request/prefix
     private String requesterEmail;
