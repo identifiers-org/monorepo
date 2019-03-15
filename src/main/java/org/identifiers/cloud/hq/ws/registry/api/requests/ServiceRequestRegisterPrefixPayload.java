@@ -58,11 +58,13 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
     // TODO - THIS HAS BEEN REMOVED / REFACTORED INTO another attribute
     // private String homePage;
 
+    // This is the name of the institution that owns the resource that's being registered as first provider for this namespace
+    // TODO - PENDING VALIDATOR
     private String institutionName;
     private String institutionDescription;
     private String institutionLocation;
 
-    
+
     private String organization;
     private String preferredPrefix;
     private String resourceAccessRule;
