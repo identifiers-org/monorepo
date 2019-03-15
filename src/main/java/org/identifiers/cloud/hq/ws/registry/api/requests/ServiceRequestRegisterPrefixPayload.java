@@ -66,7 +66,8 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
     // TODO - PENDING VALIDATOR
     private String institutionDescription;
 
-    // 
+    // Location of the institution that owns the resource that's being registered as first provider for this namespace
+    // TODO - PENDING VALIDATOR
     private String institutionLocation;
 
 
