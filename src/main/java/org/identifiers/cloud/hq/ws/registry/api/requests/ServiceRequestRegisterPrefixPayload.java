@@ -57,6 +57,12 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
     // into a more sensible thing
     // TODO - THIS HAS BEEN REMOVED / REFACTORED INTO another attribute
     // private String homePage;
+
+    private String institutionName;
+    private String institutionDescription;
+    private String institutionLocation;
+
+    
     private String organization;
     private String preferredPrefix;
     private String resourceAccessRule;
