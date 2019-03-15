@@ -40,8 +40,11 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
     // TODO - PENDING VALIDATOR
     private String providerName;
 
-    
+    // Description for the provider being registered along this prefix
+    // TODO - PENDING VALIDATOR
     private String providerDescription;
+
+    
     private String providerLocation;
     private String providerCode;
 
