@@ -30,6 +30,7 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
     private String description;
     private String homePage;
     private String organization;
+    // TODO - We should include 'organizationDescription' here, so we can pass it down the chain
     private String preferredPrefix;
     private String resourceAccessRule;
     private String exampleIdentifier;
