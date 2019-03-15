@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,8 +33,11 @@ public class PrefixRegistrationSessionEvent {
     @GeneratedValue
     private long id;
 
-    
+    @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String eventName;
+
+    
     private String actor;
     private String additionalInformation;
     private PrefixRegistrationSession prefixRegistrationSession;
