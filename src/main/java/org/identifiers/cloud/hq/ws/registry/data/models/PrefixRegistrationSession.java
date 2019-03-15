@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import java.util.Date;
 
 /**
  * Project: registry
@@ -26,4 +27,6 @@ import javax.persistence.EntityListeners;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class PrefixRegistrationSession {
+    private long id;
+    private Date created;
 }
