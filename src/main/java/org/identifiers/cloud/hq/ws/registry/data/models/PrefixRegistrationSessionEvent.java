@@ -30,6 +30,8 @@ import java.util.Date;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @EntityListeners(AuditingEntityListener.class)
+@Table(indexes = {@Index(name = "idx_actor", columnList = "actor"),
+                    @Index(name = "idx_event_name", columnList = "eventName")})
 public class PrefixRegistrationSessionEvent {
     // TODO
     @Id
