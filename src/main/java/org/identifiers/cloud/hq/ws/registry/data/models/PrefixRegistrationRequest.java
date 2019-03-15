@@ -29,4 +29,17 @@ import javax.persistence.EntityListeners;
 @EntityListeners(AuditingEntityListener.class)
 public class PrefixRegistrationRequest {
     // TODO
+    private long id;
+    private String name;
+    private String description;
+    private String homePage;
+    private String organization;
+    private String prefix;
+    private String urlPattern;
+    private String sampleId;
+    private String idRegexPattern;
+    private String supportingReferences;
+    private String additionalInformation;
+    private String requesterName;
+    private String requesterEmail;
 }
