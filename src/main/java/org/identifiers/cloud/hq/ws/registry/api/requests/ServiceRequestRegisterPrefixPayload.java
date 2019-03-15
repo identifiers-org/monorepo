@@ -26,9 +26,21 @@ import java.io.Serializable;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ServiceRequestRegisterPrefixPayload implements Serializable {
     // TODO - Refactor this API model to collect information for resource (provider) and institution as well.
-    //
+    // Name for the prefix being registered, ported from the original identifiers.org form at https://identifiers.org/request/prefix
     private String name;
+
+    // This is a description for the namespace being registered, ported from the original identifiers.org form at https://identifiers.org/request/prefix
     private String description;
+
+    // Home URL for a first provider of this namespace being registered
+    // TODO - PENDING VALIDATOR
+    private String providerHomeUrl;
+
+    private String providerName;
+    private String providerDescription;
+    private String providerLocation;
+    private String providerCode;
+    
     private String homePage;
     private String organization;
     private String preferredPrefix;
