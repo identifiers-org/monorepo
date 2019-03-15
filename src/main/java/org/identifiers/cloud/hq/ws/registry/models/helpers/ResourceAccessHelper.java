@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This helper is part of the prefix registration API service, that has been integrated into the HQ registry.
  */
 public class ResourceAccessHelper {
     public static final String RESOURCE_ACCESS_RULE_PLACEHOLDER_ID = "{$id}";
