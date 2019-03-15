@@ -48,10 +48,15 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
     // TODO - PENDING VALIDATOR
     private String providerLocation;
 
-    
+    // Unique identifier for this provider within the namespace for provider selection when resolving compact identifiers
+    // belonging to the namespace being registered
+    // TODO - PENDING VALIDATOR
     private String providerCode;
 
-    private String homePage;
+    // Originally 'homePage' on the identifiers.org form at https://identifiers.org/request/prefix, but now refactored
+    // into a more sensible thing
+    // TODO - THIS HAS BEEN REMOVED / REFACTORED INTO another attribute
+    // private String homePage;
     private String organization;
     private String preferredPrefix;
     private String resourceAccessRule;
