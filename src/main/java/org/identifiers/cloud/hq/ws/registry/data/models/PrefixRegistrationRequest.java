@@ -1,5 +1,11 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.data.models
@@ -10,6 +16,11 @@ package org.identifiers.cloud.hq.ws.registry.data.models;
  *
  * This model represents a prefix registration request from the point of view of its persisted representation.
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@Accessors(chain = true)
 public class PrefixRegistrationRequest {
     // TODO
 }
