@@ -6,9 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -30,7 +28,11 @@ import java.util.Date;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class PrefixRegistrationSessionEvent {
     // TODO
+    @Id
+    @GeneratedValue
     private long id;
+
+    
     private String eventName;
     private String actor;
     private String additionalInformation;
