@@ -90,7 +90,6 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
     // Originally called 'regexPattern', ported from the original identifiers.org form at https://identifiers.org/request/prefix
     // TODO - PENDING VALIDATOR (refactor)
     private String idRegexPattern;
-
     
     private String[] references;
     private String additionalInformation;
