@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import javax.persistence.Entity;
 import java.util.Date;
 
 /**
@@ -23,6 +24,7 @@ import java.util.Date;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Accessors(chain = true)
+@Entity
 public class PrefixRegistrationSessionEvent {
     // TODO
     private long id;
