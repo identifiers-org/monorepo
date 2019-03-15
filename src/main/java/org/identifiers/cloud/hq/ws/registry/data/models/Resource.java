@@ -42,7 +42,7 @@ public class Resource {
 
     // URL with the '{$id}' placeholder
     @Column(nullable = false)
-    private String accessUrl;
+    private String urlPattern;
 
     // This is known as 'info' in the old data model from the EBI platform
     @Column(nullable = false)
