@@ -1,5 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
+import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.models
@@ -17,4 +19,14 @@ package org.identifiers.cloud.hq.ws.registry.models;
  */
 public interface PrefixRegistrationRequestManagementService {
     // TODO
+
+    /**
+     * This method starts the prefix registration process for the given prefix registration request.
+     *
+     * In the current iteration of this microservice it uses the prefix registration request model from the API straight
+     * away, which is ok, but it may be refactored later, including some model transformation code.
+     * @param request the prefix registration requests to use for starting the process
+     * @throws PrefixRegistrationRequestManagementServiceException
+     */
+    void startRequest(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestManagementServiceException;
 }
