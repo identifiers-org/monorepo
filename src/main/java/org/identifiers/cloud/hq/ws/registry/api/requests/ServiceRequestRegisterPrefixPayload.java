@@ -25,6 +25,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ServiceRequestRegisterPrefixPayload implements Serializable {
+    // TODO - Update this model once the service is up and running, with the new names for the attributes
     private String name;
     private String description;
     private String homePage;
