@@ -25,12 +25,11 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ServiceRequestRegisterPrefixPayload implements Serializable {
-    // TODO - Update this model once the service is up and running, with the new names for the attributes
+    // TODO - Refactor this API model to collect information for resource (provider) and institution as well.
     private String name;
     private String description;
     private String homePage;
     private String organization;
-    // TODO - We should include 'organizationDescription' here, so we can pass it down the chain
     private String preferredPrefix;
     private String resourceAccessRule;
     private String exampleIdentifier;

@@ -38,9 +38,12 @@ public class PrefixRegistrationRequest {
     private String homePage;
     // Organization, ported from the original identifiers.org form at https://identifiers.org/request/prefix
     private String organization;
-    // WARNING - This is missing in the original original identifiers.org form at https://identifiers.org/request/prefix,
+    // WARNING - This is missing in the original identifiers.org form at https://identifiers.org/request/prefix,
     // because I understand things where done by hand, but it is no longer the case
     private String organizationDescription;
+    // WARNING - This is missing in the original identifiers.org form at https://identifiers.org/request/prefix,
+    // because I understand things where done by hand, but it is no longer the case
+    private String organizationLocation;
     // This is from 'preferredPrefix', ported from the original identifiers.org form at https://identifiers.org/request/prefix
     private String prefix;
     // Originally called 'resourceAccessUrl', ported from the original identifiers.org form at https://identifiers.org/request/prefix
