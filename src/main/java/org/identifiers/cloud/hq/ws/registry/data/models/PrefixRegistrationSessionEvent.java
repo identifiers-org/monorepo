@@ -33,6 +33,7 @@ public class PrefixRegistrationSessionEvent {
     @GeneratedValue
     private long id;
 
+    // This part is useful for the client applications that will deal with session events
     @Column(nullable = false)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String eventName;
