@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -27,6 +29,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@EntityListeners(AuditingEntityListener.class)
 public class PrefixRegistrationSessionEvent {
     // TODO
     @Id
@@ -48,5 +51,9 @@ public class PrefixRegistrationSessionEvent {
 
     @ManyToOne(optional = false)
     private PrefixRegistrationSession prefixRegistrationSession;
+
+    @Column(nullable = false, updatable = false)
+    @CreatedDate
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date created;
 }
