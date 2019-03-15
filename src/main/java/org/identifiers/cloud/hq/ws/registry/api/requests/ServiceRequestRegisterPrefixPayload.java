@@ -25,7 +25,6 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ServiceRequestRegisterPrefixPayload implements Serializable {
-    // TODO - Refactor this API model to collect information for resource (provider) and institution as well.
     // Name for the prefix being registered, ported from the original identifiers.org form at https://identifiers.org/request/prefix
     private String name;
 
@@ -90,7 +89,7 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
     // Originally called 'regexPattern', ported from the original identifiers.org form at https://identifiers.org/request/prefix
     // TODO - PENDING VALIDATOR (refactor)
     private String idRegexPattern;
-    
+
     private String[] references;
     private String additionalInformation;
     private Requester requester;
