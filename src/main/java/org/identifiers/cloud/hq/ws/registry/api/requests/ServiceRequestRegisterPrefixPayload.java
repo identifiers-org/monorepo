@@ -56,7 +56,7 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
     // Originally 'homePage' on the identifiers.org form at https://identifiers.org/request/prefix, but now refactored
     // into a more sensible thing
     // TODO - THIS HAS BEEN REMOVED / REFACTORED INTO another attribute
-    // private String homePage;
+    //private String homePage;
 
     // This is the name of the institution that owns the resource that's being registered as first provider for this namespace
     // TODO - PENDING VALIDATOR
@@ -70,8 +70,10 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
     // TODO - PENDING VALIDATOR
     private String institutionLocation;
 
-
-    private String organization;
+    // This attribute is part of the original identifiers.org form at https://identifiers.org/request/prefix, but now
+    // refactored into a more sensible thing
+    // TODO - THIS HAS BEEN REMOVED / REFACTORED INTO another attribute
+    //private String organization;
     private String preferredPrefix;
     private String resourceAccessRule;
     private String exampleIdentifier;
