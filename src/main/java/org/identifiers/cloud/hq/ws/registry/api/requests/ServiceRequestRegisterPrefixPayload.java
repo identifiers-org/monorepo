@@ -74,7 +74,10 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
     // refactored into a more sensible thing
     // TODO - THIS HAS BEEN REMOVED / REFACTORED INTO another attribute
     //private String organization;
-    private String preferredPrefix;
+
+    // Originally called 'preferredPrefix', ported from the original identifiers.org form at https://identifiers.org/request/prefix
+    // TODO - PENDING VALIDATOR (refactor)
+    private String requestedPrefix;
     private String resourceAccessRule;
     private String exampleIdentifier;
     private String regexPattern;

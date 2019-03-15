@@ -46,7 +46,7 @@ public class PrefixRegistrationRequest {
     // because I understand things where done by hand, but it is no longer the case
     private String organizationLocation;
     // This is from 'preferredPrefix', ported from the original identifiers.org form at https://identifiers.org/request/prefix
-    private String prefix;
+    private String requestedPrefix;
     // Originally called 'resourceAccessUrl', ported from the original identifiers.org form at https://identifiers.org/request/prefix
     private String urlPattern;
     // Originally called 'exampleIdentifier', ported from the original identifiers.org form at https://identifiers.org/request/prefix
