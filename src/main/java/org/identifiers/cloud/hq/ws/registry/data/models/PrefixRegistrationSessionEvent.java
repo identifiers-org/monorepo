@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.util.Date;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.data.models
@@ -23,4 +25,10 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class PrefixRegistrationSessionEvent {
     // TODO
+    private long id;
+    private String eventName;
+    private String actor;
+    private String additionalInformation;
+    private PrefixRegistrationSession prefixRegistrationSession;
+    private Date created;
 }
