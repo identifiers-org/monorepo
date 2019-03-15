@@ -19,6 +19,9 @@ import java.util.Date;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This model represents a prefix registration session, it groups together the different stages in the process of
+ * approving or rejecting a prefix registration requests, and the evolution of its content.
  */
 @Data
 @AllArgsConstructor
