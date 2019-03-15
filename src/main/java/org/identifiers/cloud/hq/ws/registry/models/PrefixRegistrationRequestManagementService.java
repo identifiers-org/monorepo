@@ -29,4 +29,9 @@ public interface PrefixRegistrationRequestManagementService {
      * @throws PrefixRegistrationRequestManagementServiceException
      */
     void startRequest(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestManagementServiceException;
+
+    // TODO - ammend request
+    // TODO - comment request
+    // TODO - reject request
+    // TODO - accept request
 }
