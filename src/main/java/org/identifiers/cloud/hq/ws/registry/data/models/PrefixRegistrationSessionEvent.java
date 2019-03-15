@@ -37,8 +37,10 @@ public class PrefixRegistrationSessionEvent {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String eventName;
 
-    
+    @Column(nullable = false)
     private String actor;
+
+    
     private String additionalInformation;
     private PrefixRegistrationSession prefixRegistrationSession;
     private Date created;
