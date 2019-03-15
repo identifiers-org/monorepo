@@ -13,6 +13,8 @@ import lombok.experimental.Accessors;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This is the base class that represents the events that are part of a prefix registration request session.
  */
 @Data
 @AllArgsConstructor
