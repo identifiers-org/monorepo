@@ -45,6 +45,8 @@ public class PrefixRegistrationSessionEvent {
 
     // Providing information associated with a particular event is useful, but optional
     private String additionalInformation;
+
+    @ManyToOne(optional = false)
     private PrefixRegistrationSession prefixRegistrationSession;
     private Date created;
 }
