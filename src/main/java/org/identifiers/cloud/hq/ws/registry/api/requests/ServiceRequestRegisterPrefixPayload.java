@@ -86,8 +86,12 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
     // Originally called 'exampleIdentifier', ported from the original identifiers.org form at https://identifiers.org/request/prefix
     // TODO - PENDING VALIDATOR (refactor)
     private String sampleId;
+
+    // Originally called 'regexPattern', ported from the original identifiers.org form at https://identifiers.org/request/prefix
+    // TODO - PENDING VALIDATOR (refactor)
+    private String idRegexPattern;
+
     
-    private String regexPattern;
     private String[] references;
     private String additionalInformation;
     private Requester requester;
