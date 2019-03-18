@@ -68,7 +68,10 @@ public class PrefixRegistrationRequestValidatorRequestedPrefix implements Prefix
             }
         } catch (RuntimeException e) {
             // TODO
-            
+            errorMessage = String.format("While validating prefix '%s', the following error occurred: '%s'",
+                    request.getRequestedPrefix(), e.getMessage());
+            logger.error(errorMessage);
+            throw new PrefixRegistrationRequestValidatorException(errorMessage);
         }
         // TODO - This hack is only valid because the resolver does not validate the PID against the registered regular expression for the given prefix
         String fakeCompactId = String.format("%s:093846", request.getRequestedPrefix());
