@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Scope("prototype")
-@Qualifier("prefixRegistrationRequestValidatorHomePage")
-public class PrefixRegistrationRequestValidatorHomePage implements PrefixRegistrationRequestValidator {
+@Qualifier("PrefixRegistrationRequestValidatorProviderHomeUrl")
+public class PrefixRegistrationRequestValidatorProviderHomeUrl implements PrefixRegistrationRequestValidator {
 
     private WebPageChecker webPageChecker = WebPageCheckerFactory.getWebPageChecker();
 
@@ -24,12 +24,12 @@ public class PrefixRegistrationRequestValidatorHomePage implements PrefixRegistr
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
         // TODO - Refactor this code out as a URL checker
         // Home Page URL for the resource is required
-        if (request.getHomePage() == null) {
-            throw new PrefixRegistrationRequestValidatorException("MISSING URL describing the resource");
+        if (request.getProviderHomeUrl() == null) {
+            throw new PrefixRegistrationRequestValidatorException("MISSING URL with information for a resource within the context of a namespace");
         }
         boolean valid = true;
         try {
-            valid = webPageChecker.checkWebPageUrl(request.getHomePage());
+            valid = webPageChecker.checkWebPageUrl(request.getProviderHomeUrl());
         } catch (WebPageCheckerException e) {
             throw new PrefixRegistrationRequestValidatorException(e.getMessage());
         }

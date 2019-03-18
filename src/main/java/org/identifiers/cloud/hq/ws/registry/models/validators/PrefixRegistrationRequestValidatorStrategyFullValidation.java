@@ -33,7 +33,7 @@ public class PrefixRegistrationRequestValidatorStrategyFullValidation implements
     private PrefixRegistrationRequestValidator descriptionValidator;
 
     @Autowired
-    @Qualifier("prefixRegistrationRequestValidatorHomePage")
+    @Qualifier("prefixRegistrationRequestValidatorProviderHomeUrl")
     private PrefixRegistrationRequestValidator homePageValidator;
 
     @Autowired
