@@ -47,11 +47,9 @@ public class PrefixRegistrationRequestValidatorRequestedPrefix implements Prefix
             // TODO
             String errorMessage = "--- no error message has been set ---";
             if (request.getRequestedPrefix() == null) {
-
+                logger.error("Invalid request for validating Requested Prefix, WITHOUT specifying a prefix");
+                throw new PrefixRegistrationRequestValidatorException("MISSING Preferred Prefix");
             }
-        }
-        if (request.getRequestedPrefix() == null) {
-            throw new PrefixRegistrationRequestValidatorException("MISSING Preferred Prefix");
         }
         // TODO - This hack is only valid because the resolver does not validate the PID against the registered regular expression for the given prefix
         String fakeCompactId = String.format("%s:093846", request.getRequestedPrefix());
