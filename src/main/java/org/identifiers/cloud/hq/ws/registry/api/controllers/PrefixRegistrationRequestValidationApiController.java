@@ -1,8 +1,11 @@
 package org.identifiers.cloud.hq.ws.registry.api.controllers;
 
 import org.identifiers.cloud.hq.ws.registry.api.models.PrefixRegistrationRequestValidationApiModel;
+import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestValidate;
+import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseValidateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Project: registry
@@ -17,6 +20,10 @@ public class PrefixRegistrationRequestValidationApiController {
     @Autowired
     private PrefixRegistrationRequestValidationApiModel model;
 
-    
+    @PostMapping(value = "/validateName")
+    public ResponseEntity<?> validateName(@RequestBody ServiceRequestValidate request) {
+        ServiceResponseValidateRequest response = model.validateName(request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
+    }
     // TODO
 }
