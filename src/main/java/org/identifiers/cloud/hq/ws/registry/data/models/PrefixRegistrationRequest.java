@@ -28,6 +28,7 @@ import javax.persistence.EntityListeners;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class PrefixRegistrationRequest {
+    // TODO Define how these attributes are going to persist
     private long id;
     // Name for the prefix being registered, ported from the original identifiers.org form at https://identifiers.org/request/prefix
     private String name;
