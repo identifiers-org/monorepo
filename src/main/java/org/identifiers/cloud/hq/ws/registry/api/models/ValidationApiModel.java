@@ -125,4 +125,10 @@ public class ValidationApiModel {
         }
         return response;
     }
+
+    // -- API --
+    public ServiceResponseValidateRequest validateName(ServiceRequestValidate request) {
+        return doValidation(request, nameValidator);
+    }
+
 }
