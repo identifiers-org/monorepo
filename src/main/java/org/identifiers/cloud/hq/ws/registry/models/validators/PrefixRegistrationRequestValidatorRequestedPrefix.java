@@ -26,9 +26,9 @@ import java.io.IOException;
 // We don't need qualifier here?
 @Component
 @Scope("prototype")
-@Qualifier("prefixRegistrationRequestValidatorPreferredPrefix")
-public class PrefixRegistrationRequestValidatorPreferredPrefix implements PrefixRegistrationRequestValidator {
-    private static Logger logger = LoggerFactory.getLogger(PrefixRegistrationRequestValidatorPreferredPrefix.class);
+@Qualifier("PrefixRegistrationRequestValidatorRequestedPrefix")
+public class PrefixRegistrationRequestValidatorRequestedPrefix implements PrefixRegistrationRequestValidator {
+    private static Logger logger = LoggerFactory.getLogger(PrefixRegistrationRequestValidatorRequestedPrefix.class);
 
     class RestTemplateErrorHandler implements ResponseErrorHandler {
         ClientHttpResponse clientHttpResponse;
@@ -59,11 +59,11 @@ public class PrefixRegistrationRequestValidatorPreferredPrefix implements Prefix
         // TODO - e.g. Java and Python, so people don't have to write their own code every time
         // TODO - What happens if the prefix has been requested for registration but it's in "pending" state?
         // TODO
-        if (request.getPreferredPrefix() == null) {
+        if (request.getRequestedPrefix() == null) {
             throw new PrefixRegistrationRequestValidatorException("MISSING Preferred Prefix");
         }
         // TODO - This hack is only valid because the resolver does not validate the PID against the registered regular expression for the given prefix
-        String fakeCompactId = String.format("%s:093846", request.getPreferredPrefix());
+        String fakeCompactId = String.format("%s:093846", request.getRequestedPrefix());
         String queryUrl = String.format("http://%s:%d/%s", resolverHost, resolverPort, fakeCompactId);
         logger.info("Prefix Validation, hack URL '{}'", queryUrl);
         RestTemplate restTemplate = new RestTemplate();

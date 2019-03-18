@@ -21,7 +21,7 @@ import java.util.List;
 public class PrefixRegistrationRequestValidatorStrategyFullValidation implements PrefixRegistrationRequestValidatorStrategy {
 
     @Autowired
-    @Qualifier("prefixRegistrationRequestValidatorPreferredPrefix")
+    @Qualifier("prefixRegistrationRequestValidatorRequestedPrefix")
     private PrefixRegistrationRequestValidator prefixValidator;
 
     @Autowired
@@ -34,7 +34,7 @@ public class PrefixRegistrationRequestValidatorStrategyFullValidation implements
 
     @Autowired
     @Qualifier("prefixRegistrationRequestValidatorProviderHomeUrl")
-    private PrefixRegistrationRequestValidator homePageValidator;
+    private PrefixRegistrationRequestValidator providerHomeUrlValidator;
 
     @Autowired
     @Qualifier("prefixRegistrationRequestValidatorOrganization")
@@ -69,7 +69,7 @@ public class PrefixRegistrationRequestValidatorStrategyFullValidation implements
         return Arrays.asList(
                 nameValidator,
                 descriptionValidator,
-                homePageValidator,
+                providerHomeUrlValidator,
                 organizationValidator,
                 prefixValidator,
                 resourceAccessRuleValidator,
