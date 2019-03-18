@@ -170,4 +170,8 @@ public class ValidationApiModel {
     public ServiceResponseValidateRequest validateRequestedPrefix(ServiceRequestValidate request) {
         return doValidation(request, prefixValidator);
     }
+
+    public ServiceResponseValidateRequest validateProviderUrlPattern(ServiceRequestValidate request) {
+        return doValidation(request, providerUrlPatternValidator);
+    }
 }
