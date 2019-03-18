@@ -131,4 +131,8 @@ public class ValidationApiModel {
         return doValidation(request, nameValidator);
     }
 
+    public ServiceResponseValidateRequest validateDescription(ServiceRequestValidate request) {
+        return doValidation(request, descriptionValidator);
+    }
+
 }
