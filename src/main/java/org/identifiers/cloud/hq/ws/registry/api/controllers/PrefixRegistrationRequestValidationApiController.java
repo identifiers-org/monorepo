@@ -99,5 +99,10 @@ public class PrefixRegistrationRequestValidationApiController {
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
+    @PostMapping(value = "/validateIdRegexPattern")
+    public ResponseEntity<?> validateIdRegexPattern(@RequestBody ServiceRequestValidate request) {
+        ServiceResponseValidateRequest response = model.validateIdRegexPattern(request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
+    }
     // TODO
 }
