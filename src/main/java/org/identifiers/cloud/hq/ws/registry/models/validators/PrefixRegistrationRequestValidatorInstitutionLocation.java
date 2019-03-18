@@ -13,6 +13,9 @@ import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterP
 public class PrefixRegistrationRequestValidatorInstitutionLocation implements PrefixRegistrationRequestValidator {
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
+        if (request.getInstitutionLocation() == null) {
+            throw new PrefixRegistrationRequestValidatorException("Institution Location information is REQUIRED, but it's MISSING");
+        }
         return false;
     }
 }
