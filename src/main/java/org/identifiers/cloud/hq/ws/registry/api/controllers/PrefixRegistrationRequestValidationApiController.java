@@ -116,5 +116,11 @@ public class PrefixRegistrationRequestValidationApiController {
         ServiceResponseValidateRequest response = model.validateAdditionalInformation(request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
+
+    @PostMapping(value = "/validateRequester")
+    public ResponseEntity<?> validateRequester(@RequestBody ServiceRequestValidate request) {
+        ServiceResponseValidateRequest response = model.validateRequester(request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
+    }
     // TODO
 }
