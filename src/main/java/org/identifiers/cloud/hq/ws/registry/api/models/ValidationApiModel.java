@@ -57,4 +57,8 @@ public class ValidationApiModel {
     @Qualifier("PrefixRegistrationRequestValidatorInstitutionName")
     private PrefixRegistrationRequestValidator institutionDescriptionValidator;
 
+    @Autowired
+    @Qualifier("PrefixRegistrationRequestValidatorInstitutionLocation")
+    private PrefixRegistrationRequestValidator institutionLocationValidator;
+
 }
