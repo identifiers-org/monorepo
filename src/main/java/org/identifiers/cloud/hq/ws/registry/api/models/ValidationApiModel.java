@@ -21,4 +21,8 @@ public class ValidationApiModel {
     @Qualifier("prefixRegistrationRequestValidatorRequestedPrefix")
     private PrefixRegistrationRequestValidator prefixValidator;
 
+    @Autowired
+    @Qualifier("prefixRegistrationRequestValidatorName")
+    private PrefixRegistrationRequestValidator nameValidator;
+
 }
