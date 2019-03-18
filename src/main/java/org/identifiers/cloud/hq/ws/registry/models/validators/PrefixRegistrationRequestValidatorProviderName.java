@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Scope("prototype")
-@Qualifier("prefixRegistrationRequestValidatorOrganization")
-public class PrefixRegistrationRequestValidatorOrganization implements PrefixRegistrationRequestValidator {
+@Qualifier("PrefixRegistrationRequestValidatorProviderName")
+public class PrefixRegistrationRequestValidatorProviderName implements PrefixRegistrationRequestValidator {
     // Up to this point, a developer may be wondering why I return a value that it is not used, because in case a
     // validator "fails", I notify the "not valid" state and also the reason via an exception. It could have been done
     // by using a POJO that contains a boolean 'valid' to flag whether the attribute that was tested is valid or not, a
@@ -26,8 +26,8 @@ public class PrefixRegistrationRequestValidatorOrganization implements PrefixReg
     // want to know why. So that's why I decided to do it via this coding style.
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
-        if (request.getOrganization() == null) {
-            throw new PrefixRegistrationRequestValidatorException("The name of the providing organization is MISSING");
+        if (request.getProviderName() == null) {
+            throw new PrefixRegistrationRequestValidatorException("The name of the resource (provider name) is MISSING");
         }
         return true;
     }
