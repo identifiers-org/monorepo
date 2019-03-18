@@ -1,9 +1,12 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
 import lombok.extern.slf4j.Slf4j;
+import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
+import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponse;
 import org.identifiers.cloud.hq.ws.registry.models.validators.PrefixRegistrationRequestValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 /**
@@ -85,4 +88,10 @@ public class ValidationApiModel {
     @Qualifier("prefixRegistrationRequestValidatorRequester")
     private PrefixRegistrationRequestValidator requesterValidator;
 
+    // Helpers
+    private <T> void initDefaultResponse(ServiceResponse<T> response, T payload) {
+        response.setApiVersion(ApiCentral.apiVersion)
+                .setHttpStatus(HttpStatus.OK);
+        response.setPayload(payload);
+    }
 }
