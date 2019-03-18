@@ -45,7 +45,10 @@ public class PrefixRegistrationRequestValidatorRequestedPrefix implements Prefix
         // TODO
         try {
             // TODO
-            
+            String errorMessage = "--- no error message has been set ---";
+            if (request.getRequestedPrefix() == null) {
+
+            }
         }
         if (request.getRequestedPrefix() == null) {
             throw new PrefixRegistrationRequestValidatorException("MISSING Preferred Prefix");
