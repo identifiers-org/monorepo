@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
  * ---
  */
 @Component
-public class ValidationApiModel {
+public class PrefixRegistrationRequestValidationApiModel {
     @Autowired
     @Qualifier("prefixRegistrationRequestValidatorRequestedPrefix")
     private PrefixRegistrationRequestValidator prefixValidator;
