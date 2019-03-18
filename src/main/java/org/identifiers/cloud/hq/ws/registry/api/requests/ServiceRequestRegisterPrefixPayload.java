@@ -72,7 +72,6 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
     private String requestedPrefix;
 
     // Originally called 'resourceAccessRule', ported from the original identifiers.org form at https://identifiers.org/request/prefix
-    // TODO - PENDING VALIDATOR (refactor)
     private String providerUrlPattern;
 
     // Originally called 'exampleIdentifier', ported from the original identifiers.org form at https://identifiers.org/request/prefix
