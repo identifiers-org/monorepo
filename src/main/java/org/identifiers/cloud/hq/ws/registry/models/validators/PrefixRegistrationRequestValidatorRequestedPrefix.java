@@ -23,7 +23,6 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 @Qualifier("PrefixRegistrationRequestValidatorRequestedPrefix")
 public class PrefixRegistrationRequestValidatorRequestedPrefix implements PrefixRegistrationRequestValidator {
-    // TODO - Refactor this according to issue #16, at https://github.com/identifiers-org/cloud-hq-ws-registry/issues/16
     private static Logger logger = LoggerFactory.getLogger(PrefixRegistrationRequestValidatorRequestedPrefix.class);
 
     @Autowired
