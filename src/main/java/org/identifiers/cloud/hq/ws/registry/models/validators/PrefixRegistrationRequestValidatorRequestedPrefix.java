@@ -1,8 +1,10 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators;
 
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
+import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -31,27 +33,8 @@ public class PrefixRegistrationRequestValidatorRequestedPrefix implements Prefix
     // TODO - Refactor this according to issue #16, at https://github.com/identifiers-org/cloud-hq-ws-registry/issues/16
     private static Logger logger = LoggerFactory.getLogger(PrefixRegistrationRequestValidatorRequestedPrefix.class);
 
-    class RestTemplateErrorHandler implements ResponseErrorHandler {
-        ClientHttpResponse clientHttpResponse;
-
-        @Override
-        public boolean hasError(ClientHttpResponse clientHttpResponse) throws IOException {
-            // By default we'll tell the rest template there is no error here
-            return false;
-        }
-
-        @Override
-        public void handleError(ClientHttpResponse clientHttpResponse) throws IOException {
-            // Thus, we don't need to do anything to handle a non-existing error
-        }
-    }
-
-    // TODO - Let's see how this plays with Docker, later. It should go through a discovery service, but I'll find out
-    // TODO - later how to lay all the pieces together for testing, development and production
-    @Value("${org.identifiers.cloud.ws.register.resolver.host}")
-    private String resolverHost;
-    @Value("${org.identifiers.cloud.ws.register.resolver.port}")
-    private int resolverPort;
+    @Autowired
+    private NamespaceRepository namespaceRepository;
 
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
@@ -60,6 +43,7 @@ public class PrefixRegistrationRequestValidatorRequestedPrefix implements Prefix
         // TODO - e.g. Java and Python, so people don't have to write their own code every time
         // TODO - What happens if the prefix has been requested for registration but it's in "pending" state?
         // TODO
+
         if (request.getRequestedPrefix() == null) {
             throw new PrefixRegistrationRequestValidatorException("MISSING Preferred Prefix");
         }
