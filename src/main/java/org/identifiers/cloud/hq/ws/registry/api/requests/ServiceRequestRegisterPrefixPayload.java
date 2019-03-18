@@ -45,7 +45,6 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
 
     // Unique identifier for this provider within the namespace for provider selection when resolving compact identifiers
     // belonging to the namespace being registered
-    // TODO - PENDING VALIDATOR
     private String providerCode;
 
     // This is the name of the institution that owns the resource that's being registered as first provider for this namespace

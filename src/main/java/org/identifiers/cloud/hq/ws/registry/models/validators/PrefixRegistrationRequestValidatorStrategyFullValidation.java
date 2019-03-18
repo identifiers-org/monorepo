@@ -85,7 +85,7 @@ public class PrefixRegistrationRequestValidatorStrategyFullValidation implements
                 providerNameValidator,
                 providerDescriptionValidator,
                 providerLocationValidator,
-                providerCodeValidator, 
+                providerCodeValidator,
                 prefixValidator,
                 providerUrlPatternValidator,
                 crossedSampleIdProviderUrlPatternValidator,
