@@ -43,13 +43,13 @@ public class PrefixRegistrationRequestValidatorRequestedPrefix implements Prefix
         // TODO - e.g. Java and Python, so people don't have to write their own code every time
         // TODO - What happens if the prefix has been requested for registration but it's in "pending" state?
         // TODO
+        if (request.getRequestedPrefix() == null) {
+            logger.error("Invalid request for validating Requested Prefix, WITHOUT specifying a prefix");
+            throw new PrefixRegistrationRequestValidatorException("MISSING Preferred Prefix");
+        }
         try {
             // TODO
             String errorMessage = "--- no error message has been set ---";
-            if (request.getRequestedPrefix() == null) {
-                logger.error("Invalid request for validating Requested Prefix, WITHOUT specifying a prefix");
-                throw new PrefixRegistrationRequestValidatorException("MISSING Preferred Prefix");
-            }
         }
         // TODO - This hack is only valid because the resolver does not validate the PID against the registered regular expression for the given prefix
         String fakeCompactId = String.format("%s:093846", request.getRequestedPrefix());
