@@ -13,6 +13,9 @@ import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterP
 public class PrefixRegistrationRequestValidatorProviderLocation implements PrefixRegistrationRequestValidator {
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
-        return false;
+        if (request.getProviderLocation() == null) {
+            throw new PrefixRegistrationRequestValidatorException("Provider Location MUST BE PRESENT, and follow ISO 3166/MA Alpha-2 Country Codes format");
+        }
+        return true;
     }
 }
