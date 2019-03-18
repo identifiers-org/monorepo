@@ -15,12 +15,12 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Scope("prototype")
-@Qualifier("prefixRegistrationRequestValidatorRegexPattern")
-public class PrefixRegistrationRequestValidatorRegexPattern implements PrefixRegistrationRequestValidator {
+@Qualifier("PrefixRegistrationRequestValidatorIdRegexPattern")
+public class PrefixRegistrationRequestValidatorIdRegexPattern implements PrefixRegistrationRequestValidator {
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
-        if (request.getRegexPattern() == null) {
-            throw new PrefixRegistrationRequestValidatorException("MISSING REQUIRED Regex Pattern");
+        if (request.getIdRegexPattern() == null) {
+            throw new PrefixRegistrationRequestValidatorException("MISSING REQUIRED ID Regex Pattern");
         }
         return true;
     }
