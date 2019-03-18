@@ -92,5 +92,12 @@ public class PrefixRegistrationRequestValidationApiController {
         ServiceResponseValidateRequest response = model.validateProviderUrlPattern(request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
+
+    @PostMapping(value = "/validateSampleId")
+    public ResponseEntity<?> validateSampleId(@RequestBody ServiceRequestValidate request) {
+        ServiceResponseValidateRequest response = model.validateSampleId(request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
+    }
+
     // TODO
 }
