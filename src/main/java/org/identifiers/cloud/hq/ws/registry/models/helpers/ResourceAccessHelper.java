@@ -13,9 +13,9 @@ import javax.validation.constraints.NotNull;
  * This helper is part of the prefix registration API service, that has been integrated into the HQ registry.
  */
 public class ResourceAccessHelper {
-    public static final String RESOURCE_ACCESS_RULE_PLACEHOLDER_ID = "{$id}";
+    public static final String PROVIDER_URL_PATTERN_PLACEHOLDER_ID = "{$id}";
 
     public static String getResourceUrlFor(@NotNull String accessRule, @NotNull String id) {
-        return accessRule.replace(RESOURCE_ACCESS_RULE_PLACEHOLDER_ID, id);
+        return accessRule.replace(PROVIDER_URL_PATTERN_PLACEHOLDER_ID, id);
     }
 }

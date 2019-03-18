@@ -17,23 +17,23 @@ import org.springframework.util.StringUtils;
  */
 @Component
 @Scope("prototype")
-@Qualifier("prefixRegistrationRequestValidatorResourceAccessRule")
-public class PrefixRegistrationRequestValidatorResourceAccessRule implements PrefixRegistrationRequestValidator {
+@Qualifier("PrefixRegistrationRequestValidatorProviderUrlPattern")
+public class PrefixRegistrationRequestValidatorProviderUrlPattern implements PrefixRegistrationRequestValidator {
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
         // TODO
-        if (request.getResourceAccessRule() == null) {
-            throw new PrefixRegistrationRequestValidatorException("MISSING required Resource Access Rule");
+        if (request.getProviderUrlPattern() == null) {
+            throw new PrefixRegistrationRequestValidatorException("MISSING required Provider URL Pattern");
         }
         // Check that PLACEHOLDER_ID is uniquely present
-        if (StringUtils.countOccurrencesOf(request.getResourceAccessRule(), ResourceAccessHelper.RESOURCE_ACCESS_RULE_PLACEHOLDER_ID) != 1) {
-            throw new PrefixRegistrationRequestValidatorException(String.format("ID placeholder '%s' IS REQUIRED to be present at least once in the resource access rule", ResourceAccessHelper.RESOURCE_ACCESS_RULE_PLACEHOLDER_ID));
+        if (StringUtils.countOccurrencesOf(request.getProviderUrlPattern(), ResourceAccessHelper.PROVIDER_URL_PATTERN_PLACEHOLDER_ID) != 1) {
+            throw new PrefixRegistrationRequestValidatorException(String.format("ID placeholder '%s' IS REQUIRED to be present at least once in the provider URL pattern", ResourceAccessHelper.PROVIDER_URL_PATTERN_PLACEHOLDER_ID));
         }
         WebPageChecker webPageChecker = WebPageCheckerFactory.getWebPageChecker();
-        String urlToCheck = StringUtils.replace(request.getResourceAccessRule(), ResourceAccessHelper.RESOURCE_ACCESS_RULE_PLACEHOLDER_ID, "placeholderId");
+        String urlToCheck = StringUtils.replace(request.getProviderUrlPattern(), ResourceAccessHelper.PROVIDER_URL_PATTERN_PLACEHOLDER_ID, "placeholderId");
         // Remove the PLACEHOLDER_ID from thr URL for standalone checking
         if (!webPageChecker.checkForValidUrl(urlToCheck)) {
-            throw new PrefixRegistrationRequestValidatorException(String.format("INVALID resource access rule '%s'", request.getResourceAccessRule()));
+            throw new PrefixRegistrationRequestValidatorException(String.format("INVALID provider URL pattern '%s'", request.getProviderUrlPattern()));
         }
         return true;
     }

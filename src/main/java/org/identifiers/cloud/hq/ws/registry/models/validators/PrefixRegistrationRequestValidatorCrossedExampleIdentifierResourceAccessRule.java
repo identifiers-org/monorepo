@@ -26,7 +26,7 @@ public class PrefixRegistrationRequestValidatorCrossedExampleIdentifierResourceA
         List<String> errors = new ArrayList<>();
         // Check resource access rule
         try {
-            new PrefixRegistrationRequestValidatorResourceAccessRule().validate(request);
+            new PrefixRegistrationRequestValidatorProviderUrlPattern().validate(request);
         } catch (PrefixRegistrationRequestValidatorException e) {
             errors.add(e.getMessage());
         }
