@@ -151,5 +151,8 @@ public class ValidationApiModel {
         return doValidation(request, providerLocationValidator);
     }
 
+    public ServiceResponseValidateRequest validateProviderCode(ServiceRequestValidate request) {
+        return doValidation(request, providerLocationValidator);
+    }
 
 }
