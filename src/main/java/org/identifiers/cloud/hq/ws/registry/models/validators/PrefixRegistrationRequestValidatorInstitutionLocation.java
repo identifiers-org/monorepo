@@ -16,6 +16,6 @@ public class PrefixRegistrationRequestValidatorInstitutionLocation implements Pr
         if (request.getInstitutionLocation() == null) {
             throw new PrefixRegistrationRequestValidatorException("Institution Location information is REQUIRED, but it's MISSING");
         }
-        return false;
+        return true;
     }
 }
