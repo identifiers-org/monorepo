@@ -1,6 +1,9 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
 import lombok.extern.slf4j.Slf4j;
+import org.identifiers.cloud.hq.ws.registry.models.validators.PrefixRegistrationRequestValidator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,4 +17,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class ValidationApiModel {
+    @Autowired
+    @Qualifier("prefixRegistrationRequestValidatorRequestedPrefix")
+    private PrefixRegistrationRequestValidator prefixValidator;
+
 }
