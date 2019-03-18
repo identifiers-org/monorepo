@@ -19,8 +19,8 @@ import java.util.List;
  */
 @Component
 @Scope("prototype")
-@Qualifier("prefixRegistrationRequestValidatorCrossedExampleIdentifierResourceAccessRule")
-public class PrefixRegistrationRequestValidatorCrossedExampleIdentifierResourceAccessRule implements PrefixRegistrationRequestValidator {
+@Qualifier("PrefixRegistrationRequestValidatorCrossedSampleIdProviderUrlPattern")
+public class PrefixRegistrationRequestValidatorCrossedSampleIdProviderUrlPattern implements PrefixRegistrationRequestValidator {
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
         List<String> errors = new ArrayList<>();
@@ -42,15 +42,15 @@ public class PrefixRegistrationRequestValidatorCrossedExampleIdentifierResourceA
         }
         // Cross-validate example identifier
         try {
-            WebPageCheckerFactory.getWebPageChecker().checkWebPageUrl(ResourceAccessHelper.getResourceUrlFor(request.getResourceAccessRule(), request.getExampleIdentifier()));
+            WebPageCheckerFactory.getWebPageChecker().checkWebPageUrl(ResourceAccessHelper.getResourceUrlFor(request.getProviderUrlPattern(), request.getSampleId()));
         } catch (WebPageCheckerException e) {
             throw new PrefixRegistrationRequestValidatorException(
-                    String.format("The provided Resource Access Rule '%s' " +
-                                    "combined with the provided Example Identifier '%s' " +
-                                    "into '%s' DOES NOT VALIDATE", request.getResourceAccessRule(),
-                            request.getExampleIdentifier(),
-                            ResourceAccessHelper.getResourceUrlFor(request.getResourceAccessRule(),
-                                    request.getExampleIdentifier())));
+                    String.format("The provided Provider URL Pattern '%s' " +
+                                    "combined with the provided Sample ID '%s' " +
+                                    "into '%s' DOES NOT VALIDATE", request.getProviderUrlPattern(),
+                            request.getSampleId(),
+                            ResourceAccessHelper.getResourceUrlFor(request.getProviderUrlPattern(),
+                                    request.getSampleId())));
         }
         return true;
     }
