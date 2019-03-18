@@ -16,6 +16,7 @@ public class PrefixRegistrationRequestValidatorInstitutionDescription implements
         if (request.getInstitutionDescription() == null) {
             throw new PrefixRegistrationRequestValidatorException("Institution Description is REQUIRED, but it's missing.");
         }
+        // TODO - Should we require a minimum length for the institution description in the future?
         return true;
     }
 }
