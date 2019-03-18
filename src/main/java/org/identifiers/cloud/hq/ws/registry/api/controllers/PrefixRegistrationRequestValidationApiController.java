@@ -1,5 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.api.controllers;
 
+import org.springframework.web.bind.annotation.RestController;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.api.controllers
@@ -8,5 +10,6 @@ package org.identifiers.cloud.hq.ws.registry.api.controllers;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+@RestController(value = "/prefixRegistrationApi")
 public class PrefixRegistrationRequestValidationApiController {
 }
