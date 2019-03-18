@@ -80,5 +80,11 @@ public class PrefixRegistrationRequestValidationApiController {
         ServiceResponseValidateRequest response = model.validateInstitutionLocation(request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
+
+    @PostMapping(value = "/validateRequestedPrefix")
+    public ResponseEntity<?> validateRequestedPrefix(@RequestBody ServiceRequestValidate request) {
+        ServiceResponseValidateRequest response = model.validateRequestedPrefix(request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
+    }
     // TODO
 }
