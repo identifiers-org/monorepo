@@ -33,4 +33,8 @@ public class ValidationApiModel {
     @Qualifier("prefixRegistrationRequestValidatorProviderHomeUrl")
     private PrefixRegistrationRequestValidator providerHomeUrlValidator;
 
+    @Autowired
+    @Qualifier("prefixRegistrationRequestValidatorProviderName")
+    private PrefixRegistrationRequestValidator providerNameValidator;
+
 }
