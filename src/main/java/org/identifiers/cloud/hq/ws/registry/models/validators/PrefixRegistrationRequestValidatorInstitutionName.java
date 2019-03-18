@@ -16,6 +16,6 @@ public class PrefixRegistrationRequestValidatorInstitutionName implements Prefix
         if (request.getInstitutionName() == null) {
             throw new PrefixRegistrationRequestValidatorException("Institution Name is MISSING");
         }
-        return false;
+        return true;
     }
 }
