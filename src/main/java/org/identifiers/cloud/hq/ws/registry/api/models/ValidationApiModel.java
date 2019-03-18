@@ -77,5 +77,8 @@ public class ValidationApiModel {
     @Qualifier("prefixRegistrationRequestValidatorReferences")
     private PrefixRegistrationRequestValidator referencesValidator;
 
+    @Autowired
+    @Qualifier("prefixRegistrationRequestValidatorAdditionalInformation")
+    private PrefixRegistrationRequestValidator additionalInformationValidator;
 
 }
