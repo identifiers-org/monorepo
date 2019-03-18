@@ -22,9 +22,9 @@ import java.util.regex.Pattern;
  */
 @Component
 @Scope("prototype")
-@Qualifier("prefixRegistrationRequestValidatorCrossedRegexPatternAndExampleIdentifier")
-public class PrefixRegistrationRequestValidatorCrossedRegexPatternAndExampleIdentifier implements PrefixRegistrationRequestValidator {
-    private static Logger logger = LoggerFactory.getLogger(PrefixRegistrationRequestValidatorCrossedRegexPatternAndExampleIdentifier.class);
+@Qualifier("PrefixRegistrationRequestValidatorCrossedIdRegexPatternAndSampleId")
+public class PrefixRegistrationRequestValidatorCrossedIdRegexPatternAndSampleId implements PrefixRegistrationRequestValidator {
+    private static Logger logger = LoggerFactory.getLogger(PrefixRegistrationRequestValidatorCrossedIdRegexPatternAndSampleId.class);
 
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
@@ -46,11 +46,11 @@ public class PrefixRegistrationRequestValidatorCrossedRegexPatternAndExampleIden
             throw new PrefixRegistrationRequestValidatorException(String.join("\n", errors));
         }
         // Cross-validation
-        logger.debug("Validating regex pattern '{}' against '{}'", request.getRegexPattern(), request.getExampleIdentifier());
-        Pattern pattern = Pattern.compile(request.getRegexPattern());
-        Matcher matcher = pattern.matcher(request.getExampleIdentifier());
+        logger.debug("Validating regex pattern '{}' against '{}'", request.getIdRegexPattern(), request.getSampleId());
+        Pattern pattern = Pattern.compile(request.getIdRegexPattern());
+        Matcher matcher = pattern.matcher(request.getSampleId());
         if (!matcher.matches()) {
-            throw new PrefixRegistrationRequestValidatorException(String.format("There is a MISMATCH between the provided Example Identifier '%s' and the provided Regular Expression Pattern '%s'", request.getExampleIdentifier(), request.getRegexPattern()));
+            throw new PrefixRegistrationRequestValidatorException(String.format("There is a MISMATCH between the provided Sample ID '%s' and the provided Regular Expression Pattern '%s'", request.getSampleId(), request.getIdRegexPattern()));
         }
         return true;
     }

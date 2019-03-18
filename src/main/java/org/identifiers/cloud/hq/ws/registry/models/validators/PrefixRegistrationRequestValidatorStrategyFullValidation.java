@@ -49,7 +49,7 @@ public class PrefixRegistrationRequestValidatorStrategyFullValidation implements
     private PrefixRegistrationRequestValidator crossedSampleIdProviderUrlPattern;
 
     @Autowired
-    @Qualifier("prefixRegistrationRequestValidatorCrossedRegexPatternAndExampleIdentifier")
+    @Qualifier("prefixRegistrationRequestValidatorCrossedIdRegexPatternAndSampleId")
     private PrefixRegistrationRequestValidator crossedRegexPatternAndExampleIdentifierValidator;
 
     @Autowired
