@@ -46,11 +46,11 @@ public class PrefixRegistrationRequestValidatorStrategyFullValidation implements
 
     @Autowired
     @Qualifier("prefixRegistrationRequestValidatorCrossedSampleIdProviderUrlPattern")
-    private PrefixRegistrationRequestValidator crossedSampleIdProviderUrlPattern;
+    private PrefixRegistrationRequestValidator crossedSampleIdProviderUrlPatternValidator;
 
     @Autowired
     @Qualifier("prefixRegistrationRequestValidatorCrossedIdRegexPatternAndSampleId")
-    private PrefixRegistrationRequestValidator crossedRegexPatternAndExampleIdentifierValidator;
+    private PrefixRegistrationRequestValidator crossedIdRegexPatternAndSampleIdValidator;
 
     @Autowired
     @Qualifier("prefixRegistrationRequestValidatorReferences")
@@ -73,8 +73,8 @@ public class PrefixRegistrationRequestValidatorStrategyFullValidation implements
                 organizationValidator,
                 prefixValidator,
                 providerUrlPatternValidator,
-                crossedSampleIdProviderUrlPattern,
-                crossedRegexPatternAndExampleIdentifierValidator,
+                crossedSampleIdProviderUrlPatternValidator,
+                crossedIdRegexPatternAndSampleIdValidator,
                 referencesValidator,
                 additionalInformationValidator,
                 requesterValidator
