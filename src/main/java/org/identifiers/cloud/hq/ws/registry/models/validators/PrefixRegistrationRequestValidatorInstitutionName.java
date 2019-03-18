@@ -16,6 +16,7 @@ public class PrefixRegistrationRequestValidatorInstitutionName implements Prefix
         if (request.getInstitutionName() == null) {
             throw new PrefixRegistrationRequestValidatorException("Institution Name is MISSING");
         }
+        // Right now, there is no restriction on the length of the institution name
         return true;
     }
 }
