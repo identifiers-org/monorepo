@@ -32,7 +32,6 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
     private String description;
 
     // Home URL for a first provider of this namespace being registered
-    // TODO - PENDING VALIDATOR
     private String providerHomeUrl;
 
     // Name for the provider being registered along this prefix
