@@ -2,8 +2,12 @@ package org.identifiers.cloud.hq.ws.registry.api.models;
 
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
+import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestValidate;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponse;
+import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixPayload;
+import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseValidateRequest;
 import org.identifiers.cloud.hq.ws.registry.models.validators.PrefixRegistrationRequestValidator;
+import org.identifiers.cloud.hq.ws.registry.models.validators.PrefixRegistrationRequestValidatorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -88,10 +92,30 @@ public class ValidationApiModel {
     @Qualifier("prefixRegistrationRequestValidatorRequester")
     private PrefixRegistrationRequestValidator requesterValidator;
 
-    // Helpers
+    // -- Helpers --
     private <T> void initDefaultResponse(ServiceResponse<T> response, T payload) {
         response.setApiVersion(ApiCentral.apiVersion)
                 .setHttpStatus(HttpStatus.OK);
         response.setPayload(payload);
+    }
+
+    private ServiceResponseValidateRequest doValidation(ServiceRequestValidate request,
+                                                        PrefixRegistrationRequestValidator validator) {
+        // TODO - Check API version information?
+        ServiceResponseValidateRequest response = new ServiceResponseValidateRequest();
+        initDefaultResponse(response, new ServiceResponseRegisterPrefixPayload());
+        // Validate the request
+        boolean isValidRequest = false;
+        try {
+            isValidRequest = validator.validate(request.getPayload());
+        } catch (PrefixRegistrationRequestValidatorException e) {
+            response.setErrorMessage(e.getMessage());
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            response.getPayload().setComment("VALIDATION FAILED");
+        }
+        if (isValidRequest) {
+            response.getPayload().setComment("VALIDATION OK");
+        }
+        return response;
     }
 }
