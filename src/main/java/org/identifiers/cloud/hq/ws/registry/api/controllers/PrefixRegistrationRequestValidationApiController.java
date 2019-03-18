@@ -1,5 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.api.controllers;
 
+import org.identifiers.cloud.hq.ws.registry.api.models.PrefixRegistrationRequestValidationApiModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -12,4 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController(value = "/prefixRegistrationApi")
 public class PrefixRegistrationRequestValidationApiController {
+    @Autowired
+    private PrefixRegistrationRequestValidationApiModel model;
+
+    
+    // TODO
 }
