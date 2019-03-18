@@ -43,7 +43,10 @@ public class PrefixRegistrationRequestValidatorRequestedPrefix implements Prefix
         // TODO - e.g. Java and Python, so people don't have to write their own code every time
         // TODO - What happens if the prefix has been requested for registration but it's in "pending" state?
         // TODO
-
+        try {
+            // TODO
+            
+        }
         if (request.getRequestedPrefix() == null) {
             throw new PrefixRegistrationRequestValidatorException("MISSING Preferred Prefix");
         }
