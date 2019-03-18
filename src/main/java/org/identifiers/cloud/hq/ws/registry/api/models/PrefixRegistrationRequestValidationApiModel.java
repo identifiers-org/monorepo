@@ -145,7 +145,7 @@ public class PrefixRegistrationRequestValidationApiModel {
         return doValidation(request, providerDescriptionValidator);
     }
 
-    public ServiceResponseValidateRequest validateLocation(ServiceRequestValidate request) {
+    public ServiceResponseValidateRequest validateProviderLocation(ServiceRequestValidate request) {
         return doValidation(request, providerLocationValidator);
     }
 

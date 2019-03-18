@@ -50,5 +50,6 @@ public class PrefixRegistrationRequestValidationApiController {
         ServiceResponseValidateRequest response = model.validateProviderDescription(request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
+
     // TODO
 }
