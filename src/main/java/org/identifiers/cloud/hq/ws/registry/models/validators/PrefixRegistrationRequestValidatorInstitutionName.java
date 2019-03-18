@@ -13,6 +13,9 @@ import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterP
 public class PrefixRegistrationRequestValidatorInstitutionName implements PrefixRegistrationRequestValidator {
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
+        if (request.getInstitutionName() == null) {
+            throw new PrefixRegistrationRequestValidatorException("Institution Name is MISSING");
+        }
         return false;
     }
 }
