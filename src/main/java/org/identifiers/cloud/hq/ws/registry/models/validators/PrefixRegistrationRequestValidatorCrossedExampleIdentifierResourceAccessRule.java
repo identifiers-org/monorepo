@@ -32,7 +32,7 @@ public class PrefixRegistrationRequestValidatorCrossedExampleIdentifierResourceA
         }
         // Check example identifier
         try {
-            new PrefixRegistrationRequestValidatorExampleIdentifier().validate(request);
+            new PrefixRegistrationRequestValidatorSampleId().validate(request);
         } catch (PrefixRegistrationRequestValidatorException e) {
             errors.add(e.getMessage());
         }

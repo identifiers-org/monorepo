@@ -15,13 +15,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Scope("prototype")
-@Qualifier("prefixRegistrationRequestValidatorExampleIdentifier")
-public class PrefixRegistrationRequestValidatorExampleIdentifier implements PrefixRegistrationRequestValidator {
+@Qualifier("PrefixRegistrationRequestValidatorSampleId")
+public class PrefixRegistrationRequestValidatorSampleId implements PrefixRegistrationRequestValidator {
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
         // Check the ID information is present
-        if (request.getExampleIdentifier() == null) {
-            throw new PrefixRegistrationRequestValidatorException("MISSING REQUIRED Example Identifier");
+        if (request.getSampleId() == null) {
+            throw new PrefixRegistrationRequestValidatorException("MISSING REQUIRED Sample ID");
         }
         return true;
     }

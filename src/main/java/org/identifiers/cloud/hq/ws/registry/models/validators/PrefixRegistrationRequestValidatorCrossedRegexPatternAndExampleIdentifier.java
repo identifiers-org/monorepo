@@ -31,7 +31,7 @@ public class PrefixRegistrationRequestValidatorCrossedRegexPatternAndExampleIden
         List<String> errors = new ArrayList<>();
         // Check Example Identifier
         try {
-            new PrefixRegistrationRequestValidatorExampleIdentifier().validate(request);
+            new PrefixRegistrationRequestValidatorSampleId().validate(request);
         } catch (PrefixRegistrationRequestValidatorException e) {
             errors.add(e.getMessage());
         }
