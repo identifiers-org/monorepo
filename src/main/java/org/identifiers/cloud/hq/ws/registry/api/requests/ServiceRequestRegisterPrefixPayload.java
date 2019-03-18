@@ -63,11 +63,6 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
     // TODO - PENDING VALIDATOR
     private String institutionLocation;
 
-    // This attribute is part of the original identifiers.org form at https://identifiers.org/request/prefix, but now
-    // refactored into a more sensible thing
-    // TODO - THIS HAS BEEN REMOVED / REFACTORED INTO another attribute
-    //private String organization;
-
     // Originally called 'preferredPrefix', ported from the original identifiers.org form at https://identifiers.org/request/prefix
     private String requestedPrefix;
 
