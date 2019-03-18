@@ -163,4 +163,8 @@ public class ValidationApiModel {
         return doValidation(request, institutionDescriptionValidator);
     }
 
+    public ServiceResponseValidateRequest validateInstitutionLocation(ServiceRequestValidate request) {
+        return doValidation(request, institutionLocationValidator);
+    }
+
 }
