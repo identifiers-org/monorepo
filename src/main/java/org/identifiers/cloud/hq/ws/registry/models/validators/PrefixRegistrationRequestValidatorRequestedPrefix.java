@@ -56,9 +56,10 @@ public class PrefixRegistrationRequestValidatorRequestedPrefix implements Prefix
                 if (foundNamespace.isDeprecated()) {
                     errorMessage = String.format("Prefix '%s' is DEPRECATED, for REACTIVATION, please, use a different " +
                             "API", request.getRequestedPrefix());
-                    logger.error(String.format("Prefix Validation FAILED on prefix %s, because it ALREADY EXISTS and it's DEPRECATED"));
+                    logger.error(String.format("Prefix Validation FAILED on prefix %s, because it ALREADY EXISTS and it's DEPRECATED", request.getRequestedPrefix()));
                     throw new PrefixRegistrationRequestValidatorException(errorMessage);
                 }
+                
             }
         }
         // TODO - This hack is only valid because the resolver does not validate the PID against the registered regular expression for the given prefix
