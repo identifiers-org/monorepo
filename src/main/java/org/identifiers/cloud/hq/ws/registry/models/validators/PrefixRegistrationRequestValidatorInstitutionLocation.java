@@ -16,6 +16,7 @@ public class PrefixRegistrationRequestValidatorInstitutionLocation implements Pr
         if (request.getInstitutionLocation() == null) {
             throw new PrefixRegistrationRequestValidatorException("Institution Location information is REQUIRED, but it's MISSING");
         }
+        // TODO - Actually validate the provided location using ISO 3166/MA Alpha-2 Country Codes
         return true;
     }
 }
