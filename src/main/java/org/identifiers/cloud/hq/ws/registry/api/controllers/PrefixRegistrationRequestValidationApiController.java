@@ -122,5 +122,4 @@ public class PrefixRegistrationRequestValidationApiController {
         ServiceResponseValidateRequest response = model.validateRequester(request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
-    // TODO
 }
