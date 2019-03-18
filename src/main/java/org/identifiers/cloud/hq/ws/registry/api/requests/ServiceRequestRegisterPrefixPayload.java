@@ -41,7 +41,6 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
     private String providerDescription;
 
     // Location Associated with the provider being registered along this prefix
-    // TODO - PENDING VALIDATOR
     private String providerLocation;
 
     // Unique identifier for this provider within the namespace for provider selection when resolving compact identifiers
