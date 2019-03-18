@@ -190,4 +190,8 @@ public class ValidationApiModel {
     public ServiceResponseValidateRequest validateAdditionalInformation(ServiceRequestValidate request) {
         return doValidation(request, additionalInformationValidator);
     }
+
+    public ServiceResponseValidateRequest validateRequester(ServiceRequestValidate request) {
+        return doValidation(request, requesterValidator);
+    }
 }
