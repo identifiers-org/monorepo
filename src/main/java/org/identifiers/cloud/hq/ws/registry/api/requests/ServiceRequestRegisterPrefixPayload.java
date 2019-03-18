@@ -75,7 +75,6 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
     private String providerUrlPattern;
 
     // Originally called 'exampleIdentifier', ported from the original identifiers.org form at https://identifiers.org/request/prefix
-    // TODO - PENDING VALIDATOR (refactor)
     private String sampleId;
 
     // Originally called 'regexPattern', ported from the original identifiers.org form at https://identifiers.org/request/prefix
