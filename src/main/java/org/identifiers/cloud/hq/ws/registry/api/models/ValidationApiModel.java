@@ -1,5 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.api.models
@@ -8,5 +11,7 @@ package org.identifiers.cloud.hq.ws.registry.api.models;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+@Component
+@Slf4j
 public class ValidationApiModel {
 }
