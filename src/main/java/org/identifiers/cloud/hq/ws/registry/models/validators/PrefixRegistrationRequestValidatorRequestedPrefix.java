@@ -7,16 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.ResponseErrorHandler;
-import org.springframework.web.client.RestTemplate;
-
-import java.io.IOException;
 
 /**
  * Project: registry
@@ -70,18 +62,6 @@ public class PrefixRegistrationRequestValidatorRequestedPrefix implements Prefix
             // TODO
             errorMessage = String.format("While validating prefix '%s', the following error occurred: '%s'",
                     request.getRequestedPrefix(), e.getMessage());
-            logger.error(errorMessage);
-            throw new PrefixRegistrationRequestValidatorException(errorMessage);
-        }
-        // TODO - This hack is only valid because the resolver does not validate the PID against the registered regular expression for the given prefix
-        String fakeCompactId = String.format("%s:093846", request.getRequestedPrefix());
-        String queryUrl = String.format("http://%s:%d/%s", resolverHost, resolverPort, fakeCompactId);
-        logger.info("Prefix Validation, hack URL '{}'", queryUrl);
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setErrorHandler(new RestTemplateErrorHandler());
-        ResponseEntity<String> response = restTemplate.getForEntity(queryUrl, String.class);
-        if (response.getStatusCode() != HttpStatus.NOT_FOUND) {
-            String errorMessage = String.format("Preferred Prefix COULD NOT BE VALIDATED, internal status %s, IT MAY ALREADY BEEN REGISTERED", response.getStatusCode());
             logger.error(errorMessage);
             throw new PrefixRegistrationRequestValidatorException(errorMessage);
         }
