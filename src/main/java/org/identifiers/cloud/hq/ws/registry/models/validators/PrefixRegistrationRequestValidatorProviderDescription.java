@@ -11,6 +11,8 @@ import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterP
  * ---
  */
 public class PrefixRegistrationRequestValidatorProviderDescription implements PrefixRegistrationRequestValidator {
+    public static final int DESCRIPTIONI_CONTENT_MIN_LENGTH = 50;
+    
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
         return false;
