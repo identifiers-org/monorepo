@@ -17,6 +17,7 @@ public class PrefixRegistrationRequestValidatorProviderCode implements PrefixReg
         if (request.getProviderCode() == null) {
             throw new PrefixRegistrationRequestValidatorException("Provider Code is REQUIRED, but it's missing");
         }
+        // As this is the first provider within the requested prefix, we don't need to check that the provider code is unique.
         return true;
     }
 }
