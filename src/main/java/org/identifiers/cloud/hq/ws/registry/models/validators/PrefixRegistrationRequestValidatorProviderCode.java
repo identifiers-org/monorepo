@@ -13,6 +13,10 @@ import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterP
 public class PrefixRegistrationRequestValidatorProviderCode implements PrefixRegistrationRequestValidator {
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
+        // Provider code must be provided
+        if (request.getProviderCode() == null) {
+            throw new PrefixRegistrationRequestValidatorException("Provider Code is REQUIRED, but it's missing");
+        }
         return false;
     }
 }
