@@ -16,6 +16,7 @@ public class PrefixRegistrationRequestValidatorProviderLocation implements Prefi
         if (request.getProviderLocation() == null) {
             throw new PrefixRegistrationRequestValidatorException("Provider Location MUST BE PRESENT, and follow ISO 3166/MA Alpha-2 Country Codes format");
         }
+        // TODO - Actually validate the provided location using ISO 3166/MA Alpha-2 Country Codes
         return true;
     }
 }
