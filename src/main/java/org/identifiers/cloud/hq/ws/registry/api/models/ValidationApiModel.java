@@ -186,4 +186,8 @@ public class ValidationApiModel {
     public ServiceResponseValidateRequest validateReferences(ServiceRequestValidate request) {
         return doValidation(request, referencesValidator);
     }
+
+    public ServiceResponseValidateRequest validateAdditionalInformation(ServiceRequestValidate request) {
+        return doValidation(request, additionalInformationValidator);
+    }
 }
