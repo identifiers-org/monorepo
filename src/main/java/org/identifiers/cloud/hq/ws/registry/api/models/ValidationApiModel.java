@@ -167,4 +167,7 @@ public class ValidationApiModel {
         return doValidation(request, institutionLocationValidator);
     }
 
+    public ServiceResponseValidateRequest validateRequestedPrefix(ServiceRequestValidate request) {
+        return doValidation(request, prefixValidator);
+    }
 }
