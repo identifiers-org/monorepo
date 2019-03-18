@@ -182,4 +182,8 @@ public class ValidationApiModel {
     public ServiceResponseValidateRequest validateIdRegexPattern(ServiceRequestValidate request) {
         return doValidation(request, crossedIdRegexPatternAndSampleIdValidator);
     }
+
+    public ServiceResponseValidateRequest validateReferences(ServiceRequestValidate request) {
+        return doValidation(request, referencesValidator);
+    }
 }
