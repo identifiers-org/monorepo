@@ -65,4 +65,8 @@ public class ValidationApiModel {
     @Qualifier("prefixRegistrationRequestValidatorProviderUrlPattern")
     private PrefixRegistrationRequestValidator providerUrlPatternValidator;
 
+    @Autowired
+    @Qualifier("prefixRegistrationRequestValidatorCrossedSampleIdProviderUrlPattern")
+    private PrefixRegistrationRequestValidator crossedSampleIdProviderUrlPatternValidator;
+
 }
