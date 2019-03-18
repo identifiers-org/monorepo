@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators;
 
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
+import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,8 +49,17 @@ public class PrefixRegistrationRequestValidatorRequestedPrefix implements Prefix
             throw new PrefixRegistrationRequestValidatorException("MISSING Preferred Prefix");
         }
         try {
-            // TODO
+            // I planned on reusing the error message, but I may use different messages for logging and the client
             String errorMessage = "--- no error message has been set ---";
+            Namespace foundNamespace = namespaceRepository.findByPrefix(request.getRequestedPrefix());
+            if (foundNamespace != null) {
+                if (foundNamespace.isDeprecated()) {
+                    errorMessage = String.format("Prefix '%s' is DEPRECATED, for REACTIVATION, please, use a different " +
+                            "API", request.getRequestedPrefix());
+                    logger.error(String.format("Prefix Validation FAILED on prefix %s, because it ALREADY EXISTS and it's DEPRECATED"));
+                    throw new PrefixRegistrationRequestValidatorException(errorMessage);
+                }
+            }
         }
         // TODO - This hack is only valid because the resolver does not validate the PID against the registered regular expression for the given prefix
         String fakeCompactId = String.format("%s:093846", request.getRequestedPrefix());
