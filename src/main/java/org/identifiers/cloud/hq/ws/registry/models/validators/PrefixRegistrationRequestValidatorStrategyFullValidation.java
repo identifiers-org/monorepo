@@ -41,6 +41,10 @@ public class PrefixRegistrationRequestValidatorStrategyFullValidation implements
     private PrefixRegistrationRequestValidator providerNameValidator;
 
     @Autowired
+    @Qualifier("PrefixRegistrationRequestValidatorProviderDescription")
+    private PrefixRegistrationRequestValidator providerDescriptionValidator;
+
+    @Autowired
     @Qualifier("prefixRegistrationRequestValidatorProviderUrlPattern")
     private PrefixRegistrationRequestValidator providerUrlPatternValidator;
 
@@ -71,6 +75,7 @@ public class PrefixRegistrationRequestValidatorStrategyFullValidation implements
                 descriptionValidator,
                 providerHomeUrlValidator,
                 providerNameValidator,
+                providerDescriptionValidator,
                 prefixValidator,
                 providerUrlPatternValidator,
                 crossedSampleIdProviderUrlPatternValidator,
