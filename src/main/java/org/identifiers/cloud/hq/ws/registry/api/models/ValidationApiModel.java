@@ -139,4 +139,9 @@ public class ValidationApiModel {
         return doValidation(request, providerHomeUrlValidator);
     }
 
+    public ServiceResponseValidateRequest validateProviderName(ServiceRequestValidate request) {
+        return doValidation(request, providerNameValidator);
+    }
+
+
 }
