@@ -93,6 +93,13 @@ public class ValidationApiModel {
     private PrefixRegistrationRequestValidator requesterValidator;
 
     // -- Helpers --
+
+    /**
+     * Initialize a response with the default values and the given payload.
+     * @param response response to initialize
+     * @param payload payload to set in the response
+     * @param <T> the type of payload
+     */
     private <T> void initDefaultResponse(ServiceResponse<T> response, T payload) {
         response.setApiVersion(ApiCentral.apiVersion)
                 .setHttpStatus(HttpStatus.OK);
