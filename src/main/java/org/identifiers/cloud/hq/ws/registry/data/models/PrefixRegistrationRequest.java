@@ -1,14 +1,13 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  * Project: registry
@@ -29,7 +28,11 @@ import javax.persistence.EntityListeners;
 @EntityListeners(AuditingEntityListener.class)
 public class PrefixRegistrationRequest {
     // TODO Define how these attributes are going to persist
+
+    @Id
+    @GeneratedValue
     private long id;
+
     // Name for the prefix being registered, ported from the original identifiers.org form at https://identifiers.org/request/prefix
     private String name;
 
