@@ -68,6 +68,7 @@ public class PrefixRegistrationRequest {
     private String institutionDescription;
 
     // Location of the institution that owns the resource that's being registered as first provider for this namespace
+    @Column(nullable = false)
     private String institutionLocation;
 
     // Originally called 'preferredPrefix', ported from the original identifiers.org form at https://identifiers.org/request/prefix
