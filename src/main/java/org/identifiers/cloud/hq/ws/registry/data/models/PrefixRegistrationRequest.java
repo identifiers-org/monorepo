@@ -39,6 +39,7 @@ public class PrefixRegistrationRequest {
     private String description;
 
     // Home URL for a first provider of this namespace being registered
+    @Column(nullable = false)
     private String providerHomeUrl;
 
     // Name for the provider being registered along this prefix
