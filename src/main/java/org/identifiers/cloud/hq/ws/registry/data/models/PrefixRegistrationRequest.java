@@ -76,6 +76,7 @@ public class PrefixRegistrationRequest {
     private String requestedPrefix;
 
     // Originally called 'resourceAccessRule', ported from the original identifiers.org form at https://identifiers.org/request/prefix
+    @Column(nullable = false)
     private String providerUrlPattern;
 
     // Originally called 'exampleIdentifier', ported from the original identifiers.org form at https://identifiers.org/request/prefix
