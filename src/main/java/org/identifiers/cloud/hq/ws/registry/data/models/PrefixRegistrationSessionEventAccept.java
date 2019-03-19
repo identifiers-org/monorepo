@@ -15,8 +15,12 @@ import javax.persistence.Entity;
  * ---
  */
 @Data
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @Entity
-public class PrefixRegistrationSessionEventAccept {
+public class PrefixRegistrationSessionEventAccept extends PrefixRegistrationSessionEvent {
+    public PrefixRegistrationSessionEventAccept() {
+        super();
+        this.setEventName("ACCEPT");
+    }
 }
