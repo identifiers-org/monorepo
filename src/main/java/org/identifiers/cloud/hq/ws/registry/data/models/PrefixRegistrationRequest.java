@@ -43,6 +43,7 @@ public class PrefixRegistrationRequest {
     private String providerHomeUrl;
 
     // Name for the provider being registered along this prefix
+    @Column(nullable = false)
     private String providerName;
 
     // Description for the provider being registered along this prefix
