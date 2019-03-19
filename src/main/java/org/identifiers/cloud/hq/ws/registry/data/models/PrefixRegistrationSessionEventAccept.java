@@ -1,5 +1,9 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
 /**
  * Project: hq-registry
  * Package: org.identifiers.cloud.hq.ws.registry.data.models
@@ -8,5 +12,8 @@ package org.identifiers.cloud.hq.ws.registry.data.models;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+@Data
+@EqualsAndHashCode
+@Accessors(chain = true)
 public class PrefixRegistrationSessionEventAccept {
 }
