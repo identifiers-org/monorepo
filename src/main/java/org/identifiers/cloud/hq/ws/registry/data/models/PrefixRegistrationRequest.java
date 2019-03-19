@@ -60,6 +60,7 @@ public class PrefixRegistrationRequest {
     private String providerCode;
 
     // This is the name of the institution that owns the resource that's being registered as first provider for this namespace
+    @Column(nullable = false)
     private String institutionName;
 
     // A description related to the institution that owns the resource that's being registered as first provider for this namespace
