@@ -90,6 +90,7 @@ public class PrefixRegistrationRequest {
     // Originally called 'references', but, apparently, when hibernate produces the DDL, it doesn't do it very well and
     // the attribute name clashes with the reserved keyword 'references' of the SQL dialect used by the RDBMS backend,
     // ported from the original identifiers.org form at https://identifiers.org/request/prefix
+    // Optional
     private String supportingReferences;
 
     // Additional information to be included as part of the request, ported from the original identifiers.org form at
