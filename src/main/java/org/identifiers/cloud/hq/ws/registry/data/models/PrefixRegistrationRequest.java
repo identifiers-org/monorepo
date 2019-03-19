@@ -35,6 +35,7 @@ public class PrefixRegistrationRequest {
     private String name;
 
     // This is a description for the namespace being registered, ported from the original identifiers.org form at https://identifiers.org/request/prefix
+    @Column(nullable = false)
     private String description;
 
     // Home URL for a first provider of this namespace being registered
