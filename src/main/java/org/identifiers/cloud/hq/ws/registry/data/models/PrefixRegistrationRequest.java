@@ -24,8 +24,6 @@ import javax.persistence.*;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class PrefixRegistrationRequest {
-    // TODO Define how these attributes are going to persist
-
     @Id
     @GeneratedValue
     private long id;
