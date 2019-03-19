@@ -4,10 +4,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Project: registry
@@ -34,6 +31,7 @@ public class PrefixRegistrationRequest {
     private long id;
 
     // Name for the prefix being registered, ported from the original identifiers.org form at https://identifiers.org/request/prefix
+    @Column(nullable = false, unique = true)
     private String name;
 
     // This is a description for the namespace being registered, ported from the original identifiers.org form at https://identifiers.org/request/prefix
