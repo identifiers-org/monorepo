@@ -18,8 +18,8 @@ import javax.persistence.Entity;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @Entity
-public class PrefixRegistrationSessionEventAmmend extends PrefixRegistrationSessionEvent {
-    public PrefixRegistrationSessionEventAmmend() {
+public class PrefixRegistrationSessionEventAmend extends PrefixRegistrationSessionEvent {
+    public PrefixRegistrationSessionEventAmend() {
         super();
         this.setEventName("AMENDMENT");
     }
