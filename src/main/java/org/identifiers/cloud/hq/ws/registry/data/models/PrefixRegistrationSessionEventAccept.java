@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.persistence.Entity;
+
 /**
  * Project: hq-registry
  * Package: org.identifiers.cloud.hq.ws.registry.data.models
@@ -15,5 +17,6 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode
 @Accessors(chain = true)
+@Entity
 public class PrefixRegistrationSessionEventAccept {
 }
