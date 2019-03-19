@@ -35,6 +35,10 @@ public class PrefixRegistrationSession {
     @GeneratedValue
     private long id;
 
+    // This is a reference to the latest version of the prefix registration request that's being processed in the session.
+    @OneToOne(optional = false)
+    private PrefixRegistrationRequest prefixRegistrationRequest;
+
     @Column(nullable = false, updatable = false)
     @CreatedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
