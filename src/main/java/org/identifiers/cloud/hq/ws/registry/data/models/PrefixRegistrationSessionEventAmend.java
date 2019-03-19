@@ -21,6 +21,6 @@ import javax.persistence.Entity;
 public class PrefixRegistrationSessionEventAmend extends PrefixRegistrationSessionEvent {
     public PrefixRegistrationSessionEventAmend() {
         super();
-        this.setEventName("AMENDMENT");
+        this.setEventName("AMEND");
     }
 }
