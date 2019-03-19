@@ -84,6 +84,7 @@ public class PrefixRegistrationRequest {
     private String sampleId;
 
     // Originally called 'regexPattern', ported from the original identifiers.org form at https://identifiers.org/request/prefix
+    @Column(nullable = false)
     private String idRegexPattern;
 
     // Originally called 'references', but, apparently, when hibernate produces the DDL, it doesn't do it very well and
