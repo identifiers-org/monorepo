@@ -95,6 +95,7 @@ public class PrefixRegistrationRequest {
 
     // Additional information to be included as part of the request, ported from the original identifiers.org form at
     // https://identifiers.org/request/prefix
+    // Optional
     private String additionalInformation;
 
     // Contact person for this request, ported from the original identifiers.org form at
