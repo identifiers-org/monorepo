@@ -47,6 +47,7 @@ public class PrefixRegistrationRequest {
     private String providerName;
 
     // Description for the provider being registered along this prefix
+    @Column(nullable = false)
     private String providerDescription;
 
     // Location Associated with the provider being registered along this prefix
