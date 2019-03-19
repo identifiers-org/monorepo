@@ -31,7 +31,7 @@ public class PrefixRegistrationRequest {
     private long id;
 
     // Name for the prefix being registered, ported from the original identifiers.org form at https://identifiers.org/request/prefix
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
     // This is a description for the namespace being registered, ported from the original identifiers.org form at https://identifiers.org/request/prefix
