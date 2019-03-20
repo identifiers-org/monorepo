@@ -54,6 +54,12 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
     @Override
     public PrefixRegistrationSessionEvent rejectRequest(PrefixRegistrationSession prefixRegistrationSession,
                                                         String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
+        // TODO Check that the prefix registration session is open
+        // TODO Create the event
+        // TODO Reference the current session prefix registration request
+        // TODO Persist the event
+        // Session is considered 'closed' right now
+        // TODO Return the event
         return null;
     }
 
