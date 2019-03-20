@@ -31,17 +31,23 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
     public PrefixRegistrationSessionEvent amendRequest(PrefixRegistrationSession prefixRegistrationSession,
                                                        PrefixRegistrationRequest amendedRequest, String actor,
                                                        String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
-        // TODO Check the prefix registration session is open
+        // TODO Check that the prefix registration session is open
         // TODO Create the event
         // TODO Persist the amended request
         // TODO Reference the amended request in the newly created event
         // TODO Update the prefix registration request referenced at session level
+        // TODO Return the event
         return null;
     }
 
     @Override
     public PrefixRegistrationSessionEvent commentRequest(PrefixRegistrationSession prefixRegistrationSession,
                                                          String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
+        // TODO Check that the prefix registration session is open
+        // TODO Create the event
+        // TODO Reference the current session prefix registration request
+        // TODO Persist the event
+        // TODO Return the event
         return null;
     }
 
