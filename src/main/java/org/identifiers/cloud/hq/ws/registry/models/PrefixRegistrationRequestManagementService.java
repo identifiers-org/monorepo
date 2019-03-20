@@ -80,7 +80,15 @@ public interface PrefixRegistrationRequestManagementService {
                                                  String actor,
                                                  String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
 
-    // TODO - accept request
+    /**
+     * Close a prefix registration session, by accepting its prefix registration request.
+     *
+     * @param prefixRegistrationSession opened prefix registration session where this action is being triggered
+     * @param actor the actor that has triggered this action
+     * @param additionalInformation possible additional information related to this action
+     * @return the prefix registration event registered as a consequence of executing this action
+     * @throws PrefixRegistrationRequestManagementServiceException
+     */
     PrefixRegistrationSessionEvent acceptRequest(PrefixRegistrationSession prefixRegistrationSession,
                                                  String actor,
                                                  String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
