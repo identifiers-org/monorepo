@@ -21,8 +21,6 @@ import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSessio
  *
  */
 public interface PrefixRegistrationRequestManagementService {
-    // TODO
-
     /**
      * This method starts the prefix registration process for the given prefix registration request.
      *
