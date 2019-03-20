@@ -1,9 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
-import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationRequest;
-import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
-import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSessionEvent;
-import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSessionEventStart;
+import org.identifiers.cloud.hq.ws.registry.data.models.*;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -40,8 +37,8 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
 
     @Transactional
     @Override
-    public PrefixRegistrationSessionEvent startRequest(PrefixRegistrationRequest request, String actor,
-                                                       String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
+    public PrefixRegistrationSessionEventStart startRequest(PrefixRegistrationRequest request, String actor,
+                                                            String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
         try {
             // Persist the given prefix registration request
             PrefixRegistrationRequest savedRequest = prefixRegistrationRequestRepository.save(request);
@@ -58,16 +55,19 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
             // Return the event
             return prefixRegistrationSessionEventStartRepository.save(sessionEventStart);
         } catch (RuntimeException e) {
-            // TODO
+            throw new PrefixRegistrationRequestManagementServiceException(
+                    String.format("While starting a prefix registration session for prefix registration request " +
+                            "on '%s' prefix, the following error occurred: '%s'",
+                            request.getRequestedPrefix(), e.getMessage()))
         }
         return null;
     }
 
     @Transactional
     @Override
-    public PrefixRegistrationSessionEvent amendRequest(PrefixRegistrationSession prefixRegistrationSession,
-                                                       PrefixRegistrationRequest amendedRequest, String actor,
-                                                       String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
+    public PrefixRegistrationSessionEventAmend amendRequest(PrefixRegistrationSession prefixRegistrationSession,
+                                                            PrefixRegistrationRequest amendedRequest, String actor,
+                                                            String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
         // TODO Check that the prefix registration session is open
         // TODO Create the event
         // TODO Persist the amended request
@@ -79,8 +79,8 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
 
     @Transactional
     @Override
-    public PrefixRegistrationSessionEvent commentRequest(PrefixRegistrationSession prefixRegistrationSession,
-                                                         String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
+    public PrefixRegistrationSessionEventComment commentRequest(PrefixRegistrationSession prefixRegistrationSession,
+                                                                String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
         // TODO Check that the prefix registration session is open
         // TODO Create the event
         // TODO Reference the current session prefix registration request
@@ -91,8 +91,8 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
 
     @Transactional
     @Override
-    public PrefixRegistrationSessionEvent rejectRequest(PrefixRegistrationSession prefixRegistrationSession,
-                                                        String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
+    public PrefixRegistrationSessionEventReject rejectRequest(PrefixRegistrationSession prefixRegistrationSession,
+                                                              String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
         // TODO Check that the prefix registration session is open
         // TODO Create the event
         // TODO Reference the current session prefix registration request
@@ -105,8 +105,8 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
 
     @Transactional
     @Override
-    public PrefixRegistrationSessionEvent acceptRequest(PrefixRegistrationSession prefixRegistrationSession,
-                                                        String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
+    public PrefixRegistrationSessionEventAccept acceptRequest(PrefixRegistrationSession prefixRegistrationSession,
+                                                              String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
         // TODO Check that the prefix registration session is open
         // TODO Create the event
         // TODO Reference the current session prefix registration request
