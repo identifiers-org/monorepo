@@ -72,7 +72,7 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
             throw new PrefixRegistrationRequestManagementServiceException(
                     String.format("While starting a prefix registration session for prefix registration request " +
                             "on '%s' prefix, the following error occurred: '%s'",
-                            request.getRequestedPrefix(), e.getMessage()))
+                            request.getRequestedPrefix(), e.getMessage()));
         }
     }
 
