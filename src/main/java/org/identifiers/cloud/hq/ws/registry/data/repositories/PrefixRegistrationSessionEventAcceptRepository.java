@@ -13,4 +13,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface PrefixRegistrationSessionEventAcceptRepository extends JpaRepository<PrefixRegistrationSessionEventAccept, Long> {
     // TODO
+    PrefixRegistrationSessionEventAccept findByPrefixRegistrationSessionId(long id);
 }
