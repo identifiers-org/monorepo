@@ -35,7 +35,17 @@ public interface PrefixRegistrationRequestManagementService {
                                                 String actor,
                                                 String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
 
-    // TODO - amend request
+    /**
+     * Amend the prefix registration request being processed in the given prefix registration session.
+     *
+     * @param prefixRegistrationSession opened prefix registration session where the request is being amended
+     * @param amendedRequest amended prefix registration request, which is a copy of the latest version of the prefix
+     *                       registration requests, with some changes applied to it.
+     * @param actor the actor that has triggered this action
+     * @param additionalInformation possible additional information related to this action
+     * @return the prefix registration event registered as a consequence of executing this action
+     * @throws PrefixRegistrationRequestManagementServiceException
+     */
     PrefixRegistrationSessionEvent amendRequest(PrefixRegistrationSession prefixRegistrationSession,
                                                 PrefixRegistrationRequest amendedRequest,
                                                 String actor,
