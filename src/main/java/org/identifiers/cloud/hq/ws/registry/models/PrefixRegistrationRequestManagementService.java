@@ -31,7 +31,7 @@ public interface PrefixRegistrationRequestManagementService {
      */
     PrefixRegistrationSessionEvent startRequest(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestManagementServiceException;
 
-    // TODO - ammend request
+    // TODO - amend request
     // TODO - comment request
     // TODO - reject request
     // TODO - accept request
