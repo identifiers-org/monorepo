@@ -1,8 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
-import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationRequest;
-import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
-import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSessionEvent;
+import org.identifiers.cloud.hq.ws.registry.data.models.*;
 
 /**
  * Project: registry
@@ -31,9 +29,9 @@ public interface PrefixRegistrationRequestManagementService {
      * @return the prefix registration event registered as a consequence of executing this action
      * @throws PrefixRegistrationRequestManagementServiceException
      */
-    PrefixRegistrationSessionEvent startRequest(PrefixRegistrationRequest request,
-                                                String actor,
-                                                String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
+    PrefixRegistrationSessionEventStart startRequest(PrefixRegistrationRequest request,
+                                                     String actor,
+                                                     String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
 
     /**
      * Amend the prefix registration request being processed in the given prefix registration session.
@@ -46,10 +44,10 @@ public interface PrefixRegistrationRequestManagementService {
      * @return the prefix registration event registered as a consequence of executing this action
      * @throws PrefixRegistrationRequestManagementServiceException
      */
-    PrefixRegistrationSessionEvent amendRequest(PrefixRegistrationSession prefixRegistrationSession,
-                                                PrefixRegistrationRequest amendedRequest,
-                                                String actor,
-                                                String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
+    PrefixRegistrationSessionEventAmend amendRequest(PrefixRegistrationSession prefixRegistrationSession,
+                                                     PrefixRegistrationRequest amendedRequest,
+                                                     String actor,
+                                                     String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
 
     /**
      * Log a comment on the given prefix registration session.
@@ -60,7 +58,7 @@ public interface PrefixRegistrationRequestManagementService {
      * @return the prefix registration event registered as a consequence of executing this action
      * @throws PrefixRegistrationRequestManagementServiceException
      */
-    PrefixRegistrationSessionEvent commentRequest(PrefixRegistrationSession prefixRegistrationSession,
+    PrefixRegistrationSessionEventComment commentRequest(PrefixRegistrationSession prefixRegistrationSession,
                                                   String actor,
                                                   String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
 
@@ -73,7 +71,7 @@ public interface PrefixRegistrationRequestManagementService {
      * @return the prefix registration event registered as a consequence of executing this action
      * @throws PrefixRegistrationRequestManagementServiceException
      */
-    PrefixRegistrationSessionEvent rejectRequest(PrefixRegistrationSession prefixRegistrationSession,
+    PrefixRegistrationSessionEventReject rejectRequest(PrefixRegistrationSession prefixRegistrationSession,
                                                  String actor,
                                                  String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
 
@@ -86,7 +84,7 @@ public interface PrefixRegistrationRequestManagementService {
      * @return the prefix registration event registered as a consequence of executing this action
      * @throws PrefixRegistrationRequestManagementServiceException
      */
-    PrefixRegistrationSessionEvent acceptRequest(PrefixRegistrationSession prefixRegistrationSession,
+    PrefixRegistrationSessionEventAccept acceptRequest(PrefixRegistrationSession prefixRegistrationSession,
                                                  String actor,
                                                  String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
 }
