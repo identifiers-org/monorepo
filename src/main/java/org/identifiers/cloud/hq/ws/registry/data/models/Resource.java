@@ -31,7 +31,7 @@ import java.util.Date;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(indexes = {@Index(name = "idx_mir_id", columnList = "mirId", unique = true),
-        @Index(name = "idx_official", columnList = "official", unique = true)})
+        @Index(name = "idx_official", columnList = "official")})
 public class Resource {
     @Id
     @GeneratedValue
