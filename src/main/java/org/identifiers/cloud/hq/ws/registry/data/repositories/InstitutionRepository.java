@@ -17,5 +17,7 @@ public interface InstitutionRepository extends JpaRepository<Institution, Long> 
     // TODO
     Institution findByName(String name);
 
-    List<Institution> findByNameContaining(String nameContent);
+    List<Institution> findAllByNameContaining(String nameContent);
+
+    List<Institution> findAllByLocationCountryCode(String countryCode);
 }
