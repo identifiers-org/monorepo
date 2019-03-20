@@ -32,4 +32,6 @@ public interface PrefixRegistrationRequestManagementService {
      */
     PrefixRegistrationSessionEvent startRequest(ServiceRequestRegisterPrefixPayload request, String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
 
+    // TODO - amend request
+    PrefixRegistrationSessionEvent amendRequest(PrefixRegistrationSession prefixRegistrationSession, String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
 }
