@@ -7,6 +7,8 @@ package org.identifiers.cloud.hq.ws.registry.models.helpers;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This helper provides methods for transformations between api models and data models.
  */
 public class ApiDataModelHelper {
 }
