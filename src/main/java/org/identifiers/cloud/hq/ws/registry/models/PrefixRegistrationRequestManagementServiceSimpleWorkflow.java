@@ -3,6 +3,8 @@ package org.identifiers.cloud.hq.ws.registry.models;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationRequest;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSessionEvent;
+import org.identifiers.cloud.hq.ws.registry.data.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,6 +17,24 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements PrefixRegistrationRequestManagementService {
+
+    // Repositories
+    @Autowired
+    private PrefixRegistrationRequestRepository prefixRegistrationRequestRepository;
+    @Autowired
+    private PrefixRegistrationSessionRepository prefixRegistrationSessionRepository;
+    @Autowired
+    private PrefixRegistrationSessionEventStartRepository prefixRegistrationSessionEventStartRepository;
+    @Autowired
+    private PrefixRegistrationSessionEventAmendRepository prefixRegistrationSessionEventAmendRepository;
+    @Autowired
+    private PrefixRegistrationSessionEventRejectRepository prefixRegistrationSessionEventRejectRepository;
+    @Autowired
+    private PrefixRegistrationSessionEventAcceptRepository prefixRegistrationSessionEventAcceptRepository;
+    @Autowired
+    private PrefixRegistrationSessionEventCommentRepository prefixRegistrationSessionEventCommentRepository;
+    // --- END - Repositories
+
     @Override
     public PrefixRegistrationSessionEvent startRequest(PrefixRegistrationRequest request, String actor,
                                                        String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
