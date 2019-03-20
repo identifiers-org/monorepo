@@ -59,12 +59,21 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
         // TODO Reference the current session prefix registration request
         // TODO Persist the event
         // Session is considered 'closed' right now
+        // TODO Run the 'reject' chain of actions
         // TODO Return the event
         return null;
     }
 
     @Override
-    public PrefixRegistrationSessionEvent acceptRequest(PrefixRegistrationSession prefixRegistrationSession, String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
+    public PrefixRegistrationSessionEvent acceptRequest(PrefixRegistrationSession prefixRegistrationSession,
+                                                        String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
+        // TODO Check that the prefix registration session is open
+        // TODO Create the event
+        // TODO Reference the current session prefix registration request
+        // TODO Persist the event
+        // Session is considered 'closed' right now
+        // TODO Run the 'accept' chain of actions
+        // TODO Return the event
         return null;
     }
 }
