@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
+import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSessionEvent;
 
 /**
@@ -29,10 +30,6 @@ public interface PrefixRegistrationRequestManagementService {
      * @param request the prefix registration requests to use for starting the process
      * @throws PrefixRegistrationRequestManagementServiceException
      */
-    PrefixRegistrationSessionEvent startRequest(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestManagementServiceException;
+    PrefixRegistrationSessionEvent startRequest(ServiceRequestRegisterPrefixPayload request, String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
 
-    // TODO - amend request
-    // TODO - comment request
-    // TODO - reject request
-    // TODO - accept request
 }
