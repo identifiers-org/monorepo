@@ -40,4 +40,7 @@ public interface PrefixRegistrationRequestManagementService {
 
     // TODO - reject request
     PrefixRegistrationSessionEvent rejectRequest(PrefixRegistrationSession prefixRegistrationSession, String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
+
+    // TODO - accept request
+    PrefixRegistrationSessionEvent acceptRequest(PrefixRegistrationSession prefixRegistrationSession, String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
 }
