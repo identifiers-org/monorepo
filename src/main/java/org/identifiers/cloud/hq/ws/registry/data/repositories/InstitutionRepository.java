@@ -15,7 +15,11 @@ import java.util.List;
  */
 public interface InstitutionRepository extends JpaRepository<Institution, Long> {
     // TODO
-    Institution findByName(String name);
+    Institution findOneByNameMatches(String name);
+
+    List<Institution> findByName(String name);
+
+    List<Institution> findAllByName(String name);
 
     List<Institution> findAllByNameContaining(String nameContent);
 

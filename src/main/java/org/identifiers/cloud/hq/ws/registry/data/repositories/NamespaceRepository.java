@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface NamespaceRepository extends JpaRepository<Namespace, Long> {
     // TODO
-    Namespace findByPrefix(String prefix);
+    Namespace findOneByPrefixMatches(String prefix);
 
     List<Namespace> findAllByPrefixStartsWith(String prefixStart);
 
