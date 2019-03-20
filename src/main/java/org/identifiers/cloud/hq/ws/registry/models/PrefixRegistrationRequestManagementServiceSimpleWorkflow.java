@@ -3,9 +3,12 @@ package org.identifiers.cloud.hq.ws.registry.models;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationRequest;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSessionEvent;
+import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSessionEventStart;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.transaction.Transactional;
 
 /**
  * Project: registry
@@ -35,21 +38,32 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
     private PrefixRegistrationSessionEventCommentRepository prefixRegistrationSessionEventCommentRepository;
     // --- END - Repositories
 
+    @Transactional
     @Override
     public PrefixRegistrationSessionEvent startRequest(PrefixRegistrationRequest request, String actor,
                                                        String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
         try {
-            // TODO Persist the given prefix registration request
-            // TODO Open a new prefix registration session
-            // TODO Set the given prefix registration request
-            // TODO Create a 'start' event
-            // TODO Return the event
+            // Persist the given prefix registration request
+            PrefixRegistrationRequest savedRequest = prefixRegistrationRequestRepository.save(request);
+            // Open a new prefix registration session
+            // Set the given prefix registration request
+            PrefixRegistrationSession session = new PrefixRegistrationSession().setPrefixRegistrationRequest(savedRequest);
+            session = prefixRegistrationSessionRepository.save(session);
+            // Create a 'start' event
+            PrefixRegistrationSessionEventStart sessionEventStart = new PrefixRegistrationSessionEventStart();
+            sessionEventStart.setActor(actor)
+                    .setAdditionalInformation(additionalInformation)
+                    .setPrefixRegistrationRequest(savedRequest)
+                    .setPrefixRegistrationSession(session);
+            // Return the event
+            return prefixRegistrationSessionEventStartRepository.save(sessionEventStart);
         } catch (RuntimeException e) {
             // TODO
         }
         return null;
     }
 
+    @Transactional
     @Override
     public PrefixRegistrationSessionEvent amendRequest(PrefixRegistrationSession prefixRegistrationSession,
                                                        PrefixRegistrationRequest amendedRequest, String actor,
@@ -63,6 +77,7 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
         return null;
     }
 
+    @Transactional
     @Override
     public PrefixRegistrationSessionEvent commentRequest(PrefixRegistrationSession prefixRegistrationSession,
                                                          String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
@@ -74,6 +89,7 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
         return null;
     }
 
+    @Transactional
     @Override
     public PrefixRegistrationSessionEvent rejectRequest(PrefixRegistrationSession prefixRegistrationSession,
                                                         String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
@@ -87,6 +103,7 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
         return null;
     }
 
+    @Transactional
     @Override
     public PrefixRegistrationSessionEvent acceptRequest(PrefixRegistrationSession prefixRegistrationSession,
                                                         String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
