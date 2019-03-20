@@ -35,6 +35,15 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
     private PrefixRegistrationSessionEventCommentRepository prefixRegistrationSessionEventCommentRepository;
     // --- END - Repositories
 
+    // Helpers
+    private boolean isPrefixRegistrationSessionOpen(PrefixRegistrationSession session) {
+        // TODO
+        // Check there is no reject event
+        
+        return true;
+    }
+    // --- END - Helpers
+
     @Transactional
     @Override
     public PrefixRegistrationSessionEventStart startRequest(PrefixRegistrationRequest request, String actor,
