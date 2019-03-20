@@ -15,8 +15,34 @@ import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationReques
  */
 public class ApiDataModelHelper {
 
-    public static final PrefixRegistrationRequest getPrefixRegistrationRequest(ServiceRequestRegisterPrefixPayload sourceModel) {
+    public static PrefixRegistrationRequest getPrefixRegistrationRequest(ServiceRequestRegisterPrefixPayload sourceModel) {
         // TODO
-        return null;
+        String references = "";
+        if (sourceModel.getReferences() != null) {
+            references = "".join(",", sourceModel.getReferences());
+        }
+        String additionalInformation = "--- No additional information provided ---";
+        if (sourceModel.getAdditionalInformation() != null) {
+            additionalInformation = sourceModel.getAdditionalInformation();
+        }
+        return new PrefixRegistrationRequest()
+                .setName(sourceModel.getName())
+                .setDescription(sourceModel.getDescription())
+                .setProviderHomeUrl(sourceModel.getProviderHomeUrl())
+                .setProviderName(sourceModel.getProviderName())
+                .setProviderDescription(sourceModel.getProviderDescription())
+                .setProviderLocation(sourceModel.getProviderLocation())
+                .setProviderCode(sourceModel.getProviderCode())
+                .setInstitutionName(sourceModel.getInstitutionName())
+                .setInstitutionDescription(sourceModel.getInstitutionDescription())
+                .setInstitutionLocation(sourceModel.getInstitutionLocation())
+                .setRequestedPrefix(sourceModel.getRequestedPrefix())
+                .setProviderUrlPattern(sourceModel.getProviderUrlPattern())
+                .setSampleId(sourceModel.getSampleId())
+                .setIdRegexPattern(sourceModel.getIdRegexPattern())
+                .setSupportingReferences(references)
+                .setAdditionalInformation(additionalInformation)
+                .setRequesterName(sourceModel.getRequester().getName())
+                .setRequesterEmail(sourceModel.getRequester().getEmail());
     }
 }
