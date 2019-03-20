@@ -37,12 +37,14 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
 
     // Helpers
     private boolean isPrefixRegistrationSessionOpen(PrefixRegistrationSession session) {
-        // TODO
-        // Check there is no reject event
+        // Check there is no 'reject' event
         if (prefixRegistrationSessionEventRejectRepository.findByPrefixRegistrationSessionId(session.getId()) != null) {
             return false;
         }
-
+        // Check there no 'accept' event
+        if (prefixRegistrationSessionEventAcceptRepository.findByPrefixRegistrationSessionId(session.getId()) != null) {
+            return false;
+        }
         return true;
     }
     // --- END - Helpers
