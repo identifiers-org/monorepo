@@ -82,6 +82,11 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
     public PrefixRegistrationSessionEventAmend amendRequest(PrefixRegistrationSession prefixRegistrationSession,
                                                             PrefixRegistrationRequest amendedRequest, String actor,
                                                             String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
+        try {
+            // TODO
+        } catch (RuntimeException e) {
+            // TODO
+        }
         // TODO Check that the prefix registration session is open
         // TODO Create the event
         // TODO Persist the amended request
@@ -95,6 +100,11 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
     @Override
     public PrefixRegistrationSessionEventComment commentRequest(PrefixRegistrationSession prefixRegistrationSession,
                                                                 String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
+        try {
+            // TODO
+        } catch (RuntimeException e) {
+            // TODO
+        }
         // TODO Check that the prefix registration session is open
         // TODO Create the event
         // TODO Reference the current session prefix registration request
@@ -107,6 +117,11 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
     @Override
     public PrefixRegistrationSessionEventReject rejectRequest(PrefixRegistrationSession prefixRegistrationSession,
                                                               String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
+        try {
+            // TODO
+        } catch (RuntimeException e) {
+            // TODO
+        }
         // TODO Check that the prefix registration session is open
         // TODO Create the event
         // TODO Reference the current session prefix registration request
@@ -121,6 +136,11 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
     @Override
     public PrefixRegistrationSessionEventAccept acceptRequest(PrefixRegistrationSession prefixRegistrationSession,
                                                               String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
+        try {
+            // TODO
+        } catch (RuntimeException e) {
+            // TODO
+        }
         // TODO Check that the prefix registration session is open
         // TODO Create the event
         // TODO Reference the current session prefix registration request
