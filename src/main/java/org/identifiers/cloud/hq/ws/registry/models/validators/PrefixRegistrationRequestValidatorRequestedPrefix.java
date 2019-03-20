@@ -37,7 +37,7 @@ public class PrefixRegistrationRequestValidatorRequestedPrefix implements Prefix
         // I planned on reusing the error message, but I may use different messages for logging and the client
         String errorMessage = "--- no error message has been set ---";
         try {
-            Namespace foundNamespace = namespaceRepository.findByPrefix(request.getRequestedPrefix());
+            Namespace foundNamespace = namespaceRepository.findOneByPrefixMatches(request.getRequestedPrefix());
             if (foundNamespace != null) {
                 if (foundNamespace.isDeprecated()) {
                     errorMessage = String.format("Prefix '%s' is DEPRECATED, for REACTIVATION, please, use a " +
