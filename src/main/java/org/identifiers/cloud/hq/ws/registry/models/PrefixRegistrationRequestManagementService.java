@@ -29,6 +29,9 @@ public interface PrefixRegistrationRequestManagementService {
      * In the current iteration of this microservice it uses the prefix registration request model from the API straight
      * away, which is ok, but it may be refactored later, including some model transformation code.
      * @param request the prefix registration requests to use for starting the process
+     * @param actor the actor that has triggered this action
+     * @param additionalInformation possible additional information related to this action
+     * @return the prefix registration event registered as a consequence of executing this action
      * @throws PrefixRegistrationRequestManagementServiceException
      */
     PrefixRegistrationSessionEvent startRequest(ServiceRequestRegisterPrefixPayload request,
