@@ -74,7 +74,6 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
                             "on '%s' prefix, the following error occurred: '%s'",
                             request.getRequestedPrefix(), e.getMessage()))
         }
-        return null;
     }
 
     @Transactional
@@ -83,17 +82,31 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
                                                             PrefixRegistrationRequest amendedRequest, String actor,
                                                             String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
         try {
-            // TODO
+            // Check that the prefix registration session is open
+            if (!isPrefixRegistrationSessionOpen(prefixRegistrationSession)) {
+                throw new PrefixRegistrationRequestManagementServiceException("NO amendment requests ACCEPTED on ALREADY CLOSED Prefix Registration Session");
+            }
+            // Persist the amended request
+            PrefixRegistrationRequest savedRequest = prefixRegistrationRequestRepository.save(amendedRequest);
+            // Create the event
+            PrefixRegistrationSessionEventAmend eventAmend = new PrefixRegistrationSessionEventAmend();
+            // Reference the amended request in the newly created event
+            eventAmend.setActor(actor)
+                    .setAdditionalInformation(additionalInformation)
+                    .setPrefixRegistrationSession(prefixRegistrationSession)
+                    .setPrefixRegistrationRequest(savedRequest);
+            eventAmend = prefixRegistrationSessionEventAmendRepository.save(eventAmend);
+            // Update the prefix registration request referenced at session level
+            prefixRegistrationSession.setPrefixRegistrationRequest(amendedRequest);
+            prefixRegistrationSessionRepository.save(prefixRegistrationSession);
+            // Return the event
+            return eventAmend;
         } catch (RuntimeException e) {
             // TODO
+            throw new PrefixRegistrationRequestManagementServiceException(
+                    String.format("While amending a prefix registration request with amendment prefix '%s', " +
+                            "the following error occurred: '%s'", amendedRequest.getRequestedPrefix(), e.getMessage()));
         }
-        // TODO Check that the prefix registration session is open
-        // TODO Create the event
-        // TODO Persist the amended request
-        // TODO Reference the amended request in the newly created event
-        // TODO Update the prefix registration request referenced at session level
-        // TODO Return the event
-        return null;
     }
 
     @Transactional
