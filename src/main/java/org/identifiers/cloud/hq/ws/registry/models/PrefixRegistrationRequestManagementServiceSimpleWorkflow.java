@@ -20,6 +20,9 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
     @Override
     public PrefixRegistrationSessionEvent startRequest(PrefixRegistrationRequest request, String actor,
                                                        String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
+        // TODO Open a new prefix registration session
+        // TODO Set the given prefix registration request
+        // TODO Create a 'start' event
         return null;
     }
 
