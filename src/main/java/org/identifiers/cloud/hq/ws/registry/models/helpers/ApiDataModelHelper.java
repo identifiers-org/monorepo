@@ -16,7 +16,6 @@ import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationReques
 public class ApiDataModelHelper {
 
     public static PrefixRegistrationRequest getPrefixRegistrationRequest(ServiceRequestRegisterPrefixPayload sourceModel) {
-        // TODO
         String references = "";
         if (sourceModel.getReferences() != null) {
             references = "".join(",", sourceModel.getReferences());
