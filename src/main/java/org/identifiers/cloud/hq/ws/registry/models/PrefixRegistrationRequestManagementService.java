@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
+import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationRequest;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSessionEvent;
 
@@ -33,7 +34,7 @@ public interface PrefixRegistrationRequestManagementService {
     PrefixRegistrationSessionEvent startRequest(ServiceRequestRegisterPrefixPayload request, String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
 
     // TODO - amend request
-    PrefixRegistrationSessionEvent amendRequest(PrefixRegistrationSession prefixRegistrationSession, String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
+    PrefixRegistrationSessionEvent amendRequest(PrefixRegistrationSession prefixRegistrationSession, PrefixRegistrationRequest amendedRequest, String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
 
     // TODO - comment request
     PrefixRegistrationSessionEvent commentRequest(PrefixRegistrationSession prefixRegistrationSession, String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
