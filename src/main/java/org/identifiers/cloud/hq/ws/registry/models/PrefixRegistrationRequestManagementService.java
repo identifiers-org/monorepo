@@ -31,17 +31,28 @@ public interface PrefixRegistrationRequestManagementService {
      * @param request the prefix registration requests to use for starting the process
      * @throws PrefixRegistrationRequestManagementServiceException
      */
-    PrefixRegistrationSessionEvent startRequest(ServiceRequestRegisterPrefixPayload request, String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
+    PrefixRegistrationSessionEvent startRequest(ServiceRequestRegisterPrefixPayload request,
+                                                String actor,
+                                                String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
 
     // TODO - amend request
-    PrefixRegistrationSessionEvent amendRequest(PrefixRegistrationSession prefixRegistrationSession, PrefixRegistrationRequest amendedRequest, String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
+    PrefixRegistrationSessionEvent amendRequest(PrefixRegistrationSession prefixRegistrationSession,
+                                                PrefixRegistrationRequest amendedRequest,
+                                                String actor,
+                                                String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
 
     // TODO - comment request
-    PrefixRegistrationSessionEvent commentRequest(PrefixRegistrationSession prefixRegistrationSession, String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
+    PrefixRegistrationSessionEvent commentRequest(PrefixRegistrationSession prefixRegistrationSession,
+                                                  String actor,
+                                                  String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
 
     // TODO - reject request
-    PrefixRegistrationSessionEvent rejectRequest(PrefixRegistrationSession prefixRegistrationSession, String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
+    PrefixRegistrationSessionEvent rejectRequest(PrefixRegistrationSession prefixRegistrationSession,
+                                                 String actor,
+                                                 String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
 
     // TODO - accept request
-    PrefixRegistrationSessionEvent acceptRequest(PrefixRegistrationSession prefixRegistrationSession, String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
+    PrefixRegistrationSessionEvent acceptRequest(PrefixRegistrationSession prefixRegistrationSession,
+                                                 String actor,
+                                                 String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
 }
