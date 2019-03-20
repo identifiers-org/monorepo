@@ -1,9 +1,11 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
+import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationRequest;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSessionEvent;
+import org.springframework.stereotype.Component;
 
 /**
  * Project: registry
@@ -13,6 +15,8 @@ import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSessio
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+@Component
+@Slf4j
 public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements PrefixRegistrationRequestManagementService {
     @Override
     public PrefixRegistrationSessionEvent startRequest(ServiceRequestRegisterPrefixPayload request, String actor,
