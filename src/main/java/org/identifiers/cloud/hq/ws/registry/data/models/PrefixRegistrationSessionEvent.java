@@ -54,6 +54,9 @@ public class PrefixRegistrationSessionEvent {
     @ManyToOne(optional = false)
     private PrefixRegistrationSession prefixRegistrationSession;
 
+    @ManyToOne
+    private PrefixRegistrationRequest prefixRegistrationRequest;
+
     @Column(nullable = false, updatable = false)
     @CreatedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
