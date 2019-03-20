@@ -18,4 +18,6 @@ public interface NamespaceRepository extends JpaRepository<Namespace, Long> {
     Namespace findByPrefix(String prefix);
 
     List<Namespace> findAllByPrefixStartsWith(String prefixStart);
+
+    List<Namespace> findAllByPrefixContaining(String content);
 }
