@@ -102,7 +102,6 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
             // Return the event
             return eventAmend;
         } catch (RuntimeException e) {
-            // TODO
             throw new PrefixRegistrationRequestManagementServiceException(
                     String.format("While amending a prefix registration request with amendment prefix '%s', " +
                             "the following error occurred: '%s'", amendedRequest.getRequestedPrefix(), e.getMessage()));
