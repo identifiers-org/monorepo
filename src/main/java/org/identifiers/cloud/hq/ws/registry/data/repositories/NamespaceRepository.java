@@ -20,7 +20,10 @@ public interface NamespaceRepository extends JpaRepository<Namespace, Long> {
     // TODO
     Namespace findByPrefix(String prefix);
 
+    @RestResource(exported = false)
     List<Namespace> findByPrefixStartsWith(String prefixStart);
+
+    Page<Namespace> findByPrefixStartsWith(String prefixStart, Pageable pageable);
 
     @RestResource(exported = false)
     List<Namespace> findByPrefixContaining(String content);
