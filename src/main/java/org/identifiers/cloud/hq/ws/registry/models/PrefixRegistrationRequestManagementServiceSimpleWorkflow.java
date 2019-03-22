@@ -196,12 +196,16 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
             // Persist the event
             eventAccept = prefixRegistrationSessionEventAcceptRepository.save(eventAccept);
             // Session is considered 'closed' right now
-            // TODO Run the 'accept' chain of actions
+            // TODO Run the 'accept' chain of actions, THIS INCLUDES THE ACTUAL ACTIVATION OF THE PREFIX IN THE REGISTRY
             // Return the event
             return eventAccept;
         } catch (RuntimeException e) {
-            // TODO
+            throw new PrefixRegistrationRequestManagementServiceException(
+                    String.format("While accepting a prefix registration request, with reason '%s', for prefix '%s', " +
+                                    "the following error occurred: '%s'",
+                            acceptanceReason,
+                            prefixRegistrationSession.getPrefixRegistrationRequest().getRequestedPrefix(),
+                            e.getMessage()));
         }
-        return null;
     }
 }
