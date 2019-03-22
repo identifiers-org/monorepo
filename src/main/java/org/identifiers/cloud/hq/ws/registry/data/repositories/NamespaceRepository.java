@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.data.repositories;
 
 import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -18,8 +19,10 @@ public interface NamespaceRepository extends JpaRepository<Namespace, Long> {
     // TODO
     Namespace findByPrefix(String prefix);
 
-    List<Namespace> findByPrefixStartsWith(String prefixStart, Pageable pageable);
+    List<Namespace> findByPrefixStartsWith(String prefixStart);
 
-    List<Namespace> findByPrefixContaining(String content, Pageable pageable);
+    List<Namespace> findByPrefixContaining(String content);
+
+    Page<Namespace> findByPrefixContaining(String content, Pageable pageable);
 
 }
