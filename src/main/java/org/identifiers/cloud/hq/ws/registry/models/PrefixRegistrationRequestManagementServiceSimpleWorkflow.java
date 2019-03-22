@@ -112,16 +112,19 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
     @Override
     public PrefixRegistrationSessionEventComment commentRequest(PrefixRegistrationSession prefixRegistrationSession,
                                                                 String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
+        // Check that the prefix registration session is open
+        if (!isPrefixRegistrationSessionOpen(prefixRegistrationSession)) {
+            throw new PrefixRegistrationRequestManagementServiceException("NO comment requests ACCEPTED on ALREADY CLOSED Prefix Registration Session");
+        }
         try {
             // TODO
+            // TODO Create the event
+            // TODO Reference the current session prefix registration request
+            // TODO Persist the event
+            // TODO Return the event
         } catch (RuntimeException e) {
             // TODO
         }
-        // TODO Check that the prefix registration session is open
-        // TODO Create the event
-        // TODO Reference the current session prefix registration request
-        // TODO Persist the event
-        // TODO Return the event
         return null;
     }
 
