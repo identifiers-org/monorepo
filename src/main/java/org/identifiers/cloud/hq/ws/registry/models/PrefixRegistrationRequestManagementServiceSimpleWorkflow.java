@@ -131,7 +131,12 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
             // Return the event
             return prefixRegistrationSessionEventCommentRepository.save(eventComment);
         } catch (RuntimeException e) {
-            // TODO
+            throw new PrefixRegistrationRequestManagementServiceException(
+                    String.format("While appending comment '%s' to a prefix registration request, for prefix '%s', " +
+                            "the following error occurred: '%s'",
+                            comment,
+                            prefixRegistrationSession.getPrefixRegistrationRequest().getRequestedPrefix(),
+                            e.getMessage()));
         }
         return null;
     }
