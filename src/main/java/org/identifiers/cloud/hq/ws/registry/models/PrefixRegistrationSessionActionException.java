@@ -8,8 +8,8 @@ package org.identifiers.cloud.hq.ws.registry.models;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-public class PrefixRegistrationSessionEventActionException extends RuntimeException {
-    public PrefixRegistrationSessionEventActionException(String message) {
+public class PrefixRegistrationSessionActionException extends RuntimeException {
+    public PrefixRegistrationSessionActionException(String message) {
         super(message);
     }
 }
