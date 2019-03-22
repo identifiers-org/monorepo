@@ -59,6 +59,7 @@ public interface PrefixRegistrationRequestManagementService {
      * @throws PrefixRegistrationRequestManagementServiceException
      */
     PrefixRegistrationSessionEventComment commentRequest(PrefixRegistrationSession prefixRegistrationSession,
+                                                  String comment,
                                                   String actor,
                                                   String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
 
