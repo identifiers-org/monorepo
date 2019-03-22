@@ -11,6 +11,6 @@ package org.identifiers.cloud.hq.ws.registry.models;
  * This interface defines the contract for an action, usually taken upon a prefix registration session event completion.
  *
  */
-public interface PrefixRegistrationSessionEventAction {
+public interface PrefixRegistrationSessionAction {
     // TODO
 }
