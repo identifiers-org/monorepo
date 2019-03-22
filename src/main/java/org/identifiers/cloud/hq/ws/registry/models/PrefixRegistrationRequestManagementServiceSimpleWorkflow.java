@@ -185,8 +185,14 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
         }
         try {
             // TODO
-            // TODO Create the event
-            // TODO Reference the current session prefix registration request
+            // Create the event
+            PrefixRegistrationSessionEventAccept eventAccept =
+                    new PrefixRegistrationSessionEventAccept().setAcceptanceReason(acceptanceReason);
+            // Reference the current session prefix registration request
+            eventAccept.setActor(actor)
+                    .setAdditionalInformation(additionalInformation)
+                    .setPrefixRegistrationSession(prefixRegistrationSession)
+                    .setPrefixRegistrationRequest(prefixRegistrationSession.getPrefixRegistrationRequest());
             // TODO Persist the event
             // Session is considered 'closed' right now
             // TODO Run the 'accept' chain of actions

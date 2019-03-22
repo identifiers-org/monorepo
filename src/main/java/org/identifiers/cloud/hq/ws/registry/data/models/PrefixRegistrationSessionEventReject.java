@@ -20,6 +20,7 @@ import javax.persistence.Entity;
 @Entity
 public class PrefixRegistrationSessionEventReject extends PrefixRegistrationSessionEvent {
 
+    // Optional reason for rejecting the prefix registration request
     private String rejectionReason;
 
     public PrefixRegistrationSessionEventReject() {

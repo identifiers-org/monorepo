@@ -19,6 +19,10 @@ import javax.persistence.Entity;
 @Accessors(chain = true)
 @Entity
 public class PrefixRegistrationSessionEventAccept extends PrefixRegistrationSessionEvent {
+
+    // Optional reason for accepting the prefix registration request
+    private String acceptanceReason;
+
     public PrefixRegistrationSessionEventAccept() {
         super();
         this.setEventName("ACCEPT");
