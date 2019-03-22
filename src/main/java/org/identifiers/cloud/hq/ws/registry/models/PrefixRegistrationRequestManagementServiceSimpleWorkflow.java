@@ -193,7 +193,8 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
                     .setAdditionalInformation(additionalInformation)
                     .setPrefixRegistrationSession(prefixRegistrationSession)
                     .setPrefixRegistrationRequest(prefixRegistrationSession.getPrefixRegistrationRequest());
-            // TODO Persist the event
+            // Persist the event
+            eventAccept = prefixRegistrationSessionEventAcceptRepository.save(eventAccept);
             // Session is considered 'closed' right now
             // TODO Run the 'accept' chain of actions
             // TODO Return the event
