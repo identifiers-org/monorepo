@@ -144,12 +144,15 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
     @Override
     public PrefixRegistrationSessionEventReject rejectRequest(PrefixRegistrationSession prefixRegistrationSession,
                                                               String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
+        // Check that the prefix registration session is open
+        if (!isPrefixRegistrationSessionOpen(prefixRegistrationSession)) {
+            throw new PrefixRegistrationRequestManagementServiceException("NO reject requests ACCEPTED on ALREADY CLOSED Prefix Registration Session");
+        }
         try {
             // TODO
         } catch (RuntimeException e) {
             // TODO
         }
-        // TODO Check that the prefix registration session is open
         // TODO Create the event
         // TODO Reference the current session prefix registration request
         // TODO Persist the event
@@ -163,12 +166,12 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
     @Override
     public PrefixRegistrationSessionEventAccept acceptRequest(PrefixRegistrationSession prefixRegistrationSession,
                                                               String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
+        // TODO Check that the prefix registration session is open
         try {
             // TODO
         } catch (RuntimeException e) {
             // TODO
         }
-        // TODO Check that the prefix registration session is open
         // TODO Create the event
         // TODO Reference the current session prefix registration request
         // TODO Persist the event
