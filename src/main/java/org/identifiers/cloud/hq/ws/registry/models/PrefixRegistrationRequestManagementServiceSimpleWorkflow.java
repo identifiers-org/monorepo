@@ -127,7 +127,8 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
                     .setAdditionalInformation(additionalInformation)
                     .setPrefixRegistrationSession(prefixRegistrationSession)
                     .setPrefixRegistrationRequest(prefixRegistrationSession.getPrefixRegistrationRequest());
-            // TODO Persist the event
+            // Persist the event
+            eventComment = prefixRegistrationSessionEventCommentRepository.save(eventComment);
             // TODO Return the event
         } catch (RuntimeException e) {
             // TODO
