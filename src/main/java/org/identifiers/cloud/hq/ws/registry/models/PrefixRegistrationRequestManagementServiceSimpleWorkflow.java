@@ -128,8 +128,8 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
                     .setPrefixRegistrationSession(prefixRegistrationSession)
                     .setPrefixRegistrationRequest(prefixRegistrationSession.getPrefixRegistrationRequest());
             // Persist the event
-            eventComment = prefixRegistrationSessionEventCommentRepository.save(eventComment);
-            // TODO Return the event
+            // Return the event
+            return prefixRegistrationSessionEventCommentRepository.save(eventComment);
         } catch (RuntimeException e) {
             // TODO
         }
