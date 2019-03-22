@@ -8,6 +8,7 @@ package org.identifiers.cloud.hq.ws.registry.models;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  *
+ * This interface defines the contract for an action, usually taken upon a prefix registration session event completion.
  *
  */
 public interface PrefixRegistrationSessionEventAction {
