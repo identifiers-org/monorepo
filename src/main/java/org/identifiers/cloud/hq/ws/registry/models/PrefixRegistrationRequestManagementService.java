@@ -73,7 +73,7 @@ public interface PrefixRegistrationRequestManagementService {
      * @throws PrefixRegistrationRequestManagementServiceException
      */
     PrefixRegistrationSessionEventReject rejectRequest(PrefixRegistrationSession prefixRegistrationSession,
-                                                 String rejectReason,
+                                                 String rejectionReason,
                                                  String actor,
                                                  String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
 
@@ -87,7 +87,7 @@ public interface PrefixRegistrationRequestManagementService {
      * @throws PrefixRegistrationRequestManagementServiceException
      */
     PrefixRegistrationSessionEventAccept acceptRequest(PrefixRegistrationSession prefixRegistrationSession,
-                                                 String acceptReason,
+                                                 String acceptanceReason,
                                                  String actor,
                                                  String additionalInformation) throws PrefixRegistrationRequestManagementServiceException;
 }

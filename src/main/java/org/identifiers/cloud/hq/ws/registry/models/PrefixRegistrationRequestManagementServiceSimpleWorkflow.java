@@ -143,41 +143,49 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
     @Transactional
     @Override
     public PrefixRegistrationSessionEventReject rejectRequest(PrefixRegistrationSession prefixRegistrationSession,
+                                                              String rejectionReason,
                                                               String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
         // Check that the prefix registration session is open
         if (!isPrefixRegistrationSessionOpen(prefixRegistrationSession)) {
             throw new PrefixRegistrationRequestManagementServiceException("NO reject requests ACCEPTED on ALREADY CLOSED Prefix Registration Session");
         }
         try {
-            // TODO
+            // Create the event
+            PrefixRegistrationSessionEventReject eventReject =
+                    new PrefixRegistrationSessionEventReject().setRejectionReason(rejectionReason);
+            // Reference the current session prefix registration request
+            eventReject.setActor(actor)
+                    .setAdditionalInformation(additionalInformation)
+                    .setPrefixRegistrationSession(prefixRegistrationSession)
+                    .setPrefixRegistrationRequest(prefixRegistrationSession.getPrefixRegistrationRequest());
+            // Persist the event
+            eventReject = prefixRegistrationSessionEventRejectRepository.save(eventReject);
+            // Session is considered 'closed' right now
+            // TODO Run the 'reject' chain of actions
+            // Return the event
+            return eventReject;
         } catch (RuntimeException e) {
             // TODO
         }
-        // TODO Create the event
-        // TODO Reference the current session prefix registration request
-        // TODO Persist the event
-        // Session is considered 'closed' right now
-        // TODO Run the 'reject' chain of actions
-        // TODO Return the event
-        return null;
     }
 
     @Transactional
     @Override
     public PrefixRegistrationSessionEventAccept acceptRequest(PrefixRegistrationSession prefixRegistrationSession,
+                                                              String acceptanceReason,
                                                               String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
         // TODO Check that the prefix registration session is open
         try {
             // TODO
+            // TODO Create the event
+            // TODO Reference the current session prefix registration request
+            // TODO Persist the event
+            // Session is considered 'closed' right now
+            // TODO Run the 'accept' chain of actions
+            // TODO Return the event
         } catch (RuntimeException e) {
             // TODO
         }
-        // TODO Create the event
-        // TODO Reference the current session prefix registration request
-        // TODO Persist the event
-        // Session is considered 'closed' right now
-        // TODO Run the 'accept' chain of actions
-        // TODO Return the event
         return null;
     }
 }
