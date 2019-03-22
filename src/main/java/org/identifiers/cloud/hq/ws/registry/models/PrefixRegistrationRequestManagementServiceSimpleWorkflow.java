@@ -138,7 +138,6 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
                             prefixRegistrationSession.getPrefixRegistrationRequest().getRequestedPrefix(),
                             e.getMessage()));
         }
-        return null;
     }
 
     @Transactional
