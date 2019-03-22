@@ -147,7 +147,7 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
                                                               String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
         // Check that the prefix registration session is open
         if (!isPrefixRegistrationSessionOpen(prefixRegistrationSession)) {
-            throw new PrefixRegistrationRequestManagementServiceException("NO reject requests ACCEPTED on ALREADY CLOSED Prefix Registration Session");
+            throw new PrefixRegistrationRequestManagementServiceException("NO rejection requests ACCEPTED on ALREADY CLOSED Prefix Registration Session");
         }
         try {
             // Create the event
@@ -179,7 +179,10 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
     public PrefixRegistrationSessionEventAccept acceptRequest(PrefixRegistrationSession prefixRegistrationSession,
                                                               String acceptanceReason,
                                                               String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
-        // TODO Check that the prefix registration session is open
+        // Check that the prefix registration session is open
+        if (!isPrefixRegistrationSessionOpen(prefixRegistrationSession)) {
+            throw new PrefixRegistrationRequestManagementServiceException("NO acceptance requests ACCEPTED on ALREADY CLOSED Prefix Registration Session");
+        }
         try {
             // TODO
             // TODO Create the event
