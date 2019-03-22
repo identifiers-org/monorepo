@@ -19,6 +19,9 @@ import javax.persistence.Entity;
 @Accessors(chain = true)
 @Entity
 public class PrefixRegistrationSessionEventComment extends PrefixRegistrationSessionEvent {
+    // This is the comment we want to add
+    private String comment;
+
     public PrefixRegistrationSessionEventComment() {
         super();
         this.setEventName("COMMENT");
