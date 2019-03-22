@@ -12,4 +12,5 @@ package org.identifiers.cloud.hq.ws.registry.models;
  *
  */
 public interface PrefixRegistrationSessionEventAction {
+    // TODO
 }
