@@ -81,11 +81,11 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
     public PrefixRegistrationSessionEventAmend amendRequest(PrefixRegistrationSession prefixRegistrationSession,
                                                             PrefixRegistrationRequest amendedRequest, String actor,
                                                             String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
+        // Check that the prefix registration session is open
+        if (!isPrefixRegistrationSessionOpen(prefixRegistrationSession)) {
+            throw new PrefixRegistrationRequestManagementServiceException("NO amendment requests ACCEPTED on ALREADY CLOSED Prefix Registration Session");
+        }
         try {
-            // Check that the prefix registration session is open
-            if (!isPrefixRegistrationSessionOpen(prefixRegistrationSession)) {
-                throw new PrefixRegistrationRequestManagementServiceException("NO amendment requests ACCEPTED on ALREADY CLOSED Prefix Registration Session");
-            }
             // Persist the amended request
             PrefixRegistrationRequest savedRequest = prefixRegistrationRequestRepository.save(amendedRequest);
             // Create the event
