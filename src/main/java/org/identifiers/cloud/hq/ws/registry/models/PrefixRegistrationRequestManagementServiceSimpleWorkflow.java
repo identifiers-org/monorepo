@@ -165,7 +165,12 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
             // Return the event
             return eventReject;
         } catch (RuntimeException e) {
-            // TODO
+            throw new PrefixRegistrationRequestManagementServiceException(
+                    String.format("While rejecting a prefix registration request, with reason '%s', for prefix '%s', " +
+                                    "the following error occurred: '%s'",
+                            rejectionReason,
+                            prefixRegistrationSession.getPrefixRegistrationRequest().getRequestedPrefix(),
+                            e.getMessage()));
         }
     }
 
