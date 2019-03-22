@@ -111,6 +111,7 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
     @Transactional
     @Override
     public PrefixRegistrationSessionEventComment commentRequest(PrefixRegistrationSession prefixRegistrationSession,
+                                                                String comment,
                                                                 String actor, String additionalInformation) throws PrefixRegistrationRequestManagementServiceException {
         // Check that the prefix registration session is open
         if (!isPrefixRegistrationSessionOpen(prefixRegistrationSession)) {
@@ -118,8 +119,14 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
         }
         try {
             // TODO
-            // TODO Create the event
-            // TODO Reference the current session prefix registration request
+            // Create the event
+            PrefixRegistrationSessionEventComment eventComment =
+                    new PrefixRegistrationSessionEventComment().setComment(comment);
+            // Reference the current session prefix registration request
+            eventComment.setActor(actor)
+                    .setAdditionalInformation(additionalInformation)
+                    .setPrefixRegistrationSession(prefixRegistrationSession)
+                    .setPrefixRegistrationRequest(prefixRegistrationSession.getPrefixRegistrationRequest());
             // TODO Persist the event
             // TODO Return the event
         } catch (RuntimeException e) {
