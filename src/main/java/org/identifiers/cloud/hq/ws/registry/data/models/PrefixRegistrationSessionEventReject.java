@@ -19,6 +19,9 @@ import javax.persistence.Entity;
 @Accessors(chain = true)
 @Entity
 public class PrefixRegistrationSessionEventReject extends PrefixRegistrationSessionEvent {
+
+    private String rejectionReason;
+
     public PrefixRegistrationSessionEventReject() {
         super();
         this.setEventName("REJECT");
