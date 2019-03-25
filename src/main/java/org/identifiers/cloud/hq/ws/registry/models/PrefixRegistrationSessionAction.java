@@ -14,7 +14,8 @@ import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSessio
  *
  */
 public interface PrefixRegistrationSessionAction {
-    // TODO
-    // TODO I'll probably remove the return value, as I think I'm not using it anywhere, and it doesn't seem to make sense
+
+    // Having the report kind of makes sense, as it leaves the exception to true exceptional circumstances. Although it
+    // doesn't stop being just another approach experiment...
     PrefixRegistrationSessionActionReport performAction(PrefixRegistrationSession session) throws PrefixRegistrationSessionActionException;
 }
