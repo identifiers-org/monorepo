@@ -37,7 +37,6 @@ public class PrefixRegistrationSessionActionLogger implements PrefixRegistration
             report.setAdditionalInformation(message);
             log.warn(message);
         } else if (prefixRegistrationSessionEventAcceptRepository.findByPrefixRegistrationSessionId(session.getId()) != null) {
-            // TODO
             String message = String.format("%s has CLOSED as ACCEPTED", logMessagePrefix);
             report.setAdditionalInformation(message);
             log.info(message);
