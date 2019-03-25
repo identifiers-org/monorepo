@@ -20,7 +20,6 @@ import java.util.List;
 @Qualifier("PrefixRegistrationSessionActionAcceptance")
 public class PrefixRegistrationSessionActionAcceptance implements PrefixRegistrationSessionAction {
 
-
     private List<PrefixRegistrationSessionAction> buildActionSequence() {
         // TODO
     }
