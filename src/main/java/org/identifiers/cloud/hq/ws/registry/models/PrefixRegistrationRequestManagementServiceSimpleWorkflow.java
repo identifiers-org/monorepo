@@ -184,7 +184,6 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
             throw new PrefixRegistrationRequestManagementServiceException("NO acceptance requests ACCEPTED on ALREADY CLOSED Prefix Registration Session");
         }
         try {
-            // TODO
             // Create the event
             PrefixRegistrationSessionEventAccept eventAccept =
                     new PrefixRegistrationSessionEventAccept().setAcceptanceReason(acceptanceReason);
