@@ -39,7 +39,7 @@ public class PrefixRegistrationSessionActionLogger implements PrefixRegistration
             log.warn(String.format("%s has CLOSED as REJECTED", logMessagePrefix));
         } else if (prefixRegistrationSessionEventAcceptRepository.findByPrefixRegistrationSessionId(session.getId()) != null) {
             // TODO
-            
+            log.info(String.format("%s has CLOSED as ACCEPTED", logMessagePrefix));
         } else {
             // TODO
         }
