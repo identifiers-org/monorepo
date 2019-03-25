@@ -25,8 +25,6 @@ public interface NamespaceRepository extends JpaRepository<Namespace, Long> {
 
     Page<Namespace> findByPrefixStartsWith(String prefixStart, Pageable pageable);
 
-    Page<Namespace> findByPrefixRegex(String prefixRegex, Pageable pageable);
-
     @RestResource(exported = false)
     List<Namespace> findByPrefixContaining(String content);
 
