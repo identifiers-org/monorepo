@@ -1,5 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.data.services;
 
+import org.springframework.stereotype.Service;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.data.services
@@ -10,6 +12,7 @@ package org.identifiers.cloud.hq.ws.registry.data.services;
  *
  * This is service that implements complex persistence operations for Namespace objects
  */
+@Service
 public class NamespaceService {
     // TODO
 }
