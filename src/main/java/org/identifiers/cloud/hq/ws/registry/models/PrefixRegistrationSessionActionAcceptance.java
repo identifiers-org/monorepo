@@ -46,7 +46,7 @@ public class PrefixRegistrationSessionActionAcceptance implements PrefixRegistra
                 session.getPrefixRegistrationRequest().getRequestedPrefix());
         // TODO Refactor this out in future iterations
         try {
-            // If an subaction is not successful, should we stop or keep going?
+            // If a subaction is not successful, should we stop or keep going?
             // For this iteration of the software, we'll just deal with non-critical chains of actions, so we keep going
             List<PrefixRegistrationSessionActionReport> actionReports = buildActionSequence().parallelStream()
                     .map(action -> action.performAction(session))
