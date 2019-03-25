@@ -27,6 +27,9 @@ public class PrefixRegistrationSessionActionLogger implements PrefixRegistration
 
     @Override
     public PrefixRegistrationSessionActionReport performAction(PrefixRegistrationSession session) throws PrefixRegistrationSessionActionException {
-        return null;
+        // Default report
+        PrefixRegistrationSessionActionReport report = new PrefixRegistrationSessionActionReport();
+        // TODO
+        return report;
     }
 }
