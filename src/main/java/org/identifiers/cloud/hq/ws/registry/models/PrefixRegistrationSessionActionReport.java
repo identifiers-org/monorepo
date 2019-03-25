@@ -1,4 +1,4 @@
-package org.identifiers.cloud.hq.ws.registry.models.validators;
+package org.identifiers.cloud.hq.ws.registry.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
