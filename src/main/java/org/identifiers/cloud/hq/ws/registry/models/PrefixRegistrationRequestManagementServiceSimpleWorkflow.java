@@ -35,6 +35,11 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
     private PrefixRegistrationSessionEventCommentRepository prefixRegistrationSessionEventCommentRepository;
     // --- END - Repositories
 
+    // Prefix registration session completion actions
+    @Autowired
+    private PrefixRegistrationSessionActionAcceptance actionAcceptance;
+    // END - Prefix registration session completion actions
+
     // Helpers
     private boolean isPrefixRegistrationSessionOpen(PrefixRegistrationSession session) {
         // Check there is no 'reject' event
@@ -195,7 +200,7 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
             // Persist the event
             eventAccept = prefixRegistrationSessionEventAcceptRepository.save(eventAccept);
             // Session is considered 'closed' right now
-            // TODO Run the 'accept' chain of actions, THIS INCLUDES THE ACTUAL ACTIVATION OF THE PREFIX IN THE REGISTRY
+            // TODO Run the 'accept' chain of actions
             // Return the event
             return eventAccept;
         } catch (RuntimeException e) {
