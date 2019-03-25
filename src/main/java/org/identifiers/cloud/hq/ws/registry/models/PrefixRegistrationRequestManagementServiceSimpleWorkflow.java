@@ -200,6 +200,8 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
             // Persist the event
             eventAccept = prefixRegistrationSessionEventAcceptRepository.save(eventAccept);
             // Session is considered 'closed' right now
+            // TODO - Activate the new Namespace
+            // TODO - Activate the new Namespace first Provider
             // Acceptance action
             actionAcceptance.performAction(prefixRegistrationSession);
             // Return the event
