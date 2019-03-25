@@ -35,7 +35,10 @@ public class PrefixRegistrationSessionActionAcceptance implements PrefixRegistra
     @Override
     public PrefixRegistrationSessionActionReport performAction(PrefixRegistrationSession session) throws PrefixRegistrationSessionActionException {
         PrefixRegistrationSessionActionReport report = new PrefixRegistrationSessionActionReport();
-        // TODO
+        String messagePrefix = String.format("ACCEPTANCE ACTION for prefix registration session " +
+                "with ID '%d', for prefix '%s', ",
+                session.getId(),
+                session.getPrefixRegistrationRequest().getRequestedPrefix());
         try {
             // TODO
         } catch (RuntimeException e) {
