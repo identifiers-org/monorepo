@@ -33,7 +33,6 @@ public class PrefixRegistrationSessionActionLogger implements PrefixRegistration
         PrefixRegistrationSessionActionReport report = new PrefixRegistrationSessionActionReport();
         String logMessagePrefix = String.format("Prefix Registration Session with ID '%d', for prefix '%s' - ", session.getId(), session.getPrefixRegistrationRequest().getRequestedPrefix());
         if (prefixRegistrationSessionEventRejectRepository.findByPrefixRegistrationSessionId(session.getId()) != null) {
-            // TODO
             String message = String.format("%s has CLOSED as REJECTED", logMessagePrefix);
             report.setAdditionalInformation(message);
             log.warn(message);
