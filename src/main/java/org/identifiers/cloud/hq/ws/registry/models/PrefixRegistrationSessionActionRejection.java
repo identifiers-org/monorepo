@@ -28,7 +28,7 @@ public class PrefixRegistrationSessionActionRejection implements PrefixRegistrat
     private List<PrefixRegistrationSessionAction> buildActionSequence() {
         // TODO
         // TODO - Right now we just log the closing of the prefix registration session, but in the future there will be
-        //  notifications and other actions triggered by an accepted prefix registration request
+        //  notifications and other actions triggered by a rejected prefix registration request
         return Arrays.asList(actionLogger);
     }
 
@@ -39,6 +39,7 @@ public class PrefixRegistrationSessionActionRejection implements PrefixRegistrat
                         "with ID '%d', for prefix '%s', ",
                 session.getId(),
                 session.getPrefixRegistrationRequest().getRequestedPrefix());
+        // TODO - I may refactor this out later on
         try {
             // For this iteration of the software, we don't require all subactions to be successful
             List<PrefixRegistrationSessionActionReport> actionReports = buildActionSequence().parallelStream()
