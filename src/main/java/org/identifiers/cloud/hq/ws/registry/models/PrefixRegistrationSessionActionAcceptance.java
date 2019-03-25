@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
+import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Project: registry
@@ -15,10 +17,11 @@ import java.util.List;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
- *
+ * <p>
  * Composite action to perform upon prefix registration session completion
  */
 @Component
+@Slf4j
 @Qualifier("PrefixRegistrationSessionActionAcceptance")
 public class PrefixRegistrationSessionActionAcceptance implements PrefixRegistrationSessionAction {
     // This is one of things of the inversion of control (IOC) that I may not be getting quite right and I hope I get
@@ -38,11 +41,29 @@ public class PrefixRegistrationSessionActionAcceptance implements PrefixRegistra
     public PrefixRegistrationSessionActionReport performAction(PrefixRegistrationSession session) throws PrefixRegistrationSessionActionException {
         PrefixRegistrationSessionActionReport report = new PrefixRegistrationSessionActionReport();
         String messagePrefix = String.format("ACCEPTANCE ACTION for prefix registration session " +
-                "with ID '%d', for prefix '%s', ",
+                        "with ID '%d', for prefix '%s', ",
                 session.getId(),
                 session.getPrefixRegistrationRequest().getRequestedPrefix());
         try {
             // TODO
+            // If an subaction is not successful, should we stop or keep going?
+            // For this iteration of the software, we'll just deal with non-critical chains of actions, so we keep going
+            List<PrefixRegistrationSessionActionReport> actionReports = buildActionSequence().parallelStream()
+                    .map(action -> action.performAction(session))
+                    .filter(PrefixRegistrationSessionActionReport::isError)
+                    .collect(Collectors.toList());
+            // Set own report to error if any of the subactions completed with error
+            if (!actionReports.isEmpty()) {
+                report.setErrorMessage(String.format("%s, some actions COMPLETED WITH ERRORS", messagePrefix));
+                report.setSuccess(false);
+            } else {
+                report.setAdditionalInformation(String.format("%s, ALL actions SUCCESSFULY COMPLETED", messagePrefix));
+            }
+            // Report errors from subactions
+            actionReports.parallelStream()
+                    .forEach(actionReport -> {
+                        log.error(actionReport.getErrorMessage());
+                    });
         } catch (RuntimeException e) {
             // Some of them may not be capturing exceptions, let's go up to runtime top level
             // TODO
