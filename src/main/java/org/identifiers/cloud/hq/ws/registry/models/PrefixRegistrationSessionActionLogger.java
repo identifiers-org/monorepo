@@ -32,7 +32,6 @@ public class PrefixRegistrationSessionActionLogger implements PrefixRegistration
         // Default report
         PrefixRegistrationSessionActionReport report = new PrefixRegistrationSessionActionReport();
         // TODO
-        // TODO Check if the session finished in rejection state
         String logMessagePrefix = String.format("Prefix Registration Session with ID '%d', for prefix '%s' - ", session.getId(), session.getPrefixRegistrationRequest().getRequestedPrefix());
         if (prefixRegistrationSessionEventRejectRepository.findByPrefixRegistrationSessionId(session.getId()) != null) {
             // TODO
@@ -46,9 +45,10 @@ public class PrefixRegistrationSessionActionLogger implements PrefixRegistration
             log.info(message);
         } else {
             // TODO
-            throw new PrefixRegistrationSessionActionException(String.format("%s HAS NOT BEEN CLOSED!!!", logMessagePrefix));
+            String message = String.format("%s HAS NOT BEEN CLOSED!!!", logMessagePrefix);
+            report.setErrorMessage(message);
+            report.setSuccess(false);
         }
-        // TODO Check if the session finished in acceptance state
         return report;
     }
 }
