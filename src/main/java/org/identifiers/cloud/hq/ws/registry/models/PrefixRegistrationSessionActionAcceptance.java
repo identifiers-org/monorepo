@@ -29,7 +29,7 @@ public class PrefixRegistrationSessionActionAcceptance implements PrefixRegistra
 
     private List<PrefixRegistrationSessionAction> buildActionSequence() {
         // TODO
-        
+        return Arrays.asList(actionLogger);
     }
 
     @Override
