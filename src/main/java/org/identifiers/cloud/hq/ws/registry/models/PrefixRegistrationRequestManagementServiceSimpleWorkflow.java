@@ -38,6 +38,8 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
     // Prefix registration session completion actions
     @Autowired
     private PrefixRegistrationSessionActionAcceptance actionAcceptance;
+    @Autowired
+    private PrefixRegistrationSessionActionRejection actionRejection;
     // END - Prefix registration session completion actions
 
     // Helpers
