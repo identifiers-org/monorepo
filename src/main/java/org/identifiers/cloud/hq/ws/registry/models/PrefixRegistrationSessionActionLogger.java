@@ -5,6 +5,7 @@ import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSessio
 import org.identifiers.cloud.hq.ws.registry.data.repositories.PrefixRegistrationSessionEventAcceptRepository;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.PrefixRegistrationSessionEventRejectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
+@Qualifier("PrefixRegistrationSessionActionLogger")
 public class PrefixRegistrationSessionActionLogger implements PrefixRegistrationSessionAction {
 
     @Autowired

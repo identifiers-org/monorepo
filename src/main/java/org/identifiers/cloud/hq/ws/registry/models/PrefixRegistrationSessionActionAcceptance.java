@@ -1,9 +1,11 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,9 +21,15 @@ import java.util.List;
 @Component
 @Qualifier("PrefixRegistrationSessionActionAcceptance")
 public class PrefixRegistrationSessionActionAcceptance implements PrefixRegistrationSessionAction {
+    // This is one of things of the inversion of control (IOC) that I may not be getting quite right and I hope I get
+    // better on it in the future
+
+    @Autowired
+    private PrefixRegistrationSessionActionLogger actionLogger;
 
     private List<PrefixRegistrationSessionAction> buildActionSequence() {
         // TODO
+        
     }
 
     @Override
