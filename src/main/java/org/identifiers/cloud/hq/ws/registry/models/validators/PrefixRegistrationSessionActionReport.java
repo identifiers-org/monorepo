@@ -7,6 +7,8 @@ package org.identifiers.cloud.hq.ws.registry.models.validators;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This is a report built by any prefix registration session action after running.
  */
 public class PrefixRegistrationSessionActionReport {
 }
