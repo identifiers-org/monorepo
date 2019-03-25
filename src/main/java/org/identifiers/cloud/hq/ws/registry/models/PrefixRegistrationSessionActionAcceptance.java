@@ -36,6 +36,12 @@ public class PrefixRegistrationSessionActionAcceptance implements PrefixRegistra
     public PrefixRegistrationSessionActionReport performAction(PrefixRegistrationSession session) throws PrefixRegistrationSessionActionException {
         PrefixRegistrationSessionActionReport report = new PrefixRegistrationSessionActionReport();
         // TODO
+        try {
+            // TODO
+        } catch (RuntimeException e) {
+            // Some of them may not be capturing exceptions, let's go up to runtime top level
+            // TODO
+        }
         return report;
     }
 }
