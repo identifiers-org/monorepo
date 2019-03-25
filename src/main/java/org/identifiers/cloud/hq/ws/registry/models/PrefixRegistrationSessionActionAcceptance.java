@@ -66,7 +66,6 @@ public class PrefixRegistrationSessionActionAcceptance implements PrefixRegistra
                     });
         } catch (RuntimeException e) {
             // Some of them may not be capturing exceptions, let's go up to runtime top level
-            // TODO
             throw new PrefixRegistrationSessionActionException(String.format("%s, the following error occurred: %s", messagePrefix, e.getMessage()));
         }
         return report;
