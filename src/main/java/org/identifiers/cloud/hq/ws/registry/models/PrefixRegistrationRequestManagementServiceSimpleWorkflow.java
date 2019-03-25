@@ -168,7 +168,8 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
             // Persist the event
             eventReject = prefixRegistrationSessionEventRejectRepository.save(eventReject);
             // Session is considered 'closed' right now
-            // TODO Run the 'reject' chain of actions
+            // Run the rejection action
+            actionRejection.performAction(prefixRegistrationSession);
             // Return the event
             return eventReject;
         } catch (RuntimeException e) {
