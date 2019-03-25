@@ -28,4 +28,8 @@ public class PrefixRegistrationSessionActionReport {
     private String errorMessage = "--- No error message set ---";
     // Additional Information to action completion, optional
     private String additionalInformation = "--- No additional information set ---";
+
+    public boolean isError() {
+        return !isSuccess();
+    }
 }
