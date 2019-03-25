@@ -29,6 +29,8 @@ public class PrefixRegistrationSessionActionAcceptance implements PrefixRegistra
 
     private List<PrefixRegistrationSessionAction> buildActionSequence() {
         // TODO
+        // TODO - Right now we just log the closing of the prefix registration session, but in the future there will be
+        //  notifications and other actions triggered by an accepted prefix registration request
         return Arrays.asList(actionLogger);
     }
 
