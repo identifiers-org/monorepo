@@ -15,5 +15,6 @@ import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSessio
  */
 public interface PrefixRegistrationSessionAction {
     // TODO
+    // TODO I'll probably remove the return value, as I think I'm not using it anywhere, and it doesn't seem to make sense
     PrefixRegistrationSessionActionReport performAction(PrefixRegistrationSession session) throws PrefixRegistrationSessionActionException;
 }
