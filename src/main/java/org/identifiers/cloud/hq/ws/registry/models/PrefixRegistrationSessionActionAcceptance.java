@@ -34,6 +34,8 @@ public class PrefixRegistrationSessionActionAcceptance implements PrefixRegistra
 
     @Override
     public PrefixRegistrationSessionActionReport performAction(PrefixRegistrationSession session) throws PrefixRegistrationSessionActionException {
-        return null;
+        PrefixRegistrationSessionActionReport report = new PrefixRegistrationSessionActionReport();
+        // TODO
+        return report;
     }
 }
