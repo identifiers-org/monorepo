@@ -1,5 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,13 +21,17 @@ public class MirIdServiceWsClient implements MirIdService {
 
     // Helpers
     // END - Helpers
+
+    @Retryable(maxAttempts = WS_REQUEST_RETRY_MAX_ATTEMPTS,
+            backoff = @Backoff(delay = WS_REQUEST_RETRY_BACK_OFF_PERIOD))
     @Override
     public String mintId() throws MirIdServiceException {
+        // TODO
         return null;
     }
 
     @Override
     public void keepAlive(String mirId) throws MirIdServiceException {
-
+        // TODO
     }
 }
