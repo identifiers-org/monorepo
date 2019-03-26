@@ -44,6 +44,9 @@ public class Location {
     private String countryCode;
 
     @Column(nullable = false, updatable = false)
+    private String countryName;
+
+    @Column(nullable = false, updatable = false)
     @CreatedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date created;
