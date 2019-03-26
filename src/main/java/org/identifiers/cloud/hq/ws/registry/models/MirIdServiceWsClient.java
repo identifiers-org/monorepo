@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
@@ -22,6 +23,7 @@ import java.net.URL;
  * This implementation of MIR ID Service delegates the operations on identifiers.org MIR ID Controller API.
  */
 @Component
+@Slf4j
 public class MirIdServiceWsClient implements MirIdService {
     private static final int WS_REQUEST_RETRY_MAX_ATTEMPTS = 12;
     private static final int WS_REQUEST_RETRY_BACK_OFF_PERIOD = 1500; // 1.5 seconds
@@ -45,6 +47,7 @@ public class MirIdServiceWsClient implements MirIdService {
             backoff = @Backoff(delay = WS_REQUEST_RETRY_BACK_OFF_PERIOD))
     @Override
     public String mintId() throws MirIdServiceException {
+        log.info("Requesting MIR ID MINTING");
         int status = 0;
         String mirId = null;
         HttpURLConnection connection = null;
@@ -76,6 +79,7 @@ public class MirIdServiceWsClient implements MirIdService {
         if (status != 200) {
             throw new MirIdServiceException(String.format("MIR ID minting FAILED, status code '%d'", status));
         }
+        log.info("MIR ID MINTING, new ID '%s'", mirId);
         return mirId;
     }
 
