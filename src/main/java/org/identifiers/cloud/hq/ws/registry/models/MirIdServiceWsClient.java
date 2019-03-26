@@ -18,19 +18,6 @@ public class MirIdServiceWsClient implements MirIdService {
     private static final int WS_REQUEST_RETRY_BACK_OFF_PERIOD = 1500; // 1.5 seconds
 
     // Helpers
-    public static RetryTemplate retryTemplate() {
-        RetryTemplate retryTemplate = new RetryTemplate();
-        SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy();
-        retryPolicy.setMaxAttempts(WS_REQUEST_RETRY_MAX_ATTEMPTS);
-
-        FixedBackOffPolicy backOffPolicy = new FixedBackOffPolicy();
-        backOffPolicy.setBackOffPeriod(WS_REQUEST_RETRY_BACK_OFF_PERIOD);
-
-        retryTemplate = new RetryTemplate();
-        retryTemplate.setRetryPolicy(retryPolicy);
-        retryTemplate.setBackOffPolicy(backOffPolicy);
-        return retryTemplate;
-    }
     // END - Helpers
     @Override
     public String mintId() throws MirIdServiceException {
