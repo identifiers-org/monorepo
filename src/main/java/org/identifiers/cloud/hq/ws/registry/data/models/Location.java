@@ -9,10 +9,7 @@ import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -32,6 +29,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@Table(indexes = {@Index(name = "idx_country_name", columnList = "countryName")})
 public class Location {
 
     // ISO 3166/MA Alpha-2 Country Codes
