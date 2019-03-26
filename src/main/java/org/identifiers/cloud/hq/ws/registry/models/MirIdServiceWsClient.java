@@ -79,7 +79,7 @@ public class MirIdServiceWsClient implements MirIdService {
         if (status != 200) {
             throw new MirIdServiceException(String.format("MIR ID minting FAILED, status code '%d'", status));
         }
-        log.info("MIR ID MINTING, new ID '%s'", mirId);
+        log.info(String.format("MIR ID MINTING, newly minted ID '%s'", mirId));
         return mirId;
     }
 
