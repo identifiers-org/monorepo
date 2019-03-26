@@ -8,8 +8,8 @@ package org.identifiers.cloud.hq.ws.registry.models;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-public class MirIdControllerServiceException extends RuntimeException {
-    public MirIdControllerServiceException(String message) {
+public class MirIdServiceException extends RuntimeException {
+    public MirIdServiceException(String message) {
         super(message);
     }
 }

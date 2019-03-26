@@ -15,14 +15,14 @@ public interface MirIdService {
     /**
      * Mint a MIR ID.
      * @return the newly minted MIR ID, if anything happens, it will throw an exception
-     * @throws MirIdControllerServiceException
+     * @throws MirIdServiceException
      */
-    String mintId() throws MirIdControllerServiceException;
+    String mintId() throws MirIdServiceException;
 
     /**
      * Keep a MIR ID alive, if anything goes wrong, it will throw an exception
      * @param mirId MIR ID to keep alive
-     * @throws MirIdControllerServiceException
+     * @throws MirIdServiceException
      */
-    void keepAlive(String mirId) throws MirIdControllerServiceException;
+    void keepAlive(String mirId) throws MirIdServiceException;
 }
