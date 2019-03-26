@@ -7,6 +7,8 @@ package org.identifiers.cloud.hq.ws.registry.configuration;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This is the configuration active for development
  */
 public class ApplicationConfigurationDevelopment {
 }
