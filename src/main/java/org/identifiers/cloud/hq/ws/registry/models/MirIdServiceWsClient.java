@@ -24,7 +24,13 @@ public class MirIdServiceWsClient implements MirIdService {
     private String wsMirIdControllerHost;
     @Value("${org.identifiers.cloud.hq.ws.registry.backend.service.miridcontroller.port}")
     private String wsMirIdControllerPort;
+
     // Helpers
+    private String getMirIdServiceBaseUrl() {
+        // We should allow HTTP / HTTPS configurability in case we want the cluster internal traffic to be encrypted,
+        // otherwise this is fine, as all HQ services are deployed within the same cluster
+        return String.format("http://%s:%s/", wsMirIdControllerHost, wsMirIdControllerPort);
+    }
     // END - Helpers
 
     @Retryable(maxAttempts = WS_REQUEST_RETRY_MAX_ATTEMPTS,
