@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.*;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-@RestController(value = "prefixRegistrationApi")
+@RestController
+@RequestMapping(value = "prefixRegistrationApi")
 public class PrefixRegistrationRequestValidationApiController {
     @Autowired
     private PrefixRegistrationRequestValidationApiModel model;
