@@ -45,7 +45,6 @@ public class MirIdServiceWsClient implements MirIdService {
             backoff = @Backoff(delay = WS_REQUEST_RETRY_BACK_OFF_PERIOD))
     @Override
     public String mintId() throws MirIdServiceException {
-        // TODO
         int status = 0;
         String mirId = null;
         HttpURLConnection connection = null;
