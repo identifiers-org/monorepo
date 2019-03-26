@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,10 @@ public class MirIdServiceWsClient implements MirIdService {
     private static final int WS_REQUEST_RETRY_MAX_ATTEMPTS = 12;
     private static final int WS_REQUEST_RETRY_BACK_OFF_PERIOD = 1500; // 1.5 seconds
 
+    @Value("${org.identifiers.cloud.hq.ws.registry.backend.service.miridcontroller.host}")
+    private String wsMirIdControllerHost;
+    @Value("${org.identifiers.cloud.hq.ws.registry.backend.service.miridcontroller.port}")
+    private String wsMirIdControllerPort;
     // Helpers
     // END - Helpers
 
