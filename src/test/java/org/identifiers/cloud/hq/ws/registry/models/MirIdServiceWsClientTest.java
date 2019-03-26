@@ -1,9 +1,11 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.Assert.*;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Project: registry
@@ -13,10 +15,16 @@ import static org.junit.Assert.*;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+@RunWith(SpringRunner.class)
 @SpringBootTest
+@Slf4j
 public class MirIdServiceWsClientTest {
+
+    @Autowired
+    private MirIdService mirIdService;
 
     @Test
     public void mintId() {
+        mirIdService.mintId();
     }
 }
