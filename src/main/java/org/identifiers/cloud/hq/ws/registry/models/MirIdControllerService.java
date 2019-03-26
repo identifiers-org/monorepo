@@ -19,5 +19,10 @@ public interface MirIdControllerService {
      */
     String mintId() throws MirIdControllerServiceException;
 
+    /**
+     * Keep a MIR ID alive, if anything goes wrong, it will throw an exception
+     * @param mirId MIR ID to keep alive
+     * @throws MirIdControllerServiceException
+     */
     void keepAlive(String mirId) throws MirIdControllerServiceException;
 }
