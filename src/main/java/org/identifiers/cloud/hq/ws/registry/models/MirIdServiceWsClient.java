@@ -30,6 +30,8 @@ public class MirIdServiceWsClient implements MirIdService {
         return null;
     }
 
+    @Retryable(maxAttempts = WS_REQUEST_RETRY_MAX_ATTEMPTS,
+            backoff = @Backoff(delay = WS_REQUEST_RETRY_BACK_OFF_PERIOD))
     @Override
     public void keepAlive(String mirId) throws MirIdServiceException {
         // TODO
