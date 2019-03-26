@@ -11,4 +11,8 @@ package org.identifiers.cloud.hq.ws.registry.models;
  * This interface specifies the contract a delegate for MIR ID Services should fullfil
  */
 public interface MirIdControllerService {
+
+    String mintId();
+
+    void keepAlive(String mirId);
 }
