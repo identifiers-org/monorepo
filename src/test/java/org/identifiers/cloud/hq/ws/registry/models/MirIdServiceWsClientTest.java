@@ -27,4 +27,9 @@ public class MirIdServiceWsClientTest {
     public void mintId() {
         mirIdService.mintId();
     }
+
+    @Test
+    public void keepAlive() {
+        mirIdService.keepAlive("MIR:00000001");
+    }
 }
