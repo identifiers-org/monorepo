@@ -54,8 +54,10 @@ public class MirIdServiceWsClient implements MirIdService {
         try {
             URL requestUrl = new URL(String.format("%s/mintId", getMirIdServiceBaseUrl()));
             connection = (HttpURLConnection) requestUrl.openConnection();
-            connection.setRequestMethod("GET");
             connection.setInstanceFollowRedirects(false);
+            connection.setConnectTimeout(WS_REQUEST_CONNECT_TIMEOUT);
+            connection.setReadTimeout(WS_REQUEST_READ_TIMEOUT);
+            connection.setRequestMethod("GET");
             status = connection.getResponseCode();
             if (status == 200) {
                 // Whaaaaat!?!? Thank you Baeldung! https://www.baeldung.com/java-http-request
@@ -93,8 +95,10 @@ public class MirIdServiceWsClient implements MirIdService {
         try {
             URL requestUrl = new URL(String.format("%s/keepAlive/%s", getMirIdServiceBaseUrl(), mirId));
             connection = (HttpURLConnection) requestUrl.openConnection();
-            connection.setRequestMethod("GET");
             connection.setInstanceFollowRedirects(false);
+            connection.setConnectTimeout(WS_REQUEST_CONNECT_TIMEOUT);
+            connection.setReadTimeout(WS_REQUEST_READ_TIMEOUT);
+            connection.setRequestMethod("GET");
             status = connection.getResponseCode();
             // I'm not interested on the content back from the MIR ID controller, just the HTTP Status
         } catch (RuntimeException | IOException e) {
