@@ -41,7 +41,7 @@ public class NamespaceService {
                     "because IT IS ALREADY REGISTERED", namespace.getPrefix()));
         }
         // TODO Check if the person needs to be created or not
-        
+
         // TODO Get a MIR ID for the new namespace (libapi?)
         // TODO Persist the new namespace
     }
