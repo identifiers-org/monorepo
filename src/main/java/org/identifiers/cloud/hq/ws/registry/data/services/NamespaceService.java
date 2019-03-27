@@ -11,6 +11,8 @@ import org.identifiers.cloud.hq.ws.registry.models.MirIdServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.data.services
@@ -44,6 +46,7 @@ public class NamespaceService {
      * @return the registered namespace
      * @throws NamespaceServiceException
      */
+    @Transactional
     public Namespace registerNewNamespace(Namespace namespace) throws NamespaceServiceException {
         // Check that you're not trying to register an already existing namespace
         if (namespaceRepository.findByPrefix(namespace.getPrefix()) != null) {
@@ -90,6 +93,7 @@ public class NamespaceService {
         return registeredNamespace;
     }
 
+    @Transactional
     public Namespace registerProvider(Namespace namespace, Resource resource) throws NamespaceServiceException {
         // TODO
         // TODO Check the provider code is unique within the namespace
