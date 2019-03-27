@@ -61,7 +61,7 @@ public class NamespaceService {
                     namespace.getContactPerson().getFullName());
             namespace.setContactPerson(contactPerson);
         }
-        // TODO Get a MIR ID for the new namespace
+        // Get a MIR ID for the new namespace
         try {
             // TODO
             namespace.setMirId(mirIdService.mintId());
