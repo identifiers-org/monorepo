@@ -25,7 +25,5 @@ public class ApplicationConfigurationDevelopment implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         log.info("CORS configuration for DEVELOPMENT");
         registry.addMapping("/**").allowedMethods("*");
-
-        // Add more mappings...
     }
 }
