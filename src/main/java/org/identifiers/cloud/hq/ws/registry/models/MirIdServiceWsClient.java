@@ -89,10 +89,17 @@ public class MirIdServiceWsClient implements MirIdService {
     public void keepAlive(String mirId) throws MirIdServiceException {
         log.info(String.format("Requesting '%s' MIR ID to be kept alive", mirId));
         // TODO
+        int status = 0;
         HttpURLConnection connection = null;
         try {
             // TODO
-        } catch (RuntimeException e) {
+            URL requestUrl = new URL(String.format("%s/keepAlive/%s", getMirIdServiceBaseUrl(), mirId));
+            connection = (HttpURLConnection) requestUrl.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setInstanceFollowRedirects(false);
+            status = connection.getResponseCode();
+            // I'm not interested on the content back from the MIR ID controller, just the HTTP Status
+        } catch (RuntimeException | IOException e) {
             // TODO
         } finally {
             if (connection != null) {
