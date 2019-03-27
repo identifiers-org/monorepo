@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.data.services;
 
 import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
+import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
 import org.identifiers.cloud.hq.ws.registry.models.MirIdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class NamespaceService {
 
+    // Repositories
+    @Autowired
+    private NamespaceRepository namespaceRepository;
+    // END - Repositories
+
+    // Services
     @Autowired
     private MirIdService mirIdService;
+    // END - Services
 
     // TODO
     public void registerNewNamespace(Namespace namespace) throws NamespaceServiceException {
