@@ -6,6 +6,7 @@ import org.identifiers.cloud.hq.ws.registry.data.models.Person;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.PersonRepository;
 import org.identifiers.cloud.hq.ws.registry.models.MirIdService;
+import org.identifiers.cloud.hq.ws.registry.models.MirIdServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,7 +61,12 @@ public class NamespaceService {
                     namespace.getContactPerson().getFullName());
             namespace.setContactPerson(contactPerson);
         }
-        // TODO Get a MIR ID for the new namespace (libapi?)
+        // TODO Get a MIR ID for the new namespace
+        try {
+            // TODO
+        } catch (MirIdServiceException e) {
+            // TODO
+        }
         // TODO Persist the new namespace
     }
 }
