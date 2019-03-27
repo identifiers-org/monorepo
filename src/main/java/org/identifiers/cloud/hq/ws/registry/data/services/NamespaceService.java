@@ -2,6 +2,7 @@ package org.identifiers.cloud.hq.ws.registry.data.services;
 
 import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
+import org.identifiers.cloud.hq.ws.registry.data.repositories.PersonRepository;
 import org.identifiers.cloud.hq.ws.registry.models.MirIdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,8 @@ public class NamespaceService {
     // Repositories
     @Autowired
     private NamespaceRepository namespaceRepository;
+    @Autowired
+    private PersonRepository personRepository;
     // END - Repositories
 
     // Services
@@ -38,6 +41,7 @@ public class NamespaceService {
                     "because IT IS ALREADY REGISTERED", namespace.getPrefix()));
         }
         // TODO Check if the person needs to be created or not
+        
         // TODO Get a MIR ID for the new namespace (libapi?)
         // TODO Persist the new namespace
     }
