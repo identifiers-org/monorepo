@@ -63,7 +63,6 @@ public class NamespaceService {
         }
         // Get a MIR ID for the new namespace
         try {
-            // TODO
             namespace.setMirId(mirIdService.mintId());
             log.info("REGISTERING NAMESPACE '%s', MIR ID minted '%s'",
                     namespace.getPrefix(),
