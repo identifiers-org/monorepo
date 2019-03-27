@@ -100,7 +100,7 @@ public class MirIdServiceWsClient implements MirIdService {
             status = connection.getResponseCode();
             // I'm not interested on the content back from the MIR ID controller, just the HTTP Status
         } catch (RuntimeException | IOException e) {
-            throw new MirIdServiceException(String.format("MIR ID keepAlive FAILED, status code '%d'", status));
+            throw new MirIdServiceException(String.format("MIR ID '%s' keepAlive FAILED, status code '%d'", mirId, status));
         } finally {
             if (connection != null) {
                 connection.disconnect();
@@ -108,10 +108,12 @@ public class MirIdServiceWsClient implements MirIdService {
         }
         if (status >= 500) {
             // We've got an error on the other side
-            throw new MirIdServiceException(String.format("MIR ID keepAlive FAILED, status code '%d', " +
-                    "something went WRONG on the other side!", status));
+            throw new MirIdServiceException(String.format("MIR ID '%s' keepAlive FAILED, status code '%d', " +
+                    "something went WRONG on the other side!", mirId, status));
         } else if (status >= 400) {
-            // TODO - We've got an error on our side
+            // We've got an error on our side
+            throw new MirIdServiceException(String.format("MIR ID '%s' keepAlive FAILED, status code '%d', " +
+                    "WE did something WRONG", mirId, status));
         } else if (status >= 300) {
             // TODO - This is a unicorn at this current iteration of the platform development
         }
