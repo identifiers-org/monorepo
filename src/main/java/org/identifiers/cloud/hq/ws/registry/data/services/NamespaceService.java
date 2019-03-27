@@ -36,6 +36,13 @@ public class NamespaceService {
     private MirIdService mirIdService;
     // END - Services
 
+    /**
+     * This methods registers the given namespace, taking care on whether its contact person needs to be registered as
+     * well or it already exists, and also the MIR ID for the about to be registered namespace.
+     * @param namespace to be registered
+     * @return the registered namespace
+     * @throws NamespaceServiceException
+     */
     public Namespace registerNewNamespace(Namespace namespace) throws NamespaceServiceException {
         // Check that you're not trying to register an already existing namespace
         if (namespaceRepository.findByPrefix(namespace.getPrefix()) != null) {
