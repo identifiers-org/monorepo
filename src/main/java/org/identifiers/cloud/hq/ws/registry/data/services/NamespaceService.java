@@ -51,6 +51,7 @@ public class NamespaceService {
                     "because IT IS ALREADY REGISTERED", namespace.getPrefix()));
         }
         // Check if the person needs to be created or not
+        // TODO Delegate this onto the Person service
         Person contactPerson = personRepository.findByEmail(namespace.getContactPerson().getEmail());
         if (contactPerson == null) {
             log.info(String.format("REGISTERING NAMESPACE '%s', contact person with e-mail '%s', full name '%s'",
@@ -67,6 +68,7 @@ public class NamespaceService {
                     namespace.getContactPerson().getFullName()));
             namespace.setContactPerson(contactPerson);
         }
+        // TODO - Until here for the Person Service
         // Get a MIR ID for the new namespace
         try {
             namespace.setMirId(mirIdService.mintId());
@@ -91,7 +93,6 @@ public class NamespaceService {
     public Namespace registerProvider(Namespace namespace, Resource resource) throws NamespaceServiceException {
         // TODO
         // TODO Check the provider code is unique within the namespace
-        // TODO Ask the Resource Service to register a new Resource
         return null;
     }
 }
