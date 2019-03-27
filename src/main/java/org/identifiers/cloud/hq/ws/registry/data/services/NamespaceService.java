@@ -3,6 +3,7 @@ package org.identifiers.cloud.hq.ws.registry.data.services;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.data.models.Person;
+import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.PersonRepository;
 import org.identifiers.cloud.hq.ws.registry.models.MirIdService;
@@ -85,5 +86,12 @@ public class NamespaceService {
                 registeredNamespace.getMirId(),
                 registeredNamespace.getId()));
         return registeredNamespace;
+    }
+
+    public Namespace registerProvider(Namespace namespace, Resource resource) throws NamespaceServiceException {
+        // TODO
+        // TODO Check the provider code is unique within the namespace
+        // TODO Ask the Resource Service to register a new Resource
+        return null;
     }
 }
