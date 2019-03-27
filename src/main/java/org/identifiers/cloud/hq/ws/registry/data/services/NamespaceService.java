@@ -103,9 +103,4 @@ public class NamespaceService {
         return null;
     }
 
-    @Transactional
-    public Namespace deRegisterProvider(Namespace, Resource resource) throws NamespaceServiceException {
-        // TODO
-        return null;
-    }
 }
