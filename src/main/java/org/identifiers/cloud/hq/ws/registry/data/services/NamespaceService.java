@@ -71,7 +71,7 @@ public class NamespaceService {
                     namespace.getPrefix(),
                     e.getMessage()));
         }
-        // TODO Persist the new namespace
+        // Persist the new namespace
         Namespace registeredNamespace = namespaceRepository.save(namespace);
         log.info(String.format("REGISTERED NAMESPACE '%s', MIR ID '%s', internal ID '%d'",
                 registeredNamespace.getPrefix(),
