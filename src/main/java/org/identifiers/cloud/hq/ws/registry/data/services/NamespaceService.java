@@ -99,4 +99,10 @@ public class NamespaceService {
         // TODO Check the provider code is unique within the namespace
         return null;
     }
+
+    @Transactional
+    public Namespace deRegisterProvider(Namespace, Resource resource) throws NamespaceServiceException {
+        // TODO
+        return null;
+    }
 }
