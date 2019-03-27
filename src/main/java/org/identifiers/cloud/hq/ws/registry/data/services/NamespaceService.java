@@ -32,7 +32,11 @@ public class NamespaceService {
     // TODO
     public void registerNewNamespace(Namespace namespace) throws NamespaceServiceException {
         // TODO
-        // TODO Check that you're not trying to register an already existing namespace
+        // Check that you're not trying to register an already existing namespace
+        if (namespaceRepository.findByPrefix(namespace.getPrefix()) != null) {
+            throw new NamespaceServiceException(String.format("CANNOT register namespace '%s', " +
+                    "because IT IS ALREADY REGISTERED", namespace.getPrefix()));
+        }
         // TODO Check if the person needs to be created or not
         // TODO Get a MIR ID for the new namespace (libapi?)
         // TODO Persist the new namespace
