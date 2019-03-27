@@ -94,6 +94,10 @@ public class MirIdServiceWsClient implements MirIdService {
             // TODO
         } catch (RuntimeException e) {
             // TODO
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
         }
         log.info(String.format("SUCCESS, Request for '%s' MIR ID to be kept alive", mirId));
     }
