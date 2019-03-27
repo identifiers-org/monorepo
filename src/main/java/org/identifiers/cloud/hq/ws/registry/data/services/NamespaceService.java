@@ -93,6 +93,9 @@ public class NamespaceService {
         return registeredNamespace;
     }
 
+    // TODO - Deactivate a namespace
+    // TODO - Reactivate a namespace
+
     @Transactional
     public Namespace registerProvider(Namespace namespace, Resource resource) throws NamespaceServiceException {
         // TODO
