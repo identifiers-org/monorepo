@@ -88,11 +88,9 @@ public class MirIdServiceWsClient implements MirIdService {
     @Override
     public void keepAlive(String mirId) throws MirIdServiceException {
         log.info(String.format("Requesting '%s' MIR ID to be kept alive", mirId));
-        // TODO
         int status = 0;
         HttpURLConnection connection = null;
         try {
-            // TODO
             URL requestUrl = new URL(String.format("%s/keepAlive/%s", getMirIdServiceBaseUrl(), mirId));
             connection = (HttpURLConnection) requestUrl.openConnection();
             connection.setRequestMethod("GET");
@@ -115,7 +113,7 @@ public class MirIdServiceWsClient implements MirIdService {
             log.error(String.format("MIR ID '%s' keepAlive FAILED, status code '%d', " +
                     "WE did something WRONG", mirId, status));
         } else if (status >= 300) {
-            // TODO - This is a unicorn at this current iteration of the platform development
+            // This is a unicorn at this current iteration of the platform development
             throw new MirIdServiceException(String.format("MIR ID '%s' keepAlive FAILED, status code '%d', " +
                     "CONGRATULATIONS! YOU FOUND THE UNICORN! Something is deeply wrong because this iteration of the " +
                     "platform development has no redirections for the MIR ID Controller API Service", mirId, status));
