@@ -88,5 +88,6 @@ public class MirIdServiceWsClient implements MirIdService {
     @Override
     public void keepAlive(String mirId) throws MirIdServiceException {
         // TODO
+        log.info(String.format("Requesting '%s' MIR ID to be kept alive", mirId));
     }
 }
