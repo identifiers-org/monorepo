@@ -107,7 +107,7 @@ public class MirIdServiceWsClient implements MirIdService {
             }
         }
         if (status >= 500) {
-            // TODO - We've got an error on the other side
+            // We've got an error on the other side
             throw new MirIdServiceException(String.format("MIR ID keepAlive FAILED, status code '%d', " +
                     "something went WRONG on the other side!", status));
         } else if (status >= 400) {
