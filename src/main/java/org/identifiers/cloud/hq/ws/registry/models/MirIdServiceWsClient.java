@@ -116,6 +116,9 @@ public class MirIdServiceWsClient implements MirIdService {
                     "WE did something WRONG", mirId, status));
         } else if (status >= 300) {
             // TODO - This is a unicorn at this current iteration of the platform development
+            throw new MirIdServiceException(String.format("MIR ID '%s' keepAlive FAILED, status code '%d', " +
+                    "CONGRATULATIONS! YOU FOUND THE UNICORN! Something is deeply wrong because this iteration of the " +
+                    "platform development has no redirections for the MIR ID Controller API Service", mirId, status));
         }
         // If we get here, it is within the HTTP 2xx status space
         log.info(String.format("SUCCESS, Request for '%s' MIR ID to be kept alive", mirId));
