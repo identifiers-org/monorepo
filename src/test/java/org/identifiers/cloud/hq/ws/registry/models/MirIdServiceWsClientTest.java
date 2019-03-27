@@ -1,7 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,13 +22,13 @@ public class MirIdServiceWsClientTest {
     @Autowired
     private MirIdService mirIdService;
 
-    @Test
+/*    @Test
     public void mintId() {
         mirIdService.mintId();
     }
 
     @Test
     public void keepAlive() {
-        mirIdService.keepAlive("MIR:00000001");
-    }
+        mirIdService.keepAlive("MIR:00000002");
+    } */
 }
