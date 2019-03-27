@@ -87,7 +87,14 @@ public class MirIdServiceWsClient implements MirIdService {
             backoff = @Backoff(delay = WS_REQUEST_RETRY_BACK_OFF_PERIOD))
     @Override
     public void keepAlive(String mirId) throws MirIdServiceException {
-        // TODO
         log.info(String.format("Requesting '%s' MIR ID to be kept alive", mirId));
+        // TODO
+        HttpURLConnection connection = null;
+        try {
+            // TODO
+        } catch (RuntimeException e) {
+            // TODO
+        }
+        log.info(String.format("SUCCESS, Request for '%s' MIR ID to be kept alive", mirId));
     }
 }
