@@ -36,9 +36,7 @@ public class NamespaceService {
     private MirIdService mirIdService;
     // END - Services
 
-    // TODO
-    public void registerNewNamespace(Namespace namespace) throws NamespaceServiceException {
-        // TODO
+    public Namespace registerNewNamespace(Namespace namespace) throws NamespaceServiceException {
         // Check that you're not trying to register an already existing namespace
         if (namespaceRepository.findByPrefix(namespace.getPrefix()) != null) {
             throw new NamespaceServiceException(String.format("CANNOT register namespace '%s', " +
@@ -47,26 +45,26 @@ public class NamespaceService {
         // Check if the person needs to be created or not
         Person contactPerson = personRepository.findByEmail(namespace.getContactPerson().getEmail());
         if (contactPerson == null) {
-            log.info("REGISTERING NAMESPACE '%s', contact person with e-mail '%s', full name '%s'",
+            log.info(String.format("REGISTERING NAMESPACE '%s', contact person with e-mail '%s', full name '%s'",
                     namespace.getPrefix(),
                     namespace.getContactPerson().getEmail(),
-                    namespace.getContactPerson().getFullName());
+                    namespace.getContactPerson().getFullName()));
             // NOTE - I don't know JPA that well so that I can tell whether it does this automatically when persisting
             // a namespace or not
             namespace.setContactPerson(personRepository.save(namespace.getContactPerson()));
         } else {
-            log.info("REGISTERING NAMESPACE '%s', with ALREADY EXISTING contact person with e-mail '%s', full name '%s'",
+            log.info(String.format("REGISTERING NAMESPACE '%s', with ALREADY EXISTING contact person with e-mail '%s', full name '%s'",
                     namespace.getPrefix(),
                     namespace.getContactPerson().getEmail(),
-                    namespace.getContactPerson().getFullName());
+                    namespace.getContactPerson().getFullName()));
             namespace.setContactPerson(contactPerson);
         }
         // Get a MIR ID for the new namespace
         try {
             namespace.setMirId(mirIdService.mintId());
-            log.info("REGISTERING NAMESPACE '%s', MIR ID minted '%s'",
+            log.info(String.format("REGISTERING NAMESPACE '%s', MIR ID minted '%s'",
                     namespace.getPrefix(),
-                    namespace.getMirId());
+                    namespace.getMirId()));
         } catch (MirIdServiceException e) {
             throw new NamespaceServiceException(String.format("REGISTERING NAMESPACE '%s', " +
                     "MIR ID minting resulted in the following error: '%s'",
@@ -74,5 +72,11 @@ public class NamespaceService {
                     e.getMessage()));
         }
         // TODO Persist the new namespace
+        Namespace registeredNamespace = namespaceRepository.save(namespace);
+        log.info(String.format("REGISTERED NAMESPACE '%s', MIR ID '%s', internal ID '%d'",
+                registeredNamespace.getPrefix(),
+                registeredNamespace.getMirId(),
+                registeredNamespace.getId()));
+        return registeredNamespace;
     }
 }
