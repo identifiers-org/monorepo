@@ -68,7 +68,6 @@ public class NamespaceService {
                     namespace.getPrefix(),
                     namespace.getMirId());
         } catch (MirIdServiceException e) {
-            // TODO
             throw new NamespaceServiceException(String.format("REGISTERING NAMESPACE '%s', " +
                     "MIR ID minting resulted in the following error: '%s'",
                     namespace.getPrefix(),
