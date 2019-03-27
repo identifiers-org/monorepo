@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * This is the configuration active for development
  */
 @Configuration
-@EnableWebMvc
 @Profile({"development", "standalone"})
 @Slf4j
 public class ApplicationConfigurationDevelopment implements WebMvcConfigurer {
@@ -26,7 +24,7 @@ public class ApplicationConfigurationDevelopment implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         log.info("CORS configuration for DEVELOPMENT");
-        registry.addMapping("/restApi/**").allowedMethods("*");
+        registry.addMapping("/**").allowedMethods("*");
 
         // Add more mappings...
     }
