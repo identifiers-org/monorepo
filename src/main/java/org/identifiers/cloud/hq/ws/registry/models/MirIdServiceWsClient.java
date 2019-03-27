@@ -100,12 +100,20 @@ public class MirIdServiceWsClient implements MirIdService {
             status = connection.getResponseCode();
             // I'm not interested on the content back from the MIR ID controller, just the HTTP Status
         } catch (RuntimeException | IOException e) {
-            // TODO
+            throw new MirIdServiceException(String.format("MIR ID keepAlive FAILED, status code '%d'", status));
         } finally {
             if (connection != null) {
                 connection.disconnect();
             }
         }
+        if (status >= 500) {
+            // TODO - We've got an error on the other side
+        } else if (status >= 400) {
+            // TODO - We've got an error on our side
+        } else if (status >= 300) {
+            // TODO - This is a unicorn at this current iteration of the platform development
+        }
+        // If we get here, it is within the HTTP 2xx status space
         log.info(String.format("SUCCESS, Request for '%s' MIR ID to be kept alive", mirId));
     }
 }
