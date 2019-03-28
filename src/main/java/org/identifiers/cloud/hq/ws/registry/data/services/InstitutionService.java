@@ -6,6 +6,8 @@ import org.identifiers.cloud.hq.ws.registry.data.repositories.InstitutionReposit
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.data.services
@@ -33,6 +35,7 @@ public class InstitutionService {
      * @return the registered institution
      * @throws InstitutionServiceException
      */
+    @Transactional
     public Institution registerInstitution(Institution institution) throws InstitutionServiceException {
         Institution registeredInstitution = repository.findByName(institution.getName());
         if (registeredInstitution == null) {
