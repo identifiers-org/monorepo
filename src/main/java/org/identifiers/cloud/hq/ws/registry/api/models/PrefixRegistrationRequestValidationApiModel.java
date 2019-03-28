@@ -63,7 +63,7 @@ public class PrefixRegistrationRequestValidationApiModel {
     private PrefixRegistrationRequestValidator institutionHomeUrlValidator;
 
     @Autowired
-    @Qualifier("PrefixRegistrationRequestValidatorInstitutionName")
+    @Qualifier("PrefixRegistrationRequestValidatorInstitutionDescription")
     private PrefixRegistrationRequestValidator institutionDescriptionValidator;
 
     @Autowired

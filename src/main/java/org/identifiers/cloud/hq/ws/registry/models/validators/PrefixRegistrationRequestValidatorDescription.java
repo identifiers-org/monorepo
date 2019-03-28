@@ -22,7 +22,7 @@ public class PrefixRegistrationRequestValidatorDescription implements PrefixRegi
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
         if ((request.getDescription() == null) || (request.getDescription().length() < DESCRIPTION_CONTENT_MIN_CHARS)) {
-            throw new PrefixRegistrationRequestValidatorException(String.format("Prefix request description must be provided and be longer than %d characters", DESCRIPTION_CONTENT_MIN_CHARS));
+            throw new PrefixRegistrationRequestValidatorException(String.format("Prefix request description must be longer than %d characters", DESCRIPTION_CONTENT_MIN_CHARS));
         }
         return true;
     }
