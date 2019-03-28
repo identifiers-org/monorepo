@@ -48,7 +48,8 @@ public class ResourceService {
             // TODO Request a MIR ID
             resource.setMirId(mirIdService.mintId());
         }
-        // TODO Register the contact person
+        // Register the contact person
+        resource.setContactPerson(personService.registerPerson(resource.getContactPerson()));
         // TODO Register the location
         // TODO Register the institution
         // TODO Register the Namespace
