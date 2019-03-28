@@ -1,5 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
+import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationRequest;
+import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.models
@@ -12,4 +15,8 @@ package org.identifiers.cloud.hq.ws.registry.models;
  */
 public class DataModelConversionHelper {
     // TODO
+    public static Resource getFrom(PrefixRegistrationRequest prefixRegistrationRequest) {
+        // TODO
+        return new Resource();
+    }
 }
