@@ -1,8 +1,10 @@
 package org.identifiers.cloud.hq.ws.registry.data.services;
 
+import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.data.models.Person;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
@@ -16,6 +18,8 @@ import javax.transaction.Transactional;
  *
  * This service implements complex persistence operations for Persons
  */
+@Service
+@Slf4j
 public class PersonService {
 
     // Repository
