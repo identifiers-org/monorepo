@@ -22,5 +22,11 @@ public class LocationService {
 
     public Location registerLocation(Location location) throws LocationServiceException {
         // TODO
+        // TODO Do check for ISO 3166/MA Alpha-2 Country Codes compliance
+        Location registeredLocation = repository.findByCountryCode(location.getCountryCode());
+        if (registeredLocation == null) {
+            // TODO
+        }
+        return registeredLocation;
     }
 }
