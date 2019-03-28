@@ -2,6 +2,7 @@ package org.identifiers.cloud.hq.ws.registry.models;
 
 import org.identifiers.cloud.hq.ws.registry.data.models.*;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.*;
+import org.identifiers.cloud.hq.ws.registry.data.services.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +35,10 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
     @Autowired
     private PrefixRegistrationSessionEventCommentRepository prefixRegistrationSessionEventCommentRepository;
     // --- END - Repositories
+
+    // Services
+    @Autowired
+    private ResourceService resourceService;
 
     // Prefix registration session completion actions
     @Autowired
