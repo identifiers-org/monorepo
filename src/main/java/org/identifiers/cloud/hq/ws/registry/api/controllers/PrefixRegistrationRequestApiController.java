@@ -32,4 +32,5 @@ public class PrefixRegistrationRequestApiController {
         // TODO Model delegation
         return new ResponseEntity<>("registerPrefix()", HttpStatus.OK);
     }
+
 }
