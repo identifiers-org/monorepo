@@ -44,7 +44,7 @@ public class NamespaceService {
      * @throws NamespaceServiceException
      */
     @Transactional
-    public Namespace registerNewNamespace(Namespace namespace) throws NamespaceServiceException {
+    public Namespace registerNamespace(Namespace namespace) throws NamespaceServiceException {
         // Check that you're not trying to register an already existing namespace
         if (repository.findByPrefix(namespace.getPrefix()) != null) {
             throw new NamespaceServiceException(String.format("CANNOT register namespace '%s', " +
