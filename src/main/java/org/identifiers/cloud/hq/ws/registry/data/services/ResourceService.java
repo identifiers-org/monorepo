@@ -52,7 +52,8 @@ public class ResourceService {
         resource.setContactPerson(personService.registerPerson(resource.getContactPerson()));
         // Register the location
         resource.setLocation(locationService.registerLocation(resource.getLocation()));
-        // TODO Register the institution
+        // Register the institution
+        resource.setInstitution(institutionService.registerInstitution(resource.getInstitution()));
         // TODO Register the Namespace
         // TODO Register the resource
         // TODO Register the resource within its namespace
