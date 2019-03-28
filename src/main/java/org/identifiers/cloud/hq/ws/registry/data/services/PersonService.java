@@ -1,7 +1,10 @@
 package org.identifiers.cloud.hq.ws.registry.data.services;
 
+import org.identifiers.cloud.hq.ws.registry.data.models.Person;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.transaction.Transactional;
 
 /**
  * Project: registry
@@ -18,5 +21,11 @@ public class PersonService {
     // Repository
     @Autowired
     private PersonRepository repository;
-    
+
+
+    @Transactional
+    public Person registerPerson(Person person) throws PersonServiceException {
+        // TODO
+        return null;
+    }
 }
