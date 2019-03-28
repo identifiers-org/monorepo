@@ -30,7 +30,6 @@ public class LocationService {
      * @throws LocationServiceException
      */
     public Location registerLocation(Location location) throws LocationServiceException {
-        // TODO
         // TODO Do check for ISO 3166/MA Alpha-2 Country Codes compliance, this will be achieved via Event Handlers for JPA Repositories, "before create"
         Location registeredLocation = repository.findByCountryCode(location.getCountryCode());
         if (registeredLocation == null) {
