@@ -39,6 +39,12 @@ public class ResourceService {
     @Autowired
     private MirIdService mirIdService;
 
+    /**
+     * Register a resource if not registered
+     * @param resource resource to be registered
+     * @return the registered resource
+     * @throws ResourceServiceException
+     */
     @Transactional
     public Resource registerResource(Resource resource) throws ResourceServiceException {
         // TODO Resource instance validations via repository event handler
