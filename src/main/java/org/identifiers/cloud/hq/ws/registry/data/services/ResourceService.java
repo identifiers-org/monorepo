@@ -42,7 +42,6 @@ public class ResourceService {
 
     @Transactional
     public Resource registerResource(Resource resource) throws ResourceServiceException {
-        // TODO
         // TODO Resource instance validations via repository event handler
         // Current model definitions only allow for locating a resource via its MIR ID or the ID
         // It is not clear yet how to proceed as in: do we allow this method to be called with resources that have a
