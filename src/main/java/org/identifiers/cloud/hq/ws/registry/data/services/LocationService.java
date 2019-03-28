@@ -6,6 +6,8 @@ import org.identifiers.cloud.hq.ws.registry.data.repositories.LocationRepository
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.data.services
@@ -29,6 +31,7 @@ public class LocationService {
      * @return the registered location
      * @throws LocationServiceException
      */
+    @Transactional
     public Location registerLocation(Location location) throws LocationServiceException {
         // TODO Do check for ISO 3166/MA Alpha-2 Country Codes compliance, this will be achieved via Event Handlers for JPA Repositories, "before create"
         Location registeredLocation = repository.findByCountryCode(location.getCountryCode());
