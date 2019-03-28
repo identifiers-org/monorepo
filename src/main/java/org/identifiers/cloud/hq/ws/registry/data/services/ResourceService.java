@@ -30,4 +30,6 @@ public class ResourceService {
     private LocationService locationService;
     @Autowired
     private InstitutionService institutionService;
+    @Autowired
+    private NamespaceService namespaceService;
 }
