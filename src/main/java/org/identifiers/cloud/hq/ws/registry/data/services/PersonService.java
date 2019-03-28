@@ -25,10 +25,9 @@ public class PersonService {
 
     @Transactional
     public Person registerPerson(Person person) throws PersonServiceException {
-        // TODO
         Person registeredPerson = repository.findByEmail(person.getEmail());
         if (registeredPerson == null) {
-            // TODO
+            registeredPerson = repository.save(person);
         }
         return registeredPerson;
     }
