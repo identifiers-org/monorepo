@@ -23,5 +23,7 @@ public class ResourceService {
     @Autowired
     private ResourceRepository repository;
 
-    // Services 
+    // Services
+    @Autowired
+    private PersonService personService;
 }
