@@ -2,10 +2,8 @@ package org.identifiers.cloud.hq.ws.registry.data.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
-import org.identifiers.cloud.hq.ws.registry.data.models.Person;
 import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
-import org.identifiers.cloud.hq.ws.registry.data.repositories.PersonRepository;
 import org.identifiers.cloud.hq.ws.registry.models.MirIdService;
 import org.identifiers.cloud.hq.ws.registry.models.MirIdServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +25,13 @@ import javax.transaction.Transactional;
 @Slf4j
 public class NamespaceService {
 
-    // Repositories
+    // Repository
     @Autowired
-    private NamespaceRepository namespaceRepository;
-    @Autowired
-    private PersonRepository personRepository;
-    // END - Repositories
+    private NamespaceRepository repository;
 
     // Services
+    @Autowired
+    private PersonService personService;
     @Autowired
     private MirIdService mirIdService;
     // END - Services
@@ -49,29 +46,12 @@ public class NamespaceService {
     @Transactional
     public Namespace registerNewNamespace(Namespace namespace) throws NamespaceServiceException {
         // Check that you're not trying to register an already existing namespace
-        if (namespaceRepository.findByPrefix(namespace.getPrefix()) != null) {
+        if (repository.findByPrefix(namespace.getPrefix()) != null) {
             throw new NamespaceServiceException(String.format("CANNOT register namespace '%s', " +
                     "because IT IS ALREADY REGISTERED", namespace.getPrefix()));
         }
-        // Check if the person needs to be created or not
-        // TODO Delegate this onto the Person service
-        Person contactPerson = personRepository.findByEmail(namespace.getContactPerson().getEmail());
-        if (contactPerson == null) {
-            log.info(String.format("REGISTERING NAMESPACE '%s', contact person with e-mail '%s', full name '%s'",
-                    namespace.getPrefix(),
-                    namespace.getContactPerson().getEmail(),
-                    namespace.getContactPerson().getFullName()));
-            // NOTE - I don't know JPA that well so that I can tell whether it does this automatically when persisting
-            // a namespace or not
-            namespace.setContactPerson(personRepository.save(namespace.getContactPerson()));
-        } else {
-            log.info(String.format("REGISTERING NAMESPACE '%s', with ALREADY EXISTING contact person with e-mail '%s', full name '%s'",
-                    namespace.getPrefix(),
-                    namespace.getContactPerson().getEmail(),
-                    namespace.getContactPerson().getFullName()));
-            namespace.setContactPerson(contactPerson);
-        }
-        // TODO - Until here for the Person Service
+        // Delegate on Person Service
+        namespace.setContactPerson(personService.registerPerson(namespace.getContactPerson()));
         // Get a MIR ID for the new namespace
         try {
             namespace.setMirId(mirIdService.mintId());
@@ -85,7 +65,7 @@ public class NamespaceService {
                     e.getMessage()));
         }
         // Persist the new namespace
-        Namespace registeredNamespace = namespaceRepository.save(namespace);
+        Namespace registeredNamespace = repository.save(namespace);
         log.info(String.format("REGISTERED NAMESPACE '%s', MIR ID '%s', internal ID '%d'",
                 registeredNamespace.getPrefix(),
                 registeredNamespace.getMirId(),
