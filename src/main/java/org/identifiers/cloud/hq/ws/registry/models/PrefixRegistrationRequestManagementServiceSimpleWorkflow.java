@@ -208,8 +208,18 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
             // Persist the event
             eventAccept = prefixRegistrationSessionEventAcceptRepository.save(eventAccept);
             // Session is considered 'closed' right now
-            // TODO - Activate the new Namespace
-            // TODO - Activate the new Namespace first Provider
+            // Activate the new Namespace with its first provider
+            Resource resource = DataModelConversionHelper.getFrom(prefixRegistrationSession.getPrefixRegistrationRequest());
+            try {
+                resourceService.registerResource(resource);
+            } catch (RuntimeException e) {
+                throw new PrefixRegistrationRequestManagementServiceException(
+                        String.format("Prefix registration request ACCEPTANCE COULD NOT BE COMPLETED " +
+                                "for prefix '%s' " +
+                                "due to the following error '%s'",
+                                prefixRegistrationSession.getPrefixRegistrationRequest().getRequestedPrefix(),
+                                e.getMessage()));
+            }
             // Acceptance action
             actionAcceptance.performAction(prefixRegistrationSession);
             // Return the event
