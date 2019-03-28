@@ -1,8 +1,10 @@
 package org.identifiers.cloud.hq.ws.registry.data.services;
 
+import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.data.models.Location;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Project: registry
@@ -14,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * This class implements complex persistence logic for Location.
  */
+@Service
+@Slf4j
 public class LocationService {
     // TODO
     // Repository
@@ -26,6 +30,8 @@ public class LocationService {
         Location registeredLocation = repository.findByCountryCode(location.getCountryCode());
         if (registeredLocation == null) {
             // TODO
+            log.info(String.format("Registering Location, country code '%s', country name '%s'", location.getCountryCode(), location.getCountryName()));
+            registeredLocation = repository.save(location);
         }
         return registeredLocation;
     }
