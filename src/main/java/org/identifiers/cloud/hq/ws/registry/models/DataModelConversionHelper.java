@@ -14,6 +14,11 @@ import org.identifiers.cloud.hq.ws.registry.data.models.*;
  */
 public class DataModelConversionHelper {
 
+    /**
+     * Convert from the data model that represents a prefix registration requests, to a resource data model (provider)
+     * @param prefixRegistrationRequest the source for the conversion
+     * @return a resource built from the given prefix registration request
+     */
     public static Resource getFrom(PrefixRegistrationRequest prefixRegistrationRequest) {
         Resource resource = new Resource();
         Person requester =
