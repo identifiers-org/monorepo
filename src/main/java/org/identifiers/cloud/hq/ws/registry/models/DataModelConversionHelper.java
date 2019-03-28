@@ -1,9 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
-import org.identifiers.cloud.hq.ws.registry.data.models.Institution;
-import org.identifiers.cloud.hq.ws.registry.data.models.Location;
-import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationRequest;
-import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
+import org.identifiers.cloud.hq.ws.registry.data.models.*;
 
 /**
  * Project: registry
@@ -27,7 +24,18 @@ public class DataModelConversionHelper {
                 .setHomeUrl(prefixRegistrationRequest.getInstitutionHomeUrl())
                 .setLocation(new Location().setCountryCode(prefixRegistrationRequest.getInstitutionLocation()))
         );
-        // TODO Create and fill in the namespace information
+        // Create and fill in the namespace information
+        resource.setNamespace(new Namespace()
+                .setPrefix(prefixRegistrationRequest.getRequestedPrefix())
+                .setName(prefixRegistrationRequest.getName())
+                .setPattern(prefixRegistrationRequest.getIdRegexPattern())
+                .setDescription(prefixRegistrationRequest.getDescription())
+                .setSampleId(prefixRegistrationRequest.getSampleId())
+                .setContactPerson(
+                        new Person()
+                                .setFullName(prefixRegistrationRequest.getRequesterName())
+                                .setEmail(prefixRegistrationRequest.getRequesterEmail()))
+        );
         // TODO Create and fill in the resource (provider) information
         return resource;
     }
