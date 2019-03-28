@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRepository;
 import org.identifiers.cloud.hq.ws.registry.models.MirIdService;
+import org.identifiers.cloud.hq.ws.registry.models.MirIdServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +50,17 @@ public class ResourceService {
         // it may never happen, and we'll refine this in the future
         if (resource.getMirId() == null) {
             // Request a MIR ID
-            resource.setMirId(mirIdService.mintId());
+            try {
+                resource.setMirId(mirIdService.mintId());
+                log.info(String.format("Registering resource with name '%s', for namespace '%s', newly minted MIR ID '%s'",
+                        resource.getName(), resource.getNamespace().getPrefix(), resource.getMirId()));
+            } catch (MirIdServiceException e) {
+                throw new ResourceServiceException(String.format("Could not mint MIR ID for registering resource " +
+                        "with name '%s', for namespace '%s', due to '%s'",
+                        resource.getName(),
+                        resource.getNamespace().getPrefix(),
+                        e.getMessage()));
+            }
         }
         // Register the contact person
         resource.setContactPerson(personService.registerPerson(resource.getContactPerson()));
