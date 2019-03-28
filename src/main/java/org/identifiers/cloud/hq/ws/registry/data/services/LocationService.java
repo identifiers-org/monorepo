@@ -1,5 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.data.services;
 
+import org.identifiers.cloud.hq.ws.registry.data.repositories.LocationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.data.services
@@ -12,4 +15,9 @@ package org.identifiers.cloud.hq.ws.registry.data.services;
  */
 public class LocationService {
     // TODO
+    // Repository
+    @Autowired
+    private LocationRepository repository;
+
+    
 }
