@@ -32,6 +32,7 @@ public class PersonService {
         Person registeredPerson = repository.findByEmail(person.getEmail());
         if (registeredPerson == null) {
             registeredPerson = repository.save(person);
+            log.info(String.format("NEW Person REGISTRATION, with internal ID '%d'", registeredPerson.getId()));
         }
         return registeredPerson;
     }
