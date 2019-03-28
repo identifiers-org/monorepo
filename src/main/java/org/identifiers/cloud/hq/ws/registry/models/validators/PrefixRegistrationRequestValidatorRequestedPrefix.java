@@ -33,9 +33,13 @@ public class PrefixRegistrationRequestValidatorRequestedPrefix implements Prefix
         if (request.getRequestedPrefix() == null) {
             logger.error("Invalid request for validating Requested Prefix, WITHOUT specifying a prefix");
             throw new PrefixRegistrationRequestValidatorException("MISSING Preferred Prefix");
+        } else if (request.getRequestedPrefix().length() == 0) {
+            logger.error("Invalid request for validating Requested Prefix, empty prefix");
+            throw new PrefixRegistrationRequestValidatorException("Requested prefix cannot be empty");
         }
         // I planned on reusing the error message, but I may use different messages for logging and the client
         String errorMessage = "--- no error message has been set ---";
+        String shortErrorMessage = "--- no short error message has been set ---";
         try {
             Namespace foundNamespace = namespaceRepository.findByPrefix(request.getRequestedPrefix());
             if (foundNamespace != null) {
@@ -43,21 +47,23 @@ public class PrefixRegistrationRequestValidatorRequestedPrefix implements Prefix
                     errorMessage = String.format("Prefix '%s' is DEPRECATED, for REACTIVATION, please, use a " +
                             "different " +
                             "API", request.getRequestedPrefix());
-                    logger.error(String.format("Prefix Validation FAILED on prefix '%s', because it ALREADY EXISTS " +
-                            "and it's DEPRECATED", request.getRequestedPrefix()));
-                    throw new PrefixRegistrationRequestValidatorException(errorMessage);
+                    shortErrorMessage = String.format("Prefix '%s' is deprecated", request.getRequestedPrefix());
+                    logger.error(errorMessage);
+                    throw new PrefixRegistrationRequestValidatorException(shortErrorMessage);
                 }
                 errorMessage = String.format("Prefix Validation FAILED on prefix '%s', because it IS ALREADY " +
                         "REGISTERED", request.getRequestedPrefix());
+                shortErrorMessage = String.format("Prefix '%s' already exists", request.getRequestedPrefix());
                 logger.error(errorMessage);
-                throw new PrefixRegistrationRequestValidatorException(errorMessage);
+                throw new PrefixRegistrationRequestValidatorException(shortErrorMessage);
             }
         } catch (RuntimeException e) {
             // TODO
             errorMessage = String.format("While validating prefix '%s', the following error occurred: '%s'",
                     request.getRequestedPrefix(), e.getMessage());
+            shortErrorMessage = e.getMessage();
             logger.error(errorMessage);
-            throw new PrefixRegistrationRequestValidatorException(errorMessage);
+            throw new PrefixRegistrationRequestValidatorException(shortErrorMessage);
         }
         return true;
     }
