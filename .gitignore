@@ -1,6 +1,9 @@
 target/
 !.mvn/wrapper/maven-wrapper.jar
 
+### Infrastructure ###
+development_env_up
+
 ### STS ###
 .apt_generated
 .classpath
