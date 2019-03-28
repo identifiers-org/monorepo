@@ -20,7 +20,7 @@ public class LocationService {
     @Autowired
     private LocationRepository repository;
 
-    public Location registerLocation(Location location) {
+    public Location registerLocation(Location location) throws LocationServiceException {
         // TODO
     }
 }
