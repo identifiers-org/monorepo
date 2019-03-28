@@ -15,6 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value = "prefixRegistrationApi")
-public class PrefixRegistrationRequestRegistrationApiController {
+public class PrefixRegistrationRequestApiController {
     // TODO
 }
