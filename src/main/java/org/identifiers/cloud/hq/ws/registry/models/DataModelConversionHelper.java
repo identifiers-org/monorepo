@@ -17,6 +17,10 @@ public class DataModelConversionHelper {
     public static Resource getFrom(PrefixRegistrationRequest prefixRegistrationRequest) {
         Resource resource = new Resource();
         // TODO
+        Person requester =
+                new Person()
+                        .setFullName(prefixRegistrationRequest.getRequesterName())
+                        .setEmail(prefixRegistrationRequest.getRequesterEmail());
         // Create and fill in the institution information
         resource.setInstitution(new Institution()
                 .setName(prefixRegistrationRequest.getInstitutionName())
@@ -31,12 +35,19 @@ public class DataModelConversionHelper {
                 .setPattern(prefixRegistrationRequest.getIdRegexPattern())
                 .setDescription(prefixRegistrationRequest.getDescription())
                 .setSampleId(prefixRegistrationRequest.getSampleId())
-                .setContactPerson(
-                        new Person()
-                                .setFullName(prefixRegistrationRequest.getRequesterName())
-                                .setEmail(prefixRegistrationRequest.getRequesterEmail()))
+                .setContactPerson(requester)
         );
-        // TODO Create and fill in the resource (provider) information
+        // Create and fill in the resource (provider) information
+        resource.setLocation(new Location().setCountryCode(prefixRegistrationRequest.getProviderLocation()))
+                .setContactPerson(requester)
+                .setUrlPattern(prefixRegistrationRequest.getProviderUrlPattern())
+                .setName(prefixRegistrationRequest.getProviderName())
+                .setDescription(prefixRegistrationRequest.getProviderDescription())
+                .setOfficial(true)
+                .setProviderCode(prefixRegistrationRequest.getProviderCode())
+                .setSampleId(prefixRegistrationRequest.getSampleId())
+                .setResourceHomeUrl(prefixRegistrationRequest.getProviderHomeUrl());
+
         return resource;
     }
 }
