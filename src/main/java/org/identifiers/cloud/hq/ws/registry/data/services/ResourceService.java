@@ -76,5 +76,6 @@ public class ResourceService {
         // registered as provider within its associated namespace, the Namespace service will throw an exception that
         // will trigger a rollback in the database, as this method is transactional
         namespaceService.registerProvider(registeredResource.getNamespace(), registeredResource);
+        return registeredResource;
     }
 }
