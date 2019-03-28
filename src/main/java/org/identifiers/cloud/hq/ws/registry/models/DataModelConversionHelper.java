@@ -16,7 +16,11 @@ import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
 public class DataModelConversionHelper {
     // TODO
     public static Resource getFrom(PrefixRegistrationRequest prefixRegistrationRequest) {
+        Resource resource = new Resource();
         // TODO
-        return new Resource();
+        // TODO Create and fill in the institution information
+        // TODO Create and fill in the namespace information
+        // TODO Create and fill in the resource (provider) information
+        return resource;
     }
 }
