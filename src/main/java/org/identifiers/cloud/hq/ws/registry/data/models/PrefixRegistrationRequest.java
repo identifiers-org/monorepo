@@ -65,6 +65,10 @@ public class PrefixRegistrationRequest {
     @Column(nullable = false)
     private String institutionDescription;
 
+    // Home URL for the institution (this is a new requirement)
+    @Column(nullable = false)
+    private String institutionHomeUrl;
+
     // Location of the institution that owns the resource that's being registered as first provider for this namespace
     @Column(nullable = false)
     private String institutionLocation;
