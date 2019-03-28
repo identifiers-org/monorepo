@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.data.services;
 
 import lombok.extern.slf4j.Slf4j;
+import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,7 @@ public class ResourceService {
     @Autowired
     private NamespaceService namespaceService;
 
-
+    public Resource registerResource(Resource resource) throws ResourceServiceException {
+        // TODO
+    }
 }
