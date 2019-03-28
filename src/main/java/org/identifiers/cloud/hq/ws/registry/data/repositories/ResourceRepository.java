@@ -17,4 +17,5 @@ public interface ResourceRepository extends JpaRepository<Resource, Long> {
     // TODO
     List<Resource> findAllByNamespaceId(long id);
 
+    List<Resource> findByProviderCode(String providerCode);
 }
