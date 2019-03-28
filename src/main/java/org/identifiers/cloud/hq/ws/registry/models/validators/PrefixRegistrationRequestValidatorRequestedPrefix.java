@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.models.validators
@@ -36,8 +39,18 @@ public class PrefixRegistrationRequestValidatorRequestedPrefix implements Prefix
         } else if (request.getRequestedPrefix().length() == 0) {
             logger.error("Invalid request for validating Requested Prefix, empty prefix");
             throw new PrefixRegistrationRequestValidatorException("Requested prefix cannot be empty");
+        } else {
+            // TODO: Must confirm this is the right pattern for prefixes.
+            Pattern pattern = Pattern.compile("[a-z0-9_.]*");
+            Matcher matcher = pattern.matcher(request.getRequestedPrefix());
+
+            if (!matcher.matches()) {
+                logger.error("Invalid request for validating Requested Prefix, wrong prefix");
+                throw new PrefixRegistrationRequestValidatorException("Requested prefix can only contain lowercase " +
+                        "characters, numbers, underscores and dots");
+            }
         }
-        // I planned on reusing the error message, but I may use different messages for logging and the client
+
         String errorMessage = "--- no error message has been set ---";
         String shortErrorMessage = "--- no short error message has been set ---";
         try {
