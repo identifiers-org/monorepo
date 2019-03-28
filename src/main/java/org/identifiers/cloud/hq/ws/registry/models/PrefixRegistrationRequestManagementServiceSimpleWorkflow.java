@@ -71,6 +71,8 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
             // Open a new prefix registration session
             // Set the given prefix registration request
             PrefixRegistrationSession session = new PrefixRegistrationSession().setPrefixRegistrationRequest(savedRequest);
+            // TODO This is the place where some kind of generated hash should be introduced, for the user to be able to
+            //  check the status of the prefix registration request in the future
             session = prefixRegistrationSessionRepository.save(session);
             // Create a 'start' event
             PrefixRegistrationSessionEventStart sessionEventStart = new PrefixRegistrationSessionEventStart();
