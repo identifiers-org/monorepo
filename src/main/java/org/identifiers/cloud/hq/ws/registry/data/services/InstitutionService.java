@@ -1,6 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.data.services;
 
 import lombok.extern.slf4j.Slf4j;
+import org.identifiers.cloud.hq.ws.registry.data.repositories.InstitutionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,4 +19,9 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class InstitutionService {
     // TODO
+    // Repository
+    @Autowired
+    private InstitutionRepository repository;
+
+    
 }
