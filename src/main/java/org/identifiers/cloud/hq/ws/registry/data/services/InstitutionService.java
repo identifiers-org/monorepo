@@ -27,6 +27,12 @@ public class InstitutionService {
     @Autowired
     private LocationService locationService;
 
+    /**
+     * Register an institution if not registered.
+     * @param institution the institution to register
+     * @return the registered institution
+     * @throws InstitutionServiceException
+     */
     public Institution registerInstitution(Institution institution) throws InstitutionServiceException {
         Institution registeredInstitution = repository.findByName(institution.getName());
         if (registeredInstitution == null) {
