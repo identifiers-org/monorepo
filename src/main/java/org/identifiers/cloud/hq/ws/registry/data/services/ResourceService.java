@@ -54,7 +54,8 @@ public class ResourceService {
         resource.setLocation(locationService.registerLocation(resource.getLocation()));
         // Register the institution
         resource.setInstitution(institutionService.registerInstitution(resource.getInstitution()));
-        // TODO Register the Namespace
+        // Register the Namespace
+        resource.setNamespace(namespaceService.registerNamespace(resource.getNamespace()));
         // TODO Register the resource
         // TODO Register the resource within its namespace
     }
