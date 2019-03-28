@@ -23,7 +23,6 @@ import javax.transaction.Transactional;
 @Service
 @Slf4j
 public class ResourceService {
-    // TODO
     // Repository
     @Autowired
     private ResourceRepository repository;
