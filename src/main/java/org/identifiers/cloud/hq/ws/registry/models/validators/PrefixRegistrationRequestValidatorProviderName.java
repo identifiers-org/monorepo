@@ -28,6 +28,8 @@ public class PrefixRegistrationRequestValidatorProviderName implements PrefixReg
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
         if (request.getProviderName() == null) {
             throw new PrefixRegistrationRequestValidatorException("The name of the resource (provider name) is MISSING");
+        } else if (request.getProviderName().length() == 0) {
+            throw new PrefixRegistrationRequestValidatorException("Provider name cannot be empty");
         }
         return true;
     }

@@ -23,7 +23,7 @@ public class PrefixRegistrationRequestValidatorName implements PrefixRegistratio
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
         if (request.getName() == null) {
             throw new PrefixRegistrationRequestValidatorException("'Name' attribute must be provided");
-        } else if (request.getName().length() == 0){
+        } else if (request.getName().length() == 0) {
             throw new PrefixRegistrationRequestValidatorException("Name cannot be empty");
         }
         return true;
