@@ -16,7 +16,6 @@ public class DataModelConversionHelper {
 
     public static Resource getFrom(PrefixRegistrationRequest prefixRegistrationRequest) {
         Resource resource = new Resource();
-        // TODO
         Person requester =
                 new Person()
                         .setFullName(prefixRegistrationRequest.getRequesterName())
