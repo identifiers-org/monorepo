@@ -80,7 +80,7 @@ public class NamespaceService {
     public Namespace registerProvider(Namespace namespace, Resource resource) throws NamespaceServiceException {
         // TODO
         // TODO Check the provider code is unique within the namespace
-        return null;
+        return namespace;
     }
 
 }
