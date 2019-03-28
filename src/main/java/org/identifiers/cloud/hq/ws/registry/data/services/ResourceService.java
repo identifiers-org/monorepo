@@ -26,4 +26,6 @@ public class ResourceService {
     // Services
     @Autowired
     private PersonService personService;
+    @Autowired
+    private LocationService locationService;
 }
