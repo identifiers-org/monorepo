@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class LocationService {
-    // TODO
     // Repository
     @Autowired
     private LocationRepository repository;
