@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
+import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRepository;
 import org.identifiers.cloud.hq.ws.registry.models.MirIdService;
 import org.identifiers.cloud.hq.ws.registry.models.MirIdServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class NamespaceService {
     // Repository
     @Autowired
     private NamespaceRepository repository;
+    @Autowired
+    private ResourceRepository resourceRepository;
 
     // Services
     @Autowired
@@ -79,7 +82,16 @@ public class NamespaceService {
     @Transactional
     public Namespace registerProvider(Namespace namespace, Resource resource) throws NamespaceServiceException {
         // TODO
-        // TODO Check the provider code is unique within the namespace
+        // Check the provider code is unique within the namespace
+        if (resourceRepository.findByNamespaceIdAAndProviderCode(namespace.getId(), resource.getProviderCode()) != null) {
+            throw new NamespaceServiceException(String.format("Namespace '%s', " +
+                    "CANNOT REGISTER resource '%s' " +
+                    "with provider code '%s', " +
+                    "because that PROVIDER CODE ALREADY EXISTS",
+                    namespace.getPrefix(),
+                    resource.getName(),
+                    resource.getProviderCode()));
+        }
         return namespace;
     }
 
