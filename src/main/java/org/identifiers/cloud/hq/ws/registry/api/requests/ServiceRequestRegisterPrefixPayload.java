@@ -50,6 +50,9 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
     // This is the name of the institution that owns the resource that's being registered as first provider for this namespace
     private String institutionName;
 
+    // Home URL for the institution (this is a new requirement)
+    private String institutionHomeUrl;
+
     // A description related to the institution that owns the resource that's being registered as first provider for this namespace
     private String institutionDescription;
 
