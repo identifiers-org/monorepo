@@ -1,5 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.api.controllers;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.api.controllers
@@ -10,6 +13,8 @@ package org.identifiers.cloud.hq.ws.registry.api.controllers;
  *
  * This controller supports the API that handles prefix registration requests
  */
+@RestController
+@RequestMapping(value = "prefixRegistrationApi")
 public class PrefixRegistrationRequestRegistrationApiController {
     // TODO
 }
