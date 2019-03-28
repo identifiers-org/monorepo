@@ -28,7 +28,6 @@ public class InstitutionService {
     private LocationService locationService;
 
     public Institution registerInstitution(Institution institution) throws InstitutionServiceException {
-        // TODO
         Institution registeredInstitution = repository.findByName(institution.getName());
         if (registeredInstitution == null) {
             // TODO
