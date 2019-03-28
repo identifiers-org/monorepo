@@ -36,6 +36,8 @@ public class InstitutionService {
             // TODO - Run validations, probably through Repository Event listeners
             institution.setLocation(locationService.registerLocation(institution.getLocation()));
             registeredInstitution = repository.save(institution);
+            log.info(String.format("Registered Institution with ID '%d', name '%s'",
+                    registeredInstitution.getId(), registeredInstitution.getName()));
         }
         return registeredInstitution;
     }
