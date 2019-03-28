@@ -30,7 +30,6 @@ public class InstitutionService {
     public Institution registerInstitution(Institution institution) throws InstitutionServiceException {
         Institution registeredInstitution = repository.findByName(institution.getName());
         if (registeredInstitution == null) {
-            // TODO
             // TODO - Run validations, probably through Repository Event listeners
             institution.setLocation(locationService.registerLocation(institution.getLocation()));
             registeredInstitution = repository.save(institution);
