@@ -1,5 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.data.services;
 
+import org.identifiers.cloud.hq.ws.registry.data.repositories.PersonRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.data.services
@@ -11,4 +14,9 @@ package org.identifiers.cloud.hq.ws.registry.data.services;
  * This service implements complex persistence operations for Persons
  */
 public class PersonService {
+
+    // Repository
+    @Autowired
+    private PersonRepository repository;
+    
 }
