@@ -27,6 +27,12 @@ public class PersonService {
     private PersonRepository repository;
 
 
+    /**
+     * Register a person if not registered.
+     * @param person the person to register
+     * @return the registered person
+     * @throws PersonServiceException
+     */
     @Transactional
     public Person registerPerson(Person person) throws PersonServiceException {
         Person registeredPerson = repository.findByEmail(person.getEmail());
