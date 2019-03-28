@@ -39,10 +39,10 @@ public interface WebPageChecker {
             connection.disconnect();
         } catch (IOException e) {
             // Including MalformedURLException
-            throw new WebPageCheckerException(String.format("When checking your URL Endpoint, '%s', the following error occurred '%s'", url, e.getMessage()));
+            throw new WebPageCheckerException(String.format("Checking '%s' caused an error: '%s'", url, e.getMessage()));
         }
         if (HttpStatus.valueOf(status) != HttpStatus.OK) {
-            throw new WebPageCheckerException(String.format("When checking your URL Endpoint at '%s', we got the following HTTP Status Code %d", url, status));
+            throw new WebPageCheckerException(String.format("'%s' returned status code %d", url, status));
         }
         return true;
     }
@@ -50,7 +50,7 @@ public interface WebPageChecker {
     default boolean checkWebPageUrl(String webPageUrl) throws WebPageCheckerException {
         // Check for invalid URL
         if (!checkForValidUrl(webPageUrl)) {
-            throw new WebPageCheckerException(String.format("URL '%s' is NOT VALID", webPageUrl));
+            throw new WebPageCheckerException(String.format("'%s' is not a valid URL", webPageUrl));
         }
         return checkForOkUrlEndpoint(webPageUrl);
     }

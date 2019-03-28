@@ -24,8 +24,8 @@ public class PrefixRegistrationRequestValidatorProviderHomeUrl implements Prefix
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
         // TODO - Refactor this code out as a URL checker
         // Home Page URL for the resource is required
-        if (request.getProviderHomeUrl() == null) {
-            throw new PrefixRegistrationRequestValidatorException("MISSING URL with information for a resource within the context of a namespace");
+        if (request.getProviderHomeUrl() == null || request.getProviderHomeUrl().length() == 0) {
+            throw new PrefixRegistrationRequestValidatorException("Provider home URL is required");
         }
         boolean valid = true;
         try {
