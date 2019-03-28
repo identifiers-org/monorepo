@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.data.services;
 
 import lombok.extern.slf4j.Slf4j;
+import org.identifiers.cloud.hq.ws.registry.data.models.Institution;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.InstitutionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,13 @@ public class InstitutionService {
     @Autowired
     private InstitutionRepository repository;
 
-
+    public Institution registerInstitution(Institution institution) throws InstitutionServiceException {
+        // TODO
+        Institution registeredInstitution = repository.findByName(institution.getName());
+        if (registeredInstitution == null) {
+            // TODO
+            
+        }
+        return registeredInstitution;
+    }
 }
