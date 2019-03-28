@@ -21,6 +21,8 @@ public class PrefixRegistrationRequestValidatorInstitutionName implements Prefix
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
         if (request.getInstitutionName() == null) {
             throw new PrefixRegistrationRequestValidatorException("Institution Name is MISSING");
+        } else if (request.getInstitutionName().length() == 0){
+            throw new PrefixRegistrationRequestValidatorException("Institution name cannot be empty");
         }
         // Right now, there is no restriction on the length of the institution name
         // TODO Should we require a minimum length?
