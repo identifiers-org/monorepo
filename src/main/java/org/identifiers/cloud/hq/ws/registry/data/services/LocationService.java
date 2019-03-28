@@ -24,6 +24,12 @@ public class LocationService {
     @Autowired
     private LocationRepository repository;
 
+    /**
+     * Register the given location if not registered
+     * @param location the location to register
+     * @return the registered location
+     * @throws LocationServiceException
+     */
     public Location registerLocation(Location location) throws LocationServiceException {
         // TODO
         // TODO Do check for ISO 3166/MA Alpha-2 Country Codes compliance, this will be achieved via Event Handlers for JPA Repositories, "before create"
