@@ -40,6 +40,9 @@ public class Institution {
     private String name;
 
     @Column(nullable = false)
+    private String homeUrl;
+
+    @Column(nullable = false)
     private String description;
 
     @Column(nullable = false, updatable = false)
