@@ -13,7 +13,7 @@ import org.identifiers.cloud.hq.ws.registry.data.models.*;
  * This helper implements methods for converting between different data models
  */
 public class DataModelConversionHelper {
-    // TODO
+
     public static Resource getFrom(PrefixRegistrationRequest prefixRegistrationRequest) {
         Resource resource = new Resource();
         // TODO
