@@ -59,6 +59,10 @@ public class PrefixRegistrationRequestValidationApiModel {
     private PrefixRegistrationRequestValidator institutionNameValidator;
 
     @Autowired
+    @Qualifier("PrefixRegistrationRequestValidatorInstitutionHomeUrl")
+    private PrefixRegistrationRequestValidator institutionHomeUrlValidator;
+
+    @Autowired
     @Qualifier("PrefixRegistrationRequestValidatorInstitutionName")
     private PrefixRegistrationRequestValidator institutionDescriptionValidator;
 
@@ -191,5 +195,9 @@ public class PrefixRegistrationRequestValidationApiModel {
 
     public ServiceResponseValidateRequest validateRequester(ServiceRequestValidate request) {
         return doValidation(request, requesterValidator);
+    }
+
+    public ServiceResponseValidateRequest validateInstitutionHomeUrl(ServiceRequestValidate request) {
+        return doValidation(request, institutionHomeUrlValidator);
     }
 }
