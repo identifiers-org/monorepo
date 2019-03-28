@@ -37,6 +37,7 @@ public class PersonService {
     public Person registerPerson(Person person) throws PersonServiceException {
         Person registeredPerson = repository.findByEmail(person.getEmail());
         if (registeredPerson == null) {
+            // TODO Check that the provided e-mail is valid
             registeredPerson = repository.save(person);
             log.info(String.format("NEW Person REGISTRATION, with internal ID '%d'", registeredPerson.getId()));
         }
