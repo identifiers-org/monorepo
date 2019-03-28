@@ -24,12 +24,18 @@ public class InstitutionService {
     @Autowired
     private InstitutionRepository repository;
 
+    // Services
+    @Autowired
+    private LocationService locationService;
+
     public Institution registerInstitution(Institution institution) throws InstitutionServiceException {
         // TODO
         Institution registeredInstitution = repository.findByName(institution.getName());
         if (registeredInstitution == null) {
             // TODO
-            
+            // TODO - Run validations, probably through Repository Event listeners
+            institution.setLocation(locationService.registerLocation(institution.getLocation()));
+            registeredInstitution = repository.save(institution);
         }
         return registeredInstitution;
     }
