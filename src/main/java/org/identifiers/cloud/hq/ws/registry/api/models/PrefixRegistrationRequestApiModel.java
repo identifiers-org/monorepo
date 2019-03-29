@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
+import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefix;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixSessionEvent;
@@ -8,12 +9,16 @@ import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegiste
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixSessionEvent;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixSessionEventPayload;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationRequest;
+import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
+import org.identifiers.cloud.hq.ws.registry.data.repositories.PrefixRegistrationSessionRepository;
 import org.identifiers.cloud.hq.ws.registry.models.PrefixRegistrationRequestManagementService;
 import org.identifiers.cloud.hq.ws.registry.models.helpers.ApiDataModelHelper;
 import org.identifiers.cloud.hq.ws.registry.models.validators.PrefixRegistrationRequestValidatorStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 /**
  * Project: registry
@@ -24,6 +29,7 @@ import org.springframework.stereotype.Component;
  * ---
  */
 @Component
+@Slf4j
 public class PrefixRegistrationRequestApiModel {
     // TODO
 
@@ -34,6 +40,10 @@ public class PrefixRegistrationRequestApiModel {
     // Prefix Registration Request Management Service
     @Autowired
     private PrefixRegistrationRequestManagementService prefixRegistrationRequestManagementService;
+
+    // Repositories
+    @Autowired
+    private PrefixRegistrationSessionRepository prefixRegistrationSessionRepository;
 
     // Helpers
     private ServiceResponseRegisterPrefix createRegisterPrefixDefaultResponse() {
@@ -85,7 +95,24 @@ public class PrefixRegistrationRequestApiModel {
     // TODO - Amend prefix registration request
     public ServiceResponseRegisterPrefixSessionEvent amendPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
         ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
-        // TODO
+        // TODO Actor unknnown right now, until we get Spring Security
+        String actor = "UNKNOWN";
+        String additionalInformation = "No additional information specified";
+        if (request.getPayload().getAdditionalInformation() != null) {
+            additionalInformation = request.getPayload().getAdditionalInformation();
+        }
+        // Locate the prefix registration request session
+        Optional<PrefixRegistrationSession> prefixRegistrationSession = prefixRegistrationSessionRepository.findById(sessionId);
+        if (!prefixRegistrationSession.isPresent()) {
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            response.setErrorMessage(String.format("INVALID Prefix Registration Amend Request, session with ID '%d' IS NOT VALID", sessionId));
+            log.error(String.format("INVALID AMEND request on NON-EXISTING prefix registration session, with ID '%d'", sessionId));
+        } else {
+            // Transform the model
+            PrefixRegistrationRequest prefixRegistrationRequest = ApiDataModelHelper.getPrefixRegistrationRequest(request.getPayload().getPrefixRegistrationRequest());
+            // Delegate on the Prefix Registration Request Management Service
+            prefixRegistrationRequestManagementService.amendRequest(prefixRegistrationSession.get(), prefixRegistrationRequest, actor, additionalInformation);
+        }
         return response;
     }
 
