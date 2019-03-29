@@ -35,27 +35,27 @@ public class PrefixRegistrationRequestApiController {
     @PostMapping(value = "/amendPrefixRegistrationRequest/{sessionId}")
     public ResponseEntity<?> amendPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterPrefixSessionEvent request) {
         // TODO Model delegation
-        return new ResponseEntity<>("registerPrefix()", HttpStatus.OK);
+        return new ResponseEntity<>("amendPrefixRegistrationRequest()", HttpStatus.OK);
     }
 
     // TODO - Comment on prefix registration request
     @PostMapping(value = "/commentPrefixRegistrationRequest/{sessionId}")
     public ResponseEntity<?> commentPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterPrefixSessionEvent request) {
         // TODO Model delegation
-        return new ResponseEntity<>("registerPrefix()", HttpStatus.OK);
+        return new ResponseEntity<>("commentPrefixRegistrationRequest()", HttpStatus.OK);
     }
 
     // TODO - Reject prefix registration request
     @PostMapping(value = "/rejectPrefixRegistrationRequest/{sessionId}")
     public ResponseEntity<?> rejectPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterPrefixSessionEvent request) {
         // TODO Model delegation
-        return new ResponseEntity<>("registerPrefix()", HttpStatus.OK);
+        return new ResponseEntity<>("rejectPrefixRegistrationRequest()", HttpStatus.OK);
     }
 
     // TODO - Accept prefix registration request
     @PostMapping(value = "/acceptPrefixRegistrationRequest/{sessionId}")
     public ResponseEntity<?> acceptPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterPrefixSessionEvent request) {
         // TODO Model delegation
-        return new ResponseEntity<>("registerPrefix()", HttpStatus.OK);
+        return new ResponseEntity<>("acceptPrefixRegistrationRequest()", HttpStatus.OK);
     }
 }
