@@ -44,6 +44,13 @@ public class PrefixRegistrationRequestApiController {
         // TODO Model delegation
         return new ResponseEntity<>("registerPrefix()", HttpStatus.OK);
     }
+
     // TODO - Reject prefix registration request
+    @PostMapping(value = "/rejectPrefixRegistrationRequest/{sessionId}")
+    public ResponseEntity<?> rejectPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterPrefixSessionEvent request) {
+        // TODO Model delegation
+        return new ResponseEntity<>("registerPrefix()", HttpStatus.OK);
+    }
+
     // TODO - Accept prefix registration request
 }
