@@ -188,6 +188,7 @@ public class PrefixRegistrationRequestApiModel {
         PrefixRegistrationSession prefixRegistrationSession = getPrefixRegistrationSession("ACCEPT", sessionId, request, response);
         if (response.getHttpStatus() == HttpStatus.OK) {
             // Delegate on the prefix registration request management service
+            prefixRegistrationRequestManagementService.acceptRequest(prefixRegistrationSession, getAcceptanceReasonFrom(request), actor, getAdditionalInformationFrom(request));
         }
         return response;
     }
