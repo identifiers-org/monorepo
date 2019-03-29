@@ -45,8 +45,9 @@ public class PrefixRegistrationRequestApiModel {
     }
     // END - Helpers
 
-    public ResponseEntity<?> registerPrefix(ServiceRequestRegisterPrefix request) {
-        // TODO
+    public ServiceResponseRegisterPrefix registerPrefix(ServiceRequestRegisterPrefix request) {
+        // Create default response
+        ServiceResponseRegisterPrefix response = createRegisterPrefixDefaultResponse();
         // TODO Run request validation
         // TODO Determine who is the actor of this
         // TODO Possible additional information
@@ -56,26 +57,30 @@ public class PrefixRegistrationRequestApiModel {
     }
 
     // TODO - Amend prefix registration request
-    public ResponseEntity<?> amendPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
+    public ServiceResponseRegisterPrefixSessionEvent amendPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
+        ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
         // TODO
-        return new ResponseEntity<>("amendPrefixRegistrationRequest()", HttpStatus.OK);
+        return response;
     }
 
     // TODO - Comment on prefix registration request
-    public ResponseEntity<?> commentPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
+    public ServiceResponseRegisterPrefixSessionEvent commentPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
+        ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
         // TODO
-        return new ResponseEntity<>("commentPrefixRegistrationRequest()", HttpStatus.OK);
+        return response;
     }
 
     // TODO - Reject prefix registration request
-    public ResponseEntity<?> rejectPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
+    public ServiceResponseRegisterPrefixSessionEvent rejectPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
+        ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
         // TODO
-        return new ResponseEntity<>("rejectPrefixRegistrationRequest()", HttpStatus.OK);
+        return response;
     }
 
     // TODO - Accept prefix registration request
-    public ResponseEntity<?> acceptPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
+    public ServiceResponseRegisterPrefixSessionEvent acceptPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
+        ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
         // TODO
-        return new ResponseEntity<>("acceptPrefixRegistrationRequest()", HttpStatus.OK);
+        return response;
     }
 }
