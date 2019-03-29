@@ -59,6 +59,13 @@ public class PrefixRegistrationRequestApiModel {
         response.setPayload(new ServiceResponseRegisterPrefixSessionEventPayload());
         return response;
     }
+
+    private String getAdditionalInformationFrom(ServiceRequestRegisterPrefixSessionEvent request) {
+        if (request.getPayload().getAdditionalInformation() != null) {
+            return request.getPayload().getAdditionalInformation();
+        }
+        return "No additional information specified";
+    }
     // END - Helpers
 
     // --- API ---
