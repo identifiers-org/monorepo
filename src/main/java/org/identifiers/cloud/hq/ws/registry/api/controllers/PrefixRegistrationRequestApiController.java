@@ -6,7 +6,6 @@ import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterP
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefix;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixSessionEvent;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,21 +41,21 @@ public class PrefixRegistrationRequestApiController {
     // TODO - Comment on prefix registration request
     @PostMapping(value = "/commentPrefixRegistrationRequest/{sessionId}")
     public ResponseEntity<?> commentPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterPrefixSessionEvent request) {
-        // TODO Model delegation
-        return new ResponseEntity<>("commentPrefixRegistrationRequest()", HttpStatus.OK);
+        ServiceResponseRegisterPrefixSessionEvent response = model.commentPrefixRegistrationRequest(sessionId, request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     // TODO - Reject prefix registration request
     @PostMapping(value = "/rejectPrefixRegistrationRequest/{sessionId}")
     public ResponseEntity<?> rejectPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterPrefixSessionEvent request) {
-        // TODO Model delegation
-        return new ResponseEntity<>("rejectPrefixRegistrationRequest()", HttpStatus.OK);
+        ServiceResponseRegisterPrefixSessionEvent response = model.rejectPrefixRegistrationRequest(sessionId, request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     // TODO - Accept prefix registration request
     @PostMapping(value = "/acceptPrefixRegistrationRequest/{sessionId}")
     public ResponseEntity<?> acceptPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterPrefixSessionEvent request) {
-        // TODO Model delegation
-        return new ResponseEntity<>("acceptPrefixRegistrationRequest()", HttpStatus.OK);
+        ServiceResponseRegisterPrefixSessionEvent response = model.acceptPrefixRegistrationRequest(sessionId, request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
     }
 }
