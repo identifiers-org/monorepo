@@ -124,16 +124,12 @@ public class PrefixRegistrationRequestApiModel {
         // TODO Actor unknnown right now, until we get Spring Security
         String actor = "UNKNOWN";
         // Locate the prefix registration request session
-        Optional<PrefixRegistrationSession> prefixRegistrationSession = prefixRegistrationSessionRepository.findById(sessionId);
-        if (!prefixRegistrationSession.isPresent()) {
-            response.setHttpStatus(HttpStatus.BAD_REQUEST);
-            response.setErrorMessage(String.format("INVALID Prefix Registration Amend Request, session with ID '%d' IS NOT VALID", sessionId));
-            log.error(String.format("INVALID AMEND request on NON-EXISTING prefix registration session, with ID '%d'", sessionId));
-        } else {
+        PrefixRegistrationSession prefixRegistrationSession = getPrefixRegistrationSession("AMEND", sessionId, request, response);
+        if (response.getHttpStatus() == HttpStatus.OK) {
             // Transform the model
             PrefixRegistrationRequest prefixRegistrationRequest = ApiDataModelHelper.getPrefixRegistrationRequest(request.getPayload().getPrefixRegistrationRequest());
             // Delegate on the Prefix Registration Request Management Service
-            prefixRegistrationRequestManagementService.amendRequest(prefixRegistrationSession.get(),
+            prefixRegistrationRequestManagementService.amendRequest(prefixRegistrationSession,
                     prefixRegistrationRequest,
                     actor,
                     getAdditionalInformationFrom(request));
@@ -141,7 +137,6 @@ public class PrefixRegistrationRequestApiModel {
         return response;
     }
 
-    // TODO - Comment on prefix registration request
     public ServiceResponseRegisterPrefixSessionEvent commentPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
         ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
         // TODO Actor unknnown right now, until we get Spring Security
