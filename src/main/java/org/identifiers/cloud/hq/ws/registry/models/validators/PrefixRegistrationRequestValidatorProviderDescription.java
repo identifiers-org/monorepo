@@ -22,6 +22,7 @@ public class PrefixRegistrationRequestValidatorProviderDescription implements Pr
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
         if ((request.getProviderDescription() == null) || (request.getProviderDescription().length() < DESCRIPTIONI_CONTENT_MIN_LENGTH)) {
+            // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
             throw new PrefixRegistrationRequestValidatorException(String.format("Provider description MUST BE " +
                     "present, and longer than %d characters", DESCRIPTIONI_CONTENT_MIN_LENGTH));
         }
