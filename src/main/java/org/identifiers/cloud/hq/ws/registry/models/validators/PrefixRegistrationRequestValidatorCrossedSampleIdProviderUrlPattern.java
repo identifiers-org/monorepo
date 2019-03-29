@@ -23,6 +23,7 @@ import java.util.List;
 public class PrefixRegistrationRequestValidatorCrossedSampleIdProviderUrlPattern implements PrefixRegistrationRequestValidator {
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
+        // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
         List<String> errors = new ArrayList<>();
         // Check resource access rule
         try {
