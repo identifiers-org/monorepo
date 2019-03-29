@@ -23,6 +23,7 @@ public class PrefixRegistrationRequestValidatorInstitutionDescription implements
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
         if (request.getInstitutionDescription() == null || request.getInstitutionDescription().length() < DESCRIPTION_CONTENT_MIN_CHARS) {
+            // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
             throw new PrefixRegistrationRequestValidatorException(String.format("Institution description must be longer than %d characters", DESCRIPTION_CONTENT_MIN_CHARS));
         }
         return true;
