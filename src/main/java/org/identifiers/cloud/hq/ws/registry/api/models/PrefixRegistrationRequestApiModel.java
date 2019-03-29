@@ -7,6 +7,8 @@ import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegiste
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixPayload;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixSessionEvent;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixSessionEventPayload;
+import org.identifiers.cloud.hq.ws.registry.models.validators.PrefixRegistrationRequestValidatorStrategy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -22,6 +24,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class PrefixRegistrationRequestApiModel {
     // TODO
+
+    // Prefix registration request validator
+    @Autowired
+    private PrefixRegistrationRequestValidatorStrategy validatorStrategy;
 
     // Helpers
     private ServiceResponseRegisterPrefix createRegisterPrefixDefaultResponse() {

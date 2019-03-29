@@ -82,7 +82,7 @@ public class NamespaceService {
     @Transactional
     public Namespace registerProvider(Namespace namespace, Resource resource) throws NamespaceServiceException {
         // Check the provider code is unique within the namespace
-        if (resourceRepository.findByNamespaceIdAAndProviderCode(namespace.getId(), resource.getProviderCode()) != null) {
+        if (resourceRepository.findByNamespaceIdAndProviderCode(namespace.getId(), resource.getProviderCode()) != null) {
             throw new NamespaceServiceException(String.format("Namespace '%s', " +
                     "CANNOT REGISTER resource '%s' " +
                     "with provider code '%s', " +
