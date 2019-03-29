@@ -1,5 +1,11 @@
 package org.identifiers.cloud.hq.ws.registry.api.responses;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 
 /**
@@ -10,6 +16,12 @@ import java.io.Serializable;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@Accessors(chain = true)
 public class ServiceResponseRegisterPrefixSessionEventPayload implements Serializable {
     // TODO
 }
