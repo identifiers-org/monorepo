@@ -32,7 +32,7 @@ public class PrefixRegistrationRequestApiController {
         // TODO Model delegation
         return new ResponseEntity<>("registerPrefix()", HttpStatus.OK);
     }
-    
+
     // TODO - Amend prefix registration request
     // TODO - Comment on prefix registration request
     // TODO - Reject prefix registration request
