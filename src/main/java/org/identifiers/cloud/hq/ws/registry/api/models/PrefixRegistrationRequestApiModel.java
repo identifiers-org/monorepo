@@ -7,6 +7,9 @@ import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegiste
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixPayload;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixSessionEvent;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixSessionEventPayload;
+import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationRequest;
+import org.identifiers.cloud.hq.ws.registry.models.PrefixRegistrationRequestManagementService;
+import org.identifiers.cloud.hq.ws.registry.models.helpers.ApiDataModelHelper;
 import org.identifiers.cloud.hq.ws.registry.models.validators.PrefixRegistrationRequestValidatorStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +31,10 @@ public class PrefixRegistrationRequestApiModel {
     @Autowired
     private PrefixRegistrationRequestValidatorStrategy validatorStrategy;
 
+    // Prefix Registration Request Management Service
+    @Autowired
+    private PrefixRegistrationRequestManagementService prefixRegistrationRequestManagementService;
+
     // Helpers
     private ServiceResponseRegisterPrefix createRegisterPrefixDefaultResponse() {
         ServiceResponseRegisterPrefix response = new ServiceResponseRegisterPrefix();
@@ -47,8 +54,12 @@ public class PrefixRegistrationRequestApiModel {
     public ServiceResponseRegisterPrefix registerPrefix(ServiceRequestRegisterPrefix request) {
         // Create default response
         ServiceResponseRegisterPrefix response = createRegisterPrefixDefaultResponse();
-        // TODO Run request validation
         boolean isValid = false;
+        // Determine who is the actor of this
+        String actor = "ANONYMOUS";
+        // Possible additional information
+        String additionalInformation = "Source, Open API for prefix registration request submission";
+        // Run request validation
         try {
             isValid = validatorStrategy.validate(request.getPayload());
         } catch (RuntimeException e) {
@@ -60,10 +71,13 @@ public class PrefixRegistrationRequestApiModel {
             }
         }
         if (isValid) {
-            // TODO Determine who is the actor of this
-            // TODO Possible additional information
-            // TODO Translate data model
-            // TODO Delegate on the Prefix Registration Request Management Service
+            // Translate data model
+            PrefixRegistrationRequest prefixRegistrationRequest =
+                    ApiDataModelHelper.getPrefixRegistrationRequest(request.getPayload());
+            // Delegate on the Prefix Registration Request Management Service
+            prefixRegistrationRequestManagementService.startRequest(prefixRegistrationRequest,
+                    actor,
+                    additionalInformation);
         }
         return response;
     }
