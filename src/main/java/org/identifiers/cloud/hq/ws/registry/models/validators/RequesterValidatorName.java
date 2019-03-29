@@ -17,8 +17,8 @@ public class RequesterValidatorName implements RequesterValidator {
 
     @Override
     public boolean validate(Requester requester) throws RequesterValidatorException {
-        if (requester.getName() == null) {
-            logger.info("MISSING Requester Name");
+        if (requester.getName() == null || requester.getName().length() == 0) {
+            logger.info("Requester name is required");
         }
         return true;
     }
