@@ -32,4 +32,7 @@ public class ServiceRequestRegisterPrefixSessionEventPayload implements Serializ
 
     // This information is for comments
     private String comment;
+
+    // This information is for 'accept' event
+    private String acceptanceReason;
 }
