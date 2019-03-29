@@ -26,6 +26,7 @@ public class PrefixRegistrationRequestValidatorProviderName implements PrefixReg
     // want to know why. So that's why I decided to do it via this coding style.
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
+        // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
         if (request.getProviderName() == null) {
             throw new PrefixRegistrationRequestValidatorException("The name of the resource (provider name) is MISSING");
         } else if (request.getProviderName().length() == 0) {
