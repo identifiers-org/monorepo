@@ -22,8 +22,10 @@ public class PrefixRegistrationRequestValidatorName implements PrefixRegistratio
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
         if (request.getName() == null) {
+            // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
             throw new PrefixRegistrationRequestValidatorException("'Name' attribute must be provided");
         } else if (request.getName().length() == 0) {
+            // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
             throw new PrefixRegistrationRequestValidatorException("Name cannot be empty");
         }
         return true;
