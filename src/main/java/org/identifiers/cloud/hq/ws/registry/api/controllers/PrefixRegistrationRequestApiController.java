@@ -5,10 +5,7 @@ import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterP
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Project: registry
@@ -34,6 +31,12 @@ public class PrefixRegistrationRequestApiController {
     }
 
     // TODO - Amend prefix registration request
+    @PostMapping(value = "/amendPrefixRegistrationRequest/{sessionId}")
+    public ResponseEntity<?> amendPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterPrefix request) {
+        // TODO Model delegation
+        return new ResponseEntity<>("registerPrefix()", HttpStatus.OK);
+    }
+
     // TODO - Comment on prefix registration request
     // TODO - Reject prefix registration request
     // TODO - Accept prefix registration request
