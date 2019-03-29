@@ -67,6 +67,13 @@ public class PrefixRegistrationRequestApiModel {
         return "No additional information specified";
     }
 
+    private String getCommentFrom(ServiceRequestRegisterPrefixSessionEvent request) {
+        if (request.getPayload().getComment() != null) {
+            return request.getPayload().getComment();
+        }
+        return "No comment provided";
+    }
+
     private PrefixRegistrationSession getPrefixRegistrationSession(String eventName, long sessionId, ServiceRequestRegisterPrefixSessionEvent request, ServiceResponseRegisterPrefixSessionEvent response) {
         Optional<PrefixRegistrationSession> prefixRegistrationSession = prefixRegistrationSessionRepository.findById(sessionId);
         if (!prefixRegistrationSession.isPresent()) {
@@ -140,11 +147,11 @@ public class PrefixRegistrationRequestApiModel {
         // TODO Actor unknnown right now, until we get Spring Security
         String actor = "UNKNOWN";
         // Locate the prefix registration request session
-        Optional<PrefixRegistrationSession> prefixRegistrationSession = prefixRegistrationSessionRepository.findById(sessionId);
-        if (!prefixRegistrationSession.isPresent()) {
-            response.setHttpStatus(HttpStatus.BAD_REQUEST);
-            response.setErrorMessage(String.format("INVALID Prefix Registration Comment Request, session with ID '%d' IS NOT VALID", sessionId));
-            log.error(String.format("INVALID COMMENT request on NON-EXISTING prefix registration session, with ID '%d'", sessionId));
+        PrefixRegistrationSession prefixRegistrationSession = getPrefixRegistrationSession("COMMENT", sessionId, request, response);
+        if (response.getHttpStatus() == HttpStatus.OK) {
+            // We located the session
+            // Delegate on the prefix registration request management service
+            prefixRegistrationRequestManagementService.commentRequest(prefixRegistrationSession, getCommentFrom(request), actor, getAdditionalInformationFrom(request));
         }
         return response;
     }
