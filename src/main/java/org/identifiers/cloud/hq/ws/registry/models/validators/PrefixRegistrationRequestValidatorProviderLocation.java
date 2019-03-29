@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 public class PrefixRegistrationRequestValidatorProviderLocation implements PrefixRegistrationRequestValidator {
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
+        // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
         if (request.getProviderLocation() == null) {
             throw new PrefixRegistrationRequestValidatorException("Provider Location MUST BE PRESENT, and follow ISO 3166/MA Alpha-2 Country Codes format");
         }
