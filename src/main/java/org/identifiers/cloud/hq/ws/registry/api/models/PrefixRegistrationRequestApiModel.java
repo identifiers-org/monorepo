@@ -168,14 +168,27 @@ public class PrefixRegistrationRequestApiModel {
     // TODO - Reject prefix registration request
     public ServiceResponseRegisterPrefixSessionEvent rejectPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
         ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
-        // TODO
+        // TODO Actor unknnown right now, until we get Spring Security
+        String actor = "UNKNOWN";
+        // Locate the prefix registration request session
+        PrefixRegistrationSession prefixRegistrationSession = getPrefixRegistrationSession("REJECT", sessionId, request, response);
+        if (response.getHttpStatus() == HttpStatus.OK) {
+            // Delegate on the prefix registration request management service
+            prefixRegistrationRequestManagementService.rejectRequest(prefixRegistrationSession, getRejectionReasonFrom(request), actor, getAdditionalInformationFrom(request));
+        }
         return response;
     }
 
     // TODO - Accept prefix registration request
     public ServiceResponseRegisterPrefixSessionEvent acceptPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
         ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
-        // TODO
+        // TODO Actor unknnown right now, until we get Spring Security
+        String actor = "UNKNOWN";
+        // Locate the prefix registration request session
+        PrefixRegistrationSession prefixRegistrationSession = getPrefixRegistrationSession("ACCEPT", sessionId, request, response);
+        if (response.getHttpStatus() == HttpStatus.OK) {
+            // Delegate on the prefix registration request management service
+        }
         return response;
     }
 }
