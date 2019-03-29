@@ -3,6 +3,7 @@ package org.identifiers.cloud.hq.ws.registry.api.controllers;
 import org.identifiers.cloud.hq.ws.registry.api.models.PrefixRegistrationRequestApiModel;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefix;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixSessionEvent;
+import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefix;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +28,8 @@ public class PrefixRegistrationRequestApiController {
 
     @PostMapping(value = "/registerPrefix")
     public ResponseEntity<?> registerPrefix(@RequestBody ServiceRequestRegisterPrefix request) {
-        // TODO Model delegation
-        return new ResponseEntity<>("registerPrefix()", HttpStatus.OK);
+        ServiceResponseRegisterPrefix response = model.registerPrefix(request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     // TODO - Amend prefix registration request
