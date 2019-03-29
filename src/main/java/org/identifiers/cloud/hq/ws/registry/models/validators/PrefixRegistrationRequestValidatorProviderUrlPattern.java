@@ -21,6 +21,7 @@ import org.springframework.util.StringUtils;
 public class PrefixRegistrationRequestValidatorProviderUrlPattern implements PrefixRegistrationRequestValidator {
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
+        // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
         if (request.getProviderUrlPattern() == null) {
             throw new PrefixRegistrationRequestValidatorException("MISSING required Provider URL Pattern");
         }
