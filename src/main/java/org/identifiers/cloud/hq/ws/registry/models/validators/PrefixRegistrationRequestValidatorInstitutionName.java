@@ -20,8 +20,10 @@ public class PrefixRegistrationRequestValidatorInstitutionName implements Prefix
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
         if (request.getInstitutionName() == null) {
+            // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
             throw new PrefixRegistrationRequestValidatorException("Institution name is MISSING");
         } else if (request.getInstitutionName().length() == 0) {
+            // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
             throw new PrefixRegistrationRequestValidatorException("Institution name cannot be empty");
         }
         // Right now, there is no restriction on the length of the institution name
