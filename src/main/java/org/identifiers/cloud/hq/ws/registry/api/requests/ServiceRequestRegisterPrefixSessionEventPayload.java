@@ -38,4 +38,7 @@ public class ServiceRequestRegisterPrefixSessionEventPayload implements Serializ
 
     // This information is for 'reject' event
     private String rejectionReason;
+
+    // This information is mainly for 'amend' event, but it could be used by any event
+    private ServiceRequestRegisterPrefixPayload prefixRegistrationRequest;
 }
