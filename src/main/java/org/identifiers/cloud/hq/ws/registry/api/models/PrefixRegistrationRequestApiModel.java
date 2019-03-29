@@ -74,6 +74,13 @@ public class PrefixRegistrationRequestApiModel {
         return "No comment provided";
     }
 
+    private String getRejectionReasonFrom(ServiceRequestRegisterPrefixSessionEvent request) {
+        if (request.getPayload().getRejectionReason() != null) {
+            return request.getPayload().getRejectionReason();
+        }
+        return "No rejection reason provided provided";
+    }
+
     private PrefixRegistrationSession getPrefixRegistrationSession(String eventName, long sessionId, ServiceRequestRegisterPrefixSessionEvent request, ServiceResponseRegisterPrefixSessionEvent response) {
         Optional<PrefixRegistrationSession> prefixRegistrationSession = prefixRegistrationSessionRepository.findById(sessionId);
         if (!prefixRegistrationSession.isPresent()) {
