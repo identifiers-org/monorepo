@@ -27,4 +27,8 @@ import java.io.Serializable;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ServiceRequestRegisterPrefixSessionEventPayload implements Serializable {
     // TODO
+    // This is for all kinds of events
+    private String additionalInformation;
+
+    
 }
