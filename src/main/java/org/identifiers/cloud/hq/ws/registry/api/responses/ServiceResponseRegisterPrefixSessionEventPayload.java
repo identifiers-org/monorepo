@@ -16,7 +16,6 @@ import java.io.Serializable;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,4 +23,6 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class ServiceResponseRegisterPrefixSessionEventPayload implements Serializable {
     // TODO
+    // Some information back to the client on the completion of the triggered event
+    private String comment;
 }
