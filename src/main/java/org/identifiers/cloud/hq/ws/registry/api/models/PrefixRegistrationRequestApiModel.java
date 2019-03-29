@@ -19,7 +19,12 @@ public class PrefixRegistrationRequestApiModel {
     // TODO
 
     public ResponseEntity<?> registerPrefix(ServiceRequestRegisterPrefix request) {
-        // TODO 
+        // TODO
+        // TODO Run request validation
+        // TODO Determine who is the actor of this
+        // TODO Possible additional information
+        // TODO Translate data model
+        // TODO Delegate on the Prefix Registration Request Management Service
         return new ResponseEntity<>("registerPrefix()", HttpStatus.OK);
     }
 
