@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 public class PrefixRegistrationRequestValidatorSampleId implements PrefixRegistrationRequestValidator {
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
+        // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
         // Check the ID information is present
         if (request.getSampleId() == null) {
             throw new PrefixRegistrationRequestValidatorException("MISSING REQUIRED Sample ID");
