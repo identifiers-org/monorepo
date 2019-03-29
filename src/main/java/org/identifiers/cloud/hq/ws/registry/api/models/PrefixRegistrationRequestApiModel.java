@@ -79,6 +79,7 @@ public class PrefixRegistrationRequestApiModel {
             if ((request.getPayload() != null) && (request.getPayload().getRequestedPrefix() != null)) {
                 requestedPrefix = request.getPayload().getRequestedPrefix();
             }
+            log.error(String.format("INVALID Prefix registration request for prefix '%s', due to '%s'", requestedPrefix, e.getMessage()));
         }
         if (isValid) {
             // Translate data model
