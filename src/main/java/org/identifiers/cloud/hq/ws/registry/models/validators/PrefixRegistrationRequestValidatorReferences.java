@@ -23,6 +23,7 @@ public class PrefixRegistrationRequestValidatorReferences implements PrefixRegis
 
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
+        // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
         // References are not enforced, so they just validate
         logger.info("References validation policy is VALID by default");
         if (request.getReferences() == null) {
