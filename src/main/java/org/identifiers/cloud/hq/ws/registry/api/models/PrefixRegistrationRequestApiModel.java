@@ -66,6 +66,17 @@ public class PrefixRegistrationRequestApiModel {
         }
         return "No additional information specified";
     }
+
+    private PrefixRegistrationSession getPrefixRegistrationSession(String eventName, long sessionId, ServiceRequestRegisterPrefixSessionEvent request, ServiceResponseRegisterPrefixSessionEvent response) {
+        Optional<PrefixRegistrationSession> prefixRegistrationSession = prefixRegistrationSessionRepository.findById(sessionId);
+        if (!prefixRegistrationSession.isPresent()) {
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            response.setErrorMessage(String.format("INVALID Prefix Registration %s Request, session with ID '%d' IS NOT VALID", eventName, sessionId));
+            log.error(String.format("INVALID %s request on NON-EXISTING prefix registration session, with ID '%d'", eventName, sessionId));
+            return null;
+        }
+        prefixRegistrationSession.get();
+    }
     // END - Helpers
 
     // --- API ---
@@ -105,10 +116,6 @@ public class PrefixRegistrationRequestApiModel {
         ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
         // TODO Actor unknnown right now, until we get Spring Security
         String actor = "UNKNOWN";
-        String additionalInformation = "No additional information specified";
-        if (request.getPayload().getAdditionalInformation() != null) {
-            additionalInformation = request.getPayload().getAdditionalInformation();
-        }
         // Locate the prefix registration request session
         Optional<PrefixRegistrationSession> prefixRegistrationSession = prefixRegistrationSessionRepository.findById(sessionId);
         if (!prefixRegistrationSession.isPresent()) {
@@ -119,7 +126,10 @@ public class PrefixRegistrationRequestApiModel {
             // Transform the model
             PrefixRegistrationRequest prefixRegistrationRequest = ApiDataModelHelper.getPrefixRegistrationRequest(request.getPayload().getPrefixRegistrationRequest());
             // Delegate on the Prefix Registration Request Management Service
-            prefixRegistrationRequestManagementService.amendRequest(prefixRegistrationSession.get(), prefixRegistrationRequest, actor, additionalInformation);
+            prefixRegistrationRequestManagementService.amendRequest(prefixRegistrationSession.get(),
+                    prefixRegistrationRequest,
+                    actor,
+                    getAdditionalInformationFrom(request));
         }
         return response;
     }
@@ -127,7 +137,15 @@ public class PrefixRegistrationRequestApiModel {
     // TODO - Comment on prefix registration request
     public ServiceResponseRegisterPrefixSessionEvent commentPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
         ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
-        // TODO
+        // TODO Actor unknnown right now, until we get Spring Security
+        String actor = "UNKNOWN";
+        // Locate the prefix registration request session
+        Optional<PrefixRegistrationSession> prefixRegistrationSession = prefixRegistrationSessionRepository.findById(sessionId);
+        if (!prefixRegistrationSession.isPresent()) {
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            response.setErrorMessage(String.format("INVALID Prefix Registration Comment Request, session with ID '%d' IS NOT VALID", sessionId));
+            log.error(String.format("INVALID COMMENT request on NON-EXISTING prefix registration session, with ID '%d'", sessionId));
+        }
         return response;
     }
 
