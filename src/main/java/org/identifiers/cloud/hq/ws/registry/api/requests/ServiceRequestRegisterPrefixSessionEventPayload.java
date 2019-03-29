@@ -16,6 +16,8 @@ import java.io.Serializable;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This model represents the superset of information needed for every event within a prefix registration session.
  */
 @Data
 @AllArgsConstructor
