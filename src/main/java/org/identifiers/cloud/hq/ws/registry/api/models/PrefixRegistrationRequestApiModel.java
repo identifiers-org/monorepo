@@ -96,7 +96,7 @@ public class PrefixRegistrationRequestApiModel {
             log.error(String.format("INVALID %s request on NON-EXISTING prefix registration session, with ID '%d'", eventName, sessionId));
             return null;
         }
-        prefixRegistrationSession.get();
+        return prefixRegistrationSession.get();
     }
     // END - Helpers
 
