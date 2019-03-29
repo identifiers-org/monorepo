@@ -29,6 +29,7 @@ public class PrefixRegistrationRequestValidatorCrossedIdRegexPatternAndSampleId 
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
         List<String> errors = new ArrayList<>();
+        // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
         // Check Example Identifier
         try {
             new PrefixRegistrationRequestValidatorSampleId().validate(request);
