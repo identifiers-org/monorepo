@@ -2,6 +2,7 @@ package org.identifiers.cloud.hq.ws.registry.api.controllers;
 
 import org.identifiers.cloud.hq.ws.registry.api.models.PrefixRegistrationRequestApiModel;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefix;
+import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixSessionEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class PrefixRegistrationRequestApiController {
 
     // TODO - Amend prefix registration request
     @PostMapping(value = "/amendPrefixRegistrationRequest/{sessionId}")
-    public ResponseEntity<?> amendPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterPrefix request) {
+    public ResponseEntity<?> amendPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterPrefixSessionEvent request) {
         // TODO Model delegation
         return new ResponseEntity<>("registerPrefix()", HttpStatus.OK);
     }
