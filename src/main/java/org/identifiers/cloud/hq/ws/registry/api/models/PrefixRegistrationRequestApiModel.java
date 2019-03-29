@@ -10,7 +10,6 @@ import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegiste
 import org.identifiers.cloud.hq.ws.registry.models.validators.PrefixRegistrationRequestValidatorStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 /**
@@ -49,11 +48,24 @@ public class PrefixRegistrationRequestApiModel {
         // Create default response
         ServiceResponseRegisterPrefix response = createRegisterPrefixDefaultResponse();
         // TODO Run request validation
-        // TODO Determine who is the actor of this
-        // TODO Possible additional information
-        // TODO Translate data model
-        // TODO Delegate on the Prefix Registration Request Management Service
-        return new ResponseEntity<>("registerPrefix()", HttpStatus.OK);
+        boolean isValid = false;
+        try {
+            isValid = validatorStrategy.validate(request.getPayload());
+        } catch (RuntimeException e) {
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            response.setErrorMessage(String.format("INVALID Prefix registration request due to '%s'", e.getMessage()));
+            String requestedPrefix = "--- NO PREFIX SPECIFIED ---";
+            if ((request.getPayload() != null) && (request.getPayload().getRequestedPrefix() != null)) {
+                requestedPrefix = request.getPayload().getRequestedPrefix();
+            }
+        }
+        if (isValid) {
+            // TODO Determine who is the actor of this
+            // TODO Possible additional information
+            // TODO Translate data model
+            // TODO Delegate on the Prefix Registration Request Management Service
+        }
+        return response;
     }
 
     // TODO - Amend prefix registration request
