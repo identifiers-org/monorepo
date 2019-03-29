@@ -21,12 +21,13 @@ import org.springframework.util.StringUtils;
 public class PrefixRegistrationRequestValidatorProviderUrlPattern implements PrefixRegistrationRequestValidator {
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
-        // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
         if (request.getProviderUrlPattern() == null) {
+            // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
             throw new PrefixRegistrationRequestValidatorException("MISSING required Provider URL Pattern");
         }
         // Check that PLACEHOLDER_ID is uniquely present
         if (StringUtils.countOccurrencesOf(request.getProviderUrlPattern(), ResourceAccessHelper.PROVIDER_URL_PATTERN_PLACEHOLDER_ID) != 1) {
+            // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
             throw new PrefixRegistrationRequestValidatorException(String.format("ID placeholder '%s' IS REQUIRED to be present at least once in the provider URL pattern", ResourceAccessHelper.PROVIDER_URL_PATTERN_PLACEHOLDER_ID));
         }
         WebPageChecker webPageChecker = WebPageCheckerFactory.getWebPageChecker();
