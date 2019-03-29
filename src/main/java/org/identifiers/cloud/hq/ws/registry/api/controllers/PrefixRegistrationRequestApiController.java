@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "prefixRegistrationApi")
 public class PrefixRegistrationRequestApiController {
-    // TODO
+
     @Autowired
     private PrefixRegistrationRequestApiModel model;
 
