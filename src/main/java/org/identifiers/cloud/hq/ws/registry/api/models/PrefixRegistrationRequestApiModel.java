@@ -61,6 +61,7 @@ public class PrefixRegistrationRequestApiModel {
     }
     // END - Helpers
 
+    // --- API ---
     public ServiceResponseRegisterPrefix registerPrefix(ServiceRequestRegisterPrefix request) {
         // Create default response
         ServiceResponseRegisterPrefix response = createRegisterPrefixDefaultResponse();
@@ -93,7 +94,6 @@ public class PrefixRegistrationRequestApiModel {
         return response;
     }
 
-    // TODO - Amend prefix registration request
     public ServiceResponseRegisterPrefixSessionEvent amendPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
         ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
         // TODO Actor unknnown right now, until we get Spring Security
