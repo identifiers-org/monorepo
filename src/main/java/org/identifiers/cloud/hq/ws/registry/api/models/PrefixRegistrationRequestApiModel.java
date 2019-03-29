@@ -5,6 +5,8 @@ import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterP
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixSessionEvent;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefix;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixPayload;
+import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixSessionEvent;
+import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixSessionEventPayload;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -26,6 +28,13 @@ public class PrefixRegistrationRequestApiModel {
         ServiceResponseRegisterPrefix response = new ServiceResponseRegisterPrefix();
         response.setApiVersion(ApiCentral.apiVersion).setHttpStatus(HttpStatus.OK);
         response.setPayload(new ServiceResponseRegisterPrefixPayload());
+        return response;
+    }
+
+    private ServiceResponseRegisterPrefixSessionEvent createRegisterPrefixSessionEventDefaultResponse() {
+        ServiceResponseRegisterPrefixSessionEvent response = new ServiceResponseRegisterPrefixSessionEvent();
+        response.setApiVersion(ApiCentral.apiVersion).setHttpStatus(HttpStatus.OK);
+        response.setPayload(new ServiceResponseRegisterPrefixSessionEventPayload());
         return response;
     }
     // END - Helpers
