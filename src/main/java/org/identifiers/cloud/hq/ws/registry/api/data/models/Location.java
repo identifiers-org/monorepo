@@ -24,7 +24,6 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @Accessors(chain = true)
 public class Location implements Serializable {
-    // TODO
     private String countryCode;
     private String countryName;
 }
