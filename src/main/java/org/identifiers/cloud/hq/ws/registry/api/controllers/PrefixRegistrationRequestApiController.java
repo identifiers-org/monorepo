@@ -50,7 +50,6 @@ public class PrefixRegistrationRequestApiController {
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
-    // TODO - Accept prefix registration request
     @PostMapping(value = "/acceptPrefixRegistrationRequest/{sessionId}")
     public ResponseEntity<?> acceptPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterPrefixSessionEvent request) {
         ServiceResponseRegisterPrefixSessionEvent response = model.acceptPrefixRegistrationRequest(sessionId, request);
