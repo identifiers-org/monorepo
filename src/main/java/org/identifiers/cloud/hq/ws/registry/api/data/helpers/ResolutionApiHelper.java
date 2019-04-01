@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.helpers;
 
+import org.identifiers.cloud.hq.ws.registry.api.data.models.Institution;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.Location;
 
 /**
@@ -18,6 +19,16 @@ public class ResolutionApiHelper {
     // right?
 
     public static Location getLocationFrom(org.identifiers.cloud.hq.ws.registry.data.models.Location location) {
-        return new Location().setCountryCode(location.getCountryCode()).setCountryName(location.getCountryName());
+        return new Location()
+                .setCountryCode(location.getCountryCode())
+                .setCountryName(location.getCountryName());
+    }
+
+    public static Institution getInstitutionFrom(org.identifiers.cloud.hq.ws.registry.data.models.Institution institution) {
+        return new Institution()
+                .setId(institution.getId())
+                .setName(institution.getName())
+                .setDescription(institution.getDescription())
+                .setLocation(getLocationFrom(institution.getLocation()));
     }
 }
