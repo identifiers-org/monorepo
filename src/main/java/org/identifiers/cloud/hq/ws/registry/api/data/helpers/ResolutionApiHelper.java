@@ -2,6 +2,7 @@ package org.identifiers.cloud.hq.ws.registry.api.data.helpers;
 
 import org.identifiers.cloud.hq.ws.registry.api.data.models.Institution;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.Location;
+import org.identifiers.cloud.hq.ws.registry.api.data.models.Resource;
 
 /**
  * Project: registry
@@ -30,5 +31,20 @@ public class ResolutionApiHelper {
                 .setName(institution.getName())
                 .setDescription(institution.getDescription())
                 .setLocation(getLocationFrom(institution.getLocation()));
+    }
+
+    public static Resource getResourceFrom(org.identifiers.cloud.hq.ws.registry.data.models.Resource resource) {
+        return new Resource()
+                .setId(resource.getId())
+                .setMirId(resource.getMirId())
+                .setUrlPattern(resource.getUrlPattern())
+                .setName(resource.getName())
+                .setDescription(resource.getDescription())
+                .setOfficial(resource.isOfficial())
+                .setProviderCode(resource.getProviderCode())
+                .setSampleId(resource.getSampleId())
+                .setResourceHomeUrl(resource.getResourceHomeUrl())
+                .setInstitution(getInstitutionFrom(resource.getInstitution()))
+                .setLocation(getLocationFrom(resource.getLocation()));
     }
 }
