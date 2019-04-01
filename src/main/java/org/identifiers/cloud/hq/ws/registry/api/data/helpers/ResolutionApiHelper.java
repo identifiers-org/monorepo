@@ -2,6 +2,7 @@ package org.identifiers.cloud.hq.ws.registry.api.data.helpers;
 
 import org.identifiers.cloud.hq.ws.registry.api.data.models.Institution;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.Location;
+import org.identifiers.cloud.hq.ws.registry.api.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.Resource;
 
 /**
@@ -46,5 +47,17 @@ public class ResolutionApiHelper {
                 .setResourceHomeUrl(resource.getResourceHomeUrl())
                 .setInstitution(getInstitutionFrom(resource.getInstitution()))
                 .setLocation(getLocationFrom(resource.getLocation()));
+    }
+
+    public static Namespace getNamespaceFrom(org.identifiers.cloud.hq.ws.registry.data.models.Namespace namespace) {
+        return new Namespace()
+                .setId(namespace.getId())
+                .setPrefix(namespace.getPrefix())
+                .setName(namespace.getName())
+                .setPattern(namespace.getPattern())
+                .setDescription(namespace.getDescription())
+                .setCreated(namespace.getCreated())
+                .setModified(namespace.getModified())
+                .setSampleId(namespace.getSampleId());
     }
 }
