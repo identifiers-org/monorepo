@@ -12,7 +12,7 @@ import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationReques
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.PrefixRegistrationSessionRepository;
 import org.identifiers.cloud.hq.ws.registry.models.PrefixRegistrationRequestManagementService;
-import org.identifiers.cloud.hq.ws.registry.api.data.helpers.ApiDataModelHelper;
+import org.identifiers.cloud.hq.ws.registry.api.data.helpers.ApiAndDataModelsHelper;
 import org.identifiers.cloud.hq.ws.registry.models.validators.PrefixRegistrationRequestValidatorStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -124,7 +124,7 @@ public class PrefixRegistrationRequestApiModel {
         if (isValid) {
             // Translate data model
             PrefixRegistrationRequest prefixRegistrationRequest =
-                    ApiDataModelHelper.getPrefixRegistrationRequest(request.getPayload());
+                    ApiAndDataModelsHelper.getPrefixRegistrationRequest(request.getPayload());
             // Delegate on the Prefix Registration Request Management Service
             prefixRegistrationRequestManagementService.startRequest(prefixRegistrationRequest,
                     actor,
@@ -141,7 +141,7 @@ public class PrefixRegistrationRequestApiModel {
         PrefixRegistrationSession prefixRegistrationSession = getPrefixRegistrationSession("AMEND", sessionId, request, response);
         if (response.getHttpStatus() == HttpStatus.OK) {
             // Transform the model
-            PrefixRegistrationRequest prefixRegistrationRequest = ApiDataModelHelper.getPrefixRegistrationRequest(request.getPayload().getPrefixRegistrationRequest());
+            PrefixRegistrationRequest prefixRegistrationRequest = ApiAndDataModelsHelper.getPrefixRegistrationRequest(request.getPayload().getPrefixRegistrationRequest());
             // Delegate on the Prefix Registration Request Management Service
             prefixRegistrationRequestManagementService.amendRequest(prefixRegistrationSession,
                     prefixRegistrationRequest,

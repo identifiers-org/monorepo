@@ -1,6 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.services;
 
-import org.identifiers.cloud.hq.ws.registry.api.data.helpers.ApiDataModelHelper;
+import org.identifiers.cloud.hq.ws.registry.api.data.helpers.ApiAndDataModelsHelper;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.Resource;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
@@ -39,8 +39,8 @@ public class NamespaceApiService {
             // TODO - Refactor model transformations into an external helper
             List<Resource> resources = new ArrayList<>();
             resources = resourceRepository.findAllByNamespaceId(namespace.getId()).parallelStream()
-                    .map(ApiDataModelHelper::getResourceFrom).collect(Collectors.toList());
-            return ApiDataModelHelper.getNamespaceFrom(namespace)
+                    .map(ApiAndDataModelsHelper::getResourceFrom).collect(Collectors.toList());
+            return ApiAndDataModelsHelper.getNamespaceFrom(namespace)
                     .setResources(resources);
         }).collect(Collectors.toList());
     }

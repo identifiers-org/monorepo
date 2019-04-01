@@ -17,7 +17,7 @@ import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationReques
  *
  * This helper provides methods for transformations between api models and data models.
  */
-public class ApiDataModelHelper {
+public class ApiAndDataModelsHelper {
     public static PrefixRegistrationRequest getPrefixRegistrationRequest(ServiceRequestRegisterPrefixPayload sourceModel) {
         String references = "";
         if (sourceModel.getReferences() != null) {
