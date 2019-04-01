@@ -6,8 +6,8 @@ import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRepository
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Project: registry
@@ -30,7 +30,9 @@ public class NamespaceApiService {
     // END - Repositories
 
     public List<Namespace> getNamespaceTreeDownToLeaves() {
-        // TODO
-        return new ArrayList<>();
+        return namespaceRepository.findAll().parallelStream().map(namespace -> {
+            // TODO
+            return new Namespace();
+        }).collect(Collectors.toList());
     }
 }
