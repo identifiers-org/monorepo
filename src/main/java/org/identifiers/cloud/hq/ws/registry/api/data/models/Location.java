@@ -18,7 +18,6 @@ import java.io.Serializable;
  *
  * This is the location data model at API level
  */
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
