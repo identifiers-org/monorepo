@@ -1,7 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.services;
 
-import org.identifiers.cloud.hq.ws.registry.api.data.models.Institution;
-import org.identifiers.cloud.hq.ws.registry.api.data.models.Location;
+import org.identifiers.cloud.hq.ws.registry.api.data.helpers.ResolutionApiHelper;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.Resource;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
@@ -39,28 +38,8 @@ public class NamespaceApiService {
             // NOTE - There must be another way of doing this model mappings
             // TODO - Refactor model transformations into an external helper
             List<Resource> resources = new ArrayList<>();
-            resources = resourceRepository.findAllByNamespaceId(namespace.getId()).parallelStream().map(resource -> {
-                return new Resource()
-                        .setId(resource.getId())
-                        .setMirId(resource.getMirId())
-                        .setUrlPattern(resource.getUrlPattern())
-                        .setName(resource.getName())
-                        .setDescription(resource.getDescription())
-                        .setOfficial(resource.isOfficial())
-                        .setProviderCode(resource.getProviderCode())
-                        .setSampleId(resource.getSampleId())
-                        .setResourceHomeUrl(resource.getResourceHomeUrl())
-                        .setLocation(new Location()
-                                .setCountryCode(resource.getLocation().getCountryCode())
-                                .setCountryName(resource.getLocation().getCountryName()))
-                        .setInstitution(new Institution()
-                                .setId(resource.getInstitution().getId())
-                                .setName(resource.getInstitution().getName())
-                                .setDescription(resource.getInstitution().getDescription())
-                                .setLocation(new Location()
-                                        .setCountryName(resource.getInstitution().getLocation().getCountryCode())
-                                        .setCountryName(resource.getInstitution().getLocation().getCountryName())));
-            }).collect(Collectors.toList());
+            resources = resourceRepository.findAllByNamespaceId(namespace.getId()).parallelStream()
+                    .map(ResolutionApiHelper::getResourceFrom).collect(Collectors.toList());
             return new Namespace()
                     .setId(namespace.getId())
                     .setPrefix(namespace.getPrefix())
