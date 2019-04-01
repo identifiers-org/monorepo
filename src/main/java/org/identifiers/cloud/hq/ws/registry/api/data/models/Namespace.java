@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.models;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -20,6 +21,7 @@ import java.util.List;
  *
  * This class models how the microservice exposes information about namespaces in the registry through its Resolution API.
  */
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
