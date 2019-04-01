@@ -26,9 +26,12 @@ public class ResolutionApiModel {
         ServiceResponseGetResolverDataset response = new ServiceResponseGetResolverDataset();
         response.setHttpStatus(HttpStatus.OK);
         response.setPayload(new ResolverDatasetPayload());
-        // TODO - Refactoring
-        //response.getPayload().setNamespaces(ResolutionApiHelper.getResolutionDatasetFrom(namespaceApiService.getNamespaceTreeDownToLeaves()));
-        // Return response
+        try {
+            response.getPayload().setNamespaces(namespaceApiService.getNamespaceTreeDownToLeaves());
+        } catch (RuntimeException e) {
+            response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            response.setErrorMessage(e.getMessage());
+        }
         return response;
     }
 }
