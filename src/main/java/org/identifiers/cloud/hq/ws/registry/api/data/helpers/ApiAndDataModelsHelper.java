@@ -84,6 +84,7 @@ public class ApiAndDataModelsHelper {
     public static Namespace getNamespaceFrom(org.identifiers.cloud.hq.ws.registry.data.models.Namespace namespace) {
         return new Namespace()
                 .setId(namespace.getId())
+                .setMirId(namespace.getMirId())
                 .setPrefix(namespace.getPrefix())
                 .setName(namespace.getName())
                 .setPattern(namespace.getPattern())
