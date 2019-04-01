@@ -40,15 +40,7 @@ public class NamespaceApiService {
             List<Resource> resources = new ArrayList<>();
             resources = resourceRepository.findAllByNamespaceId(namespace.getId()).parallelStream()
                     .map(ResolutionApiHelper::getResourceFrom).collect(Collectors.toList());
-            return new Namespace()
-                    .setId(namespace.getId())
-                    .setPrefix(namespace.getPrefix())
-                    .setName(namespace.getName())
-                    .setPattern(namespace.getPattern())
-                    .setDescription(namespace.getDescription())
-                    .setCreated(namespace.getCreated())
-                    .setModified(namespace.getModified())
-                    .setSampleId(namespace.getSampleId())
+            return ResolutionApiHelper.getNamespaceFrom(namespace)
                     .setResources(resources);
         }).collect(Collectors.toList());
     }
