@@ -11,4 +11,9 @@ package org.identifiers.cloud.hq.ws.registry.api.data.models;
  * API domain data model for institution
  */
 public class Institution {
+    private long id;
+    private String name;
+    private String homeUrl;
+    private String description;
+    private Location location;
 }
