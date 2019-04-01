@@ -37,14 +37,13 @@ public class PrefixRegistrationRequestApiController {
         ServiceResponseRegisterPrefixSessionEvent response = model.amendPrefixRegistrationRequest(sessionId, request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
-    
+
     @PostMapping(value = "/commentPrefixRegistrationRequest/{sessionId}")
     public ResponseEntity<?> commentPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterPrefixSessionEvent request) {
         ServiceResponseRegisterPrefixSessionEvent response = model.commentPrefixRegistrationRequest(sessionId, request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
-    // TODO - Reject prefix registration request
     @PostMapping(value = "/rejectPrefixRegistrationRequest/{sessionId}")
     public ResponseEntity<?> rejectPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterPrefixSessionEvent request) {
         ServiceResponseRegisterPrefixSessionEvent response = model.rejectPrefixRegistrationRequest(sessionId, request);
