@@ -1,5 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.models;
 
+import java.io.Serializable;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.api.data.models
@@ -10,7 +12,7 @@ package org.identifiers.cloud.hq.ws.registry.api.data.models;
  *
  * API domain data model for institution
  */
-public class Institution {
+public class Institution implements Serializable {
     // identifiers.org internal ID for this institution
     private long id;
     private String name;
