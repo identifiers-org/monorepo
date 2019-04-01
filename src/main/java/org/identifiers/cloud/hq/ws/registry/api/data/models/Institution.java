@@ -11,9 +11,11 @@ package org.identifiers.cloud.hq.ws.registry.api.data.models;
  * API domain data model for institution
  */
 public class Institution {
+    // identifiers.org internal ID for this institution
     private long id;
     private String name;
     private String homeUrl;
     private String description;
+    // Geographical location for this institution
     private Location location;
 }
