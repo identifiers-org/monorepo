@@ -40,8 +40,6 @@ public class NamespaceApiService {
             // NOTE - There must be another way of doing this model mappings
             List<Resource> resources = new ArrayList<>();
             resources = resourceRepository.findAllByNamespaceId(namespace.getId()).parallelStream().map(resource -> {
-                // TODO - Create Institution
-                // TODO - Create Location
                 return new Resource()
                         .setId(resource.getId())
                         .setMirId(resource.getMirId())
