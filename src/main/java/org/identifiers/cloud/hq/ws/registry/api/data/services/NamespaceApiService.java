@@ -8,7 +8,6 @@ import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRepository
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,9 +35,7 @@ public class NamespaceApiService {
         return namespaceRepository.findAll().parallelStream().map(namespace -> {
             // Locate the resources within the namespace
             // NOTE - There must be another way of doing this model mappings
-            // TODO - Refactor model transformations into an external helper
-            List<Resource> resources = new ArrayList<>();
-            resources = resourceRepository.findAllByNamespaceId(namespace.getId()).parallelStream()
+            List<Resource> resources = resources = resourceRepository.findAllByNamespaceId(namespace.getId()).parallelStream()
                     .map(ApiAndDataModelsHelper::getResourceFrom).collect(Collectors.toList());
             return ApiAndDataModelsHelper.getNamespaceFrom(namespace)
                     .setResources(resources);
