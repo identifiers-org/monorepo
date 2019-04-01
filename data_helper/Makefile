@@ -30,7 +30,7 @@ update_requirements_file: dev_environment
 
 upgrade_dependencies:
 	@echo "<===|DEVOPS|===> [UPDATE] Application Requirements Upgrade"
-	pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
+	@pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
 	@echo "<===|DEVOPS|===> [USER_INTERACTION] Please, run an update on the requirements file"
 
 clean_dev:
