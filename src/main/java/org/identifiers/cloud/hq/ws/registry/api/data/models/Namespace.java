@@ -35,7 +35,6 @@ public class Namespace implements Serializable {
     private String description;
     private Timestamp created;
     private Timestamp modified;
-    private boolean deprecated = false;
-    private Timestamp deprecationDate;
+    // The resolver does not need deprecated namespaces
     private List<Resource> resources = new ArrayList<>();
 }
