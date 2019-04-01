@@ -35,7 +35,6 @@ public class NamespaceApiService {
 
     public List<Namespace> getNamespaceTreeDownToLeaves() {
         return namespaceRepository.findAll().parallelStream().map(namespace -> {
-            // TODO
             // Locate the resources within the namespace
             // NOTE - There must be another way of doing this model mappings
             List<Resource> resources = new ArrayList<>();
