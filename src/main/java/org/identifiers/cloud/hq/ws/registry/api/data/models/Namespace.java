@@ -37,4 +37,5 @@ public class Namespace implements Serializable {
     private Timestamp modified;
     // The resolver does not need deprecated namespaces
     private List<Resource> resources = new ArrayList<>();
+    private String sampleId;
 }
