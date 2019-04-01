@@ -4,18 +4,50 @@ import org.identifiers.cloud.hq.ws.registry.api.data.models.Institution;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.Location;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.Resource;
+import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
+import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationRequest;
 
 /**
  * Project: registry
- * Package: org.identifiers.cloud.hq.ws.registry.api.data.helpers
- * Timestamp: 2018-10-17 12:29
+ * Package: org.identifiers.cloud.hq.ws.registry.models.helpers
+ * Timestamp: 2019-03-20 13:49
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  *
- * This is a data helper in the context of the Resolution API data models
+ * This helper provides methods for transformations between api models and data models.
  */
-public class ResolutionApiHelper {
+public class ApiDataModelHelper {
+    public static PrefixRegistrationRequest getPrefixRegistrationRequest(ServiceRequestRegisterPrefixPayload sourceModel) {
+        String references = "";
+        if (sourceModel.getReferences() != null) {
+            references = "".join(",", sourceModel.getReferences());
+        }
+        String additionalInformation = "--- No additional information provided ---";
+        if (sourceModel.getAdditionalInformation() != null) {
+            additionalInformation = sourceModel.getAdditionalInformation();
+        }
+        return new PrefixRegistrationRequest()
+                .setName(sourceModel.getName())
+                .setDescription(sourceModel.getDescription())
+                .setProviderHomeUrl(sourceModel.getProviderHomeUrl())
+                .setProviderName(sourceModel.getProviderName())
+                .setProviderDescription(sourceModel.getProviderDescription())
+                .setProviderLocation(sourceModel.getProviderLocation())
+                .setProviderCode(sourceModel.getProviderCode())
+                .setInstitutionName(sourceModel.getInstitutionName())
+                .setInstitutionDescription(sourceModel.getInstitutionDescription())
+                .setInstitutionLocation(sourceModel.getInstitutionLocation())
+                .setRequestedPrefix(sourceModel.getRequestedPrefix())
+                .setProviderUrlPattern(sourceModel.getProviderUrlPattern())
+                .setSampleId(sourceModel.getSampleId())
+                .setIdRegexPattern(sourceModel.getIdRegexPattern())
+                .setSupportingReferences(references)
+                .setAdditionalInformation(additionalInformation)
+                .setRequesterName(sourceModel.getRequester().getName())
+                .setRequesterEmail(sourceModel.getRequester().getEmail());
+    }
+
     // NOTE - I don't totally like to have two models with the same name, as it makes the coding more prone to
     // making mistakes, but, at the same time, this is the meaning of it, and that's why we have packages,
     // right?
@@ -60,4 +92,5 @@ public class ResolutionApiHelper {
                 .setModified(namespace.getModified())
                 .setSampleId(namespace.getSampleId());
     }
+
 }

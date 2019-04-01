@@ -12,7 +12,7 @@ import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationReques
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.PrefixRegistrationSessionRepository;
 import org.identifiers.cloud.hq.ws.registry.models.PrefixRegistrationRequestManagementService;
-import org.identifiers.cloud.hq.ws.registry.models.helpers.ApiDataModelHelper;
+import org.identifiers.cloud.hq.ws.registry.api.data.helpers.ApiDataModelHelper;
 import org.identifiers.cloud.hq.ws.registry.models.validators.PrefixRegistrationRequestValidatorStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
