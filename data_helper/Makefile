@@ -28,6 +28,11 @@ update_requirements_file: dev_environment
 	#@python_install/bin/pipreqs --use-local --savepath requirements.txt $(PWD)
 	@python_install/bin/pip freeze > requirements.txt
 
+upgrade_dependencies:
+	@echo "<===|DEVOPS|===> [UPDATE] Application Requirements Upgrade"
+	pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
+	@echo "<===|DEVOPS|===> [USER_INTERACTION] Please, run an update on the requirements file"
+
 clean_dev:
 	@echo "<===|DEVOPS|===> [CLEAN] Removing Python Virtual Environment"
 	@rm -rf python_install
@@ -46,4 +51,4 @@ clean: clean_logs clean_tmp
 clean_all: clean clean_dev
 	@echo "<===|DEVOPS|===> [CLEAN] Housekeeping, clean all"
 
-.PHONY: install dev_environment install_requirements update_requirements_file clean_logs clean_dev clean_all clean_tmp clean
+.PHONY: install dev_environment install_requirements update_requirements_file upgrade_dependencies clean_logs clean_dev clean_all clean_tmp clean
