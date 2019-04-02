@@ -18,6 +18,9 @@ import java.util.List;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * This data model represents the payload that comes embedded in the service response from the HQ Registry API Service
+ * when queried about the resolver dataset.
  */
 @Data
 @AllArgsConstructor
