@@ -12,9 +12,6 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -31,9 +28,6 @@ public class ApplicationConfig {
 
     @Value("${spring.redis.host}")
     private String redisHost;
-
-    @Value("${org.identifiers.cloud.ws.resolver.cors.origin}")
-    private String corsOrigins;
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
@@ -58,17 +52,6 @@ public class ApplicationConfig {
     @Bean
     public ResolverDataFetcher resolverDataFetcher() {
         return new ResolverDataFetcherFromDataBackend();
-    }
-
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins(corsOrigins.split(","));
-            }
-        };
     }
 
 }
