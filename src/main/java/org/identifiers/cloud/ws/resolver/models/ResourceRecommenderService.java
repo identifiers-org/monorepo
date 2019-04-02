@@ -36,11 +36,11 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
         return ApiServicesFactory
                 .getResourceRecommenderService(resourceRecommenderServiceHost, resourceRecommenderServicePort)
                 .requestRecommendations(resources.parallelStream()
-                        .map(resourceEntry ->
+                        .map(resolvedResource ->
                                 new ResolvedResource()
-                                        .setOfficial(resourceEntry.isOfficial())
-                                        .setAccessURL(resourceEntry.getAccessUrl())
-                                        .setId(resourceEntry.getId()))
+                                        .setOfficial(resolvedResource.isOfficial())
+                                        .setAccessURL(resolvedResource.getCompactIdentifierResolvedUrl())
+                                        .setId(resolvedResource.getId()))
                         .collect(Collectors.toList()))
                 .getPayload()
                 .getResourceRecommendations();
