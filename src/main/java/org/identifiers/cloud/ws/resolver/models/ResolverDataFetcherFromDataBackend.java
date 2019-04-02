@@ -1,9 +1,8 @@
 package org.identifiers.cloud.ws.resolver.models;
 
 import org.identifiers.cloud.ws.resolver.data.models.Namespace;
-import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
+import org.identifiers.cloud.ws.resolver.data.models.Resource;
 import org.identifiers.cloud.ws.resolver.data.repositories.NamespaceRespository;
-import org.identifiers.cloud.ws.resolver.data.repositories.PidEntryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -31,22 +28,17 @@ public class ResolverDataFetcherFromDataBackend implements ResolverDataFetcher {
     private NamespaceRespository namespaceRespository;
 
     @Override
-    public List<ResourceEntry> findResourcesByPrefix(String prefix) {
+    public List<Resource> findResourcesByPrefix(String prefix) {
         logger.info("Find resources by prefix for '{}'", prefix);
-        List<ResourceEntry> result = new ArrayList<>();
         if (prefix != null) {
-            List<Namespace> pidEntries = pidEntryRepository.findByPrefix(prefix);
-            if (!pidEntries.isEmpty()) {
-                if (pidEntries.size() > 1) {
-                    logger.error("MULTIPLE PID entries for prefix '{}'", prefix);
-                }
-                result = pidEntries.parallelStream().flatMap(pidEntry -> Arrays.stream(pidEntry.getResources())).collect(Collectors
-                        .toList());
+            Namespace namespace = namespaceRespository.findByPrefix(prefix);
+            if (namespace != null) {
+                return namespace.getResources();
             } else {
                 logger.warn("NO PID entry for prefix '{}'", prefix);
             }
         }
-        return result;
+        return new ArrayList<>();
     }
 
     @Override
