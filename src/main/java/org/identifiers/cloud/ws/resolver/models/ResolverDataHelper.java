@@ -26,9 +26,9 @@ import java.util.stream.Collectors;
 public class ResolverDataHelper {
     private static final Logger logger = LoggerFactory.getLogger(ResolverDataHelper.class);
 
+    // Services
     @Autowired
     private ResourceRecommenderStrategy resourceRecommender;
-
     @Autowired
     private ResolverDataFetcher resolverDataFetcher;
 
@@ -86,20 +86,17 @@ public class ResolverDataHelper {
 
     public List<ResolvedResource> resolveAllResourcesWithTheirSampleId() {
         List<ResolvedResource> resolvedResources = new ArrayList<>();
-        resolverDataFetcher.findAllPidEntries().forEach(pidEntry -> resolvedResources.addAll(Arrays.stream(pidEntry
-                .getResources()).parallel().map(resourceEntry -> {
-            ResolvedResource resolvedResource = new ResolvedResource();
-            resolvedResource.setId(resourceEntry.getId());
-            resolvedResource.setResourcePrefix(resourceEntry.getResourcePrefix());
-            resolvedResource.setInfo(resourceEntry.getInfo());
-            resolvedResource.setInstitution(resourceEntry.getInstitution());
-            resolvedResource.setLocation(resourceEntry.getLocation());
-            resolvedResource.setAccessUrl(resourceEntry
-                    .getAccessURL().replace("{$id}", resourceEntry.getLocalId()));
-            resolvedResource.setOfficial(resourceEntry.isOfficial());
-            resolvedResource.setResourceURL(resourceEntry.getResourceURL());
-            // Embed Recommendation
-            Recommendation recommendation = new Recommendation();
+        resolverDataFetcher.findAllNamespaces().forEach(namespace -> resolvedResources.addAll(namespace
+                .getResources().parallelStream().map(resource -> {
+            ResolvedResource resolvedResource =
+                    new ResolvedResource()
+                            .setId(Long.toString(resource.getId()))
+                            .setProviderCode(resource.getProviderCode())
+                            .setCompactIdentifierResolvedUrl(resource.getUrlPattern().replace("{$id}", resource.getSampleId()))
+                            .setDescription(resource.getDescription()).setInstitution(resource.getInstitution())
+                            .setLocation(resource.getLocation()).setOfficial(resource.isOfficial())
+                            .setResourceHomeUrl(resource.getResourceHomeUrl())
+                            .setRecommendation(new Recommendation());
             return resolvedResource;
         }).collect(Collectors.toList())));
         return resolvedResources;
