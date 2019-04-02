@@ -18,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 // This iteration is using the same profile for 'development' and 'thirdparty' profiles, as they are not different yet.
 @Profile({"development", "thirdparty"})
-public class DevelopmentConfiguration {
+public class CorsConfigurerDevelopment {
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {
