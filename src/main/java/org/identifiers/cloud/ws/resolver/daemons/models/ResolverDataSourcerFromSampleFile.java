@@ -6,7 +6,9 @@ import org.identifiers.cloud.ws.resolver.data.models.Namespace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,6 +21,8 @@ import java.util.List;
  * Timestamp: 2018-01-18 10:06
  * ---
  */
+@Component
+@Profile("disabled")
 public class ResolverDataSourcerFromSampleFile implements ResolverDataSourcer {
     private Logger logger = LoggerFactory.getLogger(ResolverDataSourcerFromSampleFile.class);
 
