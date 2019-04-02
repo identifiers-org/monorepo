@@ -88,8 +88,7 @@ public class ResolverDataHelper {
         List<ResolvedResource> resolvedResources = new ArrayList<>();
         resolverDataFetcher.findAllNamespaces().forEach(namespace -> resolvedResources.addAll(namespace
                 .getResources().parallelStream().map(resource -> {
-            ResolvedResource resolvedResource =
-                    new ResolvedResource()
+            return new ResolvedResource()
                             .setId(Long.toString(resource.getId()))
                             .setProviderCode(resource.getProviderCode())
                             .setCompactIdentifierResolvedUrl(resource.getUrlPattern().replace("{$id}", resource.getSampleId()))
@@ -97,7 +96,6 @@ public class ResolverDataHelper {
                             .setLocation(resource.getLocation()).setOfficial(resource.isOfficial())
                             .setResourceHomeUrl(resource.getResourceHomeUrl())
                             .setRecommendation(new Recommendation());
-            return resolvedResource;
         }).collect(Collectors.toList())));
         return resolvedResources;
     }
