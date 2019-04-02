@@ -3,6 +3,7 @@ package org.identifiers.cloud.ws.resolver.daemons;
 import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcer;
 import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcerException;
 import org.identifiers.cloud.ws.resolver.data.models.Namespace;
+import org.identifiers.cloud.ws.resolver.data.repositories.NamespaceRespository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class ResolverDataUpdater extends Thread {
     private ResolverDataSourcer resolverDataSourcer;
 
     @Autowired
-    private PidEntryRepository pidEntryRepository;
+    private NamespaceRespository namespaceRespository;
 
     public synchronized boolean isShutdown() {
         return shutdown;
@@ -49,16 +50,16 @@ public class ResolverDataUpdater extends Thread {
         while (!isShutdown()) {
             // TODO - Do your stuff
             logger.info("---> Creating instance of Namespace ---");
-            List<Namespace> pidEntries = new ArrayList<>();
+            List<Namespace> namespaces = new ArrayList<>();
             try {
-                pidEntries = resolverDataSourcer.getResolverData();
+                namespaces = resolverDataSourcer.getResolverData();
             } catch (ResolverDataSourcerException e) {
                 logger.error("Failed to obtained resolver data update because '{}'", e.getMessage());
             }
-            if (pidEntries.size() > 0) {
-                logger.info("Resolver data update, #{} PID entries", pidEntries.size());
+            if (namespaces.size() > 0) {
+                logger.info("Resolver data update, #{} Namespaces", namespaces.size());
                 // Update data backend
-                pidEntryRepository.saveAll(pidEntries);
+                namespaceRespository.saveAll(namespaces);
             } else {
                 logger.warn("EMPTY resolver data update!");
             }
