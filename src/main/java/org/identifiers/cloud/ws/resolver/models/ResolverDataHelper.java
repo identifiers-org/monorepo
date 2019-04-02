@@ -48,6 +48,12 @@ public class ResolverDataHelper {
         return url.replace("{$id}", localId);
     }
 
+    /**
+     * This helper will translate from Resource data model to Resolved Resource data model, with two missing pieces:
+     * Recommendation scoring and Resolved URL, so that needs to be added later by the calling client
+     * @param resource the source Resource data model
+     * @return the translated ResolvedResource data model
+     */
     public static ResolvedResource getResolvedResourceFrom(Resource resource) {
         return new ResolvedResource()
                 .setId(Long.toString(resource.getId()))
