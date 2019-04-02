@@ -42,7 +42,12 @@ public class ResolverDataHelper {
     }
 
     public static ResolvedResource getResolvedResourceFrom(Resource resource) {
-        // TODO
+        return new ResolvedResource()
+                .setId(Long.toString(resource.getId()))
+                .setProviderCode(resource.getProviderCode())
+                .setDescription(resource.getDescription()).setInstitution(resource.getInstitution())
+                .setLocation(resource.getLocation()).setOfficial(resource.isOfficial())
+                .setResourceHomeUrl(resource.getResourceHomeUrl());
     }
 
     // TODO - Maybe, refactor out the logic for resolving a resource given an ID, i.e. the URL substring substitution
