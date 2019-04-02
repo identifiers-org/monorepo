@@ -1,6 +1,6 @@
 package org.identifiers.cloud.ws.resolver.daemons.models;
 
-import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
+import org.identifiers.cloud.ws.resolver.data.models.Namespace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,14 +46,14 @@ public class ResolverDataSourcerFromWs implements ResolverDataSourcer {
     private String resolverDataDumpWsEndpoint;
 
     @Override
-    public List<PidEntry> getResolverData() throws ResolverDataSourcerException {
-        List<PidEntry> result = new ArrayList<>();
+    public List<Namespace> getResolverData() throws ResolverDataSourcerException {
+        List<Namespace> result = new ArrayList<>();
         logger.info("Try to get Resolver data dump from '{}'", resolverDataDumpWsEndpoint);
         // Run it with multiple tries
         try {
             result = retryTemplate.execute(retryContext -> {
                 RestTemplate restTemplate = new RestTemplate();
-                return Arrays.asList(restTemplate.getForObject(resolverDataDumpWsEndpoint, PidEntry[].class));
+                return Arrays.asList(restTemplate.getForObject(resolverDataDumpWsEndpoint, Namespace[].class));
             });
         } catch (RuntimeException e) {
             // NOTE - Yes, according to best practices, I should not be catching such a top level exception, but here it

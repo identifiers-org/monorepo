@@ -1,6 +1,6 @@
 package org.identifiers.cloud.ws.resolver.models;
 
-import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
+import org.identifiers.cloud.ws.resolver.data.models.Namespace;
 import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
 import org.identifiers.cloud.ws.resolver.data.repositories.PidEntryRepository;
 import org.slf4j.Logger;
@@ -34,7 +34,7 @@ public class ResolverDataFetcherFromDataBackend implements ResolverDataFetcher {
         logger.info("Find resources by prefix for '{}'", prefix);
         List<ResourceEntry> result = new ArrayList<>();
         if (prefix != null) {
-            List<PidEntry> pidEntries = pidEntryRepository.findByPrefix(prefix);
+            List<Namespace> pidEntries = pidEntryRepository.findByPrefix(prefix);
             if (!pidEntries.isEmpty()) {
                 if (pidEntries.size() > 1) {
                     logger.error("MULTIPLE PID entries for prefix '{}'", prefix);
@@ -49,7 +49,7 @@ public class ResolverDataFetcherFromDataBackend implements ResolverDataFetcher {
     }
 
     @Override
-    public Iterable<PidEntry> findAllPidEntries() {
+    public Iterable<Namespace> findAllPidEntries() {
         return pidEntryRepository.findAll();
     }
 }

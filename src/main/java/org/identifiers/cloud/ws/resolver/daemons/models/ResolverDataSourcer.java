@@ -1,6 +1,6 @@
 package org.identifiers.cloud.ws.resolver.daemons.models;
 
-import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
+import org.identifiers.cloud.ws.resolver.data.models.Namespace;
 
 import java.util.List;
 
@@ -12,5 +12,5 @@ import java.util.List;
  * ---
  */
 public interface ResolverDataSourcer {
-    List<PidEntry> getResolverData() throws ResolverDataSourcerException;
+    List<Namespace> getResolverData() throws ResolverDataSourcerException;
 }

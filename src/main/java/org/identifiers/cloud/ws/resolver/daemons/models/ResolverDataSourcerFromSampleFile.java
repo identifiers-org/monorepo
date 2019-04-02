@@ -2,7 +2,7 @@ package org.identifiers.cloud.ws.resolver.daemons.models;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
+import org.identifiers.cloud.ws.resolver.data.models.Namespace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,12 +26,12 @@ public class ResolverDataSourcerFromSampleFile implements ResolverDataSourcer {
     private String sampleDataFileLocalPath;
 
     @Override
-    public List<PidEntry> getResolverData() throws ResolverDataSourcerException {
-        List<PidEntry> result = new ArrayList<>();
+    public List<Namespace> getResolverData() throws ResolverDataSourcerException {
+        List<Namespace> result = new ArrayList<>();
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             result = objectMapper.readValue(new ClassPathResource(sampleDataFileLocalPath).getInputStream(),
-                    new TypeReference<List<PidEntry>>() {});
+                    new TypeReference<List<Namespace>>() {});
         } catch (IOException e) {
             throw new ResolverDataSourcerException(String
                     .format("There was a problem reading the file at '%s' -> '%s'",

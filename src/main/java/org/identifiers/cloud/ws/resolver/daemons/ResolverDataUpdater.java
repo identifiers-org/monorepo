@@ -2,7 +2,7 @@ package org.identifiers.cloud.ws.resolver.daemons;
 
 import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcer;
 import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcerException;
-import org.identifiers.cloud.ws.resolver.data.models.PidEntry;
+import org.identifiers.cloud.ws.resolver.data.models.Namespace;
 import org.identifiers.cloud.ws.resolver.data.repositories.PidEntryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,8 +49,8 @@ public class ResolverDataUpdater extends Thread {
         Random random = new Random(System.currentTimeMillis());
         while (!isShutdown()) {
             // TODO - Do your stuff
-            logger.info("---> Creating instance of PidEntry ---");
-            List<PidEntry> pidEntries = new ArrayList<>();
+            logger.info("---> Creating instance of Namespace ---");
+            List<Namespace> pidEntries = new ArrayList<>();
             try {
                 pidEntries = resolverDataSourcer.getResolverData();
             } catch (ResolverDataSourcerException e) {
