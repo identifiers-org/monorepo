@@ -39,6 +39,14 @@ public class ResolverApiModel {
     @Autowired
     private ResolverDataHelper resolverDataHelper;
 
+    // Helpers
+    private ServiceResponseResolve createDefaultResponse() {
+        return (ServiceResponseResolve)
+                new ServiceResponseResolve()
+                .setApiVersion(ApiCentral.apiVersion)
+                .setPayload(new ResponseResolvePayload().setResolvedResources(new ArrayList<>()));
+    }
+    // END - Helpers
 
     // TODO - Document this API method
     public ServiceResponseResolve resolveCompactId(String compactIdParameter) throws ResolverApiException {
