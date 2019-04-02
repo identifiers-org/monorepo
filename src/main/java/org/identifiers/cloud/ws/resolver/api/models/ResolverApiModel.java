@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,40 +47,45 @@ public class ResolverApiModel {
                 .setApiVersion(ApiCentral.apiVersion)
                 .setPayload(new ResponseResolvePayload().setResolvedResources(new ArrayList<>()));
     }
+
+    private CompactId getCompactIdentifier(String compactId, ServiceResponseResolve response) {
+        try {
+            return new CompactId(compactId);
+        } catch (CompactIdException e) {
+            response.setErrorMessage(e.getMessage());
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        }
+        return null;
+    }
     // END - Helpers
 
     // TODO - Document this API method
     public ServiceResponseResolve resolveCompactId(String compactIdParameter) throws ResolverApiException {
-        CompactId compactId = null;
-        try {
-            compactId = new CompactId(compactIdParameter);
-        } catch (CompactIdException e) {
-            throw new ResolverApiException(e.getMessage());
+        ServiceResponseResolve response = createDefaultResponse();
+        CompactId compactId = getCompactIdentifier(compactIdParameter, response);
+        if (compactId != null) {
+            // TODO - Check if prefix is null, as we may want to perform a more sofisticated search on the resolver data
+            // Locate resource providers
+            logger.debug("Looking up resources for compact ID '{}', prefix '{}' and ID '{}'", compactId.getOriginal(), compactId.getPrefix(), compactId.getId());
+            List<Resource> resources = resolverDataFetcher.findResourcesByPrefix(compactId.getPrefix());
+            logger.info("CompactId '{}', with prefix '{}' got #{} resources back from the data backend", compactId
+                    .getOriginal(), compactId.getPrefix(), resources.size());
+            // Default behaviour for the Resolver Web Service is to return all the possible options, we may want to include
+            // information regarding availability of every possible resource providing information on the given compact ID
+            if (resources.isEmpty()) {
+                // If no providers, produce error response
+                response.setErrorMessage(String.format("No providers found for Compact ID '%s'", compactId.getOriginal()));
+                response.setHttpStatus(HttpStatus.NOT_FOUND);
+            } else {
+                // Resolve the links
+                response.getPayload()
+                        .setResolvedResources(resolverDataHelper.resolveResourcesForCompactId(compactId, resources));
+                response.setHttpStatus(HttpStatus.OK);
+            }
+            // NOTE - This code may be refactored later
+            response.setApiVersion(ApiCentral.apiVersion);
         }
-        // Prepare default answer
-        ServiceResponseResolve resolverApiResponse = new ServiceResponseResolve();
-        resolverApiResponse.setPayload(new ResponseResolvePayload().setResolvedResources(new ArrayList<>()));
-        // TODO - Check if prefix is null, as we may want to perform a more sofisticated search on the resolver data
-        // Locate resource providers
-        logger.debug("Looking up resources for compact ID '{}', prefix '{}' and ID '{}'", compactId.getOriginal(), compactId.getPrefix(), compactId.getId());
-        List<Resource> resources = resolverDataFetcher.findResourcesByPrefix(compactId.getPrefix());
-        logger.info("CompactId '{}', with prefix '{}' got #{} resources back from the data backend", compactId
-                .getOriginal(), compactId.getPrefix(), resources.size());
-        // Default behaviour for the Resolver Web Service is to return all the possible options, we may want to include
-        // information regarding availability of every possible resource providing information on the given compact ID
-        if (resources.isEmpty()) {
-            // If no providers, produce error response
-            resolverApiResponse.setErrorMessage(String.format("No providers found for Compact ID '%s'", compactId.getOriginal()));
-            resolverApiResponse.setHttpStatus(HttpStatus.NOT_FOUND);
-        } else {
-            // Resolve the links
-            resolverApiResponse.getPayload()
-                    .setResolvedResources(resolverDataHelper.resolveResourcesForCompactId(compactId, resources));
-            resolverApiResponse.setHttpStatus(HttpStatus.OK);
-        }
-        // NOTE - This code may be refactored later
-        resolverApiResponse.setApiVersion(ApiCentral.apiVersion);
-        return resolverApiResponse;
+        return response;
     }
 
     public ServiceResponseResolve resolveCompactId(String compactIdParameter, String selector) throws ResolverApiException {
