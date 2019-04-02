@@ -37,6 +37,13 @@ public class ResolverDataHelper {
     private ResolverDataFetcher resolverDataFetcher;
 
     // Helpers
+
+    /**
+     * Given a URL with the placeholder "{$id}", and a local ID, it will returned the resolved form of the URL
+     * @param url the URL pattern
+     * @param localId the ID to embed in the URL
+     * @return the resolved URL
+     */
     public static String resolveUrlForLocalId(String url, String localId) {
         return url.replace("{$id}", localId);
     }
