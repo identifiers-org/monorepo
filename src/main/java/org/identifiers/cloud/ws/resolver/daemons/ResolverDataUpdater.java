@@ -3,7 +3,6 @@ package org.identifiers.cloud.ws.resolver.daemons;
 import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcer;
 import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcerException;
 import org.identifiers.cloud.ws.resolver.data.models.Namespace;
-import org.identifiers.cloud.ws.resolver.data.repositories.PidEntryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

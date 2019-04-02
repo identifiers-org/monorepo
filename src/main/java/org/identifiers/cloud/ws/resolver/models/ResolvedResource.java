@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.identifiers.cloud.ws.resolver.data.models.Institution;
+import org.identifiers.cloud.ws.resolver.data.models.Location;
 
 import java.io.Serializable;
 
@@ -21,13 +23,22 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @Accessors(chain = true)
 public class ResolvedResource implements Serializable {
+    // identifiers.org internal ID for this resource
     private String id;
-    private String resourcePrefix;
-    private String accessUrl;
-    private String info;
-    private String institution;
-    private String location;
+    // Provider code for this resource
+    private String providerCode;
+    // This is the resolved URL for the given compact identifier
+    private String compactIdentifierResolvedUrl;
+    // A description of this resource
+    private String description;
+    // The institution this resource belongs to
+    private Institution institution;
+    // Location information for this resource
+    private Location location;
+    // Whether this resource is official or not
     private boolean official;
-    private String resourceURL;
+    // Home URL for this resource within the context of the namespace where it's registered
+    private String resourceHomeUrl;
+    // Recommendation scoring information
     private Recommendation recommendation;
 }
