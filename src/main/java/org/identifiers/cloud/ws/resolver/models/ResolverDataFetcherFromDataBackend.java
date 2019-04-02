@@ -1,12 +1,10 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.ws.resolver.data.models.Namespace;
 import org.identifiers.cloud.ws.resolver.data.models.Resource;
 import org.identifiers.cloud.ws.resolver.data.repositories.NamespaceRespository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -20,22 +18,21 @@ import java.util.List;
  * ---
  */
 @Component
-@Scope("prototype")
+@Slf4j
 public class ResolverDataFetcherFromDataBackend implements ResolverDataFetcher {
-    private static Logger logger = LoggerFactory.getLogger(ResolverDataFetcherFromDataBackend.class);
 
     @Autowired
     private NamespaceRespository namespaceRespository;
 
     @Override
     public List<Resource> findResourcesByPrefix(String prefix) {
-        logger.info("Find resources by prefix for '{}'", prefix);
+        log.info("Find resources by prefix for '{}'", prefix);
         if (prefix != null) {
             Namespace namespace = namespaceRespository.findByPrefix(prefix);
             if (namespace != null) {
                 return namespace.getResources();
             } else {
-                logger.warn("NO PID entry for prefix '{}'", prefix);
+                log.warn("NO PID entry for prefix '{}'", prefix);
             }
         }
         return new ArrayList<>();
