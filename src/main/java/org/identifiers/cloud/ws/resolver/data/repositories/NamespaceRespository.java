@@ -1,5 +1,8 @@
 package org.identifiers.cloud.ws.resolver.data.repositories;
 
+import org.identifiers.cloud.ws.resolver.data.models.Namespace;
+import org.springframework.data.repository.CrudRepository;
+
 /**
  * Project: resolver
  * Package: org.identifiers.cloud.ws.resolver.data.repositories
@@ -8,6 +11,7 @@ package org.identifiers.cloud.ws.resolver.data.repositories;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-public interface NamespaceRespository {
-    // TODO
+public interface NamespaceRespository extends CrudRepository<Namespace, String> {
+
+    Namespace findByPrefix(String prefix);
 }
