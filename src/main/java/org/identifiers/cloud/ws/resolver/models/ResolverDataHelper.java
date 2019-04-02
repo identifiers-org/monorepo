@@ -100,10 +100,10 @@ public class ResolverDataHelper {
         return resolvedResources;
     }
 
-    public Map<String, ResourceRecommendation> getRecommendationsByResourceId(List<ResolvedResource> resourceEntries) {
+    public Map<String, ResourceRecommendation> getRecommendationsByResourceId(List<ResolvedResource> resolvedResources) {
         try {
             return resourceRecommender
-                    .getRecommendations(resourceEntries)
+                    .getRecommendations(resolvedResources)
                     .parallelStream()
                     .collect(Collectors.toMap(ResourceRecommendation::getId,
                             recommendedResource -> recommendedResource,
