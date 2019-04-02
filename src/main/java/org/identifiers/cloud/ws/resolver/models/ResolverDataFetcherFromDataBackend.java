@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.resolver.models;
 
 import org.identifiers.cloud.ws.resolver.data.models.Namespace;
 import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
+import org.identifiers.cloud.ws.resolver.data.repositories.NamespaceRespository;
 import org.identifiers.cloud.ws.resolver.data.repositories.PidEntryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,7 @@ public class ResolverDataFetcherFromDataBackend implements ResolverDataFetcher {
     private static Logger logger = LoggerFactory.getLogger(ResolverDataFetcherFromDataBackend.class);
 
     @Autowired
-    private PidEntryRepository pidEntryRepository;
+    private NamespaceRespository namespaceRespository;
 
     @Override
     public List<ResourceEntry> findResourcesByPrefix(String prefix) {
@@ -49,7 +50,7 @@ public class ResolverDataFetcherFromDataBackend implements ResolverDataFetcher {
     }
 
     @Override
-    public Iterable<Namespace> findAllPidEntries() {
-        return pidEntryRepository.findAll();
+    public Iterable<Namespace> findAllNamespaces() {
+        return namespaceRespository.findAll();
     }
 }
