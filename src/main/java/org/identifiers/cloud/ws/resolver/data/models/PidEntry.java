@@ -1,6 +1,11 @@
 package org.identifiers.cloud.ws.resolver.data.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
@@ -14,6 +19,11 @@ import java.io.Serializable;
  * Timestamp: 2018-01-17 15:20
  * ---
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@Accessors(chain = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @RedisHash("ResolverPidEntries")
 public class PidEntry implements Serializable {
