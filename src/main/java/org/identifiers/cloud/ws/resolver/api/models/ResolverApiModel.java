@@ -1,10 +1,9 @@
 package org.identifiers.cloud.ws.resolver.api.models;
 
 import org.identifiers.cloud.ws.resolver.api.ApiCentral;
-import org.identifiers.cloud.ws.resolver.data.models.Resource;
-import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
 import org.identifiers.cloud.ws.resolver.api.responses.ResponseResolvePayload;
 import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponseResolve;
+import org.identifiers.cloud.ws.resolver.data.models.Resource;
 import org.identifiers.cloud.ws.resolver.models.CompactId;
 import org.identifiers.cloud.ws.resolver.models.CompactIdException;
 import org.identifiers.cloud.ws.resolver.models.ResolverDataFetcher;
@@ -16,7 +15,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -90,55 +88,49 @@ public class ResolverApiModel {
 
     public ServiceResponseResolve resolveCompactId(String compactIdParameter, String selector) throws ResolverApiException {
         logger.info("Resolve Compact ID '{}', with selector '{}'", compactIdParameter, selector);
-        CompactId compactId = null;
-        try {
-            compactId = new CompactId(compactIdParameter);
-        } catch (CompactIdException e) {
-            throw new ResolverApiException(e.getMessage());
-        }
-        // Prepare default answer
-        ServiceResponseResolve resolverApiResponse = new ServiceResponseResolve();
-        resolverApiResponse.setPayload(new ResponseResolvePayload().setResolvedResources(new ArrayList<>()));
-        // TODO - I do need to do something about prefix being 'null', otherwise it will break this first implementation
-        // Locate resource providers
-        // TODO - Refactor this later to make sure that 'selector' is always used lower case
-        if ((compactId.getPrefix() == null) || (compactId.getPrefix().equals(selector.toLowerCase()))) {
-            // This is normal resolution
-            // TODO - Don't worry intrepid optimizer, this model will get refactored later on
-            return resolveCompactId(CompactId.getCompactIdString(selector, compactId.getId()));
-        } else {
-            // We need to locate resources for the given compact ID and filter by the given selector
-            // So... it turns out that I don't need anything more complex as a decider right now
-            logger.debug("Looking up resources for compact ID '{}', selector '{}' and ID '{}'",
-                    compactId.getOriginal(),
-                    selector);
-            List<ResourceEntry> resourceEntries = resolverDataFetcher.findResourcesByPrefix(compactId.getPrefix())
-                    .stream()
-                    .filter(resourceEntry -> {
-                        if (resourceEntry.getResourcePrefix() != null) {
-                            return resourceEntry.getResourcePrefix().equals(selector.toLowerCase());
-                        }
-                        return false;
-                    })
-                    .collect(Collectors.toList());
-            logger.info("CompactId '{}', with selector '{}' got #{} resources back from the data backend",
-                    compactId.getOriginal(),
-                    selector,
-                    resourceEntries.size());
-            if (resourceEntries.isEmpty()) {
-                // If no providers, produce error response
-                resolverApiResponse.setErrorMessage(String.format("No providers found for Compact ID '%s', selector '%s'",
-                        compactId.getOriginal(),
-                        selector));
-                resolverApiResponse.setHttpStatus(HttpStatus.NOT_FOUND);
+        ServiceResponseResolve response = createDefaultResponse();
+        CompactId compactId = getCompactIdentifier(compactIdParameter, response);
+        if (compactId != null) {
+            // TODO - I do need to do something about prefix being 'null', otherwise it will break this first implementation
+            // Locate resource providers
+            // TODO - Refactor this later to make sure that 'selector' is always used lower case
+            if ((compactId.getPrefix() == null) || (compactId.getPrefix().equals(selector.toLowerCase()))) {
+                // This is normal resolution
+                // TODO - Don't worry intrepid optimizer, this model will get refactored later on
+                return resolveCompactId(CompactId.getCompactIdString(selector, compactId.getId()));
             } else {
-                // Resolve the links
-                resolverApiResponse.getPayload()
-                        .setResolvedResources(resolverDataHelper.resolveResourcesForCompactId(compactId,resourceEntries));
-                resolverApiResponse.setHttpStatus(HttpStatus.OK);
+                // We need to locate resources for the given compact ID and filter by the given selector
+                // So... it turns out that I don't need anything more complex as a decider right now
+                logger.debug("Looking up resources for compact ID '{}', selector '{}' and ID '{}'",
+                        compactId.getOriginal(),
+                        selector);
+                List<Resource> resources = resolverDataFetcher.findResourcesByPrefix(compactId.getPrefix())
+                        .stream()
+                        .filter(resource -> {
+                            if (resource.getProviderCode() != null) {
+                                return resource.getProviderCode().equals(selector.toLowerCase());
+                            }
+                            return false;
+                        })
+                        .collect(Collectors.toList());
+                logger.info("CompactId '{}', with selector '{}' got #{} resources back from the data backend",
+                        compactId.getOriginal(),
+                        selector,
+                        resources.size());
+                if (resources.isEmpty()) {
+                    // If no providers, produce error response
+                    response.setErrorMessage(String.format("No providers found for Compact ID '%s', selector '%s'",
+                            compactId.getOriginal(),
+                            selector));
+                    response.setHttpStatus(HttpStatus.NOT_FOUND);
+                } else {
+                    // Resolve the links
+                    response.getPayload()
+                            .setResolvedResources(resolverDataHelper.resolveResourcesForCompactId(compactId,resources));
+                    response.setHttpStatus(HttpStatus.OK);
+                }
             }
         }
-        resolverApiResponse.setApiVersion(ApiCentral.apiVersion);
-        return resolverApiResponse;
+        return response;
     }
 }
