@@ -46,7 +46,7 @@ public class ResolverApiController {
     }
 
     @Autowired
-    private ResolverApiModel resolverApiModel;
+    private ResolverApiModel model;
 
     // Compact Identifier and provider code helper
     private ProviderCompactIdTuple extractProviderAndCompactIdentifier(String resolutionRequest) {
@@ -78,6 +78,7 @@ public class ResolverApiController {
         return new ProviderCompactIdTuple().setCompactIdentifier(compactIdentifier).setProvider(provider);
     }
 
+    // TODO - ADOPT THE APPROACH OF THIN CONTROLLERS IN FUTURE ITERATIONS
     @RequestMapping(value = "/{resolutionRequest}/**", method = RequestMethod.GET)
     public ResponseEntity<?> resolve(@PathVariable String resolutionRequest, HttpServletRequest request) {
         final String path =
@@ -86,10 +87,10 @@ public class ResolverApiController {
         ProviderCompactIdTuple providerAndCompactIdentifier = extractProviderAndCompactIdentifier(path.replaceFirst("/", ""));
         ServiceResponse result = null;
         if (providerAndCompactIdentifier.getProvider() != null) {
-            result = resolverApiModel.resolveCompactId(providerAndCompactIdentifier.getCompactIdentifier(),
+            result = model.resolveCompactId(providerAndCompactIdentifier.getCompactIdentifier(),
                     providerAndCompactIdentifier.getProvider());
         } else {
-            result = resolverApiModel.resolveCompactId(providerAndCompactIdentifier.getCompactIdentifier());
+            result = model.resolveCompactId(providerAndCompactIdentifier.getCompactIdentifier());
         }
         return new ResponseEntity<>(result, result.getHttpStatus());
     }
@@ -102,7 +103,7 @@ public class ResolverApiController {
         // business logic should be caught and handled at the model level (the main model associated to the controller),
         // and only request related exceptions should be handled at the controller level, probably via @ControllerAdvice
         // mechanism and error controller, that I need to implement anyway.
-        ServiceResponse result = resolverApiModel.resolveCompactId(compactId);
+        ServiceResponse result = model.resolveCompactId(compactId);
         return new ResponseEntity<>(result, result.getHttpStatus());
     }
 
@@ -114,7 +115,7 @@ public class ResolverApiController {
         // business logic should be caught and handled at the model level (the main model associated to the controller),
         // and only request related exceptions should be handled at the controller level, probably via @ControllerAdvice
         // mechanism and error controller, that I need to implement anyway.
-        ServiceResponse result = resolverApiModel.resolveCompactId(compactId, selector);
+        ServiceResponse result = model.resolveCompactId(compactId, selector);
         return new ResponseEntity<>(result, result.getHttpStatus());
     }*/
 }

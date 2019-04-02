@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.resolver.api.models;
 
 import org.identifiers.cloud.ws.resolver.api.ApiCentral;
+import org.identifiers.cloud.ws.resolver.data.models.Resource;
 import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
 import org.identifiers.cloud.ws.resolver.api.responses.ResponseResolvePayload;
 import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponseResolve;
@@ -53,19 +54,19 @@ public class ResolverApiModel {
         // TODO - Check if prefix is null, as we may want to perform a more sofisticated search on the resolver data
         // Locate resource providers
         logger.debug("Looking up resources for compact ID '{}', prefix '{}' and ID '{}'", compactId.getOriginal(), compactId.getPrefix(), compactId.getId());
-        List<ResourceEntry> resourceEntries = resolverDataFetcher.findResourcesByPrefix(compactId.getPrefix());
+        List<Resource> resources = resolverDataFetcher.findResourcesByPrefix(compactId.getPrefix());
         logger.info("CompactId '{}', with prefix '{}' got #{} resources back from the data backend", compactId
-                .getOriginal(), compactId.getPrefix(), resourceEntries.size());
+                .getOriginal(), compactId.getPrefix(), resources.size());
         // Default behaviour for the Resolver Web Service is to return all the possible options, we may want to include
         // information regarding availability of every possible resource providing information on the given compact ID
-        if (resourceEntries.isEmpty()) {
+        if (resources.isEmpty()) {
             // If no providers, produce error response
             resolverApiResponse.setErrorMessage(String.format("No providers found for Compact ID '%s'", compactId.getOriginal()));
             resolverApiResponse.setHttpStatus(HttpStatus.NOT_FOUND);
         } else {
             // Resolve the links
             resolverApiResponse.getPayload()
-                    .setResolvedResources(resolverDataHelper.resolveResourcesForCompactId(compactId, resourceEntries));
+                    .setResolvedResources(resolverDataHelper.resolveResourcesForCompactId(compactId, resources));
             resolverApiResponse.setHttpStatus(HttpStatus.OK);
         }
         // NOTE - This code may be refactored later
