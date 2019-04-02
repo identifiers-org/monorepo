@@ -11,7 +11,6 @@ import org.springframework.retry.support.RetryTemplate;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -53,7 +52,7 @@ public class ResolverDataSourcerFromWs implements ResolverDataSourcer {
         try {
             result = retryTemplate.execute(retryContext -> {
                 RestTemplate restTemplate = new RestTemplate();
-                return Arrays.asList(restTemplate.getForObject(resolverDataDumpWsEndpoint, Namespace[].class));
+                return restTemplate.getForObject(resolverDataDumpWsEndpoint, HqServiceResponseGetResolverDataset.class).getPayload().getNamespaces();
             });
         } catch (RuntimeException e) {
             // NOTE - Yes, according to best practices, I should not be catching such a top level exception, but here it
