@@ -104,12 +104,11 @@ public class ResolverDataHelper {
 
     public List<ResolvedResource> resolveAllResourcesWithTheirSampleId() {
         List<ResolvedResource> resolvedResources = new ArrayList<>();
+        // TODO Review this in the future to find out whether it's the best way of doing this or not
         resolverDataFetcher.findAllNamespaces().forEach(namespace -> resolvedResources.addAll(namespace
-                .getResources().parallelStream().map(resource -> {
-                    return getResolvedResourceFrom(resource)
-                            .setCompactIdentifierResolvedUrl(resolveUrlForLocalId(resource.getUrlPattern(), resource.getSampleId()))
-                            .setRecommendation(new Recommendation());
-        }).collect(Collectors.toList())));
+                .getResources().parallelStream().map(resource -> getResolvedResourceFrom(resource)
+                        .setCompactIdentifierResolvedUrl(resolveUrlForLocalId(resource.getUrlPattern(), resource.getSampleId()))
+                        .setRecommendation(new Recommendation())).collect(Collectors.toList())));
         return resolvedResources;
     }
 
