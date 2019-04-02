@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.resolver.models;
 
 import org.identifiers.cloud.libapi.models.resourcerecommender.ResourceRecommendation;
+import org.identifiers.cloud.ws.resolver.data.models.Resource;
 import org.identifiers.cloud.ws.resolver.data.models.ResourceEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -31,6 +35,15 @@ public class ResolverDataHelper {
     private ResourceRecommenderStrategy resourceRecommender;
     @Autowired
     private ResolverDataFetcher resolverDataFetcher;
+
+    // Helpers
+    public static String resolveUrlForLocalId(String url, String localId) {
+        return url.replace("{$id}", localId);
+    }
+
+    public static ResolvedResource getResolvedResourceFrom(Resource resource) {
+        // TODO
+    }
 
     // TODO - Maybe, refactor out the logic for resolving a resource given an ID, i.e. the URL substring substitution
 
