@@ -40,7 +40,7 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
                                 new ResolvedResource()
                                         .setOfficial(resolvedResource.isOfficial())
                                         .setAccessURL(resolvedResource.getCompactIdentifierResolvedUrl())
-                                        .setId(resolvedResource.getId()))
+                                        .setId(Long.toString(resolvedResource.getId())))
                         .collect(Collectors.toList()))
                 .getPayload()
                 .getResourceRecommendations();
