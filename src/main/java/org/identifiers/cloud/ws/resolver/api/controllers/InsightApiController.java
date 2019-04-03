@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Expose an API that offers insights into the resolver dataset.
  */
 @RestController
+@RequestMapping("insightApi")
 public class InsightApiController {
     @Autowired
     private InsightApiModel model;
