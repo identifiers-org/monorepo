@@ -24,6 +24,5 @@ public class PrefixRegistrationRequestValidatorRequesterName implements PrefixRe
         } catch (RequesterValidatorException e) {
             throw new PrefixRegistrationRequestValidatorException(e.getMessage());
         }
-        return false;
     }
 }
