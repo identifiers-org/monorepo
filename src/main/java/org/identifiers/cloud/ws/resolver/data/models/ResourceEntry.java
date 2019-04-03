@@ -14,6 +14,7 @@ import java.io.Serializable;
  * Timestamp: 2018-01-17 16:15
  * ---
  */
+// TODO - Remove this model from the service
 @JsonIgnoreProperties(ignoreUnknown = true)
 @RedisHash("ResolverResourceEntries")
 public class ResourceEntry implements Serializable {
