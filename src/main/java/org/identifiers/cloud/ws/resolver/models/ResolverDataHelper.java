@@ -57,7 +57,7 @@ public class ResolverDataHelper {
      */
     public static ResolvedResource getResolvedResourceFrom(Resource resource) {
         return new ResolvedResource()
-                .setId(Long.toString(resource.getId()))
+                .setId(resource.getId())
                 .setProviderCode(resource.getProviderCode())
                 .setDescription(resource.getDescription()).setInstitution(resource.getInstitution())
                 .setLocation(resource.getLocation()).setOfficial(resource.isOfficial())
