@@ -29,7 +29,7 @@ public class PrefixRegistrationRequestValidatorInstitutionHomeUrl implements Pre
         }
         boolean valid = true;
         try {
-            valid = webPageChecker.checkWebPageUrl(request.getProviderHomeUrl());
+            valid = webPageChecker.checkWebPageUrl(request.getInstitutionHomeUrl());
         } catch (WebPageCheckerException e) {
             throw new PrefixRegistrationRequestValidatorException(e.getMessage());
         }
