@@ -46,10 +46,7 @@ public class PrefixRegistrationRequestValidatorCrossedSampleIdProviderUrlPattern
             WebPageCheckerFactory.getWebPageChecker().checkWebPageUrl(ResourceAccessHelper.getResourceUrlFor(request.getProviderUrlPattern(), request.getSampleId()));
         } catch (WebPageCheckerException e) {
             throw new PrefixRegistrationRequestValidatorException(
-                    String.format("The provided Provider URL Pattern '%s' " +
-                                    "combined with the provided Sample ID '%s' " +
-                                    "into '%s' DOES NOT VALIDATE", request.getProviderUrlPattern(),
-                            request.getSampleId(),
+                    String.format("Id '%s' does not exist in '%s'", request.getSampleId(),
                             ResourceAccessHelper.getResourceUrlFor(request.getProviderUrlPattern(),
                                     request.getSampleId())));
         }

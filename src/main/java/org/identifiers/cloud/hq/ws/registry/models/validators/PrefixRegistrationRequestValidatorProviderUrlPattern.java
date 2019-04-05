@@ -28,13 +28,13 @@ public class PrefixRegistrationRequestValidatorProviderUrlPattern implements Pre
         // Check that PLACEHOLDER_ID is uniquely present
         if (StringUtils.countOccurrencesOf(request.getProviderUrlPattern(), ResourceAccessHelper.PROVIDER_URL_PATTERN_PLACEHOLDER_ID) != 1) {
             // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
-            throw new PrefixRegistrationRequestValidatorException(String.format("ID placeholder '%s' IS REQUIRED to be present at least once in the provider URL pattern", ResourceAccessHelper.PROVIDER_URL_PATTERN_PLACEHOLDER_ID));
+            throw new PrefixRegistrationRequestValidatorException(String.format("URL Pattern must include the '%s' placeholder", ResourceAccessHelper.PROVIDER_URL_PATTERN_PLACEHOLDER_ID));
         }
         WebPageChecker webPageChecker = WebPageCheckerFactory.getWebPageChecker();
         String urlToCheck = StringUtils.replace(request.getProviderUrlPattern(), ResourceAccessHelper.PROVIDER_URL_PATTERN_PLACEHOLDER_ID, "placeholderId");
         // Remove the PLACEHOLDER_ID from thr URL for standalone checking
         if (!webPageChecker.checkForValidUrl(urlToCheck)) {
-            throw new PrefixRegistrationRequestValidatorException(String.format("INVALID provider URL pattern '%s'", request.getProviderUrlPattern()));
+            throw new PrefixRegistrationRequestValidatorException(String.format("Invalid URL '%s'", request.getProviderUrlPattern()));
         }
         return true;
     }

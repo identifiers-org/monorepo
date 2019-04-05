@@ -51,7 +51,7 @@ public class PrefixRegistrationRequestValidatorCrossedIdRegexPatternAndSampleId 
         Pattern pattern = Pattern.compile(request.getIdRegexPattern());
         Matcher matcher = pattern.matcher(request.getSampleId());
         if (!matcher.matches()) {
-            throw new PrefixRegistrationRequestValidatorException(String.format("There is a MISMATCH between the provided Sample ID '%s' and the provided Regular Expression Pattern '%s'", request.getSampleId(), request.getIdRegexPattern()));
+            throw new PrefixRegistrationRequestValidatorException(String.format("This regex does not match the Sample Id", request.getSampleId(), request.getIdRegexPattern()));
         }
         return true;
     }

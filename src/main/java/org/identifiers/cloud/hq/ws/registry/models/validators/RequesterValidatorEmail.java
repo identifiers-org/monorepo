@@ -18,7 +18,7 @@ public class RequesterValidatorEmail implements RequesterValidator {
             throw new RequesterValidatorException("MISSING REQUIRED Requester e-mail address");
         }
         if (!EmailValidator.getInstance().isValid(requester.getEmail())) {
-            throw new RequesterValidatorException(String.format("The provided Requester e-mail address '%s' IS NOT VALID", requester.getEmail()));
+            throw new RequesterValidatorException(String.format("'%s' is not a valid email address", requester.getEmail()));
         }
         return true;
     }

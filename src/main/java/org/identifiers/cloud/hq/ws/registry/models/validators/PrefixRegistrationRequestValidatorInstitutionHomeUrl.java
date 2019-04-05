@@ -26,6 +26,8 @@ public class PrefixRegistrationRequestValidatorInstitutionHomeUrl implements Pre
         // Home Page URL for the resource is required
         if (request.getInstitutionHomeUrl() == null) {
             throw new PrefixRegistrationRequestValidatorException("MISSING URL for a Institution");
+        } else if (request.getInstitutionHomeUrl().length() == 0) {
+            throw new PrefixRegistrationRequestValidatorException("Home URL cannot be empty");
         }
         boolean valid = true;
         try {
