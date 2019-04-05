@@ -1,6 +1,5 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,7 +21,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Accessors(chain = true)
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Requester implements Serializable {
     private String name;
     private String email;

@@ -38,6 +38,7 @@ public class ApiAndDataModelsHelper {
                 .setInstitutionName(sourceModel.getInstitutionName())
                 .setInstitutionDescription(sourceModel.getInstitutionDescription())
                 .setInstitutionLocation(sourceModel.getInstitutionLocation())
+                .setInstitutionHomeUrl(sourceModel.getInstitutionHomeUrl())
                 .setRequestedPrefix(sourceModel.getRequestedPrefix())
                 .setProviderUrlPattern(sourceModel.getProviderUrlPattern())
                 .setSampleId(sourceModel.getSampleId())
