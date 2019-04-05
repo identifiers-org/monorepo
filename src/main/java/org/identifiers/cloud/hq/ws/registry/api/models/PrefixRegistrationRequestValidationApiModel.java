@@ -162,7 +162,7 @@ public class PrefixRegistrationRequestValidationApiModel {
     }
 
     public ServiceResponseValidateRequest validateProviderCode(ServiceRequestValidate request) {
-        return doValidation(request, providerLocationValidator);
+        return doValidation(request, providerCodeValidator);
     }
 
     public ServiceResponseValidateRequest validateInstitutionName(ServiceRequestValidate request) {
