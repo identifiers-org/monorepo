@@ -64,6 +64,7 @@ public class ApiAndDataModelsHelper {
                 .setId(institution.getId())
                 .setName(institution.getName())
                 .setDescription(institution.getDescription())
+                .setHomeUrl(institution.getHomeUrl())
                 .setLocation(getLocationFrom(institution.getLocation()));
     }
 
