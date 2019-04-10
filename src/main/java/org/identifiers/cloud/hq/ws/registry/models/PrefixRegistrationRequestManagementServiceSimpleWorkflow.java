@@ -174,6 +174,8 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
                     .setPrefixRegistrationRequest(prefixRegistrationSession.getPrefixRegistrationRequest());
             // Persist the event
             eventReject = prefixRegistrationSessionEventRejectRepository.save(eventReject);
+            prefixRegistrationSession.setClosed(true);
+            prefixRegistrationSessionRepository.save(prefixRegistrationSession);
             // Session is considered 'closed' right now
             // Run the rejection action
             actionRejection.performAction(prefixRegistrationSession);
@@ -209,6 +211,8 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
                     .setPrefixRegistrationRequest(prefixRegistrationSession.getPrefixRegistrationRequest());
             // Persist the event
             eventAccept = prefixRegistrationSessionEventAcceptRepository.save(eventAccept);
+            prefixRegistrationSession.setClosed(true);
+            prefixRegistrationSessionRepository.save(prefixRegistrationSession);
             // Session is considered 'closed' right now
             // Activate the new Namespace with its first provider
             Resource resource = DataModelConversionHelper.getFrom(prefixRegistrationSession.getPrefixRegistrationRequest());
