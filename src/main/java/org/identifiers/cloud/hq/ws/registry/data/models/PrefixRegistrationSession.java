@@ -36,7 +36,7 @@ public class PrefixRegistrationSession {
     private long id;
 
     // This is a reference to the latest version of the prefix registration request that's being processed in the session.
-    @ManyToOne(optional = false)
+    @OneToOne(optional = false)
     private PrefixRegistrationRequest prefixRegistrationRequest;
 
     @Column(nullable = false, updatable = false)
