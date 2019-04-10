@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.data.repositories;
 
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -13,4 +14,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface PrefixRegistrationSessionRepository extends JpaRepository<PrefixRegistrationSession, Long> {
     // TODO
+    Page<PrefixRegistrationSession> findByClosedNot();
 }
