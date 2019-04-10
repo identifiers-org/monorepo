@@ -30,6 +30,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@Table(indexes = {@Index(name = "idx_closed", columnList = "closed")})
 public class PrefixRegistrationSession {
     @Id
     @GeneratedValue
