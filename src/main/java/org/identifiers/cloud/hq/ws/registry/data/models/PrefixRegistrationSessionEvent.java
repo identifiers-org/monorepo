@@ -51,7 +51,7 @@ public class PrefixRegistrationSessionEvent {
     // Providing information associated with a particular event is useful, but optional
     private String additionalInformation;
 
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     private PrefixRegistrationSession prefixRegistrationSession;
 
     @ManyToOne
