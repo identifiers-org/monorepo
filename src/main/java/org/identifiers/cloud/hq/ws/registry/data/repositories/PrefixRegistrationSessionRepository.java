@@ -15,5 +15,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface PrefixRegistrationSessionRepository extends JpaRepository<PrefixRegistrationSession, Long> {
     // TODO
-    Page<PrefixRegistrationSession> findByClosedNot(Pageable pageable);
+    Page<PrefixRegistrationSession> findByClosedFalse(Pageable pageable);
 }
