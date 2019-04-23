@@ -41,7 +41,7 @@ public class Resource {
     private String mirId;
 
     // URL with the '{$id}' placeholder
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2000)
     private String urlPattern;
 
     // This is known as 'info' in the old data model from the EBI platform
@@ -49,6 +49,7 @@ public class Resource {
     private String name;
 
     // Now you can optionally provide a description
+    @Column(length = 2000)
     private String description;
 
     @Column(nullable = false)
@@ -61,7 +62,7 @@ public class Resource {
     private String sampleId;
 
     // This is a home URL for this resource within the context of the namespace it belongs to
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2000)
     private String resourceHomeUrl;
 
     @Column(nullable = false, updatable = false)
