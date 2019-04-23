@@ -36,11 +36,11 @@ public class PrefixRegistrationRequest {
     private String name;
 
     // This is a description for the namespace being registered, ported from the original identifiers.org form at https://identifiers.org/request/prefix
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2000)
     private String description;
 
     // Home URL for a first provider of this namespace being registered
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2000)
     private String providerHomeUrl;
 
     // Name for the provider being registered along this prefix
@@ -48,7 +48,7 @@ public class PrefixRegistrationRequest {
     private String providerName;
 
     // Description for the provider being registered along this prefix
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2000)
     private String providerDescription;
 
     // Location Associated with the provider being registered along this prefix
@@ -65,11 +65,11 @@ public class PrefixRegistrationRequest {
     private String institutionName;
 
     // A description related to the institution that owns the resource that's being registered as first provider for this namespace
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2000)
     private String institutionDescription;
 
     // Home URL for the institution (this is a new requirement)
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2000)
     private String institutionHomeUrl;
 
     // Location of the institution that owns the resource that's being registered as first provider for this namespace
@@ -81,7 +81,7 @@ public class PrefixRegistrationRequest {
     private String requestedPrefix;
 
     // Originally called 'resourceAccessRule', ported from the original identifiers.org form at https://identifiers.org/request/prefix
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2000)
     private String providerUrlPattern;
 
     // Originally called 'exampleIdentifier', ported from the original identifiers.org form at https://identifiers.org/request/prefix
@@ -96,11 +96,13 @@ public class PrefixRegistrationRequest {
     // the attribute name clashes with the reserved keyword 'references' of the SQL dialect used by the RDBMS backend,
     // ported from the original identifiers.org form at https://identifiers.org/request/prefix
     // Optional
+    @Column(length = 2000)
     private String supportingReferences;
 
     // Additional information to be included as part of the request, ported from the original identifiers.org form at
     // https://identifiers.org/request/prefix
     // Optional
+    @Column(length = 2000)
     private String additionalInformation;
 
     // Contact person for this request, ported from the original identifiers.org form at
