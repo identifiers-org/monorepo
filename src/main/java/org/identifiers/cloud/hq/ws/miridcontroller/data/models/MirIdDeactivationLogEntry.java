@@ -56,5 +56,6 @@ public class MirIdDeactivationLogEntry {
 
     // Some additional information regarding the deactivation entry. This piece of information is left out as optional
     // right now
+    @Column(length = 2000)
     private String additionalInformation;
 }
