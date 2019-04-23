@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 /**
@@ -21,6 +22,7 @@ import javax.persistence.Entity;
 public class PrefixRegistrationSessionEventReject extends PrefixRegistrationSessionEvent {
 
     // Optional reason for rejecting the prefix registration request
+    @Column(length = 2000)
     private String rejectionReason;
 
     public PrefixRegistrationSessionEventReject() {
