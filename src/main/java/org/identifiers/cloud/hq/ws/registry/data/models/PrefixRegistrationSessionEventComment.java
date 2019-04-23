@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 /**
@@ -20,6 +21,7 @@ import javax.persistence.Entity;
 @Entity
 public class PrefixRegistrationSessionEventComment extends PrefixRegistrationSessionEvent {
     // This is the comment we want to add
+    @Column(length = 2000)
     private String comment;
 
     public PrefixRegistrationSessionEventComment() {
