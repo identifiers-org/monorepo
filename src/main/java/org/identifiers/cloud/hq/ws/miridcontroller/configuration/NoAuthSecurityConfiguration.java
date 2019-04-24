@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import javax.annotation.PostConstruct;
+
 /**
  * Project: mirid-controller
  * Package: org.identifiers.cloud.hq.ws.miridcontroller.configuration
@@ -20,4 +22,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class NoAuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
     // TODO
+
+    @PostConstruct
+    private void postConstruct() {
+        log.info("[CONFIG] NO AUTH configuration loaded");
+    }
 }
