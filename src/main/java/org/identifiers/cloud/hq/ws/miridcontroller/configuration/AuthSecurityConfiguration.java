@@ -36,12 +36,20 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-    // TODO
+        // TODO - Spring Security is a big f*****g black box that is incredibly difficult to figure out. When a not
+        //  authenticated call is made to the endpoints protected by 'access' rules in the antMatchers, an exception is
+        //  thrown and HTTP 500 returned back to the client, instead of a 401, because, as there is no principal, the
+        //  expression fails to evaluate. FUCK! I haven't found a fucking way around this, and all the fucking
+        //  documentation I've found on the internet doesn't even want to touch this "expression based
+        //  authentication". I've tried to decipher SpEL, and using "#principal != null ? principal?
+        //  .claims['%s']['%s']['roles'].contains('idMinting') : false", and then, some-fucking-how, it works for
+        //  non-authenticated requests by returning an HTTP 401, but for authenticated requests it says something
+        //  like "The token provided has insufficient scope for this request".
         http
                 .authorizeRequests()
-                    .antMatchers(HttpMethod.GET, "/restApi/**").permitAll()
-                    .antMatchers("/mirIdApi/mintId").access(String.format("principal?.claims['%s']['%s']['roles'].contains('idMinting')", JWT_SCOPE_RESOURCE_ACCESS, clientId))
-                    .anyRequest().denyAll()
+                .antMatchers(HttpMethod.GET, "/restApi/**").permitAll()
+                .antMatchers("/mirIdApi/mintId").access(String.format("principal?.claims['%s']['%s']['roles'].contains('idMinting')", JWT_SCOPE_RESOURCE_ACCESS, clientId))
+                .anyRequest().denyAll()
                 .and()
                 .oauth2ResourceServer().jwt();
     }
