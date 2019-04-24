@@ -3,6 +3,8 @@ package org.identifiers.cloud.hq.ws.miridcontroller.configuration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -27,5 +29,15 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private void postConstruct() {
         log.info("[CONFIG] (AAA) ENABLED");
     }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
     // TODO
+        http
+                .authorizeRequests()
+                    .antMatchers(HttpMethod.GET, "/restApi/**").permitAll()
+                    .anyRequest().denyAll()
+                .and()
+                .oauth2ResourceServer().jwt();
+    }
 }
