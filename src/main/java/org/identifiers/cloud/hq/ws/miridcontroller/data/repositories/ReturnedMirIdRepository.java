@@ -29,15 +29,11 @@ public interface ReturnedMirIdRepository extends JpaRepository<ReturnedMirId, Lo
     // I don't want removal operations available on the REST interface
     @RestResource(exported = false)
     @Transactional
-    void deleteByMirId(Long id);
+    void deleteByMirId(long id);
 
     // I don't want new entries through REST API
     @RestResource(exported = false)
     ReturnedMirId save(ReturnedMirId returnedMirId);
-
-    // Do not allow deletion through REST API
-    @RestResource(exported = false)
-    void deleteByMirId(long mirId);
 
     // Allow paginated listing of returned IDs
     Page<ReturnedMirId> findAll(Pageable pageable);
