@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import javax.annotation.PostConstruct;
+
 /**
  * Project: mirid-controller
  * Package: org.identifiers.cloud.hq.ws.miridcontroller.configuration
@@ -21,5 +23,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
     static final String JWT_SCOPE_RESOURCE_ACCESS = "resource_access";
 
+    @PostConstruct
+    private void postConstruct() {
+        log.info("[CONFIG] (AAA) ENABLED");
+    }
     // TODO
 }
