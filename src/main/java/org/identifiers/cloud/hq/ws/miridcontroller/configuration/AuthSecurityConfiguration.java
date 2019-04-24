@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.miridcontroller.configuration;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
@@ -25,6 +26,9 @@ import javax.annotation.PostConstruct;
 public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
     static final String JWT_SCOPE_RESOURCE_ACCESS = "resource_access";
 
+    @Value("${spring.security.oauth2.client.registration.keycloak.client-id}")
+    private String clientId;
+
     @PostConstruct
     private void postConstruct() {
         log.info("[CONFIG] (AAA) ENABLED");
@@ -36,6 +40,7 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers(HttpMethod.GET, "/restApi/**").permitAll()
+                    .antMatchers("/mirIdApi/mintId").access(String.format("principal?.claims['%s']['%s']['roles'].contains('idMinting')", JWT_SCOPE_RESOURCE_ACCESS, clientId))
                     .anyRequest().denyAll()
                 .and()
                 .oauth2ResourceServer().jwt();
