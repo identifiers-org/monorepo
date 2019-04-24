@@ -3,6 +3,7 @@ package org.identifiers.cloud.hq.ws.miridcontroller.configuration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -21,10 +22,15 @@ import javax.annotation.PostConstruct;
 @Profile("noauthprofile")
 @EnableWebSecurity
 public class NoAuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
-    // TODO
 
     @PostConstruct
     private void postConstruct() {
         log.info("[CONFIG] NO AUTH configuration loaded");
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        log.info("Opening all requests, without authorization");
+        http.authorizeRequests().anyRequest().permitAll();
     }
 }
