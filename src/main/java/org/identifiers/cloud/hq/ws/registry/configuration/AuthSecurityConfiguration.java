@@ -19,5 +19,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Slf4j
 @EnableWebSecurity
 public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
+    static final String JWT_SCOPE_RESOURCE_ACCESS = "resource_access";
     // TODO
 }
