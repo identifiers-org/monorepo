@@ -6,7 +6,7 @@ all:
 install_requirements:
 	@echo "<===|DEVOPS|===> [INSTALL] Installing Application Requirements"
 	@pip install --user pipenv
-	@PIPENV_VENV_IN_PROJECT=1 PIPENV_PIPFILE=registry_import/Pipfile pipenv install
+	@PIPENV_VENV_IN_PROJECT=1 pipenv install
 
 tmp:
 	@echo "<===|DEVOPS|===> [MKDIR] Temporary folder"
@@ -20,19 +20,19 @@ install: dev_environment
 
 update_requirements_file: dev_environment
 	@echo "<===|DEVOPS|===> [UPDATE] Application Requirements"
-	@PIPENV_PIPFILE=registry_import/Pipfile pipenv lock -r
+	@pipenv lock -r
 
 upgrade_dependencies:
 	@echo "<===|DEVOPS|===> [UPDATE] Application Requirements Upgrade"
-	@PIPENV_PIPFILE=registry_import/Pipfile pipenv update
+	@pipenv update
 
 import_registry:
-	@PIPENV_PIPFILE=registry_import/Pipfile pipenv run registry_import/registry_import/populate_registry.py
-
+	@echo "<===|DEVOPS|===> [IMPORT] Importing HQ Registry Dataset"
+	@pipenv run registry_import/registry_import/populate_registry.py
 
 clean_dev:
 	@echo "<===|DEVOPS|===> [CLEAN] Removing Python Virtual Environment"
-	@PIPENV_PIPFILE=registry_import/Pipfile pipenv --rm
+	@pipenv --rm
 
 clean_logs:
 	@echo "<===|DEVOPS|===> [CLEAN] Removing logs"
