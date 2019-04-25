@@ -5,19 +5,14 @@ all:
 
 install_requirements:
 	@echo "<===|DEVOPS|===> [INSTALL] Installing Application Requirements"
-	@python_install/bin/pip install pipreqs nose
-	@python_install/bin/pip install -r requirements.txt
-
-python_install:
-	@echo "<===|DEVOPS|===> [INSTALL] Python Virtual Environment"
-	@pip install --user virtualenv
-	@virtualenv python_install
+	@pip install --user pipenv
+	@PIPENV_VENV_IN_PROJECT=1 PIPENV_PIPFILE=registry_import/Pipfile pipenv install
 
 tmp:
 	@echo "<===|DEVOPS|===> [MKDIR] Temporary folder"
 	@mkdir tmp
 
-dev_environment: python_install install_requirements
+dev_environment: install_requirements
 	@echo "<===|DEVOPS|===> [INSTALL] Development Environment"
 
 install: dev_environment
@@ -25,17 +20,19 @@ install: dev_environment
 
 update_requirements_file: dev_environment
 	@echo "<===|DEVOPS|===> [UPDATE] Application Requirements"
-	#@python_install/bin/pipreqs --use-local --savepath requirements.txt $(PWD)
-	@python_install/bin/pip freeze > requirements.txt
+	@PIPENV_PIPFILE=registry_import/Pipfile pipenv lock -r
 
 upgrade_dependencies:
 	@echo "<===|DEVOPS|===> [UPDATE] Application Requirements Upgrade"
-	@pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
-	@echo "<===|DEVOPS|===> [USER_INTERACTION] Please, run an update on the requirements file"
+	@PIPENV_PIPFILE=registry_import/Pipfile pipenv update
+
+import_registry:
+	@PIPENV_PIPFILE=registry_import/Pipfile pipenv run registry_import/registry_import/populate_registry.py
+
 
 clean_dev:
 	@echo "<===|DEVOPS|===> [CLEAN] Removing Python Virtual Environment"
-	@rm -rf python_install
+	@PIPENV_PIPFILE=registry_import/Pipfile pipenv --rm
 
 clean_logs:
 	@echo "<===|DEVOPS|===> [CLEAN] Removing logs"

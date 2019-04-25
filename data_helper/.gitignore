@@ -1,2 +1,9 @@
 python_install
 notebooks/.ipynb_checkpoints
+
+registry_import/.venv
+registry_import/.vscode
+
+registry_import/Pipfile.lock
+
+.vscode
