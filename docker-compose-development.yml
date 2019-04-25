@@ -9,4 +9,4 @@ services:
             - POSTGRES_USER=devusername
             - POSTGRES_PASSWORD=devpassword
         ports:
-            - "5432:5432"
+            - "5430:5432"
