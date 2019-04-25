@@ -54,12 +54,17 @@ def do_post(payload, what, where, skip_existing, destination_url):
 
     response = requests.post(f'{destination_url}{where}', json=payload)
 
+    if (response.status_code == 403):
+        spinner.fail(spinner.text[:-3] + ' → [FORBIDDEN]')
+        exit(1)
+
     if (response.status_code < 200 or response.status_code > 299):
         if skip_existing and response.status_code == 409 and "duplicate key value violates unique constraint" in response.text:
             spinner.fail(spinner.text[:-3] + ' → [ALREADY EXISTS]')
             return
 
     response_json = json.loads(response.text)
+
 
     spinner.succeed(spinner.text[:-3] + f' → [{response.status_code}]: \"{response_json["_links"]["self"]["href"]}')
 
