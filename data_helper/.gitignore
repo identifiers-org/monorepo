@@ -6,4 +6,4 @@ registry_import/.vscode
 
 .vscode
 
-./**/*.pyc
+**/*.pyc
