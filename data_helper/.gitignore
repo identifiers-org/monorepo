@@ -7,3 +7,5 @@ registry_import/.vscode
 registry_import/Pipfile.lock
 
 .vscode
+
+./**/*.pyc
