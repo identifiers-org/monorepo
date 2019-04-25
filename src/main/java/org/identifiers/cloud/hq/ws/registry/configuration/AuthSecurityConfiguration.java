@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.configuration;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,5 +21,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
     static final String JWT_SCOPE_RESOURCE_ACCESS = "resource_access";
+
+    @Value("${spring.security.oauth2.client.registration.keycloak.client-id}")
+    private String clientId;
     // TODO
 }
