@@ -1,4 +1,4 @@
-# This file contains properties to be used when AAA is enabledspring
+# This file contains properties to be used when AAA is enabled
 spring:
   security:
     oauth2:
