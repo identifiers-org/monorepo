@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import javax.annotation.PostConstruct;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.configuration
@@ -24,5 +26,11 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Value("${spring.security.oauth2.client.registration.keycloak.client-id}")
     private String clientId;
+
+    @PostConstruct
+    private void postConstruct() {
+        log.info("[CONFIG] (AAA) ENABLED");
+    }
+
     // TODO
 }
