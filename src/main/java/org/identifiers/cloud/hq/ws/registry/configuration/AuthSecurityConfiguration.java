@@ -36,6 +36,18 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // TODO - ACLs for location
+        // TODO - ACLs for namespace
+        // TODO - ACLs for namespace synonyms
+        // TODO - ACLs for person
+        // TODO - ACLs for prefix registration request
+        // TODO - ACLs for prefix registration session
+        // TODO - ACLs for prefix registration session event
+        // TODO - ACLs for prefix registration session event accept
+        // TODO - ACLs for prefix registration session event amend
+        // TODO - ACLs for prefix registration session event comment
+        // TODO - ACLs for prefix registration session event reject
+        // TODO - ACLs for prefix registration session event start
         http
                 .authorizeRequests()
                     .antMatchers("/healthApi/**").permitAll()
