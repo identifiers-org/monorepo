@@ -1,9 +1,9 @@
-python_install
-notebooks/.ipynb_checkpoints
-
-registry_import/.venv
+# Development IDEs
 registry_import/.vscode
-
 .vscode
 
+# Python environment
+.venv
+Pipfile.lock
 **/*.pyc
+notebooks/.ipynb_checkpoints
