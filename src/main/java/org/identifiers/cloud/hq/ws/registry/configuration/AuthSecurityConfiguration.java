@@ -50,6 +50,8 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
         // TODO - ACLs for prefix registration session event start
         // TODO - ACLs for Resource
         // TODO - ACLs for prefix registration API (Request and Validation controllers)
+        // TODO - ACLs for the resolution API
+        // TODO - ACLs for the semantic API
         http
                 .authorizeRequests()
                     .antMatchers("/healthApi/**").permitAll()
