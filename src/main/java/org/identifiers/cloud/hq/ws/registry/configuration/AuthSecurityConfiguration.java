@@ -36,7 +36,9 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests().anyRequest().denyAll()
+                .authorizeRequests()
+                    .antMatchers("/healthApi/**").permitAll()
+                    .anyRequest().denyAll()
                 .and()
                 .oauth2ResourceServer().jwt();
     }
