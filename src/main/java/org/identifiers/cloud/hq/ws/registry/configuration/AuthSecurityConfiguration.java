@@ -9,6 +9,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
@@ -47,7 +50,14 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public RestTemplate restTemplate() {
-        // TODO
+        ClientCredentialsResourceDetails clientCredentialsResourceDetails = new ClientCredentialsResourceDetails();
+        clientCredentialsResourceDetails.setClientId(clientId);
+        clientCredentialsResourceDetails.setClientSecret(clientSecret);
+        clientCredentialsResourceDetails.setAccessTokenUri(accessTokenUri);
+        clientCredentialsResourceDetails.setGrantType(grantType);
+        clientCredentialsResourceDetails.setId("1");
+        OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(clientCredentialsResourceDetails, new DefaultOAuth2ClientContext());
+        return restTemplate;
     }
 
     @Override
