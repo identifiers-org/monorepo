@@ -36,9 +36,8 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // TODO - I may need this information to disble CSRF on a particular URL, https://stackoverflow.com/questions/22524470/spring-security-3-2-csrf-disable-for-specific-urls
         // TODO - ACLs for prefix registration API (Request and Validation controllers)
-        // TODO - ACLs for the resolution API
-        // TODO - ACLs for the semantic API
         http
                 .authorizeRequests()
                     .antMatchers("/healthApi/**").permitAll()
