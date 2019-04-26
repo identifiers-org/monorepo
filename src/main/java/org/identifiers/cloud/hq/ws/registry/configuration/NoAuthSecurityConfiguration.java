@@ -22,6 +22,10 @@ import javax.annotation.PostConstruct;
 @Profile("noauthprofile")
 @EnableWebSecurity
 public class NoAuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
+    // TODO - Maybe configurable in the future?
+    // Connection parameters
+    private static final int WS_REQUEST_CONNECT_TIMEOUT = 2000; // 2 seconds
+    private static final int WS_REQUEST_READ_TIMEOUT = 2000; // 2 seconds
 
     @PostConstruct
     private void postConstruct() {
