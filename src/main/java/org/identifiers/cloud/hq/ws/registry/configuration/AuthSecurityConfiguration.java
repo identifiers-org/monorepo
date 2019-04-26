@@ -36,7 +36,6 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // TODO - ACLs for person
         // TODO - ACLs for prefix registration request
         // TODO - ACLs for prefix registration session
         // TODO - ACLs for prefix registration session event
@@ -45,7 +44,6 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
         // TODO - ACLs for prefix registration session event comment
         // TODO - ACLs for prefix registration session event reject
         // TODO - ACLs for prefix registration session event start
-        // TODO - ACLs for Resource
         // TODO - ACLs for prefix registration API (Request and Validation controllers)
         // TODO - ACLs for the resolution API
         // TODO - ACLs for the semantic API
@@ -76,6 +74,12 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.PUT, "restApi/namespaceSynonyms/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('restApiNamespaceSynonymPut'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
                     .antMatchers(HttpMethod.PATCH, "restApi/namespaceSynonyms/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('restApiNamespaceSynonymPatch'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
                     .antMatchers(HttpMethod.DELETE, "restApi/namespaceSynonyms/**").denyAll()
+                    .antMatchers(HttpMethod.GET, "restApi/resources/**").permitAll()
+                    .antMatchers(HttpMethod.HEAD, "restApi/resources/**").permitAll()
+                    .antMatchers(HttpMethod.POST, "restApi/resources/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('restApiResourcePost'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
+                    .antMatchers(HttpMethod.PUT, "restApi/resources/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('restApiResourcePut'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
+                    .antMatchers(HttpMethod.PATCH, "restApi/resources/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('restApiResourcePatch'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
+                    .antMatchers(HttpMethod.DELETE, "restApi/resources/**").denyAll()
                     .antMatchers(HttpMethod.GET, "restApi/persons/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('restApiPersonGet'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
                     .antMatchers(HttpMethod.HEAD, "restApi/persons/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('restApiPersonHead'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
                     .antMatchers(HttpMethod.POST, "restApi/persons/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('restApiPersonPost'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
