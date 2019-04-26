@@ -1,11 +1,14 @@
 package org.identifiers.cloud.hq.ws.registry.configuration;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
 
@@ -30,6 +33,15 @@ public class NoAuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @PostConstruct
     private void postConstruct() {
         log.info("[CONFIG] NO AUTH configuration loaded");
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        SimpleClientHttpRequestFactory simpleClientHttpRequestFactory = new SimpleClientHttpRequestFactory();
+        // Configure requests time outs
+        simpleClientHttpRequestFactory.setConnectTimeout(WS_REQUEST_CONNECT_TIMEOUT);
+        simpleClientHttpRequestFactory.setReadTimeout(WS_REQUEST_READ_TIMEOUT);
+        return new RestTemplate(simpleClientHttpRequestFactory);
     }
 
     @Override
