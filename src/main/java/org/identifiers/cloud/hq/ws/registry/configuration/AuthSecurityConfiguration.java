@@ -2,12 +2,14 @@ package org.identifiers.cloud.hq.ws.registry.configuration;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
 
@@ -32,6 +34,11 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @PostConstruct
     private void postConstruct() {
         log.info("[CONFIG] (AAA) ENABLED");
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        // TODO
     }
 
     @Override
