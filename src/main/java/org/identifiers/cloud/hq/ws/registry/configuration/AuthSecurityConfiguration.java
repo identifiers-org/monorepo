@@ -36,10 +36,6 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // TODO - ACLs for prefix registration session event amend
-        // TODO - ACLs for prefix registration session event comment
-        // TODO - ACLs for prefix registration session event reject
-        // TODO - ACLs for prefix registration session event start
         // TODO - ACLs for prefix registration API (Request and Validation controllers)
         // TODO - ACLs for the resolution API
         // TODO - ACLs for the semantic API
