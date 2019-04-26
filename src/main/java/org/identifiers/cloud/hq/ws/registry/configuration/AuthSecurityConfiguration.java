@@ -126,6 +126,7 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.PUT, "restApi/prefixRegistrationSessionEventStarts/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('restApiPrefixRegistrationSessionEventStartPut'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
                     .antMatchers(HttpMethod.PATCH, "restApi/prefixRegistrationSessionEventStarts/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('restApiPrefixRegistrationSessionEventStartPatch'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
                     .antMatchers(HttpMethod.DELETE, "restApi/prefixRegistrationSessionEventStarts/**").denyAll()
+                    .antMatchers("resolutionApi/**").permitAll()
                     .anyRequest().denyAll()
                 .and()
                 .oauth2ResourceServer().jwt();
