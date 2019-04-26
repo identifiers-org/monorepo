@@ -128,6 +128,10 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers("resolutionApi/**").permitAll()
                     .antMatchers("semanticApi/**").permitAll()
                     .antMatchers("prefixRegistrationApi/registerPrefix").permitAll()
+                    .antMatchers("prefixRegistrationApi/amendPrefixRegistrationRequest/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('ApiPrefixRegistrationAmendPrefixRegistrationRequest'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
+                    .antMatchers("prefixRegistrationApi/commentPrefixRegistrationRequest/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('ApiPrefixRegistrationCommentPrefixRegistrationRequest'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
+                    .antMatchers("prefixRegistrationApi/rejectPrefixRegistrationRequest/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('ApiPrefixRegistrationRejectPrefixRegistrationRequest'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
+                    .antMatchers("prefixRegistrationApi/acceptPrefixRegistrationRequest/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('ApiPrefixRegistrationAcceptPrefixRegistrationRequest'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
                     .anyRequest().denyAll()
                 .and()
                 .oauth2ResourceServer().jwt();
