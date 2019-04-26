@@ -36,7 +36,6 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // TODO - ACLs for prefix registration session event accept
         // TODO - ACLs for prefix registration session event amend
         // TODO - ACLs for prefix registration session event comment
         // TODO - ACLs for prefix registration session event reject
@@ -101,6 +100,12 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.PUT, "restApi/prefixRegistrationSessionEvents/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('restApiPrefixRegistrationSessionEventPut'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
                     .antMatchers(HttpMethod.PATCH, "restApi/prefixRegistrationSessionEvents/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('restApiPrefixRegistrationSessionEventPatch'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
                     .antMatchers(HttpMethod.DELETE, "restApi/prefixRegistrationSessionEvents/**").denyAll()
+                    .antMatchers(HttpMethod.GET, "restApi/prefixRegistrationSessionEventAccepts/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('restApiPrefixRegistrationSessionEventAcceptGet'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
+                    .antMatchers(HttpMethod.HEAD, "restApi/prefixRegistrationSessionEventAccepts/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('restApiPrefixRegistrationSessionEventAcceptHead'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
+                    .antMatchers(HttpMethod.POST, "restApi/prefixRegistrationSessionEventAccepts/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('restApiPrefixRegistrationSessionEventAcceptPost'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
+                    .antMatchers(HttpMethod.PUT, "restApi/prefixRegistrationSessionEventAccepts/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('restApiPrefixRegistrationSessionEventAcceptPut'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
+                    .antMatchers(HttpMethod.PATCH, "restApi/prefixRegistrationSessionEventAccepts/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('restApiPrefixRegistrationSessionEventAcceptPatch'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
+                    .antMatchers(HttpMethod.DELETE, "restApi/prefixRegistrationSessionEventAccepts/**").denyAll()
                     .anyRequest().denyAll()
                 .and()
                 .oauth2ResourceServer().jwt();
