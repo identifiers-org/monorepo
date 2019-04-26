@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -29,6 +30,12 @@ import javax.annotation.PostConstruct;
 @Slf4j
 @EnableWebSecurity
 public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
+    // TODO - Maybe configurable in the future?
+    // Connection parameters
+    private static final int WS_REQUEST_CONNECT_TIMEOUT = 2000; // 2 seconds
+    private static final int WS_REQUEST_READ_TIMEOUT = 2000; // 2 seconds
+
+    // OAuth2 stuff
     static final String JWT_SCOPE_RESOURCE_ACCESS = "resource_access";
 
     @Value("${spring.security.oauth2.client.registration.keycloak.client-id}")
@@ -57,6 +64,11 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
         clientCredentialsResourceDetails.setGrantType(grantType);
         clientCredentialsResourceDetails.setId("1");
         OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(clientCredentialsResourceDetails, new DefaultOAuth2ClientContext());
+        SimpleClientHttpRequestFactory simpleClientHttpRequestFactory = new SimpleClientHttpRequestFactory();
+        // Configure requests time outs
+        simpleClientHttpRequestFactory.setConnectTimeout(WS_REQUEST_CONNECT_TIMEOUT);
+        simpleClientHttpRequestFactory.setReadTimeout(WS_REQUEST_READ_TIMEOUT);
+        restTemplate.setRequestFactory(simpleClientHttpRequestFactory);
         return restTemplate;
     }
 

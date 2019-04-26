@@ -50,6 +50,7 @@ public class MirIdServiceWsClient implements MirIdService {
         log.info("Requesting MIR ID MINTING");
         int status = 0;
         String mirId = null;
+        // TODO Refactor this to use the configuration provided REST Template
         HttpURLConnection connection = null;
         try {
             URL requestUrl = new URL(String.format("%s/mintId", getMirIdServiceBaseUrl()));
@@ -91,6 +92,7 @@ public class MirIdServiceWsClient implements MirIdService {
     public void keepAlive(String mirId) throws MirIdServiceException {
         log.info(String.format("Requesting '%s' MIR ID to be kept alive", mirId));
         int status = 0;
+        // TODO Refactor this to use the configuration provided REST Template
         HttpURLConnection connection = null;
         try {
             URL requestUrl = new URL(String.format("%s/keepAlive/%s", getMirIdServiceBaseUrl(), mirId));
