@@ -9,7 +9,7 @@ spring:
         registration:
           keycloak:
             client-id: ${HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTID:hq-registry}
-            client-secret: ${HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTSECRET:29d9150c-14b4-46b5-a7fb-e634101cb020}
+            client-secret: ${HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTSECRET:3f18e907-da71-45af-829a-2842b3123c9e}
       resourceserver:
         jwt:
           issuer-uri: ${HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI:http://localkeycloak:8080/auth/realms/scratchpad}
