@@ -31,6 +31,15 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Value("${spring.security.oauth2.client.registration.keycloak.client-id}")
     private String clientId;
 
+    @Value("${spring.security.oauth2.client.registration.keycloak.client-secret}")
+    private String clientSecret;
+
+    @Value("${spring.security.oauth2.client.registration.keycloak.accessTokenUri}")
+    private String accessTokenUri;
+
+    @Value("${spring.security.oauth2.client.registration.keycloak.grantType}")
+    private String grantType;
+
     @PostConstruct
     private void postConstruct() {
         log.info("[CONFIG] (AAA) ENABLED");
