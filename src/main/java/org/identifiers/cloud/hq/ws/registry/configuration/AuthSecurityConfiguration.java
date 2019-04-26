@@ -128,6 +128,7 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.DELETE, "restApi/prefixRegistrationSessionEventStarts/**").denyAll()
                     .antMatchers("resolutionApi/**").permitAll()
                     .antMatchers("semanticApi/**").permitAll()
+                    .antMatchers("prefixRegistrationApi/registerPrefix").permitAll()
                     .anyRequest().denyAll()
                 .and()
                 .oauth2ResourceServer().jwt();
