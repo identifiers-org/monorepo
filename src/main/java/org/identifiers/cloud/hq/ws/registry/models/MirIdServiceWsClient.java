@@ -27,6 +27,7 @@ import java.net.URL;
 public class MirIdServiceWsClient implements MirIdService {
     private static final int WS_REQUEST_RETRY_MAX_ATTEMPTS = 12;
     private static final int WS_REQUEST_RETRY_BACK_OFF_PERIOD = 1500; // 1.5 seconds
+    // TODO Remove these timeouts now set by the configuration class
     private static final int WS_REQUEST_CONNECT_TIMEOUT = 1000; // 1 second
     private static final int WS_REQUEST_READ_TIMEOUT = 1000; // 1 second
 
