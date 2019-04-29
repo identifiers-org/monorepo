@@ -54,6 +54,8 @@ public class MirIdServiceWsClient implements MirIdService {
         // TODO Refactor this to use the configuration provided REST Template
         HttpURLConnection connection = null;
         try {
+
+            // TODO Old request method to be removed
             URL requestUrl = new URL(String.format("%s/mintId", getMirIdServiceBaseUrl()));
             connection = (HttpURLConnection) requestUrl.openConnection();
             connection.setInstanceFollowRedirects(false);
@@ -96,6 +98,7 @@ public class MirIdServiceWsClient implements MirIdService {
         // TODO Refactor this to use the configuration provided REST Template
         HttpURLConnection connection = null;
         try {
+            // TODO Old request method to be removed
             URL requestUrl = new URL(String.format("%s/keepAlive/%s", getMirIdServiceBaseUrl(), mirId));
             connection = (HttpURLConnection) requestUrl.openConnection();
             connection.setInstanceFollowRedirects(false);
