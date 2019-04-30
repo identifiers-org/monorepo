@@ -35,6 +35,7 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     @Transactional
     @Override
     public long mintId() throws MirIdManagementStrategyException {
+        // TODO THIS BIT IS FAILING TO BE CONCURRENCY SAFE - A SOLUTION NEEDS TO BE PUT IN PLACE URGENTLY
         // Check if we can use one from the returned IDs
         Date now = new Date(System.currentTimeMillis());
         ReturnedMirId returnedMirId = returnedMirIdRepository.findTopByOrderByCreatedAsc();
