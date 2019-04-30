@@ -42,6 +42,10 @@ public class MirIdServiceWsClient implements MirIdService {
         // otherwise this is fine, as all HQ services are deployed within the same cluster
         return String.format("http://%s:%s/mirIdApi", wsMirIdControllerHost, wsMirIdControllerPort);
     }
+
+    private String getMirIdMintingUrl() {
+        // TODO
+    }
     // END - Helpers
 
     @Retryable(maxAttempts = WS_REQUEST_RETRY_MAX_ATTEMPTS,
