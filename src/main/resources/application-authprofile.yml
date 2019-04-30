@@ -5,13 +5,13 @@ spring:
       client:
         provider:
           keycloak:
-            issuer-uri: ${HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUERURI:http://localkeycloak:8080/auth/realms/scratchpad/}
+            issuer-uri: ${HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUERURI:http://localkeycloak:8080/auth/realms/scratchpad}
         registration:
           keycloak:
             grantType: client_credentials
             accessTokenUri: ${HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_ACCESS_TOKEN_URI:http://localkeycloak:8080/auth/realms/scratchpad/protocol/openid-connect/token}
             client-id: ${HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTID:hq-registry}
-            client-secret: ${HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTSECRET:3f18e907-da71-45af-829a-2842b3123c9e}
+            client-secret: ${HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTSECRET:4ec8bb52-941c-4bdb-83fd-dd9d521d3964}
       resourceserver:
         jwt:
           issuer-uri: ${HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI:http://localkeycloak:8080/auth/realms/scratchpad}
