@@ -43,7 +43,12 @@ public class MirIdServiceWsClient implements MirIdService {
         return String.format("http://%s:%s/mirIdApi", wsMirIdControllerHost, wsMirIdControllerPort);
     }
 
-    private String getMirIdMintingUrl() {
+    private String getWsMirIdMintingUrl() {
+        // TODO
+        
+    }
+
+    private String getWsMirIdKeepingAliveUrl() {
         // TODO
     }
     // END - Helpers
