@@ -3,15 +3,15 @@ package org.identifiers.cloud.hq.ws.registry.models;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -54,7 +54,7 @@ public class MirIdServiceWsClient implements MirIdService {
     }
 
     private String getWsMirIdKeepingAliveUrl(String mirId) {
-        return String.format("%s/keepAlive/%s", getMirIdServiceBaseUrl(), mirId)
+        return String.format("%s/keepAlive/%s", getMirIdServiceBaseUrl(), mirId);
     }
 
     private ResponseEntity<?> doGetRequest(String url) {
@@ -67,41 +67,19 @@ public class MirIdServiceWsClient implements MirIdService {
     @Override
     public String mintId() throws MirIdServiceException {
         log.info("Requesting MIR ID MINTING");
-        int status = 0;
         String mirId = null;
         // TODO Refactor this to use the configuration provided REST Template
-        HttpURLConnection connection = null;
         try {
-
-            // TODO Old request method to be removed
-            URL requestUrl = new URL(String.format("%s/mintId", getMirIdServiceBaseUrl()));
-            connection = (HttpURLConnection) requestUrl.openConnection();
-            connection.setInstanceFollowRedirects(false);
-            connection.setConnectTimeout(WS_REQUEST_CONNECT_TIMEOUT);
-            connection.setReadTimeout(WS_REQUEST_READ_TIMEOUT);
-            connection.setRequestMethod("GET");
-            status = connection.getResponseCode();
-            if (status == 200) {
-                // Whaaaaat!?!? Thank you Baeldung! https://www.baeldung.com/java-http-request
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(connection.getInputStream()));
-                String inputLine;
-                StringBuilder content = new StringBuilder();
-                while ((inputLine = in.readLine()) != null) {
-                    content.append(inputLine);
-                }
-                in.close();
-                mirId = content.toString();
+            ResponseEntity<?> response = doGetRequest(getWsMirIdMintingUrl());
+            if (response.getStatusCode() != HttpStatus.OK) {
+                throw new MirIdServiceException(String.format("MIR ID minting FAILED, status code '%s'", response.getStatusCode().toString()));
             }
-        } catch (RuntimeException | IOException e) {
+            if (!response.hasBody()) {
+                throw new MirIdServiceException(String.format("MIR ID minting FAILED, NO BODY IN THE RESPONSE, response -> '%s'", response.toString()));
+            }
+            mirId = response.getBody().toString();
+        } catch (RestClientException e) {
             throw new MirIdServiceException(e.getMessage());
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
-        }
-        if (status != 200) {
-            throw new MirIdServiceException(String.format("MIR ID minting FAILED, status code '%d'", status));
         }
         log.info(String.format("MIR ID MINTING, newly minted ID '%s'", mirId));
         return mirId;

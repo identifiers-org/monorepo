@@ -74,12 +74,12 @@ public class ResourceService {
         resource.setInstitution(institutionService.registerInstitution(resource.getInstitution()));
         // Register the Namespace
         resource.setNamespace(namespaceService.registerNamespace(resource.getNamespace()));
-        // Register the resource
-        Resource registeredResource = repository.save(resource);
         // Register the resource within its namespace. Ok, why doing it this way? Because if this resource can't be
         // registered as provider within its associated namespace, the Namespace service will throw an exception that
         // will trigger a rollback in the database, as this method is transactional
-        namespaceService.registerProvider(registeredResource.getNamespace(), registeredResource);
+        namespaceService.registerProvider(resource.getNamespace(), resource);
+        // Register the resource
+        Resource registeredResource = repository.save(resource);
         return registeredResource;
     }
 }
