@@ -1,11 +1,13 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,6 +39,9 @@ public class MirIdServiceWsClient implements MirIdService {
     @Value("${org.identifiers.cloud.hq.ws.registry.backend.service.miridcontroller.port}")
     private String wsMirIdControllerPort;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     // Helpers
     private String getMirIdServiceBaseUrl() {
         // We should allow HTTP / HTTPS configurability in case we want the cluster internal traffic to be encrypted,
@@ -53,7 +58,7 @@ public class MirIdServiceWsClient implements MirIdService {
     }
 
     private ResponseEntity<?> doGetRequest(String url) {
-        // TODO
+        return restTemplate.getForEntity(url, String.class);
     }
     // END - Helpers
 
