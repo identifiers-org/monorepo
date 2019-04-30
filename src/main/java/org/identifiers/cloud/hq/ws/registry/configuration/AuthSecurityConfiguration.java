@@ -176,8 +176,10 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .anyRequest().denyAll()
                 .and()
                 .csrf()
-                    .ignoringAntMatchers("/prefixRegistrationApi/registerPrefix")
-                .and()
+                    // TODO - RE-ENABLE THIS WHEN YOU'RE DONE TESTING THE OAUTH2 CLIENT
+                    //.ignoringAntMatchers("/prefixRegistrationApi/registerPrefix")
+                    .disable()
+                //.and()
                 .oauth2ResourceServer().jwt();
     }
     // TODO
