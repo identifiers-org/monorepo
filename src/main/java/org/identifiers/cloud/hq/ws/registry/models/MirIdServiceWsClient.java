@@ -2,6 +2,7 @@ package org.identifiers.cloud.hq.ws.registry.models;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
@@ -44,11 +45,14 @@ public class MirIdServiceWsClient implements MirIdService {
     }
 
     private String getWsMirIdMintingUrl() {
-        // TODO
         return String.format("%s/mintId", getMirIdServiceBaseUrl());
     }
 
-    private String getWsMirIdKeepingAliveUrl() {
+    private String getWsMirIdKeepingAliveUrl(String mirId) {
+        return String.format("%s/keepAlive/%s", getMirIdServiceBaseUrl(), mirId)
+    }
+
+    private ResponseEntity<?> doGetRequest(String url) {
         // TODO
     }
     // END - Helpers
