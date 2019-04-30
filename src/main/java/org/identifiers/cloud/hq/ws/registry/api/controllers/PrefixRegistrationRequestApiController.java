@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
  * This controller supports the API that handles prefix registration requests
  */
 @RestController
-@RequestMapping(value = "prefixRegistrationApi")
+@RequestMapping("prefixRegistrationApi")
 public class PrefixRegistrationRequestApiController {
 
     @Autowired
