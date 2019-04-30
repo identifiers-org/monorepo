@@ -45,7 +45,7 @@ public class MirIdServiceWsClient implements MirIdService {
 
     private String getWsMirIdMintingUrl() {
         // TODO
-
+        return String.format("%s/mintId", getMirIdServiceBaseUrl());
     }
 
     private String getWsMirIdKeepingAliveUrl() {
