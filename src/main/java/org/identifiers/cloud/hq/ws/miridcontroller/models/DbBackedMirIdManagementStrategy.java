@@ -59,14 +59,9 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     @PersistenceContext
     private EntityManager entityManager;
 
-    // This re-try is a dirty acceptable-for-now workaround for the concurrency / high throughput problem. But this is
-    // an interesting topic to dig deeper and learn how this complex operation could be lock protected at the database
-    // level
     @Transactional
-    //@Retryable(label = "idMinting", maxAttempts = 3, backoff = @Backoff(delay = 300L))
     @Override
     public long mintId() throws MirIdManagementStrategyException {
-        // TODO THIS BIT IS FAILING TO BE CONCURRENCY SAFE - A SOLUTION NEEDS TO BE PUT IN PLACE URGENTLY
         // Lock Acquisition
         RLock operationLock = redissonClient.getLock(CONCURRENCY_LOCK_OPERATION_ID_MINTING);
         try {
