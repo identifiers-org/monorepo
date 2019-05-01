@@ -29,9 +29,14 @@ import java.util.concurrent.TimeUnit;
 @Component
 @Slf4j
 public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy {
+    // Defaults
     private static final String CONCURRENCY_LOCK_OPERATION_ID_MINTING = "DbBackedMirIdManagementStrategy_concurrency_lock_operation_id_minting";
-    private static final int CONCURRENCY_LOCK_OPERATION_ID_MINTING_TIME_SECONDS_LEASE_TIME = 7;
-    private static final int CONCURRENCY_LOCK_OPERATION_ID_MINTING_TIME_SECONDS_WAIT_FOR_LOCK_TIME = 14;
+    private static final int CONCURRENCY_LOCK_OPERATION_ID_MINTING_TIME_SECONDS_LEASE_TIME = 3;
+    private static final int CONCURRENCY_LOCK_OPERATION_ID_MINTING_TIME_SECONDS_WAIT_FOR_LOCK_TIME = 6;
+    private static final String CONCURRENCY_LOCK_OPERATION_KEEP_ALIVE = "DbBackedMirIdManagementStrategy_concurrency_lock_operation_keep_alive";
+    private static final int CONCURRENCY_LOCK_OPERATION_KEEP_ALIVE_TIME_SECONDS_LEASE_TIME = 3;
+    private static final int CONCURRENCY_LOCK_OPERATION_KEEP_ALIVE_TIME_SECONDS_WAIT_FOR_LOCK_TIME = 6;
+
 
     // Repositories
     @Autowired
