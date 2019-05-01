@@ -130,6 +130,9 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
             } else {
                 activeMirId.setLastConfirmed(new Date(System.currentTimeMillis()));
                 activeMirIdRepository.save(activeMirId);
+                // Apparently, the Entity Manager cache is a troublemaker for this particular operation
+                entityManager.flush();
+                entityManager.getEntityManagerFactory().getCache().evictAll();
                 String msg = String.format("KEEP ALIVE MIR ID, %d, minted on %s, confirmed on %s",
                         id, activeMirId.getCreated(), activeMirId.getLastConfirmed());
                 report.setReportContent(msg);
@@ -183,6 +186,9 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
             Date now = new Date(System.currentTimeMillis());
             ActiveMirId newId = new ActiveMirId().setMirId(id).setCreated(now).setLastConfirmed(now);
             ActiveMirId registeredId = activeMirIdRepository.save(newId);
+            // Apparently, the Entity Manager cache is a troublemaker for this particular operation
+            entityManager.flush();
+            entityManager.getEntityManagerFactory().getCache().evictAll();
             String msg = String.format("Load MIR ID %d, on %s, last confirmed %s - COMPLETED",
                     id,
                     registeredId.getCreated(),
@@ -246,6 +252,9 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
                             .setMinted(activeMirId.getCreated())
                             .setLastConfirmed(activeMirId.getLastConfirmed());
             mirIdDeactivationLogEntryRepository.save(mirIdDeactivationLogEntry);
+            // Apparently, the Entity Manager cache is a troublemaker for this particular operation
+            entityManager.flush();
+            entityManager.getEntityManagerFactory().getCache().evictAll();
             String msg = String.format("RETURNED MIR ID, %d, on %s, minted on %s, and last confirmed on %s",
                     id,
                     returnedMirId.getCreated(),
