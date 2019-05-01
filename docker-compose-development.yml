@@ -18,3 +18,5 @@ services:
             - POSTGRES_PASSWORD=devpassword
         ports:
             - "5431:5432"
+    miridcontroller:
+        image: identifiersorg/cloud-hq-ws-mirid-controller
