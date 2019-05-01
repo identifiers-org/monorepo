@@ -36,7 +36,9 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     private static final String CONCURRENCY_LOCK_OPERATION_KEEP_ALIVE = "DbBackedMirIdManagementStrategy_concurrency_lock_operation_keep_alive";
     private static final int CONCURRENCY_LOCK_OPERATION_KEEP_ALIVE_TIME_SECONDS_LEASE_TIME = 3;
     private static final int CONCURRENCY_LOCK_OPERATION_KEEP_ALIVE_TIME_SECONDS_WAIT_FOR_LOCK_TIME = 6;
-
+    private static final String CONCURRENCY_LOCK_OPERATION_LOAD_ID = "DbBackedMirIdManagementStrategy_concurrency_lock_operation_load_id";
+    private static final int CONCURRENCY_LOCK_OPERATION_LOAD_ID_TIME_SECONDS_LEASE_TIME = 3;
+    private static final int CONCURRENCY_LOCK_OPERATION_LOAD_ID_TIME_SECONDS_WAIT_FOR_LOCK_TIME = 6;
 
     // Repositories
     @Autowired
