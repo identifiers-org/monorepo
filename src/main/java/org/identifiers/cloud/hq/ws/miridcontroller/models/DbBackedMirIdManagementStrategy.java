@@ -113,7 +113,7 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
                 throw new MirIdManagementStrategyException("LOCK ACQUISITION TIMED OUT while keeping a MIR ID alive");
             }
         } catch (InterruptedException e) {
-            throw new MirIdManagementStrategyException(String.format("LOCK ACQUISITION TIMED OUT while keeping a MIR ID alive, '%s'", e.getMessage()));
+            throw new MirIdManagementStrategyException(String.format("LOCK ACQUISITION INTERRUPTED while keeping a MIR ID alive, '%s'", e.getMessage()));
         }
         // Operation - Keep Alive
         try {
@@ -154,9 +154,9 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
                 throw new MirIdManagementStrategyException(String.format("LOCK ACQUISITION TIMED OUT while loading MIR ID '%s'", MirIdHelper.prettyPrintMirId(id)));
             }
         } catch (InterruptedException e) {
-            throw new MirIdManagementStrategyException(String.format("LOCK ACQUISITION TIMED OUT while loading MIR ID '%s', '%s'", MirIdHelper.prettyPrintMirId(id), e.getMessage()));
+            throw new MirIdManagementStrategyException(String.format("LOCK ACQUISITION INTERRUPTED while loading MIR ID '%s', '%s'", MirIdHelper.prettyPrintMirId(id), e.getMessage()));
         }
-        // Operation - Keep Alive
+        // Operation - Load ID
         try {
             MirIdManagementStrategyOperationReport report = new MirIdManagementStrategyOperationReport()
                     .setStatus(MirIdManagementStrategyOperationReport.Status.SUCCESS);
@@ -199,65 +199,63 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     @Override
     public MirIdManagementStrategyOperationReport returnId(long id) throws MirIdManagementStrategyException {
         // Lock Acquisition
-        RLock operationLock = redissonClient.getLock(CONCURRENCY_LOCK_OPERATION_KEEP_ALIVE);
+        RLock operationLock = redissonClient.getLock(CONCURRENCY_LOCK_OPERATION_RETURN_ID);
         try {
-            if (!operationLock.tryLock(CONCURRENCY_LOCK_OPERATION_KEEP_ALIVE_TIME_SECONDS_WAIT_FOR_LOCK_TIME,
-                    CONCURRENCY_LOCK_OPERATION_KEEP_ALIVE_TIME_SECONDS_LEASE_TIME,
+            if (!operationLock.tryLock(CONCURRENCY_LOCK_OPERATION_RETURN_ID_TIME_SECONDS_WAIT_FOR_LOCK_TIME,
+                    CONCURRENCY_LOCK_OPERATION_RETURN_ID_TIME_SECONDS_LEASE_TIME,
                     TimeUnit.SECONDS)) {
-                throw new MirIdManagementStrategyException("LOCK ACQUISITION TIMED OUT while keeping a MIR ID alive");
+                throw new MirIdManagementStrategyException(String.format("LOCK ACQUISITION TIMED OUT while returning MIR ID '%s'", MirIdHelper.prettyPrintMirId(id)));
             }
         } catch (InterruptedException e) {
-            throw new MirIdManagementStrategyException(String.format("LOCK ACQUISITION TIMED OUT while keeping a MIR ID alive, '%s'", e.getMessage()));
+            throw new MirIdManagementStrategyException(String.format("\"LOCK ACQUISITION INTERRUPTED while returning " +
+                    "MIR ID '%s', '%s'", MirIdHelper.prettyPrintMirId(id), e.getMessage()));
         }
-        // Operation - Keep Alive
+        // Operation - Return ID
         try {
-            // TODO
+            MirIdManagementStrategyOperationReport report = new MirIdManagementStrategyOperationReport()
+                    .setStatus(MirIdManagementStrategyOperationReport.Status.SUCCESS);
+            // Check if the ID is active
+            ActiveMirId activeMirId = activeMirIdRepository.findByMirId(id);
+            if (activeMirId == null) {
+                String msg = String.format("Return MIR ID, %d, NOT POSSIBLE for NON ACTIVE MIR IDs", id);
+                log.error(msg);
+                report.setStatus(MirIdManagementStrategyOperationReport.Status.BAD_REQUEST).setReportContent(msg);
+                return report;
+            }
+            // Check if it already was returned
+            ReturnedMirId returnedMirId = returnedMirIdRepository.findByMirId(id);
+            if (returnedMirId != null) {
+                String msg = String.format("Return MIR ID, %d, NOT POSSIBLE for ALREADY RETURNED IDs", id);
+                log.error(msg);
+                report.setStatus(MirIdManagementStrategyOperationReport.Status.BAD_REQUEST).setReportContent(msg);
+                return report;
+            }
+            // Return the ID
+            // remove ID from active IDs
+            activeMirIdRepository.delete(activeMirId);
+            // Put it in the pool of returned IDs
+            returnedMirId = new ReturnedMirId().setMirId(id);
+            returnedMirId = returnedMirIdRepository.save(returnedMirId);
+            // Log the deactivation
+            // log the return
+            MirIdDeactivationLogEntry mirIdDeactivationLogEntry =
+                    new MirIdDeactivationLogEntry()
+                            .setMirId(id)
+                            .setMinted(activeMirId.getCreated())
+                            .setLastConfirmed(activeMirId.getLastConfirmed());
+            mirIdDeactivationLogEntryRepository.save(mirIdDeactivationLogEntry);
+            String msg = String.format("RETURNED MIR ID, %d, on %s, minted on %s, and last confirmed on %s",
+                    id,
+                    returnedMirId.getCreated(),
+                    activeMirId.getCreated(),
+                    activeMirId.getLastConfirmed());
+            log.info(msg);
+            report.setReportContent(msg);
+            return report;
         } catch (RuntimeException e) {
             throw new MirIdManagementStrategyException(e.getMessage());
         } finally {
             operationLock.unlock();
         }
-
-
-        MirIdManagementStrategyOperationReport report = new MirIdManagementStrategyOperationReport()
-                .setStatus(MirIdManagementStrategyOperationReport.Status.SUCCESS);
-        // Check if the ID is active
-        ActiveMirId activeMirId = activeMirIdRepository.findByMirId(id);
-        if (activeMirId == null) {
-            String msg = String.format("Return MIR ID, %d, NOT POSSIBLE for NON ACTIVE MIR IDs", id);
-            log.error(msg);
-            report.setStatus(MirIdManagementStrategyOperationReport.Status.BAD_REQUEST).setReportContent(msg);
-            return report;
-        }
-        // Check if it already was returned
-        ReturnedMirId returnedMirId = returnedMirIdRepository.findByMirId(id);
-        if (returnedMirId != null) {
-            String msg = String.format("Return MIR ID, %d, NOT POSSIBLE for ALREADY RETURNED IDs", id);
-            log.error(msg);
-            report.setStatus(MirIdManagementStrategyOperationReport.Status.BAD_REQUEST).setReportContent(msg);
-            return report;
-        }
-        // Return the ID
-        // remove ID from active IDs
-        activeMirIdRepository.delete(activeMirId);
-        // Put it in the pool of returned IDs
-        returnedMirId = new ReturnedMirId().setMirId(id);
-        returnedMirId = returnedMirIdRepository.save(returnedMirId);
-        // Log the deactivation
-        // log the return
-        MirIdDeactivationLogEntry mirIdDeactivationLogEntry =
-                new MirIdDeactivationLogEntry()
-                        .setMirId(id)
-                        .setMinted(activeMirId.getCreated())
-                        .setLastConfirmed(activeMirId.getLastConfirmed());
-        mirIdDeactivationLogEntryRepository.save(mirIdDeactivationLogEntry);
-        String msg = String.format("RETURNED MIR ID, %d, on %s, minted on %s, and last confirmed on %s",
-                id,
-                returnedMirId.getCreated(),
-                activeMirId.getCreated(),
-                activeMirId.getLastConfirmed());
-        log.info(msg);
-        report.setReportContent(msg);
-        return report;
     }
 }
