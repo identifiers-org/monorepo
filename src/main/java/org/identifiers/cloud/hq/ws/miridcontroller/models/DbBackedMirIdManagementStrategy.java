@@ -12,6 +12,8 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -28,8 +30,8 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy {
     private static final String CONCURRENCY_LOCK_OPERATION_ID_MINTING = "DbBackedMirIdManagementStrategy_concurrency_lock_operation_id_minting";
-    private static final int CONCURRENCY_LOCK_OPERATION_ID_MINTING_TIME_SECONDS_LEASE_TIME = 3;
-    private static final int CONCURRENCY_LOCK_OPERATION_ID_MINTING_TIME_SECONDS_WAIT_FOR_LOCK_TIME = 2;
+    private static final int CONCURRENCY_LOCK_OPERATION_ID_MINTING_TIME_SECONDS_LEASE_TIME = 7;
+    private static final int CONCURRENCY_LOCK_OPERATION_ID_MINTING_TIME_SECONDS_WAIT_FOR_LOCK_TIME = 14;
 
     // Repositories
     @Autowired
@@ -44,17 +46,18 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     private RedissonClient redissonClient;
 
     // Persistence context
-    //@PersistenceContext
-    //private EntityManager entityManager;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     // This re-try is a dirty acceptable-for-now workaround for the concurrency / high throughput problem. But this is
     // an interesting topic to dig deeper and learn how this complex operation could be lock protected at the database
     // level
     @Transactional
-    //@Retryable(label = "idMinting", maxAttempts = 32, backoff = @Backoff(delay = 200L))
+    //@Retryable(label = "idMinting", maxAttempts = 3, backoff = @Backoff(delay = 300L))
     @Override
     public long mintId() throws MirIdManagementStrategyException {
         // TODO THIS BIT IS FAILING TO BE CONCURRENCY SAFE - A SOLUTION NEEDS TO BE PUT IN PLACE URGENTLY
+        // Lock Acquisition
         RLock operationLock = redissonClient.getLock(CONCURRENCY_LOCK_OPERATION_ID_MINTING);
         try {
             if (!operationLock.tryLock(CONCURRENCY_LOCK_OPERATION_ID_MINTING_TIME_SECONDS_WAIT_FOR_LOCK_TIME,
@@ -65,6 +68,7 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
         } catch (InterruptedException e) {
             throw new MirIdManagementStrategyException(String.format("LOCK ACQUISITION ERROR while minting MIR ID, '%s'", e.getMessage()));
         }
+        // ID Minting
         try {
             // Check if we can use one from the returned IDs
             Date now = new Date(System.currentTimeMillis());
@@ -81,6 +85,8 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
                 log.info(String.format("ID Minted on %s, as a NEW ID %d - COMPLETED", now.toString(), mintedId.getMirId()));
             }
             activeMirIdRepository.save(mintedId);
+            // Is this the problem?
+            entityManager.flush();
             return mintedId.getMirId();
         } catch (RuntimeException e) {
             throw new MirIdManagementStrategyException(e.getMessage());
