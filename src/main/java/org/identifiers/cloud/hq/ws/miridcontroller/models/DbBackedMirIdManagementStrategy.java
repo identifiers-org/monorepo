@@ -8,6 +8,8 @@ import org.identifiers.cloud.hq.ws.miridcontroller.data.repositories.ActiveMirId
 import org.identifiers.cloud.hq.ws.miridcontroller.data.repositories.MirIdDeactivationLogEntryRepository;
 import org.identifiers.cloud.hq.ws.miridcontroller.data.repositories.ReturnedMirIdRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -33,6 +35,7 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     private ReturnedMirIdRepository returnedMirIdRepository;
 
     @Transactional
+    @Retryable(label = "mirIdMinting", maxAttempts = 24, backoff = @Backoff(delay = 200L))
     @Override
     public long mintId() throws MirIdManagementStrategyException {
         // TODO THIS BIT IS FAILING TO BE CONCURRENCY SAFE - A SOLUTION NEEDS TO BE PUT IN PLACE URGENTLY
