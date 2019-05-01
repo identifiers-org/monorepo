@@ -1,6 +1,10 @@
 package org.identifiers.cloud.hq.ws.miridcontroller.configuration;
 
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.retry.annotation.EnableRetry;
@@ -25,4 +29,11 @@ public class CommonConfiguration {
     private String redisHost;
     @Value("${spring.redis.port}")
     private int redisPort;
+
+    @Bean
+    public RedissonClient redissonClient() {
+        Config config = new Config();
+        config.useSingleServer().setAddress(String.format("%s:%d", redisHost, redisPort));
+        return Redisson.create(config);
+    }
 }
