@@ -33,7 +33,7 @@ public class CommonConfiguration {
     @Bean
     public RedissonClient redissonClient() {
         Config config = new Config();
-        config.useSingleServer().setAddress(String.format("%s:%d", redisHost, redisPort));
+        config.useSingleServer().setAddress(String.format("redis://%s:%d", redisHost, redisPort));
         return Redisson.create(config);
     }
 }

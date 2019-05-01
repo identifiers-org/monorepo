@@ -7,15 +7,14 @@ import org.identifiers.cloud.hq.ws.miridcontroller.data.models.ReturnedMirId;
 import org.identifiers.cloud.hq.ws.miridcontroller.data.repositories.ActiveMirIdRepository;
 import org.identifiers.cloud.hq.ws.miridcontroller.data.repositories.MirIdDeactivationLogEntryRepository;
 import org.identifiers.cloud.hq.ws.miridcontroller.data.repositories.ReturnedMirIdRepository;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.retry.annotation.Backoff;
-import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Project: mirid-controller
@@ -28,7 +27,11 @@ import java.util.Date;
 @Component
 @Slf4j
 public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy {
+    private static final String CONCURRENCY_LOCK_OPERATION_ID_MINTING = "DbBackedMirIdManagementStrategy_concurrency_lock_operation_id_minting";
+    private static final int CONCURRENCY_LOCK_OPERATION_ID_MINTING_TIME_SECONDS_LEASE_TIME = 3;
+    private static final int CONCURRENCY_LOCK_OPERATION_ID_MINTING_TIME_SECONDS_WAIT_FOR_LOCK_TIME = 2;
 
+    // Repositories
     @Autowired
     private ActiveMirIdRepository activeMirIdRepository;
     @Autowired
@@ -36,34 +39,54 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     @Autowired
     private ReturnedMirIdRepository returnedMirIdRepository;
 
+    // Concurrency
+    @Autowired
+    private RedissonClient redissonClient;
+
     // Persistence context
-    @PersistenceContext
-    private EntityManager entityManager;
+    //@PersistenceContext
+    //private EntityManager entityManager;
 
     // This re-try is a dirty acceptable-for-now workaround for the concurrency / high throughput problem. But this is
     // an interesting topic to dig deeper and learn how this complex operation could be lock protected at the database
     // level
     @Transactional
-    @Retryable(label = "idMinting", maxAttempts = 32, backoff = @Backoff(delay = 200L))
+    //@Retryable(label = "idMinting", maxAttempts = 32, backoff = @Backoff(delay = 200L))
     @Override
     public long mintId() throws MirIdManagementStrategyException {
         // TODO THIS BIT IS FAILING TO BE CONCURRENCY SAFE - A SOLUTION NEEDS TO BE PUT IN PLACE URGENTLY
-        // Check if we can use one from the returned IDs
-        Date now = new Date(System.currentTimeMillis());
-        ReturnedMirId returnedMirId = returnedMirIdRepository.findTopByOrderByCreatedAsc();
-        ActiveMirId mintedId = new ActiveMirId().setCreated(now).setLastConfirmed(now);
-        if (returnedMirId != null) {
-            mintedId.setMirId(returnedMirId.getMirId());
-            returnedMirIdRepository.delete(returnedMirId);
-            log.info(String.format("ID Minted on %s, REUSING returned ID, %d, returned on %s",
-                    now, returnedMirId.getMirId(), returnedMirId.getCreated()));
-        } else {
-            // If not, mint a new one after the last one in use
-            mintedId.setMirId(activeMirIdRepository.getMaxMirId() + 1L);
-            log.info(String.format("ID Minted on %s, as a NEW ID %d - COMPLETED", now.toString(), mintedId.getMirId()));
+        RLock operationLock = redissonClient.getLock(CONCURRENCY_LOCK_OPERATION_ID_MINTING);
+        try {
+            if (!operationLock.tryLock(CONCURRENCY_LOCK_OPERATION_ID_MINTING_TIME_SECONDS_WAIT_FOR_LOCK_TIME,
+                    CONCURRENCY_LOCK_OPERATION_ID_MINTING_TIME_SECONDS_LEASE_TIME,
+                    TimeUnit.SECONDS)) {
+                throw new MirIdManagementStrategyException("LOCK ACQUISITION TIMED OUT while minting MIR ID");
+            }
+        } catch (InterruptedException e) {
+            throw new MirIdManagementStrategyException(String.format("LOCK ACQUISITION ERROR while minting MIR ID, '%s'", e.getMessage()));
         }
-        activeMirIdRepository.save(mintedId).getMirId();
-        return mintedId.getMirId();
+        try {
+            // Check if we can use one from the returned IDs
+            Date now = new Date(System.currentTimeMillis());
+            ReturnedMirId returnedMirId = returnedMirIdRepository.findTopByOrderByCreatedAsc();
+            ActiveMirId mintedId = new ActiveMirId().setCreated(now).setLastConfirmed(now);
+            if (returnedMirId != null) {
+                mintedId.setMirId(returnedMirId.getMirId());
+                returnedMirIdRepository.delete(returnedMirId);
+                log.info(String.format("ID Minted on %s, REUSING returned ID, %d, returned on %s",
+                        now, returnedMirId.getMirId(), returnedMirId.getCreated()));
+            } else {
+                // If not, mint a new one after the last one in use
+                mintedId.setMirId(activeMirIdRepository.getMaxMirId() + 1L);
+                log.info(String.format("ID Minted on %s, as a NEW ID %d - COMPLETED", now.toString(), mintedId.getMirId()));
+            }
+            activeMirIdRepository.save(mintedId);
+            return mintedId.getMirId();
+        } catch (RuntimeException e) {
+            throw new MirIdManagementStrategyException(e.getMessage());
+        } finally {
+            operationLock.unlock();
+        }
     }
 
     @Transactional
