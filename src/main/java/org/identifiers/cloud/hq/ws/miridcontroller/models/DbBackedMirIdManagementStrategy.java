@@ -12,6 +12,8 @@ import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.Date;
 
@@ -34,11 +36,15 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     @Autowired
     private ReturnedMirIdRepository returnedMirIdRepository;
 
+    // Persistence context
+    @PersistenceContext
+    private EntityManager entityManager;
+
     // This re-try is a dirty acceptable-for-now workaround for the concurrency / high throughput problem. But this is
     // an interesting topic to dig deeper and learn how this complex operation could be lock protected at the database
     // level
     @Transactional
-    @Retryable(label = "idMinting", maxAttempts = 24, backoff = @Backoff(delay = 200L))
+    @Retryable(label = "idMinting", maxAttempts = 32, backoff = @Backoff(delay = 200L))
     @Override
     public long mintId() throws MirIdManagementStrategyException {
         // TODO THIS BIT IS FAILING TO BE CONCURRENCY SAFE - A SOLUTION NEEDS TO BE PUT IN PLACE URGENTLY
@@ -56,7 +62,7 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
             mintedId.setMirId(activeMirIdRepository.getMaxMirId() + 1L);
             log.info(String.format("ID Minted on %s, as a NEW ID %d - COMPLETED", now.toString(), mintedId.getMirId()));
         }
-        activeMirIdRepository.save(mintedId);
+        activeMirIdRepository.save(mintedId).getMirId();
         return mintedId.getMirId();
     }
 
