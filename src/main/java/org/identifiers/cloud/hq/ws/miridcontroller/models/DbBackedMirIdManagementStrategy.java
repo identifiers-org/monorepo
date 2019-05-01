@@ -82,11 +82,12 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
             } else {
                 // If not, mint a new one after the last one in use
                 mintedId.setMirId(activeMirIdRepository.getMaxMirId() + 1L);
-                log.info(String.format("ID Minted on %s, as a NEW ID %d - COMPLETED", now.toString(), mintedId.getMirId()));
+                log.info(String.format("ID Minted on %s, as a NEW ID %d", now.toString(), mintedId.getMirId()));
             }
             activeMirIdRepository.save(mintedId);
-            // Is this the problem?
+            // Apparently, the Entity Manager cache is a troublemaker for this particular operation
             entityManager.flush();
+            entityManager.getEntityManagerFactory().getCache().evictAll();
             return mintedId.getMirId();
         } catch (RuntimeException e) {
             throw new MirIdManagementStrategyException(e.getMessage());
