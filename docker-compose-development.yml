@@ -10,3 +10,11 @@ services:
             - POSTGRES_PASSWORD=devpassword
         ports:
             - "5430:5432"
+    miridpostgresql:
+        image: postgres
+        environment:
+            - POSTGRES_DB=devdatabase
+            - POSTGRES_USER=devusername
+            - POSTGRES_PASSWORD=devpassword
+        ports:
+            - "5431:5432"
