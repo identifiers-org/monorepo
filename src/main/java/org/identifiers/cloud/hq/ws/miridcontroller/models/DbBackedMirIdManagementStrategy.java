@@ -34,6 +34,9 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     @Autowired
     private ReturnedMirIdRepository returnedMirIdRepository;
 
+    // This re-try is a dirty acceptable-for-now workaround for the concurrency / high throughput problem. But this is
+    // an interesting topic to dig deeper and learn how this complex operation could be lock protected at the database
+    // level
     @Transactional
     @Retryable(label = "idMinting", maxAttempts = 24, backoff = @Backoff(delay = 200L))
     @Override
