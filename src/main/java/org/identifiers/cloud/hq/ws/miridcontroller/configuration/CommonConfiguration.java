@@ -2,6 +2,7 @@ package org.identifiers.cloud.hq.ws.miridcontroller.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.retry.annotation.EnableRetry;
 
 /**
  * Project: mirid-controller
@@ -15,6 +16,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
  */
 @Configuration
 @EnableJpaAuditing
+@EnableRetry
 public class CommonConfiguration {
     // TODO
 }

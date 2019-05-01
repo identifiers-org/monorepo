@@ -35,7 +35,7 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     private ReturnedMirIdRepository returnedMirIdRepository;
 
     @Transactional
-    @Retryable(label = "mirIdMinting", maxAttempts = 24, backoff = @Backoff(delay = 200L))
+    @Retryable(maxAttempts = 24, backoff = @Backoff(delay = 200L))
     @Override
     public long mintId() throws MirIdManagementStrategyException {
         // TODO THIS BIT IS FAILING TO BE CONCURRENCY SAFE - A SOLUTION NEEDS TO BE PUT IN PLACE URGENTLY
