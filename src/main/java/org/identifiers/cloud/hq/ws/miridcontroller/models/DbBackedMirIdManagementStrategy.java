@@ -79,20 +79,22 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
             Date now = new Date(System.currentTimeMillis());
             ReturnedMirId returnedMirId = returnedMirIdRepository.findTopByOrderByCreatedAsc();
             ActiveMirId mintedId = new ActiveMirId().setCreated(now).setLastConfirmed(now);
+            String logMessage = "";
             if (returnedMirId != null) {
                 mintedId.setMirId(returnedMirId.getMirId());
                 returnedMirIdRepository.delete(returnedMirId);
-                log.info(String.format("ID Minted on %s, REUSING returned ID, %d, returned on %s",
-                        now, returnedMirId.getMirId(), returnedMirId.getCreated()));
+                logMessage = String.format("ID Minted on %s, REUSING returned ID, %d, returned on %s",
+                        now, returnedMirId.getMirId(), returnedMirId.getCreated());
             } else {
                 // If not, mint a new one after the last one in use
                 mintedId.setMirId(activeMirIdRepository.getMaxMirId() + 1L);
-                log.info(String.format("ID Minted on %s, as a NEW ID %d", now.toString(), mintedId.getMirId()));
+                logMessage = String.format("ID Minted on %s, as a NEW ID %d", now.toString(), mintedId.getMirId());
             }
             activeMirIdRepository.save(mintedId);
             // Apparently, the Entity Manager cache is a troublemaker for this particular operation
             entityManager.flush();
             entityManager.getEntityManagerFactory().getCache().evictAll();
+            log.info(logMessage);
             return mintedId.getMirId();
         } catch (RuntimeException e) {
             throw new MirIdManagementStrategyException(e.getMessage());
