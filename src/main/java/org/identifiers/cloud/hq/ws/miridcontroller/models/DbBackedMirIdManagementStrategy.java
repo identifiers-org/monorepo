@@ -104,28 +104,68 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     @Transactional
     @Override
     public MirIdManagementStrategyOperationReport keepAlive(long id) throws MirIdManagementStrategyException {
-        MirIdManagementStrategyOperationReport report = new MirIdManagementStrategyOperationReport().setStatus(MirIdManagementStrategyOperationReport.Status.SUCCESS);
-        // Check if the ID is active
-        // If active, update "last confirmed" date
-        ActiveMirId activeMirId = activeMirIdRepository.findByMirId(id);
-        if (activeMirId == null) {
-            String msg = String.format("Keep alive MIR ID, %d, is [NOT ACTIVE], KEEPING ALIVE is NOT POSSIBLE", id);
-            report.setStatus(MirIdManagementStrategyOperationReport.Status.BAD_REQUEST).setReportContent(msg);
-            log.error(msg);
-        } else {
-            activeMirId.setLastConfirmed(new Date(System.currentTimeMillis()));
-            activeMirIdRepository.save(activeMirId);
-            String msg = String.format("KEEP ALIVE MIR ID, %d, minted on %s, confirmed on %s",
-                    id, activeMirId.getCreated(), activeMirId.getLastConfirmed());
-            report.setReportContent(msg);
-            log.info(msg);
+        // Lock Acquisition
+        RLock operationLock = redissonClient.getLock(CONCURRENCY_LOCK_OPERATION_KEEP_ALIVE);
+        try {
+            if (!operationLock.tryLock(CONCURRENCY_LOCK_OPERATION_KEEP_ALIVE_TIME_SECONDS_WAIT_FOR_LOCK_TIME,
+                    CONCURRENCY_LOCK_OPERATION_KEEP_ALIVE_TIME_SECONDS_LEASE_TIME,
+                    TimeUnit.SECONDS)) {
+                throw new MirIdManagementStrategyException("LOCK ACQUISITION TIMED OUT while keeping a MIR ID alive");
+            }
+        } catch (InterruptedException e) {
+            throw new MirIdManagementStrategyException(String.format("LOCK ACQUISITION TIMED OUT while keeping a MIR ID alive, '%s'", e.getMessage()));
         }
-        return report;
+        // Operation - Keep Alive
+        try {
+            MirIdManagementStrategyOperationReport report = new MirIdManagementStrategyOperationReport().setStatus(MirIdManagementStrategyOperationReport.Status.SUCCESS);
+            // Check if the ID is active
+            // If active, update "last confirmed" date
+            ActiveMirId activeMirId = activeMirIdRepository.findByMirId(id);
+            if (activeMirId == null) {
+                String msg = String.format("Keep alive MIR ID, %d, is [NOT ACTIVE], KEEPING ALIVE is NOT POSSIBLE", id);
+                report.setStatus(MirIdManagementStrategyOperationReport.Status.BAD_REQUEST).setReportContent(msg);
+                log.error(msg);
+            } else {
+                activeMirId.setLastConfirmed(new Date(System.currentTimeMillis()));
+                activeMirIdRepository.save(activeMirId);
+                String msg = String.format("KEEP ALIVE MIR ID, %d, minted on %s, confirmed on %s",
+                        id, activeMirId.getCreated(), activeMirId.getLastConfirmed());
+                report.setReportContent(msg);
+                log.info(msg);
+            }
+            return report;
+        } catch (RuntimeException e) {
+            throw new MirIdManagementStrategyException(e.getMessage());
+        } finally {
+            operationLock.unlock();
+        }
+
     }
 
     @Transactional
     @Override
     public MirIdManagementStrategyOperationReport loadId(long id) throws MirIdManagementStrategyException {
+        // Lock Acquisition
+        RLock operationLock = redissonClient.getLock(CONCURRENCY_LOCK_OPERATION_KEEP_ALIVE);
+        try {
+            if (!operationLock.tryLock(CONCURRENCY_LOCK_OPERATION_KEEP_ALIVE_TIME_SECONDS_WAIT_FOR_LOCK_TIME,
+                    CONCURRENCY_LOCK_OPERATION_KEEP_ALIVE_TIME_SECONDS_LEASE_TIME,
+                    TimeUnit.SECONDS)) {
+                throw new MirIdManagementStrategyException("LOCK ACQUISITION TIMED OUT while keeping a MIR ID alive");
+            }
+        } catch (InterruptedException e) {
+            throw new MirIdManagementStrategyException(String.format("LOCK ACQUISITION TIMED OUT while keeping a MIR ID alive, '%s'", e.getMessage()));
+        }
+        // Operation - Keep Alive
+        try {
+            // TODO
+        } catch (RuntimeException e) {
+            throw new MirIdManagementStrategyException(e.getMessage());
+        } finally {
+            operationLock.unlock();
+        }
+
+
         MirIdManagementStrategyOperationReport report = new MirIdManagementStrategyOperationReport()
                 .setStatus(MirIdManagementStrategyOperationReport.Status.SUCCESS);
         // Check the ID is not active
@@ -161,6 +201,27 @@ public class DbBackedMirIdManagementStrategy implements MirIdManagementStrategy 
     @Transactional
     @Override
     public MirIdManagementStrategyOperationReport returnId(long id) throws MirIdManagementStrategyException {
+        // Lock Acquisition
+        RLock operationLock = redissonClient.getLock(CONCURRENCY_LOCK_OPERATION_KEEP_ALIVE);
+        try {
+            if (!operationLock.tryLock(CONCURRENCY_LOCK_OPERATION_KEEP_ALIVE_TIME_SECONDS_WAIT_FOR_LOCK_TIME,
+                    CONCURRENCY_LOCK_OPERATION_KEEP_ALIVE_TIME_SECONDS_LEASE_TIME,
+                    TimeUnit.SECONDS)) {
+                throw new MirIdManagementStrategyException("LOCK ACQUISITION TIMED OUT while keeping a MIR ID alive");
+            }
+        } catch (InterruptedException e) {
+            throw new MirIdManagementStrategyException(String.format("LOCK ACQUISITION TIMED OUT while keeping a MIR ID alive, '%s'", e.getMessage()));
+        }
+        // Operation - Keep Alive
+        try {
+            // TODO
+        } catch (RuntimeException e) {
+            throw new MirIdManagementStrategyException(e.getMessage());
+        } finally {
+            operationLock.unlock();
+        }
+
+
         MirIdManagementStrategyOperationReport report = new MirIdManagementStrategyOperationReport()
                 .setStatus(MirIdManagementStrategyOperationReport.Status.SUCCESS);
         // Check if the ID is active
