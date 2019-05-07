@@ -17,4 +17,12 @@ metadata:
                     environment: development
                     tier: api
                     app: env-vars-exposer
-                    
+        spec:
+            containers:
+                - name: env-vars-exposer
+                  image: mbdebian/ws-env-expose:0.0.4
+                  resources:
+                      requests:
+                          memory: 640Mi
+                  ports:
+                  - containerPort: 8080
