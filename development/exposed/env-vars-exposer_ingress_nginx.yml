@@ -14,4 +14,4 @@ metadata:
 spec:
     backend:
         serviceName: env-vars-exposer
-        servicePort: 80
+        servicePort: 8080
