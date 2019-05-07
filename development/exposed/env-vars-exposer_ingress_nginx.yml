@@ -1,0 +1,13 @@
+# Ingress resource for the underlying Service
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: exting-env-vars-exposer
+    labels:
+        environment: development
+        tier: api
+        app: env-vars-exposer
+        loadBalancerType: ingress
+    annotations:
+        kubernetes.io/ingress.class: "nginx"
