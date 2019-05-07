@@ -1,2 +1,9 @@
 # This file defines a Google Managed Certificate resource
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: networking.gke.io/v1beta1
+kind: ManagedCertificate
+metadata:
+  name: cert-env-vars-exposer
+spec:
+  domains:
+    - envvars.api.dev.identifiers.org
