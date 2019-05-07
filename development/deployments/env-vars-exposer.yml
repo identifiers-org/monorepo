@@ -11,9 +11,3 @@ metadata:
                 tier: api
                 app: env-vars-exposer
         replicas: 1
-        template:
-            metadata:
-                labels:
-                    environment: development
-                    tier: api
-                    app: env-vars-exposer
