@@ -26,3 +26,15 @@ spec:
                           memory: 640Mi
                   ports:
                   - containerPort: 8080
+                  readinessProbe:
+                      httpGet:
+                          path: /healthApi/readiness_check
+                          port: 8080
+                      initialDelaySeconds: 5
+                      periodSeconds: 10
+                  livenessProbe:
+                      httpGet:
+                          path: /healthApi/liveness_check
+                          port: 8080
+                      initialDelaySeconds: 5
+                      periodSeconds: 10
