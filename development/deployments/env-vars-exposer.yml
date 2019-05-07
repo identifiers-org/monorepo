@@ -4,19 +4,19 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
     name: env-vars-exposer
-    spec:
-        selector:
-            matchLabels:
+spec:
+    selector:
+        matchLabels:
+            environment: development
+            tier: api
+            app: env-vars-exposer
+    replicas: 1
+    template:
+        metadata:
+            labels:
                 environment: development
                 tier: api
                 app: env-vars-exposer
-        replicas: 1
-        template:
-            metadata:
-                labels:
-                    environment: development
-                    tier: api
-                    app: env-vars-exposer
         spec:
             containers:
                 - name: env-vars-exposer
