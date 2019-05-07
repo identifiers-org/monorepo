@@ -3,7 +3,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-    name: exting-env-vars-exposer
+    name: exting-gce-env-vars-exposer
     labels:
         environment: development
         tier: api
