@@ -20,7 +20,7 @@ spec:
         spec:
             containers:
                 - name: env-vars-exposer
-                  image: mbdebian/ws-env-expose:0.0.4
+                  image: mbdebian/ws-env-expose:0.1.0
                   resources:
                       requests:
                           memory: 640Mi
