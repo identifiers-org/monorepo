@@ -13,5 +13,5 @@ metadata:
         kubernetes.io/ingress.class: "gce"
 spec:
     backend:
-        serviceName: env-vars-exposer
+        serviceName: nodeport-env-vars-exposer
         servicePort: 8080
