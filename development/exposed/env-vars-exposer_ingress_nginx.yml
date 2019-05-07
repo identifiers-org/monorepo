@@ -1,4 +1,4 @@
-# Ingress resource for the underlying Service
+# Ingress (NGINX) resource for the underlying Service
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 apiVersion: extensions/v1beta1
 kind: Ingress
