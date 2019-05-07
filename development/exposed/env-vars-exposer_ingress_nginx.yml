@@ -11,3 +11,7 @@ metadata:
         loadBalancerType: ingress
     annotations:
         kubernetes.io/ingress.class: "nginx"
+spec:
+    backend:
+        serviceName: env-vars-exposer
+        servicePort: 8080
