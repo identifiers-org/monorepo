@@ -12,6 +12,7 @@ metadata:
     annotations:
         kubernetes.io/ingress.class: "gce"
         kubernetes.io/ingress.global-static-ip-name: deviorg-svc-env-vars-exposer
+        networking.gke.io/managed-certificates: cert-env-vars-exposer
 spec:
     backend:
         serviceName: nodeport-env-vars-exposer
