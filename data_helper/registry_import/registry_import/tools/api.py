@@ -65,7 +65,6 @@ def do_post(payload, what, where, skip_existing, destination_url):
 
     response_json = json.loads(response.text)
 
-
     spinner.succeed(spinner.text[:-3] + f' → [{response.status_code}]: \"{response_json["_links"]["self"]["href"]}')
 
     return response_json

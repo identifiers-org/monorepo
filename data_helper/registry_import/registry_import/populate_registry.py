@@ -5,13 +5,23 @@ import os
 import requests
 import sys
 import urllib
+import argparse
 
-from data_fixer import create_bad_pool, create_institution_pool, map_location, map_institution
+
+from data_fixer import (
+    create_bad_pool,
+    create_institution_pool,
+    map_location,
+    map_institution,
+    populate_locations
+)
 
 from tools import fetch_old_data, prepare_resource, do_post
 from tools import init_config, init_args, load_countries
 
 from classes import Institution, Location, Namespace, Provider, Requester
+
+from data_fixer import mint_used_ids
 
 from halo import Halo
 
@@ -21,13 +31,18 @@ dirname = os.path.dirname(__file__)
 config = init_config(os.path.join(dirname, 'config.ini'))
 args = init_args()
 destination_url = config.get('DestinationURL')
+mirid_controller_url = config.get('mirIDControllerURL')
 EMPTY_FIELD_LITERAL = config.get('EmptyFieldLiteral')
+
 
 # Fetches data from old identifiers.org.
 namespaces = fetch_old_data(config.get('DataOriginURL'))
 
 # Gets country list.
 countries = load_countries(os.path.join(dirname, '../data/ISO-3166.csv'))
+
+# Populate country list.
+populate_locations(countries, destination_url)
 
 
 # Main loop:
@@ -52,7 +67,8 @@ for index, namespace in enumerate(namespaces):
     # Post providers for that namespace.
     for provider in namespace['resources']:
 
-        # Post location for that provider.
+        # Post location for that provider. This should never post locations anymore,
+        # as they are all added with populate_locations.
         if provider.get('location') is not None:
             location = map_location(provider['location'].strip(), countries)[0]
 
@@ -93,3 +109,8 @@ for index, namespace in enumerate(namespaces):
     spinner = Halo(spinner='dots', text_color='green')
     spinner.succeed(f'Namespace [{index}]: \"{newNamespace.name}\" → [SUCCESS]')
     print()
+
+
+# Populate mir ids if parameter is set.
+if (args.miriam):
+    mint_used_ids(os.path.join(dirname, '../data/mirids.txt'), mirid_controller_url)

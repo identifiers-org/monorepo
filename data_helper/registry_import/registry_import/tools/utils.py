@@ -29,7 +29,7 @@ def init_args():
   parser = argparse.ArgumentParser(description='Populates repositories of Identifiers.org cloud.')
   parser.add_argument('-s', '--skiperror', action='store_true', help='Continue on error.')
   parser.add_argument('-v', '--verbose', action='store_true', help='Show detailed output.')
-
+  parser.add_argument("-m", "--miriam", action="store_true", help="Also populate miriams in database.")
   return parser.parse_args()
 
 
@@ -44,7 +44,8 @@ def load_countries(country_csv_file_name):
                              quotechar='"',
                              skipinitialspace = True,
                              names=['countryName', 'countryCode', 'Alpha-3 code'],
-                             usecols=[0, 1, 2])
+                             usecols=[0, 1, 2],
+                             keep_default_na=False)
 
   spinner.succeed(f'Got {len(countries)} countries.')
 

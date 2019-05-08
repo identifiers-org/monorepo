@@ -64,6 +64,10 @@ Send2Trash = "==1.5.0"
 halo = "*"
 yaspin = "*"
 pandas = "*"
+more-itertools = "*"
+requests-async = "*"
+aiohttp = "*"
+asyncio = "*"
 
 [requires]
 python_version = "3.6"
