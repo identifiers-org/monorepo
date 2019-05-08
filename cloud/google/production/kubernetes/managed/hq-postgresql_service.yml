@@ -1,0 +1,14 @@
+# Headless service definition to connect to postgresql endpoint
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: v1
+kind: Service
+metadata:
+    name: hq-postgresql
+    labels:
+        environment: production
+        tier: backend
+        app: hq-postgresql
+        deployment: hq
+spec:
+    ports:
+    - port: 5431
