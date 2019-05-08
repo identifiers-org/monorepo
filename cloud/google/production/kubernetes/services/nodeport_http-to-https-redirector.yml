@@ -1,2 +1,19 @@
 # HTTP to HTTPS Redirector Service definition, node port based
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: v1
+kind: Service
+metadata:
+    name: nodeport-http-to-https-redirector
+    labels:
+        environment: production
+        tier: api
+        app: http-to-https-redirector
+spec:
+    ports:
+    - port: 80
+      targetPort: 80
+    selector:
+        environment: production
+        tier: api
+        app: http-to-https-redirector
+    type: NodePort
