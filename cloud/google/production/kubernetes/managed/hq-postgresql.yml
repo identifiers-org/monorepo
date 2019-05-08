@@ -1,0 +1,11 @@
+# HQ GCP Managed SQL service based on PostgreSQL
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: hq-postgresql
+subsets:
+  - addresses:
+      - ip: 10.91.176.2
+    ports:
+      - port: 5431
