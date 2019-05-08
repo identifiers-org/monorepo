@@ -1,2 +1,19 @@
 # HQ MIR ID Controller Service (internal load balancer)
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: v1
+kind: Service
+metadata:
+    name: registry
+    labels:
+        environment: production
+        tier: api
+        app: mirid-controller
+        deployment: hq
+spec:
+    ports:
+    - port: 8181
+    selector:
+        environment: production
+        tier: api
+        app: mirid-controller
+        deployment: hq
