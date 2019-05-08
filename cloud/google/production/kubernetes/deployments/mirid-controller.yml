@@ -12,3 +12,10 @@ spec:
             app: mirid-controller
             deployment: hq
     replicas: 1
+    template:
+        metadata:
+            labels:
+                environment: production
+                tier: api
+                app: mirid-controller
+                deployment: hq
