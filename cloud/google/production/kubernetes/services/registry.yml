@@ -1,4 +1,4 @@
-# HQ Registry API Service definition (load balancer)
+# HQ Registry API Service definition (internal load balancer)
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 apiVersion: v1
 kind: Service
@@ -8,6 +8,7 @@ metadata:
         environment: production
         tier: api
         app: registry
+        deployment: hq
 spec:
     ports:
     - port: 8180
@@ -15,3 +16,4 @@ spec:
         environment: production
         tier: api
         app: registry
+        deployment: hq
