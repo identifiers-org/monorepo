@@ -13,7 +13,7 @@ metadata:
         kubernetes.io/ingress.class: "gce"
         kubernetes.io/ingress.global-static-ip-name: ipaddr-iorg-dev-envvars-exposed
         #networking.gke.io/managed-certificates: cert-env-vars-exposer
-        ingress.gcp.kubernetes.io/pre-shared-cert: 'cert-iorg-dev-envvarsexposer'
+        ingress.gcp.kubernetes.io/pre-shared-cert: 'cert-iorg-dev-newenvvarsexposer'
         kubernetes.io/ingress.allow-http: "false"
 spec:
     backend:
