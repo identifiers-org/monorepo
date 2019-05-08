@@ -4,3 +4,38 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
     name: http-to-https-redirector
+spec:
+    selector:
+        matchLabels:
+            environment: production
+            tier: api
+            app: http-to-https-redirector
+    replicas: 3
+    template:
+        metadata:
+            labels:
+                environment: production
+                tier: api
+                app: http-to-https-redirector
+        spec:
+            containers:
+                - image: http-to-https-redirector
+                  image: identifiersorg/http-to-https-redirector:0.1.2
+                  imagePullPolicy: Always
+                  resources:
+                      requests:
+                          memory: 64Mi
+                  ports:
+                  - containerPort: 80
+                  readinessProbe:
+                      httpGet:
+                          path: /http_to_https_redirector_health_check
+                          port: 80
+                      initialDelaySeconds: 2
+                      periodSeconds: 10
+                  livenessProbe:
+                      httpGet:
+                          path: /http_to_https_redirector_health_check
+                          port: 80
+                      initialDelaySeconds: 2
+                      periodSeconds: 10
