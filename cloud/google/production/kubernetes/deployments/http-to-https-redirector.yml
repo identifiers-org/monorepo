@@ -1,2 +1,6 @@
 # HTTP to HTTPS redirection service deployment definition
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: http-to-https-redirector
