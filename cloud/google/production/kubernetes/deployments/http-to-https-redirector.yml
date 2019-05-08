@@ -19,7 +19,7 @@ spec:
                 app: http-to-https-redirector
         spec:
             containers:
-                - image: http-to-https-redirector
+                - name: http-to-https-redirector
                   image: identifiersorg/http-to-https-redirector:0.1.2
                   imagePullPolicy: Always
                   resources:
