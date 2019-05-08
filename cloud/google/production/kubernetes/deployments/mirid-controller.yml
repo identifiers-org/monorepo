@@ -4,3 +4,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
     name: mirid-controller
+spec:
+    selector:
+        matchLabels:
+            environment: production
+            tier: api
+            app: mirid-controller
+            deployment: hq
+    replicas: 1
