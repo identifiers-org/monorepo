@@ -19,3 +19,10 @@ spec:
                 tier: api
                 app: mirid-controller
                 deployment: hq
+        spec:
+            containers:
+                - name: cloud-hq-ws-mirid-controller
+                  image: identifiersorg/cloud-hq-ws-mirid-controller:1.0.0
+                  resources:
+                      requests:
+                          memory: 640Mi
