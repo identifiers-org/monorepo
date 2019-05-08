@@ -10,8 +10,5 @@ metadata:
         app: hq-postgresql
         deployment: hq
 spec:
-    clusterIP: None
     ports:
-    - protocol: TCP
-      port: 5431
-      targetPort: 5431
+    - port: 5432
