@@ -67,11 +67,11 @@ spec:
                       httpGet:
                           path: /healthApi/readiness_check
                           port: 8181
-                      initialDelaySeconds: 60
+                      initialDelaySeconds: 5
                       periodSeconds: 10
                   livenessProbe:
                       httpGet:
                           path: /healthApi/liveness_check
                           port: 8181
-                      initialDelaySeconds: 60
+                      initialDelaySeconds: 90
                       periodSeconds: 10
