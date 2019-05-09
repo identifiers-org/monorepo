@@ -1,2 +1,43 @@
 # Deployment definition for the Central Registry Web
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: web-hq
+spec:
+    selector:
+        matchLabels:
+            environment: production
+            tier: frontend
+            app: web-hq
+            deployment: hq
+    replicas: 1
+    template:
+        metadata:
+            labels:
+                environment: production
+                tier: frontend
+                app: web-hq
+                deployment: hq
+        spec:
+            containers:
+                - name: hq-registry-web
+                  image: nginx
+                  imagePullPolicy: Always
+                  resources:
+                      requests:
+                          memory: 64Mi
+                  ports:
+                  - containerPort: 80
+                  readinessProbe:
+                      httpGet:
+                          path: /
+                          port: 80
+                      initialDelaySeconds: 5
+                      periodSeconds: 10
+                  livenessProbe:
+                      httpGet:
+                          path: /
+                          port: 80
+                      initialDelaySeconds: 90
+                      periodSeconds: 10
