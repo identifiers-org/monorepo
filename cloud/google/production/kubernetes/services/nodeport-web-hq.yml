@@ -1,2 +1,20 @@
 # Node port based internal load balancer for the HQ Web frontend
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: v1
+kind: Service
+metadata:
+    name: nodeport-web-hq
+    labels:
+        environment: production
+        tier: frontend
+        app: web-hq
+        deployment: hq
+spec:
+    ports:
+    - port: 80
+    selector:
+        environment: production
+        tier: frontend
+        app: web-hq
+        deployment: hq
+    type: NodePort
