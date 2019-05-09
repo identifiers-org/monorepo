@@ -20,8 +20,8 @@ import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationReques
 public class ApiAndDataModelsHelper {
     public static PrefixRegistrationRequest getPrefixRegistrationRequest(ServiceRequestRegisterPrefixPayload sourceModel) {
         String references = "";
-        if (sourceModel.getReferences() != null) {
-            references = "".join(",", sourceModel.getReferences());
+        if (sourceModel.getSupportingReferences() != null) {
+            references = "".join(",", sourceModel.getSupportingReferences());
         }
         String additionalInformation = "--- No additional information provided ---";
         if (sourceModel.getAdditionalInformation() != null) {

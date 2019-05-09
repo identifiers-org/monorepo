@@ -92,8 +92,8 @@ public class PrefixRegistrationRequest {
     @Column(nullable = false)
     private String idRegexPattern;
 
-    // Originally called 'references', but, apparently, when hibernate produces the DDL, it doesn't do it very well and
-    // the attribute name clashes with the reserved keyword 'references' of the SQL dialect used by the RDBMS backend,
+    // Originally called 'supportingReferences', but, apparently, when hibernate produces the DDL, it doesn't do it very well and
+    // the attribute name clashes with the reserved keyword 'supportingReferences' of the SQL dialect used by the RDBMS backend,
     // ported from the original identifiers.org form at https://identifiers.org/request/prefix
     // Optional
     @Column(length = 2000)

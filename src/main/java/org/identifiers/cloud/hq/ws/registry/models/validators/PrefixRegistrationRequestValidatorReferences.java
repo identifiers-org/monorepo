@@ -26,10 +26,10 @@ public class PrefixRegistrationRequestValidatorReferences implements PrefixRegis
         // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
         // References are not enforced, so they just validate
         logger.info("References validation policy is VALID by default");
-        if (request.getReferences() == null) {
-            logger.info("No references have been provided");
+        if (request.getSupportingReferences() == null) {
+            logger.info("No supportingReferences have been provided");
         } else {
-            logger.info(String.format("#%d Reference entries have been provided", request.getReferences().length));
+            logger.info(String.format("#%d Reference entries have been provided", request.getSupportingReferences().length));
         }
         return true;
     }
