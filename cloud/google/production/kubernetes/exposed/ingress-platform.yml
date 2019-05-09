@@ -1,2 +1,38 @@
 # HQ deployment Ingress resource for global load balancing
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: hq-deployment
+    labels:
+        environment: production
+        tier: api
+        app: hq-deployment
+    annotations:
+        kubernetes.io/ingress.class: "gce"
+        kubernetes.io/ingress.global-static-ip-name: ipaddr-iorg-hq-production
+        ingress.gcp.kubernetes.io/pre-shared-cert: 'cert-iorg-hq-production-web,cert-iorg-hq-production-accountsweb,cert-iorg-hq-production-api-registry,cert-iorg-hq-production-api-mirid'
+        kubernetes.io/ingress.allow-http: "false"
+spec:
+    rules:
+    # Resolver rules
+    - host: registry.api.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: nodeport-registry
+                  servicePort: 8180
+    # Metadata Service rules
+    - host: metadata.api.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: nodeport-metadata
+                  servicePort: 8082
+    # Web Frontend rules
+    - host: cloud.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: nodeport-web-satellite
+                  servicePort: 9090
