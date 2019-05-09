@@ -22,7 +22,7 @@ import javax.annotation.PostConstruct;
  */
 @Configuration
 @Slf4j
-@Profile("noauthprofile")
+@Profile("authdisabled")
 @EnableWebSecurity
 public class NoAuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
     // TODO - Maybe configurable in the future?

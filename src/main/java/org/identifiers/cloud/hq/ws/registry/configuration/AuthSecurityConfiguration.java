@@ -26,7 +26,7 @@ import javax.annotation.PostConstruct;
  * ---
  */
 @Configuration
-@Profile("authprofile")
+@Profile("authenabled")
 @Slf4j
 @EnableWebSecurity
 public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
