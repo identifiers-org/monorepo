@@ -1,2 +1,26 @@
 # This is the definition of a Ingress Resource used for testing purposes
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+# HQ deployment Ingress resource for global load balancing
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: testing-gce
+    labels:
+        environment: development
+        tier: loadBalancing
+        app: testing-gce
+    annotations:
+        kubernetes.io/ingress.class: "gce"
+        kubernetes.io/ingress.global-static-ip-name: ipaddr-iorg-development-gce
+        ingress.gcp.kubernetes.io/pre-shared-cert: 'cert-iorg-development-testing'
+        #kubernetes.io/ingress.allow-http: "false"
+spec:
+    rules:
+    # Registry API rules
+    - host: echo.dev.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: nodeport-nginx-echo-headers
+                  servicePort: 8080
