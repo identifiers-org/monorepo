@@ -63,6 +63,8 @@ spec:
                             key: clientsecret
                   - name: HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI
                     value: "http://keycloak:8080/auth/realms/idorg"
+                  - name: HQ_WS_REGISTRY_CONFIG_APPLICATION_ACTIVE_PROFILE
+                    value: "authenabled"
                   ports:
                   - containerPort: 8180
                   readinessProbe:
