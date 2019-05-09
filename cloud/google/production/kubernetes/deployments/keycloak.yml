@@ -1,2 +1,61 @@
 # Keycloak Server for HQ
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: keycloak
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            environment: production
+            tier: backend
+            app: keycloak
+            deployment: hq
+    template:
+        metadata:
+            labels:
+                environment: production
+                tier: backend
+                app: keycloak
+                deployment: hq
+        spec:
+            containers:
+                - name: keycloak
+                  image: jboss/keycloak:6.0.1
+                  resources:
+                      requests:
+                          memory: 1024Mi
+                  env:
+                  - name: KEYCLOAK_USER
+                    valueFrom:
+                        secretKeyRef:
+                            name: hq-keycloak-credentials-admin
+                            key: username
+                  - name: KEYCLOAK_PASSWORD
+                    valueFrom:
+                        secretKeyRef:
+                            name: hq-keycloak-credentials-admin
+                            key: password
+                  - name: DB_VENDOR
+                    value: "postgres"
+                  - name: DB_ADDR
+                    value: "hq-postgresql"
+                  - name: DB_DATABASE
+                    value: "dbhqkeycloak"
+                  - name: DB_USER
+                    valueFrom:
+                        secretKeyRef:
+                            name: hq-keycloak-db-credentials
+                            key: username
+                  - name: DB_PASSWORD
+                    valueFrom:
+                        secretKeyRef:
+                            name: hq-keycloak-db-credentials
+                            key: password
+                  - name: JGROUPS_DISCOVERY_PROTOCOL
+                    value: "dns.DNS_PING"
+                  - name: JGROUPS_DISCOVERY_PROPERTIES
+                    value: "dns_query=keycloak.default.svc.cluster.local"
+                  ports:
+                  - containerPort: 8080
