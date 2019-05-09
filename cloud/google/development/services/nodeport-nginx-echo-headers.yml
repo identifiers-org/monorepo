@@ -1,0 +1,2 @@
+# NGINX based HTTP(S) request headers echo service (node port based internal LB)
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
