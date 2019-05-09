@@ -1,2 +1,29 @@
 # NGINX based server that will echo received HTTP(S) request headers to client
-# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: nginx-echo-headers
+spec:
+    selector:
+        matchLabels:
+            environment: development
+            tier: api
+            app: nginx-echo-headers
+            deployment: hq
+    replicas: 1
+    template:
+        metadata:
+            labels:
+                environment: development
+                tier: api
+                app: nginx-echo-headers
+                deployment: hq
+        spec:
+            containers:
+                - name: nginx-echo-headers
+                  image: brndnmtthws/nginx-echo-headers
+                  resources:
+                      requests:
+                          memory: 64Mi
+                  ports:
+                  - containerPort: 8080
