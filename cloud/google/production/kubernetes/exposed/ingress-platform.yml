@@ -27,19 +27,19 @@ spec:
       http:
           paths:
               - backend:
-                  serviceName: nodeport-metadata
+                  serviceName: nodeport-mirid-controller
                   servicePort: 8181
     # Registry Web Frontend rules
     - host: registry.identifiers.org
       http:
           paths:
               - backend:
-                  serviceName: nodeport-web-satellite
+                  serviceName: nodeport-web-hq
                   servicePort: 80
     # Accounts web
     - host: accounts.identifiers.org
       http:
           paths:
               - backend:
-                  serviceName: nodeport-web-satellite
+                  serviceName: nodeport-keycloak
                   servicePort: 8080
