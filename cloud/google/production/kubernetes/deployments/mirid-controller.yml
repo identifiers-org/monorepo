@@ -25,10 +25,10 @@ spec:
                   image: identifiersorg/cloud-hq-ws-mirid-controller:1.0.0
                   resources:
                       requests:
-                          memory: 640Mi
+                          memory: 768Mi
                   env:
                   - name: HQ_WS_MIRID_CONTROLLER_JVM_MEMORY_MAX
-                    value: "512m"
+                    value: "640m"
                   - name: HQ_WS_MIRID_CONTROLLER_CONFIG_APPLICATION_ACTIVE_PROFILE
                     value: "authenabled"
                   - name: HQ_WS_MIRID_CONTROLLER_CONFIG_JDBC_URL
@@ -67,11 +67,11 @@ spec:
                       httpGet:
                           path: /healthApi/readiness_check
                           port: 8181
-                      initialDelaySeconds: 5
+                      initialDelaySeconds: 60
                       periodSeconds: 10
                   livenessProbe:
                       httpGet:
                           path: /healthApi/liveness_check
                           port: 8181
-                      initialDelaySeconds: 5
+                      initialDelaySeconds: 60
                       periodSeconds: 10
