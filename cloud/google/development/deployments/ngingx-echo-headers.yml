@@ -1,0 +1,2 @@
+# NGINX based server that will echo received HTTP(S) request headers to client
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
