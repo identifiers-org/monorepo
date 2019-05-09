@@ -15,24 +15,31 @@ metadata:
         kubernetes.io/ingress.allow-http: "false"
 spec:
     rules:
-    # Resolver rules
+    # Registry API rules
     - host: registry.api.identifiers.org
       http:
           paths:
               - backend:
                   serviceName: nodeport-registry
                   servicePort: 8180
-    # Metadata Service rules
-    - host: metadata.api.identifiers.org
+    # MIR ID Controller API Service rules
+    - host: mirid.api.identifiers.org
       http:
           paths:
               - backend:
                   serviceName: nodeport-metadata
-                  servicePort: 8082
-    # Web Frontend rules
-    - host: cloud.identifiers.org
+                  servicePort: 8181
+    # Registry Web Frontend rules
+    - host: registry.identifiers.org
       http:
           paths:
               - backend:
                   serviceName: nodeport-web-satellite
-                  servicePort: 9090
+                  servicePort: 80
+    # Accounts web
+    - host: accounts.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: nodeport-web-satellite
+                  servicePort: 8080
