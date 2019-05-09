@@ -1,5 +1,6 @@
 # Deployment definition for the Central Registry Web
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+# TODO This is a placeholder definition, it will be refactor with the actual web
 apiVersion: apps/v1
 kind: Deployment
 metadata:
