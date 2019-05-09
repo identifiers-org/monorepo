@@ -1,0 +1,19 @@
+# Definition for a keycloak service (load balancing)
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: v1
+kind: Service
+metadata:
+    name: keycloak
+    labels:
+        environment: production
+        tier: backend
+        app: keycloak
+        deployment: hq
+spec:
+    ports:
+    - port: 8080
+    selector:
+        environment: production
+        tier: backend
+        app: keycloak
+        deployment: hq
