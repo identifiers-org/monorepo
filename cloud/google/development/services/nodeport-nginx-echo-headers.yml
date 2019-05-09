@@ -17,3 +17,4 @@ spec:
         tier: api
         app: nginx-echo-headers
         deployment: hq
+    type: NodePort
