@@ -48,7 +48,7 @@ spec:
                   - name: HQ_WS_MIRID_CONTROLLER_CONFIG_REDIS_PORT
                     value: "6379"
                   - name: HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUERURI
-                    value: "http://keycloak:8080/auth/realms/idorg/"
+                    value: "https://accounts.identifiers.org/auth/realms/idorg/"
                   - name: HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTID
                     valueFrom:
                         secretKeyRef:
@@ -60,7 +60,7 @@ spec:
                             name: hq-mirid-controller-keycloak-credentials
                             key: clientsecret
                   - name: HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI
-                    value: "http://keycloak:8080/auth/realms/idorg"
+                    value: "https://accounts.identifiers.org/auth/realms/idorg"
                   ports:
                   - containerPort: 8181
                   readinessProbe:
