@@ -57,5 +57,7 @@ spec:
                     value: "dns.DNS_PING"
                   - name: JGROUPS_DISCOVERY_PROPERTIES
                     value: "dns_query=keycloak.default.svc.cluster.local"
+                  - name: PROXY_ADDRESS_FORWARDING
+                    value: "true"
                   ports:
                   - containerPort: 8080
