@@ -27,18 +27,18 @@ spec:
                       requests:
                           memory: 640Mi
                   env:
-                  - name: HQ_WS_MIR_ID_CONTROLLER_JVM_MEMORY_MAX
+                  - name: HQ_WS_MIRID_CONTROLLER_JVM_MEMORY_MAX
                     value: "512m"
                   - name: HQ_WS_MIRID_CONTROLLER_CONFIG_APPLICATION_ACTIVE_PROFILE
                     value: "authenabled"
                   - name: HQ_WS_MIRID_CONTROLLER_CONFIG_JDBC_URL
-                    value: "XXXXXXXXXXXX"
-                  - name: HQ_WS_REGISTRY_CONFIG_RDBMS_USERNAME
+                    value: "jdbc:postgresql://hq-postgresql:5432/dbhqmiridcontroller"
+                  - name: HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_USERNAME
                     valueFrom:
                         secretKeyRef:
                             name: hq-mirid-controller-database-credentials
                             key: username
-                  - name: HQ_WS_REGISTRY_CONFIG_RDBMS_PASSWORD
+                  - name: HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_PASSWORD
                     valueFrom:
                         secretKeyRef:
                             name: hq-mirid-controller-database-credentials
@@ -48,7 +48,7 @@ spec:
                   - name: HQ_WS_MIRID_CONTROLLER_CONFIG_REDIS_PORT
                     value: "6379"
                   - name: HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUERURI
-                    value: "XXXXXXXX"
+                    value: "http://localkeycloak:8080/auth/realms/idorg/"
                   - name: HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTID
                     valueFrom:
                         secretKeyRef:
@@ -60,7 +60,7 @@ spec:
                             name: hq-mirid-controller-keycloak-credentials
                             key: clientsecret
                   - name: HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI
-                    value: "XXXXXXXX"
+                    value: "http://localkeycloak:8080/auth/realms/idorg"
                   ports:
                   - containerPort: 8181
                   readinessProbe:
