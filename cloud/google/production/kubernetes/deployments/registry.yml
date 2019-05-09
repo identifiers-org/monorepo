@@ -48,7 +48,7 @@ spec:
                   - name: HQ_WS_REGISTRY_JVM_MEMORY_MAX
                     value: "640m"
                   - name: HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUERURI
-                    value: "http://keycloak:8080/auth/realms/idorg/"
+                    value: "http://keycloak:8080/auth/realms/idorg"
                   - name: HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_ACCESS_TOKEN_URI
                     value: "http://keycloak:8080/auth/realms/idorg/protocol/openid-connect/token"
                   - name: HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTID
