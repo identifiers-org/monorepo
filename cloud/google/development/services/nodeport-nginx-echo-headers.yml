@@ -1,2 +1,19 @@
 # NGINX based HTTP(S) request headers echo service (node port based internal LB)
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: v1
+kind: Service
+metadata:
+    name: nodeport-nginx-echo-headers
+    labels:
+        environment: development
+        tier: api
+        app: nginx-echo-headers
+        deployment: hq
+spec:
+    ports:
+    - port: 8080
+    selector:
+        environment: development
+        tier: api
+        app: nginx-echo-headers
+        deployment: hq
