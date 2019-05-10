@@ -21,4 +21,4 @@ EXPOSE 8080
 WORKDIR /home/app
 
 # Launch container
-CMD /bin/bash ./startup.sh
+CMD /bin/bash -c startup.sh

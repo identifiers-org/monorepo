@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "[DEVOPS] Configuring environment"
+echo "[DEVOPS] Configuring environment, running on '$0'"
 for configparam in $( egrep -o "ENVCONFIG[A-Z_]*" /home/site/index.html )
 do
     echo -e "\t${configparam}"
