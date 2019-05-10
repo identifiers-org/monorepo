@@ -9,6 +9,9 @@ RUN mkdir -p /home/app
 # Copy startup script
 COPY scripts/startup.sh /home/app/startup.sh
 RUN chmod 750 /home/app/startup.sh
+# Prepare site
+RUN mkdir -p /home/site
+ADD site/. /home/site
 
 # Publish the following ports
 EXPOSE 8080
