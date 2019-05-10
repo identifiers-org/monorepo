@@ -15,3 +15,6 @@ EXPOSE 8080
 
 # Working directory
 WORKDIR /home/app
+
+# Launch container
+CMD ./startup.sh
