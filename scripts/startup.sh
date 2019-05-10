@@ -7,7 +7,7 @@ do
         echo -e "\t\tNOT DEFINED"
     else
         value=$(eval "echo \$$configparam")
-        sed -i "s/${configparam}/$value/g" /home/site/index.html
+        sed -i "s@${configparam}@$value@g" /home/site/index.html
     fi
 done
 echo "[START] Starting HQ Registry Web Frontend"

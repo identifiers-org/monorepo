@@ -20,5 +20,8 @@ EXPOSE 8080
 # Working directory
 WORKDIR /home/app
 
+# FUCK YOU /BIN/SH
+RUN cp /bin/bash /bin/sh
+
 # Launch container
-CMD /bin/bash -c startup.sh
+CMD ./startup.sh
