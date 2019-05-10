@@ -11,7 +11,7 @@ metadata:
     annotations:
         kubernetes.io/ingress.class: "gce"
         kubernetes.io/ingress.global-static-ip-name: ipaddr-iorg-hq-production
-        ingress.gcp.kubernetes.io/pre-shared-cert: 'cert-iorg-hq-production-web,cert-iorg-hq-production-accountsweb,cert-iorg-hq-production-api-registry,cert-iorg-hq-production-api-mirid'
+        ingress.gcp.kubernetes.io/pre-shared-cert: 'cert-iorg-hq-production-web,cert-iorg-hq-production-auth,cert-iorg-hq-production-api-registry,cert-iorg-hq-production-api-mirid'
         kubernetes.io/ingress.allow-http: "false"
 spec:
     rules:
@@ -37,7 +37,7 @@ spec:
                   serviceName: nodeport-web-hq
                   servicePort: 80
     # Accounts web
-    - host: accounts.identifiers.org
+    - host: auth.identifiers.org
       http:
           paths:
               - backend:
