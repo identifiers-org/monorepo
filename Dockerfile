@@ -12,3 +12,6 @@ RUN chmod 750 /home/app/startup.sh
 
 # Publish the following ports
 EXPOSE 8080
+
+# Working directory
+WORKDIR /home/app
