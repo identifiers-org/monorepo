@@ -12,6 +12,7 @@ RUN chmod 750 /home/app/startup.sh
 # Prepare site
 RUN mkdir -p /home/site
 ADD site/. /home/site
+RUN chown nginx:nginx -R /home/site
 
 # Publish the following ports
 EXPOSE 8080
