@@ -4,7 +4,7 @@
   "description": "Identifiers.org HQ web frontend written in js",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development parcel src/index.html --open --port 8182",
+    "start": "NODE_ENV=development parcel src/index.html --port 8182",
     "build": "NODE_ENV=production parcel build src/index.html --out-dir prod",
     "precommit": "lint-staged",
     "predeploy": "yarn run build",

@@ -19,7 +19,7 @@ deploy: clean container_production_push
 
 development_env_up: development_env_backend_up
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Launch development environment"
-	@docker run -p 8182:1234 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node npm --prefix /home/site start
+	@docker run -p 8182:8182 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site install; npm --prefix /home/site start"
 
 development_env_backend_up:
 	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing development environment UP"
