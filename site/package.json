@@ -1,6 +1,6 @@
 {
   "name": "identifiers-org-cloud-hq-web-frontend",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Identifiers.org HQ web frontend written in js",
   "main": "index.js",
   "scripts": {
