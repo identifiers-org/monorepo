@@ -7,8 +7,8 @@ docker_compose_development_file = docker-compose-development.yml
 springboot_development_profile = development
 tag_version = $(shell cat VERSION)
 dev_site_root_folder = site
-file_template_site_index = $(dev_site_root_folder)/index.html.template
-file_instance_site_index = $(dev_site_root_folder)/index.html
+file_template_site_index = $(dev_site_root_folder)/src/index.html.template
+file_instance_site_index = $(dev_site_root_folder)/src/index.html
 development_url_registry_service = http://localhost:8180
 
 # Default target
