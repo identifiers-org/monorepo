@@ -45,13 +45,15 @@ development_run_tests: development_env_up
 	@echo "<===|DEVOPS|===> [TESTS] Running Unit Tests"
 	@mvn -Dspring.profiles.active=$(springboot_development_profile) clean test
 
-app_structure:
-	@echo "<===|DEVOPS|===> [PACKAGE] Application"
-	@mvn clean > /dev/null
-	@mvn package -DskipTests
-	@mkdir -p target/app/log
-	@mkdir -p target/app/tmp
-	@cp target/hq-web-frontend-$(shell mvn help:evaluate -Dexpression=project.version | grep -v '^\[').jar target/app/service.jar
+app_structure: clean build css spa
+	@echo "<===|DEVOPS|===> [PACKAGE] Building application structure"
+	@cp -R site/* build/.
+
+css:
+	@echo "<===|DEVOPS|===> [PACKAGE] CSS"
+
+spa:
+	@echo "<===|DEVOPS|===> [PACKAGE] SPA"
 
 container_production_build: app_structure
 	@echo "<===|DEVOPS|===> [BUILD] Production container $(container_name):$(tag_version)"
@@ -65,9 +67,13 @@ container_production_push: container_production_build
 dev_container_build: clean container_production_build
 	@echo "<===|DEVOPS|===> [DEV] Preparing local container"
 
-clean:
-	@echo "<===|DEVOPS|===> [CLEAN] Cleaning the space"
-	@mvn clean > /dev/null
-	@mvn versions:commit
+# Folders
+build:
+	@echo "<===|DEVOPS|===> [FOLDER] Preparing 'build' folder"
+	@mkdir build
 
-.PHONY: all clean app_structure container_production_build container_production_push dev_container_build deploy release sync_project_version set_next_development_version
+clean:
+	@echo "<===|DEVOPS|===> [CLEAN] Cleaning 'build'"
+	@rm -rf build
+
+.PHONY: all clean app_structure css spa container_production_build container_production_push dev_container_build deploy release sync_project_version set_next_development_version
