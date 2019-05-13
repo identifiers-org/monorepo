@@ -35,6 +35,7 @@ services:
             - "8180:8180"
         depends_on:
             - hqregistrypostgresql
+            - hqmiridcontroller
     hqmiridcontroller:
         image: identifiersorg/cloud-hq-ws-mirid-controller
         environment:
