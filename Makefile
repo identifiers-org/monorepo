@@ -8,9 +8,12 @@ springboot_development_profile = development
 tag_version = $(shell cat VERSION)
 dev_site_root_folder = site
 file_template_site_index = $(dev_site_root_folder)/src/index.html.template
+file_template_environment_site_index = $(dev_site_root_folder)/src/index.template.environment
 file_instance_site_index = $(dev_site_root_folder)/src/index.html
 development_url_registry_service = http://127.0.0.1:8180
 folder_site_dist = site/dist
+file_instance_app_structure_index = $(folder_site_dist)/index.html
+environment_content = $(shell cat $(file_template_environment_site_index))
 
 # Default target
 all: deploy
@@ -61,6 +64,7 @@ production_instantiate_index_template:
 app_structure: production_instantiate_index_template
 	@echo "<===|DEVOPS|===> [PACKAGE] Building application structure"
 	@docker run -v $(shell pwd)/${dev_site_root_folder}:/home/site node /bin/bash -c "npm --prefix /home/site install; npm --prefix /home/site run build"
+	@sed -i "s@<!--ENVIRONMENT_PLACEHOLDER-->@${environment_content}@g" ${file_instance_app_structure_index}
 
 container_production_build: app_structure
 	@echo "<===|DEVOPS|===> [BUILD] Production container $(container_name):$(tag_version)"
