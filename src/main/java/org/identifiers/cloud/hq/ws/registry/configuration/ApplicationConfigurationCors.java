@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -21,20 +20,18 @@ import javax.annotation.PostConstruct;
  * ---
  */
 @Configuration
-@Profile("production")
 @Slf4j
-public class ApplicationConfigurationProduction implements WebMvcConfigurer {
+public class ApplicationConfigurationCors implements WebMvcConfigurer {
     @Value("${org.identifiers.cloud.hq.ws.registry.cors.origin}")
     private String corsOrigins;
 
     @PostConstruct
     private void postConstruct() {
-        log.info("[CONFIG] Production configuration enabled");
+        log.info("[CONFIG] CORS");
     }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        //log.info("CORS configuration for PRODUCTION");
         registry.addMapping("/**").allowedOrigins(corsOrigins).allowedMethods("*");
     }
 
