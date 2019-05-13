@@ -22,22 +22,22 @@ deploy: clean container_production_push
 
 instantiate_index_template:
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Prepare index template"
-	@cp $file_template_site_index $file_instance_site_index
-	@sed -i "s@ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_API_REGISTRY_URL@$development_url_registry_service@g" $file_instance_site_index
+	@cp ${file_template_site_index} ${file_instance_site_index}
+	@sed -i "s@ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_API_REGISTRY_URL@$development_url_registry_service@g" ${file_instance_site_index}
 
 development_env_up: instantiate_index_template development_env_backend_up
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Launch development environment"
 	@docker run -p 8182:8182 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site install; npm --prefix /home/site start"
 
 development_env_backend_up:
-	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing development environment UP"
+	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing backend UP"
 	@docker-compose -f $(docker_compose_development_file) up -d
 	@# TODO Clean this way of referencing the target name in future iterations
 	@rm -f development_env_backend_down
 	@touch development_env_backend_up
 
 development_env_backend_down:
-	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing development environment DOWN"
+	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing backend DOWN"
 	@docker-compose -f $(docker_compose_development_file) down
 	@# TODO Clean this way of referencing the target name in future iterations
 	@rm -f development_env_backend_up
