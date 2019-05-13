@@ -20,10 +20,6 @@ release: deploy
 deploy: clean container_production_push
 	@echo "<===|DEVOPS|===> [DEPLOY] Deploying service container version ${tag_version}"
 
-production_instantiate_index_template:
-	@echo "<===|DEVOPS|===> [PRODUCTION] Prepare index template"
-	@cp ${file_template_site_index} ${file_instance_site_index}
-
 development_instantiate_index_template:
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Prepare index template"
 	@cp ${file_template_site_index} ${file_instance_site_index}
@@ -51,15 +47,13 @@ development_run_tests: development_env_up
 	@echo "<===|DEVOPS|===> [TESTS] Running Unit Tests"
 	@mvn -Dspring.profiles.active=$(springboot_development_profile) clean test
 
-app_structure: build css spa
+production_instantiate_index_template:
+	@echo "<===|DEVOPS|===> [PRODUCTION] Prepare index template"
+	@cp ${file_template_site_index} ${file_instance_site_index}
+
+app_structure:
 	@echo "<===|DEVOPS|===> [PACKAGE] Building application structure"
-	@cp -R site/* build/.
-
-css:
-	@echo "<===|DEVOPS|===> [PACKAGE] CSS"
-
-spa:
-	@echo "<===|DEVOPS|===> [PACKAGE] SPA"
+	@docker run node /bin/bash -c "npm --prefix /home/site install; npm --prefix /home/site run build"
 
 container_production_build: app_structure
 	@echo "<===|DEVOPS|===> [BUILD] Production container $(container_name):$(tag_version)"
@@ -73,13 +67,7 @@ container_production_push: container_production_build
 dev_container_build: clean container_production_build
 	@echo "<===|DEVOPS|===> [DEV] Preparing local container"
 
-# Folders
-build:
-	@echo "<===|DEVOPS|===> [FOLDER] Preparing 'build' folder"
-	@mkdir build
-
 clean:
-	@echo "<===|DEVOPS|===> [CLEAN] Cleaning 'build'"
-	@rm -rf build
+	@echo "<===|DEVOPS|===> [CLEAN] Housekeeping"
 
-.PHONY: all clean app_structure css spa container_production_build development_env_up container_production_push dev_container_build deploy release sync_project_version set_next_development_version instantiate_index_template production_instantiate_index_template
+.PHONY: all clean app_structure container_production_build development_env_up container_production_push dev_container_build deploy release sync_project_version set_next_development_version instantiate_index_template production_instantiate_index_template
