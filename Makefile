@@ -20,12 +20,16 @@ release: deploy
 deploy: clean container_production_push
 	@echo "<===|DEVOPS|===> [DEPLOY] Deploying service container version ${tag_version}"
 
-instantiate_index_template:
+production_instantiate_index_template:
+	@echo "<===|DEVOPS|===> [PRODUCTION] Prepare index template"
+	@cp ${file_template_site_index} ${file_instance_site_index}
+
+development_instantiate_index_template:
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Prepare index template"
 	@cp ${file_template_site_index} ${file_instance_site_index}
 	@sed -i "s@ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_API_REGISTRY_URL@${development_url_registry_service}@g" ${file_instance_site_index}
 
-development_env_up: instantiate_index_template development_env_backend_up
+development_env_up: development_instantiate_index_template development_env_backend_up
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Launch development environment"
 	@docker run --network=hqwebnet -p 8182:8182 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site install; npm --prefix /home/site start"
 
@@ -78,4 +82,4 @@ clean:
 	@echo "<===|DEVOPS|===> [CLEAN] Cleaning 'build'"
 	@rm -rf build
 
-.PHONY: all clean app_structure css spa container_production_build development_env_up container_production_push dev_container_build deploy release sync_project_version set_next_development_version instantiate_index_template
+.PHONY: all clean app_structure css spa container_production_build development_env_up container_production_push dev_container_build deploy release sync_project_version set_next_development_version instantiate_index_template production_instantiate_index_template
