@@ -7,6 +7,7 @@ docker_compose_development_file = docker-compose-development.yml
 springboot_development_profile = development
 tag_version = $(shell cat VERSION)
 dev_site_root_folder = site
+file_template_site_index = $(dev_site_root_folder)/index.html.template
 
 # Default target
 all: deploy
@@ -17,6 +18,9 @@ release: deploy
 deploy: clean container_production_push
 	@echo "<===|DEVOPS|===> [DEPLOY] Deploying service container version ${tag_version}"
 
+instantiate_index_template:
+	@echo "<===|DEVOPS|===> [DEVELOPMENT] Prepare index template"
+	@cp
 development_env_up: development_env_backend_up
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Launch development environment"
 	@docker run -p 8182:8182 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site install; npm --prefix /home/site start"
