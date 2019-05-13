@@ -1,0 +1,30 @@
+.logo {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+
+  img {
+    max-height: 61px;
+    max-width: 61px;
+    width: auto;
+    height: auto;
+  }
+
+  h1 {
+    margin: 0 0 0 .5rem;
+    line-height: 1.5;
+  }
+}
+
+.logo-text {
+  font-family: 'Quicksand';
+}
+
+.logo-subtitle {
+  font-family: 'Quicksand';
+  font-weight: 300;
+  color: #1049a5;
+  text-align: right;
+  margin: -1rem 1.5rem 0 0;
+  font-style: italic;
+}

@@ -1,0 +1,17 @@
+html {
+  overflow-y: scroll;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a, a:visited, a:hover, a:active {
+  text-decoration: none;
+}
+
+.clear-link, .clear-link:hover{
+  color: #212529;
+  text-decoration: none;
+  cursor: pointer;
+}
