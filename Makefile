@@ -56,7 +56,7 @@ production_instantiate_index_template:
 	@echo "<===|DEVOPS|===> [PRODUCTION] Prepare index template"
 	@cp ${file_template_site_index} ${file_instance_site_index}
 
-app_structure:
+app_structure: production_instantiate_index_template
 	@echo "<===|DEVOPS|===> [PACKAGE] Building application structure"
 	@docker run -v $(shell pwd)/${dev_site_root_folder}:/home/site node /bin/bash -c "npm --prefix /home/site install; npm --prefix /home/site run build"
 
