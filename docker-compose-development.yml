@@ -18,3 +18,7 @@ services:
             - POSTGRES_PASSWORD=devpassword
         ports:
             - "5431:5432"
+    redis:
+        image: redis:4.0.8-alpine
+        ports:
+            - "6379:6379"
