@@ -78,7 +78,6 @@ export const getResourcesFromRegistry = (namespace) => {
         let { _links, ...newResource } = resource;
 
         return fetchAndAdd(newResource, [
-          {name: 'contactPerson', url: _links.contactPerson.href},
           {name: 'institution', url: _links.institution.href},
           {name: 'location', url: _links.location.href}
         ]);
