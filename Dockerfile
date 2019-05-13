@@ -15,7 +15,7 @@ ADD site/dist/. /home/site
 RUN chown nginx:nginx -R /home/site
 
 # Publish the following ports
-EXPOSE 8080
+EXPOSE 80
 
 # Working directory
 WORKDIR /home/app
