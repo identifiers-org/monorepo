@@ -8,6 +8,8 @@ springboot_development_profile = development
 tag_version = $(shell cat VERSION)
 dev_site_root_folder = site
 file_template_site_index = $(dev_site_root_folder)/index.html.template
+file_instance_site_index = $(dev_site_root_folder)/index.html
+development_url_registry_service = http://localhost:8180
 
 # Default target
 all: deploy
@@ -20,8 +22,10 @@ deploy: clean container_production_push
 
 instantiate_index_template:
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Prepare index template"
-	@cp
-development_env_up: development_env_backend_up
+	@cp $file_template_site_index $file_instance_site_index
+	@sed -i "s@ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_API_REGISTRY_URL@$development_url_registry_service@g" $file_instance_site_index
+
+development_env_up: instantiate_index_template development_env_backend_up
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Launch development environment"
 	@docker run -p 8182:8182 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site install; npm --prefix /home/site start"
 
@@ -74,4 +78,4 @@ clean:
 	@echo "<===|DEVOPS|===> [CLEAN] Cleaning 'build'"
 	@rm -rf build
 
-.PHONY: all clean app_structure css spa container_production_build development_webapp_up container_production_push dev_container_build deploy release sync_project_version set_next_development_version
+.PHONY: all clean app_structure css spa container_production_build development_webapp_up container_production_push dev_container_build deploy release sync_project_version set_next_development_version instantiate_index_template
