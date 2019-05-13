@@ -179,6 +179,8 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .ignoringAntMatchers("/prefixRegistrationApi/registerPrefix")
                     .ignoringAntMatchers("/prefixRegistrationApi/validate*")
                 .and()
+                .cors()
+                .and()
                 .oauth2ResourceServer().jwt();
     }
     // TODO
