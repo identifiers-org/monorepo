@@ -28,9 +28,10 @@ sync_project_version:
 deploy: clean container_production_push
 	@echo "<===|DEVOPS|===> [DEPLOY] Deploying service container version ${tag_version}"
 
-development_instantiate_index_template:
-	@echo "<===|DEVOPS|===> [DEVELOPMENT] Prepare index template"
-	@cp ${file_template_site_index} ${file_instance_site_index}
+development_instantiate_index_template: instantiate_base_index_template
+	@echo "<===|DEVOPS|===> [DEVELOPMENT] Prepare index template environment"
+	@sed -i "s@<!--ENVIRONMENT_PLACEHOLDER-->@${environment_content}@g" ${file_instance_site_index}
+	@echo "<===|DEVOPS|===> [DEVELOPMENT] Set development environment"
 	@sed -i "s@ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_API_REGISTRY_URL@${development_url_registry_service}@g" ${file_instance_site_index}
 
 development_env_up: development_instantiate_index_template development_env_backend_up
@@ -57,11 +58,11 @@ development_run_tests: development_env_up
 	@echo "<===|DEVOPS|===> [TESTS] Running Unit Tests"
 	@mvn -Dspring.profiles.active=$(springboot_development_profile) clean test
 
-production_instantiate_index_template:
-	@echo "<===|DEVOPS|===> [PRODUCTION] Prepare index template"
+instantiate_base_index_template:
+	@echo "<===|DEVOPS|===> [PRODUCTION] Prepare base index template"
 	@cp ${file_template_site_index} ${file_instance_site_index}
 
-app_structure: production_instantiate_index_template
+app_structure: instantiate_base_index_template
 	@echo "<===|DEVOPS|===> [PACKAGE] Building application structure"
 	@docker run -v $(shell pwd)/${dev_site_root_folder}:/home/site node /bin/bash -c "npm --prefix /home/site install; npm --prefix /home/site run build"
 	@sed -i "s@<!--ENVIRONMENT_PLACEHOLDER-->@${environment_content}@g" ${file_instance_app_structure_index}
@@ -82,4 +83,4 @@ clean:
 	@echo "<===|DEVOPS|===> [CLEAN] Housekeeping"
 	@rm -rf ${folder_site_dist}
 
-.PHONY: all clean app_structure container_production_build development_env_up development_env_down container_production_push dev_container_build deploy release sync_project_version set_next_development_version instantiate_index_template production_instantiate_index_template
+.PHONY: all clean app_structure container_production_build development_env_up development_env_down container_production_push dev_container_build deploy release sync_project_version set_next_development_version instantiate_index_template instantiate_base_index_template
