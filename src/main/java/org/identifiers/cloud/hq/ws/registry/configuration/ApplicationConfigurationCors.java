@@ -32,7 +32,7 @@ public class ApplicationConfigurationCors implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOrigins(corsOrigins).allowedMethods("*");
+        registry.addMapping("/**").allowedOrigins(corsOrigins.split(",")).allowedMethods("*");
     }
 
     // Configure CORS for JPA Repositories
@@ -41,7 +41,7 @@ public class ApplicationConfigurationCors implements WebMvcConfigurer {
         return new RepositoryRestConfigurer() {
             @Override
             public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-                config.getCorsRegistry().addMapping("/restApi/**").allowedOrigins(corsOrigins).allowedMethods("*");
+                config.getCorsRegistry().addMapping("/restApi/**").allowedOrigins(corsOrigins.split(",")).allowedMethods("*");
             }
         };
     }
