@@ -1,2 +1,12 @@
 # Development environment definition
 # Author: Manuel Bernal Llinares
+version: "3"
+services:
+    hqregistrypostgresql:
+        image: postgres
+        environment:
+            - POSTGRES_DB=devdatabase
+            - POSTGRES_USER=devusername
+            - POSTGRES_PASSWORD=devpassword
+        ports:
+            - "5430:5432"
