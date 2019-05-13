@@ -6,6 +6,7 @@ container_name = identifiersorg/cloud-hq-web-frontend
 docker_compose_development_file = docker-compose-development.yml
 springboot_development_profile = development
 tag_version = $(shell cat VERSION)
+dev_site_root_folder = site
 
 # Default target
 all: deploy
@@ -16,19 +17,23 @@ release: deploy
 deploy: clean container_production_push
 	@echo "<===|DEVOPS|===> [DEPLOY] Deploying service container version ${tag_version}"
 
-development_env_up:
+development_env_up: development_env_backend_up
+	@echo "<===|DEVOPS|===> [DEVELOPMENT] Launch development environment"
+	@cd ${dev_site_root_folder}; docker run -it node npm start
+
+development_env_backend_up:
 	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing development environment UP"
 	@docker-compose -f $(docker_compose_development_file) up -d
 	@# TODO Clean this way of referencing the target name in future iterations
-	@rm -f development_env_down
-	@touch development_env_up
+	@rm -f development_env_backend_down
+	@touch development_env_backend_up
 
-development_env_down:
+development_env_backend_down:
 	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing development environment DOWN"
 	@docker-compose -f $(docker_compose_development_file) down
 	@# TODO Clean this way of referencing the target name in future iterations
-	@rm -f development_env_up
-	@touch development_env_down
+	@rm -f development_env_backend_up
+	@touch development_env_backend_down
 
 development_run_tests: development_env_up
 	@echo "<===|DEVOPS|===> [TESTS] Running Unit Tests"
@@ -65,4 +70,4 @@ clean:
 	@echo "<===|DEVOPS|===> [CLEAN] Cleaning 'build'"
 	@rm -rf build
 
-.PHONY: all clean app_structure css spa container_production_build container_production_push dev_container_build deploy release sync_project_version set_next_development_version
+.PHONY: all clean app_structure css spa container_production_build development_webapp_up container_production_push dev_container_build deploy release sync_project_version set_next_development_version
