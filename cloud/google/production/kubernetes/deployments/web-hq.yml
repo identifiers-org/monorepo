@@ -23,7 +23,7 @@ spec:
         spec:
             containers:
                 - name: hq-registry-web
-                  image: identifiers-org/cloud-hq-web-
+                  image: identifiersorg/cloud-hq-web-frontend:1.0.1
                   imagePullPolicy: Always
                   resources:
                       requests:
