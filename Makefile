@@ -19,7 +19,7 @@ release: deploy
 
 sync_project_version:
 	@echo "<===|DEVOPS|===> [SYNC] Synchronizing project version to version '${tag_version}'"
-	@docker run node /bin/bash -c "npm --prefix /home/site version ${tag_version}"
+	@docker run -v $(shell pwd)/${dev_site_root_folder}:/home/site node /bin/bash -c "npm --prefix /home/site version ${tag_version}"
 
 deploy: clean container_production_push
 	@echo "<===|DEVOPS|===> [DEPLOY] Deploying service container version ${tag_version}"
@@ -57,7 +57,7 @@ production_instantiate_index_template:
 
 app_structure:
 	@echo "<===|DEVOPS|===> [PACKAGE] Building application structure"
-	@docker run node /bin/bash -c "npm --prefix /home/site install; npm --prefix /home/site run build"
+	@docker run -v $(shell pwd)/${dev_site_root_folder}:/home/site node /bin/bash -c "npm --prefix /home/site install; npm --prefix /home/site run build"
 
 container_production_build: app_structure
 	@echo "<===|DEVOPS|===> [BUILD] Production container $(container_name):$(tag_version)"
