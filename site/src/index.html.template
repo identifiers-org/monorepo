@@ -9,10 +9,7 @@
 
   <body>
       <div id="app"></div>
-      <script type="application/javascript">
-          // Environment
-          const configApiRegistryUrl = 'ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_API_REGISTRY_URL'
-      </script>
+      <!--ENVIRONMENT_PLACEHOLDER-->
       <script src="/index.js"></script>
   </body>
 </html>

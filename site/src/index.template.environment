@@ -1,0 +1,4 @@
+<script type="application/javascript">
+    // Environment
+    const configApiRegistryUrl = 'ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_API_REGISTRY_URL'
+</script>
