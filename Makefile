@@ -23,7 +23,7 @@ deploy: clean container_production_push
 instantiate_index_template:
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Prepare index template"
 	@cp ${file_template_site_index} ${file_instance_site_index}
-	@sed -i "s@ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_API_REGISTRY_URL@$development_url_registry_service@g" ${file_instance_site_index}
+	@sed -i "s@ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_API_REGISTRY_URL@${development_url_registry_service}@g" ${file_instance_site_index}
 
 development_env_up: instantiate_index_template development_env_backend_up
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Launch development environment"
@@ -78,4 +78,4 @@ clean:
 	@echo "<===|DEVOPS|===> [CLEAN] Cleaning 'build'"
 	@rm -rf build
 
-.PHONY: all clean app_structure css spa container_production_build development_webapp_up container_production_push dev_container_build deploy release sync_project_version set_next_development_version instantiate_index_template
+.PHONY: all clean app_structure css spa container_production_build development_env_up container_production_push dev_container_build deploy release sync_project_version set_next_development_version instantiate_index_template
