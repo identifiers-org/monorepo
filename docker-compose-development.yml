@@ -1,6 +1,6 @@
 # Development environment definition
 # Author: Manuel Bernal Llinares
-version: "3"
+version: "3.5"
 services:
     hqregistrypostgresql:
         image: postgres
@@ -49,3 +49,6 @@ services:
         depends_on:
             - redis
             - hqmiridpostgresql
+networks:
+    default:
+        name: hqwebnet

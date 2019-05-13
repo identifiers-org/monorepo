@@ -9,7 +9,7 @@ tag_version = $(shell cat VERSION)
 dev_site_root_folder = site
 file_template_site_index = $(dev_site_root_folder)/src/index.html.template
 file_instance_site_index = $(dev_site_root_folder)/src/index.html
-development_url_registry_service = http://localhost:8180
+development_url_registry_service = http://127.0.0.1:8180
 
 # Default target
 all: deploy
@@ -27,7 +27,7 @@ instantiate_index_template:
 
 development_env_up: instantiate_index_template development_env_backend_up
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Launch development environment"
-	@docker run -p 8182:8182 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site install; npm --prefix /home/site start"
+	@docker run --network=hqwebnet -p 8182:8182 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site install; npm --prefix /home/site start"
 
 development_env_backend_up:
 	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing backend UP"
