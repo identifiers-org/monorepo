@@ -17,6 +17,10 @@ all: deploy
 release: deploy
 	@echo "<===|DEVOPS|===> [RELEASE] New Software Release, and next development version prepared"
 
+sync_project_version:
+	@echo "<===|DEVOPS|===> [SYNC] Synchronizing project version to version '${tag_version}'"
+	@docker run node /bin/bash -c "npm --prefix /home/site version ${tag_version}"
+
 deploy: clean container_production_push
 	@echo "<===|DEVOPS|===> [DEPLOY] Deploying service container version ${tag_version}"
 
