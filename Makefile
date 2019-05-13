@@ -10,6 +10,7 @@ dev_site_root_folder = site
 file_template_site_index = $(dev_site_root_folder)/src/index.html.template
 file_instance_site_index = $(dev_site_root_folder)/src/index.html
 development_url_registry_service = http://127.0.0.1:8180
+folder_site_dist = site/dist
 
 # Default target
 all: deploy
@@ -73,5 +74,6 @@ dev_container_build: clean container_production_build
 
 clean:
 	@echo "<===|DEVOPS|===> [CLEAN] Housekeeping"
+	@rm -rf ${folder_site_dist}
 
 .PHONY: all clean app_structure container_production_build development_env_up container_production_push dev_container_build deploy release sync_project_version set_next_development_version instantiate_index_template production_instantiate_index_template
