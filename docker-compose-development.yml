@@ -25,7 +25,7 @@ services:
     hqregistry:
         image: identifiersorg/cloud-hq-ws-registry
         environment:
-            - HQ_WS_REGISTRY_CONFIG_JDBC_URL=jdbc:postgresql://hqregistrypostgresql:5430/dbhqregistry
+            - HQ_WS_REGISTRY_CONFIG_JDBC_URL=jdbc:postgresql://hqregistrypostgresql:5432/devdatabase
             - HQ_WS_REGISTRY_CONFIG_RDBMS_USERNAME=devusername
             - HQ_WS_REGISTRY_CONFIG_RDBMS_PASSWORD=devpassword
             - HQ_WS_REGISTRY_CONFIG_BACKEND_SERVICE_MIRID_CONTROLLER_HOST=hqmiridcontroller
@@ -39,7 +39,7 @@ services:
     hqmiridcontroller:
         image: identifiersorg/cloud-hq-ws-mirid-controller
         environment:
-            - HQ_WS_MIRID_CONTROLLER_CONFIG_JDBC_URL=jdbc:postgresql://hqmiridpostgresql:5431/devdatabase
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_JDBC_URL=jdbc:postgresql://hqmiridpostgresql:5432/devdatabase
             - HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_USERNAME=devusername
             - HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_PASSWORD:devpassword
             - HQ_WS_MIRID_CONTROLLER_CONFIG_REDIS_HOST=redis
