@@ -36,7 +36,7 @@ development_instantiate_index_template: instantiate_base_index_template
 
 development_env_up: development_instantiate_index_template development_env_backend_up
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Launch development environment"
-	@docker run --network=hqwebnet -p 8182:8182 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site install; npm --prefix /home/site start"
+	@docker run --user node --network=hqwebnet -p 8182:8182 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site install; npm --prefix /home/site start"
 
 development_env_down: development_env_backend_down
 

@@ -1,4 +1,4 @@
-# HQ Web fronted container definition
+# HQ Web frontend container definition
 FROM nginx
 LABEL maintainer="Manuel Bernal Llinares <mbdebian@gmail.com>"
 
