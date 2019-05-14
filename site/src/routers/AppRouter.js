@@ -31,10 +31,10 @@ const AppRouter = () => (
                 <Route exact path="/curator" component={CuratorDashboardPage} />
                 <Route exact path="/curator/:id" component={ManagePrefixRegistrationRequestPage} />
                 <Route path="/account" component={AccountPage} />
-                <Route component={NotFoundPage} />
               </>
             )
           }
+          <Route component={NotFoundPage} />
         </Switch>
       </div>
     </>
