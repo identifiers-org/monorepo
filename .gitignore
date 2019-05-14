@@ -33,4 +33,4 @@ mvnw*
 # Development environment
 development_env_up
 development_env_backend_up
-
+npm_install

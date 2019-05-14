@@ -34,9 +34,18 @@ development_instantiate_index_template: instantiate_base_index_template
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Set development environment"
 	@sed -i "s@ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_API_REGISTRY_URL@${development_url_registry_service}@g" ${file_instance_site_index}
 
-development_env_up: development_instantiate_index_template development_env_backend_up
+force_npm_reinstall:
+	@echo "<===|DEVOPS|===> [CLEAN] Deleting npm updated flag"
+	@rm npm_install
+
+npm_install:
+	@echo "<===|DEVOPS|===> [DEVELOPMENT] Installing npm modules"
+	@docker run --user node --network=hqwebnet -p 8192:8192 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site install"
+	@touch npm_install
+
+development_env_up: development_instantiate_index_template development_env_backend_up npm_install
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Launch development environment"
-	@docker run --user node --network=hqwebnet -p 8182:8182 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site install; npm --prefix /home/site start"
+	@docker run --user node --network=hqwebnet -p 8182:8182 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site start"
 
 development_env_down: development_env_backend_down
 
@@ -82,5 +91,6 @@ dev_container_build: clean container_production_build
 clean:
 	@echo "<===|DEVOPS|===> [CLEAN] Housekeeping"
 	@rm -rf ${folder_site_dist}
+	@rm -rf ${dev_site_root_folder}/node_modules
 
-.PHONY: all clean app_structure container_production_build development_env_up development_env_down container_production_push dev_container_build deploy release sync_project_version set_next_development_version instantiate_index_template instantiate_base_index_template
+.PHONY: all clean app_structure container_production_build development_env_up development_env_down container_production_push dev_container_build deploy release sync_project_version set_next_development_version instantiate_index_template instantiate_base_index_template force_npm_install
