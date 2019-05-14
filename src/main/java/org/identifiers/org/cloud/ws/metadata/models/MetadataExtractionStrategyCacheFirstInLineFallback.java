@@ -61,10 +61,10 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
     // Helpers
     private MetadataExtractionResult getCachedMetadataExtractionResult(ResolvedResource resolvedResource) {
         try {
-            return metadataExtractionResultService.findByAccessUrl(resolvedResource.getAccessUrl());
+            return metadataExtractionResultService.findByAccessUrl(resolvedResource.getCompactIdentifierResolvedUrl());
         } catch (MetadataExtractionResultServiceException e) {
             logger.error("Could not locate metadata extraction result cache entry for access URL '{}' due to '{}'",
-                    resolvedResource.getAccessUrl(), e.getMessage());
+                    resolvedResource.getCompactIdentifierResolvedUrl(), e.getMessage());
         }
         return null;
     }
@@ -86,19 +86,19 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
         List<String> reportMessages = new ArrayList<>();
         for (ResolvedResource resolvedResource :
                 resolvedResources) {
-            logger.info("Processing access URL '{}' with score '{}'", resolvedResource.getAccessUrl(),
+            logger.info("Processing access URL '{}' with score '{}'", resolvedResource.getCompactIdentifierResolvedUrl(),
                     resolvedResource.getRecommendation().getRecommendationIndex());
             // Get metadata from cache
             MetadataExtractionResult cachedMetadataExtractionResult = getCachedMetadataExtractionResult(resolvedResource);
             if (cachedMetadataExtractionResult == null) {
                 // queue a metadata extraction request
                 logger.info("Queuing metadata extraction request for access URL '{}' score '{}'",
-                        resolvedResource.getAccessUrl(),
+                        resolvedResource.getCompactIdentifierResolvedUrl(),
                         resolvedResource.getRecommendation().getRecommendationIndex());
                 metadataExtractionRequestQueue
                         .add(MetadataExtractionRequestFactory.getMetadataExtractionRequest(resolvedResource));
                 reportMessages.add(String.format("No cached metadata for access URL '%s', score '%s'",
-                        resolvedResource.getAccessUrl(),
+                        resolvedResource.getCompactIdentifierResolvedUrl(),
                         resolvedResource.getRecommendation().getRecommendationIndex()));
                 // Keep looking
                 continue;
@@ -109,7 +109,7 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
                                     " " +
                                     "resource score '%s', " +
                                     "with HTTP Status '%s'",
-                            resolvedResource.getAccessUrl(),
+                            resolvedResource.getCompactIdentifierResolvedUrl(),
                             resolvedResource.getRecommendation().getRecommendationIndex(),
                             HttpStatus.resolve(cachedMetadataExtractionResult.getHttpStatus()).toString());
                     logger.warn(message);
@@ -132,7 +132,7 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
                 if ((metadataExtractionResult == null) || (metadataExtractionResult.getHttpStatus() != 200)) {
                     String message = String.format("Valid Cached metadata for access URL '%s', score '%s', overwrites" +
                                     " previous selections",
-                            resolvedResource.getAccessUrl(),
+                            resolvedResource.getCompactIdentifierResolvedUrl(),
                             resolvedResource.getRecommendation().getRecommendationIndex());
                     metadataExtractionResult = cachedMetadataExtractionResult;
                     logger.info(message);
@@ -141,7 +141,7 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
                     String message = String.format("Ignoring valid Cached metadata for access URL '%s', score '%s' " +
                                     "as we have already found cached metadata for a higher scoring resource at access" +
                                     " URL '%s'",
-                            resolvedResource.getAccessUrl(),
+                            resolvedResource.getCompactIdentifierResolvedUrl(),
                             resolvedResource.getRecommendation().getRecommendationIndex(),
                             metadataExtractionResult.getAccessUrl());
                     logger.warn(message);
@@ -154,7 +154,7 @@ public class MetadataExtractionStrategyCacheFirstInLineFallback implements Metad
             // Do in-line metadata extraction
             String message = String.format("No Cached metadata found!, running in-line metadata extraction for " +
                             "access URL '%s', score '%s'",
-                    resolvedResources.get(0).getAccessUrl(),
+                    resolvedResources.get(0).getCompactIdentifierResolvedUrl(),
                     resolvedResources.get(0).getRecommendation().getRecommendationIndex());
             logger.warn(message);
             reportMessages.add(message);

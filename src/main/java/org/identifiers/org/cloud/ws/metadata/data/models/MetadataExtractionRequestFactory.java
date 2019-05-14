@@ -17,7 +17,7 @@ public class MetadataExtractionRequestFactory {
 
     public static MetadataExtractionRequest getMetadataExtractionRequest(ResolvedResource resolvedResource) {
         return new MetadataExtractionRequest()
-                .setAccessUrl(resolvedResource.getAccessUrl())
-                .setResourceId(resolvedResource.getId());
+                .setAccessUrl(resolvedResource.getCompactIdentifierResolvedUrl())
+                .setResourceId(Long.toString(resolvedResource.getId()));
     }
 }
