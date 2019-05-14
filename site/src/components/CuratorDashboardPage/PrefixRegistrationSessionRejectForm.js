@@ -69,14 +69,14 @@ class PrefixRegistrationSessionRejectForm extends React.Component {
     } = this;
 
     return (
-      <Collapse className="bg-gray pt-3 pb-2 px-4 rounded-all-but-top-left-lg" isOpen={isOpen}>
+      <Collapse className="bg-gray pt-3 pb-2 px-4 rounded-all-but-top-right-lg" isOpen={isOpen}>
         <div className="row">
           <div className="col mb-3">
             <h4><FontAwesomeIcon icon={faCheck} /> Reject request</h4>
           </div>
         </div>
 
-{/* ========================================  FORM FOR REGISTRATION ACCEPT ======================================== */}
+{/* ======================================== FORM FOR REGISTRATION REJECT ======================================== */}
         <div className="row no-gutters align-items-center bg-light rounded p-2 mb-1">
           <div className="col">
             <div className="input-group">
@@ -104,7 +104,7 @@ class PrefixRegistrationSessionRejectForm extends React.Component {
           </div>
         </div>
 
-{/* ======================================== TABLE FORM FOR REGISTRATION AMEND ======================================== */}
+{/* ======================================== FORM FOR REGISTRATION REJECT ======================================== */}
 
       </Collapse>
     );

@@ -414,11 +414,11 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
         <div className="row">
           <div className="col mt-2">
               <a
-                className={`btn btn-success btn-block`}
+                className={`btn btn-warning btn-block`}
                 href="#!"
                 onClick={handleAmend}
               >
-                <FontAwesomeIcon icon={faCheck} /> Confirm amend
+                <FontAwesomeIcon icon={faEdit} /> Confirm amend
               </a>
             </div>
         </div>

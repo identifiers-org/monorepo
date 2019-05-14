@@ -104,7 +104,7 @@ class PrefixRegistrationSessionCommentForm extends React.Component {
         <div className="row">
           <div className="col mt-2">
             <a
-              className={`btn btn-success btn-block`}
+              className={`btn btn-secondary btn-block`}
               href="#!"
               onClick={handleComment}
             >
