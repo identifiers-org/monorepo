@@ -3,6 +3,7 @@ target/
 
 ### Infrastructure ###
 development_env_up
+development_env_down
 
 ### STS ###
 .apt_generated

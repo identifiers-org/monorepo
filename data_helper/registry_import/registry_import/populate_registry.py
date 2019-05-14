@@ -38,79 +38,81 @@ EMPTY_FIELD_LITERAL = config.get('EmptyFieldLiteral')
 # Fetches data from old identifiers.org.
 namespaces = fetch_old_data(config.get('DataOriginURL'))
 
-# Gets country list.
-countries = load_countries(os.path.join(dirname, '../data/ISO-3166.csv'))
+if args.skiplocations is False:
+    # Gets country list.
+    countries = load_countries(os.path.join(dirname, '../data/ISO-3166.csv'))
 
-# Populate country list.
-populate_locations(countries, destination_url)
+    # Populate country list.
+    populate_locations(countries, destination_url)
 
 
 # Main loop:
-for index, namespace in enumerate(namespaces):
-    spinner = Halo(spinner='dots')
-    spinner.info(f'Working on namespace [{index}]: \"{namespace["name"]}\"')
+if args.skipnamespaces is False:
+    for index, namespace in enumerate(namespaces):
+        spinner = Halo(spinner='dots')
+        spinner.info(f'Working on namespace [{index}]: \"{namespace["name"]}\"')
 
-    newNamespace = Namespace(prefix=namespace['prefix'].strip(),
-                             mirId=namespace['id'].strip(),
-                             name=namespace['name'].strip(),
-                             pattern=namespace['pattern'].strip(),
-                             description=namespace['definition'].strip(),
-                             sampleId=namespace['resources'][0]['localId'].strip())
+        newNamespace = Namespace(prefix=namespace['prefix'].strip(),
+                                mirId=namespace['id'].strip(),
+                                name=namespace['name'].strip(),
+                                pattern=namespace['pattern'].strip(),
+                                description=namespace['definition'].strip(),
+                                sampleId=namespace['resources'][0]['localId'].strip())
 
-    # Post the namespace.
-    namespaceRef = prepare_resource('namespaces',
-                                    namespace['prefix'],
-                                    'findByPrefix',
-                                    newNamespace.serialize(),
-                                    destination_url)
+        # Post the namespace.
+        namespaceRef = prepare_resource('namespaces',
+                                        namespace['prefix'],
+                                        'findByPrefix',
+                                        newNamespace.serialize(),
+                                        destination_url)
 
-    # Post providers for that namespace.
-    for provider in namespace['resources']:
+        # Post providers for that namespace.
+        for provider in namespace['resources']:
 
-        # Post location for that provider. This should never post locations anymore,
-        # as they are all added with populate_locations.
-        if provider.get('location') is not None:
-            location = map_location(provider['location'].strip(), countries)[0]
+            # Post location for that provider. This should never post locations anymore,
+            # as they are all added with populate_locations.
+            if provider.get('location') is not None:
+                location = map_location(provider['location'].strip(), countries)[0]
 
-            locationRef = prepare_resource('locations',
-                                           location['countryCode'],
-                                           'findByCountryCode',
-                                           location,
-                                           destination_url)
+                locationRef = prepare_resource('locations',
+                                            location['countryCode'],
+                                            'findByCountryCode',
+                                            location,
+                                            destination_url)
 
-        # Post institution for that resource.
-        if provider.get('institution') is not None:
-            newInstitution = Institution(name=provider['institution'].strip(),
-                                         homeUrl=EMPTY_FIELD_LITERAL,
-                                         description=EMPTY_FIELD_LITERAL,
-                                         location=locationRef)
+            # Post institution for that resource.
+            if provider.get('institution') is not None:
+                newInstitution = Institution(name=provider['institution'].strip(),
+                                            homeUrl=EMPTY_FIELD_LITERAL,
+                                            description=EMPTY_FIELD_LITERAL,
+                                            location=locationRef)
 
-            institutionRef = prepare_resource('institutions',
-                                              provider['institution'].strip(),
-                                              'findByName',
-                                              newInstitution.serialize(),
-                                              destination_url)
+                institutionRef = prepare_resource('institutions',
+                                                provider['institution'].strip(),
+                                                'findByName',
+                                                newInstitution.serialize(),
+                                                destination_url)
 
-        # Post the provider.
-        newProvider = Provider(mirId=provider.get('id').strip(),
-                               urlPattern=provider.get('accessURL', EMPTY_FIELD_LITERAL).strip(),
-                               name=provider.get('info', EMPTY_FIELD_LITERAL).strip(),
-                               description=provider.get('info', EMPTY_FIELD_LITERAL).strip(),
-                               official=provider.get('official', 'false'),
-                               providerCode=provider.get('resourcePrefix', EMPTY_FIELD_LITERAL).strip(),
-                               sampleId=provider.get('localId', EMPTY_FIELD_LITERAL).strip(),
-                               resourceHomeUrl=provider.get('resourceURL', EMPTY_FIELD_LITERAL).strip(),
-                               location=locationRef,
-                               institution=institutionRef,
-                               namespace=namespaceRef)
+            # Post the provider.
+            newProvider = Provider(mirId=provider.get('id').strip(),
+                                urlPattern=provider.get('accessURL', EMPTY_FIELD_LITERAL).strip(),
+                                name=provider.get('info', EMPTY_FIELD_LITERAL).strip(),
+                                description=provider.get('info', EMPTY_FIELD_LITERAL).strip(),
+                                official=provider.get('official', 'false'),
+                                providerCode=provider.get('resourcePrefix', EMPTY_FIELD_LITERAL).strip(),
+                                sampleId=provider.get('localId', EMPTY_FIELD_LITERAL).strip(),
+                                resourceHomeUrl=provider.get('resourceURL', EMPTY_FIELD_LITERAL).strip(),
+                                location=locationRef,
+                                institution=institutionRef,
+                                namespace=namespaceRef)
 
-        do_post(newProvider.serialize(), newProvider.name, 'resources', True, config.get('DestinationURL'))
+            do_post(newProvider.serialize(), newProvider.name, 'resources', True, config.get('DestinationURL'))
 
-    spinner = Halo(spinner='dots', text_color='green')
-    spinner.succeed(f'Namespace [{index}]: \"{newNamespace.name}\" → [SUCCESS]')
-    print()
+        spinner = Halo(spinner='dots', text_color='green')
+        spinner.succeed(f'Namespace [{index}]: \"{newNamespace.name}\" → [SUCCESS]')
+        print()
 
 
 # Populate mir ids if parameter is set.
-if (args.miriam):
+if args.miriam is True:
     mint_used_ids(os.path.join(dirname, '../data/mirids.txt'), mirid_controller_url)
