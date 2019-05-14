@@ -159,7 +159,7 @@ public class MetadataApiModel {
     private void extractMetadata(ResolvedResource resolvedResource, ServiceResponseFetchMetadata response, String selector, String compactIdOrRequest) {
         // Extract the metadata
         try {
-            response.getPayload().setMetadata(metadataFetcher.fetchMetadataFor(resolvedResource.getAccessUrl()));
+            response.getPayload().setMetadata(metadataFetcher.fetchMetadataFor(resolvedResource.getCompactIdentifierResolvedUrl()));
         } catch (MetadataFetcherException e) {
             response.setErrorMessage(String.format("FAILED to fetch metadata for '%s', %s, " +
                             "because '%s'",
