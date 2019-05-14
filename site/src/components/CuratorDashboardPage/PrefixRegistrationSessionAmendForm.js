@@ -54,7 +54,7 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
       prefixRegistrationSession: { prefixRegistrationRequest }
     } = this.props;
 
-    if (!value) {
+    if (typeof value === 'undefined') {
       value = prefixRegistrationRequest[field];
     }
 
@@ -111,16 +111,9 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
                       <div className="col">
                         Resource name
                       </div>
-                      {
-                        fieldChanged('name') && (
-                          <div className="col">
-                            <span class="badge badge-secondary text-warning">Modified</span>
-                          </div>
-                        )
-                      }
                     </div>
                   </td>
-                  <td className="w-75">
+                  <td className="w-50">
                     <div className="input-group input-group-sm">
                       <input
                         type="text"
@@ -141,6 +134,15 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
                         )
                       }
                     </div>
+                  </td>
+                  <td className="w-25 align-middle">
+                    {
+                      fieldChanged('name') && (
+                        <div className="col">
+                          <span class="badge badge-secondary text-warning">Modified</span>
+                        </div>
+                      )
+                    }
                   </td>
                 </tr>
                 <tr>
@@ -180,7 +182,7 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td className="w-25 pl-2 font-weight-bold">supporting references</td>
+                  <td className="w-25 pl-2 font-weight-bold">Supporting references</td>
                   <td className="w-75">
                     <div className="input-group input-group-sm">
                       <textarea

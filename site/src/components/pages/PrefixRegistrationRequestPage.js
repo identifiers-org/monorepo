@@ -344,7 +344,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                         Enter one per line."
                       example="https://doi.org/10.1093/nar/28.1.235"
                       formsection="Prefix details"
-                      label="supporting references"
+                      label="Supporting references"
                       required={false}
                       rows="5"
                       splitByLines={true}

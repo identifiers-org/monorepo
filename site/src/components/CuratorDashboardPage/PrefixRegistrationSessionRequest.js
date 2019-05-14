@@ -22,7 +22,7 @@ const PrefixRegistrationSessionRequestDetails = ({ data }) => (
             <tr><td className="w-25 pl-2 font-weight-bold">Description</td><td className="w-75 text-block small align-middle">{data.description}</td></tr>
             <tr><td className="w-25 pl-2 font-weight-bold">Requested prefix</td><td className="w-75 text-block">{data.requestedPrefix}</td></tr>
             <tr><td className="w-25 pl-2 font-weight-bold">Regex pattern</td><td className="w-75 text-block">{data.idRegexPattern}</td></tr>
-            <tr><td className="w-25 pl-2 font-weight-bold">Supporting References</td><td className="w-75 text-block small align-middle">{data.supportingReferences}</td></tr>
+            <tr><td className="w-25 pl-2 font-weight-bold">Supporting references</td><td className="w-75 text-block small align-middle">{data.supportingReferences}</td></tr>
             <tr><td className="w-25 pl-2 font-weight-bold">Additional information</td><td className="w-75 text-block">{data.additionalInformation}</td></tr>
           </tbody>
         </table>
