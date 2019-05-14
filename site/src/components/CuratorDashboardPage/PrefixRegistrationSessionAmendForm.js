@@ -182,7 +182,7 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td className="w-25 pl-2 font-weight-bold">Supporting references</td>
+                  <td className="w-25 pl-2 font-weight-bold">supporting references</td>
                   <td className="w-75">
                     <div className="input-group input-group-sm">
                       <textarea
