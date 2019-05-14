@@ -92,9 +92,10 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
                 insightResponse.getPayload().getResolvedResources()
                         .parallelStream().forEach(resolvedResource -> {
                     // Create link checking requests for resolution samples
+                    // TODO - Have a look at the data types for refactoring
                     linkCheckRequestQueue.add(new LinkCheckRequest()
-                            .setUrl(resolvedResource.getAccessUrl())
-                            .setResourceId(resolvedResource.getId()));
+                            .setUrl(resolvedResource.getCompactIdentifierResolvedUrl())
+                            .setResourceId(Long.toString(resolvedResource.getId())));
                     // Create link checking requests for home URLs (a.k.a. providers)
                     // NOTE - This implementation assumes that every provider in the resolution dataset has a different
                     // ID depending on the namespace context where it's providing an access URL, the provider home URL
@@ -104,8 +105,8 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
                     // namespace. This way, more complex scoring can be calculated by combining metrics related to the
                     // same provider / resource ID, i.e. scoped by the namespace where the provider is a resource.
                     linkCheckRequestQueue.add(new LinkCheckRequest()
-                            .setUrl(resolvedResource.getResourceURL())
-                            .setProviderId(resolvedResource.getId()));
+                            .setUrl(resolvedResource.getResourceHomeUrl())
+                            .setProviderId(Long.toString(resolvedResource.getId())));
                 });
             } else {
                 logger.error("Got HTTP Status '{}' from Resolution Service Insight API, reason '{}', " +
