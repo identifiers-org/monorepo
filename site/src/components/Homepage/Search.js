@@ -32,10 +32,8 @@ class Search extends React.Component {
       state: {query}
     } = this;
 
-    // set active suggestion to -1 if length of query is 0.
-    if (query.length === 0) {
-      this.setState({activeSuggestion: -1});
-    }
+    // set active suggestion to -1.
+    this.setState({activeSuggestion: -1});
 
     await getNamespacesFromRegistry({
       content: query,
