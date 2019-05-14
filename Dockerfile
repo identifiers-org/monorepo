@@ -20,7 +20,7 @@ EXPOSE 80
 # Working directory
 WORKDIR /home/app
 
-# FUCK YOU /BIN/SH
+# Getting rid of /bin/sh
 RUN cp /bin/bash /bin/sh
 
 # Launch container
