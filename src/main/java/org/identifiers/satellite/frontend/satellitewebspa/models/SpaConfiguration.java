@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SpaConfiguration {
-    
+
     @Value("${org.identifiers.satellite.frontend.satellitewebspa.config.ws.resolver.url}")
     private String urlResolver;
 
