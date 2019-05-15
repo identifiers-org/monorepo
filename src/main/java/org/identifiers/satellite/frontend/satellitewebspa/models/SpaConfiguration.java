@@ -29,8 +29,20 @@ import java.io.Serializable;
 public class SpaConfiguration implements Serializable {
 
     @Value("${org.identifiers.satellite.frontend.satellitewebspa.config.ws.resolver.url}")
-    private String urlResolver;
+    private String resolverApi;
 
     @Value("${org.identifiers.satellite.frontend.satellitewebspa.config.ws.hqregistry.url}")
-    private String urlHqRegistry;
+    private String registryApi;
+
+    @Value("${org.identifiers.satellite.frontend.satellitewebspa.config.web.hqregistry.prefixregistrationform.url}")
+    private String registryUrl;
+
+    @Value("${org.identifiers.satellite.frontend.satellitewebspa.config.web.hqregistry.prefixregistrationform.url}")
+    private String registryPrefixRegistrationRequestFormUrl;
+
+    @Value("${org.identifiers.satellite.frontend.satellitewebspa.config.ws.apiversion}")
+    private String apiVersion;
+
+    @Value("${org.identifiers.satellite.frontend.satellitewebspa.config.flag.showsearchsuggestions}")
+    private boolean showSearchSuggestions;
 }
