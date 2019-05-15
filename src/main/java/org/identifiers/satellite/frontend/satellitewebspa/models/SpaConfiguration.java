@@ -1,5 +1,6 @@
 package org.identifiers.satellite.frontend.satellitewebspa.models;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,5 +15,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SpaConfiguration {
-    // TODO
+    
+    @Value("${org.identifiers.satellite.frontend.satellitewebspa.config.ws.resolver.url}")
+    private String urlResolver;
+
+    @Value("${org.identifiers.satellite.frontend.satellitewebspa.config.ws.hqregistry.url}")
+    private String urlHqRegistry;
 }
