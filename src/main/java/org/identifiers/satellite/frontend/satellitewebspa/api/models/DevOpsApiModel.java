@@ -1,5 +1,9 @@
 package org.identifiers.satellite.frontend.satellitewebspa.api.models;
 
+import org.identifiers.satellite.frontend.satellitewebspa.models.SpaConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,5 +18,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DevOpsApiModel {
-    // TODO
+
+    @Autowired
+    private SpaConfiguration spaConfiguration;
+
+    public ResponseEntity<?> getSpaConfiguration() {
+        return new ResponseEntity<SpaConfiguration>(spaConfiguration, HttpStatus.OK);
+    }
 }
