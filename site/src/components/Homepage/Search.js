@@ -69,7 +69,7 @@ class Search extends React.Component {
     }
 
     case 38: {  // Up key
-      if (this.state.activeSuggestion >= -1) {
+      if (this.state.activeSuggestion > -1) {
         this.setState({activeSuggestion: activeSuggestion - 1});
       }
       break;
@@ -119,7 +119,7 @@ class Search extends React.Component {
             />
             <div className="input-group-append">
               <button className="btn btn-primary">
-              <FontAwesomeIcon icon={faSearch} /> Search
+                <FontAwesomeIcon icon={faSearch} /> Search
               </button>
             </div>
           </div>

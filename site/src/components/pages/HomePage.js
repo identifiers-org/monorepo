@@ -31,8 +31,8 @@ class MainPage extends React.Component {
               </div>
             </div>
           </div>
-          <div className="row justify-content-md-center mt-2">
-            <div className="col col-6">
+          <div className="row justify-content-center mt-2">
+            <div className="col col-xs-12 col-sm-10 col-md-8 col-lg-6">
               <Search query={query} />
             </div>
           </div>
