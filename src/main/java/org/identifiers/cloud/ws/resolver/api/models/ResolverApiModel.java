@@ -4,10 +4,7 @@ import org.identifiers.cloud.ws.resolver.api.ApiCentral;
 import org.identifiers.cloud.ws.resolver.api.responses.ResponseResolvePayload;
 import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponseResolve;
 import org.identifiers.cloud.ws.resolver.data.models.Resource;
-import org.identifiers.cloud.ws.resolver.models.CompactId;
-import org.identifiers.cloud.ws.resolver.models.CompactIdException;
-import org.identifiers.cloud.ws.resolver.models.ResolverDataFetcher;
-import org.identifiers.cloud.ws.resolver.models.ResolverDataHelper;
+import org.identifiers.cloud.ws.resolver.models.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +35,9 @@ public class ResolverApiModel {
     @Autowired
     private ResolverDataHelper resolverDataHelper;
 
+    @Autowired
+    private CompactIdParsingHelper compactIdParsingHelper;
+
     // Helpers
     private ServiceResponseResolve createDefaultResponse() {
         return (ServiceResponseResolve)
@@ -56,6 +56,24 @@ public class ResolverApiModel {
         return null;
     }
     // END - Helpers
+
+    // --- Resolution API ---
+
+    public ServiceResponseResolve resolveRawCompactId(String rawCompactId) {
+        ServiceResponseResolve response = createDefaultResponse();
+        ParsedCompactIdentifier parsedCompactIdentifier = compactIdParsingHelper.parseCompactIdRequest(rawCompactId);
+        if ((parsedCompactIdentifier.getLocalId() != null && (parsedCompactIdentifier.getNamespace() != null))) {
+            // Check for provider
+            if (parsedCompactIdentifier.getProviderCode() != null) {
+                return resolveCompactId(CompactId.getCompactIdString(parsedCompactIdentifier.getNamespace(), parsedCompactIdentifier.getLocalId()), parsedCompactIdentifier.getProviderCode());
+            }
+            return resolveCompactId(CompactId.getCompactIdString(parsedCompactIdentifier.getNamespace(), parsedCompactIdentifier.getLocalId()));
+        }
+        String errorMessage = String.format("INVALID Compact Identifier resolution request for '%s'", rawCompactId);
+        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        response.setErrorMessage(errorMessage);
+        return response;
+    }
 
     // TODO - Document this API method
     public ServiceResponseResolve resolveCompactId(String compactIdParameter) throws ResolverApiException {

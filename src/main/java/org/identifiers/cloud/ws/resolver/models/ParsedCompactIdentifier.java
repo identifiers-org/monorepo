@@ -1,0 +1,31 @@
+package org.identifiers.cloud.ws.resolver.models;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+
+/**
+ * Project: resolver
+ * Package: org.identifiers.cloud.ws.resolver.models
+ * Timestamp: 2019-05-16 13:20
+ *
+ * @author Manuel Bernal Llinares <mbdebian@gmail.com>
+ * ---
+ * <p>
+ * This models the elements presented in a Compact ID request
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@Accessors(chain = true)
+public class ParsedCompactIdentifier implements Serializable {
+    private String providerCode;
+    private String namespace;
+    private String localId;
+    private String rawRequest;
+}

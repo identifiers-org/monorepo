@@ -84,14 +84,14 @@ public class ResolverApiController {
         final String path =
                 request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE).toString();
         logger.info("Resolution request, PATH '{}'", path);
-        ProviderCompactIdTuple providerAndCompactIdentifier = extractProviderAndCompactIdentifier(path.replaceFirst("/", ""));
-        ServiceResponse result = null;
-        if (providerAndCompactIdentifier.getProvider() != null) {
+        //ProviderCompactIdTuple providerAndCompactIdentifier = extractProviderAndCompactIdentifier(path.replaceFirst("/", ""));
+        ServiceResponse result = model.resolveRawCompactId(path.replaceFirst("/", ""));
+        /*if (providerAndCompactIdentifier.getProvider() != null) {
             result = model.resolveCompactId(providerAndCompactIdentifier.getCompactIdentifier(),
                     providerAndCompactIdentifier.getProvider());
         } else {
             result = model.resolveCompactId(providerAndCompactIdentifier.getCompactIdentifier());
-        }
+        }*/
         return new ResponseEntity<>(result, result.getHttpStatus());
     }
 
