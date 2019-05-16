@@ -3,6 +3,7 @@ package org.identifiers.cloud.ws.resolver.api.models;
 import org.identifiers.cloud.ws.resolver.api.ApiCentral;
 import org.identifiers.cloud.ws.resolver.api.responses.ResponseResolvePayload;
 import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponseResolve;
+import org.identifiers.cloud.ws.resolver.data.models.Namespace;
 import org.identifiers.cloud.ws.resolver.data.models.Resource;
 import org.identifiers.cloud.ws.resolver.models.*;
 import org.slf4j.Logger;
@@ -55,6 +56,27 @@ public class ResolverApiModel {
         }
         return null;
     }
+
+    private void verifyCompactIdentifier(String namespace, String localId, ServiceResponseResolve response) {
+        // TODO
+        Namespace registryNamespace = resolverDataFetcher.findNamespaceByPrefix(namespace);
+        if (registryNamespace == null) {
+            String errorMessage = String.format("UNKNOWN namespace '%s' when verifying local ID '%s'", namespace,
+                    localId);
+            logger.error(errorMessage);
+            response.setErrorMessage(errorMessage);
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        } else {
+            // Verify regular expression
+            if (!localId.matches(registryNamespace.getPattern())) {
+                response.setHttpStatus(HttpStatus.BAD_REQUEST);
+                String errorMessage = String.format("For namespace '%s', provided local ID '%s' DOES NOT MATCH local IDs definition pattern '%s'", namespace, localId, registryNamespace.getPattern());
+                logger.error(errorMessage);
+                response.setErrorMessage(errorMessage);
+                response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            }
+        }
+    }
     // END - Helpers
 
     // --- Resolution API ---
@@ -63,6 +85,11 @@ public class ResolverApiModel {
         ServiceResponseResolve response = createDefaultResponse();
         ParsedCompactIdentifier parsedCompactIdentifier = compactIdParsingHelper.parseCompactIdRequest(rawCompactId);
         if ((parsedCompactIdentifier.getLocalId() != null && (parsedCompactIdentifier.getNamespace() != null))) {
+            // Verify compact identifier
+            verifyCompactIdentifier(parsedCompactIdentifier.getNamespace(), parsedCompactIdentifier.getLocalId(), response);
+            if (!response.getHttpStatus().is2xxSuccessful()) {
+                return response;
+            }
             // Check for provider
             if (parsedCompactIdentifier.getProviderCode() != null) {
                 return resolveCompactId(CompactId.getCompactIdString(parsedCompactIdentifier.getNamespace(), parsedCompactIdentifier.getLocalId()), parsedCompactIdentifier.getProviderCode());

@@ -14,6 +14,6 @@ import java.util.List;
  */
 public interface ResolverDataFetcher {
     List<Resource> findResourcesByPrefix(String prefix);
-
+    Namespace findNamespaceByPrefix(String prefix);
     Iterable<Namespace> findAllNamespaces();
 }
