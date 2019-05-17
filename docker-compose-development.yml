@@ -12,6 +12,8 @@ services:
             - WS_RESOLVER_JVM_MEMORY_MAX=1024m
         ports:
             - "8080:8080"
+        networks:
+            - satwebspanet
         depends_on:
             - redis
             - recommender
@@ -22,6 +24,8 @@ services:
             - WS_RESOURCE_RECOMMENDER_CONFIG_BACKEND_SERVICE_LINK_CHECKER_HOST=link-checker
         ports:
             - "8083:8083"
+        networks:
+            - satwebspanet
         depends_on:
             - link-checker
     link-checker:
@@ -32,9 +36,21 @@ services:
             - WS_LINK_CHECKER_CONFIG_DAEMON_PERIODIC_LINK_CHECK_REQUESTER_ENABLED=false
         ports:
             - "8084:8084"
+        networks:
+            - satwebspanet
         depends_on:
             - redis
     redis:
         image: redis:4.0.8-alpine
         ports:
             - "6379:6379"
+        networks:
+            - satwebspanet
+networks:
+    satwebspanet:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 192.168.252.0/24
+                gateway: 192.168.252.254
