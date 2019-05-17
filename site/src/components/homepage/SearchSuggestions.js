@@ -20,7 +20,7 @@ class SearchSuggestions extends React.Component {
         [...sum, part, <strong key={`${prefix}-${index}`} className="text-warning">{query}</strong>], []).slice(0, -1);
   }
 
-  handleSuggestionLinkClick = (prefix) => window.open(`${config.registryUrl}/registry/${prefix}`, '_blank');
+  handleSuggestionLinkClick = (prefix) => window.open(`${this.props.config.registryUrl}/registry/${prefix}`, '_blank');
 
 
   render() {
@@ -28,6 +28,7 @@ class SearchSuggestions extends React.Component {
       handleSuggestionLinkClick,
       highlightQuery,
       props: {
+        config,
         handleClick,
         mouseOver,
         queryParts,
@@ -59,14 +60,16 @@ class SearchSuggestions extends React.Component {
         {
           // Render search suggestion list if it contains elements.
           searchSuggestionList.length > 0 && (
-            <div className="suggestions-box">
+            <div className="suggestions-box pb-2">
               <div className="row mx-1">
                 <div className="col align-self-end">
                   <p className="text-muted text-right my-0"><small>Suggestions</small></p>
                 </div>
               </div>
-              {
-                searchSuggestionList.map((result, index) => {
+
+              <ul className="suggestion-list">
+                {
+                  searchSuggestionList.map((result, index) => {
                   // Background color for the suggestion:
                   // If result.prefix = queryParts.prefix, highlight as active, and then,
                   // if index = selectedSearchSuggestion, and bg is still white, highlight as selected.
@@ -76,37 +79,41 @@ class SearchSuggestions extends React.Component {
                   }
 
                   return (
-                    <a
-                      className="clear-link"
-                      href="#!"
-                      id={result.prefix}
-                      key={result.prefix}
-                      onClick={() => {handleClick(result.prefix)}}
+                    <li
+                      key={`suggestion-${index}`}
+                      onMouseOver={() => {mouseOver(index)}}
+                      className={`suggestion ${suggestionBgColor}`}
                     >
-                      <li
-                        onMouseOver={() => {mouseOver(index)}}
-                        className={`suggestion ${suggestionBgColor}`}
-                      >
-                        <div className="row no-gutters py-1 mx-2">
-                          <div className="col d-flex align-items-center">
+                      <div className="row no-gutters py-1 mx-2">
+                        <div className="col col-11">
+                         <a
+                            className="clear-link d-flex align-items-center"
+                            href="#!"
+                            id={result.prefix}
+                            key={result.prefix}
+                            onClick={() => {handleClick(result.prefix)}}
+                          >
                             <span className="badge badge-secondary font-weight-normal">
                               {highlightQuery(result.prefix, queryParts.prefix)}
                             </span>
                             <p className="mb-0 ml-2">{result.name}</p>
-                            <button
-                              className="ml-auto clear-button"
-                              onClick={() => {handleSuggestionLinkClick(result.prefix)}}
-                              type="button"
-                            >
-                              <FontAwesomeIcon icon={faExternalLinkAlt}/>
-                            </button>
-                          </div>
+                          </a>
                         </div>
-                      </li>
-                    </a>
+                        <div className="col col-1">
+                          <button
+                            className="ml-auto clear-button"
+                            onClick={() => {handleSuggestionLinkClick(result.prefix)}}
+                            type="button"
+                          >
+                            <FontAwesomeIcon icon={faExternalLinkAlt}/>
+                          </button>
+                        </div>
+                      </div>
+                    </li>
                   );
                 })
               }
+            </ul>
             </div>
           )
         }
