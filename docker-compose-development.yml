@@ -53,6 +53,15 @@ services:
         depends_on:
             - redis
             - hqmiridpostgresql
+    hqwebspa:
+        image: identifiersorg/cloud-hq-web-frontend
+        environment:
+            - name: ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_API_REGISTRY_URL
+              value: "http://localhost:8180"
+        ports:
+            - "9092:80"
+        networks:
+            - satwebspanet
     resolver:
         image: identifiersorg/cloud-ws-resolver
         environment:
