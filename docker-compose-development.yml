@@ -56,7 +56,7 @@ services:
     hqwebspa:
         image: identifiersorg/cloud-hq-web-frontend
         environment:
-            - name: ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_API_REGISTRY_URL=http://localhost:8180
+            - ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_API_REGISTRY_URL=http://localhost:8180
         ports:
             - "9092:80"
         networks:
