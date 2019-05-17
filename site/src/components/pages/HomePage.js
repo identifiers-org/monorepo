@@ -4,20 +4,12 @@ import identifiersLogo from '../../assets/identifiers_logo.png';
 import Search from '../homepage/Search';
 
 
-class MainPage extends React.Component {
+class HomePage extends React.Component {
   constructor(props) {
     super(props);
-
-    const params = new URLSearchParams(props.location.search);
-
-    this.state = {
-      query: params.get('query') || ''
-    };
   }
 
   render() {
-    const { query } = this.state;
-
     return (
         <>
           <div className="row justify-content-center">
@@ -33,7 +25,7 @@ class MainPage extends React.Component {
           </div>
           <div className="row justify-content-center mt-2">
             <div className="col col-xs-12 col-sm-10 col-md-12 col-lg-6">
-              <Search query={query} />
+              <Search />
             </div>
           </div>
         </>
@@ -42,4 +34,4 @@ class MainPage extends React.Component {
 }
 
 
-export default MainPage;
+export default HomePage;

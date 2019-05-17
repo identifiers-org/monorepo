@@ -17,7 +17,7 @@ class Search extends React.Component {
     this.search = React.createRef();
 
     this.state = {
-      query: this.props.query,
+      query: '',
       queryParts: {
         resource: undefined,
         prefix: undefined,
@@ -62,13 +62,16 @@ class Search extends React.Component {
   handleKeyDown = e => {
     const {
       props: { namespaceList },
-      state: { activeSuggestion, queryParts }
+      state: { activeSuggestion, query, queryParts }
     } = this;
 
     switch (e.keyCode) {
     case 13: {  // Enter key
       e.preventDefault();
-      if (activeSuggestion !== -1) {
+
+      if (activeSuggestion === -1) {
+        this.props.history.push(`resolve?query=${query}`);
+      } else {
         e.currentTarget.value = completeQuery(queryParts.resource, namespaceList[activeSuggestion].prefix, queryParts.id);
         this.handleChange();
         break;
@@ -105,7 +108,7 @@ class Search extends React.Component {
     const {query} = this.state;
 
     e.preventDefault();
-    this.props.history.push(`/registry?query=${query}`);
+    this.props.history.push(`resolve?query=${query}`);
   }
 
 
