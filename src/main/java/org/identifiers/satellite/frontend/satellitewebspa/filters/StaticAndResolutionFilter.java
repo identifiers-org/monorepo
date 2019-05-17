@@ -40,6 +40,9 @@ public class StaticAndResolutionFilter implements Filter {
         if (doesResourceExists(path)) {
             log.info(String.format("Delegate to default - path '%s'", path));
             filterChain.doFilter(servletRequest, servletResponse); // Goes to default servlet.
+        } else if ((path.startsWith("/resolve"))) {
+            log.info(String.format("Delegate to index.html (SPA routing) - path '%s'", path));
+            servletRequest.getRequestDispatcher("/index.html").forward(servletRequest, servletResponse);
         } else if ((path.startsWith("/devopsApi")) || (path.startsWith("/healthApi"))) {
             log.info(String.format("Delegate to my handlers - path '%s'", path));
             filterChain.doFilter(servletRequest, servletResponse);

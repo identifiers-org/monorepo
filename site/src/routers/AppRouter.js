@@ -15,7 +15,7 @@ const AppRouter = () => (
       <div className="container mt-5">
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/resolve" components={ResolvePage} />
+          <Route exact path="/resolve" component={ResolvePage} />
           <Route component={NotFoundPage} />
         </Switch>
       </div>

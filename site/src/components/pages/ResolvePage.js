@@ -5,19 +5,24 @@ class ResolvePage extends React.Component {
   constructor(props) {
     super(props);
 
-    console.log('this.props', props);
-    // const params = new URLSearchParams(props.location.search);
+    console.log('props', props);
 
-    // this.state = {
-    //   query: params.get('query') || ''
-    // };
+    const params = new URLSearchParams(props.location.search);
+
+    this.state = {
+      query: params.get('query') || ''
+    };
   }
 
   render() {
     return (
-        <>
-          results
-        </>
+      <>
+        <div className="row">
+          <div className="col">
+            results of {this.state.query}
+          </div>
+        </div>
+      </>
     );
   }
 }
