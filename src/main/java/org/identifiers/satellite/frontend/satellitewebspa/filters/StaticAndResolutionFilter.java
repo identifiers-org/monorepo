@@ -2,7 +2,10 @@ package org.identifiers.satellite.frontend.satellitewebspa.filters;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -21,12 +24,20 @@ import java.io.IOException;
 @Slf4j
 @Order(1)
 public class StaticAndResolutionFilter implements Filter {
+    @Autowired
+    private ResourceLoader resourceLoader;
+
+    private boolean doesResourceExists(String path) {
+        Resource resource = resourceLoader.getResource("classpath:/static" + path);
+        return resource.exists();
+    }
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         log.info("Running my custom filter");
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         String path = req.getRequestURI().substring(req.getContextPath().length());
-        if (path.contains("/index.html")) {
+        if (doesResourceExists(path)) {
             log.info(String.format("Delegate to default - path '%s'", path));
             filterChain.doFilter(servletRequest, servletResponse); // Goes to default servlet.
         } else if ((path.startsWith("/devopsApi")) || (path.startsWith("/healthApi"))) {
