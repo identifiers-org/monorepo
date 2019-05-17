@@ -1,6 +1,6 @@
 # This docker-compose file defines the development environment
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
-version: "3"
+version: "3.5"
 services:
     hqregistrypostgresql:
         image: postgres
