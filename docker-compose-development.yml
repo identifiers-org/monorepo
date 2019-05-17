@@ -98,9 +98,8 @@ services:
         networks:
             - satwebspanet
 networks:
-    default:
-        name: satwebspanet
     satwebspanet:
+        name: satwebspanet
         driver: bridge
         ipam:
             driver: default

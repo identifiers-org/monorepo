@@ -9,7 +9,7 @@ tag_version = $(shell cat VERSION)
 dev_site_root_folder = site
 folder_site_dist = site/dist
 folder_spring_boot_static = src/main/resources/static
-network_docker_name = cloud-satellite-web-spa_satwebspanet
+network_docker_name = satwebspanet
 
 # Default target
 all: deploy
