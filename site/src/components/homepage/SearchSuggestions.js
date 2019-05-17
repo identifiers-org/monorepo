@@ -59,8 +59,7 @@ class SearchSuggestions extends React.Component {
         {
           // Render search suggestion list if it contains elements.
           searchSuggestionList.length > 0 && (
-            <>
-              <ul className="suggestion-list mt-0">
+            <div className="suggestions-box">
               <div className="row mx-1">
                 <div className="col align-self-end">
                   <p className="text-muted text-right my-0"><small>Suggestions</small></p>
@@ -108,8 +107,7 @@ class SearchSuggestions extends React.Component {
                   );
                 })
               }
-              </ul>
-            </>
+            </div>
           )
         }
       </>

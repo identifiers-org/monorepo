@@ -5,7 +5,11 @@
 // Get config from devops endpoint.
 export const getConfigFromDevopsApi = (url) => {
   return async (dispatch) => {
-    let requestUrl = new URL(`${url}devopsApi/getSpaConfiguration`);
+    let requestUrl = new URL(`${url}/devopsApi/getSpaConfiguration`);
+
+    if (process.env.NODE_ENV === 'development') {
+      console.log('fetching config from', requestUrl);
+    }
 
     try {
       const response = await fetch(requestUrl);

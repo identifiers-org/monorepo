@@ -21,7 +21,10 @@ const jsx = (
 
 // Get initial data.
 // Configuration from devops endpoint, which will be residing in the same url as the app.
-store.dispatch(getConfigFromDevopsApi(window.location.href));
+const configUrlPort = process.env.NODE_ENV === 'development' ? 9090 : window.location.port;
+const configUrl = `${window.location.protocol}//${window.location.hostname}:${configUrlPort}`;
+
+store.dispatch(getConfigFromDevopsApi(configUrl));
 
 
 // Render app.
