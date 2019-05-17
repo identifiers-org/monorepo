@@ -1,0 +1,128 @@
+// Callouts.
+.callout {
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid #eee;
+    border-left-width: .25rem;
+    border-radius: .25rem;
+    border-left-color: #343a40;
+
+    table {
+        margin: 0;
+    }
+}
+
+.callout-primary {
+    border-left-color: $primary;
+}
+
+.callout-secondary {
+    border-left-color: $secondary;
+}
+
+.callout-success {
+    border-left-color: $success;
+}
+
+.callout-danger {
+    border-left-color: $danger;
+}
+
+.callout-warning {
+    border-left-color: $warning;
+}
+
+.callout-info {
+    border-left-color: $info;
+}
+
+.callout-dark {
+    border-left-color: $dark;
+}
+
+.callout-light {
+    border-left-color: $light;
+}
+
+
+// Block text with ellipsis.
+.text-block {
+  hyphens: auto;
+  line-height: 1.2em;
+  margin-right: -1em;
+  max-height: 3.6em;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  padding-right: 1em;
+  position: relative;
+  word-break: break-word;
+  word-wrap: break-word;
+}
+
+
+// Extra widths.
+.w-20 {
+  width: 20% !important;
+}
+
+.w-15 {
+  width: 15% !important;
+}
+
+.w-35 {
+  width: 35% !important;
+}
+
+
+// Rounded corners.
+.rounded-top-lg {
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+}
+
+.rounded-lg {
+  border-radius: .5rem;
+}
+
+.rounded-all-but-top-left-lg {
+  border-radius: .5rem;
+  border-top-left-radius: 0;
+}
+
+.rounded-all-but-top-right-lg {
+  border-radius: .5rem;
+  border-top-right-radius: 0;
+}
+
+
+// Border widths.
+.border-2 {
+  border-width:2px !important;
+}
+
+
+// Muted background colors.
+.bg-primary-muted {
+  background: #77b9ff;
+}
+
+.bg-warning-muted {
+  background: #f9d977;
+}
+
+.bg-success-muted {
+  background: #8ce2a0;
+}
+
+.bg-danger-muted {
+  background: #f2a4ac;
+}
+
+.bg-secondary-muted {
+  background: #d2d6db;
+}
+
+.bg-gray {
+  background: #ebeced;
+}

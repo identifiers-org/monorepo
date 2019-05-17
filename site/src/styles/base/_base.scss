@@ -1,0 +1,37 @@
+html {
+  overflow-y: scroll;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a, a:visited, a:hover, a:active {
+  text-decoration: none;
+}
+
+.clear-link, .clear-link:hover{
+  color: #212529;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.clear-button, .clear-button:hover .clear-button:focus {
+  color: #212529;
+  text-decoration: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: 0px auto !important;
+}
+
+
+// Bootstrap colors.
+$primary: #007bff;
+$secondary: #6c757d;
+$success: #28a745;
+$danger: #dc3545;
+$warning: #f0ad4e;
+$info: #17a2b8;
+$dark: #343a40;
+$light: #f8f9fa;

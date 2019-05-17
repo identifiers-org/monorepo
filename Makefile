@@ -37,12 +37,12 @@ force_npm_reinstall:
 
 npm_install:
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Installing npm modules"
-	@docker run --user node --network=satwebnet -p 9091:9091 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site install; npm rebuild"
+	@docker run --user node --network=satwebnet -p 9091:9091 -p 50001:50001 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site install; npm rebuild"
 	@touch npm_install
 
 development_env_up: development_env_backend_up npm_install
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Launch development environment"
-	@docker run --user node --network=satwebnet -p 9091:9091 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site start"
+	@docker run --user node --network=satwebnet -p 9091:9091 -p 50001:50001 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site start"
 
 development_env_down: development_env_backend_down
 
