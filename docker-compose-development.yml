@@ -2,6 +2,57 @@
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 version: "3"
 services:
+    hqregistrypostgresql:
+        image: postgres
+        environment:
+            - POSTGRES_DB=devdatabase
+            - POSTGRES_USER=devusername
+            - POSTGRES_PASSWORD=devpassword
+        ports:
+            - "5430:5432"
+        networks:
+            - satwebspanet
+    hqmiridpostgresql:
+        image: postgres
+        environment:
+            - POSTGRES_DB=devdatabase
+            - POSTGRES_USER=devusername
+            - POSTGRES_PASSWORD=devpassword
+        ports:
+            - "5431:5432"
+        networks:
+            - satwebspanet
+    hqregistry:
+        image: identifiersorg/cloud-hq-ws-registry
+        environment:
+            - HQ_WS_REGISTRY_CONFIG_JDBC_URL=jdbc:postgresql://hqregistrypostgresql:5432/devdatabase
+            - HQ_WS_REGISTRY_CONFIG_RDBMS_USERNAME=devusername
+            - HQ_WS_REGISTRY_CONFIG_RDBMS_PASSWORD=devpassword
+            - HQ_WS_REGISTRY_CONFIG_BACKEND_SERVICE_MIRID_CONTROLLER_HOST=hqmiridcontroller
+            - HQ_WS_REGISTRY_CONFIG_BACKEND_SERVICE_MIRID_CONTROLLER_PORT=8181
+            - HQ_WS_REGISTRY_CONFIG_APPLICATION_ACTIVE_PROFILE=development,authdisabled
+        ports:
+            - "8180:8180"
+        networks:
+            - satwebspanet
+        depends_on:
+            - hqregistrypostgresql
+            - hqmiridcontroller
+    hqmiridcontroller:
+        image: identifiersorg/cloud-hq-ws-mirid-controller
+        environment:
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_JDBC_URL=jdbc:postgresql://hqmiridpostgresql:5432/devdatabase
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_USERNAME=devusername
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_PASSWORD:devpassword
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_REDIS_HOST=redis
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_APPLICATION_ACTIVE_PROFILE=development,authdisabled
+        ports:
+            - "8181:8181"
+        networks:
+            - satwebspanet
+        depends_on:
+            - redis
+            - hqmiridpostgresql
     resolver:
         image: identifiersorg/cloud-ws-resolver
         environment:
@@ -47,6 +98,8 @@ services:
         networks:
             - satwebspanet
 networks:
+    default:
+        name: satwebspanet
     satwebspanet:
         driver: bridge
         ipam:
