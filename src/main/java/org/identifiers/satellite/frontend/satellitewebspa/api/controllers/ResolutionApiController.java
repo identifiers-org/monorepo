@@ -20,13 +20,16 @@ import javax.servlet.http.HttpServletRequest;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+//@RestController
 @RestController
+@RequestMapping("resolutionApi")
 @Slf4j
 public class ResolutionApiController {
     @Autowired
     private ResolutionApiModel model;
 
     // TODO
+
     @RequestMapping(value = "/{resolutionRequest}/**", method = RequestMethod.GET)
     public ResponseEntity<?> resolveRawCompactIdentifier(@PathVariable String resolutionRequest, HttpServletRequest request) {
         // Extract the request path
@@ -34,6 +37,6 @@ public class ResolutionApiController {
                 request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE).toString();
         log.info("Resolution request, PATH '{}'", path);
         // Resolve
-        return model.resolveRawCompactIdentifier(path.replaceFirst("/", ""));
+        return model.resolveRawCompactIdentifier(path.replaceFirst("/resolutionApi/", ""));
     }
 }

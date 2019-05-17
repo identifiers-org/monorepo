@@ -10,4 +10,5 @@ public class SatelliteWebspaApplication {
         SpringApplication.run(SatelliteWebspaApplication.class, args);
     }
 
+
 }

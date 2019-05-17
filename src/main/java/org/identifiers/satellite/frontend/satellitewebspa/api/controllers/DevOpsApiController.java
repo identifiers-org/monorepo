@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * ---
  */
 @RestController
-@RequestMapping("devops")
+@RequestMapping("devopsApi")
 public class DevOpsApiController {
     @Autowired
     private DevOpsApiModel model;
