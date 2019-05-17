@@ -3,7 +3,7 @@ import { config } from "../config/Config";
 
 // Config reducer
 
-const defaultState = Config;
+const defaultState = config;
 
 const configReducer = (state = defaultState, action) => {
   switch (action.type) {

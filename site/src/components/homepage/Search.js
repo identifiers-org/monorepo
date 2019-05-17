@@ -112,7 +112,7 @@ class Search extends React.Component {
   render() {
     const {
       handleChange, handleClick, handleKeyDown, handleMouseOver, handleSubmit,
-      props: { namespaceList },
+      props: { config, namespaceList },
       state: { activeSuggestion, query, queryParts }
 
     } = this;

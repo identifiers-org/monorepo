@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
@@ -59,6 +60,7 @@ class SearchSuggestions extends React.Component {
           // Render search suggestion list if it contains elements.
           searchSuggestionList.length > 0 && (
             <>
+              <ul className="suggestion-list mt-0">
               <div className="row mx-1">
                 <div className="col align-self-end">
                   <p className="text-muted text-right my-0"><small>Suggestions</small></p>
@@ -106,6 +108,7 @@ class SearchSuggestions extends React.Component {
                   );
                 })
               }
+              </ul>
             </>
           )
         }
