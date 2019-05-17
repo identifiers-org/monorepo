@@ -34,7 +34,7 @@ public class SpaConfiguration implements Serializable {
     @Value("${org.identifiers.satellite.frontend.satellitewebspa.config.ws.hqregistry.url}")
     private String registryApi;
 
-    @Value("${org.identifiers.satellite.frontend.satellitewebspa.config.web.hqregistry.prefixregistrationform.url}")
+    @Value("${org.identifiers.satellite.frontend.satellitewebspa.config.web.hqregistry.url}")
     private String registryUrl;
 
     @Value("${org.identifiers.satellite.frontend.satellitewebspa.config.web.hqregistry.prefixregistrationform.url}")
