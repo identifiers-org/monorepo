@@ -11,7 +11,7 @@
 version: "3"
 services:
     link-checker:
-        image: identifiersorg/cloud-ws-link-checker:1.1.0
+        image: identifiersorg/cloud-ws-link-checker
         environment:
             - WS_LINK_CHECKER_CONFIG_REDIS_HOST=redis
             - WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST=resolver
@@ -22,7 +22,7 @@ services:
             - resolver
             - redis
     resolver:
-        image: identifiersorg/cloud-ws-resolver:1.0.4
+        image: identifiersorg/cloud-ws-resolver
         environment:
             - WS_RESOLVER_CONFIG_REDIS_HOST=redis
             - WS_RESOLVER_CONFIG_REDIS_PORT=6379
