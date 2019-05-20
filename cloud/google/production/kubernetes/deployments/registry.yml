@@ -44,7 +44,7 @@ spec:
                   - name: HQ_WS_REGISTRY_CONFIG_BACKEND_SERVICE_MIRID_CONTROLLER_PORT
                     value: "8181"
                   - name: HQ_WS_REGISTRY_CONFIG_CORS_ORIGIN
-                    value: "http://identifiers.org,https://identifiers.org,https://registry.identifiers.org"
+                    value: "http://cloud.identifiers.org,https://cloud.identifiers.org,http://identifiers.org,https://identifiers.org,https://registry.identifiers.org"
                   - name: HQ_WS_REGISTRY_JVM_MEMORY_MAX
                     value: "640m"
                   - name: HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUERURI
