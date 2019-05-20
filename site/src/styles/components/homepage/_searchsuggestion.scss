@@ -11,14 +11,6 @@
 .suggestion__selected {
   background-color: $primary;
   border-radius: .25rem;
-  color: white;
-  cursor: pointer;
-}
-
-.suggestion__active {
-  background-color: $success;
-  border-radius: .25rem;
-  color: white;
   cursor: pointer;
 }
 

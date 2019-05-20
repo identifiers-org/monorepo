@@ -15,9 +15,23 @@ class SearchSuggestions extends React.Component {
 
   highlightQuery = (prefix, query) => {
     const parts = prefix.split(query);
-    return parts.reduce(
-      (sum, part, index) =>
-        [...sum, part, <strong key={`${prefix}-${index}`} className="text-warning">{query}</strong>], []).slice(0, -1);
+    let result;
+    let complete = false;
+
+    if (prefix === query) {
+      result = <strong className="text-light">{query}</strong>;
+      complete = true;
+    } else {
+      result = parts.reduce(
+        (sum, part, index) =>
+          [...sum, part, <strong key={`${prefix}-${index}`} className="text-warning">{query}</strong>], []).slice(0, -1);
+    }
+
+    return <span
+      className={`badge ${complete ? 'badge-secondary border border-warning' : 'badge-light border border-secondary'} font-weight-normal`}
+    >
+      {result}
+    </span>
   }
 
   handleSuggestionLinkClick = (prefix) => window.open(`${this.props.config.registryUrl}/registry/${prefix}`, '_blank');
@@ -28,7 +42,6 @@ class SearchSuggestions extends React.Component {
       handleSuggestionLinkClick,
       highlightQuery,
       props: {
-        config,
         handleClick,
         mouseOver,
         queryParts,
@@ -70,19 +83,11 @@ class SearchSuggestions extends React.Component {
               <ul className="suggestion-list">
                 {
                   searchSuggestionList.map((result, index) => {
-                  // Background color for the suggestion:
-                  // If result.prefix = queryParts.prefix, highlight as active, and then,
-                  // if index = selectedSearchSuggestion, and bg is still white, highlight as selected.
-                  let suggestionBgColor = result.prefix === queryParts.prefix ? 'suggestion__active' : '';
-                  if (selectedSearchSuggestion === index && suggestionBgColor === '') {
-                    suggestionBgColor = 'suggestion__selected';
-                  }
-
                   return (
                     <li
                       key={`suggestion-${index}`}
                       onMouseOver={() => {mouseOver(index)}}
-                      className={`suggestion ${suggestionBgColor}`}
+                      className={`suggestion ${selectedSearchSuggestion === index ? 'suggestion__selected' : ''}`}
                     >
                       <div className="row no-gutters py-1 mx-2">
                         <div className="col col-11">
@@ -93,15 +98,17 @@ class SearchSuggestions extends React.Component {
                             key={result.prefix}
                             onClick={() => {handleClick(result.prefix)}}
                           >
-                            <span className="badge badge-secondary font-weight-normal">
-                              {highlightQuery(result.prefix, queryParts.prefix)}
-                            </span>
-                            <p className="mb-0 ml-2">{result.name}</p>
+                            {highlightQuery(result.prefix, queryParts.prefix)}
+                            <p
+                              className={`mb-0 ml-2 ${selectedSearchSuggestion === index ? 'text-light' : ''}`}
+                            >
+                              {result.name}
+                            </p>
                           </a>
                         </div>
                         <div className="col col-1">
                           <button
-                            className="ml-auto clear-button"
+                            className={`ml-auto clear-button ${selectedSearchSuggestion === index ? 'text-light' : ''}`}
                             onClick={() => {handleSuggestionLinkClick(result.prefix)}}
                             type="button"
                           >
