@@ -34,7 +34,7 @@ public class CompactIdParsingHelper {
                 parsedCompactIdentifier.setLocalId(rawCompactIdentifier.substring(rawCompactIdentifier.indexOf(":") + 1));
             } else {
                 // We have a provider code (possibly)
-                String possibleProviderCode = splitBySlash[0];
+                String possibleProviderCode = splitBySlash[0].toLowerCase();
                 String rightSide = rawCompactIdentifier.substring(rawCompactIdentifier.indexOf("/") + 1);
                 if (namespaceRespository.findByPrefix(possibleProviderCode) == null) {
                     // It is a provider code
@@ -42,7 +42,7 @@ public class CompactIdParsingHelper {
                     // Test whether we have a local ID or a compact identifier on the right side
                     if (rightSide.contains(":")) {
                         // Check if it is a namespace
-                        String possibleNamespace = rightSide.split(":")[0];
+                        String possibleNamespace = rightSide.split(":")[0].toLowerCase();
                         if (namespaceRespository.findByPrefix(possibleNamespace) != null) {
                             parsedCompactIdentifier.setNamespace(possibleNamespace).setLocalId(rightSide.substring(rightSide.indexOf(":") + 1));
                         } else {
@@ -73,7 +73,7 @@ public class CompactIdParsingHelper {
         } else {
             // If there is no '/', it means there is no provider code, just a compact identifier
             if (rawCompactIdentifier.contains(":")) {
-                parsedCompactIdentifier.setNamespace(rawCompactIdentifier.split(":")[0]);
+                parsedCompactIdentifier.setNamespace(rawCompactIdentifier.split(":")[0].toLowerCase());
                 parsedCompactIdentifier.setLocalId(rawCompactIdentifier.substring(rawCompactIdentifier.indexOf(":") + 1));
             }
         }

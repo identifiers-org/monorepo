@@ -82,6 +82,7 @@ public class ResolverApiModel {
     // --- Resolution API ---
 
     public ServiceResponseResolve resolveRawCompactId(String rawCompactId) {
+        // This is the only entry method right now
         ServiceResponseResolve response = createDefaultResponse();
         ParsedCompactIdentifier parsedCompactIdentifier = compactIdParsingHelper.parseCompactIdRequest(rawCompactId);
         if ((parsedCompactIdentifier.getLocalId() != null && (parsedCompactIdentifier.getNamespace() != null))) {
@@ -103,7 +104,7 @@ public class ResolverApiModel {
     }
 
     // TODO - Document this API method
-    public ServiceResponseResolve resolveCompactId(String compactIdParameter) throws ResolverApiException {
+    private ServiceResponseResolve resolveCompactId(String compactIdParameter) throws ResolverApiException {
         ServiceResponseResolve response = createDefaultResponse();
         CompactId compactId = getCompactIdentifier(compactIdParameter, response);
         if (compactId != null) {
@@ -131,7 +132,7 @@ public class ResolverApiModel {
         return response;
     }
 
-    public ServiceResponseResolve resolveCompactId(String compactIdParameter, String selector) throws ResolverApiException {
+    private ServiceResponseResolve resolveCompactId(String compactIdParameter, String selector) throws ResolverApiException {
         logger.info("Resolve Compact ID '{}', with selector '{}'", compactIdParameter, selector);
         ServiceResponseResolve response = createDefaultResponse();
         CompactId compactId = getCompactIdentifier(compactIdParameter, response);
