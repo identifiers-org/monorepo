@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -17,17 +18,20 @@ import java.util.stream.Collectors;
  */
 @Component
 @Profile("recommendationStrategyWeighted")
+@Slf4j
 public class RecommendationStrategyWeighted implements RecommendationStrategy {
     @Autowired
     private ScoringFunctionProvider scoringFunctionProvider;
 
     // Helper method to compute a resource recommendation score for a given resolved resource
     private int getResourceRecommendationScore(ResolvedResource resolvedResource) {
-        return scoringFunctionProvider.getFunctionComponents().stream()
+        int score = scoringFunctionProvider.getFunctionComponents().stream()
                 .mapToInt(weightedScore ->
                         weightedScore.getWeight()
                                 * weightedScore.getScoreProvider().getScoreForResource(resolvedResource))
                 .sum() / 100;
+        log.info(String.format("Computed recommendation score for resolved resource ID '%s', URL '%s' is '%d'", resolvedResource.getId(), resolvedResource.getAccessURL(), score));
+        return score;
     }
 
     @Override
