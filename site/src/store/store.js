@@ -1,8 +1,9 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
-import namespaceListReducer from '../reducers/NamespaceList';
 import configReducer from '../reducers/ConfigReducer';
+import namespaceListReducer from '../reducers/NamespaceList';
+import resolvedResourcesReducer from '../reducers/ResolvedResources';
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -15,8 +16,9 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // Store creation.
 const store = createStore(
   combineReducers({
+    config: configReducer,
     namespaceList: namespaceListReducer,
-    config: configReducer
+    resolvedResources: resolvedResourcesReducer
   }),
   composeEnhancers(applyMiddleware(thunk))
 );

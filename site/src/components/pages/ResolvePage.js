@@ -1,11 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { getResolvedResources } from '../../actions/ResolvedResources';
+import ResourceList from '../resolverpage/ResourceList';
 
 
 class ResolvePage extends React.Component {
   constructor(props) {
     super(props);
-
-    console.log('props', props);
 
     const params = new URLSearchParams(props.location.search);
 
@@ -14,18 +16,33 @@ class ResolvePage extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const {
+      props: { getResolvedResources },
+      state: { query }
+    } = this;
+
+    getResolvedResources(query);
+  }
+
+
   render() {
     return (
       <>
-        <div className="row">
-          <div className="col">
-            results of {this.state.query}
-          </div>
+      <div className="row mb-5">
+        <div className="col">
+          <ResourceList />
         </div>
+      </div>
       </>
     );
   }
 }
 
 
-export default ResolvePage;
+// Redux mappings.
+const mapDispatchToProps = dispatch => ({
+  getResolvedResources: (query) => dispatch(getResolvedResources(query))
+});
+
+export default connect (undefined, mapDispatchToProps)(ResolvePage);

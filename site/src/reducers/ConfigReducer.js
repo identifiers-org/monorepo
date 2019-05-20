@@ -7,12 +7,12 @@ const defaultState = config;
 
 const configReducer = (state = defaultState, action) => {
   switch (action.type) {
-  // Set store namespace list to the supplied one.
-  case 'SET_CONFIG':
-    return {...state, ...action.config}
+    // Set store namespace list to the supplied one.
+    case 'SET_CONFIG':
+      return {...state, ...action.config}
 
-  default:
-    return state;
+    default:
+      return state;
   }
 }
 

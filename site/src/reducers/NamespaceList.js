@@ -4,25 +4,25 @@ const defaultState = [];
 
 const namespaceListReducer = (state = defaultState, action) => {
   switch (action.type) {
-  // Set store namespace list to the supplied one.
-  case 'SET_NAMESPACELIST':
-    return action.namespaceList
+    // Set store namespace list to the supplied one.
+    case 'SET_NAMESPACELIST':
+      return action.namespaceList
 
-  case 'SET_RESOURCES': {
-    // Adds resources to namespace specified by action.prefix.
-    let newNamespaceList = state.map(ns => {
-      if (ns.prefix === action.prefix) {
-        ns['resources'] = action.resources;
-      }
+    case 'SET_RESOURCES': {
+      // Adds resources to namespace specified by action.prefix.
+      let newNamespaceList = state.map(ns => {
+        if (ns.prefix === action.prefix) {
+          ns['resources'] = action.resources;
+        }
 
-      return ns;
-    });
+        return ns;
+      });
 
-    return newNamespaceList;
-  }
+      return newNamespaceList;
+    }
 
-  default:
-    return state;
+    default:
+      return state;
   }
 }
 

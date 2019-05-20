@@ -8,7 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import { getNamespacesFromRegistry } from '../../actions/NamespaceList';
-import { querySplit, completeQuery } from '../../utils/identifiers';
+import { querySplit, completeQuery, evaluateSearch } from '../../utils/identifiers';
+import { getResolvedResources } from '../../actions/ResolvedResources';
 
 
 class Search extends React.Component {
@@ -47,9 +48,7 @@ class Search extends React.Component {
 
 
   handleChange = () => {
-    const {
-      updateNamespaceList
-    } = this;
+    const { updateNamespaceList } = this;
 
     this.setState({
       query: this.search.value,
@@ -61,6 +60,8 @@ class Search extends React.Component {
 
   handleKeyDown = e => {
     const {
+      handleChange,
+      handleSearch,
       props: { namespaceList },
       state: { activeSuggestion, query, queryParts }
     } = this;
@@ -70,10 +71,10 @@ class Search extends React.Component {
       e.preventDefault();
 
       if (activeSuggestion === -1) {
-        this.props.history.push(`resolve?query=${query}`);
+        handleSearch();
       } else {
         e.currentTarget.value = completeQuery(queryParts.resource, namespaceList[activeSuggestion].prefix, queryParts.id);
-        this.handleChange();
+        handleChange();
         break;
       }
     }
@@ -108,7 +109,23 @@ class Search extends React.Component {
     const {query} = this.state;
 
     e.preventDefault();
-    this.props.history.push(`resolve?query=${query}`);
+    this.handleSearch();
+  }
+
+  handleSearch = () => {
+    const {
+      props: { config, history, namespaceList },
+      state: { query, queryParts }
+    } = this;
+
+    const evaluation = evaluateSearch(queryParts, namespaceList, config.enableResourcePrediction);
+
+    if (evaluation !== 'ok') {
+      return;
+    }
+
+
+    history.push(`resolve?query=${query}`);
   }
 
 
@@ -165,4 +182,4 @@ const mapDispatchToProps = dispatch => ({
   getNamespacesFromRegistry: (query) => dispatch(getNamespacesFromRegistry(query))
 });
 
-export default withRouter(connect (mapStateToProps, mapDispatchToProps)(Search));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Search));
