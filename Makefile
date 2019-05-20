@@ -65,7 +65,7 @@ development_run_tests: development_env_up
 	@echo "<===|DEVOPS|===> [TESTS] Running Unit Tests"
 	@mvn -Dspring.profiles.active=$(springboot_development_profile) clean test
 
-app_structure:
+app_structure: clean
 	@echo "<===|DEVOPS|===> [PACKAGE] Building SPA structure"
 	@docker run -v $(shell pwd)/${dev_site_root_folder}:/home/site node /bin/bash -c "npm --prefix /home/site install; npm --prefix /home/site run build"
 	@echo "<===|DEVOPS|===> [PACKAGE] Copying SPA tree to Spring Boot static content folder"
