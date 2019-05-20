@@ -79,10 +79,10 @@ public class ResolverDataHelper {
         // Get their recommendation scoring information
         Map<String, ResourceRecommendation> recommendationById = getRecommendationsByResourceId(resolvedResources);
         resolvedResources.parallelStream().forEach(resolvedResource -> {
-            if (recommendationById.containsKey(resolvedResource.getId())) {
+            if (recommendationById.containsKey(Long.toString(resolvedResource.getId()))) {
                 resolvedResource.getRecommendation()
-                        .setRecommendationExplanation(recommendationById.get(resolvedResource.getId()).getRecommendationExplanation())
-                        .setRecommendationIndex(recommendationById.get(resolvedResource.getId()).getRecommendationIndex());
+                        .setRecommendationExplanation(recommendationById.get(Long.toString(resolvedResource.getId())).getRecommendationExplanation())
+                        .setRecommendationIndex(recommendationById.get(Long.toString(resolvedResource.getId())).getRecommendationIndex());
             }
 
         });

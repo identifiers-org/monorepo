@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.libapi.models.resourcerecommender.ResolvedResource;
 import org.identifiers.cloud.libapi.models.resourcerecommender.ResourceRecommendation;
 import org.identifiers.cloud.libapi.services.ApiServicesFactory;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
  */
 @Component
 @Scope("prototype")
+@Slf4j
 public class ResourceRecommenderService implements ResourceRecommenderStrategy {
 
     private static final Logger logger = LoggerFactory.getLogger(ResourceRecommenderService.class);
@@ -44,5 +46,6 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
                         .collect(Collectors.toList()))
                 .getPayload()
                 .getResourceRecommendations();
+
     }
 }
