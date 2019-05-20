@@ -22,10 +22,12 @@ export const getNamespacesFromRegistry = (query) => {
 
       dispatch(setNamespaceList(data._embedded.namespaces));
 
-      // Get resources for those namespaces.
-      data._embedded.namespaces.map(async namespace => {
-        await dispatch(getResourcesFromRegistry(namespace));
-      });
+      // Get resources for those namespaces if resource prediction is enabled.
+      if (config.enableResourcePrediction) {
+        data._embedded.namespaces.map(async namespace => {
+          await dispatch(getResourcesFromRegistry(namespace));
+        });
+      }
 
       return response;
     }

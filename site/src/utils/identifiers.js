@@ -1,7 +1,8 @@
 //
 // evaluateSearch: evaluates the correctness of a search query. Returns a result ('ok', 'warn', 'fail') and
 // a description message.
-export const evaluateSearch = function (queryParts, namespaceList) {
+//
+export const evaluateSearch = function (queryParts, namespaceList, enableResourcePrediction) {
   // Case analysis for incorrect identifier strings:
   // 1. Empty prefix.
   if (queryParts.prefix === '') {
@@ -29,7 +30,12 @@ export const evaluateSearch = function (queryParts, namespaceList) {
     return 'id_bad';
   }
 
-  // 5. Non-existant resource.
+  // 5. Resource specified when resource prediction is disabled.
+  if (queryParts.resource !== '' && !enableResourcePrediction) {
+    return 'resource_not_empty';
+  }
+
+  // 6. Non-existant resource.
   if (queryParts.resource !== '') {
     const currentResource = currentNamespace.resources ?
       currentNamespace.resources.filter(resource => resource.providerCode === queryParts.resource)[0]

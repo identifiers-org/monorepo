@@ -8,5 +8,8 @@ export const config = {
   apiVersion: '1.0',
 
   // This requires a working HQ architecture with a central registry.
-  showSearchSuggestions: true
+  showSearchSuggestions: true,
+
+  // We don't predict resources for now.
+  enableResourcePrediction: false
 };
