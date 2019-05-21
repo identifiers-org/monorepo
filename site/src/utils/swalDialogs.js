@@ -30,3 +30,10 @@ export const swalError = Swal.mixin({
   buttonsStyling: false,
   type: 'error'
 })
+
+export const swalToast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000
+});

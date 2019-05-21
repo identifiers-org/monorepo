@@ -1,5 +1,6 @@
 export const config = {
   resolverApi: 'http://localhost:8080',
+  resolverHardcodedUrl: 'https://identifiers.org',
   registryApi: 'http://localhost:8180',
 
   registryUrl: 'https://registry.identifiers.org',

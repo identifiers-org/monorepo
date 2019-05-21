@@ -27,9 +27,6 @@ export const getResolvedResources = (query) => {
       resolvedResource['compactIdentifier'] = `${config.resolverApi}/${resolvedResource.providerCode}/${query}`
     });
 
-    // TODO: REMOVE DELAY
-    await new Promise(resolve => setTimeout(resolve, 5000));
-
     dispatch(setResolvedResources(data));
 
     return response;

@@ -53,9 +53,23 @@ a, a:visited, a:hover, a:active {
   outline: 0px auto !important;
 }
 
+.clear-textarea {
+  border: 0px none;
+  resize: none;
+  margin: 0;
+
+  &:focus {
+    outline: none;
+  }
+}
+
 
 // Min width for fontawesome margins.
 .min-width-2 {
   min-width: 2rem;
   width: 2rem;
+}
+
+.svg-inline--fa .title {
+  color: red;
 }

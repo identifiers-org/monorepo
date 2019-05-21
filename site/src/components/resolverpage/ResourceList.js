@@ -42,8 +42,10 @@ class ResourceList extends React.Component {
         </>
       ) : (
         <>
+          <small className="text-muted">
+            Found {resolvedResources.length} {resolvedResources.length === 1 ? 'entry' : 'entries'}.
+          </small>
           {resolvedResources.map((rr, index) => <ResourceItem key={`rr-${index}`} data={rr} />)}
-          <span className="text-muted">Found {resolvedResources.length} {resolvedResources.length === 1 ? 'entry' : 'entries'}.</span>
         </>
       )
     );
