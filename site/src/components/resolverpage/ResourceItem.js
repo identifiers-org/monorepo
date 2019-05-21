@@ -12,17 +12,18 @@ import {
 
 const ResourceItem = ({ data }) => (
   <div className="card mb-5">
-    <div className="card-header">
-      <FontAwesomeIcon icon={faCubes} className="min-width-2" />
-      <a
-        href={data.compactIdentifierResolvedUrl}
-        className="clear-link ml-2"
-        target="_blank"
-      >
-        {data.description}
-        <FontAwesomeIcon icon={faExternalLinkAlt} className="ml-2" />
-      </a>
-    </div>
+    <div className="card-header d-flex align-items-center">
+          <FontAwesomeIcon icon={faCubes} size="2x" className="mr-2" />
+          <a
+            href={data.compactIdentifierResolvedUrl}
+            className="ml-2 clear-link"
+            target="_blank"
+          >
+            <p className="mb-0">{data.description}</p>
+            <small className="text-muted">{data.compactIdentifier}</small>
+          </a>
+      </div>
+
     <ul className="list-group list-group-flush">
       <li className="list-group-item">
         <p className="mb-0">

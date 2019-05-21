@@ -22,6 +22,11 @@ export const getResolvedResources = (query) => {
     // Sort resources by their score.
     data = data.payload.resolvedResources.sort((a, b) => b.recommendation.recommendationIndex - a.recommendation.recommendationIndex);
 
+    // Add compact identifier to every resource.
+    data.forEach(resolvedResource => {
+      resolvedResource['compactIdentifier'] = `${config.resolverApi}/${resolvedResource.providerCode}/${query}`
+    });
+
     dispatch(setResolvedResources(data));
 
     return response;
