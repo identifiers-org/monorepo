@@ -71,7 +71,7 @@ instantiate_base_index_template:
 	@echo "<===|DEVOPS|===> [PRODUCTION] Prepare base index template"
 	@cp ${file_template_site_index} ${file_instance_site_index}
 
-app_structure: instantiate_base_index_template
+app_structure: clean instantiate_base_index_template
 	@echo "<===|DEVOPS|===> [PACKAGE] Building application structure"
 	@docker run -v $(shell pwd)/${dev_site_root_folder}:/home/site node /bin/bash -c "npm --prefix /home/site install; npm --prefix /home/site run build"
 	@sed -i "s@<!--ENVIRONMENT_PLACEHOLDER-->@${environment_content}@g" ${file_instance_app_structure_index}
@@ -92,5 +92,6 @@ clean:
 	@echo "<===|DEVOPS|===> [CLEAN] Housekeeping"
 	@rm -rf ${folder_site_dist}
 	@rm -rf ${dev_site_root_folder}/node_modules
+	@rm -rf ${dev_site_root_folder}/.cache
 
 .PHONY: all clean app_structure container_production_build development_env_up development_env_down container_production_push dev_container_build deploy release sync_project_version set_next_development_version instantiate_index_template instantiate_base_index_template force_npm_install
