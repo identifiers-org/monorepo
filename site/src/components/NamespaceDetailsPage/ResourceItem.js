@@ -2,6 +2,8 @@ import React from 'react';
 
 
 const ResourceItem = ({ resource }) => {
+  const providerCodeLabel = resource.providerCode === 'CURATOR_REVIEW' ? 'Empty provider code' : resource.providerCode;
+
   return (
     <table className="table table-sm table-striped">
       <tbody>
@@ -10,7 +12,7 @@ const ResourceItem = ({ resource }) => {
             rowSpan="5"
             className={`w-20 align-middle ${resource.official ? 'bg-warning' : 'bg-primary text-white'}`}
           >
-            <p className="font-weight-bold text-center n-0">{resource.providerCode}</p>
+            <p className="font-weight-bold text-center n-0">{providerCodeLabel}</p>
             <p className="text-center m-0">{resource.mirId}</p>
             <p className="font-weight-bold text-center m-0">{resource.official ? 'Primary' : ''}</p>
           </td>
