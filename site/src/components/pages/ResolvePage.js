@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { getResolvedResources } from '../../actions/ResolvedResources';
 import ResourceList from '../resolverpage/ResourceList';
 
+import Spinner from '../common/Spinner';
+
 
 class ResolvePage extends React.Component {
   constructor(props) {
@@ -12,26 +14,37 @@ class ResolvePage extends React.Component {
     const params = new URLSearchParams(props.location.search);
 
     this.state = {
-      query: params.get('query') || ''
+      query: params.get('query') || '',
+      isLoading: true
     };
   }
 
-  componentDidMount() {
+  componentDidMount = async () => {
     const {
       props: { getResolvedResources },
       state: { query }
     } = this;
 
-    getResolvedResources(query);
+    await getResolvedResources(query)
+    console.log('done loading!');
+    this.setState({isLoading: false});
   }
 
 
   render() {
+    const { isLoading } = this.state;
+
     return (
       <>
       <div className="row mb-5">
         <div className="col">
-          <ResourceList />
+          {
+            isLoading ? (
+              <Spinner />
+            ) : (
+              <ResourceList />
+            )
+          }
         </div>
       </div>
       </>
