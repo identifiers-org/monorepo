@@ -12,7 +12,7 @@ const NamespaceItem = (namespace) => {
       </td>
       <td>
         <span
-          className=" text-warning font-weight-bold badge badge-secondary"
+          className=" text-warning font-weight-bold border border-secondary badge badge-dark"
         >
           {namespace.prefix}
         </span>

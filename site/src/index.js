@@ -8,7 +8,6 @@ import store from './store/store';
 import { getLocationListFromRegistry } from './actions/LocationList';
 
 import './styles/styles.scss';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 
 // App container.

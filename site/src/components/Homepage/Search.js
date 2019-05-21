@@ -127,7 +127,7 @@ class Search extends React.Component {
             searchSuggestionList={namespaceList}
             selectedSearchSuggestion={activeSuggestion}
             query={query}
-            mouseover={handleMouseOver}
+            mouseOver={handleMouseOver}
           />
         </div>
       </form>

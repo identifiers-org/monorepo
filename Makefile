@@ -40,7 +40,7 @@ force_npm_reinstall:
 
 npm_install:
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Installing npm modules"
-	@docker run --user node --network=hqwebnet -p 8192:8192 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site install"
+	@docker run --user node --network=hqwebnet -p 8192:8192 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site install; npm rebuild"
 	@touch npm_install
 
 development_env_up: development_instantiate_index_template development_env_backend_up npm_install
