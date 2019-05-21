@@ -10,7 +10,7 @@
 
 .suggestion__selected {
   background-color: $primary;
-  border-radius: .25rem;
+  border-radius: $border-radius;
   cursor: pointer;
 }
 
@@ -21,7 +21,7 @@
 
 .hints-box, .suggestions-box {
   border: 1px solid rgb(206, 212, 218);
-  border-radius: .25rem;
+  border-radius: $border-radius;
   border-top-width: 0;
   list-style: none;
   margin-top: 0;

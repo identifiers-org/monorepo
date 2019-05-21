@@ -17,6 +17,9 @@ $secondary: #e36109;
 $success: #1f7c35;
 $warning: #e2ad00;
 
+$enable-rounded: false;
+$border-radius: 0;
+
 // Fix ugly form focus color.
 .form-control:focus {
   border-color: $primary !important;
