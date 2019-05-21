@@ -37,12 +37,12 @@ class Header extends React.Component {
       <header>
         <nav className="navbar navbar-expand-md navbar-light bg-light">
 
-          <a className="navbar-brand" href="#">
+          <div className="navbar-brand">
             <div className="mb-0 header-logo">
               <img src={identifiersLogo} className="brand-img"/>
               <h2>Identifiers.org</h2>
             </div>
-          </a>
+          </div>
 
           <button className="navbar-toggler" type="button" onClick={handleToggleNav}>
             <span className="navbar-toggler-icon"></span>
