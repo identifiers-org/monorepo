@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=development parcel src/index.html --port 8182",
-    "build": "NODE_ENV=production parcel build src/index.html --out-dir dist --experimental-scope-hoisting",
+    "build": "NODE_ENV=production parcel build src/index.html --out-dir dist",
     "precommit": "lint-staged",
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d dist",
