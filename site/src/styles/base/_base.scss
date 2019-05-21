@@ -1,3 +1,28 @@
+// Colors. Commented is bootstrap original.
+// $danger: #dc3545;
+// $dark: #343a40;
+// $info: #17a2b8;
+// $light: #f8f9fa;
+// $primary: #007bff;
+// $secondary: #6c757d;
+// $success: #28a745;
+// $warning: #f0ad4e;
+
+$danger: #dc3545;
+$dark: #292929;
+$light: #eaeaea;
+$info: #96a291;
+$primary: #3c81b9;
+$secondary: #e36109;
+$success: #5e801a;
+$warning: #e2ad00;
+
+// Fix ugly form focus color.
+.form-control:focus {
+  border-color: $primary !important;
+}
+
+
 html {
   overflow-y: scroll;
 }
@@ -24,17 +49,6 @@ a, a:visited, a:hover, a:active {
   cursor: pointer;
   outline: 0px auto !important;
 }
-
-
-// Bootstrap colors.
-$primary: #007bff;
-$secondary: #6c757d;
-$success: #28a745;
-$danger: #dc3545;
-$warning: #f0ad4e;
-$info: #17a2b8;
-$dark: #343a40;
-$light: #f8f9fa;
 
 
 // Min width for fontawesome margins.

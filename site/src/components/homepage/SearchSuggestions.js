@@ -19,7 +19,7 @@ class SearchSuggestions extends React.Component {
     let complete = false;
 
     if (prefix === query) {
-      result = <strong className="text-light">{query}</strong>;
+      result = <strong>{query}</strong>;
       complete = true;
     } else {
       result = parts.reduce(
@@ -28,7 +28,7 @@ class SearchSuggestions extends React.Component {
     }
 
     return <span
-      className={`badge ${complete ? 'badge-secondary border border-warning' : 'badge-light border border-secondary'} font-weight-normal`}
+      className={`badge ${complete ? 'badge-secondary border border-dark' : 'badge-dark border border-secondary'} font-weight-normal`}
     >
       {result}
     </span>

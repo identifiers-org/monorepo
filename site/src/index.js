@@ -2,13 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import './styles/styles.scss';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-
 import AppRouter from './routers/AppRouter';
 import store from './store/store';
 
 import { getConfigFromDevopsApi } from './actions/Config';
+
+import './styles/styles.scss';
 
 
 // App container.
