@@ -41,19 +41,19 @@ class SearchEvaluator extends React.Component {
                 case 'ok':
                   return (
                     <small className="text-block mr-0">
-                      Your compact identifier appears valid.
+                      Your compact identifier appears to be valid.
                     </small>
                   );
                 case 'prefix_empty':
                   return (
                     <small className="text-block mr-0">
-                      Your compact identifier appears incomplete: The prefix is missing.
+                      Your compact identifier appears to be incomplete: The prefix is missing.
                     </small>
                   );
                 case 'prefix_unknown':
                   return (
                     <small className="text-block mr-0">
-                      Your compact identifier appears incorrect: The prefix&nbsp;
+                      Your compact identifier appears to be incorrect: The prefix&nbsp;
                       <span className="font-weight-bold">{queryParts.prefix}</span>&nbsp;
                       does not exist in the registry.
                     </small>
@@ -61,7 +61,7 @@ class SearchEvaluator extends React.Component {
                 case 'id_empty':
                   return (
                     <small className="text-block mr-0">
-                      Your compact identifier appears incomplete, the local id is missing.
+                      Your compact identifier appears to be incomplete, the local id is missing.
                     </small>
                   );
 
@@ -69,7 +69,7 @@ class SearchEvaluator extends React.Component {
                   const currentNamespace = namespaceList.filter(namespace => namespace.prefix === queryParts.prefix)[0];
                   return (
                     <small className="text-block mr-0">
-                      Your compact identifier appears incorrect: The local id&nbsp;
+                      Your compact identifier appears to be incorrect: The local id&nbsp;
                       <span className="font-weight-bold">{queryParts.id}</span>&nbsp;
                       does not match the pattern&nbsp;
                       <span className="text-monospace">{currentNamespace? currentNamespace.pattern : ''}</span>.
@@ -80,7 +80,7 @@ class SearchEvaluator extends React.Component {
                 case 'resource_not_empty': {
                   return (
                     <small className="text-block mr-0">
-                      Your compact identifier appears incorrect: You have specified a provider code (
+                      Your compact identifier appears to be incorrect: You have specified a provider code (
                       <span className="font-weight-bold">{queryParts.resource}</span>
                       ). That is not a compact identifier. Please, remove the provider code.
                     </small>
@@ -90,7 +90,7 @@ class SearchEvaluator extends React.Component {
                 case 'resource_bad': {
                   return (
                     <small className="text-block mr-0">
-                      Your compact identifier appears incorrect: The provider code&nbsp;
+                      Your compact identifier appears to be incorrect: The provider code&nbsp;
                       <span className="font-weight-bold">{queryParts.resource}</span>&nbsp;
                       does not exist for the prefix&nbsp;
                       <span className="font-weight-bold">{queryParts.prefix}</span>.

@@ -26,7 +26,7 @@ class ResourceList extends React.Component {
         <>
           <div className="row mb-5">
             <div className="col align-middle">
-              <FontAwesomeIcon icon={faBomb} size="2x" className="text-dark mr-2" />
+              <FontAwesomeIcon icon={faBomb} size="2x" className="text-dark mr-2 mt-4" />
               Error resolving compact identifier <strong>{query}</strong>.
             </div>
           </div>
