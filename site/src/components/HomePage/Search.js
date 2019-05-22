@@ -4,12 +4,8 @@ import SearchSuggestions from './SearchSuggestions';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-
 import { getNamespacesFromRegistry } from '../../actions/NamespaceList';
 import { querySplit, completeQuery, evaluateSearch } from '../../utils/identifiers';
-import { getResolvedResources } from '../../actions/ResolvedResources';
 
 
 class Search extends React.Component {
@@ -153,7 +149,7 @@ class Search extends React.Component {
             />
             <div className="input-group-append">
               <button className="btn btn-primary">
-                <FontAwesomeIcon icon={faSearch} /> Resolve
+                <i className="icon icon-common icon-search" /> Resolve
               </button>
             </div>
           </div>

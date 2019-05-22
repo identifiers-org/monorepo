@@ -1,14 +1,12 @@
 import React from 'react';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 
 const PageTitle = ({ icon, title, extraTitle, description }) => (
   <>
     <div className="row">
       <div className="col">
         <h1>
-          <FontAwesomeIcon icon={icon} /> {title}&nbsp;
+          <i className={`icon icon-common ${icon}`} />&nbsp;
           <span className="font-italic">{extraTitle}</span>
         </h1>
       </div>

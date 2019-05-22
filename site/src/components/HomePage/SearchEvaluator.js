@@ -1,13 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCheckCircle,
-  faExclamationTriangle,
-  faTimesCircle
-} from '@fortawesome/free-solid-svg-icons';
-
 import { evaluateSearch } from '../../utils/identifiers';
 
 
@@ -25,15 +18,15 @@ class SearchEvaluator extends React.Component {
     return (
       <>
         <div className="row no-gutters ml-3 mr-2">
-          <div className="col d-flex">
+          <div className="col d-flex align-items-center">
             {(() => {
               switch (evaluation) {
                 case 'ok':
-                  return <FontAwesomeIcon className="text-success mr-2" icon={faCheckCircle} size="2x" />
+                  return <i className="icon icon-common icon-check-circle size-200 text-success mr-2" />
                 case 'prefix_empty': case 'id_empty':
-                  return <FontAwesomeIcon className="text-warning mr-2" icon={faExclamationTriangle} size="2x" />
+                  return <i className="icon icon-common icon-exclamation-triangle size-200 text-warning mr-2" />
                 case 'prefix_unknown': case 'id_bad':
-                  return <FontAwesomeIcon className="text-danger mr-2" icon={faTimesCircle} size="2x" />
+                  return <i className="icon icon-common icon-times-circle size-200 text-danger mr-2" />
               }
             })()}
             {(() => {

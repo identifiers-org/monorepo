@@ -1,9 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCopy } from '@fortawesome/free-regular-svg-icons';
-
 import { getResolvedResources } from '../../actions/ResolvedResources';
 import ResourceList from '../ResolverPage/ResourceList';
 
@@ -78,12 +75,7 @@ class ResolvePage extends React.Component {
                           className="btn btn-sm btn-primary-outline"
                           onClick={() => {handleCopyToClipboard(compactIdentifier)}}
                         >
-                          <FontAwesomeIcon
-                            icon={faCopy}
-                            size="2x"
-                            className="min-width-2"
-                            title="Copy to clipboard"
-                          />
+                          <i className="icon icon-common icon-copy size-150" />
                         </button>
                       )
                     }

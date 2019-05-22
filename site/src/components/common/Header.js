@@ -4,13 +4,6 @@ import { NavLink } from 'react-router-dom';
 
 import identifiersLogo from '../../assets/identifiers_logo.png';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faHome,
-  faSearch,
-  faHandPointUp
-} from '@fortawesome/free-solid-svg-icons';
-
 
 class Header extends React.Component {
   constructor(props) {
@@ -55,17 +48,17 @@ class Header extends React.Component {
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
                 <NavLink exact to="/" className="nav-link" activeClassName="active">
-                    <FontAwesomeIcon icon={faHome}/> Home
+                <i className="icon icon-common icon-home" /> Home
                 </NavLink>
               </li>
               <li className="nav-item">
                 <a href={config.registryUrl} className="nav-link">
-                  <FontAwesomeIcon icon={faSearch}/> Registry
+                  <i className="icon icon-common icon-search" /> Registry
                 </a>
               </li>
               <li className="nav-item">
                 <a href={config.registryPrefixRegistrationRequestFormUrl} className="nav-link">
-                  <FontAwesomeIcon icon={faHandPointUp}/> Request prefix
+                  <i className="icon icon-common icon-hand-point-up" /> Request prefix
                 </a>
               </li>
             </ul>

@@ -1,9 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
-
 import SearchEvaluator from './SearchEvaluator';
 
 
@@ -112,7 +109,7 @@ class SearchSuggestions extends React.Component {
                             onClick={() => {handleSuggestionLinkClick(result.prefix)}}
                             type="button"
                           >
-                            <FontAwesomeIcon icon={faExternalLinkAlt}/>
+                            <i className="icon icon-common icon-external-link-alt" />
                           </button>
                         </div>
                       </div>

@@ -2,9 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faBomb } from '@fortawesome/free-solid-svg-icons';
-
 import ResourceItem from './ResourceItem';
 
 
@@ -26,7 +23,7 @@ class ResourceList extends React.Component {
         <>
           <div className="row mb-5">
             <div className="col align-middle">
-              <FontAwesomeIcon icon={faBomb} size="2x" className="text-dark mr-2 mt-4" />
+              <i className="icon icon-common icon-bomb size-200 mr-2 mt-4" />
               Error resolving compact identifier <strong>{query}</strong>.
             </div>
           </div>
@@ -35,7 +32,7 @@ class ResourceList extends React.Component {
               <a
                 href={`${window.location.protocol}//${window.location.hostname}${window.location.port ? ':' + window.location.port : ''}`}
               >
-                <FontAwesomeIcon icon={faArrowLeft} className="text-dark mr-2" /> Go back
+                <i className="icon icon-common icon-arrow-left mr-2" />Go back
               </a>
             </div>
           </div>
