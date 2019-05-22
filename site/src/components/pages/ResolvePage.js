@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 
 import { getResolvedResources } from '../../actions/ResolvedResources';
-import ResourceList from '../resolverpage/ResourceList';
+import ResourceList from '../ResolverPage/ResourceList';
 
 import Spinner from '../common/Spinner';
 import { swalToast } from '../../utils/swalDialogs';

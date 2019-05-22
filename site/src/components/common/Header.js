@@ -40,7 +40,10 @@ class Header extends React.Component {
           <div className="navbar-brand">
             <div className="mb-0 header-logo">
               <img src={identifiersLogo} className="brand-img"/>
-              <h2>Identifiers.org</h2>
+              <div className="logo-text">
+                  <h1>Identifiers.org</h1>
+                  <p className="logo-subtitle">Resolution service</p>
+                </div>
             </div>
           </div>
 
