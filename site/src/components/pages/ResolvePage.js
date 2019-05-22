@@ -69,7 +69,7 @@ class ResolvePage extends React.Component {
               <>
                 <div className="row mb-5 justify-content-md-center">
                   <div className="col d-flex align-items-center text-middle justify-content-center border p-2 bg-cardgrey">
-                    <h4 className="mb-0 text-success">
+                    <h4 className="mb-0 text-success text-ellipsis">
                       {compactIdentifier}
                     </h4>
                     {
@@ -93,7 +93,7 @@ class ResolvePage extends React.Component {
                   <div className="col">
                     <h4 className="mb-0">
                       Compact Identifier:&nbsp;
-                      <strong className="text-primary font-italic">{query}</strong>
+                      <strong className="text-primary font-italic text-ellipsis">{query}</strong>
                     </h4>
                   </div>
                 </div>

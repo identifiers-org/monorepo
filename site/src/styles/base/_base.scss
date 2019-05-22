@@ -64,6 +64,31 @@ a, a:visited, a:hover, a:active {
 }
 
 
+// Word breaking for urls and long words.
+.text-breakword {
+  display: block;
+  hyphens: auto;
+  line-height: 1.2em;
+  margin-right: -1em;
+  max-height: 3.6em;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  padding-right: 1em;
+  position: relative;
+  text-align: justify;
+  word-break: break-word;
+  word-wrap: break-word;
+}
+
+// Non-wrapping text that ends in ellipsis if too long.
+.text-ellipsis {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
 // Min width for fontawesome margins.
 .min-width-2 {
   min-width: 2rem;
@@ -73,3 +98,4 @@ a, a:visited, a:hover, a:active {
 .svg-inline--fa .title {
   color: red;
 }
+

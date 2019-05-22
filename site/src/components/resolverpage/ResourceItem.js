@@ -7,16 +7,21 @@ import { faCubes, /* faLink, faGlobeEurope, faSitemap */ } from '@fortawesome/fr
 const ResourceItem = ({ data }) => (
   <div className="card mt-3">
     <div className="card-header d-flex align-items-center">
-          <FontAwesomeIcon icon={faCubes} size="2x" className="mr-2" />
-          <a
-            href={data.compactIdentifierResolvedUrl}
-            className="ml-2 clear-link"
-            target="_blank"
-          >
-            <p className="mb-0">{data.description}</p>
-            <small className="text-muted">{data.compactIdentifier}</small>
-          </a>
-      </div>
+      <FontAwesomeIcon icon={faCubes} size="2x" className="mr-2" />
+
+      <a
+        href={data.compactIdentifierResolvedUrl}
+        className="ml-2 clear-link w-90"
+        target="_blank"
+      >
+        <p className="mb-0">
+          {data.description}
+        </p>
+        <p className="mb-0">
+          <small className="text-muted text-wordbreak">{data.compactIdentifier}</small>
+        </p>
+      </a>
+    </div>
 
     <ul className="list-group list-group-flush">
       <li className="list-group-item">
