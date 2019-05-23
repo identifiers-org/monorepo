@@ -5,10 +5,22 @@
 .header-logo {
   display: flex;
   align-items: flex-end;
-  font-family: 'Quicksand';
+  margin-right: 1rem;
 }
 
-.brand-img {
-  height: 48px;
-  margin-right: 1rem;
+.nav-item-spacer {
+  border-right: 1px solid $light;
+}
+
+.nav-link-dark {
+  color: $light !important;
+}
+
+.nav-item:hover {
+  background-color: rgba(0, 0, 0, .5)
+}
+
+.nav-link-active {
+  background-color: $light;
+  color: $dark !important;
 }

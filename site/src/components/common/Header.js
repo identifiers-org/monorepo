@@ -28,36 +28,39 @@ class Header extends React.Component {
 
     return (
       <header>
-        <nav className="navbar navbar-expand-md navbar-light bg-light">
+        <nav className="navbar navbar-dark bg-primary pt-4">
 
           <div className="navbar-brand">
             <div className="mb-0 header-logo">
-              <img src={identifiersLogo} className="brand-img"/>
-              <div className="logo-text">
+              <img src={identifiersLogo} className="brand-img header-logo"/>
+                <div className="logo-text">
                   <h1>Identifiers.org</h1>
                   <p className="logo-subtitle">Resolution service</p>
                 </div>
             </div>
           </div>
-
-          <button className="navbar-toggler" type="button" onClick={handleToggleNav}>
+        </nav>
+        <nav className="navbar navbar-expand navbar-dark bg-primary pb-0">
+          <button className="navbar-toggler mb-1" type="button" onClick={handleToggleNav}>
             <span className="navbar-toggler-icon"></span>
           </button>
 
           <div className={`collapse navbar-collapse ${navCollapsed ? '' : 'show'}`}>
-            <ul className="navbar-nav ml-auto">
+            <ul className="navbar-nav">
               <li className="nav-item">
-                <NavLink exact to="/" className="nav-link" activeClassName="active">
+                <NavLink exact to="/" className="nav-link nav-link-dark" activeClassName="nav-link-active">
                 <i className="icon icon-common icon-home" /> Home
                 </NavLink>
               </li>
+              <div className="nav-item-spacer"></div>
               <li className="nav-item">
-                <a href={config.registryUrl} className="nav-link">
+                <a href={config.registryUrl} className="nav-link nav-link-dark">
                   <i className="icon icon-common icon-search" /> Registry
                 </a>
               </li>
+              <div className="nav-item-spacer"></div>
               <li className="nav-item">
-                <a href={config.registryPrefixRegistrationRequestFormUrl} className="nav-link">
+                <a href={config.registryPrefixRegistrationRequestFormUrl} className="nav-link nav-link-dark">
                   <i className="icon icon-common icon-hand-point-up" /> Request prefix
                 </a>
               </li>
