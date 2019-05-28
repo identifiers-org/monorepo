@@ -4,7 +4,8 @@
 @import './base/base';
 @import './base/bootstrap_addons';
 
-@import './components/common/header';
+@import './components/common/header/header';
+@import './components/common/footer/footer';
 @import './components/common/spinner';
 
 @import './components/homepage/searchsuggestion';
