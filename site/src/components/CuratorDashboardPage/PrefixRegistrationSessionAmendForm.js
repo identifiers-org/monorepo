@@ -430,7 +430,7 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
 }
 
 // *****************************************************************************************
-// TODO - VOY POR QUE EL STATE AMEND SE RELLENE DIRECTAMENTE CON EL REQUEST. <--------------
+// TODO - Amend state should fill from request.                              <--------------
 // *****************************************************************************************
 
 // Mapping
