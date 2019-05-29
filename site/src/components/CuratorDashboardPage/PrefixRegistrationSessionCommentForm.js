@@ -4,9 +4,6 @@ import { withRouter } from 'react-router';
 
 import { Collapse } from 'reactstrap';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faPlus } from '@fortawesome/free-solid-svg-icons';
-
 import { prefixRegistrationRequestComment } from '../../actions/PrefixRegistrationSession';
 import { setPrefixRegistrationSessionComment } from '../../actions/PrefixRegistrationSessionComment';
 
@@ -80,7 +77,7 @@ class PrefixRegistrationSessionCommentForm extends React.Component {
       <Collapse className="bg-gray pt-3 pb-2 px-4 rounded-lg" isOpen={isOpen}>
         <div className="row">
           <div className="col mb-3">
-            <h4><FontAwesomeIcon icon={faCheck} /> Add comment to request</h4>
+            <h4><i className="icon icon-common icon-check" /> Add comment to request</h4>
           </div>
         </div>
 
@@ -108,7 +105,7 @@ class PrefixRegistrationSessionCommentForm extends React.Component {
               href="#!"
               onClick={handleComment}
             >
-              <FontAwesomeIcon icon={faPlus} /> Add comment
+              <i className="icon icon-common icon-plus" /> Add comment
             </a>
           </div>
         </div>

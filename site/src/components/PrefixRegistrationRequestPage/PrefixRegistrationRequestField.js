@@ -1,9 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faExclamationTriangle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-
 import {
   setValue,
   setValidity,
@@ -232,12 +229,12 @@ class PrefixRegistrationRequestField extends React.Component {
           {
             validationtooltip && (
               <div className="invalid-feedback bg-warning">
-                <span className="text-white ml-1"><FontAwesomeIcon icon={faExclamationTriangle} /></span> {this.props.validationtooltip}
+                <span className="text-white ml-1"><i className="icon icon-common icon-exclamation-triangle" /></span> {this.props.validationtooltip}
               </div>
             )
           }
           <div className="invalid-feedback">
-            <FontAwesomeIcon icon={faTimesCircle} /> {errorMessage}
+            <i className="icon icon-common icon-times-circle" /> {errorMessage}
           </div>
           <small
             id={`${id}-helpblock`}

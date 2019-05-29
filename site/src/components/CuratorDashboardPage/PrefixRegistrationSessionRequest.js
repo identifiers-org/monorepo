@@ -1,19 +1,11 @@
 import React from 'react';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faLeaf,
-  faSitemap,
-  faCube,
-  faUser
-} from '@fortawesome/free-solid-svg-icons';
-
 
 const PrefixRegistrationSessionRequestDetails = ({ data }) => (
   <>
     <div className="row no-gutters align-items-center bg-light rounded p-2 mb-1">
       <div className="col col-sm-4 col-lg-3 col-xl-2">
-        <p><FontAwesomeIcon icon={faLeaf} /> <strong>Prefix details</strong></p>
+        <p><i className="icon icon-common icon-leaf" /> <strong>Prefix details</strong></p>
       </div>
       <div className="col col-sm-8 col-lg-9 col-xl-10">
         <table className="table table-sm m-0 table-borderless table-striped">
@@ -31,7 +23,7 @@ const PrefixRegistrationSessionRequestDetails = ({ data }) => (
 
     <div className="row no-gutters align-items-center bg-light rounded p-2 mb-1">
       <div className="col col-sm-4 col-lg-3 col-xl-2">
-        <p><FontAwesomeIcon icon={faSitemap} /> <strong>Institution details</strong></p>
+        <p><i className="icon icon-common icon-sitemap" /> <strong>Institution details</strong></p>
       </div>
       <div className="col col-sm-8 col-lg-9 col-xl-10">
         <table className="table table-sm m-0 table-borderless table-striped">
@@ -47,7 +39,7 @@ const PrefixRegistrationSessionRequestDetails = ({ data }) => (
 
     <div className="row no-gutters align-items-center bg-light rounded p-2 mb-1">
       <div className="col col-sm-4 col-lg-3 col-xl-2">
-        <p><FontAwesomeIcon icon={faCube} /> <strong>Provider details</strong></p>
+        <p><i className="icon icon-common icon-cube" /> <strong>Provider details</strong></p>
       </div>
       <div className="col col-sm-8 col-lg-9 col-xl-10">
         <table className="table table-sm m-0 table-borderless table-striped">
@@ -65,7 +57,7 @@ const PrefixRegistrationSessionRequestDetails = ({ data }) => (
 
     <div className="row no-gutters align-items-center bg-light rounded p-2 mb-1">
       <div className="col col-sm-4 col-lg-3 col-xl-2">
-        <p><FontAwesomeIcon icon={faUser} /> <strong>Requester details</strong></p>
+        <p><i className="icon icon-common icon-user" /> <strong>Requester details</strong></p>
       </div>
       <div className="col col-sm-8 col-lg-9 col-xl-10">
         <table className="table table-sm m-0 table-borderless table-striped">

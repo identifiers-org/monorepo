@@ -1,14 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faLeaf,
-  faInfoCircle,
-  faFingerprint,
-  faCubes
-} from '@fortawesome/free-solid-svg-icons';
-
 import PageTitle from '../common/PageTitle';
 import { getNamespaceFromRegistry, getResourcesFromRegistry } from '../../actions/NamespaceList';
 import ResourceItem from '../NamespaceDetailsPage/ResourceItem';
@@ -36,14 +28,14 @@ class NamespaceDetailsPage extends React.Component {
     ) : (
       <>
         <PageTitle
-          icon={faLeaf}
+          icon="icon-leaf"
           title={`Data collection:`}
           extraTitle={namespace.name}
         />
 
         <div className="row">
           <div className="col">
-            <h2><FontAwesomeIcon icon={faInfoCircle} /> General Information</h2>
+            <h2><i className="icon icon-common icon-info" /> General Information</h2>
           </div>
         </div>
 
@@ -78,7 +70,8 @@ class NamespaceDetailsPage extends React.Component {
 
         <div className="row">
           <div className="col">
-            <h2><FontAwesomeIcon icon={faFingerprint} /> Identification schemes</h2>
+            {/* TODO: Change to FINGERPRINT when EBI adds it to EBI-Font-icons */}
+            <h2><i className="icon icon-common icon-barcode" /> Identification schemes</h2>
           </div>
         </div>
 
@@ -109,7 +102,7 @@ class NamespaceDetailsPage extends React.Component {
 
         <div className="row">
           <div className="col">
-            <h2><FontAwesomeIcon icon={faCubes} /> Resources</h2>
+            <h2><i className="icon icon-common icon-cubes" /> Resources</h2>
           </div>
         </div>
 

@@ -1,13 +1,5 @@
 import React from 'react';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faAngleLeft,
-  faAngleDoubleLeft,
-  faAngleRight,
-  faAngleDoubleRight
-} from '@fortawesome/free-solid-svg-icons';
-
 
 class Paginator extends React.Component {
   constructor (props) {
@@ -60,7 +52,7 @@ class Paginator extends React.Component {
                 href="#!"
                 onClick={() => {this.props.navigate(0)}}
               >
-                <FontAwesomeIcon icon={faAngleDoubleLeft} />
+                <i className="icon icon-common icon-angle-double-left" />
               </a>
             </li>
             <li className={`page-item ${number === 0 ? 'disabled' : ''}`}>
@@ -69,7 +61,7 @@ class Paginator extends React.Component {
                 href="#!"
                 onClick={() => {this.props.navigate(Math.max(number - 1, 0))}}
               >
-                <FontAwesomeIcon icon={faAngleLeft} />
+                <i className="icon icon-common icon-angle-left" />
               </a>
             </li>
 
@@ -96,7 +88,7 @@ class Paginator extends React.Component {
                 className="page-link" href="#!"
                 onClick={() => {this.props.navigate(Math.min(number + 1, (totalPages - 1)))}}
               >
-                <FontAwesomeIcon icon={faAngleRight} />
+                <i className="icon icon-common icon-angle-right" />
               </a>
             </li>
             <li className={`page-item ${number === totalPages - 1 ? 'disabled' : ''}`}>
@@ -104,7 +96,7 @@ class Paginator extends React.Component {
                 className="page-link" href="#!"
                 onClick={() => {this.props.navigate(totalPages - 1)}}
               >
-                <FontAwesomeIcon icon={faAngleDoubleRight} />
+                <i className="icon icon-common icon-angle-double-right" />
               </a>
             </li>
           </ul>

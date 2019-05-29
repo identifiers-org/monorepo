@@ -5,9 +5,6 @@ import { Link } from 'react-router-dom';
 
 import { Collapse } from 'reactstrap';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
-
 import PrefixRegistrationSessionRequest from './PrefixRegistrationSessionRequest';
 
 
@@ -57,7 +54,7 @@ class PrefixRegistrationSessionItem extends React.Component {
                   className="clear-link btn btn-warning btn-block"
                   to={`/curator/${id}`}
                 >
-                  <FontAwesomeIcon icon={faEllipsisH} /> Manage
+                  <i className="icon icon-common icon-ellipsis-h" /> Manage
                 </Link>
               </div>
             </div>

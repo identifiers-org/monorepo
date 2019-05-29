@@ -1,19 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faListAlt,
-  faLeaf,
-  faSitemap,
-  faCube,
-  faUser,
-  faTasks,
-  faCheck,
-  faTimes,
-  faCaretRight
-} from '@fortawesome/free-solid-svg-icons';
-
 import Swal from 'sweetalert2';
 
 import { Config } from '../../config/config';
@@ -248,7 +235,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
       <>
         <div className="row mt-5">
           <div className="col col-md-12 col-lg-10 col-xl-8">
-            <h1><FontAwesomeIcon icon={faListAlt} /> Request Prefix Form</h1>
+            <h1><i className="icon icon-common icon-list" /> Request Prefix Form</h1>
           </div>
         </div>
 
@@ -268,7 +255,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
               <div className="form" role="form" autoComplete="off">
                 <div className="card mb-3">
                   <div className="card-header">
-                    <h2 className="mb-3"><FontAwesomeIcon icon={faLeaf} /> Prefix details</h2>
+                    <h2 className="mb-3"><i className="icon icon-common icon-leaf" /> Prefix details</h2>
                     <p className="text-muted">
                       The prefix is a label that identifies the set of data that is being provided in a
                       resource. <strong>Examples:</strong> <span className="text-dark">pdb</span>,
@@ -365,7 +352,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
 
                 <div className="card mb-3">
                   <div className="card-header">
-                    <h2 className="mb-2"><FontAwesomeIcon icon={faSitemap} /> Institution details</h2>
+                    <h2 className="mb-2"><i className="icon icon-common icon-sitemap" /> Institution details</h2>
                     <p>
                       The resource&#39;s owner institution or organization, who is in charge of creating,
                       developing and maintaining a resource. Examples are EMBL-EBI, Kyoto University
@@ -426,7 +413,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
 
                 <div className="card mb-3">
                   <div className="card-header">
-                    <h2 className="mb-2"><FontAwesomeIcon icon={faCube} /> Provider details</h2>
+                    <h2 className="mb-2"><i className="icon icon-common icon-cube" /> Provider details</h2>
                     <p>
                       The <span className="text-italic">provider</span> is the institution or organization
                       in charge of providing a resource. There can be more than one provider, and
@@ -544,7 +531,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
 
                 <div className="card mb-3">
                   <div className="card-header">
-                    <h2 className="mb-2"><FontAwesomeIcon icon={faUser} /> Requester details</h2>
+                    <h2 className="mb-2"><i className="icon icon-common icon-user" /> Requester details</h2>
                     <p>
                       The requester details are required to contact the person who is creating
                       this request if further information is required.
@@ -585,7 +572,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
 
                 <div className="card m-5">
                   <div className="card-header">
-                    <h2 className="mb-2"><FontAwesomeIcon icon={faTasks} /> Request form status</h2>
+                    <h2 className="mb-2"><i className="icon icon-common icon-tasks" /> Request form status</h2>
                   </div>
                   <div className="card-body">
                     <>
@@ -594,7 +581,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                           <div className="row">
                             <div className="col">
                               <div className="d-flex align-items-center">
-                                <h1 className="text-success mb-0 mr-1"><FontAwesomeIcon icon={faCheck} /></h1>
+                                <h1 className="text-success mb-0 mr-1"><i className="icon icon-common icon-check" /></h1>
                                 <span className="font-weight-bold">Request is complete and ready to send.</span>
                               </div>
                             </div>
@@ -604,7 +591,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                             <div className="row">
                               <div className="col">
                                 <div className="d-flex align-items-center">
-                                  <h1 className="text-danger mb-0 mr-1"><FontAwesomeIcon icon={faTimes} /></h1>
+                                  <h1 className="text-danger mb-0 mr-1"><i className="icon icon-common icon-times" /></h1>
                                   <span className="font-weight-bold">Request contains errors or empty required fields.</span>
                                 </div>
                               </div>
@@ -631,7 +618,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                                               <span key={`label-${label}-${i}`}>{label}</span>
                                               {
                                                 i < this.props[field].label.length - 1 &&
-                                                <FontAwesomeIcon key={`label-${label}-${i}-arrow`} icon={faCaretRight} className="mx-1"/>
+                                                <i key={`label-${label}-${i}-arrow`} className="icon icon-common icon-caret-right mx-1" />
                                               }
                                             </span>
                                           ))

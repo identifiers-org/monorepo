@@ -1,8 +1,5 @@
 import React from 'react';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-
 
 class PrefixRegistrationSessionNewEventBtn extends React.Component {
   constructor(props) {
@@ -51,7 +48,7 @@ class PrefixRegistrationSessionNewEventBtn extends React.Component {
           href="#!"
           onClick={handleClick}
         >
-          <FontAwesomeIcon icon={isCancel ? faTimes : icon} />&nbsp;
+          <i className={`icon icon-common icon-${isCancel ? 'times' : icon}`} />&nbsp;
           {isCancel ? `Cancel ${caption.toLowerCase()}` : caption}
         </a>
       </div>

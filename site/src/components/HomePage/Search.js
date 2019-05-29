@@ -4,9 +4,6 @@ import SearchSuggestions from './SearchSuggestions';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-
 import { getNamespacesFromRegistry } from '../../actions/NamespaceList';
 
 
@@ -119,7 +116,7 @@ class Search extends React.Component {
             />
             <div className="input-group-append">
               <button className="btn btn-primary">
-                <FontAwesomeIcon icon={faSearch} /> Search
+                <i className="icon icon-common icon-search" /> Search
               </button>
             </div>
           </div>

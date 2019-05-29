@@ -6,15 +6,6 @@ import identifiersLogo from '../../assets/identifiers_logo.png';
 
 import { Config } from '../../config/config';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faHome,
-  faSearch,
-  faSignInAlt,
-  faHandPointUp,
-  faTachometerAlt
-} from '@fortawesome/free-solid-svg-icons';
-
 
 class Header extends React.Component {
   constructor(props) {
@@ -46,17 +37,17 @@ class Header extends React.Component {
             <Nav className="ml-auto" navbar>
               <NavItem>
                 <NavLink exact to="/" className="nav-link" activeClassName="active">
-                  <FontAwesomeIcon icon={faHome}/> Home
+                  <i className="icon icon-common icon-home" /> Registry
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink to="/registry" className="nav-link" activeClassName="active">
-                  <FontAwesomeIcon icon={faSearch}/> Browse the registry
+                  <i className="icon icon-common icon-search" /> Browse the registry
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink to="/prefixregistrationrequest" className="nav-link" activeClassName="active">
-                  <FontAwesomeIcon icon={faHandPointUp}/> Request prefix
+                  <i className="icon icon-common icon-hand-point-up" /> Request prefix
                 </NavLink>
               </NavItem>
               {
@@ -64,12 +55,12 @@ class Header extends React.Component {
                   <>
                     <NavItem>
                       <NavLink to="/curator" className="nav-link" activeClassName="active">
-                        <FontAwesomeIcon icon={faTachometerAlt}/> Curator dashboard
+                        <i className="icon icon-common icon-tachometer-alt" /> Curator dashboard
                       </NavLink>
                     </NavItem>
                     <NavItem>
                       <NavLink to="/account" className="nav-link" activeClassName="active">
-                        <FontAwesomeIcon icon={faSignInAlt}/> Account
+                        <i className="icon icon-common icon-sign-in-alt" /> Account
                       </NavLink>
                     </NavItem>
                   </>

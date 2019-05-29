@@ -2,9 +2,6 @@ import React from 'react';
 
 import { Collapse } from 'reactstrap';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
-
 import PrefixRegistrationSessionRequest from './PrefixRegistrationSessionRequest';
 
 
@@ -43,9 +40,9 @@ class PrefixRegistrationSessionEventAmend extends React.Component {
             >
               {
                 expanded ?
-                  <><FontAwesomeIcon icon={faMinus} /> Hide request contents&nbsp;</>
+                  <><i className="icon icon-common icon-minus" /> Hide request contents&nbsp;</>
                 :
-                  <><FontAwesomeIcon icon={faPlus} /> Show request contents&nbsp;</>
+                  <><i className="icon icon-common icon-plus" /> Show request contents&nbsp;</>
               }
             </a>
           </div>

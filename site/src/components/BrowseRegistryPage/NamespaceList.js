@@ -1,9 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faList, faIdCard, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-
 import { getNamespacesFromRegistry } from '../../actions/NamespaceList';
 
 import NamespaceItem from './NamespaceItem';
@@ -161,13 +158,13 @@ class NamespaceList extends React.Component {
                   <thead className="thead-light thead-rounded">
                     <tr>
                       <th className="narrow">
-                        <FontAwesomeIcon icon={faList} /> Name
+                        <i className="icon icon-common icon-list" /> Name
                       </th>
                       <th className="narrow">
-                        <FontAwesomeIcon icon={faIdCard} /> Prefix
+                        <i className="icon icon-common icon-card" /> Prefix
                       </th>
                       <th className="wide">
-                        <FontAwesomeIcon icon={faInfoCircle} /> Description
+                        <i className="icon icon-common icon-info" /> Description
                       </th>
                     </tr>
                     </thead>

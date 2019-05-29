@@ -1,17 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faHandPointUp,
-  faHistory,
-  faCheckSquare,
-  faComment,
-  faEdit,
-  faCheck,
-  faTimes
-} from '@fortawesome/free-solid-svg-icons';
-
 import { getPrefixRegistrationSessionFromRegistry } from '../../actions/PrefixRegistrationSession';
 
 import PrefixRegistrationSessionEvent from '../CuratorDashboardPage/PrefixRegistrationSessionEvent';
@@ -102,7 +91,7 @@ class ManagePrefixRegistrationRequestPage extends React.Component {
       !prefixRegistrationRequest ? '' : (
       <>
         <PageTitle
-          icon={faCheckSquare}
+          icon="icon-check-square"
           title={`Managing request:`}
           extraTitle={prefixRegistrationRequest.name}
         />
@@ -110,7 +99,7 @@ class ManagePrefixRegistrationRequestPage extends React.Component {
         <div className="row">
           <div className="col">
             <div className="card-body">
-              <h4><FontAwesomeIcon icon={faHandPointUp} /> Current request details</h4>
+              <h4><i className="icon icon-common icon-hand-point-up" /> Current request details</h4>
               <PrefixRegistrationSessionRequestDetails
                 data={prefixRegistrationRequest}
               />
@@ -123,7 +112,7 @@ class ManagePrefixRegistrationRequestPage extends React.Component {
             caption="Accept"
             color="success"
             handleShow={() => handleFormVisibility('acceptForm')}
-            icon={faCheck}
+            icon="check"
             isCancel={acceptFormVisible}
 
           />
@@ -131,21 +120,21 @@ class ManagePrefixRegistrationRequestPage extends React.Component {
             caption="Amend"
             color="warning"
             handleShow={() => handleFormVisibility('amendForm')}
-            icon={faEdit}
+            icon="edit"
             isCancel={amendFormVisible}
           />
           <PrefixRegistrationSessionNewEventBtn
             caption="Comment"
             color="secondary"
             handleShow={() => handleFormVisibility('commentForm')}
-            icon={faComment}
+            icon="comment"
             isCancel={commentFormVisible}
           />
           <PrefixRegistrationSessionNewEventBtn
             caption="Reject"
             color="danger"
             handleShow={() => handleFormVisibility('rejectForm')}
-            icon={faTimes}
+            icon="times"
             isCancel={rejectFormVisible}
           />
         </div>
@@ -180,7 +169,7 @@ class ManagePrefixRegistrationRequestPage extends React.Component {
 
         <div className="row">
           <div className="col">
-            <h4><FontAwesomeIcon icon={faHistory} /> Previous events</h4>
+            <h4><i className="icon icon-common icon-history" /> Previous events</h4>
             {
               prefixRegistrationSessionEvents.map(prse =>
                 <PrefixRegistrationSessionEvent

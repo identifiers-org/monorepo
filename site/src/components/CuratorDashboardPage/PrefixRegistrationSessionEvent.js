@@ -1,8 +1,5 @@
 import React from 'react';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faTimes, faComment, faEdit, faFile } from '@fortawesome/free-solid-svg-icons';
-
 import PrefixRegistrationSessionEventStart from './PrefixRegistrationSessionEventStart';
 import PrefixRegistrationSessionEventAmend from './PrefixRegistrationSessionEventAmend';
 import PrefixRegistrationSessionEventComment from './PrefixRegistrationSessionEventComment';
@@ -18,7 +15,8 @@ const PrefixRegistrationSessionEvent = ({ data }) => (
       data.eventName === 'START' &&
         <div className="callout callout-primary">
           <div className="mb-3 pl-3 bg-dark text-white rounded-sm">
-            <FontAwesomeIcon icon={faFile} />&nbsp;
+          {/* TODO: change to file when EBI adds it to EBI-Font-icons */}
+            <i className="icon icon-common icon-search-document" />&nbsp;
             <strong>Original request submission at {Moment(data.created).format('llll')}</strong>
           </div>
           <PrefixRegistrationSessionEventStart data={data} />
@@ -27,7 +25,7 @@ const PrefixRegistrationSessionEvent = ({ data }) => (
       data.eventName === 'AMEND' &&
         <div className="callout callout-warning">
           <div className="mb-3 pl-3 bg-dark text-white rounded-sm">
-            <FontAwesomeIcon icon={faEdit} />&nbsp;
+            <i className="icon icon-common icon-edit" />&nbsp;
             <strong>Request amend at {Moment(data.created).format('llll')}</strong>
           </div>
           <PrefixRegistrationSessionEventAmend data={data} />
@@ -36,7 +34,7 @@ const PrefixRegistrationSessionEvent = ({ data }) => (
       data.eventName === 'COMMENT' &&
         <div className="callout callout-secondary">
           <div className="mb-3 pl-3 bg-dark text-white rounded-sm">
-            <FontAwesomeIcon icon={faComment} />&nbsp;
+            <i className="icon icon-common icon-comment" />&nbsp;
             <strong>Request comment at {Moment(data.created).format('llll')}</strong>
           </div>
           <PrefixRegistrationSessionEventComment data={data} />
@@ -45,7 +43,7 @@ const PrefixRegistrationSessionEvent = ({ data }) => (
       data.eventName === 'ACCEPT' &&
         <div className="callout callout-success">
           <div className="mb-3 pl-3 bg-dark text-white rounded-sm">
-            <FontAwesomeIcon icon={faCheck} />&nbsp;
+            <i className="icon icon-common icon-check" />&nbsp;
             <strong>Request accept at {Moment(data.created).format('llll')}</strong>
           </div>
           <PrefixRegistrationSessionEventAccept data={data} />
@@ -54,7 +52,7 @@ const PrefixRegistrationSessionEvent = ({ data }) => (
       data.eventName === 'REJECT' &&
         <div className="callout callout-danger">
           <div className="mb-3 pl-3 bg-dark text-white rounded-sm">
-            <FontAwesomeIcon icon={faTimes} />&nbsp;
+            <i className="icon icon-common icon-times" />&nbsp;
             <strong>Request reject at {Moment(data.created).format('llll')}</strong>
           </div>
           <PrefixRegistrationSessionEventReject data={data} />

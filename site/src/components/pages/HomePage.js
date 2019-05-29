@@ -1,7 +1,7 @@
 import React from 'react';
 
 import identifiersLogo from '../../assets/identifiers_logo.png';
-import Search from '../Homepage/Search';
+import Search from '../HomePage/Search';
 
 
 class MainPage extends React.Component {
