@@ -136,7 +136,7 @@ class Search extends React.Component {
     return (
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <div className="input-group">
+          <div className="input-group inline-search-input-group">
             <input
               autoFocus
               spellCheck={false}

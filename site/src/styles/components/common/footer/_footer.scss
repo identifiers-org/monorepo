@@ -1,4 +1,8 @@
 .global-footer {
   margin-top: 10rem;
-  border: 0px solid !important;
+}
+
+.global-footer .row {
+  display: block;
+  margin: 0 auto !important;
 }

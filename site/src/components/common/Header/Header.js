@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import identifiersLogo from '../../../assets/identifiers_logo.png';
@@ -18,11 +19,13 @@ class Header extends React.Component {
   }
 
   render() {
+    const { config } = this.props;
+
     return (
-      // This is EMBL-EBI Enforced boilerplate code.
+      // This is EMBL-EBI Enforced boilerplate header.
       <>
-        <header id="masthead-black-bar" className="clearfix masthead-black-bar">
-          <nav className="fixblackbar">
+        <header id="masthead-black-bar" className="clearfix masthead-black-bar expanded">
+          <nav>
             <ul id="global-nav" className="menu">
               <li className="home-mobile"><a href="//www.ebi.ac.uk"></a></li>
               <li className="home"><a href="//www.ebi.ac.uk">EMBL-EBI</a></li>
@@ -44,9 +47,9 @@ class Header extends React.Component {
         <div id="content">
         <div data-sticky-container>
           <div id="masthead" className="masthead" data-sticky data-sticky-on="large" data-top-anchor="main-content-area:top" data-btm-anchor="main-content-area:bottom">
-            <div className="masthead-inner row">
+            <div className="masthead-inner row expanded">
               <div className="columns medium-12" id="local-title">
-                <div className="d-flex ml-2">
+                <div className="d-flex ml-3 mb-2">
                   <img src={identifiersLogo} />
                   <div className="logo-text">
                     <h1>Identifiers.org</h1>
@@ -57,9 +60,35 @@ class Header extends React.Component {
 
               <nav>
                 <ul id="local-nav" className="dropdown menu float-left" data-description="navigational">
-                  <li><a href="../">Overview</a></li>
-                  <li><a data-open="modal-download">Download</a></li>
-                  <li><a href="#">Support <i className="icon icon-generic" data-icon="x"></i></a></li>
+                  <li>
+                    <NavLink exact to="/" className="nav-link nav-link-dark" activeClassName="active">
+                      <i className="icon icon-common icon-search" /> Resolution
+                    </NavLink>
+                  </li>
+
+                  <li className="nav-item">
+                    <a href={config.registryUrl} className="nav-link nav-link-dark">
+                      <i className="icon icon-common icon-list" /> Registry
+                    </a>
+                  </li>
+
+                  <li className="nav-item">
+                    <a href={config.registryPrefixRegistrationRequestFormUrl} className="nav-link nav-link-dark">
+                      <i className="icon icon-common icon-hand-point-up" /> Request prefix
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href={config.oldIdentifiersUrl} target="_blank" className="nav-link nav-link-dark">
+                      <i className="icon icon-common icon-home" /> Legacy platform
+                    </a>
+                  </li>
+
+                  <li class="nav-item float-right">
+                    <a href={config.feedbackUrl} target="_blank" className="nav-link nav-link-dark">
+                      <i className="icon icon-common icon-comments" /> Feedback
+                    </a>
+                  </li>
                 </ul>
               </nav>
             </div>
@@ -72,4 +101,9 @@ class Header extends React.Component {
 }
 
 
-export default Header;
+// Redux mappings.
+const mapStateToProps = (state) => ({
+  config: state.config
+});
+
+export default connect(mapStateToProps)(Header);

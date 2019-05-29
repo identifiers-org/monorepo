@@ -1,5 +1,72 @@
-.ebi-row {
+// Blackbar fix.
+.masthead-black-bar .row {
+  max-width: none;
+  display: block;
+  margin: 0 auto !important;
+}
+
+.expanded {
+  max-width: none;
+}
+
+
+// EMBL Popover close 'X' fix.
+.embl-bar .row .padding-top-medium {
+  text-align: right;
+}
+
+// EMBL Popover fix.
+.embl-bar .row.padding-bottom-medium {
   max-width: 80rem;
-  margin-left: auto;
-  margin-right: auto;
+}
+
+// Search bar fix.
+#search-bar .padding-bottom-medium {
+  padding: 0;
+}
+
+#global-search {
+  width: 50%;
+  margin: 0 auto 2rem auto;
+}
+
+#global-search .input-group-field {
+  @extend .form-control;
+}
+
+#global-search .input-group-button .button {
+  @extend .btn;
+  @extend .btn-light;
+}
+
+// Search bar close 'X' fix.
+#search-bar .row .padding-top-medium {
+  text-align: right;
+
+  .close-button {
+    font-weight: bold;
+    color: #eee;
+  }
+}
+
+// Masthead fixes.
+.masthead {
+  background-color: $primary;
+}
+
+.menu li a.active {
+  background-color: $light;
+  color: $dark !important;
+
+  &:hover {
+    color: $light !important;
+  }
+}
+
+nav {
+  width: 100%;
+}
+
+nav .menu {
+  width: 100%;
 }

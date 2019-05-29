@@ -9,11 +9,11 @@ class Footer extends React.Component {
 
   render() {
     return (
-      // This is EMBL-EBI Enforced boilerplate code.
+      // This is EMBL-EBI Enforced boilerplate footer.
       <footer>
         <div id="global-footer" className="global-footer">
-          <nav id="global-nav-expanded" className="global-nav-expanded ebi-row"></nav>
-          <section id="ebi-footer-meta" className="ebi-footer-meta ebi-row"></section>
+          <nav id="global-nav-expanded" className="global-nav-expanded row"></nav>
+          <section id="ebi-footer-meta" className="ebi-footer-meta row"></section>
         </div>
       </footer>
     );

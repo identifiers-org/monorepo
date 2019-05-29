@@ -6,6 +6,10 @@ export const config = {
   registryUrl: 'https://registry.identifiers.org',
   registryPrefixRegistrationRequestFormUrl: 'https://registry.identifiers.org/prefixregistrationrequest',
 
+  feedbackUrl: 'https://github.com/identifiers-org/identifiers-org.github.io/issues/new',
+
+  oldIdentifiersUrl: 'https://ebi.identifiers.org',
+
   apiVersion: '1.0',
 
   // This requires a working HQ architecture with a central registry.

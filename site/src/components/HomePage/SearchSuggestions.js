@@ -53,7 +53,7 @@ class SearchSuggestions extends React.Component {
     }
 
     return (
-      <>
+      <div className="inline-search-container">
         {
           (queryParts.prefix || queryParts.id || queryParts.resource) && (
             <div className="hints-box">
@@ -70,14 +70,14 @@ class SearchSuggestions extends React.Component {
         {
           // Render search suggestion list if it contains elements.
           searchSuggestionList.length > 0 && (
-            <div className="suggestions-box pb-2">
+            <div className="suggestions-box">
               <div className="row mx-1">
                 <div className="col align-self-end">
                   <p className="text-muted text-right my-0"><small>Suggestions</small></p>
                 </div>
               </div>
 
-              <ul className="suggestion-list">
+              <ul className="suggestion-list pb-2">
                 {
                   searchSuggestionList.map((result, index) => {
                   return (
@@ -97,7 +97,7 @@ class SearchSuggestions extends React.Component {
                           >
                             {highlightQuery(result.prefix, queryParts.prefix)}
                             <p
-                              className={`mb-0 ml-2 ${selectedSearchSuggestion === index ? 'text-light' : ''}`}
+                              className={`mb-0 ml-2 ${selectedSearchSuggestion === index ? 'text-white' : ''}`}
                             >
                               {result.name}
                             </p>
@@ -105,7 +105,7 @@ class SearchSuggestions extends React.Component {
                         </div>
                         <div className="col col-1">
                           <button
-                            className={`ml-auto clear-button ${selectedSearchSuggestion === index ? 'text-light' : ''}`}
+                            className={`ml-auto clear-button ${selectedSearchSuggestion === index ? 'text-white' : ''}`}
                             onClick={() => {handleSuggestionLinkClick(result.prefix)}}
                             type="button"
                           >
@@ -121,7 +121,7 @@ class SearchSuggestions extends React.Component {
             </div>
           )
         }
-      </>
+      </div>
     );
   }
 }
