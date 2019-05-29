@@ -5,7 +5,7 @@ const ResourceItem = ({ resource }) => {
   const providerCodeLabel = resource.providerCode === 'CURATOR_REVIEW' ? 'Empty provider code' : resource.providerCode;
 
   return (
-    <table className="table table-sm table-striped">
+    <table className="table table-sm table-striped table-borderless">
       <tbody>
         <tr>
           <td
@@ -16,26 +16,26 @@ const ResourceItem = ({ resource }) => {
             <p className="text-center m-0">{resource.mirId}</p>
             <p className="font-weight-bold text-center m-0">{resource.official ? 'Primary' : ''}</p>
           </td>
-          <td className="w-15">
+          <td className="w-15 px-3">
             Description</td>
           <td className="resourceitem-table__wide">
             {resource.description}
           </td>
         </tr>
         <tr>
-          <td>Access URL</td>
+          <td className="px-3">Access URL</td>
           <td>{resource.urlPattern}</td>
         </tr>
         <tr>
-          <td>Institution</td>
+          <td className="px-3">Institution</td>
           <td>{resource.institution ? resource.institution.name : 'None'}</td>
         </tr>
         <tr>
-          <td>Website</td>
+          <td className="px-3">Website</td>
           <td>{resource.resourceHomeUrl}</td>
         </tr>
         <tr>
-          <td>Location</td>
+          <td className="px-3">Location</td>
           <td>{resource.location.countryName}</td>
         </tr>
       </tbody>
