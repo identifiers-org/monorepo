@@ -1,9 +1,12 @@
-export const Config = {
+export const config = {
   registryApi: typeof configApiRegistryUrl !== 'undefined' ? configApiRegistryUrl : 'http://localhost:8180',
 
   validationEndpoint: 'prefixRegistrationApi',
   prefixRegistrationEndpoint: 'prefixRegistrationApi',
   prefixRequestEndpoint: 'prefixRegistrationApi/registerPrefix',
+
+  satelliteUrl: 'https://cloud.identifiers.org',
+  feedbackUrl: 'https://github.com/identifiers-org/identifiers-org.github.io/issues/new',
 
   baseUrl: window.location.protocol + '//' + window.location.hostname + ':' + location.port + '/',
 
@@ -11,5 +14,5 @@ export const Config = {
 
   VALIDATION_DELAY: 1000,
 
-  enableAuthFeatures: true
+  enableAuthFeatures: false
 };

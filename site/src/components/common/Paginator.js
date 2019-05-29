@@ -45,7 +45,7 @@ class Paginator extends React.Component {
     return (
       <div className="row justify-content-between">
         <div className="col col-xs-12 col-sm-6 paginator">
-          <ul className="pagination pagination-sm">
+          <ul className="pagination pagination-sm m-0">
             <li className={`page-item ${number === 0 ? 'disabled' : ''}`}>
               <a
                 className="page-link"

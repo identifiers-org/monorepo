@@ -15,7 +15,7 @@ class CuratorDashboardPage extends React.Component  {
     return (
       <>
         <PageTitle
-          icon={faCheckSquare}
+          icon="icon-check-square"
           title="Prefix Registration Requests"
           description="This is the list of Prefix Registration Requests sent by resource administrators.
                        Clicking on one will expand the information and allow to perform actions like

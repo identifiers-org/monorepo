@@ -17,13 +17,14 @@
 }
 
 .logo-text {
-  font-family: 'Quicksand';
+  color: inherit;
+  margin-left: 1rem;
 }
 
 .logo-subtitle {
-  font-family: 'Quicksand';
+  color: inherit;
+  font-size: 1rem;
   font-weight: 300;
-  color: $secondary;
   text-align: right;
   margin: -1rem 1.5rem 0 0;
   font-style: italic;

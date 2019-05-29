@@ -1,4 +1,4 @@
-import { Config } from '../config/config';
+import { config } from '../config/Config';
 
 import { fetchAndAdd } from '../utils/fetchAndAdd';
 import { setPrefixRegistrationSessionAmend } from './PrefixRegistrationSessionAmend';
@@ -11,7 +11,7 @@ import { setPrefixRegistrationSessionAmend } from './PrefixRegistrationSessionAm
 // Get Prefix Registration Session from registry. Will dispatch setPrefixRegistrationSession.
 export const getPrefixRegistrationSessionFromRegistry = (id) => {
   return async (dispatch) => {
-    const requestUrl = new URL(`${Config.registryApi}/restApi/prefixRegistrationSessions/${id}`);
+    const requestUrl = new URL(`${config.registryApi}/restApi/prefixRegistrationSessions/${id}`);
 
     try {
       const response = await fetch(requestUrl);
@@ -22,7 +22,7 @@ export const getPrefixRegistrationSessionFromRegistry = (id) => {
         {name: 'prefixRegistrationRequest', url: data._links.prefixRegistrationRequest.href}
       ]);
 
-      const eventsUrl = `${Config.registryApi}/restApi/prefixRegistrationSessionEvents/search/findByPrefixRegistrationSessionId?id=${id}`
+      const eventsUrl = `${config.registryApi}/restApi/prefixRegistrationSessionEvents/search/findByPrefixRegistrationSessionId?id=${id}`
       const eventsResponse = await fetch(eventsUrl);
 
       let eventsData = await eventsResponse.json();
@@ -73,12 +73,12 @@ export const setPrefixRegistrationSession = (prefixRegistrationSession) => {
 // Accept prefixRegistrationRequest.
 export const prefixRegistrationRequestAccept = (id, reason) => {
   return async () => {
-    const requestUrl = `${Config.registryApi}/${Config.prefixRegistrationEndpoint}/acceptPrefixRegistrationRequest/${id}`;
+    const requestUrl = `${config.registryApi}/${config.prefixRegistrationEndpoint}/acceptPrefixRegistrationRequest/${id}`;
     const config = {
       method: 'POST',
       headers: {'content-type': 'application/json'},
       body: JSON.stringify({
-        apiVersion: Config.apiVersion,
+        apiVersion: config.apiVersion,
         payload: {
           additionalInformation: 'Source: curation web interface',
           acceptanceReason: reason
@@ -94,12 +94,12 @@ export const prefixRegistrationRequestAccept = (id, reason) => {
 // Reject prefixRegistrationRequest.
 export const prefixRegistrationRequestReject = (id, reason) => {
   return async () => {
-    const requestUrl = `${Config.registryApi}/${Config.prefixRegistrationEndpoint}/rejectPrefixRegistrationRequest/${id}`;
+    const requestUrl = `${config.registryApi}/${config.prefixRegistrationEndpoint}/rejectPrefixRegistrationRequest/${id}`;
     const config = {
       method: 'POST',
       headers: {'content-type': 'application/json'},
       body: JSON.stringify({
-        apiVersion: Config.apiVersion,
+        apiVersion: config.apiVersion,
         payload: {
           additionalInformation: 'Source: curation web interface',
           rejectionReason: reason
@@ -115,12 +115,12 @@ export const prefixRegistrationRequestReject = (id, reason) => {
 // Comment prefixRegistrationRequest.
 export const prefixRegistrationRequestComment = (id, comment) => {
   return async () => {
-    const requestUrl = `${Config.registryApi}/${Config.prefixRegistrationEndpoint}/commentPrefixRegistrationRequest/${id}`;
+    const requestUrl = `${config.registryApi}/${config.prefixRegistrationEndpoint}/commentPrefixRegistrationRequest/${id}`;
     const config = {
       method: 'POST',
       headers: {'content-type': 'application/json'},
       body: JSON.stringify({
-        apiVersion: Config.apiVersion,
+        apiVersion: config.apiVersion,
         payload: {
           additionalInformation: 'Source: curation web interface',
           comment,

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Config } from '../../config/config';
+import { config } from '../../config/Config';
 
 
 const highlightQuery = (prefix, query) => {
@@ -38,31 +38,57 @@ const SearchSuggestions = (props) => {
   }
 
   return (
-    <ul className="suggestion-list py-2">
-      {
-        searchSuggestionList.map((result, index) => (
-          <a
-            className="clear-link"
-            href={`${Config.baseUrl}registry/${result.prefix}`}
-            id={result.prefix}
-            key={result.prefix}
-          >
-            <li
-              onMouseOver={() => {mouseOver(index)}}
-              className={`suggestion ${selectedSearchSuggestion === index ? 'suggestion__active' : ''}`}
-              onClick={onClick}
-            >
-              <div className="row no-gutters py-1 mx-2">
-                <div className="col d-flex align-items-center">
-                  <span className="font-weight-normal">{highlightQuery(result.prefix, query)}</span>
-                  <p className="mb-0 ml-2">{result.name}</p>
-                </div>
-              </div>
-            </li>
-          </a>
-        ))
-      }
-    </ul>
+    <div className="inline-search-container">
+      <div className="suggestions-box">
+        <div className="row mx-1">
+          <div className="col align-self-end">
+            <p className="text-muted text-right my-0"><small>Suggestions</small></p>
+          </div>
+        </div>
+
+        <ul className="suggestion-list pb-2">
+                {
+                  searchSuggestionList.map((result, index) => {
+                  return (
+                    <li
+                      key={`suggestion-${index}`}
+                      onMouseOver={() => {mouseOver(index)}}
+                      className={`suggestion ${selectedSearchSuggestion === index ? 'suggestion__selected' : ''}`}
+                    >
+                      <div className="row no-gutters py-1 mx-2">
+                        <div className="col col-11">
+                         <a
+                            className="clear-link d-flex align-items-center"
+                            href="#!"
+                            id={result.prefix}
+                            key={result.prefix}
+                            onClick={() => {handleClick(result.prefix)}}
+                          >
+                            {highlightQuery(result.prefix, query)}
+                            <p
+                              className={`mb-0 ml-2 ${selectedSearchSuggestion === index ? 'text-white' : ''}`}
+                            >
+                              {result.name}
+                            </p>
+                          </a>
+                        </div>
+                        <div className="col col-1">
+                          <button
+                            className={`ml-auto clear-button ${selectedSearchSuggestion === index ? 'text-white' : ''}`}
+                            onClick={() => {handleSuggestionLinkClick(result.prefix)}}
+                            type="button"
+                          >
+                            <i className="icon icon-common icon-external-link-alt" />
+                          </button>
+                        </div>
+                      </div>
+                    </li>
+                  );
+                })
+              }
+            </ul>
+      </div>
+    </div>
   );
 }
 

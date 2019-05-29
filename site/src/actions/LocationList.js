@@ -1,6 +1,6 @@
 import { fetchAndAdd } from '../utils/fetchAndAdd';
 
-import { Config } from '../config/config';
+import { config } from '../config/Config';
 
 
 //
@@ -10,7 +10,7 @@ import { Config } from '../config/config';
 // Get Locations list from registry. Will dispatch setLocationList.
 export const getLocationListFromRegistry = () => {
   return async (dispatch) => {
-    let requestUrl = Config.registryApi + '/restApi/locations?size=1000';
+    let requestUrl = config.registryApi + '/restApi/locations?size=1000';
 
     const response = await fetch(requestUrl);
     const json = await response.json();

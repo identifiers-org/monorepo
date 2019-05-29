@@ -1,14 +1,76 @@
-.active {
-  font-weight: 700;
+// Blackbar fix.
+.masthead-black-bar .row {
+  max-width: none;
+  display: block;
+  margin: 0 auto !important;
 }
 
-.header-logo {
-  display: flex;
-  align-items: flex-end;
-  font-family: 'Quicksand';
+.expanded {
+  max-width: none;
 }
 
-.brand-img {
-  height: 48px;
-  margin-right: 1rem;
+
+// EMBL Popover close 'X' fix.
+.embl-bar .row .padding-top-medium {
+  text-align: right;
+}
+
+// EMBL Popover fix.
+.embl-bar .row.padding-bottom-medium {
+  max-width: 80rem;
+}
+
+// Search bar fix.
+#search-bar .padding-bottom-medium {
+  padding: 0;
+}
+
+#global-search {
+  width: 50%;
+  margin: 0 auto 1rem auto;
+
+  fieldset {
+    border: none;
+  }
+}
+
+#global-search .input-group-field {
+  @extend .form-control;
+}
+
+#global-search .input-group-button .button {
+  @extend .btn;
+  @extend .btn-light;
+}
+
+// Search bar close 'X' fix.
+#search-bar .row .padding-top-medium {
+  text-align: right;
+
+  .close-button {
+    font-weight: bold;
+    color: #eee;
+  }
+}
+
+// Masthead fixes.
+.masthead {
+  background-color: $primary;
+}
+
+.menu li a.active {
+  background-color: $light;
+  color: $dark !important;
+
+  &:hover {
+    color: $light !important;
+  }
+}
+
+nav {
+  width: 100%;
+}
+
+nav .menu {
+  width: 100%;
 }

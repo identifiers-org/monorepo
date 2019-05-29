@@ -1,6 +1,6 @@
 import { fetchAndAdd } from '../utils/fetchAndAdd';
 
-import { Config } from '../config/config';
+import { config } from '../config/Config';
 
 import { setNamespaceListParams } from './NamespaceListParams';
 
@@ -16,14 +16,14 @@ export const getNamespacesFromRegistry = (params) => {
 
     // TODO: Refactor to strategy.
     if (params.content !== '') {
-      requestUrl = new URL(`${Config.registryApi}/restApi/namespaces/search/findByPrefixContaining`);
+      requestUrl = new URL(`${config.registryApi}/restApi/namespaces/search/findByPrefixContaining`);
       requestUrl.searchParams.append('content', params.content);
     } else if (params.prefixStart !== '') {
       // TODO: What to do with '#' prefixstart?
-      requestUrl = new URL(`${Config.registryApi}/restApi/namespaces/search/findByPrefixStartsWith`);
+      requestUrl = new URL(`${config.registryApi}/restApi/namespaces/search/findByPrefixStartsWith`);
       requestUrl.searchParams.append('prefixStart', params.prefixStart);
     } else {
-      requestUrl = new URL(`${Config.registryApi}/restApi/namespaces`);
+      requestUrl = new URL(`${config.registryApi}/restApi/namespaces`);
     }
 
     // Params to add to request: PAGE, SIZE, SORT
@@ -49,7 +49,7 @@ export const getNamespacesFromRegistry = (params) => {
 // Get single namespace from registry. Will dispatch setNamespaces.
 export const getNamespaceFromRegistry = (prefix) => {
   return async (dispatch) => {
-    let requestUrl = new URL(`${Config.registryApi}/restApi/namespaces/search/findByPrefix?prefix=${prefix}`);
+    let requestUrl = new URL(`${config.registryApi}/restApi/namespaces/search/findByPrefix?prefix=${prefix}`);
 
     try {
       const response = await fetch(requestUrl);
@@ -68,7 +68,7 @@ export const getNamespaceFromRegistry = (prefix) => {
 // Get resources from registry. Will dispatch setResources.
 export const getResourcesFromRegistry = (namespace) => {
   return async (dispatch) => {
-    let requestUrl = new URL(`${Config.registryApi}/restApi/resources/search/findAllByNamespaceId`);
+    let requestUrl = new URL(`${config.registryApi}/restApi/resources/search/findAllByNamespaceId`);
     requestUrl.searchParams.append('id', namespace._links.self.href.split('/').pop());
 
     try {

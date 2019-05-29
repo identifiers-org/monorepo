@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
+import configReducer from '../reducers/ConfigReducer';
 import namespaceListReducer from '../reducers/NamespaceList';
 import namespaceListParamsReducer from '../reducers/NamespaceListParams';
 import prefixRegistrationRequestFieldReducer from '../reducers/PrefixRegistrationRequestField';
@@ -23,6 +24,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // Store creation.
 const store = createStore(
   combineReducers({
+    config: configReducer,
     registryBrowser: combineReducers({
       namespaceList: namespaceListReducer,
       namespaceListParams: namespaceListParamsReducer

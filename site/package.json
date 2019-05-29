@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/javfg/identifiers-org-cloud-hq-web-frontend#readme",
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^5.8.2",
     "bootstrap": "^4.3.1",
     "moment": "^2.24.0",
     "react": "^16.8.6",

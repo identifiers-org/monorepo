@@ -23,7 +23,7 @@ class BrowseRegistryPage extends React.Component {
     return (
       <>
         <PageTitle
-          icon={faDatabase}
+          icon="icon-database"
           title="Registry"
           description="This is the list of Prefixes currently registered in Identifiers.org database.
                        Clicking on one will show additional details and the related providers."

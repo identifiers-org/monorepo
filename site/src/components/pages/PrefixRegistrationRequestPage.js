@@ -3,9 +3,10 @@ import { connect } from 'react-redux'
 
 import Swal from 'sweetalert2';
 
-import { Config } from '../../config/config';
+import { config } from '../../config/Config';
 import RequestField from '../PrefixRegistrationRequestPage/PrefixRegistrationRequestField';
 import { requestValidation, setValidation, setValue, reset } from '../../actions/PrefixRegistrationRequestField';
+import PageTitle from '../common/PageTitle';
 
 
 class PrefixRegistrationRequestPage extends React.Component  {
@@ -156,7 +157,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
   handleSubmit = () => {
     this.setState({submitted: true}, async () => {
       let body = {
-        apiVersion: Config.apiVersion,
+        apiVersion: config.apiVersion,
         payload: this.state.fields.reduce((o, f) => {
           o[f] = this.props[f].value;
           return o;
@@ -173,7 +174,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
         })
       });
 
-      const config = {
+      const init = {
         method: 'POST',
         headers: {'content-type': 'application/json'},
         body: JSON.stringify(body)
@@ -182,8 +183,8 @@ class PrefixRegistrationRequestPage extends React.Component  {
       let responseStatusCode;
 
       // Make request and update the store.
-      const requestUrl = `${Config.registryApi}/${Config.prefixRequestEndpoint}`;
-      const response = await fetch(requestUrl, config);
+      const requestUrl = `${config.registryApi}/${config.prefixRequestEndpoint}`;
+      const response = await fetch(requestUrl, init);
       responseStatusCode = response.status;
       const json = await response.json();
       const res = { valid: responseStatusCode === 200, errorMessage: json.errorMessage };
@@ -227,27 +228,19 @@ class PrefixRegistrationRequestPage extends React.Component  {
 
 
   render() {
-    const validationUrlBase = `${Config.registryApi}/${Config.validationEndpoint}/`;
+    const validationUrlBase = `${config.registryApi}/${config.validationEndpoint}/`;
     const { institutionIsProvider, valid, invalidFields } = this.state;
     const { locationList } = this.props;
 
     return (
       <>
-        <div className="row mt-5">
-          <div className="col col-md-12 col-lg-10 col-xl-8">
-            <h1><i className="icon icon-common icon-list" /> Request Prefix Form</h1>
-          </div>
-        </div>
-
-        <div className="row mb-2">
-          <div className="col">
-            <p>
-              Please complete this form to register an identifier prefix that can be recognized by the
-              meta-resolver at identifiers.org. Completing all fields will enable a swift processing of
-              your request.
-            </p>
-          </div>
-        </div>
+        <PageTitle
+          icon="icon-list"
+          title="Request prefix form"
+          description="Please complete this form to register an identifier prefix that can be recognized by the
+                       meta-resolver at identifiers.org. Completing all fields will enable a swift processing of
+                       your request."
+        />
 
         <div className="container py-3">
           <div className="row">

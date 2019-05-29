@@ -107,7 +107,7 @@ class NamespaceList extends React.Component {
           {/* ALPHABETIC PAGINATOR */}
           <div className="col col-lg-12 col-xl-8">
             <div className="paginator">
-              <ul className="pagination pagination-sm">
+              <ul className="pagination pagination-sm m-0">
                 {
                   alphabetSearch.map(letter =>
                     <li

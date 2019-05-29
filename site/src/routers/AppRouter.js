@@ -2,8 +2,9 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Header from '../components/common/Header';
+import Footer from '../components/common/Footer';
 
-import { Config } from '../config/config';
+import { config } from '../config/Config';
 
 import HomePage from '../components/pages/HomePage';
 import BrowseRegistryPage from '../components/pages/BrowseRegistryPage';
@@ -26,7 +27,7 @@ const AppRouter = () => (
           <Route exact path="/registry/:prefix" component={NamespaceDetailsPage} />
           <Route exact path="/prefixregistrationrequest" component={PrefixRegistrationRequestPage} />
           {
-            Config.enableAuthFeatures && (
+            config.enableAuthFeatures && (
               <>
                 <Route exact path="/curator" component={CuratorDashboardPage} />
                 <Route exact path="/curator/:id" component={ManagePrefixRegistrationRequestPage} />
@@ -37,6 +38,7 @@ const AppRouter = () => (
           <Route component={NotFoundPage} />
         </Switch>
       </div>
+      <Footer />
     </>
   </BrowserRouter>
 );

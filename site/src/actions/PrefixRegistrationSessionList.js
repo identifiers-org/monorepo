@@ -1,4 +1,4 @@
-import { Config } from '../config/config';
+import { config } from '../config/Config';
 import { fetchAndAdd } from '../utils/fetchAndAdd';
 
 import { setPrefixRegistrationSessionListParams } from './PrefixRegistrationSessionListParams';
@@ -11,10 +11,10 @@ import { setPrefixRegistrationSessionListParams } from './PrefixRegistrationSess
 // Get Prefix Registration Requests from registry. Will dispatch setPrefixRegistrationSessionList.
 export const getPrefixRegistrationSessionListFromRegistry = (params) => {
   return async (dispatch) => {
-    const requestUrl = new URL(`${Config.registryApi}/restApi/prefixRegistrationSessions/search/findByClosedFalse`);
+    const requestUrl = new URL(`${config.registryApi}/restApi/prefixRegistrationSessions/search/findByClosedFalse`);
 
     // Comment previous line and use this one to see all requests, even closed ones.
-    // const requestUrl = new URL(`${Config.registryApi}/restApi/prefixRegistrationSessions/`);
+    // const requestUrl = new URL(`${config.registryApi}/restApi/prefixRegistrationSessions/`);
 
     Object.keys(params).forEach(param => {
       requestUrl.searchParams.append(param, params[param]);

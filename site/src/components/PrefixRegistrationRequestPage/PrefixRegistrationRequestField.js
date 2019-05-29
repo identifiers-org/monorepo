@@ -9,7 +9,7 @@ import {
   validationDone
 } from '../../actions/PrefixRegistrationRequestField';
 
-import { Config } from '../../config/config';
+import { config } from '../../config/Config';
 
 
 class PrefixRegistrationRequestField extends React.Component {
@@ -85,7 +85,7 @@ class PrefixRegistrationRequestField extends React.Component {
 
     // Create request body.
     let body = {
-      apiVersion: Config.apiVersion,
+      apiVersion: config.apiVersion,
       payload
     };
 
@@ -96,7 +96,7 @@ class PrefixRegistrationRequestField extends React.Component {
       });
     }
 
-    let config = {
+    let init = {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
@@ -107,7 +107,7 @@ class PrefixRegistrationRequestField extends React.Component {
     let responseStatusCode = 0;
 
     // Make request and update the store.
-    const response = await fetch(this.props.validationurl, config);
+    const response = await fetch(this.props.validationurl, init);
     responseStatusCode = response.status;
     const json = await response.json();
     const res = {
@@ -137,7 +137,7 @@ class PrefixRegistrationRequestField extends React.Component {
       if (this.props.field.shouldValidate) {
         this.validate();
       }
-    }, Config.VALIDATION_DELAY);
+    }, config.VALIDATION_DELAY);
   }
 
   handleBlur = (e) => {

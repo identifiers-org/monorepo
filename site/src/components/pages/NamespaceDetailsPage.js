@@ -5,7 +5,7 @@ import PageTitle from '../common/PageTitle';
 import { getNamespaceFromRegistry, getResourcesFromRegistry } from '../../actions/NamespaceList';
 import ResourceItem from '../NamespaceDetailsPage/ResourceItem';
 
-import { Config } from '../../config/config';
+import { config } from '../../config/Config';
 
 
 class NamespaceDetailsPage extends React.Component {
@@ -89,7 +89,7 @@ class NamespaceDetailsPage extends React.Component {
                 </tr>
                 <tr>
                   <td>URI</td>
-                  <td>{Config.baseUrl}registry/{namespace.prefix}</td>
+                  <td>{config.baseUrl}registry/{namespace.prefix}</td>
                 </tr>
                 <tr>
                   <td>Compact identifier</td>
