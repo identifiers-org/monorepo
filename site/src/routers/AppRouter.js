@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import Header from '../components/common/Header/Header';
-import Footer from '../components/common/Footer/Footer';
+import Header from '../components/common/Header';
+import Footer from '../components/common/Footer';
 
 import HomePage from '../components/pages/HomePage';
 import NotFoundPage from '../components/pages/NotFoundPage';

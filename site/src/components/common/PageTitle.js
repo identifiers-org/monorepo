@@ -6,7 +6,7 @@ const PageTitle = ({ icon, title, extraTitle, description }) => (
     <div className="row">
       <div className="col">
         <h1>
-          <i className={`icon icon-common ${icon}`} />&nbsp;
+          <i className={`icon icon-common ${icon}`} />&nbsp;{title}
           <span className="font-italic">{extraTitle}</span>
         </h1>
       </div>

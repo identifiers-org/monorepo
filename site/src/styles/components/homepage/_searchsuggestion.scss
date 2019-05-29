@@ -3,10 +3,11 @@
 }
 
 .inline-search-container {
-  position: absolute;
-  z-index: 100;
   background-color: #fff;
   box-shadow: 0px 0px 25px 0px $dark;
+  position: absolute;
+  width: 100%;
+  z-index: 100;
 }
 
 .suggestion-list {

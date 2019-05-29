@@ -2,20 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-import identifiersLogo from '../../../assets/identifiers_logo.png';
+import identifiersLogo from '../../assets/identifiers_logo.png';
 
 
 class Header extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      navCollapsed: true
-    };
-  }
-
-  handleToggleNav = () => {
-    this.setState({navCollapsed: !this.state.navCollapsed});
   }
 
   render() {
@@ -62,7 +54,7 @@ class Header extends React.Component {
                 <ul id="local-nav" className="dropdown menu float-left" data-description="navigational">
                   <li>
                     <NavLink exact to="/" className="nav-link nav-link-dark" activeClassName="active">
-                      <i className="icon icon-common icon-search" /> Resolution
+                      <i className="icon icon-common icon-external-link-alt" /> Resolution
                     </NavLink>
                   </li>
 
@@ -84,7 +76,7 @@ class Header extends React.Component {
                     </a>
                   </li>
 
-                  <li class="nav-item float-right">
+                  <li className="nav-item float-right">
                     <a href={config.feedbackUrl} target="_blank" className="nav-link nav-link-dark">
                       <i className="icon icon-common icon-comments" /> Feedback
                     </a>
