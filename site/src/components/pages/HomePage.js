@@ -32,7 +32,7 @@ class MainPage extends React.Component {
             </div>
           </div>
           <div className="row justify-content-center mt-2">
-            <div className="col col-xs-12 col-sm-10 col-md-8 col-lg-6">
+            <div className="col col-xs-12 col-sm-11 col-md-9 col-lg-7 col-xl-6">
               <Search query={query} />
             </div>
           </div>

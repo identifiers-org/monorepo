@@ -107,7 +107,7 @@ class Search extends React.Component {
           <div className="input-group inline-search-input-group">
             <input
               autoFocus
-              className="form-control"
+              className="form-control search-input"
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               placeholder="Enter a namespace to search the registry"

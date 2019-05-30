@@ -44,3 +44,13 @@
 .hint-list {
   list-style: none;
 }
+
+.search-input {
+  height: 2.5rem !important;
+  padding-top: .5rem;
+  z-index: 101 !important;
+}
+
+.search-button {
+  z-index: 101 !important;
+}
