@@ -41,7 +41,7 @@ class NamespaceDetailsPage extends React.Component {
 
         <div className="row mb-3">
           <div className="col">
-            <table className="table table-sm table-striped">
+            <table className="table table-sm table-striped table-borderless">
               <tbody>
                 <tr>
                   <td className="w-35">
@@ -77,7 +77,7 @@ class NamespaceDetailsPage extends React.Component {
 
         <div className="row mb-3">
           <div className="col">
-            <table className="table table-sm table-striped">
+            <table className="table table-sm table-striped table-borderless">
               <tbody>
                 <tr>
                   <td className="w-35">
