@@ -1,28 +1,27 @@
 import React from 'react';
 
-import { config } from '../../config/Config';
-
 
 const highlightQuery = (prefix, query) => {
-    const parts = prefix.split(query);
-    let result;
-    let complete = false;
+  const parts = prefix.split(query);
+  let result;
+  let complete = false;
 
-    if (prefix === query) {
-      result = <strong>{query}</strong>;
-      complete = true;
-    } else {
-      result = parts.reduce(
-        (sum, part, index) =>
-          [...sum, part, <strong key={`${prefix}-${index}`} className="text-warning">{query}</strong>], []).slice(0, -1);
-    }
+  if (prefix === query) {
+    result = <strong>{query}</strong>;
+    complete = true;
+  } else {
+    result = parts.reduce((sum, part, index) =>
+      [...sum, part, <strong key={`${prefix}-${index}`} className="text-warning">{query}</strong>], []).slice(0, -1);
+  }
 
-    return <span
+  return (
+    <span
       className={`badge ${complete ? 'badge-secondary border border-dark' : 'badge-dark border border-secondary'} font-weight-normal`}
     >
       {result}
     </span>
-  }
+  );
+}
 
 const SearchSuggestions = (props) => {
   const {
@@ -62,7 +61,7 @@ const SearchSuggestions = (props) => {
                             href="#!"
                             id={result.prefix}
                             key={result.prefix}
-                            onClick={() => {handleClick(result.prefix)}}
+                            onClick={() => {onClick(result.prefix)}}
                           >
                             {highlightQuery(result.prefix, query)}
                             <p

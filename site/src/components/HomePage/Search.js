@@ -48,7 +48,7 @@ class Search extends React.Component {
     });
   }
 
-  handleKeyDown = e => {
+  handleKeyDown = (e) => {
     const {
       props: {namespaceList},
       state: {activeSuggestion, query}
@@ -81,11 +81,15 @@ class Search extends React.Component {
     }
   }
 
-  handleMouseOver = index => {
+  handleMouseOver = (index) => {
     this.setState({activeSuggestion: index});
   }
 
-  handleSubmit = e => {
+  handleSuggestionClick = (prefix) => {
+    this.props.history.push(`/registry/${prefix}`);
+  }
+
+  handleSubmit = (e) => {
     const {query} = this.state;
 
     e.preventDefault();
@@ -95,10 +99,9 @@ class Search extends React.Component {
 
   render() {
     const {
-      handleChange, handleKeyDown, handleMouseOver, handleSubmit,
+      handleChange, handleKeyDown, handleMouseOver, handleSubmit, handleSuggestionClick,
       props: {namespaceList},
       state: {activeSuggestion, query}
-
     } = this;
 
     return (
@@ -121,10 +124,11 @@ class Search extends React.Component {
             </div>
           </div>
           <SearchSuggestions
+            mouseOver={handleMouseOver}
+            onClick={handleSuggestionClick}
+            query={query}
             searchSuggestionList={namespaceList}
             selectedSearchSuggestion={activeSuggestion}
-            query={query}
-            mouseOver={handleMouseOver}
           />
         </div>
       </form>
@@ -137,7 +141,7 @@ const mapStateToProps = (state) => ({
   namespaceList: state.registryBrowser.namespaceList
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getNamespacesFromRegistry: (params) => dispatch(getNamespacesFromRegistry(params))
 });
 
