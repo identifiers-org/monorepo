@@ -5,7 +5,7 @@ export const config = {
   prefixRegistrationEndpoint: 'prefixRegistrationApi',
   prefixRequestEndpoint: 'prefixRegistrationApi/registerPrefix',
 
-  satelliteUrl: 'https://cloud.identifiers.org',
+  satelliteUrl: 'https://identifiers.org',
   feedbackUrl: 'https://github.com/identifiers-org/identifiers-org.github.io/issues/new',
 
   baseUrl: window.location.protocol + '//' + window.location.hostname + ':' + location.port + '/',
