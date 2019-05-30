@@ -55,7 +55,7 @@ const SearchSuggestions = (props) => {
                       className={`suggestion ${selectedSearchSuggestion === index ? 'suggestion__selected' : ''}`}
                     >
                       <div className="row no-gutters py-1 mx-2">
-                        <div className="col col-11">
+                        <div className="col">
                          <a
                             className="clear-link d-flex align-items-center"
                             href="#!"
@@ -70,15 +70,6 @@ const SearchSuggestions = (props) => {
                               {result.name}
                             </p>
                           </a>
-                        </div>
-                        <div className="col col-1">
-                          <button
-                            className={`ml-auto clear-button ${selectedSearchSuggestion === index ? 'text-white' : ''}`}
-                            onClick={() => {handleSuggestionLinkClick(result.prefix)}}
-                            type="button"
-                          >
-                            <i className="icon icon-common icon-external-link-alt" />
-                          </button>
                         </div>
                       </div>
                     </li>
