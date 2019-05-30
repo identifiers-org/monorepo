@@ -74,7 +74,8 @@ instantiate_base_index_template:
 app_structure: clean instantiate_base_index_template
 	@echo "<===|DEVOPS|===> [PACKAGE] Building application structure"
 	@docker run -v $(shell pwd)/${dev_site_root_folder}:/home/site node /bin/bash -c "npm --prefix /home/site install; npm --prefix /home/site run build"
-	@sed -i "s@<!--ENVIRONMENT_PLACEHOLDER-->@${environment_content}@g" ${file_instance_app_structure_index}
+	@echo "<===|DEVOPS|===> [PACKAGE] SPA based distribution prepared at '${folder_site_dist}', injecting configuration placeholders"
+	@sed -i "s@<div id=\"config_placeholder\"></div>@${environment_content}@g" ${file_instance_app_structure_index}
 
 container_production_build: app_structure
 	@echo "<===|DEVOPS|===> [BUILD] Production container $(container_name):$(tag_version)"
