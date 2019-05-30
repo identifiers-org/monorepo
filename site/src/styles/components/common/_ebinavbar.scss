@@ -1,0 +1,13 @@
+.Sticky-base {
+  width: 100%;
+}
+
+.EBINavBar--stuck-top {
+  background-color: #0086b4;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 1;
+  box-shadow: 0 0 10px 0 $dark;
+}

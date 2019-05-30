@@ -4,6 +4,9 @@ import { NavLink } from 'react-router-dom';
 
 import identifiersLogo from '../../assets/identifiers_logo.png';
 
+import Sticky from './Sticky';
+import EBINavBar from './EBINavBar';
+
 
 class Header extends React.Component {
   constructor(props) {
@@ -50,58 +53,64 @@ class Header extends React.Component {
                 </div>
               </div>
 
-              <nav>
-                <ul id="local-nav" className="dropdown menu float-left" data-description="navigational">
 
-                  <li className="nav-item">
-                    <a href={config.satelliteUrl} className="nav-link nav-link-dark">
-                      <i className="icon icon-common icon-external-link-alt" /> Resolution
-                    </a>
-                  </li>
+              <Sticky>
+                <EBINavBar>
+                  <nav>
+                    <ul id="local-nav" className="dropdown menu float-left" data-description="navigational">
 
-                  <li className="nav-item">
-                    <NavLink exact to="/" className="nav-link" activeClassName="active">
-                      <i className="icon icon-common icon-list" /> Registry
-                    </NavLink>
-                  </li>
+                      <li className="nav-item">
+                        <a href={config.satelliteUrl} className="nav-link nav-link-dark">
+                          <i className="icon icon-common icon-external-link-alt" /> Resolution
+                        </a>
+                      </li>
 
-                  <li className="nav-item">
-                    <NavLink to="/registry" className="nav-link" activeClassName="active">
-                      <i className="icon icon-common icon-search" /> Browse the registry
-                    </NavLink>
-                  </li>
+                      <li className="nav-item">
+                        <NavLink exact to="/" className="nav-link" activeClassName="active">
+                          <i className="icon icon-common icon-list" /> Registry
+                        </NavLink>
+                      </li>
 
-                  <li className="nav-item">
-                    <NavLink to="/prefixregistrationrequest" className="nav-link" activeClassName="active">
-                      <i className="icon icon-common icon-hand-point-up" /> Request prefix
-                    </NavLink>
-                  </li>
+                      <li className="nav-item">
+                        <NavLink to="/registry" className="nav-link" activeClassName="active">
+                          <i className="icon icon-common icon-search" /> Browse the registry
+                        </NavLink>
+                      </li>
 
-                  {
-                    config.enableAuthFeatures && (
-                      <>
-                        <li className="nav-item">
-                          <NavLink to="/curator" className="nav-link" activeClassName="active">
-                            <i className="icon icon-common icon-tachometer-alt" /> Curator dashboard
-                          </NavLink>
-                        </li>
-                        <li className="nav-item">
-                          <NavLink to="/account" className="nav-link" activeClassName="active">
-                            <i className="icon icon-common icon-sign-in-alt" /> Account
-                          </NavLink>
-                        </li>
-                      </>
-                    )
-                  }
+                      <li className="nav-item">
+                        <NavLink to="/prefixregistrationrequest" className="nav-link" activeClassName="active">
+                          <i className="icon icon-common icon-hand-point-up" /> Request prefix
+                        </NavLink>
+                      </li>
 
-                  <li className="nav-item float-right">
-                    <a href={config.feedbackUrl} target="_blank" className="nav-link nav-link-dark">
-                      <i className="icon icon-common icon-comments" /> Feedback
-                    </a>
-                  </li>
+                      {
+                        config.enableAuthFeatures && (
+                          <>
+                            <li className="nav-item">
+                              <NavLink to="/curator" className="nav-link" activeClassName="active">
+                                <i className="icon icon-common icon-tachometer-alt" /> Curator dashboard
+                              </NavLink>
+                            </li>
+                            <li className="nav-item">
+                              <NavLink to="/account" className="nav-link" activeClassName="active">
+                                <i className="icon icon-common icon-sign-in-alt" /> Account
+                              </NavLink>
+                            </li>
+                          </>
+                        )
+                      }
 
-                </ul>
-              </nav>
+                      <li className="nav-item float-right">
+                        <a href={config.feedbackUrl} target="_blank" className="nav-link nav-link-dark">
+                          <i className="icon icon-common icon-comments" /> Feedback
+                        </a>
+                      </li>
+
+                    </ul>
+                  </nav>
+                </EBINavBar>
+              </Sticky>
+
             </div>
           </div>
         </div>
