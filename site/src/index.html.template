@@ -15,6 +15,7 @@
   <body>
       <div id="app"></div>
       <!--ENVIRONMENT_PLACEHOLDER-->
+      <div id="config_placeholder"></div>
       <script src="/index.js"></script>
   </body>
 </html>
