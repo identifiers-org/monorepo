@@ -24,7 +24,7 @@ class HomePage extends React.Component {
             </div>
           </div>
           <div className="row justify-content-center mt-2">
-            <div className="col col-xs-12 col-sm-10 col-md-12 col-lg-6">
+            <div className="col col-sm-12 col-md-11 col-lg-9 col-xl-8">
               <Search />
             </div>
           </div>

@@ -1,20 +1,30 @@
 export const config = {
+  // Url used for resolving a resource to get its providers. Used when clicking 'resolve' in the home page.
   resolverApi: 'http://localhost:8080',
+
+  // Hardcoded Url used to build the links shown in the resolver page.
   resolverHardcodedUrl: 'https://identifiers.org',
+
+  // Registry API Url used to fetch namespaces for the suggestions box.
   registryApi: 'http://localhost:8180',
-
-  registryUrl: 'https://registry.identifiers.org',
-  registryPrefixRegistrationRequestFormUrl: 'https://registry.identifiers.org/prefixregistrationrequest',
-
-  feedbackUrl: 'https://github.com/identifiers-org/identifiers-org.github.io/issues/new',
-
-  oldIdentifiersUrl: 'https://ebi.identifiers.org',
-
-  apiVersion: '1.0',
 
   // This requires a working HQ architecture with a central registry.
   showSearchSuggestions: true,
 
-  // We don't predict resources for now.
-  enableResourcePrediction: false
+  // We don't predict resources in suggestions box for now.
+  enableResourcePrediction: false,
+
+  // HQ Registry Url used in navbar and in link buttons in suggestions.
+  registryUrl: 'https://registry.identifiers.org',
+
+  // HQ Prefix registration request used in navbar.
+  registryPrefixRegistrationRequestFormUrl: 'https://registry.identifiers.org/prefixregistrationrequest',
+
+  // Feedback Url. Links to github 'new issue' in our github pages repository.
+  feedbackUrl: 'https://github.com/identifiers-org/identifiers-org.github.io/issues/new',
+
+  // Old platform Url. Used in navbar.
+  oldIdentifiersUrl: 'https://ebi.identifiers.org',
+
+  apiVersion: '1.0'
 };

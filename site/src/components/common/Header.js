@@ -4,6 +4,9 @@ import { NavLink } from 'react-router-dom';
 
 import identifiersLogo from '../../assets/identifiers_logo.png';
 
+import Sticky from './Sticky';
+import EBINavBar from './EBINavBar';
+
 
 class Header extends React.Component {
   constructor(props) {
@@ -37,55 +40,60 @@ class Header extends React.Component {
         </header>
 
         <div id="content">
-        <div data-sticky-container>
-          <div id="masthead" className="masthead" data-sticky data-sticky-on="large" data-top-anchor="main-content-area:top" data-btm-anchor="main-content-area:bottom">
-            <div className="masthead-inner row expanded">
-              <div className="columns medium-12" id="local-title">
-                <div className="d-flex ml-3 mb-2">
-                  <img src={identifiersLogo} />
-                  <div className="logo-text">
-                    <h1>Identifiers.org</h1>
-                    <p className="logo-subtitle">Resolution service</p>
+          <div data-sticky-container>
+            <div id="masthead" className="masthead" data-sticky data-sticky-on="large" data-top-anchor="main-content-area:top" data-btm-anchor="main-content-area:bottom">
+              <div className="masthead-inner row expanded">
+                <div className="columns medium-12" id="local-title">
+                  <div className="d-flex ml-3 mb-2">
+                    <img src={identifiersLogo} />
+                    <div className="logo-text">
+                      <h1>Identifiers.org</h1>
+                      <p className="logo-subtitle">Resolution service</p>
+                    </div>
                   </div>
                 </div>
+
+                <Sticky>
+                  <EBINavBar>
+                    <nav>
+                      <ul id="local-nav" className="dropdown menu float-left" data-description="navigational">
+                        <li>
+                          <NavLink exact to="/" className="nav-link nav-link-dark" activeClassName="active">
+                            <i className="icon icon-common icon-external-link-alt" /> Resolution
+                          </NavLink>
+                        </li>
+
+                        <li className="nav-item">
+                          <a href={config.registryUrl} className="nav-link nav-link-dark">
+                            <i className="icon icon-common icon-list" /> Registry
+                          </a>
+                        </li>
+
+                        <li className="nav-item">
+                          <a href={config.registryPrefixRegistrationRequestFormUrl} className="nav-link nav-link-dark">
+                            <i className="icon icon-common icon-hand-point-up" /> Request prefix
+                          </a>
+                        </li>
+
+                        <li>
+                          <a href={config.oldIdentifiersUrl} target="_blank" className="nav-link nav-link-dark">
+                            <i className="icon icon-common icon-home" /> Legacy platform
+                          </a>
+                        </li>
+
+                        <li className="nav-item float-right">
+                          <a href={config.feedbackUrl} target="_blank" className="nav-link nav-link-dark">
+                            <i className="icon icon-common icon-comments" /> Feedback
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </EBINavBar>
+                </Sticky>
+
               </div>
-
-              <nav>
-                <ul id="local-nav" className="dropdown menu float-left" data-description="navigational">
-                  <li>
-                    <NavLink exact to="/" className="nav-link nav-link-dark" activeClassName="active">
-                      <i className="icon icon-common icon-external-link-alt" /> Resolution
-                    </NavLink>
-                  </li>
-
-                  <li className="nav-item">
-                    <a href={config.registryUrl} className="nav-link nav-link-dark">
-                      <i className="icon icon-common icon-list" /> Registry
-                    </a>
-                  </li>
-
-                  <li className="nav-item">
-                    <a href={config.registryPrefixRegistrationRequestFormUrl} className="nav-link nav-link-dark">
-                      <i className="icon icon-common icon-hand-point-up" /> Request prefix
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href={config.oldIdentifiersUrl} target="_blank" className="nav-link nav-link-dark">
-                      <i className="icon icon-common icon-home" /> Legacy platform
-                    </a>
-                  </li>
-
-                  <li className="nav-item float-right">
-                    <a href={config.feedbackUrl} target="_blank" className="nav-link nav-link-dark">
-                      <i className="icon icon-common icon-comments" /> Feedback
-                    </a>
-                  </li>
-                </ul>
-              </nav>
             </div>
           </div>
-        </div>
         </div>
       </>
     );

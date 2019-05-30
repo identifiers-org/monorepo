@@ -136,11 +136,11 @@ class Search extends React.Component {
     return (
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <div className="input-group inline-search-input-group">
+          <div className="input-group">
             <input
               autoFocus
               spellCheck={false}
-              className="form-control"
+              className="form-control search-input"
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               placeholder="Enter an identifier to resolve it"
@@ -148,20 +148,20 @@ class Search extends React.Component {
               value={query}
             />
             <div className="input-group-append">
-              <button className="btn btn-primary">
+              <button className="btn btn-primary search-button">
                 <i className="icon icon-common icon-search" /> Resolve
               </button>
             </div>
+              { config.showSearchSuggestions &&
+              <SearchSuggestions
+                searchSuggestionList={namespaceList}
+                selectedSearchSuggestion={activeSuggestion}
+                queryParts={queryParts}
+                mouseOver={handleMouseOver}
+                handleClick={handleClick}
+              />
+            }
           </div>
-          { config.showSearchSuggestions &&
-            <SearchSuggestions
-              searchSuggestionList={namespaceList}
-              selectedSearchSuggestion={activeSuggestion}
-              queryParts={queryParts}
-              mouseOver={handleMouseOver}
-              handleClick={handleClick}
-            />
-          }
         </div>
       </form>
     )
