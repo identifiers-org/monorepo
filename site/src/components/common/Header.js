@@ -89,6 +89,12 @@ class Header extends React.Component {
                         </a>
                       </li>
 
+                      <li>
+                        <a href={config.oldIdentifiersUrl} target="_blank" className="nav-link nav-link-dark">
+                          <i className="icon icon-common icon-home" /> Legacy platform
+                        </a>
+                      </li>
+
                       {
                         config.enableAuthFeatures && (
                           <>
