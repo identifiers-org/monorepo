@@ -17,6 +17,9 @@ export const config = {
   // HQ Registry Url used in navbar and in link buttons in suggestions.
   registryUrl: 'https://registry.identifiers.org',
 
+  // Documentation Url.
+  documentationUrl: 'https://identifiers-org.github.io/docs/',
+
   // HQ Prefix registration request used in navbar.
   registryPrefixRegistrationRequestFormUrl: 'https://registry.identifiers.org/prefixregistrationrequest',
 

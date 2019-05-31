@@ -57,21 +57,33 @@ class Header extends React.Component {
                   <EBINavBar>
                     <nav>
                       <ul id="local-nav" className="dropdown menu float-left" data-description="navigational">
-                        <li>
-                          <NavLink exact to="/" className="nav-link nav-link-dark" activeClassName="active">
-                            <i className="icon icon-common icon-external-link-alt" /> Resolution
-                          </NavLink>
-                        </li>
-
                         <li className="nav-item">
-                          <a href={config.registryUrl} className="nav-link nav-link-dark">
-                            <i className="icon icon-common icon-list" /> Registry
+                          <a href={config.satelliteUrl} className="nav-link nav-link-dark">
+                            <i className="icon icon-common icon-external-link-alt" /> Resolution
                           </a>
                         </li>
 
                         <li className="nav-item">
-                          <a href={config.registryPrefixRegistrationRequestFormUrl} className="nav-link nav-link-dark">
+                          <NavLink exact to="/" className="nav-link" activeClassName="active">
+                            <i className="icon icon-common icon-list" /> Registry
+                          </NavLink>
+                        </li>
+
+                        <li className="nav-item">
+                          <NavLink to="/registry" className="nav-link" activeClassName="active">
+                            <i className="icon icon-common icon-search" /> Browse the registry
+                          </NavLink>
+                        </li>
+
+                        <li className="nav-item">
+                          <NavLink to="/prefixregistrationrequest" className="nav-link" activeClassName="active">
                             <i className="icon icon-common icon-hand-point-up" /> Request prefix
+                          </NavLink>
+                        </li>
+
+                        <li>
+                          <a href={config.documentationUrl} className="nav-link nav-link-dark">
+                            <i className="icon icon-common icon-documentation" /> Documentation
                           </a>
                         </li>
 
