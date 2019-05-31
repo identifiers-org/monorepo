@@ -27,7 +27,7 @@ const configUrl = `${window.location.protocol}//${window.location.hostname}:${co
 
 store.dispatch(getConfigFromDevopsApi(configUrl));
 
-// Show beta banner in desktop version.
+// Show beta banner.
 const betaBannerMQ = window.matchMedia( "(max-width: 1024px)" );
 if (betaBannerMQ.matches) {
   swalBannerMobile.fire({
