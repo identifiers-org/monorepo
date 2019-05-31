@@ -58,27 +58,27 @@ class Header extends React.Component {
                     <nav>
                       <ul id="local-nav" className="dropdown menu float-left" data-description="navigational">
                         <li className="nav-item">
-                          <a href={config.satelliteUrl} className="nav-link nav-link-dark">
+                          <NavLink exact to="/" className="nav-link nav-link-dark" activeClassName="active">
                             <i className="icon icon-common icon-external-link-alt" /> Resolution
+                          </NavLink>
+                        </li>
+
+                        <li className="nav-item">
+                          <a href={config.registryUrl} className="nav-link nav-link-dark">
+                            <i className="icon icon-common icon-list" /> Registry
                           </a>
                         </li>
 
                         <li className="nav-item">
-                          <NavLink exact to="/" className="nav-link" activeClassName="active">
-                            <i className="icon icon-common icon-list" /> Registry
-                          </NavLink>
-                        </li>
-
-                        <li className="nav-item">
-                          <NavLink to="/registry" className="nav-link" activeClassName="active">
+                          <a href={`${config.registryUrl}/registry`} className="nav-link nav-link-dark">
                             <i className="icon icon-common icon-search" /> Browse the registry
-                          </NavLink>
+                          </a>
                         </li>
 
                         <li className="nav-item">
-                          <NavLink to="/prefixregistrationrequest" className="nav-link" activeClassName="active">
+                          <a href={`${config.registryUrl}/prefixregistrationrequest`} className="nav-link nav-link-dark">
                             <i className="icon icon-common icon-hand-point-up" /> Request prefix
-                          </NavLink>
+                          </a>
                         </li>
 
                         <li>
