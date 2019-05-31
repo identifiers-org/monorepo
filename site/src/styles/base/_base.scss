@@ -126,3 +126,27 @@ a, a:visited, a:hover, a:active {
   padding-right: 0px !important;
   padding-left: 0px !important;
 }
+
+.beta-banner {
+  margin-top: 3rem;
+}
+
+.beta-banner__content {
+  width: 85%;
+}
+
+.beta-banner__actions {
+  width: 15% !important;
+}
+
+.beta-banner__icon {
+  align-self: center;
+}
+
+.beta-banner__text {
+  text-align: left;
+}
+
+.beta-banner__content #swal2-content {
+  display: flex !important;
+}

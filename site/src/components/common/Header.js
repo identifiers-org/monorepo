@@ -83,6 +83,12 @@ class Header extends React.Component {
                         </NavLink>
                       </li>
 
+                      <li>
+                        <a href={config.documentationUrl} className="nav-link nav-link-dark">
+                          <i className="icon icon-common icon-documentation" /> Documentation
+                        </a>
+                      </li>
+
                       {
                         config.enableAuthFeatures && (
                           <>
