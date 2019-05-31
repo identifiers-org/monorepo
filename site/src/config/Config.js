@@ -7,7 +7,7 @@ export const config = {
 
   satelliteUrl: 'https://identifiers.org',
   feedbackUrl: 'https://github.com/identifiers-org/identifiers-org.github.io/issues/new',
-  documentationUrl: 'https://identifiers-org.github.io/docs/',
+  documentationUrl: 'http://docs.identifiers.org',
 
   baseUrl: window.location.protocol + '//' + window.location.hostname + ':' + location.port + '/',
 
