@@ -31,6 +31,7 @@ public class CompactIdParsingHelper {
             if (splitBySlash[0].contains(":")) {
                 // ':' is NOT ALLOWED for namespaces, so the whole thing is a compact identifier
                 parsedCompactIdentifier.setNamespace(rawCompactIdentifier.split(":")[0]);
+                // TODO Check if namespace is a special case where the LUI has the namespace embedded, before prefix and LUI can actually be taken apart
                 parsedCompactIdentifier.setLocalId(rawCompactIdentifier.substring(rawCompactIdentifier.indexOf(":") + 1));
             } else {
                 // We have a provider code (possibly)
