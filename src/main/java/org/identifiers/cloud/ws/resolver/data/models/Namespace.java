@@ -54,6 +54,7 @@ public class Namespace implements Serializable {
     private String sampleId;
     // WARNING - SPECIAL CASE
     // This flag tells the resolver whether LUIs in this namespace have the namespace embedded in the LUI, as they will
-    // have to be treated differently depending on the different resolver domain operations
+    // have to be treated differently depending on the different resolver domain operations (see HQ Registry for more
+    // information)
     private boolean namespaceEmbeddedInLui = false;
 }
