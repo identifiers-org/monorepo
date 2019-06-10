@@ -52,4 +52,8 @@ public class Namespace implements Serializable {
     private List<Resource> resources = new ArrayList<>();
     // A sample ID at namespace level
     private String sampleId;
+    // WARNING - SPECIAL CASE
+    // This flag tells the resolver whether LUIs in this namespace have the namespace embedded in the LUI, as they will
+    // have to be treated differently depending on the different resolver domain operations
+    private boolean namespaceEmbeddedInLui = false;
 }
