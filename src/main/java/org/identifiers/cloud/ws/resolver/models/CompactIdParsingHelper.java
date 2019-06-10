@@ -45,6 +45,7 @@ public class CompactIdParsingHelper {
                         // Check if it is a namespace
                         String possibleNamespace = rightSide.split(":")[0].toLowerCase();
                         if (namespaceRespository.findByPrefix(possibleNamespace) != null) {
+                            // TODO check if the namespace is a special case where the LUI has it embedded, before prefix and LUI can actually be taken apart
                             parsedCompactIdentifier.setNamespace(possibleNamespace).setLocalId(rightSide.substring(rightSide.indexOf(":") + 1));
                         } else {
                             // ERROR We have a provider code but the namespace does not exist
@@ -68,6 +69,8 @@ public class CompactIdParsingHelper {
                     // It's a namespace
                     parsedCompactIdentifier.setNamespace(possibleProviderCode);
                     // WHEN USING NAMESPACE ON THE LEFT SIDE, A LOCAL IDENTIFIER IS REQUIRED ON THE RIGHT SIDE
+                    // AND THIS IS THE ONLY DAMN use case that doesn't require special processing for those LUIs that
+                    // have the namespace embedded, and are allowed to omit that when hitting the resolver
                     parsedCompactIdentifier.setLocalId(rightSide);
                 }
             }
