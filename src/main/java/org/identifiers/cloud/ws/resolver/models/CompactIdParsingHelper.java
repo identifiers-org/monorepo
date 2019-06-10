@@ -78,6 +78,7 @@ public class CompactIdParsingHelper {
             // If there is no '/', it means there is no provider code, just a compact identifier
             if (rawCompactIdentifier.contains(":")) {
                 parsedCompactIdentifier.setNamespace(rawCompactIdentifier.split(":")[0].toLowerCase());
+                // TODO Another place to check whether it belongs to the special case where the LUI has the namespace embedded
                 parsedCompactIdentifier.setLocalId(rawCompactIdentifier.substring(rawCompactIdentifier.indexOf(":") + 1));
             }
         }
