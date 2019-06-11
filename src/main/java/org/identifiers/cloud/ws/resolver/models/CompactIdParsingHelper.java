@@ -43,8 +43,13 @@ public class CompactIdParsingHelper {
             if (splitBySlash[0].contains(":")) {
                 // ':' is NOT ALLOWED for namespaces, so the whole thing is a compact identifier
                 parsedCompactIdentifier.setNamespace(rawCompactIdentifier.split(":")[0]);
-                // TODO Check if namespace is a special case where the LUI has the namespace embedded, before prefix and LUI can actually be taken apart
-                parsedCompactIdentifier.setLocalId(rawCompactIdentifier.substring(rawCompactIdentifier.indexOf(":") + 1));
+                // Check if namespace is a special case where the LUI has the namespace embedded, before prefix and LUI can actually be taken apart
+                if (isNamespaceEmbeddedInLui(parsedCompactIdentifier.getNamespace())) {
+                    parsedCompactIdentifier.setNamespaceEmbeddedInLui(true);
+                    parsedCompactIdentifier.setLocalId(rawCompactIdentifier);
+                } else {
+                    parsedCompactIdentifier.setLocalId(rawCompactIdentifier.substring(rawCompactIdentifier.indexOf(":") + 1));
+                }
             } else {
                 // We have a provider code (possibly)
                 String possibleProviderCode = splitBySlash[0].toLowerCase();
@@ -57,8 +62,14 @@ public class CompactIdParsingHelper {
                         // Check if it is a namespace
                         String possibleNamespace = rightSide.split(":")[0].toLowerCase();
                         if (namespaceRespository.findByPrefix(possibleNamespace) != null) {
-                            // TODO check if the namespace is a special case where the LUI has it embedded, before prefix and LUI can actually be taken apart
-                            parsedCompactIdentifier.setNamespace(possibleNamespace).setLocalId(rightSide.substring(rightSide.indexOf(":") + 1));
+                            parsedCompactIdentifier.setNamespace(possibleNamespace);
+                            // check if the namespace is a special case where the LUI has it embedded, before prefix and LUI can actually be taken apart
+                            if (isNamespaceEmbeddedInLui(possibleNamespace)) {
+                                parsedCompactIdentifier.setNamespaceEmbeddedInLui(true);
+                                parsedCompactIdentifier.setLocalId(rightSide);
+                            } else {
+                                parsedCompactIdentifier.setLocalId(rightSide.substring(rightSide.indexOf(":") + 1));
+                            }
                         } else {
                             // ERROR We have a provider code but the namespace does not exist
                             log.error(String.format("For RAW compact identifier parsing '%s', " +
@@ -90,8 +101,13 @@ public class CompactIdParsingHelper {
             // If there is no '/', it means there is no provider code, just a compact identifier
             if (rawCompactIdentifier.contains(":")) {
                 parsedCompactIdentifier.setNamespace(rawCompactIdentifier.split(":")[0].toLowerCase());
-                // TODO Another place to check whether it belongs to the special case where the LUI has the namespace embedded
-                parsedCompactIdentifier.setLocalId(rawCompactIdentifier.substring(rawCompactIdentifier.indexOf(":") + 1));
+                // Another place to check whether it belongs to the special case where the LUI has the namespace embedded
+                if (isNamespaceEmbeddedInLui(parsedCompactIdentifier.getNamespace())) {
+                    parsedCompactIdentifier.setNamespaceEmbeddedInLui(true);
+                    parsedCompactIdentifier.setLocalId(rawCompactIdentifier);
+                } else {
+                    parsedCompactIdentifier.setLocalId(rawCompactIdentifier.substring(rawCompactIdentifier.indexOf(":") + 1));
+                }
             }
         }
         return parsedCompactIdentifier;
