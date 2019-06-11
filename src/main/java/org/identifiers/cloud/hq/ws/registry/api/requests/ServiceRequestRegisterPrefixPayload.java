@@ -74,4 +74,7 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
     private String[] supportingReferences;
     private String additionalInformation;
     private Requester requester;
+
+    // Flag whether this namespace has LUIs with namespace embedded, which is a special case, as they're allowed to omit their namespace when hitting the resolver.
+    private boolean namespaceEmbeddedInLui = false;
 }

@@ -115,6 +115,10 @@ public class PrefixRegistrationRequest {
     @Column(nullable = false)
     private String requesterEmail;
 
+    // This is a flag on whether the namespace contains LUIs with embedded namespace prefix
+    @Column(nullable = false)
+    private boolean namespaceEmbeddedInLui = false;
+
     @Column(nullable = false, updatable = false)
     @CreatedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
