@@ -45,6 +45,7 @@ public class ApiAndDataModelsHelper {
                 .setIdRegexPattern(sourceModel.getIdRegexPattern())
                 .setSupportingReferences(references)
                 .setAdditionalInformation(additionalInformation)
+                .setNamespaceEmbeddedInLui(sourceModel.isNamespaceEmbeddedInLui())
                 .setRequesterName(sourceModel.getRequester().getName())
                 .setRequesterEmail(sourceModel.getRequester().getEmail());
     }
