@@ -12,7 +12,7 @@ def fetch_old_data(originURL):
 
     try:
         response = requests.get(originURL)
-
+        
         if response.status_code is 200:
             namespaces = response.json()
             spinner.succeed(f'Found {len(namespaces)} namespaces.')

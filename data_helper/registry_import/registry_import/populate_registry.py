@@ -53,11 +53,12 @@ if args.skipnamespaces is False:
         spinner.info(f'Working on namespace [{index}]: \"{namespace["name"]}\"')
 
         newNamespace = Namespace(prefix=namespace['prefix'].strip(),
-                                mirId=namespace['id'].strip(),
-                                name=namespace['name'].strip(),
-                                pattern=namespace['pattern'].strip(),
-                                description=namespace['definition'].strip(),
-                                sampleId=namespace['resources'][0]['localId'].strip())
+                                 mirId=namespace['id'].strip(),
+                                 name=namespace['name'].strip(),
+                                 pattern=namespace['pattern'].strip(),
+                                 description=namespace['definition'].strip(),
+                                 sampleId=namespace['resources'][0]['localId'].strip(),
+                                 namespaceEmbeddedInLui=(namespace['prefixed'] == 1))
 
         # Post the namespace.
         namespaceRef = prepare_resource('namespaces',

@@ -9,7 +9,8 @@ class Namespace:
                  name = None,
                  pattern = None,
                  description = None,
-                 sampleId = None
+                 sampleId = None,
+                 namespaceEmbeddedInLui = False
     ):
         self.prefix = prefix
         self.mirId = mirId
@@ -17,6 +18,7 @@ class Namespace:
         self.pattern = pattern
         self.description = description
         self.sampleId = sampleId
+        self.namespaceEmbeddedInLui = namespaceEmbeddedInLui
 
 
     #
