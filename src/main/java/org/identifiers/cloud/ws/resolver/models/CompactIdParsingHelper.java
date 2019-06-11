@@ -29,8 +29,13 @@ public class CompactIdParsingHelper {
     private boolean isNamespaceEmbeddedInLui(String namespace) {
         Namespace namespaceRecord = namespaceRespository.findByPrefix(namespace);
         if (namespaceRecord != null) {
+            if (namespaceRecord.isNamespaceEmbeddedInLui())
+                log.info(String.format("Namespace '%s' has LUIs with embedded namespace prefix", namespace));
+            else
+                log.info(String.format("Namespace '%s' DOES NOT HAVE LUIs with embedded namespace prefix", namespace));
             return namespaceRecord.isNamespaceEmbeddedInLui();
         }
+        log.info(String.format("Namespace '%s' NOT FOUND", namespace));
         return false;
     }
 

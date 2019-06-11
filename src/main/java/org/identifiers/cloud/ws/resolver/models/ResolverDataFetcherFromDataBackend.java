@@ -26,13 +26,13 @@ public class ResolverDataFetcherFromDataBackend implements ResolverDataFetcher {
 
     @Override
     public List<Resource> findResourcesByPrefix(String prefix) {
-        log.info(String.format("Find resources by prefix for '{}'", prefix));
+        log.info(String.format("Find resources by prefix for '%s'", prefix));
         if (prefix != null) {
             Namespace namespace = namespaceRespository.findByPrefix(prefix);
             if (namespace != null) {
                 return namespace.getResources();
             } else {
-                log.warn("NO PID entry for prefix '{}'", prefix);
+                log.warn("NO PID entry for prefix '%s'", prefix);
             }
         }
         return new ArrayList<>();
