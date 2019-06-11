@@ -91,7 +91,7 @@ public class ResolverDataHelper {
                 resources.parallelStream()
                         .map(resource -> getResolvedResourceFrom(resource)
                                 .setCompactIdentifierResolvedUrl(resolveUrlForLocalId(resource.getUrlPattern(),
-                                        (parsedCompactIdentifier.isNamespaceEmbeddedInLui() ? compactIdParsingHelper.trimEmbeddedNamespacePrefixFromLui(parsedCompactIdentifier.getLocalId()) : parsedCompactIdentifier.getLocalId())))
+                                        (parsedCompactIdentifier.isNamespaceEmbeddedInLui() ? compactIdParsingHelper.trimOutEmbeddedNamespacePrefixFromLui(parsedCompactIdentifier.getLocalId()) : parsedCompactIdentifier.getLocalId())))
                                 .setRecommendation(new Recommendation())).collect(Collectors.toList());
         // Get their recommendation scoring information
         Map<String, ResourceRecommendation> recommendationById = getRecommendationsByResourceId(resolvedResources);
