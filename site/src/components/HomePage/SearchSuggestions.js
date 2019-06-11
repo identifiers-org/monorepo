@@ -11,6 +11,8 @@ class SearchSuggestions extends React.Component {
 
 
   highlightQuery = (prefix, query) => {
+    console.log('prefix', prefix);
+    console.log('query', query);
     const parts = prefix.split(query);
     let result;
     let complete = false;
@@ -39,6 +41,7 @@ class SearchSuggestions extends React.Component {
       handleSuggestionLinkClick,
       highlightQuery,
       props: {
+        config,
         handleClick,
         mouseOver,
         queryParts,
@@ -95,7 +98,7 @@ class SearchSuggestions extends React.Component {
                             key={result.prefix}
                             onClick={() => {handleClick(result.prefix)}}
                           >
-                            {highlightQuery(result.prefix, queryParts.prefix)}
+                            {highlightQuery(result.namespaceEmbeddedInLui ? result.pattern.slice(1).split(':')[0] : result.prefix, queryParts.prefix)}
                             <p
                               className={`mb-0 ml-2 ${selectedSearchSuggestion === index ? 'text-white' : ''}`}
                             >

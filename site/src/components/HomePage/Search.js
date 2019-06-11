@@ -18,10 +18,13 @@ class Search extends React.Component {
       queryParts: {
         resource: undefined,
         prefix: undefined,
+        prefixEffectiveValue: undefined,
         id: undefined,
+        idWithEmbeddedPrefix: undefined,
         bad: []
       },
-      activeSuggestion: -1
+      activeSuggestion: -1,
+      namespaceList: []
     }
   }
 
@@ -32,14 +35,31 @@ class Search extends React.Component {
 
   updateNamespaceList = async () => {
     const {
-      props: { getNamespacesFromRegistry },
-      state: { queryParts: { prefix } }
+      props: {
+        getNamespacesFromRegistry,
+        config: { suggestionListSize }
+      },
+      state: { queryParts: { prefixEffectiveValue } }
     } = this;
 
     // set active suggestion to -1.
     this.setState({activeSuggestion: -1});
 
-    await getNamespacesFromRegistry(prefix);
+    await getNamespacesFromRegistry(prefixEffectiveValue);
+    this.setState({
+      namespaceList: this.props.namespaceList.sort((a, b) => {
+        if (a.prefix.startsWith(prefixEffectiveValue) && !b.prefix.startsWith(prefixEffectiveValue)) {
+          return -1;
+        };
+
+        if (!a.prefix.startsWith(prefixEffectiveValue) && b.prefix.startsWith(prefixEffectiveValue)) {
+          return 1;
+        }
+
+        return a.prefix - b.prefix;
+      })
+      .slice(0, suggestionListSize)
+    });
   }
 
 
@@ -58,8 +78,7 @@ class Search extends React.Component {
     const {
       handleChange,
       handleSearch,
-      props: { namespaceList },
-      state: { activeSuggestion, query, queryParts }
+      state: { namespaceList, activeSuggestion, queryParts }
     } = this;
 
     switch (e.keyCode) {
@@ -69,7 +88,8 @@ class Search extends React.Component {
       if (activeSuggestion === -1) {
         handleSearch();
       } else {
-        e.currentTarget.value = completeQuery(queryParts.resource, namespaceList[activeSuggestion].prefix, queryParts.id);
+        console.log('namespaceList', namespaceList);
+        e.currentTarget.value = completeQuery(queryParts.resource, namespaceList[activeSuggestion], queryParts.id);
         handleChange();
         break;
       }
@@ -102,16 +122,14 @@ class Search extends React.Component {
   }
 
   handleSubmit = e => {
-    const {query} = this.state;
-
     e.preventDefault();
     this.handleSearch();
   }
 
   handleSearch = () => {
     const {
-      props: { config, history, namespaceList },
-      state: { query, queryParts }
+      props: { config, history },
+      state: { namespaceList, query, queryParts }
     } = this;
 
     const evaluation = evaluateSearch(queryParts, namespaceList, config.enableResourcePrediction);
@@ -128,8 +146,8 @@ class Search extends React.Component {
   render() {
     const {
       handleChange, handleClick, handleKeyDown, handleMouseOver, handleSubmit,
-      props: { config, namespaceList },
-      state: { activeSuggestion, query, queryParts }
+      props: { config },
+      state: { activeSuggestion, namespaceList, query, queryParts }
 
     } = this;
 

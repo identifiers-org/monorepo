@@ -10,12 +10,12 @@ export const evaluateSearch = function (queryParts, namespaceList, enableResourc
   }
 
   // 2. Non-existant prefix.
-  if (namespaceList.filter(namespace => namespace.prefix === queryParts.prefix).length === 0) {
+  if (namespaceList.filter(namespace => namespace.prefix === queryParts.prefixEffectiveValue).length === 0) {
     return 'prefix_unknown';
   }
 
   // Below here, we are supposed to have a namespace.
-  const currentNamespace = namespaceList.filter(namespace => namespace.prefix === queryParts.prefix)[0];
+  const currentNamespace = namespaceList.filter(namespace => namespace.prefix === queryParts.prefixEffectiveValue)[0];
 
   // 3. Empty local id.
   if (queryParts.id === '') {
@@ -24,7 +24,7 @@ export const evaluateSearch = function (queryParts, namespaceList, enableResourc
 
   // 4. Non-conforming local id.
   const regex = new RegExp(currentNamespace.pattern);
-  const matches = queryParts.id.match(regex);
+  const matches = currentNamespace.namespaceEmbeddedInLui ? queryParts.idWithEmbeddedPrefix.match(regex) : queryParts.id.match(regex);
 
   if (!matches) {
     return 'id_bad';
@@ -66,13 +66,22 @@ export const querySplit = function (query) {
   }
 
   const prefix = prefixParts.join('/');
+  const prefixEffectiveValue = prefix.toLowerCase();
   const id = idSide ? idSide.join(':') : '';
+  const idWithEmbeddedPrefix = `${prefix}:${id}`;
 
-  return {prefix, id, resource};
+  return {prefix, prefixEffectiveValue, id, idWithEmbeddedPrefix, resource};
 }
 
 
 //
 // completeQuery: completes a identifier string by concatenating the different parts,
 // and optionally adding resource and its trailing / or not.
-export const completeQuery = (resource, prefix, id) => `${resource ? resource + '/' : ''}${prefix}:${id}`;
+// Also, if the namespace is special (prefix embedded in LUI), take prefix from pattern instead, because
+// they are allowed to have caps.
+export const completeQuery = (resource, namespace, id) => {
+  const prefix = namespace.namespaceEmbeddedInLui ? namespace.pattern.slice(1).split(':')[0] : namespace.prefix;
+
+  return `${resource ? resource + '/' : ''}${prefix}:${id}`;
+};
+

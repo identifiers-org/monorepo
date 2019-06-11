@@ -13,7 +13,7 @@ export const getNamespacesFromRegistry = (query) => {
 
     // Params to add to request: CONTENT, SIZE, SORT
     requestUrl.searchParams.append('content', query === '' ? 'nothingtosearch' : query);
-    requestUrl.searchParams.append('size', 5);
+    requestUrl.searchParams.append('size', config.suggestionQuerySize);
     requestUrl.searchParams.append('sort', 'name,asc');
 
     try {

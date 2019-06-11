@@ -10,6 +10,8 @@ export const config = {
 
   // This requires a working HQ architecture with a central registry.
   showSearchSuggestions: true,
+  suggestionListSize: 10,
+  suggestionQuerySize: 25,
 
   // We don't predict resources in suggestions box for now.
   enableResourcePrediction: false,

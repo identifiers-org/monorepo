@@ -47,7 +47,7 @@ class SearchEvaluator extends React.Component {
                   return (
                     <small className="text-block mr-0">
                       Your compact identifier appears to be incorrect: The prefix&nbsp;
-                      <span className="font-weight-bold">{queryParts.prefix}</span>&nbsp;
+                      <span className="font-weight-bold">{queryParts.prefixEffectiveValue}</span>&nbsp;
                       does not exist in the registry.
                     </small>
                   );
@@ -59,7 +59,7 @@ class SearchEvaluator extends React.Component {
                   );
 
                 case 'id_bad': {
-                  const currentNamespace = namespaceList.filter(namespace => namespace.prefix === queryParts.prefix)[0];
+                  const currentNamespace = namespaceList.filter(namespace => namespace.prefix === queryParts.prefixEffectiveValue)[0];
                   return (
                     <small className="text-block mr-0">
                       Your compact identifier appears to be incorrect: The local id&nbsp;
@@ -86,7 +86,7 @@ class SearchEvaluator extends React.Component {
                       Your compact identifier appears to be incorrect: The provider code&nbsp;
                       <span className="font-weight-bold">{queryParts.resource}</span>&nbsp;
                       does not exist for the prefix&nbsp;
-                      <span className="font-weight-bold">{queryParts.prefix}</span>.
+                      <span className="font-weight-bold">{queryParts.prefixEffectiveValue}</span>.
                     </small>
                   );
                 }
