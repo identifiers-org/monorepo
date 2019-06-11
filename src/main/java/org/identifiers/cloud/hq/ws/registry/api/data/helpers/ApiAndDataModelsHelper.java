@@ -93,7 +93,8 @@ public class ApiAndDataModelsHelper {
                 .setDescription(namespace.getDescription())
                 .setCreated(namespace.getCreated())
                 .setModified(namespace.getModified())
-                .setSampleId(namespace.getSampleId());
+                .setSampleId(namespace.getSampleId())
+                .setNamespaceEmbeddedInLui(namespace.isNamespaceEmbeddedInLui());
     }
 
 }

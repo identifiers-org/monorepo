@@ -46,4 +46,6 @@ public class Namespace implements Serializable {
     private List<Resource> resources = new ArrayList<>();
     // A sample ID at namespace level
     private String sampleId;
+    // Whether this namespace has LUIs with embedded namespace prefix
+    private boolean namespaceEmbeddedInLui;
 }

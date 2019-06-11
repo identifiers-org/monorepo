@@ -41,5 +41,4 @@ public class Resource implements Serializable {
     private String resourceHomeUrl;
     private Institution institution;
     private Location location;
-
 }
