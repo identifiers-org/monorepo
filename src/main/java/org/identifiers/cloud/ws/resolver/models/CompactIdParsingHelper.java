@@ -34,6 +34,12 @@ public class CompactIdParsingHelper {
         return false;
     }
 
+    public String trimEmbeddedNamespacePrefixFromLui(String lui) {
+        if (lui.contains(":")) {
+            return lui.substring(lui.indexOf(":") + 1);
+        }
+        return "";
+    }
     // END - Helpers
 
     public ParsedCompactIdentifier parseCompactIdRequest(String rawCompactIdentifier) {

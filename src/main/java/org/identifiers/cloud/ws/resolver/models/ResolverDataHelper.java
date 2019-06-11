@@ -36,7 +36,6 @@ public class ResolverDataHelper {
     private ResolverDataFetcher resolverDataFetcher;
 
     // Helpers
-
     /**
      * Given a URL with the placeholder "{$id}", and a local ID, it will returned the resolved form of the URL
      *
@@ -44,7 +43,7 @@ public class ResolverDataHelper {
      * @param localId the ID to embed in the URL
      * @return the resolved URL
      */
-    public static String resolveUrlForLocalId(String url, String localId) {
+    private static String resolveUrlForLocalId(String url, String localId) {
         return url.replace("{$id}", localId);
     }
 
@@ -55,7 +54,7 @@ public class ResolverDataHelper {
      * @param resource the source Resource data model
      * @return the translated ResolvedResource data model
      */
-    public static ResolvedResource getResolvedResourceFrom(Resource resource) {
+    private static ResolvedResource getResolvedResourceFrom(Resource resource) {
         return new ResolvedResource()
                 .setId(resource.getId())
                 .setProviderCode(resource.getProviderCode())
@@ -63,33 +62,8 @@ public class ResolverDataHelper {
                 .setLocation(resource.getLocation()).setOfficial(resource.isOfficial())
                 .setResourceHomeUrl(resource.getResourceHomeUrl());
     }
-    // END - Helpers
 
-    // TODO - Maybe, refactor out the logic for resolving a resource given an ID, i.e. the URL substring substitution
-    // This code may be refactored out later on
-    public List<ResolvedResource> resolveResourcesForCompactId(CompactId compactId,
-                                                               List<Resource> resources) {
-        // Resolve the URLs
-        List<ResolvedResource> resolvedResources =
-                resources.parallelStream()
-                        .map(resource -> getResolvedResourceFrom(resource)
-                                .setCompactIdentifierResolvedUrl(resolveUrlForLocalId(resource.getUrlPattern(),
-                                        compactId.getId()))
-                                .setRecommendation(new Recommendation())).collect(Collectors.toList());
-        // Get their recommendation scoring information
-        Map<String, ResourceRecommendation> recommendationById = getRecommendationsByResourceId(resolvedResources);
-        resolvedResources.parallelStream().forEach(resolvedResource -> {
-            if (recommendationById.containsKey(Long.toString(resolvedResource.getId()))) {
-                resolvedResource.getRecommendation()
-                        .setRecommendationExplanation(recommendationById.get(Long.toString(resolvedResource.getId())).getRecommendationExplanation())
-                        .setRecommendationIndex(recommendationById.get(Long.toString(resolvedResource.getId())).getRecommendationIndex());
-            }
-
-        });
-        return resolvedResources;
-    }
-
-    public Map<String, ResourceRecommendation> getRecommendationsByResourceId(List<ResolvedResource> resolvedResources) {
+    private Map<String, ResourceRecommendation> getRecommendationsByResourceId(List<ResolvedResource> resolvedResources) {
         try {
             return resourceRecommender
                     .getRecommendations(resolvedResources)
@@ -102,6 +76,31 @@ public class ResolverDataHelper {
                     " ERROR '{}'", e.getMessage());
         }
         return new HashMap<>();
+    }
+    // END - Helpers
+
+    // TODO - Maybe, refactor out the logic for resolving a resource given an ID, i.e. the URL substring substitution
+    // This code may be refactored out later on
+    public List<ResolvedResource> resolveResourcesForCompactId(ParsedCompactIdentifier parsedCompactIdentifier,
+                                                               List<Resource> resources) {
+        // Resolve the URLs
+        List<ResolvedResource> resolvedResources =
+                resources.parallelStream()
+                        .map(resource -> getResolvedResourceFrom(resource)
+                                .setCompactIdentifierResolvedUrl(resolveUrlForLocalId(resource.getUrlPattern(),
+                                        (parsedCompactIdentifier.isNamespaceEmbeddedInLui() ? "XXX TODO XXX" : parsedCompactIdentifier.getLocalId())))
+                                .setRecommendation(new Recommendation())).collect(Collectors.toList());
+        // Get their recommendation scoring information
+        Map<String, ResourceRecommendation> recommendationById = getRecommendationsByResourceId(resolvedResources);
+        resolvedResources.parallelStream().forEach(resolvedResource -> {
+            if (recommendationById.containsKey(Long.toString(resolvedResource.getId()))) {
+                resolvedResource.getRecommendation()
+                        .setRecommendationExplanation(recommendationById.get(Long.toString(resolvedResource.getId())).getRecommendationExplanation())
+                        .setRecommendationIndex(recommendationById.get(Long.toString(resolvedResource.getId())).getRecommendationIndex());
+            }
+
+        });
+        return resolvedResources;
     }
 
     public List<ResolvedResource> resolveAllResourcesWithTheirSampleId() {
