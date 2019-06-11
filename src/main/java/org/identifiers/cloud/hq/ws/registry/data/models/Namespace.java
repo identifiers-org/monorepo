@@ -83,6 +83,22 @@ public class Namespace {
     @Column(nullable = false)
     private String sampleId;
 
+    // This flag indicates whether LUIs in this namespace have embedded namespace prefix, e.g. GO ontology namespace
+    // is 'go', and its LUIs are GO:00016912, usually, a compact identifier for this LUI would be go:GO:00016912, but
+    // they are a special case allowed to be thrown at the resolver without stating the namespace, i.e. as GO:00016912.
+    // This way, they can be reffered, at the resolver, as
+    //      https://identifiers.org/GO:00016912
+    //      https://identifiers.org/go/GO:00016912
+    //      https://identifiers.org/providerCode/GO:00016912
+    // Internally, their sample ID will be stored without the namespace information, because of the "purl" corner case,
+    // i.e. purl URLs, like 'http://purl.obolibrary.org/obo/PR_000000024' where it is about ontology 'PR', whose LUIs
+    // are like 'PR:000000024', but 'purl' changes the ':' by '_'. Thus, by storing only the part of the LUI after the
+    // ':', and putting the 'PR' part followed by either '_' or ':', we can deal with this YASC (Yet Another Special
+    // Case) of PIDs
+    // P.S.: LUI (Locally Unique Identifiers), https://www.biorxiv.org/content/10.1101/101279v1.full
+    @Column(nullable = false)
+    private boolean namespaceEmbeddedInLui = false;
+
     @ManyToOne
     private Person contactPerson;
 }
