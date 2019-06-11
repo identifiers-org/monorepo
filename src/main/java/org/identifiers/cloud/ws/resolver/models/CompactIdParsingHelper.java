@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.ws.resolver.data.models.Namespace;
 import org.identifiers.cloud.ws.resolver.data.repositories.NamespaceRespository;
@@ -109,6 +111,13 @@ public class CompactIdParsingHelper {
                     parsedCompactIdentifier.setLocalId(rawCompactIdentifier.substring(rawCompactIdentifier.indexOf(":") + 1));
                 }
             }
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            log.info(String.format("Parsed Compact Identifier '%s'", objectMapper.writeValueAsString(parsedCompactIdentifier)));
+        } catch (JsonProcessingException e) {
+            // Let's do nothing
+            log.error(String.format("Exception when serializing parsed compact identifier for RAW compact identifier '%s'", rawCompactIdentifier));
         }
         return parsedCompactIdentifier;
     }
