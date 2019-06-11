@@ -28,4 +28,6 @@ public class ParsedCompactIdentifier implements Serializable {
     private String namespace;
     private String localId;
     private String rawRequest;
+    // This will flag the clients on whether this compact identifier has the namespace embedded in LUI or not.
+    private boolean namespaceEmbeddedInLui = false;
 }

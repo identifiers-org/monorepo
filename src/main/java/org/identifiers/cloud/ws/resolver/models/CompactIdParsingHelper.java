@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.resolver.models;
 
 import lombok.extern.slf4j.Slf4j;
+import org.identifiers.cloud.ws.resolver.data.models.Namespace;
 import org.identifiers.cloud.ws.resolver.data.repositories.NamespaceRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,17 @@ public class CompactIdParsingHelper {
 
     @Autowired
     private NamespaceRespository namespaceRespository;
+
+    // Helpers
+    private boolean isNamespaceEmbeddedInLui(String namespace) {
+        Namespace namespaceRecord = namespaceRespository.findByPrefix(namespace);
+        if (namespaceRecord != null) {
+            return namespaceRecord.isNamespaceEmbeddedInLui();
+        }
+        return false;
+    }
+
+    // END - Helpers
 
     public ParsedCompactIdentifier parseCompactIdRequest(String rawCompactIdentifier) {
         ParsedCompactIdentifier parsedCompactIdentifier = new ParsedCompactIdentifier().setRawRequest(rawCompactIdentifier);
