@@ -6,6 +6,10 @@ import { withRouter } from 'react-router-dom';
 
 import { getNamespacesFromRegistry } from '../../actions/NamespaceList';
 
+import { config } from '../../config/Config';
+
+import { querySplit } from '../../utils/identifiers';
+
 
 class Search extends React.Component {
   constructor(props) {
@@ -13,8 +17,17 @@ class Search extends React.Component {
     this.search = React.createRef();
 
     this.state = {
-      query: this.props.query,
-      activeSuggestion: -1
+      query: '',
+      queryParts: {
+        resource: undefined,
+        prefix: undefined,
+        prefixEffectiveValue: undefined,
+        id: undefined,
+        idWithEmbeddedPrefix: undefined,
+        bad: []
+      },
+      activeSuggestion: -1,
+      namespaceList: []
     }
   }
 
@@ -25,33 +38,49 @@ class Search extends React.Component {
 
   updateNamespaceList = async () => {
     const {
-      props: {getNamespacesFromRegistry},
-      state: {query}
+      props: {
+        getNamespacesFromRegistry,
+      },
+      state: { queryParts: { prefixEffectiveValue } }
     } = this;
 
     // set active suggestion to -1.
     this.setState({activeSuggestion: -1});
 
     await getNamespacesFromRegistry({
-      content: query,
-      number: 0,
-      prefixStart: '',
-      size: 10,
-      sort: 'name,asc'
+      content: prefixEffectiveValue
+    });
+    this.setState({
+      namespaceList: this.props.namespaceList.sort((a, b) => {
+        if (a.prefix.startsWith(prefixEffectiveValue) && !b.prefix.startsWith(prefixEffectiveValue)) {
+          return -1;
+        };
+
+        if (!a.prefix.startsWith(prefixEffectiveValue) && b.prefix.startsWith(prefixEffectiveValue)) {
+          return 1;
+        }
+
+        return a.prefix - b.prefix;
+      })
+      .slice(0, config.suggestionListSize)
     });
   }
 
 
   handleChange = () => {
-    this.setState({query: this.search.value}, () => {
-      this.updateNamespaceList();
+    const { updateNamespaceList } = this;
+
+    this.setState({
+      query: this.search.value,
+      queryParts: querySplit(this.search.value)
+    }, () => {
+      updateNamespaceList();
     });
   }
 
   handleKeyDown = (e) => {
     const {
-      props: {namespaceList},
-      state: {activeSuggestion, query}
+      state: {namespaceList, activeSuggestion, query}
     } = this;
 
     switch (e.keyCode) {
@@ -100,8 +129,7 @@ class Search extends React.Component {
   render() {
     const {
       handleChange, handleKeyDown, handleMouseOver, handleSubmit, handleSuggestionClick,
-      props: {namespaceList},
-      state: {activeSuggestion, query}
+      state: {namespaceList, activeSuggestion, query, queryParts}
     } = this;
 
     return (
@@ -127,6 +155,7 @@ class Search extends React.Component {
             mouseOver={handleMouseOver}
             onClick={handleSuggestionClick}
             query={query}
+            queryParts={queryParts}
             searchSuggestionList={namespaceList}
             selectedSearchSuggestion={activeSuggestion}
           />

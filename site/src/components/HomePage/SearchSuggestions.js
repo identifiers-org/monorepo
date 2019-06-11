@@ -28,6 +28,7 @@ const SearchSuggestions = (props) => {
     mouseOver,
     onClick,
     query,
+    queryParts,
     searchSuggestionList,
     selectedSearchSuggestion
   } = props;
@@ -63,7 +64,7 @@ const SearchSuggestions = (props) => {
                             key={result.prefix}
                             onClick={() => {onClick(result.prefix)}}
                           >
-                            {highlightQuery(result.prefix, query)}
+                            {highlightQuery(result.namespaceEmbeddedInLui ? result.pattern.slice(1).split(':')[0] : result.prefix, queryParts.prefix)}
                             <p
                               className={`mb-0 ml-2 ${selectedSearchSuggestion === index ? 'text-white' : ''}`}
                             >

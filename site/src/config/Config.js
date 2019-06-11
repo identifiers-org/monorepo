@@ -9,6 +9,8 @@ export const config = {
   feedbackUrl: 'https://github.com/identifiers-org/identifiers-org.github.io/issues/new',
   documentationUrl: 'http://docs.identifiers.org',
 
+  suggestionListSize: 10,
+
   baseUrl: window.location.protocol + '//' + window.location.hostname + ':' + location.port + '/',
 
   apiVersion: '1.0',
