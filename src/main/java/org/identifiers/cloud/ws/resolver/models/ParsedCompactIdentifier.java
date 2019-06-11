@@ -25,6 +25,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class ParsedCompactIdentifier implements Serializable {
     private String providerCode;
+    // In fact, the 'prefix' value of a namespace
     private String namespace;
     private String localId;
     private String rawRequest;
