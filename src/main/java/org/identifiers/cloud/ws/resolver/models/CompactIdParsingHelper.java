@@ -104,6 +104,9 @@ public class CompactIdParsingHelper {
                 } else {
                     // It's a namespace
                     parsedCompactIdentifier.setNamespace(possibleProviderCode);
+                    if (isNamespaceEmbeddedInLui(parsedCompactIdentifier.getNamespace())) {
+                        parsedCompactIdentifier.setNamespaceEmbeddedInLui(true);
+                    }
                     // WHEN USING NAMESPACE ON THE LEFT SIDE, A LOCAL IDENTIFIER IS REQUIRED ON THE RIGHT SIDE
                     // AND THIS IS THE ONLY DAMN use case that doesn't require special processing for those LUIs that
                     // have the namespace embedded, and are allowed to omit that when hitting the resolver
