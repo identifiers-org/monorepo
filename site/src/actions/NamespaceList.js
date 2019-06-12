@@ -32,7 +32,7 @@ export const getNamespacesFromRegistry = (query) => {
       return response;
     }
     catch (err) {
-      console.log('Error fetching namespaces: ', err);
+      console.error('Error fetching namespaces: ', err);
     }
   };
 };
@@ -60,7 +60,7 @@ export const getResourcesFromRegistry = (namespace) => {
       dispatch(setResources(namespace.prefix, resources));
     }
     catch (err) {
-      console.log('Error fetching namespaces: ', err);
+      console.error('Error fetching namespaces: ', err);
     };
   };
 };

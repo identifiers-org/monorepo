@@ -16,7 +16,7 @@ export const getResolvedResources = (query) => {
       data = await response.json();
     }
     catch (err) {
-      console.log('Error fetching namespaces: ', err);
+      console.error('Error fetching namespaces: ', err);
     }
 
     // Sort resources by their score.

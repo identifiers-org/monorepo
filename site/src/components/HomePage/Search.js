@@ -88,7 +88,6 @@ class Search extends React.Component {
       if (activeSuggestion === -1) {
         handleSearch();
       } else {
-        console.log('namespaceList', namespaceList);
         e.currentTarget.value = completeQuery(queryParts.resource, namespaceList[activeSuggestion], queryParts.id);
         handleChange();
         break;

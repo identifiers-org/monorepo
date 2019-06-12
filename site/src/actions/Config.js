@@ -8,7 +8,7 @@ export const getConfigFromDevopsApi = (url) => {
     let requestUrl = new URL(`${url}/devopsApi/getSpaConfiguration`);
 
     if (process.env.NODE_ENV === 'development') {
-      console.log('fetching config from', requestUrl);
+      console.debug('fetching config from', requestUrl);
     }
 
     try {
@@ -19,7 +19,7 @@ export const getConfigFromDevopsApi = (url) => {
     }
 
     catch (err) {
-      console.log('Error fetching config, falling back to defaults.', err);
+      console.error('Error fetching config, falling back to defaults.', err);
     }
   }
 };
