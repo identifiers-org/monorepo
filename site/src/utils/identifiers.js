@@ -84,4 +84,3 @@ export const completeQuery = (resource, namespace, id) => {
 
   return `${resource ? resource + '/' : ''}${prefix}:${id}`;
 };
-

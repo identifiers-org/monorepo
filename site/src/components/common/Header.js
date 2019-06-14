@@ -6,6 +6,7 @@ import identifiersLogo from '../../assets/identifiers_logo.png';
 
 import Sticky from './Sticky';
 import EBINavBar from './EBINavBar';
+import EBINavItem from './EBINavItem';
 
 
 class Header extends React.Component {
@@ -55,51 +56,47 @@ class Header extends React.Component {
 
                 <Sticky>
                   <EBINavBar>
-                    <nav>
-                      <ul id="local-nav" className="dropdown menu float-left" data-description="navigational">
-                        <li className="nav-item">
-                          <NavLink exact to="/" className="nav-link nav-link-dark" activeClassName="active">
-                            <i className="icon icon-common icon-external-link-alt" /> Resolution
-                          </NavLink>
-                        </li>
+                    <EBINavItem className="nav-item">
+                      <NavLink exact to="/" className="nav-link nav-link-dark" activeClassName="active">
+                        <i className="icon icon-common icon-external-link-alt" /> Resolution
+                      </NavLink>
+                    </EBINavItem>
 
-                        <li className="nav-item">
-                          <a href={config.registryUrl} className="nav-link nav-link-dark">
-                            <i className="icon icon-common icon-list" /> Registry
-                          </a>
-                        </li>
+                    <EBINavItem className="nav-item">
+                      <a href={config.registryUrl} className="nav-link nav-link-dark">
+                        <i className="icon icon-common icon-list" /> Registry
+                      </a>
+                    </EBINavItem>
 
-                        <li className="nav-item">
-                          <a href={`${config.registryUrl}/registry`} className="nav-link nav-link-dark">
-                            <i className="icon icon-common icon-search" /> Browse the registry
-                          </a>
-                        </li>
+                    <EBINavItem className="nav-item">
+                      <a href={`${config.registryUrl}/registry`} className="nav-link nav-link-dark">
+                        <i className="icon icon-common icon-search" /> Browse the registry
+                      </a>
+                    </EBINavItem>
 
-                        <li className="nav-item">
-                          <a href={`${config.registryUrl}/prefixregistrationrequest`} className="nav-link nav-link-dark">
-                            <i className="icon icon-common icon-hand-point-up" /> Request prefix
-                          </a>
-                        </li>
+                    <EBINavItem className="nav-item">
+                      <a href={`${config.registryUrl}/prefixregistrationrequest`} className="nav-link nav-link-dark">
+                        <i className="icon icon-common icon-hand-point-up" /> Request prefix
+                      </a>
+                    </EBINavItem>
 
-                        <li>
-                          <a href={config.documentationUrl} className="nav-link nav-link-dark">
-                            <i className="icon icon-common icon-documentation" /> Documentation
-                          </a>
-                        </li>
+                    <EBINavItem className="nav-item">
+                      <a href={config.documentationUrl} className="nav-link nav-link-dark">
+                        <i className="icon icon-common icon-documentation" /> Documentation
+                      </a>
+                    </EBINavItem>
 
-                        <li>
-                          <a href={config.oldIdentifiersUrl} target="_blank" className="nav-link nav-link-dark">
-                            <i className="icon icon-common icon-home" /> Legacy platform
-                          </a>
-                        </li>
+                    <EBINavItem className="nav-item">
+                      <a href={config.oldIdentifiersUrl} target="_blank" className="nav-link nav-link-dark">
+                        <i className="icon icon-common icon-home" /> Legacy platform
+                      </a>
+                    </EBINavItem>
 
-                        <li className="nav-item float-right">
-                          <a href={config.feedbackUrl} target="_blank" className="nav-link nav-link-dark">
-                            <i className="icon icon-common icon-comments" /> Feedback
-                          </a>
-                        </li>
-                      </ul>
-                    </nav>
+                    <EBINavItem className="nav-item float-right">
+                      <a href={config.feedbackUrl} target="_blank" className="nav-link nav-link-dark">
+                        <i className="icon icon-common icon-comments" /> Feedback
+                      </a>
+                    </EBINavItem>
                   </EBINavBar>
                 </Sticky>
 
