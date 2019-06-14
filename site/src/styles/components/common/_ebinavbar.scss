@@ -11,3 +11,16 @@
   z-index: 1000;
   box-shadow: 0 0 10px 0 $dark;
 }
+
+.EBINavBar--extra-items-menu {
+  background-color: $dark;
+  display: flex;
+  flex-direction: column;
+  margin-left: -20px;
+  position: fixed;
+
+  .nav-item {
+    border: none !important;
+  }
+}
+

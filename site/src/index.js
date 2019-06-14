@@ -7,7 +7,7 @@ import store from './store/store';
 
 import { getLocationListFromRegistry } from './actions/LocationList';
 
-import { swalBanner } from './utils/swalDialogs';
+import { swalBannerMobile } from './utils/swalDialogs';
 
 import './styles/styles.scss';
 

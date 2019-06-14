@@ -6,6 +6,7 @@ import identifiersLogo from '../../assets/identifiers_logo.png';
 
 import Sticky from './Sticky';
 import EBINavBar from './EBINavBar';
+import EBINavItem from './EBINavItem';
 
 
 class Header extends React.Component {
@@ -56,70 +57,65 @@ class Header extends React.Component {
 
               <Sticky>
                 <EBINavBar>
-                  <nav>
-                    <ul id="local-nav" className="dropdown menu float-left" data-description="navigational">
+                  <EBINavItem className="nav-item">
+                    <a href={config.satelliteUrl} className="nav-link nav-link-dark">
+                      <i className="icon icon-common icon-external-link-alt" /> Resolution
+                    </a>
+                  </EBINavItem>
 
-                      <li className="nav-item">
-                        <a href={config.satelliteUrl} className="nav-link nav-link-dark">
-                          <i className="icon icon-common icon-external-link-alt" /> Resolution
-                        </a>
-                      </li>
+                  <EBINavItem className="nav-item">
+                    <NavLink exact to="/" className="nav-link" activeClassName="active">
+                      <i className="icon icon-common icon-list" /> Registry
+                    </NavLink>
+                  </EBINavItem>
 
-                      <li className="nav-item">
-                        <NavLink exact to="/" className="nav-link" activeClassName="active">
-                          <i className="icon icon-common icon-list" /> Registry
-                        </NavLink>
-                      </li>
+                  <EBINavItem className="nav-item">
+                    <NavLink to="/registry" className="nav-link" activeClassName="active">
+                      <i className="icon icon-common icon-search" /> Browse the registry
+                    </NavLink>
+                  </EBINavItem>
 
-                      <li className="nav-item">
-                        <NavLink to="/registry" className="nav-link" activeClassName="active">
-                          <i className="icon icon-common icon-search" /> Browse the registry
-                        </NavLink>
-                      </li>
+                  <EBINavItem className="nav-item">
+                    <NavLink to="/prefixregistrationrequest" className="nav-link" activeClassName="active">
+                      <i className="icon icon-common icon-hand-point-up" /> Request prefix
+                    </NavLink>
+                  </EBINavItem>
 
-                      <li className="nav-item">
-                        <NavLink to="/prefixregistrationrequest" className="nav-link" activeClassName="active">
-                          <i className="icon icon-common icon-hand-point-up" /> Request prefix
-                        </NavLink>
-                      </li>
+                  <EBINavItem>
+                    <a href={config.documentationUrl} className="nav-link nav-link-dark">
+                      <i className="icon icon-common icon-documentation" /> Documentation
+                    </a>
+                  </EBINavItem>
 
-                      <li>
-                        <a href={config.documentationUrl} className="nav-link nav-link-dark">
-                          <i className="icon icon-common icon-documentation" /> Documentation
-                        </a>
-                      </li>
+                  <EBINavItem>
+                    <a href={config.oldIdentifiersUrl} target="_blank" className="nav-link nav-link-dark">
+                      <i className="icon icon-common icon-home" /> Legacy platform
+                    </a>
+                  </EBINavItem>
 
-                      <li>
-                        <a href={config.oldIdentifiersUrl} target="_blank" className="nav-link nav-link-dark">
-                          <i className="icon icon-common icon-home" /> Legacy platform
-                        </a>
-                      </li>
+                  {
+                    config.enableAuthFeatures && (
+                      <>
+                        <EBINavItem className="nav-item">
+                          <NavLink to="/curator" className="nav-link" activeClassName="active">
+                            <i className="icon icon-common icon-tachometer-alt" /> Curator dashboard
+                          </NavLink>
+                        </EBINavItem>
+                        <EBINavItem className="nav-item">
+                          <NavLink to="/account" className="nav-link" activeClassName="active">
+                            <i className="icon icon-common icon-sign-in-alt" /> Account
+                          </NavLink>
+                        </EBINavItem>
+                      </>
+                    )
+                  }
 
-                      {
-                        config.enableAuthFeatures && (
-                          <>
-                            <li className="nav-item">
-                              <NavLink to="/curator" className="nav-link" activeClassName="active">
-                                <i className="icon icon-common icon-tachometer-alt" /> Curator dashboard
-                              </NavLink>
-                            </li>
-                            <li className="nav-item">
-                              <NavLink to="/account" className="nav-link" activeClassName="active">
-                                <i className="icon icon-common icon-sign-in-alt" /> Account
-                              </NavLink>
-                            </li>
-                          </>
-                        )
-                      }
+                  <EBINavItem className="nav-item float-right">
+                    <a href={config.feedbackUrl} target="_blank" className="nav-link nav-link-dark">
+                      <i className="icon icon-common icon-comments" /> Feedback
+                    </a>
+                  </EBINavItem>
 
-                      <li className="nav-item float-right">
-                        <a href={config.feedbackUrl} target="_blank" className="nav-link nav-link-dark">
-                          <i className="icon icon-common icon-comments" /> Feedback
-                        </a>
-                      </li>
-
-                    </ul>
-                  </nav>
                 </EBINavBar>
               </Sticky>
 
