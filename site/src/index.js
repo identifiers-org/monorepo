@@ -7,7 +7,7 @@ import store from './store/store';
 
 import { getLocationListFromRegistry } from './actions/LocationList';
 
-import { swalBannerMobile } from './utils/swalDialogs';
+import { swalBanner, swalBannerMobile } from './utils/swalDialogs';
 
 import './styles/styles.scss';
 
@@ -40,7 +40,7 @@ if (betaBannerMQ.matches) {
   })
 }
 else {
-  swalBannerMobile.fire({
+  swalBanner.fire({
     html: `
       <div class="row">
         <div class="col col-sm-12 col-md-2 align-self-center">
