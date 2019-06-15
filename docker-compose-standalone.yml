@@ -11,6 +11,7 @@ services:
             - WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_PORT=8083
             - WS_RESOLVER_JVM_MEMORY_MAX=1024m
             - WS_RESOLVER_CONFIG_APPLICATION_ACTIVE_PROFILE=thirdparty
+            - WS_RESOLVER_CONFIG_REGISTRY_RESOLUTION_DATASET_ENDPOINT=https://registry.api.identifiers.org/resolutionApi/getResolverDataset
         ports:
             - "8080:8080"
         depends_on:
