@@ -32,6 +32,7 @@ export const swalError = Swal.mixin({
 });
 
 export const swalBanner = Swal.mixin({
+  animation: false,
   customClass: {
     actions: 'beta-banner__actions',
     confirmButton: 'btn btn-light mx-2',
@@ -47,6 +48,7 @@ export const swalBanner = Swal.mixin({
 });
 
 export const swalBannerMobile = Swal.mixin({
+  animation: false,
   customClass: {
     confirmButton: 'btn btn-light mx-2'
   },
