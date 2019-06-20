@@ -21,14 +21,14 @@ loginfo "[HOSEKEEPING] Empty the output file at '$file_output_paths'"
 > $file_output_paths
 loginfo "[SEARCH] Calculating URLs for resources"
 for i in $( seq 1 1000 ); do
-    curl -i ${url_registry_base}/restApi/resources/$i | grep HTTP | grep 200
+    curl -i ${url_registry_base}/restApi/resources/$i | grep HTTP | grep 200 2> /dev/null
     if [ "`echo $?`" == "0" ]; then
         echo "/restApi/resources/$i" >> $file_output_paths
     fi
 done
 loginfo "[SEARCH] Calculating URLs for namespaces"
 for i in $( seq 1 1000 ); do
-    curl -i ${url_registry_base}/restApi/namespaces/$i | grep HTTP | grep 200
+    curl -i ${url_registry_base}/restApi/namespaces/$i | grep HTTP | grep 200 2> /dev/null
     if [ "`echo $?`" == "0" ]; then
         echo "/restApi/namespaces/$i" >> $file_output_paths
     fi
