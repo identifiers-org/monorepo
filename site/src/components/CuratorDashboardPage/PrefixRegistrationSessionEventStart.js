@@ -40,9 +40,9 @@ class PrefixRegistrationSessionEventStart extends React.Component {
             >
               {
                 expanded ?
-                  <><i className="icon icon-common icon-minus" /> Hide request contents&nbsp;</>
-                :
-                  <><i className="icon icon-common icon-plus" /> Show request contents&nbsp;</>
+                  <span className="text-white"><i className="icon icon-common icon-minus" /> Hide request contents&nbsp;</span>
+                  :
+                  <span className="text-white"><i className="icon icon-common icon-plus" /> Show request contents&nbsp;</span>
               }
             </a>
           </div>

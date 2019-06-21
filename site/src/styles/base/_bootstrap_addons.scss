@@ -3,7 +3,7 @@
     padding: 1.25rem;
     margin-top: 1.25rem;
     margin-bottom: 1.25rem;
-    border: 1px solid #eee;
+    border: none;
     border-left-width: .25rem;
     border-radius: $border-radius;
     border-left-color: #343a40;
@@ -103,7 +103,7 @@
 
 // Border widths.
 .border-2 {
-  border-width:2px !important;
+  border-width: 2px !important;
 }
 
 
@@ -129,5 +129,5 @@
 }
 
 .bg-gray {
-  background: #ebeced;
+  background: #eaeaea;
 }

@@ -6,6 +6,8 @@ import { Collapse } from 'reactstrap';
 import { prefixRegistrationRequestAmend } from '../../actions/PrefixRegistrationSession';
 
 import { setPrefixRegistrationSessionAmendField } from '../../actions/PrefixRegistrationSessionAmend';
+import ReversibleField from '../common/ReversibleField';
+import PrefixRegistrationSessionRequestDetails from './PrefixRegistrationSessionRequest';
 
 
 class PrefixRegistrationSessionAmendForm extends React.Component {
@@ -69,14 +71,12 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
   }
 
 
-  fieldChanged = (field) => this.state.fieldsChanged.has(field);
-
-
   render() {
     const {
       props: {
         isOpen,
         locationList,
+        prefixRegistrationSession: { prefixRegistrationRequest },
         prefixRegistrationSessionAmend
       },
       fieldChanged,
@@ -85,7 +85,7 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
     } = this;
 
     return (
-      <Collapse className="bg-gray pt-3 pb-2 px-4 rounded-lg" isOpen={isOpen}>
+      <Collapse className="bg-gray pt-3 pb-2 px-4" isOpen={isOpen}>
         <div className="row">
           <div className="col mb-3">
             <h4><i className="icon icon-common icon-edit" /> New amend</h4>
@@ -100,48 +100,12 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
           <div className="col col-sm-8 col-lg-9 col-xl-10">
             <table className="table table-sm m-0 table-borderless table-striped">
               <tbody>
+
                 <tr>
-                  {/* TODO: */}
-                  {/* ESTO HAY QUE PASARLO A UN COMPONENTE */}
-                  <td className="w-25 pl-2 font-weight-bold align-middle">
-                    <div className="row">
-                      <div className="col">
-                        Resource name
-                      </div>
-                    </div>
-                  </td>
-                  <td className="w-50">
-                    <div className="input-group input-group-sm">
-                      <input
-                        type="text"
-                        className={`form-control ${ fieldChanged('name') && 'border-warning border-2' }`}
-                        value={prefixRegistrationSessionAmend.name}
-                        onChange={(e) => handleChangeField('name', e.target.value)}
-                      />
-                      {
-                        fieldChanged('name') && (
-                          <div className="input-group-append">
-                            <button
-                              className="btn btn-secondary"
-                              onClick={() => handleChangeField('name', undefined)}
-                            >
-                              Revert
-                            </button>
-                          </div>
-                        )
-                      }
-                    </div>
-                  </td>
-                  <td className="w-25 align-middle">
-                    {
-                      fieldChanged('name') && (
-                        <div className="col">
-                          <span className="badge badge-secondary text-warning">Modified</span>
-                        </div>
-                      )
-                    }
-                  </td>
+                  <td className="w-25 pl-2 font-weight-bold align-middle">Resource name</td>
+                  <td className="w-75"><ReversibleField fieldName="name" defaultValue={prefixRegistrationRequest.name} handleChangeField={handleChangeField} /></td>
                 </tr>
+
                 <tr>
                   <td className="w-25 pl-2 font-weight-bold">Description</td>
                   <td className="w-75">
@@ -413,7 +377,7 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
         <div className="row">
           <div className="col mt-2">
             <a
-              className={`btn btn-warning btn-block`}
+              className="btn btn-warning btn-block"
               href="#!"
               onClick={handleAmend}
             >

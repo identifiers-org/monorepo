@@ -74,14 +74,14 @@ class PrefixRegistrationSessionCommentForm extends React.Component {
     } = this;
 
     return (
-      <Collapse className="bg-gray pt-3 pb-2 px-4 rounded-lg" isOpen={isOpen}>
+      <Collapse className="bg-gray pt-3 pb-2 px-4" isOpen={isOpen}>
         <div className="row">
           <div className="col mb-3">
             <h4><i className="icon icon-common icon-check" /> Add comment to request</h4>
           </div>
         </div>
 
-{/* ========================================  FORM FOR REGISTRATION COMMENT ======================================== */}
+        {/* ========================================  FORM FOR REGISTRATION COMMENT ======================================== */}
         <div className="row no-gutters align-items-center bg-light rounded p-2 mb-1">
           <div className="col">
             <div className="input-group">
@@ -101,7 +101,7 @@ class PrefixRegistrationSessionCommentForm extends React.Component {
         <div className="row">
           <div className="col mt-2">
             <a
-              className={`btn btn-secondary btn-block`}
+              className="btn btn-secondary btn-block text-white"
               href="#!"
               onClick={handleComment}
             >
@@ -110,7 +110,7 @@ class PrefixRegistrationSessionCommentForm extends React.Component {
           </div>
         </div>
 
-{/* ======================================== TABLE FORM FOR REGISTRATION AMEND ======================================== */}
+        {/* ======================================== TABLE FORM FOR REGISTRATION AMEND ======================================== */}
 
       </Collapse>
     );

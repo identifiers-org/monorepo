@@ -73,7 +73,7 @@ class PrefixRegistrationSessionRejectForm extends React.Component {
           </div>
         </div>
 
-{/* ======================================== FORM FOR REGISTRATION REJECT ======================================== */}
+        {/* ======================================== FORM FOR REGISTRATION REJECT ======================================== */}
         <div className="row no-gutters align-items-center bg-light rounded p-2 mb-1">
           <div className="col">
             <div className="input-group">
@@ -92,7 +92,7 @@ class PrefixRegistrationSessionRejectForm extends React.Component {
         <div className="row">
           <div className="col mt-2">
             <a
-              className={`btn btn-danger btn-block`}
+              className="btn btn-danger btn-block text-white"
               href="#!"
               onClick={handleReject}
             >
@@ -101,7 +101,7 @@ class PrefixRegistrationSessionRejectForm extends React.Component {
           </div>
         </div>
 
-{/* ======================================== FORM FOR REGISTRATION REJECT ======================================== */}
+        {/* ======================================== FORM FOR REGISTRATION REJECT ======================================== */}
 
       </Collapse>
     );
