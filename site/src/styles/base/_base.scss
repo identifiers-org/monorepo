@@ -48,7 +48,8 @@ html {
 
 a, a:visited, a:hover, a:active {
   text-decoration: none;
-  border-bottom: none;
+  border-bottom: none !important;
+  border-bottom-color: transparent;
 }
 
 .clear-link, .clear-link:hover{
