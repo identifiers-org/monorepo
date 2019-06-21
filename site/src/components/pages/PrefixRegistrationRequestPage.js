@@ -180,16 +180,17 @@ class PrefixRegistrationRequestPage extends React.Component  {
         body: JSON.stringify(body)
       };
 
-      let responseStatusCode;
-
       // Make request and update the store.
       const requestUrl = `${config.registryApi}/${config.prefixRequestEndpoint}`;
       const response = await fetch(requestUrl, init);
-      responseStatusCode = response.status;
+      const responseStatusCode = response.status;
       const json = await response.json();
       const res = { valid: responseStatusCode === 200, errorMessage: json.errorMessage };
 
       if (res.valid) {
+        // Scroll to top.
+        window.scrollTo(0, 0);
+
         // Empty form.
         this.state.fields.forEach(id => {
           this.props.reset(id);
