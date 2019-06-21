@@ -19,6 +19,9 @@ development_env_down
 *.iml
 *.ipr
 
+### VS Code ###
+.vscode
+
 ### NetBeans ###
 nbproject/private/
 build/
@@ -33,3 +36,11 @@ mvnw*
 
 # Mac OS files
 **.DS_Store
+
+# Python environment
+.venv
+Pipfile.lock
+__pycache__/
+*.py[cod]
+notebooks/.ipynb_checkpoints
+
