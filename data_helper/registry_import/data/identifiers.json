@@ -2569,28 +2569,6 @@
 		]
 	},
 	{
-		"id": "MIR:00000083",
-		"name": "Unipathway",
-		"pattern": "^UPA\\d{5}$",
-		"definition": "UniPathway is a manually curated resource of metabolic pathways for the UniProtKB/Swiss-Prot knowledgebase. It provides a structured controlled vocabulary to describe the role of a protein in a metabolic pathway.",
-		"prefix": "unipathway",
-		"url": "http://identifiers.org/unipathway",
-		"prefixed": 0,
-		"resources": [
-			{
-				"id": "MIR:00100114",
-				"accessURL": "http://www.grenoble.prabi.fr/obiwarehouse/unipathway/upa?upid={$id}",
-				"info": "UniPathway",
-				"institution": "Swiss Institute of Bioinformatics (SIB) and French National Institute for Research in Computer Science and Control",
-				"location": "Switzerland",
-				"official": false,
-				"localId": "UPA00206",
-				"testString": "ethanol fermentation",
-				"resourceURL": "http://www.grenoble.prabi.fr/obiwarehouse/unipathway"
-			}
-		]
-	},
-	{
 		"id": "MIR:00000084",
 		"name": "ChEMBL compound",
 		"pattern": "^CHEMBL\\d+$",
@@ -4177,14 +4155,14 @@
 		"resources": [
 			{
 				"id": "MIR:00100184",
-				"accessURL": "http://pir.georgetown.edu/cgi-bin/pro/entry_pro?id=PR:{$id}",
+				"accessURL": "https://proconsortium.org/app/entry/PR:{$id}",
 				"info": "Protein Ontology at Georgetown",
 				"institution": "Georgetown University Medical Center, Washington",
 				"location": "USA",
 				"official": false,
 				"localId": "000000024",
 				"testString": "rho-associated protein kinase",
-				"resourceURL": "http://pir.georgetown.edu/pro/pro.shtml"
+				"resourceURL": "https://proconsortium.org/"
 			},
 			{
 				"id": "MIR:00100240",
@@ -10672,40 +10650,40 @@
 		"synonyms": [
 			"Variation Ontology"
 		],
-		"prefixed": 0,
+		"prefixed": 1,
 		"resources": [
 			{
 				"id": "MIR:00100526",
-				"accessURL": "http://www.variationontology.org/cgi-bin/amivario/term-details.cgi?term={$id}",
+				"accessURL": "http://www.variationontology.org/cgi-bin/amivario/term-details.cgi?term=VariO:{$id}",
 				"info": "VariO at Lund University",
 				"institution": "Department of Experimental Medical Science, Lund University",
 				"location": "Sweden",
 				"official": false,
-				"localId": "VariO:0294",
+				"localId": "0294",
 				"testString": "disease causing",
 				"resourceURL": "http://www.variationontology.org/"
 			},
 			{
 				"id": "MIR:00100566",
-				"accessURL": "http://purl.bioontology.org/ontology/VARIO/{$id}",
+				"accessURL": "http://purl.bioontology.org/ontology/VARIO/VariO:{$id}",
 				"info": "VariO through BioPortal",
 				"institution": "National Center for Biomedical Ontology, Stanford",
 				"location": "USA",
 				"official": false,
 				"resourcePrefix": "bptl",
-				"localId": "VariO:0294",
+				"localId": "0294",
 				"testString": "disease causing",
 				"resourceURL": "http://bioportal.bioontology.org/ontologies/VARIO"
 			},
 			{
 				"id": "MIR:00100677",
-				"accessURL": "https://www.ebi.ac.uk/ols/ontologies/vario/terms?obo_id={$id}",
+				"accessURL": "https://www.ebi.ac.uk/ols/ontologies/vario/terms?obo_id=VariO:{$id}",
 				"info": "VariO through OLS",
 				"institution": "European Bioinformatics Institute, Hinxton, Cambridge",
 				"location": "UK",
 				"official": false,
 				"resourcePrefix": "ols",
-				"localId": "VariO:0294",
+				"localId": "0294",
 				"testString": "disease causing",
 				"resourceURL": "https://www.ebi.ac.uk/ols/ontologies/vario"
 			}
