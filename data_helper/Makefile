@@ -28,7 +28,7 @@ upgrade_dependencies:
 
 import_registry:
 	@echo "<===|DEVOPS|===> [IMPORT] Importing HQ Registry Dataset"
-	@pipenv run registry_import/registry_import/populate_registry.py
+	@pipenv run registry_import/registry_import/populate_registry.py -f registry_import/data/identifiers.json
 
 clean_dev:
 	@echo "<===|DEVOPS|===> [CLEAN] Removing Python Virtual Environment"

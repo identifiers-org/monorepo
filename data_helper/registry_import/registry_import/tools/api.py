@@ -27,8 +27,13 @@ def fetch_old_data(originURL):
 
 # Load old data from a file.
 def load_old_data(data_file_name):
+    spinner = Halo(text=f'Loading namespace data from {data_file_name}...', spinner='dots')
+    spinner.start()
+
     with open(data_file_name) as source_file:
-        return json.load(source_file)
+        namespaces = json.load(source_file)
+        spinner.succeed(f'Loaded {len(namespaces)} namespaces.')
+        return namespaces
 
 
 # Get a resource from the rest service.
