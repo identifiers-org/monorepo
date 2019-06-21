@@ -60,7 +60,7 @@ class PrefixRegistrationSessionList extends React.Component {
           totalPages={totalPages}
           navigate={navigate}
         />
-        <div className="row justify-content-md-center">
+        <div className="row justify-content-md-center mt-2">
           <div className="col">
             {
               prefixRegistrationSessionList.length === 0 ? (
