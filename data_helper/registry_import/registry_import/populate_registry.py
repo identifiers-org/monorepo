@@ -16,7 +16,7 @@ from data_fixer import (
     populate_locations
 )
 
-from tools import fetch_old_data, prepare_resource, do_post
+from tools import fetch_old_data, load_old_data, prepare_resource, do_post
 from tools import init_config, init_args, load_countries
 
 from classes import Institution, Location, Namespace, Provider, Requester
@@ -36,7 +36,11 @@ EMPTY_FIELD_LITERAL = config.get('EmptyFieldLiteral')
 
 
 # Fetches data from old identifiers.org.
-namespaces = fetch_old_data(config.get('DataOriginURL'))
+if args.datafile is None:
+    namespaces = fetch_old_data(config.get('DataOriginURL'))
+else:
+    namespaces = load_old_data(args.datafile)
+
 
 if args.skiplocations is False:
     # Gets country list.

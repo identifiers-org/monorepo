@@ -27,6 +27,7 @@ def init_config(config_file_name):
 def init_args():
   # Argument parser.
   parser = argparse.ArgumentParser(description='Populates repositories of Identifiers.org cloud.')
+  parser.add_argument('-f', '--datafile', action='store', help='Use a data file instead of fetching.')
   parser.add_argument('-s', '--skiperror', action='store_true', help='Continue on error.')
   parser.add_argument('-v', '--verbose', action='store_true', help='Show detailed output.')
   parser.add_argument('-m', '--miriam', action='store_true', help='Also populate miriams in database.')

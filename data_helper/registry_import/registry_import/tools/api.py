@@ -12,7 +12,7 @@ def fetch_old_data(originURL):
 
     try:
         response = requests.get(originURL)
-        
+
         if response.status_code is 200:
             namespaces = response.json()
             spinner.succeed(f'Found {len(namespaces)} namespaces.')
@@ -24,6 +24,11 @@ def fetch_old_data(originURL):
         exit(1)
 
     return namespaces
+
+# Load old data from a file.
+def load_old_data(data_file_name):
+    with open(data_file_name) as source_file:
+        return json.load(source_file)
 
 
 # Get a resource from the rest service.
