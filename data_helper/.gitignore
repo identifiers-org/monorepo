@@ -1,9 +1,0 @@
-# Development IDEs
-registry_import/.vscode
-.vscode
-
-# Python environment
-.venv
-Pipfile.lock
-**/*.pyc
-notebooks/.ipynb_checkpoints
