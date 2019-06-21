@@ -56,7 +56,7 @@ export const getPrefixRegistrationSessionFromRegistry = (id) => {
     }
     catch (err) {
       console.log('Error fetching prefix registration request: ', err);
-    };
+    }
   };
 };
 
@@ -74,7 +74,7 @@ export const setPrefixRegistrationSession = (prefixRegistrationSession) => {
 export const prefixRegistrationRequestAccept = (id, reason) => {
   return async () => {
     const requestUrl = `${config.registryApi}/${config.prefixRegistrationEndpoint}/acceptPrefixRegistrationRequest/${id}`;
-    const config = {
+    const init = {
       method: 'POST',
       headers: {'content-type': 'application/json'},
       body: JSON.stringify({
@@ -86,7 +86,7 @@ export const prefixRegistrationRequestAccept = (id, reason) => {
       })
     };
 
-    return await fetch(requestUrl, config);
+    return await fetch(requestUrl, init);
   }
 };
 
@@ -95,7 +95,7 @@ export const prefixRegistrationRequestAccept = (id, reason) => {
 export const prefixRegistrationRequestReject = (id, reason) => {
   return async () => {
     const requestUrl = `${config.registryApi}/${config.prefixRegistrationEndpoint}/rejectPrefixRegistrationRequest/${id}`;
-    const config = {
+    const init = {
       method: 'POST',
       headers: {'content-type': 'application/json'},
       body: JSON.stringify({
@@ -107,7 +107,7 @@ export const prefixRegistrationRequestReject = (id, reason) => {
       })
     };
 
-    return await fetch(requestUrl, config);
+    return await fetch(requestUrl, init);
   }
 };
 
@@ -115,8 +115,9 @@ export const prefixRegistrationRequestReject = (id, reason) => {
 // Comment prefixRegistrationRequest.
 export const prefixRegistrationRequestComment = (id, comment) => {
   return async () => {
+    console.log('config', config);
     const requestUrl = `${config.registryApi}/${config.prefixRegistrationEndpoint}/commentPrefixRegistrationRequest/${id}`;
-    const config = {
+    const init = {
       method: 'POST',
       headers: {'content-type': 'application/json'},
       body: JSON.stringify({
@@ -128,7 +129,7 @@ export const prefixRegistrationRequestComment = (id, comment) => {
       })
     };
 
-    return await fetch(requestUrl, config);
+    return await fetch(requestUrl, init);
   }
 };
 
