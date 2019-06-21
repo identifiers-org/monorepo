@@ -44,7 +44,7 @@ class PrefixRegistrationSessionNewEventBtn extends React.Component {
     return (
       <div className={`col p-2 rounded-top-lg ${bgColor}`}>
         <a
-          className={`btn ${isCancel ? 'btn-dark' : 'btn-' + color} btn-block`}
+          className={`btn ${isCancel ? 'btn-dark' : 'btn-' + color} btn-block text-white`}
           href="#!"
           onClick={handleClick}
         >

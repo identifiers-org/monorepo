@@ -92,7 +92,7 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
           </div>
         </div>
 
-{/* ======================================== TABLE FORM FOR REGISTRATION AMEND ======================================== */}
+        {/* ======================================== TABLE FORM FOR REGISTRATION AMEND ======================================== */}
         <div className="row no-gutters align-items-center bg-light rounded p-2 mb-1">
           <div className="col col-sm-4 col-lg-3 col-xl-2">
             <p><i className="icon icon-common icon-leaf" /> <strong>Prefix details</strong></p>
@@ -136,7 +136,7 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
                     {
                       fieldChanged('name') && (
                         <div className="col">
-                          <span class="badge badge-secondary text-warning">Modified</span>
+                          <span className="badge badge-secondary text-warning">Modified</span>
                         </div>
                       )
                     }
@@ -349,7 +349,7 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
                   <td className="w-25 pl-2 font-weight-bold">Location</td>
                   <td className="w-75">
                     <div className="input-group input-group-sm">
-                    <select
+                      <select
                         className="form-control"
                         value={prefixRegistrationSessionAmend.providerLocation}
                       >
@@ -412,17 +412,17 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
 
         <div className="row">
           <div className="col mt-2">
-              <a
-                className={`btn btn-warning btn-block`}
-                href="#!"
-                onClick={handleAmend}
-              >
-                <i className="icon icon-common icon-edit" /> Confirm amend
-              </a>
-            </div>
+            <a
+              className={`btn btn-warning btn-block`}
+              href="#!"
+              onClick={handleAmend}
+            >
+              <i className="icon icon-common icon-edit" /> Confirm amend
+            </a>
+          </div>
         </div>
 
-{/* ======================================== TABLE FORM FOR REGISTRATION AMEND ======================================== */}
+        {/* ======================================== TABLE FORM FOR REGISTRATION AMEND ======================================== */}
 
       </Collapse>
     );
@@ -441,8 +441,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  prefixRegistrationRequestAmend: (id, prefixRegistrationRequest, additionalInformation) => dispatch(prefixRegistrationRequestAmend(id, prefixRegistrationRequest, additionalInformation)),
-  setPrefixRegistrationSessionAmendField: (field, value) => dispatch(setPrefixRegistrationSessionAmendField(field, value))
+  prefixRegistrationRequestAmend: (id, prefixRegistrationRequest, additionalInformation) =>
+    dispatch(prefixRegistrationRequestAmend(id, prefixRegistrationRequest, additionalInformation)),
+  setPrefixRegistrationSessionAmendField: (field, value) =>
+    dispatch(setPrefixRegistrationSessionAmendField(field, value))
 });
 
 export default connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationSessionAmendForm);

@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
-
 import PrefixRegistrationSessionList from '../CuratorDashboardPage/PrefixRegistrationSessionList';
 import PageTitle from '../common/PageTitle';
 
