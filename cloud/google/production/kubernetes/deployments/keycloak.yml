@@ -20,6 +20,15 @@ spec:
                 app: keycloak
                 deployment: hq
         spec:
+            affinity:
+                nodeAffinity:
+                    requiredDuringSchedulingIgnoredDuringExecution:
+                        nodeSelectorTerms:
+                            - matchExpressions:
+                              - key: iorg-node-reliability
+                                operator: In
+                                values:
+                                - stable
             containers:
                 - name: keycloak
                   image: jboss/keycloak:6.0.1
