@@ -21,6 +21,62 @@ spec:
                 app: web-hq
                 deployment: hq
         spec:
+            affinity:
+              nodeAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 5
+                    preference:
+                      matchExpressions:
+                        - key: iorg-node-reliability
+                          operator: In
+                          values:
+                            - stable
+              podAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 100
+                    podAffinityTerm:
+                      labelSelector:
+                        matchExpressions:
+                        - key: environment
+                          operator: In
+                          values:
+                          - production
+                        - key: tier
+                          operator: In
+                          values:
+                          - api
+                        - key: app
+                          operator: In
+                          values:
+                          - registry
+                        - key: deployment
+                          operator: In
+                          values:
+                          - hq
+                      topologyKey: "kubernetes.io/hostname"
+              podAntiAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 50
+                    podAffinityTerm:
+                      labelSelector:
+                        matchExpressions:
+                        - key: environment
+                          operator: In
+                          values:
+                          - production
+                        - key: tier
+                          operator: In
+                          values:
+                          - frontend
+                        - key: app
+                          operator: In
+                          values:
+                          - web-hq
+                        - key: deployment
+                          operator: In
+                          values:
+                          - hq
+                      topologyKey: "kubernetes.io/hostname"
             containers:
                 - name: hq-registry-web
                   image: identifiersorg/cloud-hq-web-frontend:1.0.13
