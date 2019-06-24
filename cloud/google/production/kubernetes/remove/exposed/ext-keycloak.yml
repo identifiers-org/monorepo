@@ -1,0 +1,20 @@
+# Definition for a keycloak service (external load balancing) FOR TESTING PURPOSES
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: v1
+kind: Service
+metadata:
+    name: ext-keycloak
+    labels:
+        environment: production
+        tier: backend
+        app: keycloak
+        deployment: hq
+spec:
+    ports:
+    - port: 8080
+    selector:
+        environment: production
+        tier: backend
+        app: keycloak
+        deployment: hq
+    type: LoadBalancer
