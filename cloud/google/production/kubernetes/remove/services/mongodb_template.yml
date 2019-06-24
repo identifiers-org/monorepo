@@ -1,0 +1,78 @@
+# MongoDB HQ Backend definition
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: v1
+kind: Service
+metadata:
+    name: mongodb
+    labels:
+        app: mongo
+spec:
+    ports:
+    - port: 27017
+      targetPort: 27017
+    clusterIP: None
+    selector:
+        app: mongo
+        environment: production
+        tier: data_backend
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+    name: mongod
+spec:
+    serviceName: mongodb
+    replicas: PLACEHOLDER_MONGODB_REPLICAS
+    selector:
+        matchLabels:
+            app: mongo
+            environment: production
+            tier: data_backend
+    template:
+        metadata:
+            labels:
+                app: mongo
+                environment: production
+                tier: data_backend
+                replicaSet: MainRepSet
+        spec:
+            containers:
+            - name: mongod-container
+              image: mongo
+              imagePullPolicy: Always
+              command:
+              - "mongod"
+              - "--bind_ip"
+              - "0.0.0.0"
+              - "--replSet"
+              - "MainRepSet"
+              - "--auth"
+              - "--clusterAuthMode"
+              - "keyFile"
+              - "--keyFile"
+              - "/etc/secrets-volume/AUTH_KEY_FILE"
+              - "--setParameter"
+              - "authenticationMechanisms=SCRAM-SHA-1"
+              ports:
+              - containerPort: 27017
+              volumeMounts:
+              - name: secrets-volume
+                readOnly: true
+                mountPath: /etc/secrets-volume
+              - name: mongodb-presistent-storage-claim
+                mountPath: /data/db
+            volumes:
+            - name: secrets-volume
+              secret:
+                  secretName: MONGODB_AUTH_SECRET_NAME
+                  defaultMode: 256
+    volumeClaimTemplates:
+    - metadata:
+        name: mongodb-presistent-storage-claim
+        annotations:
+            volume.beta.kubernetes.io/storage-class: "STORAGE_CLASS"
+      spec:
+          accessModes: [ "ReadWriteOnce" ]
+          resources:
+              requests:
+                  storage: STORAGE_SIZE
