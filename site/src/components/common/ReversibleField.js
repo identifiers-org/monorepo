@@ -28,22 +28,24 @@ class ReversibleField extends React.Component {
   render() {
     const {
       handleChangeField,
+      props: { children },
       state: { defaultValue, value }
     } = this;
 
     const modified = (defaultValue !== value);
 
+    const fieldChild = React.Children.only(children);
+    const preparedFieldChild = React.cloneElement(fieldChild, {
+      className: `form-control ${ modified && 'border-warning border-2' }`,
+      value,
+      onChange: (e) => handleChangeField(e.target.value)
+    });
+
 
     // TODO: COMPOSITE COMPONENT - APPLY PROPS TO CHILD INPUT / TEXTAREA OR SELECT.
-
     return (
       <div className="input-group input-group-sm">
-        <input
-          type="text"
-          className={`form-control ${ modified && 'border-warning border-2' }`}
-          value={value}
-          onChange={(e) => handleChangeField(e.target.value)}
-        />
+        {preparedFieldChild}
         {
           modified && (
             <div className="input-group-append">
