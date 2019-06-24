@@ -17,10 +17,11 @@ class ReversibleField extends React.Component {
   }
 
 
-  handleChangeField = (value) => {
+  handleChangeField = (newValue) => {
     const { handleChangeField, fieldName } = this.props;
+    const value = newValue ? newValue : this.state.defaultValue;
 
-    this.setState({value: value ? value : this.state.defaultValue});
+    this.setState({value});
     handleChangeField(fieldName, value);
   }
 
@@ -33,12 +34,13 @@ class ReversibleField extends React.Component {
     } = this;
 
     const modified = (defaultValue !== value);
-
     const fieldChild = React.Children.only(children);
+
     const preparedFieldChild = React.cloneElement(fieldChild, {
       className: `form-control ${ modified && 'border-warning border-2' }`,
       value,
-      onChange: (e) => handleChangeField(e.target.value)
+      checked: value,
+      onChange: (e) => handleChangeField(fieldChild.props.type === 'checkbox' ? e.target.checked : e.target.value)
     });
 
 
