@@ -35,6 +35,7 @@ spec:
                   resources:
                       requests:
                           memory: 1024Mi
+                          cpu: 300m
                   env:
                   - name: KEYCLOAK_USER
                     valueFrom:
