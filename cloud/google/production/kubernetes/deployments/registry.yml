@@ -34,7 +34,8 @@ spec:
                   image: identifiersorg/cloud-hq-ws-registry:1.0.14
                   resources:
                       requests:
-                          memory: 768Mi
+                          memory: 420Mi
+                          cpu: 100m
                   env:
                   - name: HQ_WS_REGISTRY_CONFIG_JDBC_URL
                     value: "jdbc:postgresql://hq-postgresql:5432/dbhqregistry"
