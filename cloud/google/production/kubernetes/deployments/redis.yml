@@ -1,0 +1,41 @@
+# Redis backend service
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: redis
+spec:
+    selector:
+        matchLabels:
+            environment: production
+            tier: backend
+            app: redis
+            deployment: hq
+    replicas: 1
+    template:
+        metadata:
+            labels:
+                environment: production
+                tier: backend
+                app: redis
+                deployment: hq
+        spec:
+            affinity:
+                nodeAffinity:
+                    requiredDuringSchedulingIgnoredDuringExecution:
+                        nodeSelectorTerms:
+                            - matchExpressions:
+                              - key: iorg-node-reliability
+                                operator: In
+                                values:
+                                - stable
+            containers:
+                - name: redis
+                  image: redis:4.0.8-alpine
+                  imagePullPolicy: Always
+                  resources:
+                      requests:
+                          memory: 512Mi
+                          cpu: 500m
+                  ports:
+                  - containerPort: 6379
