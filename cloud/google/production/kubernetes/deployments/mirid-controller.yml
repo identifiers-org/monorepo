@@ -20,6 +20,15 @@ spec:
                 app: mirid-controller
                 deployment: hq
         spec:
+            affinity:
+                nodeAffinity:
+                    requiredDuringSchedulingIgnoredDuringExecution:
+                        nodeSelectorTerms:
+                            - matchExpressions:
+                              - key: iorg-node-reliability
+                                operator: In
+                                values:
+                                - stable
             containers:
                 - name: cloud-hq-ws-mirid-controller
                   image: identifiersorg/cloud-hq-ws-mirid-controller:1.0.0
