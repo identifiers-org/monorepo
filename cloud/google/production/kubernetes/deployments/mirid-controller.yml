@@ -34,10 +34,11 @@ spec:
                   image: identifiersorg/cloud-hq-ws-mirid-controller:1.0.0
                   resources:
                       requests:
-                          memory: 768Mi
+                          memory: 420Mi
+                          cpu: 100m
                   env:
                   - name: HQ_WS_MIRID_CONTROLLER_JVM_MEMORY_MAX
-                    value: "640m"
+                    value: "420m"
                   - name: HQ_WS_MIRID_CONTROLLER_CONFIG_APPLICATION_ACTIVE_PROFILE
                     value: "authenabled"
                   - name: HQ_WS_MIRID_CONTROLLER_CONFIG_JDBC_URL
