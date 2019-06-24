@@ -35,9 +35,10 @@ class ReversibleField extends React.Component {
 
     const modified = (defaultValue !== value);
     const fieldChild = React.Children.only(children);
+    const isCheckbox = fieldChild.props.type === 'checkbox';
 
     const preparedFieldChild = React.cloneElement(fieldChild, {
-      className: `form-control ${ modified && 'border-warning border-2' }`,
+      className: `form-control${modified ? ' border-warning border-2' : ''}${isCheckbox ? ' checkbox-input' : ''}`,
       value,
       checked: value,
       onChange: (e) => handleChangeField(fieldChild.props.type === 'checkbox' ? e.target.checked : e.target.value)
@@ -46,7 +47,7 @@ class ReversibleField extends React.Component {
 
     // TODO: COMPOSITE COMPONENT - APPLY PROPS TO CHILD INPUT / TEXTAREA OR SELECT.
     return (
-      <div className="input-group input-group-sm">
+      <div className={`input-group input-group-sm${isCheckbox ? ' justify-content-between' : ''}`}>
         {preparedFieldChild}
         {
           modified && (
