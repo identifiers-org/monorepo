@@ -39,8 +39,12 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
   }
 
 
-  handleAmend = async () => {
+  handleClickAmend = async () => {
     console.log('AMEND!');
+  }
+
+  handleClickValidate = async () => {
+    console.log('VALIDATE');
   }
 
 
@@ -80,8 +84,9 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
         prefixRegistrationSessionAmend
       },
       fieldChanged,
-      handleAmend,
-      handleChangeField
+      handleChangeField,
+      handleClickAmend,
+      handleClickValidate
     } = this;
 
     return (
@@ -103,67 +108,51 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
 
                 <tr>
                   <td className="w-25 pl-2 font-weight-bold align-middle">Resource name</td>
-                  <td className="w-75"><ReversibleField fieldName="name" defaultValue={prefixRegistrationRequest.name} handleChangeField={handleChangeField} /></td>
+                  <td className="w-75">
+                    <ReversibleField fieldName="name" defaultValue={prefixRegistrationRequest.name} handleChangeField={handleChangeField}>
+                      <input type="text" />
+                    </ReversibleField>
+                  </td>
                 </tr>
 
                 <tr>
-                  <td className="w-25 pl-2 font-weight-bold">Description</td>
+                  <td className="w-25 pl-2 font-weight-bold align-middle">Description</td>
                   <td className="w-75">
-                    <div className="input-group input-group-sm">
-                      <textarea
-                        rows="5"
-                        className="form-control"
-                        value={prefixRegistrationSessionAmend.description}
-                      />
-                    </div>
+                    <ReversibleField fieldName="name" defaultValue={prefixRegistrationRequest.description} handleChangeField={handleChangeField}>
+                      <textarea rows="5" />
+                    </ReversibleField>
                   </td>
                 </tr>
                 <tr>
                   <td className="w-25 pl-2 font-weight-bold">Requested prefix</td>
                   <td className="w-75">
-                    <div className="input-group input-group-sm">
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={prefixRegistrationSessionAmend.requestedPrefix}
-                      />
-                    </div>
+                    <ReversibleField fieldName="name" defaultValue={prefixRegistrationRequest.requestedPrefix} handleChangeField={handleChangeField}>
+                      <input type="text" />
+                    </ReversibleField>
                   </td>
                 </tr>
                 <tr>
                   <td className="w-25 pl-2 font-weight-bold">Regex pattern</td>
                   <td className="w-75">
-                    <div className="input-group input-group-sm">
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={prefixRegistrationSessionAmend.idRegexPattern}
-                      />
-                    </div>
+                    <ReversibleField fieldName="name" defaultValue={prefixRegistrationRequest.idRegexPattern} handleChangeField={handleChangeField}>
+                      <input type="text" />
+                    </ReversibleField>
                   </td>
                 </tr>
                 <tr>
                   <td className="w-25 pl-2 font-weight-bold">supporting references</td>
                   <td className="w-75">
-                    <div className="input-group input-group-sm">
-                      <textarea
-                        rows="5"
-                        className="form-control"
-                        value={prefixRegistrationSessionAmend.supportingReferences}
-                      />
-                    </div>
+                    <ReversibleField fieldName="name" defaultValue={prefixRegistrationRequest.supportingReferences} handleChangeField={handleChangeField}>
+                      <textarea rows={5} />
+                    </ReversibleField>
                   </td>
                 </tr>
                 <tr>
                   <td className="w-25 pl-2 font-weight-bold">Additional information</td>
                   <td className="w-75">
-                    <div className="input-group input-group-sm">
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={prefixRegistrationSessionAmend.additionalInformation}
-                      />
-                    </div>
+                    <ReversibleField fieldName="name" defaultValue={prefixRegistrationRequest.additionalInformation} handleChangeField={handleChangeField}>
+                      <textarea rows={5} />
+                    </ReversibleField>
                   </td>
                 </tr>
               </tbody>
@@ -181,43 +170,31 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
                 <tr>
                   <td className="w-25 pl-2 font-weight-bold">Name</td>
                   <td className="w-75">
-                    <div className="input-group input-group-sm">
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={prefixRegistrationSessionAmend.institutionName}
-                      />
-                    </div>
+                    <ReversibleField fieldName="name" defaultValue={prefixRegistrationRequest.institutionName} handleChangeField={handleChangeField}>
+                      <input type="text" />
+                    </ReversibleField>
                   </td>
                 </tr>
                 <tr>
                   <td className="w-25 pl-2 font-weight-bold">description</td>
                   <td className="w-75">
-                    <div className="input-group input-group-sm">
-                      <textarea
-                        rows="5"
-                        className="form-control"
-                        value={prefixRegistrationSessionAmend.institutionDescription}
-                      />
-                    </div>
+                    <ReversibleField fieldName="name" defaultValue={prefixRegistrationRequest.institutionDescription} handleChangeField={handleChangeField}>
+                      <textarea rows={5} />
+                    </ReversibleField>
                   </td>
                 </tr>
                 <tr>
                   <td className="w-25 pl-2 font-weight-bold">Home URL</td>
                   <td className="w-75">
-                    <div className="input-group input-group-sm">
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={prefixRegistrationSessionAmend.institutionHomeUrl}
-                      />
-                    </div>
+                    <ReversibleField fieldName="name" defaultValue={prefixRegistrationRequest.institutionHomeUrl} handleChangeField={handleChangeField}>
+                      <input type="text" />
+                    </ReversibleField>
                   </td>
                 </tr>
                 <tr>
                   <td className="w-25 pl-2 font-weight-bold">Location</td>
                   <td className="w-75">
-                    <div className="input-group input-group-sm">
+                    <ReversibleField fieldName="name" defaultValue={prefixRegistrationRequest.institutionLocation} handleChangeField={handleChangeField}>
                       <select
                         className="form-control"
                         value={prefixRegistrationSessionAmend.institutionLocation}
@@ -234,7 +211,7 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
                           )
                         }
                       </select>
-                    </div>
+                    </ReversibleField>
                   </td>
                 </tr>
               </tbody>
@@ -252,84 +229,64 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
                 <tr>
                   <td className="w-25 pl-2 font-weight-bold">Name</td>
                   <td className="w-75">
-                    <div className="input-group input-group-sm">
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={prefixRegistrationSessionAmend.providerName}
-                      />
-                    </div>
+                    <ReversibleField fieldName="name" defaultValue={prefixRegistrationRequest.providerName} handleChangeField={handleChangeField}>
+                      <input type="text" />
+                    </ReversibleField>
                   </td>
                 </tr>
                 <tr>
                   <td className="w-25 pl-2 font-weight-bold">description</td>
                   <td className="w-75">
-                    <div className="input-group input-group-sm">
-                      <textarea
-                        rows="5"
-                        className="form-control small"
-                        value={prefixRegistrationSessionAmend.providerDescription}
-                      />
-                    </div>
+                    <ReversibleField fieldName="name" defaultValue={prefixRegistrationRequest.providerDescription} handleChangeField={handleChangeField}>
+                      <textarea rows={5} />
+                    </ReversibleField>
                   </td>
                 </tr>
                 <tr>
                   <td className="w-25 pl-2 font-weight-bold">Home URL</td>
                   <td className="w-75">
-                    <div className="input-group input-group-sm">
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={prefixRegistrationSessionAmend.providerHomeUrl}
-                      />
-                    </div>
+                    <ReversibleField fieldName="name" defaultValue={prefixRegistrationRequest.providerHomeUrl} handleChangeField={handleChangeField}>
+                      <input type="text" />
+                    </ReversibleField>
                   </td>
                 </tr>
                 <tr>
                   <td className="w-25 pl-2 font-weight-bold">Provider code</td>
                   <td className="w-75">
-                    <div className="input-group input-group-sm">
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={prefixRegistrationSessionAmend.providerCode}
-                      />
-                    </div>
+                    <ReversibleField fieldName="name" defaultValue={prefixRegistrationRequest.providerCode} handleChangeField={handleChangeField}>
+                      <input type="text" />
+                    </ReversibleField>
                   </td>
                 </tr>
                 <tr>
                   <td className="w-25 pl-2 font-weight-bold">URL Pattern</td>
                   <td className="w-75">
-                    <div className="input-group input-group-sm">
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={prefixRegistrationSessionAmend.providerUrlPattern}
-                      />
-                    </div>
+                    <ReversibleField fieldName="name" defaultValue={prefixRegistrationRequest.providerUrlPattern} handleChangeField={handleChangeField}>
+                      <input type="text" />
+                    </ReversibleField>
                   </td>
                 </tr>
                 <tr>
                   <td className="w-25 pl-2 font-weight-bold">Location</td>
                   <td className="w-75">
-                    <div className="input-group input-group-sm">
+                    <ReversibleField fieldName="name" defaultValue={prefixRegistrationRequest.providerLocation} handleChangeField={handleChangeField}>
                       <select
                         className="form-control"
                         value={prefixRegistrationSessionAmend.providerLocation}
-                      >
+                        >
                         <option value="" disabled>Select location...</option>
                         {
                           locationList.map(location =>
                             <option
                               value={location.id}
                               key={`option-${location.id}`}
-                            >
+                              >
                               {location.label}
                             </option>
                           )
                         }
                       </select>
-                    </div>
+                    </ReversibleField>
                   </td>
                 </tr>
               </tbody>
@@ -348,25 +305,17 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
                 <tr>
                   <td className="w-25 pl-2 font-weight-bold">Full name</td>
                   <td className="w-75">
-                    <div className="input-group input-group-sm">
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={prefixRegistrationSessionAmend.requesterName}
-                      />
-                    </div>
+                    <ReversibleField fieldName="name" defaultValue={prefixRegistrationRequest.requesterName} handleChangeField={handleChangeField}>
+                      <input type="text" />
+                    </ReversibleField>
                   </td>
                 </tr>
                 <tr>
                   <td className="w-25 pl-2 font-weight-bold">Email</td>
                   <td className="w-75">
-                    <div className="input-group input-group-sm">
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={prefixRegistrationSessionAmend.requesterEmail}
-                      />
-                    </div>
+                    <ReversibleField fieldName="name" defaultValue={prefixRegistrationRequest.requesterEmail} handleChangeField={handleChangeField}>
+                      <input type="text" />
+                    </ReversibleField>
                   </td>
                 </tr>
               </tbody>
@@ -375,11 +324,21 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
         </div>
 
         <div className="row">
-          <div className="col mt-2">
+          <div className="col col-6 mt-2">
             <a
-              className="btn btn-warning btn-block"
+              className="btn btn-warning btn-block mr-1"
               href="#!"
-              onClick={handleAmend}
+              onClick={handleClickValidate}
+            >
+              <i className="icon icon-common icon-edit" /> Run validation
+            </a>
+          </div>
+
+          <div className="col col-6 mt-2">
+            <a
+              className="btn btn-warning btn-block ml-1"
+              href="#!"
+              onClick={handleClickAmend}
             >
               <i className="icon icon-common icon-edit" /> Confirm amend
             </a>
