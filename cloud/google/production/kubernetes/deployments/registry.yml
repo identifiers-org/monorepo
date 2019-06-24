@@ -20,6 +20,15 @@ spec:
                 app: registry
                 deployment: hq
         spec:
+            affinity:
+                nodeAffinity:
+                    requiredDuringSchedulingIgnoredDuringExecution:
+                        nodeSelectorTerms:
+                            - matchExpressions:
+                              - key: iorg-node-reliability
+                                operator: In
+                                values:
+                                - stable
             containers:
                 - name: cloud-hq-ws-registry
                   image: identifiersorg/cloud-hq-ws-registry:1.0.14
