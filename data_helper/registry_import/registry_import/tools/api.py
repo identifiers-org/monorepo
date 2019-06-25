@@ -25,6 +25,19 @@ def fetch_old_data(originURL):
 
     return namespaces
 
+
+def load_mirid(mir_id):
+    spinner = Halo(text=f'└─ Loading [MIR ID] "{mir_id}"', spinner='dots')
+    spinner.start()
+
+    response = requests.get(f'http://127.0.0.1:8181/mirIdApi/loadId/{mir_id}')
+
+    if (response.status_code == 200):
+        spinner.succeed(text=f'└─ Loading [MIR ID] "{mir_id}" → [OK]')
+    else:
+        spinner.fail(text=f'└─ Loading [MIR ID] "{mir_id}" → [ERROR]')
+
+
 # Load old data from a file.
 def load_old_data(data_file_name):
     spinner = Halo(text=f'Loading namespace data from {data_file_name}...', spinner='dots')

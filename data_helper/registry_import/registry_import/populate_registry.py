@@ -16,7 +16,7 @@ from data_fixer import (
     populate_locations
 )
 
-from tools import fetch_old_data, load_old_data, prepare_resource, do_post
+from tools import fetch_old_data, load_mirid, load_old_data, prepare_resource, do_post
 from tools import init_config, init_args, load_countries
 
 from classes import Institution, Location, Namespace, Provider, Requester
@@ -42,10 +42,10 @@ else:
     namespaces = load_old_data(args.datafile)
 
 
-if args.skiplocations is False:
-    # Gets country list.
-    countries = load_countries(os.path.join(dirname, '../data/ISO-3166.csv'))
+# Gets country list.
+countries = load_countries(os.path.join(dirname, '../data/ISO-3166.csv'))
 
+if args.skiplocations is False:
     # Populate country list.
     populate_locations(countries, destination_url)
 
@@ -70,6 +70,10 @@ if args.skipnamespaces is False:
                                         'findByPrefix',
                                         newNamespace.serialize(),
                                         destination_url)
+
+        # Mint id if parameter is set.
+        if args.mintidsfornamespaces is True:
+            load_mirid(namespace['id'])
 
         # Post providers for that namespace.
         for provider in namespace['resources']:

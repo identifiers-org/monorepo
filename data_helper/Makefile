@@ -30,6 +30,10 @@ import_registry:
 	@echo "<===|DEVOPS|===> [IMPORT] Importing HQ Registry Dataset"
 	@pipenv run registry_import/registry_import/populate_registry.py -f registry_import/data/identifiers.json
 
+import_registry_local:
+	@echo "<===|DEVOPS|===> [IMPORT] Importing HQ Registry Dataset"
+	@pipenv run registry_import/registry_import/populate_registry.py -f registry_import/data/identifiers.json -z
+
 clean_dev:
 	@echo "<===|DEVOPS|===> [CLEAN] Removing Python Virtual Environment"
 	@pipenv --rm
