@@ -29,6 +29,29 @@ spec:
                                 operator: In
                                 values:
                                 - stable
+                podAntiAffinity:
+                  preferredDuringSchedulingIgnoredDuringExecution:
+                    - weight: 50
+                      podAffinityTerm:
+                        labelSelector:
+                          matchExpressions:
+                          - key: environment
+                            operator: In
+                            values:
+                            - production
+                          - key: tier
+                            operator: In
+                            values:
+                            - api
+                          - key: app
+                            operator: In
+                            values:
+                            - registry
+                          - key: deployment
+                            operator: In
+                            values:
+                            - hq
+                        topologyKey: "kubernetes.io/hostname"
             containers:
                 - name: cloud-hq-ws-registry
                   image: identifiersorg/cloud-hq-ws-registry:1.0.14
