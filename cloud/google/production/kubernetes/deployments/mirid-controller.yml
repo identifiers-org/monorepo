@@ -30,28 +30,28 @@ spec:
                                 values:
                                 - stable
                 podAntiAffinity:
-                preferredDuringSchedulingIgnoredDuringExecution:
-                  - weight: 50
-                    podAffinityTerm:
-                      labelSelector:
-                        matchExpressions:
-                        - key: environment
-                          operator: In
-                          values:
-                          - production
-                        - key: tier
-                          operator: In
-                          values:
-                          - api
-                        - key: app
-                          operator: In
-                          values:
-                          - mirid-controller
-                        - key: deployment
-                          operator: In
-                          values:
-                          - hq
-                      topologyKey: "kubernetes.io/hostname"
+                  preferredDuringSchedulingIgnoredDuringExecution:
+                    - weight: 50
+                      podAffinityTerm:
+                        labelSelector:
+                          matchExpressions:
+                          - key: environment
+                            operator: In
+                            values:
+                            - production
+                          - key: tier
+                            operator: In
+                            values:
+                            - api
+                          - key: app
+                            operator: In
+                            values:
+                            - mirid-controller
+                          - key: deployment
+                            operator: In
+                            values:
+                            - hq
+                        topologyKey: "kubernetes.io/hostname"
             containers:
                 - name: cloud-hq-ws-mirid-controller
                   image: identifiersorg/cloud-hq-ws-mirid-controller:1.0.0
