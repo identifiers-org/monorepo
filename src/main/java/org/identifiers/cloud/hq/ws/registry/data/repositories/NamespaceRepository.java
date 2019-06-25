@@ -30,4 +30,6 @@ public interface NamespaceRepository extends JpaRepository<Namespace, Long> {
 
     Page<Namespace> findByPrefixContaining(String content, Pageable pageable);
 
+    Namespace findByMirId(String mirId);
+
 }
