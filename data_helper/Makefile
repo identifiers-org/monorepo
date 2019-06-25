@@ -31,7 +31,7 @@ import_registry:
 	@pipenv run registry_import/registry_import/populate_registry.py -f registry_import/data/identifiers.json
 
 import_registry_local:
-	@echo "<===|DEVOPS|===> [IMPORT] Importing HQ Registry Dataset"
+	@echo "<===|DEVOPS|===> [IMPORT] Importing HQ Registry Dataset with MIR ID loading"
 	@pipenv run registry_import/registry_import/populate_registry.py -f registry_import/data/identifiers.json -z
 
 clean_dev:
