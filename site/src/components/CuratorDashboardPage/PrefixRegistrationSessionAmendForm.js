@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import { Collapse } from 'reactstrap';
 
 import { prefixRegistrationRequestAmend } from '../../actions/PrefixRegistrationSession';
-
 import { setPrefixRegistrationSessionAmendField } from '../../actions/PrefixRegistrationSessionAmend';
+
 import ReversibleField from '../common/ReversibleField';
-import PrefixRegistrationSessionRequestDetails from './PrefixRegistrationSessionRequest';
+
+import { successToast, infoToast, swalError, swalSuccess } from '../../utils/swalDialogs';
 
 
 class PrefixRegistrationSessionAmendForm extends React.Component {
@@ -41,11 +42,32 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
 
 
   handleClickAmend = async () => {
-    console.log('AMEND!');
+    const { id, handleFormSubmit, prefixRegistrationRequestAmend, prefixRegistrationSessionAmend } = this.props;
+
+    const response = await prefixRegistrationRequestAmend(id, prefixRegistrationSessionAmend);
+
+    if (response.status === 200) {
+      await swalSuccess.fire({
+        title: 'Prefix Registration Request amended succesfully'
+      });
+
+      handleFormSubmit();
+    } else {
+      await swalError.fire({
+        title: 'Error',
+        text: 'Could not amend Prefix Registration Request'
+      });
+    }
   }
 
   handleClickValidate = async () => {
-    console.log('VALIDATE');
+    const fieldsToValidate = [...this.state.fieldsChanged];
+
+    if (fieldsToValidate.length === 0) {
+      infoToast('No fields have changed');
+    }
+
+
   }
 
 
@@ -383,8 +405,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   prefixRegistrationRequestAmend: (id, prefixRegistrationRequest, additionalInformation) =>
     dispatch(prefixRegistrationRequestAmend(id, prefixRegistrationRequest, additionalInformation)),
+
   setPrefixRegistrationSessionAmendField: (field, value) =>
-    dispatch(setPrefixRegistrationSessionAmendField(field, value))
+    dispatch(setPrefixRegistrationSessionAmendField(field, value)),
 });
 
 export default connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationSessionAmendForm);

@@ -115,7 +115,6 @@ export const prefixRegistrationRequestReject = (id, reason) => {
 // Comment prefixRegistrationRequest.
 export const prefixRegistrationRequestComment = (id, comment) => {
   return async () => {
-    console.log('config', config);
     const requestUrl = `${config.registryApi}/${config.prefixRegistrationEndpoint}/commentPrefixRegistrationRequest/${id}`;
     const init = {
       method: 'POST',
@@ -124,7 +123,7 @@ export const prefixRegistrationRequestComment = (id, comment) => {
         apiVersion: config.apiVersion,
         payload: {
           additionalInformation: 'Source: curation web interface',
-          comment,
+          comment
         }
       })
     };
@@ -134,7 +133,30 @@ export const prefixRegistrationRequestComment = (id, comment) => {
 };
 
 
-// Comment prefixRegistrationRequest.
+// Amend prefixRegistrationRequest.
 export const prefixRegistrationRequestAmend = (id, prefixRegistrationRequest, additionalInformation) => {
-  console.log('AMEND', id, prefixRegistrationRequest, additionalInformation);
+  return async () => {
+    const requestUrl = `${config.registryApi}/${config.prefixRegistrationEndpoint}/amendPrefixRegistrationRequest/${id}`;
+
+    // Supporting references must be an array to talk to the API. It is split here by commas. It is not ideal, but will stay like this
+    // until we find a better solution.
+    prefixRegistrationRequest.supportingReferences = prefixRegistrationRequest.supportingReferences.split(',');
+
+    // Also, requester data must be inside a subobject.
+    prefixRegistrationRequest['requester'] = {name: prefixRegistrationRequest.requesterName, email: prefixRegistrationRequest.requesterEmail};
+
+    const init = {
+      method: 'POST',
+      headers: {'content-type': 'application/json'},
+      body: JSON.stringify({
+        apiVersion: config.apiVersion,
+        payload: {
+          additionalInformation: additionalInformation || 'Source: curation web interface',
+          prefixRegistrationRequest
+        }
+      })
+    };
+
+    return await fetch(requestUrl, init);
+  }
 };

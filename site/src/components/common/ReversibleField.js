@@ -19,7 +19,7 @@ class ReversibleField extends React.Component {
 
   handleChangeField = (newValue) => {
     const { handleChangeField, fieldName } = this.props;
-    const value = newValue ? newValue : this.state.defaultValue;
+    const value = typeof newValue !== 'undefined' ? newValue : this.state.defaultValue;
 
     this.setState({value});
     handleChangeField(fieldName, value);
