@@ -55,3 +55,17 @@ export const swalBannerMobile = Swal.mixin({
   buttonsStyling: false,
   confirmButtonText: 'Dismiss'
 });
+
+const toast = (type, title, html, position, timer) => Swal.mixin({
+  type,
+  title,
+  html,
+  toast: true,
+  position,
+  showConfirmButton: false,
+  timer: timer || 3000
+}).fire();
+
+export const successToast = (title, html, timer) => toast('success', title, html, 'top-end', timer);
+export const failureToast = (title, html, timer) => toast('error', title, html, 'top-end', timer);
+export const infoToast = (title, html, timer) => toast('info', title, html, 'top-end', timer);
