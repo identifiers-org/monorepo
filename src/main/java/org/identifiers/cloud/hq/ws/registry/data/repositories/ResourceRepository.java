@@ -20,4 +20,6 @@ public interface ResourceRepository extends JpaRepository<Resource, Long> {
     List<Resource> findByNamespaceIdAndProviderCode(long namespaceId, String providerCode);
 
     List<Resource> findByProviderCode(String providerCode);
+
+    Resource findByMirId(String mirId);
 }
