@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
 public class RegistryNamespaceResolver implements ResolutionService {
     @Value("${org.identifiers.cloud.ws.resolver.registry.namespace.base.url.namespace.placeholder}")
     private String registryUrlPlaceholder;
-    @Value("${org.identifiers.cloud.ws.resolver.registry.namespace.base.url.namespace.placeholder}")
+    @Value("${org.identifiers.cloud.ws.resolver.registry.namespace.base.url}")
     private String registryUrlPattern;
 
     @Override
@@ -38,7 +38,7 @@ public class RegistryNamespaceResolver implements ResolutionService {
                 && (parsedCompactIdentifier.getProviderCode() == null)) {
             // Resolve just the namespace
             // TODO Refactor out all this strings, maybe into configuration
-            Location ukLocation = new Location().setCountryCode("GB").setCountryName("Great Britain");
+            Location ukLocation = new Location().setCountryCode("GB").setCountryName("United Kingdom");
             result.getResolvedResources()
                     .add(
                             new ResolvedResource()
@@ -54,7 +54,7 @@ public class RegistryNamespaceResolver implements ResolutionService {
                                     .setOfficial(true)
                                     .setResourceHomeUrl("https://registry.identifiers.org")
                                     .setRecommendation(new Recommendation().setRecommendationIndex(100).setRecommendationExplanation("Namespace resolution to identifiers.org Central Registry"))
-                                    .setCompactIdentifierResolvedUrl(registryUrlPattern.replaceFirst(registryUrlPlaceholder, parsedCompactIdentifier.getNamespace())));
+                                    .setCompactIdentifierResolvedUrl(registryUrlPattern.replace(registryUrlPlaceholder, parsedCompactIdentifier.getNamespace())));
             result.setResolved(true);
             log.info(String.format("Resolution request '%s' DID RESOLVED as a namespace request", parsedCompactIdentifier.getRawRequest()));
         } else {

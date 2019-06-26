@@ -50,9 +50,9 @@ public class CompactIdParsingHelper {
     public ParsedCompactIdentifier parseCompactIdRequest(String rawCompactIdentifier) {
         ParsedCompactIdentifier parsedCompactIdentifier = new ParsedCompactIdentifier().setRawRequest(rawCompactIdentifier);
         // Check if we got just a namespace
-        if (namespaceRespository.findByPrefix(rawCompactIdentifier) != null) {
+        if (namespaceRespository.findByPrefix(rawCompactIdentifier.toLowerCase()) != null) {
             // It's just a namespace, the whole thing
-            parsedCompactIdentifier.setNamespace(rawCompactIdentifier);
+            parsedCompactIdentifier.setNamespace(rawCompactIdentifier.toLowerCase());
             return parsedCompactIdentifier;
         }
         // Look for the first '/'
