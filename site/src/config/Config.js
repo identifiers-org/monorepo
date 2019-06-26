@@ -13,6 +13,9 @@ export const config = {
   suggestionListSize: 10,
   suggestionQuerySize: 25,
 
+  // Show beta banner:
+  showBetaBanner: false,
+
   // We don't predict resources in suggestions box for now.
   enableResourcePrediction: false,
 
