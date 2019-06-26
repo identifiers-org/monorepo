@@ -25,10 +25,30 @@ import org.springframework.stereotype.Component;
 @Qualifier("RegistryNamespaceResolver")
 @Slf4j
 public class RegistryNamespaceResolver implements ResolutionService {
-    @Value("${org.identifiers.cloud.ws.resolver.registry.namespace.base.url.namespace.placeholder}")
+    @Value("${org.identifiers.cloud.ws.resolver.namespaceresolver.registry.namespace.base.url.placeholder}")
     private String registryUrlPlaceholder;
-    @Value("${org.identifiers.cloud.ws.resolver.registry.namespace.base.url}")
+    @Value("${org.identifiers.cloud.ws.resolver.namespaceresolver.registry.namespace.base.url}")
     private String registryUrlPattern;
+    @Value("${org.identifiers.cloud.ws.resolver.namespaceresolver.providercode}")
+    private String providerCode;
+    @Value("${org.identifiers.cloud.ws.resolver.namespaceresolver.resource.home.url}")
+    private String resourceHomeUrl;
+    @Value("${org.identifiers.cloud.ws.resolver.namespaceresolver.resource.description}")
+    private String resourceDescription;
+    @Value("${org.identifiers.cloud.ws.resolver.namespaceresolver.location.country.code}")
+    private String locationCountryCode;
+    @Value("${org.identifiers.cloud.ws.resolver.namespaceresolver.location.country.name}")
+    private String locationCountryName;
+    @Value("${org.identifiers.cloud.ws.resolver.namespaceresolver.institution.home.url}")
+    private String institutionHomeUrl;
+    @Value("${org.identifiers.cloud.ws.resolver.namespaceresolver.institution.description}")
+    private String institutionDescription;
+    @Value("${org.identifiers.cloud.ws.resolver.namespaceresolver.institution.name}")
+    private String institutionName;
+    @Value("${org.identifiers.cloud.ws.resolver.namespaceresolver.recommendation.explanation}")
+    private String recommendationExplanation;
+
+
 
     @Override
     public ResolutionServiceResult resolve(ParsedCompactIdentifier parsedCompactIdentifier) {
@@ -38,22 +58,22 @@ public class RegistryNamespaceResolver implements ResolutionService {
                 && (parsedCompactIdentifier.getProviderCode() == null)) {
             // Resolve just the namespace
             // TODO Refactor out all this strings, maybe into configuration
-            Location ukLocation = new Location().setCountryCode("GB").setCountryName("United Kingdom");
+            Location ukLocation = new Location().setCountryCode(locationCountryCode).setCountryName(locationCountryName);
             result.getResolvedResources()
                     .add(
                             new ResolvedResource()
-                                    .setProviderCode("ebi")
-                                    .setDescription("Namespace resolution to identifiers.org Central Registry")
+                                    .setProviderCode(providerCode)
+                                    .setDescription(resourceDescription)
                                     .setInstitution(
                                             new Institution()
-                                                    .setHomeUrl("https://www.ebi.ac.uk/")
-                                                    .setDescription("Identifiers.org Central Registry")
+                                                    .setHomeUrl(institutionHomeUrl)
+                                                    .setDescription(institutionDescription)
                                                     .setLocation(ukLocation)
-                                                    .setName("EMBL-EBI"))
+                                                    .setName(institutionName))
                                     .setLocation(ukLocation)
                                     .setOfficial(true)
-                                    .setResourceHomeUrl("https://registry.identifiers.org")
-                                    .setRecommendation(new Recommendation().setRecommendationIndex(100).setRecommendationExplanation("Namespace resolution to identifiers.org Central Registry"))
+                                    .setResourceHomeUrl(resourceHomeUrl)
+                                    .setRecommendation(new Recommendation().setRecommendationIndex(100).setRecommendationExplanation(recommendationExplanation))
                                     .setCompactIdentifierResolvedUrl(registryUrlPattern.replace(registryUrlPlaceholder, parsedCompactIdentifier.getNamespace())));
             result.setResolved(true);
             log.info(String.format("Resolution request '%s' DID RESOLVED as a namespace request", parsedCompactIdentifier.getRawRequest()));
