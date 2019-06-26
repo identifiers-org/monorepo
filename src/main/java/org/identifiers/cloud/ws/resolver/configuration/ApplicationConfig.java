@@ -35,6 +35,7 @@ public class ApplicationConfig {
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
+        log.info(String.format("Using Redis on host '%s' port '%d'", redisHost, redisPort));
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(redisHost,
                 redisPort);
         return new JedisConnectionFactory(redisStandaloneConfiguration);    }
