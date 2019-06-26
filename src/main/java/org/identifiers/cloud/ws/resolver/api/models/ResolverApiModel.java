@@ -4,17 +4,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.ws.resolver.api.ApiCentral;
 import org.identifiers.cloud.ws.resolver.api.responses.ResponseResolvePayload;
 import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponseResolve;
-import org.identifiers.cloud.ws.resolver.data.models.Namespace;
-import org.identifiers.cloud.ws.resolver.data.models.Resource;
-import org.identifiers.cloud.ws.resolver.models.*;
+import org.identifiers.cloud.ws.resolver.models.CompactId;
+import org.identifiers.cloud.ws.resolver.models.CompactIdException;
+import org.identifiers.cloud.ws.resolver.models.CompactIdParsingHelper;
+import org.identifiers.cloud.ws.resolver.models.ParsedCompactIdentifier;
+import org.identifiers.cloud.ws.resolver.services.ResolutionService;
+import org.identifiers.cloud.ws.resolver.services.ResolutionServiceResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -31,6 +32,8 @@ public class ResolverApiModel {
     // External Helpers
     @Autowired
     private CompactIdParsingHelper compactIdParsingHelper;
+    @Autowired
+    private ResolutionService resolutionService;
 
     // Helpers
     private ServiceResponseResolve createDefaultResponse() {
@@ -53,72 +56,25 @@ public class ResolverApiModel {
     // END - Helpers
 
     // --- Resolution API ---
-
     public ServiceResponseResolve resolveRawCompactId(String rawCompactId) {
         // This is the only entry method right now
         ServiceResponseResolve response = createDefaultResponse();
         ParsedCompactIdentifier parsedCompactIdentifier = compactIdParsingHelper.parseCompactIdRequest(rawCompactId);
-        // TODO Place to find out whether it is just a namespace and we should redirect to the Central Registry
-        if ((parsedCompactIdentifier.getNamespace() != null)
-                && (parsedCompactIdentifier.getLocalId() == null)
-                && (parsedCompactIdentifier.getProviderCode() == null)) {
-            // TODO Resolve just the namespace
-        }
-        // This if we need to look into the registry
-        if ((parsedCompactIdentifier.getLocalId() != null && (parsedCompactIdentifier.getNamespace() != null))) {
-            // Verify compact identifier
-            verifyCompactIdentifier(parsedCompactIdentifier.getNamespace(), parsedCompactIdentifier.getLocalId(), response);
-            if (!response.getHttpStatus().is2xxSuccessful()) {
-                return response;
-            }
-            // Get the resources
-            List<Resource> resources = resolverDataFetcher.findResourcesByPrefix(parsedCompactIdentifier.getNamespace());
-            log.info(String.format("CompactId '%s', with prefix '%s' got #%d resources back from the data backend",
-                    parsedCompactIdentifier.getRawRequest(), parsedCompactIdentifier.getNamespace(), resources.size()));
-            // Have we found any resources?
-            if (resources.isEmpty()) {
-                // If no providers, produce error response
+        ResolutionServiceResult resolutionServiceResult = resolutionService.resolve(parsedCompactIdentifier);
+        if (resolutionServiceResult.isResolved()) {
+            if (resolutionServiceResult.getResolvedResources().isEmpty()) {
+                // Resolved but there are no resources
+                response.setErrorMessage(resolutionServiceResult.getErrorMessage());
                 response.setHttpStatus(HttpStatus.NOT_FOUND);
-                response.setErrorMessage(String.format("No providers found for Compact ID '%s'", parsedCompactIdentifier.getRawRequest()));
-                return response;
+            } else {
+                // Resolved with resources
+                response.getPayload().setResolvedResources(resolutionServiceResult.getResolvedResources());
             }
-            // Check for provider
-            if (parsedCompactIdentifier.getProviderCode() != null) {
-                // Look for the one with the given provider code
-                List<Resource> filteredResources = resources.stream()
-                        .filter(resource -> {
-                            if (resource.getProviderCode() != null) {
-                                return resource.getProviderCode().equals(parsedCompactIdentifier.getProviderCode());
-                            }
-                            return false;
-                        })
-                        .collect(Collectors.toList());
-                log.info(String.format("CompactId '%s', with prefix '%s' got #%d resources with provider code '%s'",
-                        parsedCompactIdentifier.getRawRequest(),
-                        parsedCompactIdentifier.getNamespace(),
-                        filteredResources.size(),
-                        parsedCompactIdentifier.getProviderCode()));
-                if (filteredResources.isEmpty()) {
-                    String errorMessage = String.format("For Compact ID '%s', prefix '%s', " +
-                            "NO RESOURCES FOUND with PROVIDER CODE '%s'",
-                            parsedCompactIdentifier.getRawRequest(),
-                            parsedCompactIdentifier.getNamespace(),
-                            parsedCompactIdentifier.getProviderCode());
-                    response.setHttpStatus(HttpStatus.NOT_FOUND);
-                    response.setErrorMessage(errorMessage);
-                    log.error(errorMessage);
-                    return response;
-                }
-                // Resolve the selected resources
-                response.getPayload().setResolvedResources(resolverDataHelper.resolveResourcesForCompactId(parsedCompactIdentifier, filteredResources));
-                return response;
-            }
-            // Resolve all the resources
-            response.getPayload().setResolvedResources(resolverDataHelper.resolveResourcesForCompactId(parsedCompactIdentifier, resources));
+            // Return response from resolver
             return response;
         }
-        // Default response
-        String errorMessage = String.format("INVALID Compact Identifier resolution request for '%s'", rawCompactId);
+        // Default error response
+        String errorMessage = String.format("INVALID resolution request for '%s', due to '%s'", rawCompactId, resolutionServiceResult.getErrorMessage());
         response.setHttpStatus(HttpStatus.BAD_REQUEST);
         response.setErrorMessage(errorMessage);
         return response;

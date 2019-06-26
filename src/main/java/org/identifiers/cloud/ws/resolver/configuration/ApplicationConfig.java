@@ -4,6 +4,9 @@ import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcer;
 import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcerFromWs;
 import org.identifiers.cloud.ws.resolver.models.ResolverDataFetcher;
 import org.identifiers.cloud.ws.resolver.models.ResolverDataFetcherFromDataBackend;
+import org.identifiers.cloud.ws.resolver.services.ResolutionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +31,10 @@ public class ApplicationConfig {
 
     @Value("${spring.redis.host}")
     private String redisHost;
+
+    @Autowired
+    @Qualifier("ResolveFirstResolutionStrategy")
+    private ResolutionService selectedResolutionService;
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
@@ -54,4 +61,8 @@ public class ApplicationConfig {
         return new ResolverDataFetcherFromDataBackend();
     }
 
+    @Bean
+    public ResolutionService resolutionService() {
+        return selectedResolutionService;
+    }
 }

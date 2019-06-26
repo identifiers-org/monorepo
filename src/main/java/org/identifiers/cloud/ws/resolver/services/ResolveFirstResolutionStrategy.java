@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.resolver.services;
 
 import org.identifiers.cloud.ws.resolver.models.ParsedCompactIdentifier;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.List;
  * sending back the results.
  */
 @Component
+@Qualifier("ResolveFirstResolutionStrategy")
 public class ResolveFirstResolutionStrategy extends MultiResolverStrategy {
     @Override
     public ResolutionServiceResult resolve(ParsedCompactIdentifier parsedCompactIdentifier) {
