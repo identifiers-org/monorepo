@@ -1,12 +1,12 @@
 package org.identifiers.cloud.ws.resolver.configuration;
 
+import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcer;
 import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcerFromWs;
 import org.identifiers.cloud.ws.resolver.models.ResolverDataFetcher;
 import org.identifiers.cloud.ws.resolver.models.ResolverDataFetcherFromDataBackend;
 import org.identifiers.cloud.ws.resolver.services.ResolutionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.identifiers.cloud.ws.resolver.services.ResolveFirstResolutionStrategy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,16 +25,13 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
  */
 @Configuration
 @EnableRedisRepositories
+@Slf4j
 public class ApplicationConfig {
     @Value("${spring.redis.port}")
     private int redisPort;
 
     @Value("${spring.redis.host}")
     private String redisHost;
-
-    @Autowired
-    @Qualifier("ResolveFirstResolutionStrategy")
-    private ResolutionService selectedResolutionService;
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
@@ -63,6 +60,7 @@ public class ApplicationConfig {
 
     @Bean
     public ResolutionService resolutionService() {
-        return selectedResolutionService;
+        log.info("[CONFIG] Resolution Strategy - Resolve First");
+        return new ResolveFirstResolutionStrategy();
     }
 }

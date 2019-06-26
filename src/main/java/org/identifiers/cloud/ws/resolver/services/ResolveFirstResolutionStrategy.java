@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.resolver.services;
 
 import org.identifiers.cloud.ws.resolver.models.ParsedCompactIdentifier;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -21,12 +22,15 @@ import java.util.List;
  */
 @Component
 @Qualifier("ResolveFirstResolutionStrategy")
-public class ResolveFirstResolutionStrategy extends MultiResolverStrategy {
+public class ResolveFirstResolutionStrategy implements ResolutionService {
+    @Autowired
+    private MultiResolverBuilder builder;
+
     @Override
     public ResolutionServiceResult resolve(ParsedCompactIdentifier parsedCompactIdentifier) {
         List<String> errors = new ArrayList<>();
         for (ResolutionService resolutionService:
-             getResolverChain()) {
+             builder.getResolverChain()) {
             ResolutionServiceResult resolutionServiceResult = resolutionService.resolve(parsedCompactIdentifier);
             if (resolutionServiceResult.isResolved()) {
                 return resolutionServiceResult;

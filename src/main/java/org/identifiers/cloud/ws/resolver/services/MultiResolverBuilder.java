@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.resolver.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +17,8 @@ import java.util.List;
  *
  * This is the common base class for resolution services that are based on composing resolutions from other resolvers.
  */
-public abstract class MultiResolverStrategy implements ResolutionService {
+@Component
+public class MultiResolverBuilder {
     @Autowired
     @Qualifier("RegistryNamespaceResolver")
     private ResolutionService registryNamespaceResolver;
