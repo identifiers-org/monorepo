@@ -44,8 +44,6 @@ class ReversibleField extends React.Component {
       onChange: (e) => handleChangeField(fieldChild.props.type === 'checkbox' ? e.target.checked : e.target.value)
     });
 
-
-    // TODO: COMPOSITE COMPONENT - APPLY PROPS TO CHILD INPUT / TEXTAREA OR SELECT.
     return (
       <div className={`input-group input-group-sm${isCheckbox ? ' justify-content-between' : ''}`}>
         {preparedFieldChild}
