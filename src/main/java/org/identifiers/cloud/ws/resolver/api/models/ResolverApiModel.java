@@ -83,7 +83,12 @@ public class ResolverApiModel {
         // This is the only entry method right now
         ServiceResponseResolve response = createDefaultResponse();
         ParsedCompactIdentifier parsedCompactIdentifier = compactIdParsingHelper.parseCompactIdRequest(rawCompactId);
-        // TODO Place to find out whether is just a namespace and we should redirect to the Central Registry
+        // TODO Place to find out whether it is just a namespace and we should redirect to the Central Registry
+        if ((parsedCompactIdentifier.getNamespace() != null)
+                && (parsedCompactIdentifier.getLocalId() == null)
+                && (parsedCompactIdentifier.getProviderCode() == null)) {
+            // TODO Resolve just the namespace
+        }
         if ((parsedCompactIdentifier.getLocalId() != null && (parsedCompactIdentifier.getNamespace() != null))) {
             // Verify compact identifier
             verifyCompactIdentifier(parsedCompactIdentifier.getNamespace(), parsedCompactIdentifier.getLocalId(), response);

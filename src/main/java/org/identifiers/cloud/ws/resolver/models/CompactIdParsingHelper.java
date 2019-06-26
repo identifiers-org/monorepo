@@ -49,6 +49,12 @@ public class CompactIdParsingHelper {
 
     public ParsedCompactIdentifier parseCompactIdRequest(String rawCompactIdentifier) {
         ParsedCompactIdentifier parsedCompactIdentifier = new ParsedCompactIdentifier().setRawRequest(rawCompactIdentifier);
+        // Check if we got just a namespace
+        if (namespaceRespository.findByPrefix(rawCompactIdentifier) != null) {
+            // It's just a namespace, the whole thing
+            parsedCompactIdentifier.setNamespace(rawCompactIdentifier);
+            return parsedCompactIdentifier;
+        }
         // Look for the first '/'
         if (rawCompactIdentifier.contains("/")) {
             // Possible provider code
