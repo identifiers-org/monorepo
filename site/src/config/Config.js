@@ -11,6 +11,8 @@ export const config = {
 
   oldIdentifiersUrl: 'https://ebi.identifiers.org',
 
+  showBetaBanner: false,
+
   suggestionListSize: 10,
 
   baseUrl: window.location.protocol + '//' + window.location.hostname + ':' + location.port + '/',
