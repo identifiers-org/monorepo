@@ -60,7 +60,7 @@ public class RegistryNamespaceResolver implements ResolutionService {
         } else {
             String errorMessage = String.format("Resolution request '%s' is NOT ABOUT A NAMESPACE", parsedCompactIdentifier.getRawRequest());
             log.error(errorMessage);
-            result.setErrorMessage(errorMessage)
+            result.setErrorMessage(errorMessage);
         }
         return result;
     }
