@@ -3,12 +3,16 @@ import { connect } from 'react-redux';
 
 import { Collapse } from 'reactstrap';
 
+// Actions.
 import { prefixRegistrationRequestAmend } from '../../actions/PrefixRegistrationSession';
 import { setPrefixRegistrationSessionAmendField } from '../../actions/PrefixRegistrationSessionAmend';
 
+// Components.
 import ReversibleField from '../common/ReversibleField';
 
-import { successToast, infoToast, swalError, swalSuccess } from '../../utils/swalDialogs';
+// Utils.
+import { successToast, infoToast, swalError, swalSuccess, failureToast } from '../../utils/swalDialogs';
+import validators from '../../utils/validators';
 
 
 class PrefixRegistrationSessionAmendForm extends React.Component {
@@ -16,26 +20,6 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
     super(props);
 
     this.state = {
-      name: this.props.prefixRegistrationSessionAmend.name,
-      description: this.props.prefixRegistrationSessionAmend.description,
-      requestedPrefix: this.props.prefixRegistrationSessionAmend.requestedPrefix,
-      sampleId: this.props.prefixRegistrationSessionAmend.sampleId,
-      idRegexPattern: this.props.prefixRegistrationSessionAmend.idRegexPattern,
-      supportingReferences: this.props.prefixRegistrationSessionAmend.supportingReferences,
-      additionalInformation: this.props.prefixRegistrationSessionAmend.additionalInformation,
-      institutionName: this.props.prefixRegistrationSessionAmend.institutionName,
-      institutionDescription: this.props.prefixRegistrationSessionAmend.institutionDescription,
-      institutionHomeUrl: this.props.prefixRegistrationSessionAmend.institutionHomeUrl,
-      institutionLocation: this.props.prefixRegistrationSessionAmend.institutionLocation,
-      namespaceEmbeddedInLui: this.props.prefixRegistrationSessionAmend.namespaceEmbeddedInLui,
-      providerName: this.props.prefixRegistrationSessionAmend.providerName,
-      providerDescription: this.props.prefixRegistrationSessionAmend.providerDescription,
-      providerHomeUrl: this.props.prefixRegistrationSessionAmend.providerHomeUrl,
-      providerCode: this.props.prefixRegistrationSessionAmend.providerCode,
-      providerUrlPattern: this.props.prefixRegistrationSessionAmend.providerUrlPattern,
-      providerLocation: this.props.prefixRegistrationSessionAmend.providerLocation,
-      requesterName: this.props.prefixRegistrationSessionAmend.requesterName,
-      requesterEmail: this.props.prefixRegistrationSessionAmend.requesterEmail,
       fieldsChanged: new Set()
     }
   }
@@ -61,13 +45,28 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
   }
 
   handleClickValidate = async () => {
+    const { prefixRegistrationSessionAmend } = this.props;
     const fieldsToValidate = [...this.state.fieldsChanged];
 
     if (fieldsToValidate.length === 0) {
       infoToast('No fields have changed');
+      return;
     }
 
+    // TODO: This has to be refactored to merge with the request prefix form. Take validators to a global place and use
+    // them everywhere.
+    const validations = await Promise.all(fieldsToValidate
+      .map(field => validators[field](prefixRegistrationSessionAmend[field], prefixRegistrationSessionAmend))
+    );
+    const toastMessage = validations
+      .filter(validations => !validations.valid)
+      .map(validations => validations.errorMessage).join('\n');
 
+    if (toastMessage !== '') {
+      failureToast(toastMessage, undefined, 10000);
+    } else {
+      successToast('All fields OK!');
+    }
   }
 
 
@@ -86,7 +85,8 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
 
     setPrefixRegistrationSessionAmendField(field, value);
 
-    // Highlight the field if it is different than the original request in the session.
+    // Add/remove field to changed list if modified/reset, so it is validated or not when clicked on the perform
+    // validation button.
     if (prefixRegistrationRequest[field] !== value) {
       this.setState(prevState => ({fieldsChanged: prevState.fieldsChanged.add(field)}));
     } else {
@@ -120,7 +120,7 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
           </div>
         </div>
 
-        {/* ======================================== TABLE FORM FOR REGISTRATION AMEND ======================================== */}
+        {/* ================================== TABLE FORM FOR REGISTRATION AMEND  ================================== */}
         <div className="row no-gutters align-items-center bg-light rounded p-2 mb-1">
           <div className="col col-sm-4 col-lg-3 col-xl-2">
             <p><i className="icon icon-common icon-leaf" /> <strong>Prefix details</strong></p>
@@ -384,7 +384,7 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
           </div>
         </div>
 
-        {/* ======================================== TABLE FORM FOR REGISTRATION AMEND ======================================== */}
+        {/* ================================   TABLE FORM FOR REGISTRATION AMEND  ================================== */}
 
       </Collapse>
     );

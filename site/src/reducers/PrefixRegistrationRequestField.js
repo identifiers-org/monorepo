@@ -1,44 +1,52 @@
-// PrefixRequestField reducer
+// PrefixRegistrationRequest reducer.
+/* TODO: This has to be used by the prefix registration request form,
+ * for validation and UI state purposes. A refactor of the whole form
+ * is needed. Will do when we have spare time (TM).
+ */
 
 const defaultState = {
-  value: '',
-  valid: undefined,
-  requestedValidate: false,
+  label: '',
   shouldValidate: true,
-  label: ''
+  requestedValidate: false,
+  value: '',
+  valid: undefined
 };
 
 
-const prefixRequestFieldReducer = (id) => (state = defaultState, action) => {
+const prefixRegistrationRequestFieldReducer = (prefixRegistrationRequestField) => (state = defaultState, action) => {
   switch (action.type) {
-  case `${id}/SET_VALUE`:
+  case `${prefixRegistrationRequestField}/SET_PREFIXREGISTRATIONFIELDFIELD`:
+    return { ...state, [action.field]: action.value }
+
+  // TODO: Phase these out and use the generic setter.
+  case `${prefixRegistrationRequestField}/SET_VALUE`:
     return { ...state, value: action.value };
 
-  case `${id}/SET_VALIDITY`:
+  case `${prefixRegistrationRequestField}/SET_VALIDITY`:
     return { ...state, valid: action.validity };
 
-  case `${id}/SET_ERRORMESSAGE`:
+  case `${prefixRegistrationRequestField}/SET_ERRORMESSAGE`:
     return { ...state, errorMessage: action.errorMessage };
 
-  case `${id}/VALIDATE`:
+  case `${prefixRegistrationRequestField}/VALIDATE`:
     return { ...state, requestedValidate: true };
 
-  case `${id}/VALIDATION_DONE`:
+  case `${prefixRegistrationRequestField}/VALIDATION_DONE`:
     return { ...state, requestedValidate: false};
 
-  case `${id}/SET_VALIDATION`:
+  case `${prefixRegistrationRequestField}/SET_VALIDATION`:
     return { ...state, shouldValidate: action.validation, valid: undefined };
 
-  case `${id}/SET_LABEL`:
+  case `${prefixRegistrationRequestField}/SET_LABEL`:
     return { ...state, label: action.label };
-  
-  case `${id}/RESET`:
+
+  case `${prefixRegistrationRequestField}/RESET`:
     return { ...state, value: '', valid: undefined, requestValidate: false, shouldValidate: true };
-    
+
   default:
     return state;
   }
 }
 
 
-export default prefixRequestFieldReducer;
+export default prefixRegistrationRequestFieldReducer;

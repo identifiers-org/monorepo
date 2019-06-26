@@ -9,6 +9,13 @@ import { requestValidation, setValidation, setValue, reset } from '../../actions
 import PageTitle from '../common/PageTitle';
 
 
+/* TODO: This class has to be completely refactored.
+ *
+ *  - Use validation logic implemented in prefix registration request field reducer
+ *    ( Take care about validation requirements ).
+ *  - Take UI state to that reducer.
+ *  - Streamline and reduce size if possible.
+ */
 class PrefixRegistrationRequestPage extends React.Component  {
   constructor(props) {
     super(props);

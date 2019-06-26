@@ -3,7 +3,15 @@
 //
 
 
-// Redux store update for prefix request field.
+// Redux store update for prefix registration request field.
+export const setPrefixRegistrationRequestFieldField = (id, field, value) => ({
+  type: `${id}/SET_PREFIXREGISTRATIONREQUESTFIELDFIELD`,
+  field,
+  value
+});
+
+
+// TODO: Phase these out once unused (see reducer).
 export const setValue = (id, value) => {
   return {
     type: `${id}/SET_VALUE`,
