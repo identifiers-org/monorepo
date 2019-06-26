@@ -30,10 +30,6 @@ import java.util.stream.Collectors;
 public class ResolverApiModel {
     // External Helpers
     @Autowired
-    private ResolverDataFetcher resolverDataFetcher;
-    @Autowired
-    private ResolverDataHelper resolverDataHelper;
-    @Autowired
     private CompactIdParsingHelper compactIdParsingHelper;
 
     // Helpers
@@ -44,6 +40,7 @@ public class ResolverApiModel {
                 .setPayload(new ResponseResolvePayload().setResolvedResources(new ArrayList<>()));
     }
 
+    @Deprecated
     private CompactId getCompactIdentifier(String compactId, ServiceResponseResolve response) {
         try {
             return new CompactId(compactId);
@@ -53,28 +50,6 @@ public class ResolverApiModel {
         }
         return null;
     }
-
-    private void verifyCompactIdentifier(String namespace, String localId, ServiceResponseResolve response) {
-        // TODO
-        Namespace registryNamespace = resolverDataFetcher.findNamespaceByPrefix(namespace);
-        if (registryNamespace == null) {
-            String errorMessage = String.format("UNKNOWN namespace '%s' when verifying local ID '%s'", namespace,
-                    localId);
-            log.error(errorMessage);
-            response.setErrorMessage(errorMessage);
-            response.setHttpStatus(HttpStatus.BAD_REQUEST);
-        } else {
-            // Verify regular expression
-            if (!localId.matches(registryNamespace.getPattern())) {
-                response.setHttpStatus(HttpStatus.BAD_REQUEST);
-                String errorMessage = String.format("For namespace '%s', provided local ID '%s' DOES NOT MATCH local IDs definition pattern '%s'", namespace, localId, registryNamespace.getPattern());
-                log.error(errorMessage);
-                response.setErrorMessage(errorMessage);
-                response.setHttpStatus(HttpStatus.BAD_REQUEST);
-            }
-        }
-    }
-
     // END - Helpers
 
     // --- Resolution API ---
@@ -89,6 +64,7 @@ public class ResolverApiModel {
                 && (parsedCompactIdentifier.getProviderCode() == null)) {
             // TODO Resolve just the namespace
         }
+        // This if we need to look into the registry
         if ((parsedCompactIdentifier.getLocalId() != null && (parsedCompactIdentifier.getNamespace() != null))) {
             // Verify compact identifier
             verifyCompactIdentifier(parsedCompactIdentifier.getNamespace(), parsedCompactIdentifier.getLocalId(), response);

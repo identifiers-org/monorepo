@@ -21,9 +21,14 @@ public abstract class MultiResolverStrategy implements ResolutionService {
     @Qualifier("RegistryNamespaceResolver")
     private ResolutionService registryNamespaceResolver;
 
+    @Autowired
+    @Qualifier("CompactIdentifierResolutionService")
+    private ResolutionService compactIdentifierResolver;
+
     protected List<ResolutionService> getResolverChain() {
         return Arrays.asList(
-                registryNamespaceResolver
+                registryNamespaceResolver,
+                compactIdentifierResolver
         );
     }
 }
