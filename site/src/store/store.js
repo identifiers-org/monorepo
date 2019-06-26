@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
+// Reducers.
 import configReducer from '../reducers/ConfigReducer';
 import namespaceListReducer from '../reducers/NamespaceList';
 import namespaceListParamsReducer from '../reducers/NamespaceListParams';
@@ -13,6 +14,10 @@ import PrefixRegistrationSessionAmendReducer from '../reducers/PrefixRegistratio
 import PrefixRegistrationSessionCommentReducer from '../reducers/PrefixRegistrationSessionComment';
 import PrefixRegistrationSessionRejectReducer from '../reducers/PrefixRegistrationSessionReject';
 import locationListReducer from '../reducers/LocationList';
+
+// Middlewares.
+// TODO: Convert validator to middleware.
+// import fieldValidationMiddleware from '../middleware/fieldValidationMiddleware';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
