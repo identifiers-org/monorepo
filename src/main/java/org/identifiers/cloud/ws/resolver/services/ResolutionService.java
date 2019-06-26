@@ -1,9 +1,6 @@
 package org.identifiers.cloud.ws.resolver.services;
 
 import org.identifiers.cloud.ws.resolver.models.ParsedCompactIdentifier;
-import org.identifiers.cloud.ws.resolver.models.ResolvedResource;
-
-import java.util.List;
 
 /**
  * Project: resolver
@@ -20,5 +17,5 @@ import java.util.List;
  */
 public interface ResolutionService {
 
-    List<ResolvedResource> resolve(ParsedCompactIdentifier parsedCompactIdentifier);
+    ResolutionServiceResult resolve(ParsedCompactIdentifier parsedCompactIdentifier);
 }
