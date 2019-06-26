@@ -49,6 +49,7 @@ public class ResolverApiController {
     private ResolverApiModel model;
 
     // Compact Identifier and provider code helper
+    @Deprecated
     private ProviderCompactIdTuple extractProviderAndCompactIdentifier(String resolutionRequest) {
         String provider = null;
         String compactIdentifier = null;
