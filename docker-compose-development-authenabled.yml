@@ -1,4 +1,4 @@
-localkeycloak# Development environment definition
+# Development environment definition
 # Author: Manuel Bernal Llinares
 version: "3.5"
 services:
