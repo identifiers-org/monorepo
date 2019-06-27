@@ -91,7 +91,7 @@ services:
             - keycloakpostgresql
         healthcheck:
             test: curl -f http://localhost:8080/auth/
-            start_period: 1m
+            start_period: 30s
 networks:
     default:
         name: hqwebnet
