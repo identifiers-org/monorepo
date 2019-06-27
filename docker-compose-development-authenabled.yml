@@ -86,7 +86,7 @@ services:
             - DB_PASSWORD=devpassword
             - KEYCLOAK_IMPORT=/srv/keycloak/realm-idorg-dev.json
         ports:
-            - "9080:8080"
+            - "8080:8080"
         depends_on:
             - keycloakpostgresql
         healthcheck:
