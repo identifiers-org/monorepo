@@ -1,4 +1,4 @@
-# Development environment definition
+localkeycloak# Development environment definition
 # Author: Manuel Bernal Llinares
 version: "3.5"
 services:
@@ -40,17 +40,17 @@ services:
             - HQ_WS_REGISTRY_CONFIG_BACKEND_SERVICE_MIRID_CONTROLLER_PORT=8181
             - HQ_WS_REGISTRY_CONFIG_APPLICATION_ACTIVE_PROFILE=development,authenabled
             - HQ_WS_REGISTRY_CONFIG_CORS_ORIGIN=*
-            - HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUERURI=http://keycloak:8080/auth/realms/idorg
-            - HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_ACCESS_TOKEN_URI=http://keycloak:8080/auth/realms/idorg/protocol/openid-connect/token
+            - HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUERURI=http://localkeycloak:8080/auth/realms/idorg
+            - HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_ACCESS_TOKEN_URI=http://localkeycloak:8080/auth/realms/idorg/protocol/openid-connect/token
             - HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTID=hq-registry
             - HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTSECRET=clientsecret
-            - HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI=http://keycloak:8080/auth/realms/idorg
+            - HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI=http://localkeycloak:8080/auth/realms/idorg
         ports:
             - "8180:8180"
         depends_on:
             - hqregistrypostgresql
             - hqmiridcontroller
-            - keycloak
+            - localkeycloak
         restart: on-failure
     hqmiridcontroller:
         image: identifiersorg/cloud-hq-ws-mirid-controller
@@ -61,18 +61,18 @@ services:
             - HQ_WS_MIRID_CONTROLLER_CONFIG_REDIS_HOST=redis
             - HQ_WS_MIRID_CONTROLLER_CONFIG_REDIS_PORT=6379
             - HQ_WS_MIRID_CONTROLLER_CONFIG_APPLICATION_ACTIVE_PROFILE=development,authenabled
-            - HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUERURI=http://keycloak:8080/auth/realms/idorg/
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUERURI=http://localkeycloak:8080/auth/realms/idorg/
             - HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTID=hq-mirid-controller
             - HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTSECRET=clientsecret
-            - HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI=http://keycloak:8080/auth/realms/idorg
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI=http://localkeycloak:8080/auth/realms/idorg
         ports:
             - "8181:8181"
         depends_on:
             - redis
             - hqmiridpostgresql
-            - keycloak
+            - localkeycloak
         restart: on-failure
-    keycloak:
+    localkeycloak:
         image: jboss/keycloak:6.0.1
         volumes:
             - ./data/keycloak:/srv/keycloak
