@@ -72,6 +72,8 @@ services:
             - keycloak
     keycloak:
         image: jboss/keycloak:6.0.1
+        volumes:
+            - ./data/keycloak:/srv/keycloak
         environment:
             - KEYCLOAK_USER=devadmin
             - KEYCLOAK_PASSWORD=devpassword
@@ -80,10 +82,14 @@ services:
             - DB_DATABASE=devdatabase
             - DB_USER=devusername
             - DB_PASSWORD=devpassword
+            - KEYCLOAK_IMPORT=/srv/keycloak/realm-idorg-dev.json
         ports:
             - "9080:8080"
         depends_on:
             - keycloakpostgresql
+        healthcheck:
+            test: curl -f http://localhost:8080/auth/
+            start_period: 1m
 networks:
     default:
         name: hqwebnet
