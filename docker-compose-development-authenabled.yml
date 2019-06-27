@@ -51,6 +51,7 @@ services:
             - hqregistrypostgresql
             - hqmiridcontroller
             - keycloak
+        restart: on-failure
     hqmiridcontroller:
         image: identifiersorg/cloud-hq-ws-mirid-controller
         environment:
@@ -70,6 +71,7 @@ services:
             - redis
             - hqmiridpostgresql
             - keycloak
+        restart: on-failure
     keycloak:
         image: jboss/keycloak:6.0.1
         volumes:
