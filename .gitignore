@@ -38,3 +38,7 @@ development_env_up
 development_env_backend_up
 development_env_backend_down
 npm_install
+
+# Keycloak database
+data/keycloak
+
