@@ -2,11 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
+// Actions.
+import { doSignIn, doSignOut } from '../../actions/Auth';
+
+// Assets.
 import identifiersLogo from '../../assets/identifiers_logo.png';
 
-import Sticky from './Sticky';
+// Components.
 import EBINavBar from './EBINavBar';
 import EBINavItem from './EBINavItem';
+import Sticky from './Sticky';
 
 
 class Header extends React.Component {
@@ -14,8 +19,33 @@ class Header extends React.Component {
     super(props);
   }
 
+
+  handleClickSignIn = () => {
+    const { auth, doSignIn } = this.props;
+
+    if (typeof auth.authenticated !== 'undefined' && !auth.authenticated) {
+      doSignIn();
+    }
+  }
+
+  handleClickSignOut = () => {
+    const { auth, doSignOut } = this.props;
+
+    if (typeof auth.authenticated !== 'undefined' && auth.authenticated) {
+      doSignOut();
+    }
+  }
+
+
   render() {
-    const { config } = this.props;
+    const {
+      handleClickSignIn,
+      handleClickSignOut,
+      props: {
+        auth: { authenticated },
+        config
+      }
+    } = this;
 
     return (
       // This is EMBL-EBI Enforced boilerplate header.
@@ -59,60 +89,81 @@ class Header extends React.Component {
                 <EBINavBar>
                   <EBINavItem className="nav-item">
                     <a href={config.satelliteUrl} className="nav-link nav-link-dark">
-                      <i className="icon icon-common icon-external-link-alt" /> Resolution
+                      <i className="icon icon-common icon-external-link-alt mr-1" />Resolution
                     </a>
                   </EBINavItem>
 
                   <EBINavItem className="nav-item">
                     <NavLink exact to="/" className="nav-link" activeClassName="active">
-                      <i className="icon icon-common icon-list" /> Registry
+                      <i className="icon icon-common icon-list mr-1" />Registry
                     </NavLink>
                   </EBINavItem>
 
                   <EBINavItem className="nav-item">
                     <NavLink to="/registry" className="nav-link" activeClassName="active">
-                      <i className="icon icon-common icon-search" /> Browse the registry
+                      <i className="icon icon-common icon-search mr-1" />Browse the registry
                     </NavLink>
                   </EBINavItem>
 
                   <EBINavItem className="nav-item">
                     <NavLink to="/prefixregistrationrequest" className="nav-link" activeClassName="active">
-                      <i className="icon icon-common icon-hand-point-up" /> Request prefix
+                      <i className="icon icon-common icon-hand-point-up mr-1" />Request prefix
                     </NavLink>
                   </EBINavItem>
 
                   <EBINavItem>
                     <a href={config.documentationUrl} className="nav-link nav-link-dark">
-                      <i className="icon icon-common icon-documentation" /> Documentation
+                      <i className="icon icon-common icon-documentation mr-1" />Documentation
                     </a>
                   </EBINavItem>
 
                   <EBINavItem>
                     <a href={config.oldIdentifiersUrl} target="_blank" className="nav-link nav-link-dark">
-                      <i className="icon icon-common icon-home" /> Legacy platform
+                      <i className="icon icon-common icon-home mr-1" />Legacy platform
                     </a>
                   </EBINavItem>
 
                   {
                     config.enableAuthFeatures && (
-                      <>
-                        <EBINavItem className="nav-item">
-                          <NavLink to="/curator" className="nav-link" activeClassName="active">
-                            <i className="icon icon-common icon-tachometer-alt" /> Curator dashboard
-                          </NavLink>
-                        </EBINavItem>
-                        <EBINavItem className="nav-item">
-                          <NavLink to="/account" className="nav-link" activeClassName="active">
-                            <i className="icon icon-common icon-sign-in-alt" /> Account
-                          </NavLink>
-                        </EBINavItem>
-                      </>
+                      // If not logged in.
+                      !authenticated ? (
+                        <>
+                          <EBINavItem className="nav-item">
+                            <a href="#!" onClick={handleClickSignIn}>
+                              <i className="icon icon-common icon-icon-sign-in-alt mr-1" />Sign in
+                            </a>
+                            {/* <NavLink to="/signin" className="nav-link" activeClassName="active">
+                              <i className="icon icon-common icon-icon-sign-in-alt mr-1" />Sign in
+                            </NavLink> */}
+                          </EBINavItem>
+                        </>
+                      ) : ( // If logged in.
+                        <>
+                          <EBINavItem className="nav-item">
+                            <NavLink to="/curator" className="nav-link" activeClassName="active">
+                              <i className="icon icon-common icon-tachometer-alt mr-1" />Curator dashboard
+                            </NavLink>
+                          </EBINavItem>
+                          <EBINavItem className="nav-item">
+                            <NavLink to="/account" className="nav-link" activeClassName="active">
+                              <i className="icon icon-common icon-user mr-1" />Account
+                            </NavLink>
+                          </EBINavItem>
+                          <EBINavItem className="nav-item">
+                            <a href="#!" onClick={handleClickSignOut}>
+                              <i className="icon icon-common icon-icon-sign-out-alt mr-1" />Sign out
+                            </a>
+                            {/* <NavLink to="/signout" className="nav-link" activeClassName="active">
+                              <i className="icon icon-common icon-sign-out-alt mr-1" />Sign out
+                            </NavLink> */}
+                          </EBINavItem>
+                        </>
+                      )
                     )
                   }
-
                   <EBINavItem className="nav-item float-right">
                     <a href={config.feedbackUrl} target="_blank" className="nav-link nav-link-dark">
-                      <i className="icon icon-common icon-comments" /> Feedback
+                      <i className="icon icon-common icon-comments mr-1" />Feedback
                     </a>
                   </EBINavItem>
 
@@ -131,7 +182,13 @@ class Header extends React.Component {
 
 // Redux mappings.
 const mapStateToProps = (state) => ({
+  auth: state.auth,
   config: state.config
 });
 
-export default connect(mapStateToProps, null, null, {pure: false})(Header);
+const mapDispatchToProps = (dispatch) => ({
+  doSignIn: () => dispatch(doSignIn()),
+  doSignOut: () => dispatch(doSignOut())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(Header);

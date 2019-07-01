@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
 // Reducers.
+import authReducer from '../reducers/Auth';
 import configReducer from '../reducers/ConfigReducer';
 import namespaceListReducer from '../reducers/NamespaceList';
 import namespaceListParamsReducer from '../reducers/NamespaceListParams';
@@ -29,11 +30,18 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // Store creation.
 const store = createStore(
   combineReducers({
+    auth: authReducer,
     config: configReducer,
-    registryBrowser: combineReducers({
-      namespaceList: namespaceListReducer,
-      namespaceListParams: namespaceListParamsReducer
+    curatorDashboard: combineReducers({
+      prefixRegistrationSessionList: prefixRegistrationSessionListReducer,
+      prefixRegistrationSessionListParams: prefixRegistrationSessionListParamsReducer,
+      prefixRegistrationSession: PrefixRegistrationSessionReducer,
+      prefixRegistrationSessionAccept: PrefixRegistrationSessionAcceptReducer,
+      prefixRegistrationSessionAmend: PrefixRegistrationSessionAmendReducer,
+      prefixRegistrationSessionComment: PrefixRegistrationSessionCommentReducer,
+      prefixRegistrationSessionReject: PrefixRegistrationSessionRejectReducer
     }),
+    locationList: locationListReducer,
     prefixRegistrationRequestForm: combineReducers({
       name: prefixRegistrationRequestFieldReducer('name'),
       description: prefixRegistrationRequestFieldReducer('description'),
@@ -56,16 +64,10 @@ const store = createStore(
       requesterName: prefixRegistrationRequestFieldReducer('requesterName'),
       requesterEmail: prefixRegistrationRequestFieldReducer('requesterEmail')
     }),
-    curatorDashboard: combineReducers({
-      prefixRegistrationSessionList: prefixRegistrationSessionListReducer,
-      prefixRegistrationSessionListParams: prefixRegistrationSessionListParamsReducer,
-      prefixRegistrationSession: PrefixRegistrationSessionReducer,
-      prefixRegistrationSessionAccept: PrefixRegistrationSessionAcceptReducer,
-      prefixRegistrationSessionAmend: PrefixRegistrationSessionAmendReducer,
-      prefixRegistrationSessionComment: PrefixRegistrationSessionCommentReducer,
-      prefixRegistrationSessionReject: PrefixRegistrationSessionRejectReducer
+    registryBrowser: combineReducers({
+      namespaceList: namespaceListReducer,
+      namespaceListParams: namespaceListParamsReducer
     }),
-    locationList: locationListReducer
   }),
   composeEnhancers(applyMiddleware(thunk))
 );

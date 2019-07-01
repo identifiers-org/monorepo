@@ -1,0 +1,10 @@
+{
+  "realm": "idorg",
+  "url": "http://auth.identifiers.org/",
+  "ssl-required": "external",
+  "resource": "hq-web-frontend",
+  "public-client": true,
+  "confidential-port": 0,
+  "clientId": "hq-web-frontend",
+  "redirectUri": "http://registry.identifiers.org"
+}

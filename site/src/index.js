@@ -2,13 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import AppRouter from './routers/AppRouter';
+// Store.
 import store from './store/store';
 
+// Actions.
 import { getLocationListFromRegistry } from './actions/LocationList';
+import { authInit } from './actions/Auth';
 
+// Routers.
+import AppRouter from './routers/AppRouter';
+
+// Utils.
 import { swalBanner, swalBannerMobile } from './utils/swalDialogs';
 
+// CSS.
 import './styles/styles.scss';
 
 
@@ -21,8 +28,12 @@ const jsx = (
 
 
 // Get initial data.
-// For now, it is only locations.
+// Get locations.
 store.dispatch(getLocationListFromRegistry());
+
+// Init auth.
+store.dispatch(authInit());
+
 
 // Show beta banner.
 if (store.getState().config.showBetaBanner) {
