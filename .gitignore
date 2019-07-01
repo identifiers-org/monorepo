@@ -35,8 +35,13 @@ mvnw*
 
 # Development environment
 development_env_up
+development_env_down
 development_env_backend_up
 development_env_backend_down
+development_authenabled_env_up
+development_authenabled_env_down
+development_authenabled_env_backend_up
+development_authenabled_env_backend_down
 npm_install
 
 # Keycloak database
