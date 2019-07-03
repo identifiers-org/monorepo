@@ -1,5 +1,9 @@
+// Config.
 import { config } from '../config/Config';
+
+// Utils.
 import { fetchAndAdd } from '../utils/fetchAndAdd';
+import { renewToken } from '../utils/auth';
 
 import { setPrefixRegistrationSessionListParams } from './PrefixRegistrationSessionListParams';
 
@@ -10,18 +14,17 @@ import { setPrefixRegistrationSessionListParams } from './PrefixRegistrationSess
 
 // Get Prefix Registration Requests from registry. Will dispatch setPrefixRegistrationSessionList.
 export const getPrefixRegistrationSessionListFromRegistry = (params) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     const requestUrl = new URL(`${config.registryApi}/restApi/prefixRegistrationSessions/search/findByClosedFalse`);
-
-    // Comment previous line and use this one to see all requests, even closed ones.
-    // const requestUrl = new URL(`${config.registryApi}/restApi/prefixRegistrationSessions/`);
+    const authToken = await renewToken();
+    const init = {headers: {'Authorization': `Bearer ${authToken}`}};
 
     Object.keys(params).forEach(param => {
       requestUrl.searchParams.append(param, params[param]);
     });
 
     try {
-      const response = await fetch(requestUrl);
+      const response = await fetch(requestUrl, init);
       const data = await response.json();
       await dispatch(setPrefixRegistrationSessionListParams(data.page));
       const prefixRegistrationRequests = await Promise.all(data._embedded.prefixRegistrationSessions.map(pfs => {
@@ -32,7 +35,7 @@ export const getPrefixRegistrationSessionListFromRegistry = (params) => {
 
         return fetchAndAdd(newResource, [
           {name: 'prefixRegistrationRequest', url: _links.prefixRegistrationRequest.href}
-        ]);
+        ], init);
       }));
 
       dispatch(setPrefixRegistrationSessionList(prefixRegistrationRequests));

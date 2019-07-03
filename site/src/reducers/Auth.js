@@ -1,5 +1,5 @@
 // Keycloak.
-import Keycloak from 'keycloak-js';
+import Keycloak from '../utils/keycloak';
 import keycloakConf from '../config/keycloak.json';
 
 

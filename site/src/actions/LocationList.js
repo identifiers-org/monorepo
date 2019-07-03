@@ -1,5 +1,3 @@
-import { fetchAndAdd } from '../utils/fetchAndAdd';
-
 import { config } from '../config/Config';
 
 

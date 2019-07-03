@@ -3,9 +3,8 @@ export const authInit = () => {
   return async (dispatch, getState) => {
     const { keycloak } = getState().auth;
 
-    keycloak.init({onLoad: 'check-sso'}).success(authenticated => {
-      dispatch(setAuthenticated(keycloak));
-    })
+    await keycloak.init({promiseType: 'native', onLoad: 'check-sso'});
+    dispatch(setAuthenticated(keycloak));
   };
 };
 
@@ -14,9 +13,8 @@ export const doSignIn = () => {
   return async (dispatch, getState) => {
     const { keycloak } = getState().auth;
 
-    keycloak.login().success(authenticated => {
-      dispatch(setAuthenticated(keycloak));
-    })
+    await keycloak.login();
+    dispatch(setAuthenticated(keycloak));
   };
 };
 
