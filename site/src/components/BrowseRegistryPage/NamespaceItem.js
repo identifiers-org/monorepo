@@ -5,14 +5,14 @@ import { Link } from 'react-router-dom';
 const NamespaceItem = (namespace) => {
   return (
     <tr>
-      <td>
+      <td className="w-20 align-middle">
         <Link to={`/registry/${namespace.prefix}`} className="clear-link text-primary">
           {namespace.name}
         </Link>
       </td>
-      <td>
+      <td className="align-middle text-center">
         <span
-          className=" text-warning font-weight-bold border border-secondary badge badge-dark"
+          className="text-warning font-weight-bold border border-secondary badge badge-dark"
         >
           {namespace.prefix}
         </span>
