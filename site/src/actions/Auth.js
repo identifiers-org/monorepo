@@ -3,7 +3,12 @@ export const authInit = () => {
   return async (dispatch, getState) => {
     const { keycloak } = getState().auth;
 
-    await keycloak.init({promiseType: 'native', onLoad: 'check-sso'});
+    try {
+      await keycloak.init({promiseType: 'native', onLoad: 'check-sso'});
+    } catch {
+      console.error('Unable to authenticate.');
+    }
+
     dispatch(setAuthenticated(keycloak));
   };
 };
