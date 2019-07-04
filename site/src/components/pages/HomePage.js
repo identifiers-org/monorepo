@@ -28,7 +28,7 @@ class MainPage extends React.Component {
     } = this;
 
     return (
-      <div className="row border">
+      <div className="row border spacer-8">
         <div className="col col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 p-5">
           <h1 className="text-primary mb-4">Identifiers.org Central Registry</h1>
           <div className="d-flex">
