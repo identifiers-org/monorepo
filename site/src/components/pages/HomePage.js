@@ -14,7 +14,7 @@ class HomePage extends React.Component {
     const { config } = this.props;
 
     return (
-      <div className="row border">
+      <div className="row border spacer-8">
         <div className="col col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 p-5">
           <h1 className="text-primary mb-4">Identifiers.org Resolution Service</h1>
           <div className="d-flex">
