@@ -4,7 +4,11 @@ import SearchSuggestions from './SearchSuggestions';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+// Actions.
 import { getNamespacesFromRegistry } from '../../actions/NamespaceList';
+import { setConfig } from '../../actions/Config';
+
+// Utils.
 import { querySplit, completeQuery, evaluateSearch } from '../../utils/identifiers';
 
 
@@ -50,18 +54,20 @@ class Search extends React.Component {
       namespaceList: this.props.namespaceList.sort((a, b) => {
         if (a.prefix.startsWith(prefixEffectiveValue) && !b.prefix.startsWith(prefixEffectiveValue)) {
           return -1;
-        };
+        }
 
         if (!a.prefix.startsWith(prefixEffectiveValue) && b.prefix.startsWith(prefixEffectiveValue)) {
           return 1;
         }
 
         return a.prefix - b.prefix;
-      })
-      .slice(0, suggestionListSize)
+      }).slice(0, suggestionListSize)
     });
   }
 
+
+  handleBlurHideSuggestions = () => {this.props.setConfig({showSearchSuggestions: false})};
+  handleFocusShowSuggestions = () => {this.props.setConfig({showSearchSuggestions: true})};
 
   handleChange = () => {
     const { updateNamespaceList } = this;
@@ -92,6 +98,7 @@ class Search extends React.Component {
         handleChange();
         break;
       }
+      break;
     }
 
     case 38: {  // Up key
@@ -144,7 +151,13 @@ class Search extends React.Component {
 
   render() {
     const {
-      handleChange, handleClick, handleKeyDown, handleMouseOver, handleSubmit,
+      handleBlurHideSuggestions,
+      handleChange,
+      handleClick,
+      handleFocusShowSuggestions,
+      handleKeyDown,
+      handleMouseOver,
+      handleSubmit,
       props: { config },
       state: { activeSuggestion, namespaceList, query, queryParts }
 
@@ -160,16 +173,22 @@ class Search extends React.Component {
               className="form-control search-input"
               onChange={handleChange}
               onKeyDown={handleKeyDown}
+              onBlur={handleBlurHideSuggestions}
+              onFocus={handleFocusShowSuggestions}
               placeholder="Enter an identifier to resolve it"
               ref={input => this.search = input}
               value={query}
             />
             <div className="input-group-append">
-              <button className="btn btn-primary search-button">
+              <button
+                className="btn btn-primary search-button"
+                onBlur={handleBlurHideSuggestions}
+                onFocus={handleFocusShowSuggestions}
+              >
                 <i className="icon icon-common icon-search" /> Resolve
               </button>
             </div>
-              { config.showSearchSuggestions &&
+            { config.showSearchSuggestions &&
               <SearchSuggestions
                 searchSuggestionList={namespaceList}
                 selectedSearchSuggestion={activeSuggestion}
@@ -192,7 +211,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getNamespacesFromRegistry: (query) => dispatch(getNamespacesFromRegistry(query))
+  getNamespacesFromRegistry: (query) => dispatch(getNamespacesFromRegistry(query)),
+  setConfig: (config) => dispatch(setConfig(config))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Search));
