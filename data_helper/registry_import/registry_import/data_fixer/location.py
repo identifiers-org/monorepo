@@ -83,7 +83,7 @@ def map_location(old_location, countries):
 
 def populate_locations(countries, destination_url):
     spinner = Halo(spinner='dots')
-    spinner.info(f'Posting {len(countries.index)} locations from ISO-3166:"')
+    spinner.info(f'Posting {len(countries.index)} locations from ISO-3166...')
 
     for index, country in countries.iterrows():
         newLocation = Location(country['countryCode'], country['countryName'])
