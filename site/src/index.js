@@ -30,7 +30,7 @@ const jsx = (
   await store.dispatch(getLocationListFromRegistry());
 
   // Init auth.
-  await store.dispatch(authInit());
+  store.getState().config.enableAuthFeatures && await store.dispatch(authInit());
 
   // Render app.
   ReactDOM.render(jsx, document.getElementById("app"));

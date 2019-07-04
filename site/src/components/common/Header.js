@@ -41,10 +41,7 @@ class Header extends React.Component {
     const {
       handleClickSignIn,
       handleClickSignOut,
-      props: {
-        auth: { authenticated },
-        config
-      }
+      props: { auth, config }
     } = this;
 
     return (
@@ -126,7 +123,7 @@ class Header extends React.Component {
                   {
                     config.enableAuthFeatures && (
                       // If not logged in.
-                      !authenticated ? (
+                      !auth.authenticated ? (
                         <>
                           <EBINavItem className="nav-item">
                             <a href="#!" onClick={handleClickSignIn}>
