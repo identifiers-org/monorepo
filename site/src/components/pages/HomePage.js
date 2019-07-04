@@ -24,7 +24,7 @@ class MainPage extends React.Component {
     const {
       handleClickPrefixRegistrationRequestForm,
       handleClickRegistryBrowser,
-      state: {query }
+      state: { query }
     } = this;
 
     return (
