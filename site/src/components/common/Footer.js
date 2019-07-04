@@ -12,7 +12,7 @@ class Footer extends React.Component {
     return (
       // This is EMBL-EBI Enforced boilerplate footer.
       <>
-        <div className="row footer-section align-items-center mb-2 bg-light py-2">
+        <div className="row footer-section align-items-center mx-5 mb-2 bg-light py-2">
           <div className="col col-xl-1">
             <img src={elixirKiteMark} />
           </div>

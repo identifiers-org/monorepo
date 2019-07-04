@@ -15,38 +15,52 @@ class MainPage extends React.Component {
     };
   }
 
+
+  handleClickPrefixRegistrationRequestForm = () => {this.props.history.push('/prefixregistrationrequest')};
+  handleClickRegistryBrowser = () => {this.props.history.push('/registry')};
+
+
   render() {
-    const { query } = this.state;
+    const {
+      handleClickPrefixRegistrationRequestForm,
+      handleClickRegistryBrowser,
+      state: {query }
+    } = this;
 
     return (
-      <>
-        <div className="row justify-content-center">
-          <div className="col col-5">
-            <div className="logo">
-              <img src={identifiersLogo} />
-              <div className="logo-text">
-                <h1>Identifiers.org</h1>
-                <p className="logo-subtitle">Central registry</p>
-              </div>
+      <div className="row border">
+        <div className="col col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 p-5">
+          <h1 className="text-primary mb-4">Identifiers.org Central Registry</h1>
+          <div className="d-flex">
+            <p className="mb-0 text-justify text-muted">
+              The <span className="text-dark">Identifiers.org</span> Central Registry service provides a centralized
+              directory of Compact Identifiers. This website allows performing searches on the registry by using the
+              search bar on the right side or the <a
+                href="#!"
+                className="text-primary"
+                onClick={handleClickRegistryBrowser}
+              >
+                Registry Browser
+              </a>. Resource maintainers can also find the <a
+                href="#!"
+                className="text-primary"
+                onClick={handleClickPrefixRegistrationRequestForm}
+              >
+                Prefix Registration Request form
+              </a> to request a prefix in Identifiers.org for their databases or services.
+            </p>
+          </div>
+        </div>
+
+        <div className="col col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 p-5 bg-light">
+          <h4 className="mt-3 mb-5"><i className="icon icon-common icon-search mr-2" />Search the registry</h4>
+          <div className="row justify-content-center mt-2">
+            <div className="col col-lg-7 col-xl-12">
+              <Search query={query} />
             </div>
           </div>
         </div>
-        <div className="row justify-content-center mt-2">
-          <div className="col col-xs-12 col-sm-11 col-md-9 col-lg-7 col-xl-6">
-            <Search query={query} />
-          </div>
-        </div>
-        <div className="mt-5 d-flex align-items-center">
-          <i className="icon icon-common icon-info size-400 text-primary mr-4" />
-          <h4 className="mb-0 text-justify">
-            The <span className="text-dark">Identifiers.org</span> resolution system provides consistent access
-            to life science data using Compact Identifiers (CIDs). Compact Identifiers consist of an assigned
-            unique prefix and a local provider designated accession number (prefix:accession). The resolving
-            location of Compact Identifiers is determined using information that is stored in the Identifiers.org
-            Registry.
-          </h4>
-        </div>
-      </>
+      </div>
     );
   }
 }
