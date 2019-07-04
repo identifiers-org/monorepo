@@ -32,7 +32,6 @@ const jsx = (
   // Init auth.
   await store.dispatch(authInit());
 
-
   // Render app.
   ReactDOM.render(jsx, document.getElementById("app"));
 
