@@ -1,9 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-// Assets.
-import identifiersLogo from '../../assets/identifiers_logo.png';
-
 // Components.
 import Search from '../HomePage/Search';
 
@@ -17,38 +14,33 @@ class HomePage extends React.Component {
     const { config } = this.props;
 
     return (
-      <>
-        <div className="row justify-content-center">
-          <div className="col col-5">
-            <div className="logo">
-              <img src={identifiersLogo} />
-              <div className="logo-text">
-                <h1>Identifiers.org</h1>
-                <p className="logo-subtitle">Central registry</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row justify-content-center mt-2">
-          <div className="col col-xs-12 col-sm-11 col-md-9 col-lg-7 col-xl-6">
-            <Search query />
-          </div>
-        </div>
-        <div className="mt-5 d-flex align-items-center">
-          <i className="icon icon-common icon-info size-400 text-primary mr-4" />
-          <h4 className="mb-0 text-justify">
+      <div className="row border spacer-8">
+        <div className="col col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 p-5">
+          <h1 className="text-primary mb-4">Identifiers.org Resolution Service</h1>
+          <div className="d-flex">
+            <p className="mb-0 text-justify text-muted">
             The Identifiers.org Resolution Service provides consistent access to life science data using Compact
             Identifiers. Compact Identifiers consist of an assigned unique prefix and a local provider designated
             accession number (prefix:accession). The resolving location of Compact Identifiers is determined using
-            information that is stored in the Identifiers.org <a
+            information that is stored in the Identifiers.org  <a
                 href={config.registryUrl}
                 className="text-primary"
               >
                 Registry
               </a>.
-          </h4>
+            </p>
+          </div>
         </div>
-      </>
+
+        <div className="col col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 p-5 bg-light">
+          <h4 className="mt-3 mb-5"><i className="icon icon-common icon-search mr-2" />Resolve a Compact Identifier</h4>
+          <div className="row justify-content-center mt-2">
+            <div className="col col-lg-7 col-xl-12">
+              <Search />
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 }
