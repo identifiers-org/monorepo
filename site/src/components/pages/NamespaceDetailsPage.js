@@ -40,7 +40,7 @@ class NamespaceDetailsPage extends React.Component {
         </div>
 
         <div className="row mb-3">
-          <div className="col">
+          <div className="col overflow-y-scroll">
             <table className="table table-sm table-striped table-borderless">
               <tbody>
                 <tr>
@@ -76,7 +76,7 @@ class NamespaceDetailsPage extends React.Component {
         </div>
 
         <div className="row mb-3">
-          <div className="col">
+          <div className="col overflow-y-scroll">
             <table className="table table-sm table-striped table-borderless">
               <tbody>
                 <tr>
@@ -107,7 +107,7 @@ class NamespaceDetailsPage extends React.Component {
         </div>
 
         <div className="row">
-          <div className="col">
+          <div className="col overflow-y-scroll">
             {
               !namespace.resources && 'No resources' ||
                 namespace.resources.map(resource =>
