@@ -153,17 +153,17 @@ class NamespaceList extends React.Component {
             namespaceList.length === 0 ? (
               <p className="text-center my-5">No items</p>
             ) : (
-              <div className="card mb-3">
-                <table className="table table-sm table-striped table-hover table-borderless">
+              <div className="card mb-3 overflow-y-scroll">
+                <table className="table table-sm table-striped table-hover table-borderless table-fixed">
                   <thead className="thead-light thead-rounded">
                     <tr>
                       <th className="narrow text-center">
                         <i className="icon icon-common icon-list" /> Name
                       </th>
-                      <th className="narrow text-center">
-                        <i className="icon icon-common icon-card" /> Prefix
+                      <th className="med text-center">
+                        <i className="icon icon-common icon-address-card" /> Prefix
                       </th>
-                      <th className="wide text-center">
+                      <th className="text-center">
                         <i className="icon icon-common icon-info" /> Description
                       </th>
                     </tr>
