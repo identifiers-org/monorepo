@@ -157,13 +157,13 @@ class NamespaceList extends React.Component {
                 <table className="table table-sm table-striped table-hover table-borderless">
                   <thead className="thead-light thead-rounded">
                     <tr>
-                      <th className="narrow">
+                      <th className="narrow text-center">
                         <i className="icon icon-common icon-list" /> Name
                       </th>
-                      <th className="narrow">
+                      <th className="narrow text-center">
                         <i className="icon icon-common icon-card" /> Prefix
                       </th>
-                      <th className="wide">
+                      <th className="wide text-center">
                         <i className="icon icon-common icon-info" /> Description
                       </th>
                     </tr>

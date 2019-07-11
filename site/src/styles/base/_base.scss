@@ -180,6 +180,11 @@ a, a:hover, a:active {
   margin-top: 8rem;
 }
 
+// Fixes for responsive tables.
 .overflow-y-scroll {
-  overflow-y: scroll;
+  overflow-y: auto;
+}
+
+.table-fixed {
+  table-layout: fixed;
 }

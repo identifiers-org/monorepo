@@ -16,8 +16,8 @@ class MainPage extends React.Component {
   }
 
 
-  handleClickPrefixRegistrationRequestForm = () => {this.props.history.push('/prefixregistrationrequest')};
-  handleClickRegistryBrowser = () => {this.props.history.push('/registry')};
+  handleClickPrefixRegistrationRequestForm = () => { this.props.history.push('/prefixregistrationrequest') };
+  handleClickRegistryBrowser = () => { this.props.history.push('/registry') };
 
 
   render() {
@@ -27,9 +27,14 @@ class MainPage extends React.Component {
       state: { query }
     } = this;
 
+    const isSmallScreen = window.matchMedia("(max-width: 768px)").matches;
+    const boxPadding = isSmallScreen ? 'p-1' : 'p-5';
+    const searchBarPadding = isSmallScreen ? 'p-1' : 'px-5';
+    const topSpacer = isSmallScreen ? '' : 'spacer-8';
+
     return (
-      <div className="row border spacer-8">
-        <div className="col col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 p-5">
+      <div className={`row border ${topSpacer}`}>
+        <div className={`col col-12 col-xl-6 ${boxPadding}`}>
           <h1 className="text-primary mb-4">Identifiers.org Central Registry</h1>
           <div className="d-flex">
             <p className="mb-0 text-justify text-muted">
@@ -52,9 +57,9 @@ class MainPage extends React.Component {
           </div>
         </div>
 
-        <div className="col col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 p-5 bg-light">
-          <h4 className="mt-3 mb-5"><i className="icon icon-common icon-search mr-2" />Search the registry</h4>
-          <div className="row justify-content-center mt-2">
+        <div className="col col-12 col-xl-6 bg-light">
+          <h4 className={`mt-3 ${boxPadding}`}><i className="icon icon-common icon-search mr-2" />Search the registry</h4>
+          <div className={`row justify-content-center mt-2 ${searchBarPadding}`}>
             <div className="col col-lg-7 col-xl-12">
               <Search query={query} />
             </div>
