@@ -194,9 +194,17 @@ a, a:hover, a:active {
 }
 
 .med {
-  width: 8rem;
+  width: 9rem;
 }
 
 .wide {
   width: 20rem;
+}
+
+.order-1 {
+  order: 1;
+}
+
+.order-2 {
+  order: 2;
 }

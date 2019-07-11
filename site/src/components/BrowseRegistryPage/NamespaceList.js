@@ -105,7 +105,7 @@ class NamespaceList extends React.Component {
         <div className="row">
 
           {/* ALPHABETIC PAGINATOR */}
-          <div className="col col-lg-12 col-xl-8">
+          <div className="col col-12 col-xl-8 mt-2 overflow-y-scroll">
             <div className="paginator">
               <ul className="pagination pagination-sm m-0">
                 {
@@ -129,7 +129,7 @@ class NamespaceList extends React.Component {
           </div>
 
           {/* SEARCH BAR */}
-          <div className="col col-lg-12 col-xl-4">
+          <div className="col col-12 col-xl-4 mt-2">
             <div className="input-group input-group-sm mb-3">
               <div className="input-group-prepend">
                 <span className="input-group-text" id="registry-search">Search</span>
