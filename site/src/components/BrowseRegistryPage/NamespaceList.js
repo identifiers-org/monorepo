@@ -87,8 +87,6 @@ class NamespaceList extends React.Component {
 
 
   render() {
-    const alphabetSearch = '#ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-
     const {
       handleNavigate,
       handleAlphabeticSearch,
@@ -99,6 +97,10 @@ class NamespaceList extends React.Component {
       },
       props: {namespaceList}
     } = this;
+
+    const alphabetSearch = '#ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    const isSmallScreen = window.matchMedia("(max-width: 768px)").matches;
+
 
     return (
       <>
@@ -157,15 +159,18 @@ class NamespaceList extends React.Component {
                 <table className="table table-sm table-striped table-hover table-borderless table-fixed">
                   <thead className="thead-light thead-rounded">
                     <tr>
-                      <th className="narrow text-center">
+                      <th className={`${isSmallScreen ? 'small-wide' : 'narrow'}`}>
                         <i className="icon icon-common icon-list" /> Name
                       </th>
-                      <th className="med text-center">
+                      <th className={`${isSmallScreen ? 'small-narrow' : 'med'} text-center`}>
                         <i className="icon icon-common icon-address-card" /> Prefix
                       </th>
-                      <th className="text-center">
-                        <i className="icon icon-common icon-info" /> Description
-                      </th>
+                      {!isSmallScreen && (
+                        <th className="text-center">
+                          <i className="icon icon-common icon-info" /> Description
+                        </th>
+                      )}
+
                     </tr>
                     </thead>
                     <tbody>

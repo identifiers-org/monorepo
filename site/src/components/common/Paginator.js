@@ -25,9 +25,13 @@ class Paginator extends React.Component {
     const { pageWindow } = this.state;
     const { number = 0, totalPages = 0, size = 0, totalElements = 0, setsize } = this.props;
 
-    const smallOrder1 = window.matchMedia("(max-width: 991px)").matches ? 'order-1' : '';
-    const smallOrder2 = window.matchMedia("(max-width: 991px)").matches ? 'order-2' : '';
-    const smallOrder3 = window.matchMedia("(max-width: 991px)").matches ? 'order-3' : '';
+    const smallerThan = (size) => window.matchMedia(`(max-width: ${size}px)`).matches;
+
+    const smallOrder1 =  smallerThan(991) ? 'order-1' : '';
+    const smallOrder2 =  smallerThan(991) ? 'order-2' : '';
+    const smallOrder3 =  smallerThan(991) ? 'order-3' : '';
+
+    const smallCenter = smallerThan(767) ? 'justify-content-center align-self-center' : '';
 
     // First and last indexes of paginator.
     let firstIndex = Math.max(0, (number - pageWindow));
@@ -49,7 +53,7 @@ class Paginator extends React.Component {
     return (
       <div className="row justify-content-between">
         <div className={`col col-12 col-md-8 col-lg-6 col-xl-6 paginator mb-2 ${smallOrder2}`}>
-          <ul className="pagination pagination-sm m-0">
+          <ul className={`pagination pagination-sm m-0 ${smallCenter}`}>
             <li className={`page-item ${number === 0 ? 'disabled' : ''}`}>
               <a
                 className="page-link"
@@ -112,7 +116,7 @@ class Paginator extends React.Component {
           </span>
         </div>
 
-        <div className={`col col-xs-4 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-2 ${smallOrder3}`}>
+        <div className={`col col-xs-12 col-sm-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-2 ${smallOrder3} ${smallCenter}`}>
           <div className="input-group input-group-sm">
             <div className="input-group-prepend">
               <label className="input-group-text" htmlFor="perPageSelect">Per page</label>
