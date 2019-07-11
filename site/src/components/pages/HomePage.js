@@ -28,7 +28,7 @@ class MainPage extends React.Component {
     } = this;
 
     const isSmallScreen = window.matchMedia("(max-width: 768px)").matches;
-    const boxPadding = isSmallScreen ? 'p-1' : 'p-5';
+    const boxPadding = isSmallScreen ? 'p-3' : 'p-5';
     const searchBarPadding = isSmallScreen ? 'p-1' : 'px-5';
     const topSpacer = isSmallScreen ? '' : 'spacer-8';
 
