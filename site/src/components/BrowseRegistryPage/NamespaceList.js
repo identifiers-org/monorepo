@@ -159,7 +159,7 @@ class NamespaceList extends React.Component {
                 <table className="table table-sm table-striped table-hover table-borderless table-fixed">
                   <thead className="thead-light thead-rounded">
                     <tr>
-                      <th className={`${isSmallScreen ? 'small-wide' : 'narrow'}`}>
+                      <th className={`${isSmallScreen ? 'small-wide' : 'med'}`}>
                         <i className="icon icon-common icon-list" /> Name
                       </th>
                       <th className={`${isSmallScreen ? 'small-narrow' : 'med'} text-center`}>
