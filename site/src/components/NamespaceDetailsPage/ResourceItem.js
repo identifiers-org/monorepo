@@ -9,7 +9,7 @@ const ResourceItem = ({ resource }) => {
       <tbody>
         <tr>
           <td
-            rowSpan="5"
+            rowSpan="6"
             className={`w-20 align-middle ${resource.official ? 'bg-warning' : 'bg-primary text-white'}`}
           >
             <p className="font-weight-bold text-center n-0">{providerCodeLabel}</p>
@@ -37,6 +37,10 @@ const ResourceItem = ({ resource }) => {
         <tr>
           <td className="px-3">Location</td>
           <td>{resource.location.countryName}</td>
+        </tr>
+        <tr>
+          <td className="px-3">Sample Id</td>
+          <td>{resource.sampleId}</td>
         </tr>
       </tbody>
     </table>

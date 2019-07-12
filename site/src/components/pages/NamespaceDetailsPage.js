@@ -95,6 +95,10 @@ class NamespaceDetailsPage extends React.Component {
                   <td>Compact identifier</td>
                   <td>{namespace.prefix}:{'{'}accession number{'}'}</td>
                 </tr>
+                <tr>
+                  <td>Sample Id</td>
+                  <td>{namespace.sampleId}</td>
+                </tr>
               </tbody>
             </table>
           </div>
