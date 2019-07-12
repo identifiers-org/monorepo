@@ -10,12 +10,12 @@ import { setConfig } from '../../actions/Config';
 
 // Utils.
 import { querySplit, completeQuery, evaluateSearch } from '../../utils/identifiers';
+import { isSmallScreen } from '../../utils/responsive';
 
 
 class Search extends React.Component {
   constructor(props) {
     super(props);
-    this.search = React.createRef();
 
     this.state = {
       query: '',
@@ -30,6 +30,9 @@ class Search extends React.Component {
       activeSuggestion: -1,
       namespaceList: []
     }
+
+    this.search = React.createRef();
+    this.suggestionListRef = React.createRef();
   }
 
   componentDidMount() {
@@ -65,9 +68,29 @@ class Search extends React.Component {
     });
   }
 
-
   handleBlurHideSuggestions = () => {this.props.setConfig({showSearchSuggestions: false})};
-  handleFocusShowSuggestions = () => {this.props.setConfig({showSearchSuggestions: true})};
+
+  handleFocusShowSuggestions = () => {
+    const {
+      search,
+      props: { setConfig }
+    } = this;
+
+    setConfig({showSearchSuggestions: true})
+
+    // Also scroll down to take the suggestion bar to the top of screen in small screens.
+    if (isSmallScreen()) {
+      const searchBarYOffset = search.getBoundingClientRect().top + window.pageYOffset - 130;
+      window.scroll({top: searchBarYOffset, behavior: 'smooth'});
+    }
+  };
+
+  // Ref to handle suggestion list scroll when using arrows keys.
+  setSuggestionListRef = (ref) => {
+    if (ref) {
+      this.suggestionListRef = ref;
+    };
+  }
 
   handleChange = () => {
     const { updateNamespaceList } = this;
@@ -84,7 +107,8 @@ class Search extends React.Component {
     const {
       handleChange,
       handleSearch,
-      state: { namespaceList, activeSuggestion, queryParts }
+      state: { namespaceList, activeSuggestion, queryParts },
+      suggestionListRef
     } = this;
 
     switch (e.keyCode) {
@@ -104,6 +128,10 @@ class Search extends React.Component {
     case 38: {  // Up key
       if (this.state.activeSuggestion > -1) {
         this.setState({activeSuggestion: activeSuggestion - 1});
+        // Scroll up to that item.
+        if ((activeSuggestion - 1) * 33 < suggestionListRef.scrollTop) {
+          suggestionListRef.scrollTop -= 33;
+        }
       }
       break;
     }
@@ -111,6 +139,10 @@ class Search extends React.Component {
     case 40: {  // Down key
       if (activeSuggestion < namespaceList.length - 1) {
         this.setState({activeSuggestion: activeSuggestion + 1});
+        // Scroll down to that item.
+        if ((activeSuggestion + 2) * 33 > suggestionListRef.clientHeight) {
+          suggestionListRef.scrollTop += 33;
+        }
       }
       break;
     }
@@ -158,6 +190,7 @@ class Search extends React.Component {
       handleKeyDown,
       handleMouseOver,
       handleSubmit,
+      setSuggestionListRef,
       props: { config },
       state: { activeSuggestion, namespaceList, query, queryParts }
 
@@ -168,12 +201,11 @@ class Search extends React.Component {
         <div className="form-group">
           <div className="input-group">
             <input
-              autoFocus
+              autoFocus={false}
               spellCheck={false}
               className="form-control search-input"
               onChange={handleChange}
               onKeyDown={handleKeyDown}
-              onBlur={handleBlurHideSuggestions}
               onFocus={handleFocusShowSuggestions}
               placeholder="Enter an identifier to resolve it"
               ref={input => this.search = input}
@@ -182,7 +214,6 @@ class Search extends React.Component {
             <div className="input-group-append">
               <button
                 className="btn btn-primary search-button"
-                onBlur={handleBlurHideSuggestions}
                 onFocus={handleFocusShowSuggestions}
               >
                 <i className="icon icon-common icon-search" /> Resolve
@@ -192,6 +223,7 @@ class Search extends React.Component {
               <SearchSuggestions
                 searchSuggestionList={namespaceList}
                 selectedSearchSuggestion={activeSuggestion}
+                setSuggestionListRef={setSuggestionListRef}
                 queryParts={queryParts}
                 mouseOver={handleMouseOver}
                 handleClick={handleClick}

@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 // Components.
 import Search from '../HomePage/Search';
 
+// Utils.
+import { isSmallScreen } from '../../utils/responsive';
+
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -13,9 +16,13 @@ class HomePage extends React.Component {
   render() {
     const { config } = this.props;
 
+    const boxPadding = isSmallScreen() ? 'p-3' : 'p-5';
+    const searchBarPadding = isSmallScreen() ? 'p-1' : 'px-5';
+    const topSpacer = isSmallScreen() ? '' : 'spacer-8';
+
     return (
-      <div className="row border spacer-8">
-        <div className="col col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 p-5">
+      <div className={`row border ${topSpacer}`}>
+        <div className={`col col-12 col-xl-6 ${boxPadding}`}>
           <h1 className="text-primary mb-4">Identifiers.org Resolution Service</h1>
           <div className="d-flex">
             <p className="mb-0 text-justify text-muted">
@@ -32,9 +39,9 @@ class HomePage extends React.Component {
           </div>
         </div>
 
-        <div className="col col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 p-5 bg-light">
-          <h4 className="mt-3 mb-5"><i className="icon icon-common icon-search mr-2" />Resolve a Compact Identifier</h4>
-          <div className="row justify-content-center mt-2">
+        <div className="col col-12 col-xl-6 bg-light">
+          <h4 className={`mt-3 ${boxPadding}`}><i className="icon icon-common icon-search mr-2" />Resolve a Compact Identifier</h4>
+          <div className={`row justify-content-center mt-2 ${searchBarPadding}`}>
             <div className="col col-lg-7 col-xl-12">
               <Search />
             </div>

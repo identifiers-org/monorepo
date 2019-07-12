@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import SearchEvaluator from './SearchEvaluator';
+import { isSmallScreen } from '../../utils/responsive';
 
 
 class SearchSuggestions extends React.Component {
@@ -39,12 +40,12 @@ class SearchSuggestions extends React.Component {
       handleSuggestionLinkClick,
       highlightQuery,
       props: {
-        config,
         handleClick,
         mouseOver,
         queryParts,
         searchSuggestionList,
-        selectedSearchSuggestion
+        selectedSearchSuggestion,
+        setSuggestionListRef
       }
     } = this;
 
@@ -52,6 +53,9 @@ class SearchSuggestions extends React.Component {
     if (searchSuggestionList.length === 0 && queryParts.resource === '' && queryParts.prefix === '' && queryParts.id === '') {
       return '';
     }
+
+    // Resource name conditional tag.
+    const ResourceNameTag = isSmallScreen() ? 'small' : 'p';
 
     return (
       <div className="inline-search-container">
@@ -78,7 +82,7 @@ class SearchSuggestions extends React.Component {
                 </div>
               </div>
 
-              <ul className="suggestion-list pb-2">
+              <ul className="suggestion-list pb-2" ref={ref => setSuggestionListRef(ref)}>
                 {
                   searchSuggestionList.map((result, index) => {
                   return (
@@ -97,11 +101,13 @@ class SearchSuggestions extends React.Component {
                             onClick={() => {handleClick(result)}}
                           >
                             {highlightQuery(result.namespaceEmbeddedInLui ? result.pattern.slice(1).split(':')[0] : result.prefix, queryParts.prefix)}
-                            <p
-                              className={`mb-0 ml-2 ${selectedSearchSuggestion === index ? 'text-white' : ''}`}
+
+                            <ResourceNameTag
+                              className={`mb-0 ml-2 ${selectedSearchSuggestion === index ? 'text-white' : ''} text-ellipsis`}
                             >
                               {result.name}
-                            </p>
+                            </ResourceNameTag>
+
                           </a>
                         </div>
                         <div className="col col-1">

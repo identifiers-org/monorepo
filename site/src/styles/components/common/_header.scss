@@ -70,3 +70,9 @@ nav {
 nav .menu {
   width: 100%;
 }
+
+// Sticky placeholder to avoid jumps when sticky navbar becomes fixed.
+.sticky-placeholder {
+  width: 100%;
+  height: 39px;
+}
