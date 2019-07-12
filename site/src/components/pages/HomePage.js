@@ -1,6 +1,5 @@
 import React from 'react';
 
-import identifiersLogo from '../../assets/identifiers_logo.png';
 import Search from '../HomePage/Search';
 
 
