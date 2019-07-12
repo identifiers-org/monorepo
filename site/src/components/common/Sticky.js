@@ -83,7 +83,7 @@ class Sticky extends React.Component {
     if (!this.state.height || !this.state.width) {
       this.setState({
         height: stickyRect.height,
-        width: stickyRect.height,
+        width: stickyRect.height
       });
     }
 
@@ -91,7 +91,7 @@ class Sticky extends React.Component {
       height: this.state.height || stickyRect.height,
       width: this.state.width || stickyRect.width,
       x: stickyRect.x,
-      y: stickyRect.y,
+      y: stickyRect.y
     };
 
     if (typeof sides.bottom === 'number') {
