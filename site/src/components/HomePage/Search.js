@@ -4,10 +4,14 @@ import SearchSuggestions from './SearchSuggestions';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+// Actions.
 import { getNamespacesFromRegistry } from '../../actions/NamespaceList';
 
+// Config.
 import { config } from '../../config/Config';
 
+// Utils.
+import { isSmallScreen } from '../../utils/responsive';
 import { querySplit } from '../../utils/identifiers';
 
 
@@ -76,7 +80,17 @@ class Search extends React.Component {
     }, () => {
       updateNamespaceList();
     });
-  }
+  };
+
+  handleFocusShowSuggestions = () => {
+    const { search } = this;
+
+    // Also scroll down to take the suggestion bar to the top of screen in small screens.
+    if (isSmallScreen()) {
+      const searchBarYOffset = search.getBoundingClientRect().top + window.pageYOffset - 130;
+      window.scroll({top: searchBarYOffset, behavior: 'smooth'});
+    }
+  };
 
   handleKeyDown = (e) => {
     const {
@@ -128,7 +142,7 @@ class Search extends React.Component {
 
   render() {
     const {
-      handleChange, handleKeyDown, handleMouseOver, handleSubmit, handleSuggestionClick,
+      handleChange, handleFocusShowSuggestions, handleKeyDown, handleMouseOver, handleSubmit, handleSuggestionClick,
       state: {namespaceList, activeSuggestion, query, queryParts}
     } = this;
 
@@ -137,11 +151,12 @@ class Search extends React.Component {
         <div className="form-group">
           <div className="input-group inline-search-input-group">
             <input
-              autoFocus
+              autoFocus={!isSmallScreen()}
               className="form-control search-input"
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               placeholder="Enter a namespace to search the registry"
+              onFocus={handleFocusShowSuggestions}
               ref={input => this.search = input}
               value={query}
             />
