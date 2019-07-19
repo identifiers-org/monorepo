@@ -201,7 +201,7 @@ class Search extends React.Component {
         <div className="form-group">
           <div className="input-group">
             <input
-              autoFocus={false}
+              autoFocus={!isSmallScreen()}
               spellCheck={false}
               className="form-control search-input"
               onChange={handleChange}
