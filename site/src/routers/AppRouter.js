@@ -18,6 +18,9 @@ import NamespaceDetailsPage from '../components/pages/NamespaceDetailsPage';
 import NotFoundPage from '../components/pages/NotFoundPage';
 import PrefixRegistrationRequestPage from '../components/pages/PrefixRegistrationRequestPage';
 
+// Router.
+import PrivateRoute from './privateRoute';
+
 
 const AppRouter = () => (
   <BrowserRouter>
@@ -29,9 +32,9 @@ const AppRouter = () => (
           <Route exact path="/registry" component={BrowseRegistryPage} />
           <Route exact path="/registry/:prefix" component={NamespaceDetailsPage} />
           <Route exact path="/prefixregistrationrequest" component={PrefixRegistrationRequestPage} />
-          {config.enableAuthFeatures && <Route exact path="/curator" component={CuratorDashboardPage} />}
-          {config.enableAuthFeatures && <Route exact path="/curator/:id" component={ManagePrefixRegistrationRequestPage} />}
-          {config.enableAuthFeatures && <Route path="/account" component={AccountPage} />}
+          {config.enableAuthFeatures && <PrivateRoute exact path="/curator" component={CuratorDashboardPage} />}
+          {config.enableAuthFeatures && <PrivateRoute exact path="/curator/:id" component={ManagePrefixRegistrationRequestPage} />}
+          {config.enableAuthFeatures && <PrivateRoute path="/account" component={AccountPage} />}
           <Route component={NotFoundPage} />
         </Switch>
       </div>
