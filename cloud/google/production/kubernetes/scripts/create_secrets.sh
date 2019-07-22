@@ -26,4 +26,5 @@ for secret in $( cat $path_file_config | $JQ -c ".[]" ); do
         done
     done
     loginfo "[COMMAND] $kubectl_command"
+    $kubectl_command
 done
