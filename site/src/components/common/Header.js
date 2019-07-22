@@ -132,6 +132,7 @@ class Header extends React.Component {
                               </EBINavItem>
                             </>
                           ) : ( // If logged in.
+                            //TODO: RoleComponent <- wrapper
                             <>
                               <EBINavItem className="nav-item">
                                 <NavLink to="/curator" className="nav-link" activeClassName="active">

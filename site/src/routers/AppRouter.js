@@ -32,9 +32,9 @@ const AppRouter = () => (
           <Route exact path="/registry" component={BrowseRegistryPage} />
           <Route exact path="/registry/:prefix" component={NamespaceDetailsPage} />
           <Route exact path="/prefixregistrationrequest" component={PrefixRegistrationRequestPage} />
-          {config.enableAuthFeatures && <PrivateRoute exact path="/curator" component={CuratorDashboardPage} />}
-          {config.enableAuthFeatures && <PrivateRoute exact path="/curator/:id" component={ManagePrefixRegistrationRequestPage} />}
-          {config.enableAuthFeatures && <PrivateRoute path="/account" component={AccountPage} />}
+          {config.enableAuthFeatures && <PrivateRoute exact path="/curator" component={CuratorDashboardPage} requiredRoles={['curationDashboard']} />}
+          {config.enableAuthFeatures && <PrivateRoute exact path="/curator/:id" component={ManagePrefixRegistrationRequestPage} requiredRoles={['curationDashboard']} />}
+          {config.enableAuthFeatures && <PrivateRoute path="/account" component={AccountPage} requiredRoles={['curationDashboard']} />}
           <Route component={NotFoundPage} />
         </Switch>
       </div>
