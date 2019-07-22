@@ -1,22 +1,22 @@
-# HQ MIR ID Controller Service (node port based internal load balancer)
+# NGINX based HTTP(S) request headers echo service (node port based internal LB)
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 apiVersion: v1
 kind: Service
 metadata:
-    name: nodeport-mirid-controller
+    name: nodeport-nginx-echo-headers
     #annotations:
     #    cloud.google.com/neg: '{"ingress": true}'
     labels:
-        environment: production
+        environment: development
         tier: api
-        app: mirid-controller
+        app: nginx-echo-headers
         deployment: hq
 spec:
     ports:
-    - port: 8181
+    - port: 8080
     selector:
-        environment: production
+        environment: development
         tier: api
-        app: mirid-controller
+        app: nginx-echo-headers
         deployment: hq
     type: NodePort
