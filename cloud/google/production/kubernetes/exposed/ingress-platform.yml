@@ -43,3 +43,10 @@ spec:
               - backend:
                   serviceName: nodeport-keycloak
                   servicePort: 8080
+    # Testing endpoint
+    - host: test.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: nodeport-test
+                  servicePort: 8080
