@@ -129,9 +129,6 @@ class Header extends React.Component {
                                 <a href="#!" onClick={handleClickSignIn}>
                                   <i className="icon icon-common icon-icon-sign-in-alt mr-1" />Sign in
                                 </a>
-                                {/* <NavLink to="/signin" className="nav-link" activeClassName="active">
-                                  <i className="icon icon-common icon-icon-sign-in-alt mr-1" />Sign in
-                                </NavLink> */}
                               </EBINavItem>
                             </>
                           ) : ( // If logged in.
@@ -150,9 +147,6 @@ class Header extends React.Component {
                                 <a href="#!" onClick={handleClickSignOut}>
                                   <i className="icon icon-common icon-icon-sign-out-alt mr-1" />Sign out
                                 </a>
-                                {/* <NavLink to="/signout" className="nav-link" activeClassName="active">
-                                  <i className="icon icon-common icon-sign-out-alt mr-1" />Sign out
-                                </NavLink> */}
                               </EBINavItem>
                             </>
                           )
