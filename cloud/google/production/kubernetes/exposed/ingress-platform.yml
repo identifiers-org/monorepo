@@ -10,7 +10,7 @@ metadata:
         app: hq-deployment
     annotations:
         kubernetes.io/ingress.class: "gce"
-        kubernetes.io/ingress.global-static-ip-name: ipaddr-iorg-hq-production
+        kubernetes.io/ingress.global-static-ip-name: idorg-hq
         ingress.gcp.kubernetes.io/pre-shared-cert: 'cert-iorg-hq-production-web,cert-iorg-hq-production-auth,cert-iorg-hq-production-api-registry,cert-iorg-hq-production-api-mirid'
         kubernetes.io/ingress.allow-http: "false"
 spec:
