@@ -10,7 +10,7 @@
     </parent>
     <groupId>org.identifiers.cloud.hq.ws</groupId>
     <artifactId>mirid-controller</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
     <name>mirid-controller</name>
     <description>MIR ID Controller, for centralisation of MIR ID lifecycle</description>
 
