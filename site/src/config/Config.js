@@ -15,7 +15,7 @@ export const config = {
 
   suggestionListSize: 10,
 
-  baseUrl: window.location.protocol + '//' + window.location.hostname + ':' + location.port + '/',
+  baseUrl: `${window.location.protocol}//${window.location.hostname}${location.port ? ':' + location.port : ''}/`,
 
   apiVersion: '1.0',
 
