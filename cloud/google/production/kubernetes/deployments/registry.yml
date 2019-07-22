@@ -54,7 +54,7 @@ spec:
                         topologyKey: "kubernetes.io/hostname"
             containers:
                 - name: cloud-hq-ws-registry
-                  image: identifiersorg/cloud-hq-ws-registry:1.0.14
+                  image: identifiersorg/cloud-hq-ws-registry:1.0.15
                   resources:
                       requests:
                           memory: 420Mi
