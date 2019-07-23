@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+// Components.
+import RoleConditional from '../common/RoleConditional';
+
 
 const NamespaceItem = (namespace) => {
   const isSmallScreen = window.matchMedia("(max-width: 768px)").matches;
@@ -22,7 +25,18 @@ const NamespaceItem = (namespace) => {
         </td>
         {!isSmallScreen && (
           <td>
-            <p className="small m-0">{namespace.description}</p>
+            <div className="d-flex justify-content-between">
+              <p className="small m-0">{namespace.description}</p>
+              <RoleConditional requiredRoles={['editNamespace']}>
+                <Link to={`/registry/${namespace.prefix}?editNamespace=true`}>
+                  <button
+                    className="btn btn-sm btn-success ml-3 edit-button"
+                    >
+                    <i className="icon icon-common icon-edit mr-1" />Edit namespace
+                  </button>
+                </Link>
+              </RoleConditional>
+            </div>
           </td>
         )}
       </tr>
