@@ -22,7 +22,10 @@ class NamespaceDetailsPage extends React.Component {
     super(props);
 
     const params = new URLSearchParams(props.location.search);
-    this.state = {editNamespace: params.get('editNamespace') === 'true' || false}
+    this.state = {
+      editNamespace: params.get('editNamespace') === 'true' || false,
+      namespaceFieldsChanged: new Set()
+    }
   }
 
 
@@ -32,8 +35,27 @@ class NamespaceDetailsPage extends React.Component {
   }
 
 
+  //
+  // Field manipulation handler. Undefined 'value' field will revert to default.
+  //
   handleChangeField = (field, value) => {
-    console.log('change', field, value);
+    const namespace = this.props.namespaceList[0];
+
+    // Add/remove field to changed list if modified/reset, so it is validated or not when clicked on the perform
+    // validation button.
+    if (namespace[field] !== value) {
+      this.setState(prevState => ({namespaceFieldsChanged: prevState.namespaceFieldsChanged.add(field)}));
+    } else {
+      this.setState(prevState => {
+        prevState.namespaceFieldsChanged.delete(field);
+        return {namespaceFieldsChanged: prevState.namespaceFieldsChanged}
+      });
+    }
+  }
+
+
+  handleClickCommitChangesButton = () => {
+    console.log('commit changes');
   }
 
   handleClickDiscardChangesButton = async () => {
@@ -49,16 +71,24 @@ class NamespaceDetailsPage extends React.Component {
     }
   }
 
+  handleClickValidateChangesButton = () => {
+    console.log('validate changes');
+  }
+
   handleClickEditButton = () => {
     this.setState({editNamespace: true});
   }
+
+  // TODO: create model for changes, and validate / commit.
 
 
   render() {
     const {
       handleChangeField,
+      handleClickCommitChangesButton,
       handleClickDiscardChangesButton,
       handleClickEditButton,
+      handleClickValidateChangesButton,
       state: { editNamespace }
     } = this;
 
@@ -75,16 +105,30 @@ class NamespaceDetailsPage extends React.Component {
         />
 
         {editNamespace ? (
-          <button
-          className="btn btn-sm btn-danger edit-button mb-3"
-          onClick={handleClickDiscardChangesButton}
-          >
-            Discard changes
-          </button>
+          <>
+            <button
+              className="btn btn-sm btn-warning edit-button mb-3 mr-2"
+              onClick={handleClickValidateChangesButton}
+            >
+              <i className="icon icon-common icon-check mr-1" />Perform validation
+            </button>
+            <button
+              className="btn btn-sm btn-success edit-button mb-3 mr-2"
+              onClick={handleClickCommitChangesButton}
+            >
+              <i className="icon icon-common icon-save" /> Commit changes
+            </button>
+            <button
+              className="btn btn-sm btn-danger edit-button mb-3"
+              onClick={handleClickDiscardChangesButton}
+            >
+              <i className="icon icon-common icon-times" /> Discard changes
+            </button>
+          </>
         ) : (
           <button
-          className="btn btn-sm btn-success edit-button mb-3"
-          onClick={handleClickEditButton}
+            className="btn btn-sm btn-success edit-button mb-3"
+            onClick={handleClickEditButton}
           >
             <i className="icon icon-common icon-edit mr-1"/>Edit namespace
           </button>
