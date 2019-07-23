@@ -3,12 +3,8 @@ import { connect } from 'react-redux';
 
 
 const RoleConditional = ({ auth, children, requiredRoles, fallbackComponent }) => {
-  console.log('auth', auth);
-
   if (auth.authenticated) {
     const rolesMet = requiredRoles.map(role => auth.keycloak.hasResourceRole(role));
-
-    console.log('rolesMet', rolesMet);
 
     if (!rolesMet.includes(false)) {
       const child = React.Children.only(children);
