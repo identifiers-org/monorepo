@@ -5,7 +5,7 @@ const defaultState = {
   additionalInformation: undefined
 };
 
-const PrefixRegistrationSessionCommentReducer = (state = defaultState, action) => {
+const prefixRegistrationSessionCommentReducer = (state = defaultState, action) => {
   switch (action.type) {
   case 'SET_PREFIXREGISTRATIONSESSIONCOMMENT': {
     return {
@@ -21,4 +21,4 @@ const PrefixRegistrationSessionCommentReducer = (state = defaultState, action) =
 }
 
 
-export default PrefixRegistrationSessionCommentReducer;
+export default prefixRegistrationSessionCommentReducer;

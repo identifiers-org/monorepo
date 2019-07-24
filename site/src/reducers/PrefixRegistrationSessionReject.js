@@ -5,7 +5,7 @@ const defaultState = {
   additionalInformation: undefined
 };
 
-const PrefixRegistrationSessionRejectReducer = (state = defaultState, action) => {
+const prefixRegistrationSessionRejectReducer = (state = defaultState, action) => {
   switch (action.type) {
   case 'SET_PREFIXREGISTRATIONSESSIONREJECT': {
     return {
@@ -21,4 +21,4 @@ const PrefixRegistrationSessionRejectReducer = (state = defaultState, action) =>
 }
 
 
-export default PrefixRegistrationSessionRejectReducer;
+export default prefixRegistrationSessionRejectReducer;

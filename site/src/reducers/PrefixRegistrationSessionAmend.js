@@ -23,7 +23,7 @@ const defaultState = {
   requesterEmail: undefined
 };
 
-const PrefixRegistrationSessionAmendReducer = (state = defaultState, action) => {
+const prefixRegistrationSessionAmendReducer = (state = defaultState, action) => {
   switch (action.type) {
   case 'SET_PREFIXREGISTRATIONSESSIONAMENDFIELD': {
     return { ...state, [action.field]: action.value };
@@ -61,4 +61,4 @@ const PrefixRegistrationSessionAmendReducer = (state = defaultState, action) => 
 }
 
 
-export default PrefixRegistrationSessionAmendReducer;
+export default prefixRegistrationSessionAmendReducer;

@@ -8,7 +8,7 @@ const defaultState = {
   prefixRegistrationSessionEvents: []
 };
 
-const PrefixRegistrationSessionReducer = (state = defaultState, action) => {
+const prefixRegistrationSessionReducer = (state = defaultState, action) => {
   switch (action.type) {
 
   case 'SET_PREFIXREGISTRATIONSESSION':
@@ -20,4 +20,4 @@ const PrefixRegistrationSessionReducer = (state = defaultState, action) => {
 }
 
 
-export default PrefixRegistrationSessionReducer;
+export default prefixRegistrationSessionReducer;
