@@ -151,41 +151,49 @@ class NamespaceDetailsPage extends React.Component {
         />
 
         {editNamespace ? (
-          <RoleConditional
-            requiredRoles={['editNamespace']}
-          >
-            <>
-              <button
-                className="btn btn-sm btn-warning edit-button mb-3 mr-2"
-                onClick={handleClickValidateChangesButton}
+          <div className="row mb-3">
+            <div className="col">
+              <RoleConditional
+                requiredRoles={['editNamespace']}
               >
-                <i className="icon icon-common icon-check mr-1" />Perform validation
-              </button>
-              <button
-                className="btn btn-sm btn-success edit-button mb-3 mr-2"
-                onClick={handleClickCommitChangesButton}
-              >
-                <i className="icon icon-common icon-save" /> Commit changes
-              </button>
-              <button
-                className="btn btn-sm btn-danger edit-button mb-3"
-                onClick={handleClickDiscardChangesButton}
-              >
-                <i className="icon icon-common icon-times" /> Discard changes
-              </button>
-            </>
-          </RoleConditional>
+                <>
+                  <button
+                    className="btn btn-sm btn-warning edit-button mr-2"
+                    onClick={handleClickValidateChangesButton}
+                  >
+                    <i className="icon icon-common icon-tasks mr-1" />Perform validation
+                  </button>
+                  <button
+                    className="btn btn-sm btn-success edit-button mr-2"
+                    onClick={handleClickCommitChangesButton}
+                  >
+                    <i className="icon icon-common icon-check" /> Commit changes
+                  </button>
+                  <button
+                    className="btn btn-sm btn-danger edit-button"
+                    onClick={handleClickDiscardChangesButton}
+                  >
+                    <i className="icon icon-common icon-times" /> Discard changes
+                  </button>
+                </>
+              </RoleConditional>
+            </div>
+          </div>
         ) : (
-          <RoleConditional
-            requiredRoles={['editNamespace']}
-          >
-            <button
-              className="btn btn-sm btn-success edit-button mb-3"
-              onClick={handleClickEditButton}
-            >
-              <i className="icon icon-common icon-edit mr-1"/>Edit namespace
-            </button>
-          </RoleConditional>
+          <div className="row mb-3">
+            <div className="col">
+              <RoleConditional
+                requiredRoles={['editNamespace']}
+                >
+                <button
+                  className="btn btn-sm btn-success edit-button"
+                  onClick={handleClickEditButton}
+                  >
+                  <i className="icon icon-common icon-edit mr-1"/>Edit namespace
+                </button>
+              </RoleConditional>
+            </div>
+          </div>
         )}
 
         <div className="row">
@@ -319,19 +327,22 @@ class NamespaceDetailsPage extends React.Component {
           </div>
         </div>
 
-        <div className="row">
-          <div className="col overflow-y-scroll">
-            {
-              !namespace.resources && 'No resources' ||
-                namespace.resources.map(resource =>
-                  <ResourceItem
-                    key={`resource-${resource.mirId}`}
-                    resource={resource}
-                  />
-                )
-            }
-          </div>
-        </div>
+        {
+          !namespace.resources && (
+            <div className="row">
+              <div className="col">
+                <p>No resources.</p>
+              </div>
+            </div>
+          ) || (
+            namespace.resources.map(resource =>
+              <ResourceItem
+                key={`resource-${resource.mirId}`}
+                resource={resource}
+              />
+            )
+          )
+        }
       </>
     );
   }
