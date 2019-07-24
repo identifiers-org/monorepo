@@ -9,12 +9,13 @@ import namespaceListParamsReducer from '../reducers/NamespaceListParams';
 import prefixRegistrationRequestFieldReducer from '../reducers/PrefixRegistrationRequestField';
 import prefixRegistrationSessionListReducer from '../reducers/PrefixRegistrationSessionList';
 import prefixRegistrationSessionListParamsReducer from '../reducers/PrefixRegistrationSessionListParams';
-import PrefixRegistrationSessionReducer from '../reducers/PrefixRegistrationSession';
-import PrefixRegistrationSessionAcceptReducer from '../reducers/PrefixRegistrationSessionAccept';
-import PrefixRegistrationSessionAmendReducer from '../reducers/PrefixRegistrationSessionAmend';
-import PrefixRegistrationSessionCommentReducer from '../reducers/PrefixRegistrationSessionComment';
-import PrefixRegistrationSessionRejectReducer from '../reducers/PrefixRegistrationSessionReject';
+import prefixRegistrationSessionReducer from '../reducers/PrefixRegistrationSession';
+import prefixRegistrationSessionAcceptReducer from '../reducers/PrefixRegistrationSessionAccept';
+import prefixRegistrationSessionAmendReducer from '../reducers/PrefixRegistrationSessionAmend';
+import prefixRegistrationSessionCommentReducer from '../reducers/PrefixRegistrationSessionComment';
+import prefixRegistrationSessionRejectReducer from '../reducers/PrefixRegistrationSessionReject';
 import locationListReducer from '../reducers/LocationList';
+import namespacePatchReducer from '../reducers/NamespacePatchReducer';
 
 // Middlewares.
 // TODO: Convert validator to middleware.
@@ -35,12 +36,13 @@ const store = createStore(
     curatorDashboard: combineReducers({
       prefixRegistrationSessionList: prefixRegistrationSessionListReducer,
       prefixRegistrationSessionListParams: prefixRegistrationSessionListParamsReducer,
-      prefixRegistrationSession: PrefixRegistrationSessionReducer,
-      prefixRegistrationSessionAccept: PrefixRegistrationSessionAcceptReducer,
-      prefixRegistrationSessionAmend: PrefixRegistrationSessionAmendReducer,
-      prefixRegistrationSessionComment: PrefixRegistrationSessionCommentReducer,
-      prefixRegistrationSessionReject: PrefixRegistrationSessionRejectReducer
+      prefixRegistrationSession: prefixRegistrationSessionReducer,
+      prefixRegistrationSessionAccept: prefixRegistrationSessionAcceptReducer,
+      prefixRegistrationSessionAmend: prefixRegistrationSessionAmendReducer,
+      prefixRegistrationSessionComment: prefixRegistrationSessionCommentReducer,
+      prefixRegistrationSessionReject: prefixRegistrationSessionRejectReducer
     }),
+    curatorEditNamespace: namespacePatchReducer,
     locationList: locationListReducer,
     prefixRegistrationRequestForm: combineReducers({
       name: prefixRegistrationRequestFieldReducer('name'),
