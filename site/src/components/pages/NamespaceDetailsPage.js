@@ -15,7 +15,7 @@ import RoleConditional from '../common/RoleConditional';
 import { config } from '../../config/Config';
 
 // Utils.
-import { swalConfirmation, failureToast, successToast } from '../../utils/swalDialogs';
+import { swalConfirmation, failureToast, successToast, infoToast } from '../../utils/swalDialogs';
 
 
 class NamespaceDetailsPage extends React.Component {
@@ -79,6 +79,11 @@ class NamespaceDetailsPage extends React.Component {
       props: { patchNamespace }
     } = this;
 
+    if (namespaceFieldsChanged.size === 0) {
+      infoToast('No changes to commit');
+      return;
+    }
+
     const result = await swalConfirmation.fire({
       title: 'Confirm changes to namespace',
       text: `Changed fields: ${[...namespaceFieldsChanged].join(', ')}`,
@@ -92,7 +97,8 @@ class NamespaceDetailsPage extends React.Component {
       if (result.status === 200) {
         successToast('Changed committed successfully');
         await this.props.getNamespaceFromRegistry(this.props.match.params.prefix);
-        this.setState({editNamespace: false});
+        await this.props.getResourcesFromRegistry(this.props.namespaceList[0]);
+        this.setState({editNamespace: false, namespaceFieldsChanged: new Set()});
       } else {
         failureToast('Error committing changes');
       }
@@ -132,6 +138,7 @@ class NamespaceDetailsPage extends React.Component {
     } = this;
 
     const namespace = this.props.namespaceList[0];
+    const sampleUrl = namespace ? `${config.satelliteUrl}/${namespace.prefix}:${namespace.sampleId}` : '';
 
     return !namespace ? (
       '' // Placeholder for empty/not found.
@@ -273,12 +280,16 @@ class NamespaceDetailsPage extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td>URI</td>
+                  <td>Registry URI</td>
                   <td>{config.baseUrl}registry/{namespace.prefix}</td>
                 </tr>
                 <tr>
-                  <td>Compact identifier</td>
-                  <td>{namespace.prefix}:{'{'}accession number{'}'}</td>
+                  <td>Sample URL</td>
+                  <td><a href={sampleUrl} target="_blank" rel="noopener noreferrer">{sampleUrl}</a></td>
+                </tr>
+                <tr>
+                  <td>Sample Compact identifier</td>
+                  <td>{namespace.prefix}:{namespace.sampleId}</td>
                 </tr>
                 <tr>
                   <td>Sample Id</td>
