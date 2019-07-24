@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 // Actions.
 import { getNamespaceFromRegistry, getResourcesFromRegistry } from '../../actions/NamespaceList';
+import { setNamespacePatch, setNamespacePatchField, patchNamespace } from '../../actions/NamespacePatch';
 
 // Components.
 import PageTitle from '../common/PageTitle';
@@ -14,7 +15,7 @@ import RoleConditional from '../common/RoleConditional';
 import { config } from '../../config/Config';
 
 // Utils.
-import { swalConfirmation } from '../../utils/swalDialogs';
+import { swalConfirmation, failureToast, successToast } from '../../utils/swalDialogs';
 
 
 class NamespaceDetailsPage extends React.Component {
@@ -22,9 +23,12 @@ class NamespaceDetailsPage extends React.Component {
     super(props);
 
     const params = new URLSearchParams(props.location.search);
+
     this.state = {
       editNamespace: params.get('editNamespace') === 'true' || false,
-      namespaceFieldsChanged: new Set()
+      namespaceId: undefined,
+      namespaceFieldsChanged: new Set(),
+      newNamespace: this.props.newNamespace
     }
   }
 
@@ -32,6 +36,13 @@ class NamespaceDetailsPage extends React.Component {
   async componentDidMount() {
     await this.props.getNamespaceFromRegistry(this.props.match.params.prefix);
     await this.props.getResourcesFromRegistry(this.props.namespaceList[0]);
+
+    // Prepares model for namespace patching.
+    const {resources, _links, ...newNamespace} = this.props.namespaceList[0];
+    const namespaceId = _links.self.href.split('/').pop();
+
+    this.setState({namespaceId, newNamespace});
+    this.props.setNamespacePatch(namespaceId, newNamespace);
   }
 
 
@@ -44,18 +55,48 @@ class NamespaceDetailsPage extends React.Component {
     // Add/remove field to changed list if modified/reset, so it is validated or not when clicked on the perform
     // validation button.
     if (namespace[field] !== value) {
-      this.setState(prevState => ({namespaceFieldsChanged: prevState.namespaceFieldsChanged.add(field)}));
+      this.setState(prevState => ({
+        namespaceFieldsChanged: prevState.namespaceFieldsChanged.add(field),
+        newNamespace: {...this.state.newNamespace, [field]: value}
+      }));
     } else {
       this.setState(prevState => {
         prevState.namespaceFieldsChanged.delete(field);
-        return {namespaceFieldsChanged: prevState.namespaceFieldsChanged}
+        return {
+          namespaceFieldsChanged: prevState.namespaceFieldsChanged,
+          newNamespace: {...this.state.newNamespace, [field]: namespace[field]}
+        };
       });
     }
+
+    this.props.setNamespacePatchField(field, value);
   }
 
 
-  handleClickCommitChangesButton = () => {
-    console.log('commit changes');
+  handleClickCommitChangesButton = async () => {
+    const {
+      state: { namespaceId, namespaceFieldsChanged, newNamespace },
+      props: { patchNamespace }
+    } = this;
+
+    const result = await swalConfirmation.fire({
+      title: 'Confirm changes to namespace',
+      text: `Changed fields: ${[...namespaceFieldsChanged].join(', ')}`,
+      confirmButtonText: 'Commit changes',
+      cancelButtonText: 'Cancel'
+    });
+
+    if (result.value) {
+      const result = await patchNamespace(namespaceId, newNamespace);
+
+      if (result.status === 200) {
+        successToast('Changed committed successfully');
+        await this.props.getNamespaceFromRegistry(this.props.match.params.prefix);
+        this.setState({editNamespace: false});
+      } else {
+        failureToast('Error committing changes');
+      }
+    }
   }
 
   handleClickDiscardChangesButton = async () => {
@@ -78,8 +119,6 @@ class NamespaceDetailsPage extends React.Component {
   handleClickEditButton = () => {
     this.setState({editNamespace: true});
   }
-
-  // TODO: create model for changes, and validate / commit.
 
 
   render() {
@@ -105,33 +144,41 @@ class NamespaceDetailsPage extends React.Component {
         />
 
         {editNamespace ? (
-          <>
-            <button
-              className="btn btn-sm btn-warning edit-button mb-3 mr-2"
-              onClick={handleClickValidateChangesButton}
-            >
-              <i className="icon icon-common icon-check mr-1" />Perform validation
-            </button>
-            <button
-              className="btn btn-sm btn-success edit-button mb-3 mr-2"
-              onClick={handleClickCommitChangesButton}
-            >
-              <i className="icon icon-common icon-save" /> Commit changes
-            </button>
-            <button
-              className="btn btn-sm btn-danger edit-button mb-3"
-              onClick={handleClickDiscardChangesButton}
-            >
-              <i className="icon icon-common icon-times" /> Discard changes
-            </button>
-          </>
-        ) : (
-          <button
-            className="btn btn-sm btn-success edit-button mb-3"
-            onClick={handleClickEditButton}
+          <RoleConditional
+            requiredRoles={['editNamespace']}
           >
-            <i className="icon icon-common icon-edit mr-1"/>Edit namespace
-          </button>
+            <>
+              <button
+                className="btn btn-sm btn-warning edit-button mb-3 mr-2"
+                onClick={handleClickValidateChangesButton}
+              >
+                <i className="icon icon-common icon-check mr-1" />Perform validation
+              </button>
+              <button
+                className="btn btn-sm btn-success edit-button mb-3 mr-2"
+                onClick={handleClickCommitChangesButton}
+              >
+                <i className="icon icon-common icon-save" /> Commit changes
+              </button>
+              <button
+                className="btn btn-sm btn-danger edit-button mb-3"
+                onClick={handleClickDiscardChangesButton}
+              >
+                <i className="icon icon-common icon-times" /> Discard changes
+              </button>
+            </>
+          </RoleConditional>
+        ) : (
+          <RoleConditional
+            requiredRoles={['editNamespace']}
+          >
+            <button
+              className="btn btn-sm btn-success edit-button mb-3"
+              onClick={handleClickEditButton}
+            >
+              <i className="icon icon-common icon-edit mr-1"/>Edit namespace
+            </button>
+          </RoleConditional>
         )}
 
         <div className="row">
@@ -283,15 +330,18 @@ class NamespaceDetailsPage extends React.Component {
 // Mapping
 const mapStateToProps = (state) => {
   return ({
-    namespaceList: state.registryBrowser.namespaceList
+    namespaceList: state.registryBrowser.namespaceList,
+    newNamespace: state.curatorEditNamespace
   })
 };
 
 const mapDispatchToProps = dispatch => ({
   getNamespaceFromRegistry: (prefix) => dispatch(getNamespaceFromRegistry(prefix)),
-  getResourcesFromRegistry: (namespace) => dispatch(getResourcesFromRegistry(namespace))
+  getResourcesFromRegistry: (namespace) => dispatch(getResourcesFromRegistry(namespace)),
+  setNamespacePatch: (id, namespace) => dispatch(setNamespacePatch(id, namespace)),
+  setNamespacePatchField: (field, value) => dispatch(setNamespacePatchField(field, value)),
+  patchNamespace: (id, newNamespace) => dispatch(patchNamespace(id, newNamespace))
 });
 
 
 export default connect (mapStateToProps, mapDispatchToProps)(NamespaceDetailsPage);
-
