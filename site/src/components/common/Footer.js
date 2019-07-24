@@ -22,7 +22,7 @@ class Footer extends React.Component {
             <p className="mb-0">
               <small>
                 <span>Identifiers.org is an ELIXIR Interoperability Platform resource </span>
-                <a href="https://elixir-europe.org/platforms/interoperability" target="_blank" className="text-primary">Learn more</a>
+                <a href="https://elixir-europe.org/platforms/interoperability" target="_blank" rel="noopener noreferrer" className="text-primary">Learn more</a>
               </small>
             </p>
           </div>
