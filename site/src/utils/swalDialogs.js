@@ -6,6 +6,7 @@ export const swalConfirmation = Swal.mixin({
     cancelButton: 'btn btn-danger mx-2',
     confirmButton: 'btn btn-success mx-2'
   },
+  backdrop: true,
   buttonsStyling: false,
   cancelButtonText: 'Cancel',
   confirmButtonText: 'Confirm',
