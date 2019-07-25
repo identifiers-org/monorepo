@@ -1,4 +1,4 @@
-// Locations List reducer
+// Location List reducer
 
 const defaultState = [];
 
