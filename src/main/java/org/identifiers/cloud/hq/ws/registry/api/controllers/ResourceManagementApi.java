@@ -22,5 +22,16 @@ public class ResourceManagementApi {
     @Autowired
     private ResourceManagementApiModel model;
 
+
+    // TODO --- Resource Registration Request Management ---
+    // TODO Resource Registration Request
+    // TODO Resource Registration Session, amend
+    // TODO Resource Registration Session, comment
+    // TODO Resource Registration Session, reject
+    // TODO Resource Registration Session, accept
+
+    // TODO --- Resource Registration Request Validation ---
+
+    // TODO --- Resource Lifecycle Management
     // TODO
 }
