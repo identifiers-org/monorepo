@@ -4,6 +4,7 @@ import thunk from 'redux-thunk';
 // Reducers.
 import authReducer from '../reducers/Auth';
 import configReducer from '../reducers/ConfigReducer';
+import institutionListReducer from '../reducers/InstitutionList';
 import locationListReducer from '../reducers/LocationList';
 import namespaceListReducer from '../reducers/NamespaceList';
 import namespaceListParamsReducer from '../reducers/NamespaceListParams';
@@ -46,6 +47,7 @@ const store = createStore(
     curatorEditNamespace: namespacePatchReducer,
     curatorEditResource: resourcePatchReducer,
     locationList: locationListReducer,
+    institutionList: institutionListReducer,
     prefixRegistrationRequestForm: combineReducers({
       name: prefixRegistrationRequestFieldReducer('name'),
       description: prefixRegistrationRequestFieldReducer('description'),
