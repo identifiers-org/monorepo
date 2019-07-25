@@ -44,6 +44,7 @@ public class Namespace {
     private String prefix;
 
     // MIR ID associated with this namespace
+    // TODO updates to this field should not be allowed via the REST repository (https://github.com/identifiers-org/cloud-hq-ws-registry/issues/45)
     @Column(nullable = false, unique = true)
     private String mirId;
 
@@ -96,6 +97,7 @@ public class Namespace {
     // ':', and putting the 'PR' part followed by either '_' or ':', we can deal with this YASC (Yet Another Special
     // Case) of PIDs
     // P.S.: LUI (Locally Unique Identifiers), https://www.biorxiv.org/content/10.1101/101279v1.full
+    // TODO This is possible to be modified here, but we need to remind the curator that provider pattern URLs should be updated as well.
     @Column(nullable = false)
     private boolean namespaceEmbeddedInLui = false;
 
