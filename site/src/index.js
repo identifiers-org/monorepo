@@ -6,8 +6,9 @@ import { Provider } from 'react-redux';
 import store from './store/store';
 
 // Actions.
-import { getLocationListFromRegistry } from './actions/LocationList';
 import { authInit } from './actions/Auth';
+import { getInstitutionsListFromRegistry } from './actions/InstitutionList';
+import { getLocationListFromRegistry } from './actions/LocationList';
 
 // Routers.
 import AppRouter from './routers/AppRouter';
@@ -28,6 +29,8 @@ const jsx = (
 (async () => {
   // Get locations.
   await store.dispatch(getLocationListFromRegistry());
+  // Get institutions.
+  await store.dispatch(getInstitutionsListFromRegistry());
 
   // Init auth.
   store.getState().config.enableAuthFeatures && await store.dispatch(authInit());
