@@ -1,7 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
 import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestValidate;
+import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixValidate;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponse;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixPayload;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseValidateRequest;
@@ -116,7 +116,7 @@ public class PrefixRegistrationRequestValidationApiModel {
         response.setPayload(payload);
     }
 
-    private ServiceResponseValidateRequest doValidation(ServiceRequestValidate request,
+    private ServiceResponseValidateRequest doValidation(ServiceRequestRegisterPrefixValidate request,
                                                         PrefixRegistrationRequestValidator validator) {
         // TODO - Check API version information?
         ServiceResponseValidateRequest response = new ServiceResponseValidateRequest();
@@ -137,83 +137,83 @@ public class PrefixRegistrationRequestValidationApiModel {
     }
 
     // -- API --
-    public ServiceResponseValidateRequest validateName(ServiceRequestValidate request) {
+    public ServiceResponseValidateRequest validateName(ServiceRequestRegisterPrefixValidate request) {
         return doValidation(request, nameValidator);
     }
 
-    public ServiceResponseValidateRequest validateDescription(ServiceRequestValidate request) {
+    public ServiceResponseValidateRequest validateDescription(ServiceRequestRegisterPrefixValidate request) {
         return doValidation(request, descriptionValidator);
     }
 
-    public ServiceResponseValidateRequest validateProviderHomeUrl(ServiceRequestValidate request) {
+    public ServiceResponseValidateRequest validateProviderHomeUrl(ServiceRequestRegisterPrefixValidate request) {
         return doValidation(request, providerHomeUrlValidator);
     }
 
-    public ServiceResponseValidateRequest validateProviderName(ServiceRequestValidate request) {
+    public ServiceResponseValidateRequest validateProviderName(ServiceRequestRegisterPrefixValidate request) {
         return doValidation(request, providerNameValidator);
     }
 
-    public ServiceResponseValidateRequest validateProviderDescription(ServiceRequestValidate request) {
+    public ServiceResponseValidateRequest validateProviderDescription(ServiceRequestRegisterPrefixValidate request) {
         return doValidation(request, providerDescriptionValidator);
     }
 
-    public ServiceResponseValidateRequest validateProviderLocation(ServiceRequestValidate request) {
+    public ServiceResponseValidateRequest validateProviderLocation(ServiceRequestRegisterPrefixValidate request) {
         return doValidation(request, providerLocationValidator);
     }
 
-    public ServiceResponseValidateRequest validateProviderCode(ServiceRequestValidate request) {
+    public ServiceResponseValidateRequest validateProviderCode(ServiceRequestRegisterPrefixValidate request) {
         return doValidation(request, providerCodeValidator);
     }
 
-    public ServiceResponseValidateRequest validateInstitutionName(ServiceRequestValidate request) {
+    public ServiceResponseValidateRequest validateInstitutionName(ServiceRequestRegisterPrefixValidate request) {
         return doValidation(request, institutionNameValidator);
     }
 
-    public ServiceResponseValidateRequest validateInstitutionDescription(ServiceRequestValidate request) {
+    public ServiceResponseValidateRequest validateInstitutionDescription(ServiceRequestRegisterPrefixValidate request) {
         return doValidation(request, institutionDescriptionValidator);
     }
 
-    public ServiceResponseValidateRequest validateInstitutionLocation(ServiceRequestValidate request) {
+    public ServiceResponseValidateRequest validateInstitutionLocation(ServiceRequestRegisterPrefixValidate request) {
         return doValidation(request, institutionLocationValidator);
     }
 
-    public ServiceResponseValidateRequest validateRequestedPrefix(ServiceRequestValidate request) {
+    public ServiceResponseValidateRequest validateRequestedPrefix(ServiceRequestRegisterPrefixValidate request) {
         return doValidation(request, prefixValidator);
     }
 
-    public ServiceResponseValidateRequest validateProviderUrlPattern(ServiceRequestValidate request) {
+    public ServiceResponseValidateRequest validateProviderUrlPattern(ServiceRequestRegisterPrefixValidate request) {
         return doValidation(request, providerUrlPatternValidator);
     }
 
-    public ServiceResponseValidateRequest validateSampleId(ServiceRequestValidate request) {
+    public ServiceResponseValidateRequest validateSampleId(ServiceRequestRegisterPrefixValidate request) {
         return doValidation(request, crossedSampleIdProviderUrlPatternValidator);
     }
 
-    public ServiceResponseValidateRequest validateIdRegexPattern(ServiceRequestValidate request) {
+    public ServiceResponseValidateRequest validateIdRegexPattern(ServiceRequestRegisterPrefixValidate request) {
         return doValidation(request, crossedIdRegexPatternAndSampleIdValidator);
     }
 
-    public ServiceResponseValidateRequest validateReferences(ServiceRequestValidate request) {
+    public ServiceResponseValidateRequest validateReferences(ServiceRequestRegisterPrefixValidate request) {
         return doValidation(request, referencesValidator);
     }
 
-    public ServiceResponseValidateRequest validateAdditionalInformation(ServiceRequestValidate request) {
+    public ServiceResponseValidateRequest validateAdditionalInformation(ServiceRequestRegisterPrefixValidate request) {
         return doValidation(request, additionalInformationValidator);
     }
 
-    public ServiceResponseValidateRequest validateRequester(ServiceRequestValidate request) {
+    public ServiceResponseValidateRequest validateRequester(ServiceRequestRegisterPrefixValidate request) {
         return doValidation(request, requesterValidator);
     }
 
-    public ServiceResponseValidateRequest validateInstitutionHomeUrl(ServiceRequestValidate request) {
+    public ServiceResponseValidateRequest validateInstitutionHomeUrl(ServiceRequestRegisterPrefixValidate request) {
         return doValidation(request, institutionHomeUrlValidator);
     }
 
-    public ServiceResponseValidateRequest validateRequesterName(ServiceRequestValidate request) {
+    public ServiceResponseValidateRequest validateRequesterName(ServiceRequestRegisterPrefixValidate request) {
         return doValidation(request, requesterNameValidator);
     }
 
-    public ServiceResponseValidateRequest validateRequesterEmail(ServiceRequestValidate request) {
+    public ServiceResponseValidateRequest validateRequesterEmail(ServiceRequestRegisterPrefixValidate request) {
         return doValidation(request, requesterEmailValidator);
     }
 }

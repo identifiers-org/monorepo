@@ -8,5 +8,5 @@ package org.identifiers.cloud.hq.ws.registry.api.requests;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-public class ServiceRequestValidate extends ServiceRequest<ServiceRequestRegisterPrefixPayload> {
+public class ServiceRequestRegisterPrefixValidate extends ServiceRequest<ServiceRequestRegisterPrefixPayload> {
 }
