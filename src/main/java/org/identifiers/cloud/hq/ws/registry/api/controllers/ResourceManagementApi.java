@@ -1,11 +1,9 @@
 package org.identifiers.cloud.hq.ws.registry.api.controllers;
 
 import org.identifiers.cloud.hq.ws.registry.api.models.ResourceManagementApiModel;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefix;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixSessionEvent;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResource;
-import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefix;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixSessionEvent;
+import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,13 +29,13 @@ public class ResourceManagementApi {
     // TODO --- Resource Registration Request Management ---
     @PostMapping(value = "/registerPrefix")
     public ResponseEntity<?> registerPrefix(@RequestBody ServiceRequestRegisterResource request) {
-        //ServiceResponseRegisterPrefix response = model.registerResource(request);
+        ServiceResponseRegisterResource response = model.registerResource(request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     @PostMapping(value = "/amendPrefixRegistrationRequest/{sessionId}")
     public ResponseEntity<?> amendPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterResourceSessionEvent request) {
-        ServiceResponseRegisterPrefixSessionEvent response = model.amendPrefixRegistrationRequest(sessionId, request);
+        ServiceResponseRegisterResource response = model.amendPrefixRegistrationRequest(sessionId, request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
