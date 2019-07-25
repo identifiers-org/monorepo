@@ -1,5 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.api.controllers;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.api.controllers
@@ -10,5 +13,10 @@ package org.identifiers.cloud.hq.ws.registry.api.controllers;
  *
  * This API is intended for management of resources at a more complex level than just the REST repositories.
  */
+@RestController
+@RequestMapping("resourceManagementApi")
 public class ResourceManagementApi {
+
+
+    // TODO
 }
