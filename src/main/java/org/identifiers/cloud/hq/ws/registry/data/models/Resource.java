@@ -75,6 +75,15 @@ public class Resource {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date modified;
 
+    // This field flags whether the resource has been deprecated or not
+    @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private boolean deprecated = false;
+
+    // Information on when this namespace was deprecated
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Date deprecationDate;
+
     @ManyToOne(optional = false)
     private Institution institution;
 
