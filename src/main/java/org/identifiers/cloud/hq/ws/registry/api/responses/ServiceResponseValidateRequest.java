@@ -8,5 +8,6 @@ package org.identifiers.cloud.hq.ws.registry.api.responses;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+// TODO - This should not be using the same response as the registration request, because it is a validation request response
 public class ServiceResponseValidateRequest extends ServiceResponse<ServiceResponseRegisterPrefixPayload> {
 }
