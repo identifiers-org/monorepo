@@ -4,8 +4,10 @@ import thunk from 'redux-thunk';
 // Reducers.
 import authReducer from '../reducers/Auth';
 import configReducer from '../reducers/ConfigReducer';
+import locationListReducer from '../reducers/LocationList';
 import namespaceListReducer from '../reducers/NamespaceList';
 import namespaceListParamsReducer from '../reducers/NamespaceListParams';
+import namespacePatchReducer from '../reducers/NamespacePatchReducer';
 import prefixRegistrationRequestFieldReducer from '../reducers/PrefixRegistrationRequestField';
 import prefixRegistrationSessionListReducer from '../reducers/PrefixRegistrationSessionList';
 import prefixRegistrationSessionListParamsReducer from '../reducers/PrefixRegistrationSessionListParams';
@@ -14,8 +16,7 @@ import prefixRegistrationSessionAcceptReducer from '../reducers/PrefixRegistrati
 import prefixRegistrationSessionAmendReducer from '../reducers/PrefixRegistrationSessionAmend';
 import prefixRegistrationSessionCommentReducer from '../reducers/PrefixRegistrationSessionComment';
 import prefixRegistrationSessionRejectReducer from '../reducers/PrefixRegistrationSessionReject';
-import locationListReducer from '../reducers/LocationList';
-import namespacePatchReducer from '../reducers/NamespacePatchReducer';
+import resourcePatchReducer from '../reducers/ResourcePatchReducer';
 
 // Middlewares.
 // TODO: Convert validator to middleware.
@@ -43,6 +44,7 @@ const store = createStore(
       prefixRegistrationSessionReject: prefixRegistrationSessionRejectReducer
     }),
     curatorEditNamespace: namespacePatchReducer,
+    curatorEditResource: resourcePatchReducer,
     locationList: locationListReducer,
     prefixRegistrationRequestForm: combineReducers({
       name: prefixRegistrationRequestFieldReducer('name'),
