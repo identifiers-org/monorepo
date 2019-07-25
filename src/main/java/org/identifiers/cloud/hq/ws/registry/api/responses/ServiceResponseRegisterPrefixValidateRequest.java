@@ -9,5 +9,5 @@ package org.identifiers.cloud.hq.ws.registry.api.responses;
  * ---
  */
 // TODO - This should not be using the same response as the registration request, because it is a validation request response
-public class ServiceResponseValidateRequest extends ServiceResponse<ServiceResponseRegisterPrefixPayload> {
+public class ServiceResponseRegisterPrefixValidateRequest extends ServiceResponse<ServiceResponseRegisterPrefixPayload> {
 }
