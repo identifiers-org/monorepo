@@ -76,6 +76,7 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // TODO - I may need this information to disble CSRF on a particular URL, https://stackoverflow.com/questions/22524470/spring-security-3-2-csrf-disable-for-specific-urls
         // TODO - Look into writing a role mapper, the use of @PreAuthorize on the repositories and the injection of "noauth" role everywhere as a way to disable authentication
+        // TODO - Update ACLs with the roles for the Resource Management API
         http
                 .authorizeRequests()
                     .antMatchers("/healthApi/**").permitAll()
