@@ -45,7 +45,7 @@ public class Namespace {
 
     // MIR ID associated with this namespace
     // TODO updates to this field should not be allowed via the REST repository (https://github.com/identifiers-org/cloud-hq-ws-registry/issues/45)
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, updatable = false)
     private String mirId;
 
     // Name for this namespace, this part does not have anything to do with the prefix in the compact identifier
