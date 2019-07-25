@@ -21,6 +21,6 @@ public class ResourceManagementApi {
 
     @Autowired
     private ResourceManagementApiModel model;
-    
+
     // TODO
 }
