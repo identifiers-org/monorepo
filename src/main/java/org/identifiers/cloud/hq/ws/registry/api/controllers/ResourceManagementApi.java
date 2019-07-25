@@ -2,6 +2,7 @@ package org.identifiers.cloud.hq.ws.registry.api.controllers;
 
 import org.identifiers.cloud.hq.ws.registry.api.models.ResourceManagementApiModel;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResource;
+import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceSessionEvent;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixSessionEvent;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterResource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,25 +36,25 @@ public class ResourceManagementApi {
 
     @PostMapping(value = "/amendPrefixRegistrationRequest/{sessionId}")
     public ResponseEntity<?> amendPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterResourceSessionEvent request) {
-        ServiceResponseRegisterResource response = model.amendPrefixRegistrationRequest(sessionId, request);
+        ServiceResponseRegisterResource response = model.amendResourceRegistrationRequest(sessionId, request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     @PostMapping(value = "/commentPrefixRegistrationRequest/{sessionId}")
     public ResponseEntity<?> commentPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterResourceSessionEvent request) {
-        ServiceResponseRegisterPrefixSessionEvent response = model.commentPrefixRegistrationRequest(sessionId, request);
+        ServiceResponseRegisterResourceSessionEvent response = model.commentResourceRegistrationRequest(sessionId, request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     @PostMapping(value = "/rejectPrefixRegistrationRequest/{sessionId}")
     public ResponseEntity<?> rejectPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterResourceSessionEvent request) {
-        ServiceResponseRegisterPrefixSessionEvent response = model.rejectPrefixRegistrationRequest(sessionId, request);
+        ServiceResponseRegisterResourceSessionEvent response = model.rejectResourceRegistrationRequest(sessionId, request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     @PostMapping(value = "/acceptPrefixRegistrationRequest/{sessionId}")
     public ResponseEntity<?> acceptPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterResourceSessionEvent request) {
-        ServiceResponseRegisterPrefixSessionEvent response = model.acceptPrefixRegistrationRequest(sessionId, request);
+        ServiceResponseRegisterResourceSessionEvent response = model.acceptResourceRegistrationRequest(sessionId, request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
     // TODO Resource Registration Request
