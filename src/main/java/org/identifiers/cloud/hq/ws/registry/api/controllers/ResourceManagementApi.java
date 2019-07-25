@@ -28,7 +28,7 @@ public class ResourceManagementApi {
 
     // TODO --- Resource Registration Request Management ---
     // TODO Resource Registration Request
-    @PostMapping(value = "/registerPrefix")
+    @PostMapping(value = "/registerResource")
     public ResponseEntity<?> registerPrefix(@RequestBody ServiceRequestRegisterResource request) {
 //        ServiceResponseRegisterResource response = model.registerResource(request);
 //        return new ResponseEntity<>(response, response.getHttpStatus());
