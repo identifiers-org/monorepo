@@ -47,6 +47,8 @@ export const patchResource = (id, newResource) => {
       body: JSON.stringify(newResource)
     };
 
+    console.log('newResource', newResource);
+
     return await fetch(requestUrl, init);
   }
 };

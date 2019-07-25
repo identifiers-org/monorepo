@@ -34,7 +34,7 @@ class ResourceItem extends React.Component {
     // Prepares model for resource patching.
     const { resource } = this.props;
 
-    this.setState({resourceId: resource.id, resource});
+    this.setState({resourceId: resource.id, newResource: resource});
     this.props.setResourcePatch(resource.id, resource);
   }
 
@@ -44,7 +44,7 @@ class ResourceItem extends React.Component {
   //
   handleChangeField = (field, value) => {
     const {
-      props: { resource }
+      props: { institutionList, locationList, resource }
     } = this;
 
     // Add/remove field to changed list if modified/reset, so it is validated or not when clicked on the perform
@@ -65,7 +65,13 @@ class ResourceItem extends React.Component {
     }
 
     this.props.setResourcePatchField(field, value);
-  }
+  };
+
+
+  handleClickAddInstitution = () => {
+    // TODO: take me to institution curation list.
+    console.log('add institution');
+  };
 
 
   handleClickCommitChangesButton = async () => {
@@ -97,7 +103,7 @@ class ResourceItem extends React.Component {
         failureToast('Error committing changes');
       }
     }
-  }
+  };
 
   handleClickDiscardChangesButton = async () => {
     const result = await swalConfirmation.fire({
@@ -110,31 +116,34 @@ class ResourceItem extends React.Component {
     if (result.value) {
       this.setState({editResource: false});
     }
-  }
+  };
 
   handleClickValidateChangesButton = () => {
     console.log('validate changes');
-  }
+  };
 
   handleClickEditButton = () => {
     this.setState({editResource: true});
-  }
+  };
 
 
 
   render() {
     const {
       handleChangeField,
+      handleClickAddInstitution,
       handleClickCommitChangesButton,
       handleClickDiscardChangesButton,
       handleClickEditButton,
       handleClickValidateChangesButton,
-      props: { locationList, resource },
+      props: { institutionList, locationList, resource },
       state: { editResource }
     } = this;
 
     const providerCodeLabel = resource.providerCode === 'CURATOR_REVIEW' ? 'Empty provider code' : resource.providerCode;
-    const locationCountryCode = resource ? resource.location._links.self.href.split('/').pop() : undefined;
+    const locationCountryCode = resource ? resource.location._links.self.href : undefined;
+    const institutionId = resource ? resource.institution._links.self.href : undefined;
+
 
     return (
       <>
@@ -247,7 +256,43 @@ class ResourceItem extends React.Component {
                 </tr>
                 <tr>
                   <td className="px-3">Institution</td>
-                  <td>{resource.institution ? resource.institution.name : 'None'}</td>
+                  <td className="d-flex">
+                    {editResource ? (
+                      <RoleConditional
+                        requiredRoles={['editResource']}
+                        fallbackComponent={resource.institution.name}
+                      >
+                        <>
+                          <ReversibleField fieldName="institution" defaultValue={institutionId} handleChangeField={handleChangeField}>
+                            <select
+                              className="form-control"
+                              value={institutionId}
+                            >
+                              <option value="" disabled>Select institution...</option>
+                              {
+                                institutionList.map(institution =>
+                                  <option
+                                    value={institution.id}
+                                    key={`option-${institution.id}`}
+                                  >
+                                    {institution.name}
+                                  </option>
+                                )
+                              }
+                            </select>
+                          </ReversibleField>
+                          <button
+                            className="btn btn-sm btn-primary ml-2"
+                            onClick={handleClickAddInstitution}
+                          >
+                            <i className="icon icon-common icon-plus" />
+                          </button>
+                        </>
+                      </RoleConditional>
+                    ) : (
+                      resource.institution.name
+                    )}
+                  </td>
                 </tr>
                 <tr>
                   <td className="px-3">Website</td>
@@ -274,7 +319,7 @@ class ResourceItem extends React.Component {
                         requiredRoles={['editResource']}
                         fallbackComponent={resource.location.countryName}
                       >
-                        <ReversibleField fieldName="institutionLocation" defaultValue={locationCountryCode} handleChangeField={handleChangeField}>
+                        <ReversibleField fieldName="location" defaultValue={locationCountryCode} handleChangeField={handleChangeField}>
                           <select
                             className="form-control"
                             value={resource.location}
@@ -328,6 +373,7 @@ class ResourceItem extends React.Component {
 // Redux Mappings
 //
 const mapStateToProps = (state) => ({
+  institutionList: state.institutionList,
   locationList: state.locationList
 });
 
