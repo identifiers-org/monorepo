@@ -25,6 +25,7 @@ spec:
                   image: brndnmtthws/nginx-echo-headers
                   resources:
                       requests:
+                          cpu: 50m
                           memory: 64Mi
                   ports:
                   - containerPort: 8080
