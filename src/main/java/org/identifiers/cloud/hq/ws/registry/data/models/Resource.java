@@ -37,6 +37,7 @@ public class Resource {
     @GeneratedValue
     private long id;
 
+    // TODO updates to this field should not be allowed via the REST repository (https://github.com/identifiers-org/cloud-hq-ws-registry/issues/45)
     @Column(nullable = false, unique = true)
     private String mirId;
 
