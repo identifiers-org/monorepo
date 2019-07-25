@@ -338,6 +338,7 @@ class NamespaceDetailsPage extends React.Component {
             namespace.resources.map(resource =>
               <ResourceItem
                 key={`resource-${resource.mirId}`}
+                namespace={namespace}
                 resource={resource}
               />
             )

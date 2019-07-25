@@ -2,12 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+// Actions.
+import { getResourcesFromRegistry } from '../../actions/NamespaceList';
+import { setResourcePatch, setResourcePatchField, patchResource } from '../../actions/ResourcePatch';
+
 // Components.
 import ReversibleField from '../common/ReversibleField';
 import RoleConditional from '../common/RoleConditional';
 
 // Utils.
-import { swalConfirmation } from '../../utils/swalDialogs';
+import { swalConfirmation, failureToast, successToast } from '../../utils/swalDialogs';
+
 
 
 class ResourceItem extends React.Component {
@@ -25,16 +30,73 @@ class ResourceItem extends React.Component {
   }
 
 
+  async componentDidMount() {
+    // Prepares model for resource patching.
+    const { resource } = this.props;
+
+    this.setState({resourceId: resource.id, resource});
+    this.props.setResourcePatch(resource.id, resource);
+  }
+
+
   //
   // Field manipulation handler. Undefined 'value' field will revert to default.
   //
   handleChangeField = (field, value) => {
-    console.log('change field', field, value);
+    const {
+      props: { resource }
+    } = this;
+
+    // Add/remove field to changed list if modified/reset, so it is validated or not when clicked on the perform
+    // validation button.
+    if (resource[field] !== value) {
+      this.setState(prevState => ({
+        resourceFieldsChanged: prevState.resourceFieldsChanged.add(field),
+        newResource: {...this.state.newResource, [field]: value}
+      }));
+    } else {
+      this.setState(prevState => {
+        prevState.resourceFieldsChanged.delete(field);
+        return {
+          resourceFieldsChanged: prevState.resourceFieldsChanged,
+          newResource: {...this.state.newResource, [field]: resource[field]}
+        };
+      });
+    }
+
+    this.props.setResourcePatchField(field, value);
   }
 
 
   handleClickCommitChangesButton = async () => {
-    console.log('commit changes');
+    const {
+      state: { resourceId, resourceFieldsChanged, newResource },
+      props: { patchResource, namespace }
+    } = this;
+
+    if (resourceFieldsChanged.size === 0) {
+      infoToast('No changes to commit');
+      return;
+    }
+
+    const result = await swalConfirmation.fire({
+      title: 'Confirm changes to resource',
+      text: `Changed fields: ${[...resourceFieldsChanged].join(', ')}`,
+      confirmButtonText: 'Commit changes',
+      cancelButtonText: 'Cancel'
+    });
+
+    if (result.value) {
+      const result = await patchResource(resourceId, newResource);
+
+      if (result.status === 200) {
+        successToast('Changed committed successfully');
+        await this.props.getResourcesFromRegistry(namespace);
+        this.setState({editResource: false, resourceFieldsChanged: new Set()});
+      } else {
+        failureToast('Error committing changes');
+      }
+    }
   }
 
   handleClickDiscardChangesButton = async () => {
@@ -269,5 +331,13 @@ const mapStateToProps = (state) => ({
   locationList: state.locationList
 });
 
+const mapDispatchToProps = dispatch => ({
+  getResourcesFromRegistry: (namespace) => dispatch(getResourcesFromRegistry(namespace)),
+  setResourcePatch: (id, resource) => dispatch(setResourcePatch(id, resource)),
+  setResourcePatchField: (field, value) => dispatch(setResourcePatchField(field, value)),
+  patchResource: (id, newResource) => dispatch(patchResource(id, newResource))
+});
 
-export default withRouter(connect(mapStateToProps)(ResourceItem));
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ResourceItem));

@@ -77,6 +77,9 @@ export const getResourcesFromRegistry = (namespace) => {
       const resources = await Promise.all(data._embedded.resources.map(resource => {
         let { _links, ...newResource } = resource;
 
+        // Add id to the resource as a field, we will need this for curation stuff.
+        newResource.id = _links.self.href.split('/').pop();
+
         return fetchAndAdd(newResource, [
           {name: 'institution', url: _links.institution.href},
           {name: 'location', url: _links.location.href}
