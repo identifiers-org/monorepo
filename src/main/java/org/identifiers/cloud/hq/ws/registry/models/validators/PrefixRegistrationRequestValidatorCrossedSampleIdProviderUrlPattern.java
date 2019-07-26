@@ -17,6 +17,7 @@ import java.util.List;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+// TODO I don't think it needs to be of "prototype" scope
 @Component
 @Scope("prototype")
 @Qualifier("PrefixRegistrationRequestValidatorCrossedSampleIdProviderUrlPattern")
