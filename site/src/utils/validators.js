@@ -41,12 +41,21 @@ const validators = {
     return validateThroughAPI(url, {requestedPrefix});
   },
 
+  // TODO: Fix when validators are refactored in backend. Hack: if no url pattern is present, all sampleIds are ok.
   sampleId: async (sampleId, prefixRegistrationRequest) => {
     const url = `${config.registryApi}/${config.validationEndpoint}/validateSampleId`;
+    if (typeof prefixRegistrationRequest.providerUrlPattern === 'undefined') {
+      return {valid: true};
+    }
     return validateThroughAPI(url, {sampleId, providerUrlPattern: prefixRegistrationRequest.providerUrlPattern});
   },
 
   idRegexPattern: async (idRegexPattern, prefixRegistrationRequest) => {
+    const url = `${config.registryApi}/${config.validationEndpoint}/validateIdRegexPattern`;
+    return validateThroughAPI(url, {idRegexPattern, sampleId: prefixRegistrationRequest.sampleId});
+  },
+
+  pattern: async (idRegexPattern, prefixRegistrationRequest) => {
     const url = `${config.registryApi}/${config.validationEndpoint}/validateIdRegexPattern`;
     return validateThroughAPI(url, {idRegexPattern, sampleId: prefixRegistrationRequest.sampleId});
   },
@@ -60,6 +69,8 @@ const validators = {
     const url = `${config.registryApi}/${config.validationEndpoint}/validateAdditionalInformation`;
     return validateThroughAPI(url, {additionalInformation});
   },
+
+  institution: () => {valid: true},
 
   institutionName: async (institutionName) => {
     const url = `${config.registryApi}/${config.validationEndpoint}/validateInstitutionName`;
@@ -101,12 +112,22 @@ const validators = {
     return validateThroughAPI(url, {providerHomeUrl});
   },
 
+  resourceHomeUrl: async (providerHomeUrl) => {
+    const url = `${config.registryApi}/${config.validationEndpoint}/validateProviderHomeUrl`;
+    return validateThroughAPI(url, {providerHomeUrl});
+  },
+
   providerCode: async (providerCode) => {
     const url = `${config.registryApi}/${config.validationEndpoint}/validateProviderCode`;
     return validateThroughAPI(url, {providerCode});
   },
 
   providerUrlPattern: async (providerUrlPattern) => {
+    const url = `${config.registryApi}/${config.validationEndpoint}/validateProviderUrlPattern`;
+    return validateThroughAPI(url, {providerUrlPattern});
+  },
+
+  urlPattern: async (providerUrlPattern) => {
     const url = `${config.registryApi}/${config.validationEndpoint}/validateProviderUrlPattern`;
     return validateThroughAPI(url, {providerUrlPattern});
   },
