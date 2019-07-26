@@ -41,3 +41,20 @@ export const setAuthenticated = (keycloak) => {
     keycloak
   };
 };
+
+
+// Setting of the authentication interval handler into redux store.
+export const saveAuthRenewalIntervalHandler = (authRenewalIntervalHandler, timeout) => {
+  return {
+    type: 'SET_AUTHRENEWALINTERVALHANDLER',
+    authRenewalIntervalHandler,
+    timeout
+  }
+}
+
+// Reset of the authentication interval.
+export const resetAuthRenewalInterval = () => {
+  return {
+    type: 'RESET_AUTHRENEWALINTERVAL'
+  }
+}
