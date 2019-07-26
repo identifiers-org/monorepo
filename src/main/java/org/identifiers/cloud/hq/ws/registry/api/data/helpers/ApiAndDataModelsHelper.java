@@ -98,4 +98,8 @@ public class ApiAndDataModelsHelper {
                 .setNamespaceEmbeddedInLui(namespace.isNamespaceEmbeddedInLui());
     }
 
+    // TODO - Get a Resource Registration Request from the request payload
+
+    // TODO - Get a Prefix Registration Request Payload from a Resource Registration Request Payload
+
 }
