@@ -16,6 +16,7 @@ import { config } from '../../config/Config';
 
 // Utils.
 import { swalConfirmation, failureToast, successToast, infoToast } from '../../utils/swalDialogs';
+import validators from '../../utils/validators';
 
 
 class NamespaceDetailsPage extends React.Component {
@@ -118,8 +119,29 @@ class NamespaceDetailsPage extends React.Component {
     }
   }
 
-  handleClickValidateChangesButton = () => {
-    console.log('validate changes');
+  handleClickValidateChangesButton = async () => {
+    const { newNamespace } = this.state;
+    const namespaceFieldsToValidate = [...this.state.namespaceFieldsChanged];
+
+    if (namespaceFieldsToValidate.length === 0) {
+      infoToast('No fields have changed');
+      return;
+    }
+
+    console.log('fields', namespaceFieldsToValidate);
+
+    const validations = await Promise.all(namespaceFieldsToValidate
+      .map(field => validators[field](newNamespace[field], newNamespace))
+    );
+    const toastMessage = validations
+      .filter(validations => !validations.valid)
+      .map(validations => validations.errorMessage).join('\n');
+
+    if (toastMessage !== '') {
+      failureToast(toastMessage, undefined, 10000);
+    } else {
+      successToast('All fields OK!');
+    }
   }
 
   handleClickEditButton = () => {
