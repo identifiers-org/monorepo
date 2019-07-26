@@ -9,18 +9,16 @@ import org.springframework.stereotype.Component;
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.models.validators
- * Timestamp: 2019-07-26 13:25
+ * Timestamp: 2019-07-26 13:33
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-// NOTE: It doesn't look like validators need to be of scope 'prototype', like in the case of prefix registration request
 @Component
-@Qualifier("ResourceRegistrationRequestValidatorSampleId")
-public class ResourceRegistrationRequestValidatorSampleId implements ResourceRegistrationRequestValidator {
-    // We borrow from prefix registration request API
+@Qualifier("ResourceRegistrationRequestValidatorRequesterName")
+public class ResourceRegistrationRequestValidatorRequesterName implements ResourceRegistrationRequestValidator {
     @Autowired
-    @Qualifier("PrefixRegistrationRequestValidatorSampleId")
+    @Qualifier("PrefixRegistrationRequestValidatorRequesterName")
     private PrefixRegistrationRequestValidator delegateValidator;
 
     @Override
