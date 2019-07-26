@@ -11,7 +11,8 @@ import ReversibleField from '../common/ReversibleField';
 import RoleConditional from '../common/RoleConditional';
 
 // Utils.
-import { swalConfirmation, failureToast, successToast } from '../../utils/swalDialogs';
+import { swalConfirmation, failureToast, successToast, infoToast } from '../../utils/swalDialogs';
+import validators from '../../utils/validators';
 
 
 
@@ -118,9 +119,34 @@ class ResourceItem extends React.Component {
     }
   };
 
-  handleClickValidateChangesButton = () => {
-    console.log('validate changes');
-  };
+  handleClickValidateChangesButton = async () => {
+    const { newResource } = this.state;
+    const resourceFieldsToValidate = [...this.state.resourceFieldsChanged];
+
+    if (resourceFieldsToValidate.length === 0) {
+      infoToast('No fields have changed');
+      return;
+    }
+
+    console.log('fields', resourceFieldsToValidate);
+
+    const validations = await Promise.all(resourceFieldsToValidate
+      .map(field => validators[field](newResource[field], newResource))
+    );
+    const toastMessage = validations
+      .filter(validations => !validations.valid)
+      .map(validations => validations.errorMessage).join('\n');
+
+    if (toastMessage !== '') {
+      failureToast(toastMessage, undefined, 10000);
+    } else {
+      successToast('All fields OK!');
+    }
+  }
+
+  handleClickEditButton = () => {
+    this.setState({editNamespace: true});
+  }
 
   handleClickEditButton = () => {
     this.setState({editResource: true});
