@@ -36,8 +36,8 @@ public interface PrefixRegistrationRequestValidatorStrategy extends PrefixRegist
                     }
                     return null;
                 })
-                .collect(Collectors.toList())
-                .stream()
+                //.collect(Collectors.toList())
+                //.stream()
                 .filter(Objects::nonNull).collect(Collectors.toList());
         if (!errors.isEmpty()) {
             // Report the errors
