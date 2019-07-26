@@ -43,7 +43,7 @@ const jsx = (
     const keycloak = store.getState().auth.keycloak;
     const tokenDuration = (moment.unix(keycloak.tokenParsed.exp) - moment.unix(keycloak.tokenParsed.iat));
 
-    console.log(`User is authenticated, setting renewal interval to ${tokenDuration - tokenDuration * .1}`);
+    console.debug(`Auth -> Setting auth token renewal interval to ${tokenDuration - tokenDuration * .1}`);
 
     store.dispatch(saveAuthRenewalIntervalHandler(renewToken, tokenDuration - (tokenDuration * .1)));
   }

@@ -1,5 +1,9 @@
 import moment from 'moment';
 
+// Actions.
+import { resetAuthRenewalInterval } from '../actions/Auth';
+
+// Store.
 import store from '../store/store';
 
 
@@ -18,9 +22,16 @@ export const renewToken = async function() {
   const tokenSecondsRemaining = moment.duration(tokenExpiresBy.diff(moment())).asSeconds();
   const tokenStatusCaption = tokenExpired ? 'Token is expired' : `Token expires in ${tokenSecondsRemaining} seconds`;
 
+  // Do not renew too often.
+  if (tokenSecondsRemaining > tokenDuration * .75) {
+    return auth.keycloak.token;
+  }
+
   console.debug(`Auth -> ${tokenStatusCaption}. Issuing renewal (${tokenDuration} seconds)...`);
 
   auth.keycloak.updateToken(tokenDuration);
+
+  store.dispatch(resetAuthRenewalInterval());
 
   return auth.keycloak.token;
 };
