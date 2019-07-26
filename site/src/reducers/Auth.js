@@ -19,12 +19,6 @@ const authReducer = (state = defaultState, action) => {
 
       return {...state, authRenewalIntervalHandler: setInterval(action.authRenewalIntervalHandler, action.timeout)};
 
-    case 'RESET_AUTHRENEWALINTERVAL':
-      clearInterval(state.authRenewalIntervalHandler);
-      console.debug('Auth renew interval reset');
-      return {...state, authRenewalIntervalHandler: setInterval(action.authRenewalIntervalHandler, action.timeout)};
-
-
     default:
       return state;
   }

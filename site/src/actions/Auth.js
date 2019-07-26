@@ -51,10 +51,3 @@ export const saveAuthRenewalIntervalHandler = (authRenewalIntervalHandler, timeo
     timeout
   }
 }
-
-// Reset of the authentication interval.
-export const resetAuthRenewalInterval = () => {
-  return {
-    type: 'RESET_AUTHRENEWALINTERVAL'
-  }
-}

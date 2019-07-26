@@ -1,8 +1,5 @@
 import moment from 'moment';
 
-// Actions.
-import { resetAuthRenewalInterval } from '../actions/Auth';
-
 // Store.
 import store from '../store/store';
 
@@ -30,8 +27,6 @@ export const renewToken = async function() {
   console.debug(`Auth -> ${tokenStatusCaption}. Issuing renewal (${tokenDuration} seconds)...`);
 
   auth.keycloak.updateToken(tokenDuration);
-
-  store.dispatch(resetAuthRenewalInterval());
 
   return auth.keycloak.token;
 };
