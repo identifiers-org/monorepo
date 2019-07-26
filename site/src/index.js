@@ -2,11 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
+import moment from 'moment';
+
 // Store.
 import store from './store/store';
 
 // Actions.
-import { authInit } from './actions/Auth';
+import { authInit, saveAuthRenewalIntervalHandler } from './actions/Auth';
 import { getInstitutionsListFromRegistry } from './actions/InstitutionList';
 import { getLocationListFromRegistry } from './actions/LocationList';
 
@@ -15,6 +17,7 @@ import AppRouter from './routers/AppRouter';
 
 // CSS.
 import './styles/styles.scss';
+import { renewToken } from './utils/auth';
 
 
 // App container.
@@ -34,6 +37,16 @@ const jsx = (
 
   // Init auth.
   store.getState().config.enableAuthFeatures && await store.dispatch(authInit());
+
+  // Auth token periodic renewal.
+  if (store.getState().auth.authenticated) {
+    const keycloak = store.getState().auth.keycloak;
+    const tokenDuration = (moment.unix(keycloak.tokenParsed.exp) - moment.unix(keycloak.tokenParsed.iat));
+
+    console.log(`User is authenticated, setting renewal interval to ${tokenDuration - tokenDuration * .1}`);
+
+    store.dispatch(saveAuthRenewalIntervalHandler(renewToken, tokenDuration - (tokenDuration * .1)));
+  }
 
   // Render app.
   ReactDOM.render(jsx, document.getElementById("app"));
