@@ -41,6 +41,9 @@ public class ServiceRequestRegisterResourcePayload implements Serializable {
     // Unique identifier for this provider within the namespace for provider selection when resolving compact identifiers
     private String providerCode;
 
+    // Originally called 'resourceAccessRule', ported from the original identifiers.org form at https://identifiers.org/request/prefix
+    private String providerUrlPattern;
+
     // This is the name of the institution that owns the resource that's being registered
     private String institutionName;
 
