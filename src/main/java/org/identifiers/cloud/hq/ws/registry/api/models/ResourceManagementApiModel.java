@@ -1,8 +1,12 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
 import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
+import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceValidate;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponse;
+import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterResourceValidate;
+import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterResourceValidatePayload;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidator;
+import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidatorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -87,6 +91,26 @@ public class ResourceManagementApiModel {
         response.setApiVersion(ApiCentral.apiVersion)
                 .setHttpStatus(HttpStatus.OK);
         response.setPayload(payload);
+    }
+
+    private ServiceResponseRegisterResourceValidate doValidation(ServiceRequestRegisterResourceValidate request,
+                                                                 ResourceRegistrationRequestValidator validator) {
+        // TODO - Check API version information?
+        ServiceResponseRegisterResourceValidate response = new ServiceResponseRegisterResourceValidate();
+        initDefaultResponse(response, new ServiceResponseRegisterResourceValidatePayload());
+        // Validate the request
+        boolean isValidRequest = false;
+        try {
+            isValidRequest = validator.validate(request.getPayload());
+        } catch (ResourceRegistrationRequestValidatorException e) {
+            response.setErrorMessage(e.getMessage());
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            response.getPayload().setComment("VALIDATION FAILED");
+        }
+        if (isValidRequest) {
+            response.getPayload().setComment("VALIDATION OK");
+        }
+        return response;
     }
     // --- API ---
 

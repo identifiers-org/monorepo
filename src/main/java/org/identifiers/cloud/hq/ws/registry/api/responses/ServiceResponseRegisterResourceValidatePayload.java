@@ -23,5 +23,5 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class ServiceResponseRegisterResourceValidatePayload implements Serializable {
     // Some comments back in the validation response
-    private String comments = "no comments on your resource registration validation request";
+    private String comment = "no comments on your resource registration validation request";
 }
