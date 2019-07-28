@@ -91,9 +91,8 @@ public class ResourceManagementApi {
 
     @PostMapping(value = "/validateProviderLocation")
     public ResponseEntity<?> validateProviderLocation(@RequestBody ServiceRequestRegisterResourceValidate request) {
-        // ServiceResponseRegisterResourceValidate response = model.validateProviderLocation(request);
-        // return new ResponseEntity<>(response, response.getHttpStatus());
-        return new ResponseEntity<>("WORK IN PROGRESS", HttpStatus.NOT_IMPLEMENTED);
+        ServiceResponseRegisterResourceValidate response = model.validateProviderLocation(request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     @PostMapping(value = "/validateProviderCode")
