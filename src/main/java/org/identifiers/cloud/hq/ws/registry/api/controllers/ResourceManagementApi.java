@@ -109,9 +109,8 @@ public class ResourceManagementApi {
 
     @PostMapping(value = "/validateInstitutionHomeUrl")
     public ResponseEntity<?> validateInstitutionHomeUrl(@RequestBody ServiceRequestRegisterResourceValidate request) {
-        // ServiceResponseRegisterResourceValidate response = model.validateInstitutionHomeUrl(request);
-        // return new ResponseEntity<>(response, response.getHttpStatus());
-        return new ResponseEntity<>("WORK IN PROGRESS", HttpStatus.NOT_IMPLEMENTED);
+        ServiceResponseRegisterResourceValidate response = model.validateInstitutionHomeUrl(request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     @PostMapping(value = "/validateInstitutionDescription")
