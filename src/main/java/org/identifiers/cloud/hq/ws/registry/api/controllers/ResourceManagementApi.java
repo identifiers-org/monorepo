@@ -139,9 +139,8 @@ public class ResourceManagementApi {
 
     @PostMapping(value = "/validateAdditionalInformation")
     public ResponseEntity<?> validateAdditionalInformation(@RequestBody ServiceRequestRegisterResourceValidate request) {
-        // ServiceResponseRegisterResourceValidate response = model.validateAdditionalInformation(request);
-        // return new ResponseEntity<>(response, response.getHttpStatus());
-        return new ResponseEntity<>("WORK IN PROGRESS", HttpStatus.NOT_IMPLEMENTED);
+        ServiceResponseRegisterResourceValidate response = model.validateAdditionalInformation(request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     @PostMapping(value = "/validateRequester")
