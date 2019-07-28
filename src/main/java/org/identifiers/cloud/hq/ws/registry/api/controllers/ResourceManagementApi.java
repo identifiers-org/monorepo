@@ -4,6 +4,7 @@ import org.identifiers.cloud.hq.ws.registry.api.models.ResourceManagementApiMode
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResource;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceSessionEvent;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceValidate;
+import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterResourceValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -72,9 +73,8 @@ public class ResourceManagementApi {
 
     @PostMapping(value = "/validateProviderHomeUrl")
     public ResponseEntity<?> validateProviderHomeUrl(@RequestBody ServiceRequestRegisterResourceValidate request) {
-        // ServiceResponseRegisterResourceValidate response = model.validateProviderHomeUrl(request);
-        // return new ResponseEntity<>(response, response.getHttpStatus());
-        return new ResponseEntity<>("WORK IN PROGRESS", HttpStatus.NOT_IMPLEMENTED);
+        ServiceResponseRegisterResourceValidate response = model.validateProviderHomeUrl(request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     @PostMapping(value = "/validateProviderName")
