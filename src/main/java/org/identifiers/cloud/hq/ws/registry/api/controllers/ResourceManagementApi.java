@@ -97,9 +97,8 @@ public class ResourceManagementApi {
 
     @PostMapping(value = "/validateProviderCode")
     public ResponseEntity<?> validateProviderCode(@RequestBody ServiceRequestRegisterResourceValidate request) {
-        // ServiceResponseRegisterResourceValidate response = model.validateProviderCode(request);
-        // return new ResponseEntity<>(response, response.getHttpStatus());
-        return new ResponseEntity<>("WORK IN PROGRESS", HttpStatus.NOT_IMPLEMENTED);
+        ServiceResponseRegisterResourceValidate response = model.validateProviderCode(request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     @PostMapping(value = "/validateInstitutionName")
