@@ -78,9 +78,16 @@ public class ResourceManagementApiModel {
     @Qualifier("ResourceRegistrationRequestValidatorRequester")
     private ResourceRegistrationRequestValidator requesterValidator;
 
+    @Autowired
+    @Qualifier("ResourceRegistrationRequestValidatorRequesterName")
+    private ResourceRegistrationRequestValidator requesterNameValidator;
+
+    @Autowired
+    @Qualifier("ResourceRegistrationRequestValidatorRequesterEmail")
+    private ResourceRegistrationRequestValidator requesterEmailValidator;
+
     // --- Helpers ---
     // -- Helpers --
-
     /**
      * Initialize a response with the default values and the given payload.
      * @param response response to initialize
@@ -112,7 +119,67 @@ public class ResourceManagementApiModel {
         }
         return response;
     }
+
     // --- API ---
 
-    // TODO
+    // --- Validation API ---
+    public ServiceResponseRegisterResourceValidate validateProviderHomeUrl(ServiceRequestRegisterResourceValidate request) {
+        return doValidation(request, providerHomeUrlValidator);
+    }
+
+    public ServiceResponseRegisterResourceValidate validateProviderName(ServiceRequestRegisterResourceValidate request) {
+        return doValidation(request, providerNameValidator);
+    }
+
+    public ServiceResponseRegisterResourceValidate validateProviderDescription(ServiceRequestRegisterResourceValidate request) {
+        return doValidation(request, providerDescriptionValidator);
+    }
+
+    public ServiceResponseRegisterResourceValidate validateProviderLocation(ServiceRequestRegisterResourceValidate request) {
+        return doValidation(request, providerLocationValidator);
+    }
+
+    public ServiceResponseRegisterResourceValidate validateProviderCode(ServiceRequestRegisterResourceValidate request) {
+        return doValidation(request, providerCodeValidator);
+    }
+
+    public ServiceResponseRegisterResourceValidate validateInstitutionName(ServiceRequestRegisterResourceValidate request) {
+        return doValidation(request, institutionNameValidator);
+    }
+
+    public ServiceResponseRegisterResourceValidate validateInstitutionHomeUrl(ServiceRequestRegisterResourceValidate request) {
+        return doValidation(request, institutionHomeUrlValidator);
+    }
+
+    public ServiceResponseRegisterResourceValidate validateInstitutionDescription(ServiceRequestRegisterResourceValidate request) {
+        return doValidation(request, institutionDescriptionValidator);
+    }
+
+    public ServiceResponseRegisterResourceValidate validateInstitutionLocation(ServiceRequestRegisterResourceValidate request) {
+        return doValidation(request, institutionLocationValidator);
+    }
+
+    public ServiceResponseRegisterResourceValidate validateProviderUrlPattern(ServiceRequestRegisterResourceValidate request) {
+        return doValidation(request, providerUrlPatternValidator);
+    }
+
+    public ServiceResponseRegisterResourceValidate validateSampleId(ServiceRequestRegisterResourceValidate request) {
+        return doValidation(request, crossedSampleIdProviderUrlPatternValidator);
+    }
+
+    public ServiceResponseRegisterResourceValidate validateAdditionalInformation(ServiceRequestRegisterResourceValidate request) {
+        return doValidation(request, additionalInformationValidator);
+    }
+
+    public ServiceResponseRegisterResourceValidate validateRequester(ServiceRequestRegisterResourceValidate request) {
+        return doValidation(request, requesterValidator);
+    }
+
+    public ServiceResponseRegisterResourceValidate validateRequesterName(ServiceRequestRegisterResourceValidate request) {
+        return doValidation(request, requesterNameValidator);
+    }
+
+    public ServiceResponseRegisterResourceValidate validateRequesterEmail(ServiceRequestRegisterResourceValidate request) {
+        return doValidation(request, requesterEmailValidator);
+    }
 }
