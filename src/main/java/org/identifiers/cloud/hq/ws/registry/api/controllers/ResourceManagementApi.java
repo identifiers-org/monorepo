@@ -157,9 +157,8 @@ public class ResourceManagementApi {
 
     @PostMapping(value = "/validateRequesterEmail")
     public ResponseEntity<?> validateRequesterEmail(@RequestBody ServiceRequestRegisterResourceValidate request) {
-        // ServiceResponseRegisterResourceValidate response = model.validateRequesterEmail(request);
-        // return new ResponseEntity<>(response, response.getHttpStatus());
-        return new ResponseEntity<>("WORK IN PROGRESS", HttpStatus.NOT_IMPLEMENTED);
+        ServiceResponseRegisterResourceValidate response = model.validateRequesterEmail(request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     // TODO --- Resource Lifecycle Management
