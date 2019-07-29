@@ -7,6 +7,7 @@ import org.identifiers.cloud.hq.ws.registry.api.data.models.Resource;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourcePayload;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationRequest;
+import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationRequest;
 
 /**
  * Project: registry
@@ -99,7 +100,24 @@ public class ApiAndDataModelsHelper {
                 .setNamespaceEmbeddedInLui(namespace.isNamespaceEmbeddedInLui());
     }
 
-    // TODO - Get a Resource Registration Request from the request payload
+    // Get a Resource Registration Request from the request payload
+    public static ResourceRegistrationRequest getResourceRegistrationRequestFrom(ServiceRequestRegisterResourcePayload payload) {
+        return new ResourceRegistrationRequest()
+                .setAdditionalInformation(payload.getAdditionalInformation())
+                .setInstitutionDescription(payload.getInstitutionDescription())
+                .setInstitutionHomeUrl(payload.getInstitutionHomeUrl())
+                .setInstitutionLocation(payload.getInstitutionLocation())
+                .setInstitutionName(payload.getInstitutionName())
+                .setNamespacePrefix(payload.getNamespacePrefix())
+                .setProviderCode(payload.getProviderCode())
+                .setProviderDescription(payload.getProviderDescription())
+                .setProviderHomeUrl(payload.getProviderHomeUrl())
+                .setProviderLocation(payload.getProviderLocation())
+                .setProviderName(payload.getProviderName())
+                .setProviderUrlPattern(payload.getProviderUrlPattern())
+                .setRequesterEmail(payload.getRequester().getEmail())
+                .setRequesterName(payload.getRequester().getName());
+    }
 
     // Get a Prefix Registration Request Payload from a Resource Registration Request Payload
     public static ServiceRequestRegisterPrefixPayload getFrom(ServiceRequestRegisterResourcePayload payload) {
