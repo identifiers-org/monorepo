@@ -111,7 +111,7 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
             // Return the event
             return eventAmend;
         } catch (RuntimeException e) {
-            throw new PrefixRegistrationRequestManagementServiceException(
+            throw new ResourceRegistrationRequestManagementServiceException(
                     String.format("While amending a resource registration request with provider name '%s', " +
                             "the following error occurred: '%s'", amendedRequest.getProviderName(), e.getMessage()));
         }
@@ -120,7 +120,30 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
     @Transactional
     @Override
     public ResourceRegistrationSessionEventComment commentRequest(ResourceRegistrationSession resourceRegistrationSession, String comment, String actor, String additionalInformation) throws ResourceRegistrationRequestManagementServiceException {
-        return null;
+        // Check that the resource registration session is open
+        if (!isResourceRegistrationSessionOpen(resourceRegistrationSession)) {
+            throw new PrefixRegistrationRequestManagementServiceException("NO comment requests ACCEPTED on ALREADY CLOSED Resource Registration Session");
+        }
+        try {
+            // Create the event
+            ResourceRegistrationSessionEventComment eventComment =
+                    new ResourceRegistrationSessionEventComment().setComment(comment);
+            // Reference the current session prefix registration request
+            eventComment.setActor(actor)
+                    .setAdditionalInformation(additionalInformation)
+                    .setResourceRegistrationSession(resourceRegistrationSession)
+                    .setResourceRegistrationRequest(resourceRegistrationSession.getResourceRegistrationRequest());
+            // Persist the event
+            // Return the event
+            return resourceRegistrationSessionEventCommentRepository.save(eventComment);
+        } catch (RuntimeException e) {
+            throw new ResourceRegistrationRequestManagementServiceException(
+                    String.format("While appending comment '%s' to a resource registration request, for provider name '%s', " +
+                                    "the following error occurred: '%s'",
+                            comment,
+                            resourceRegistrationSession.getResourceRegistrationRequest().getProviderName(),
+                            e.getMessage()));
+        }
     }
 
     @Transactional
