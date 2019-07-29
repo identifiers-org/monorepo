@@ -111,7 +111,7 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
                     .setPrefixRegistrationRequest(savedRequest);
             eventAmend = prefixRegistrationSessionEventAmendRepository.save(eventAmend);
             // Update the prefix registration request referenced at session level
-            prefixRegistrationSession.setPrefixRegistrationRequest(amendedRequest);
+            prefixRegistrationSession.setPrefixRegistrationRequest(savedRequest);
             prefixRegistrationSessionRepository.save(prefixRegistrationSession);
             // Return the event
             return eventAmend;

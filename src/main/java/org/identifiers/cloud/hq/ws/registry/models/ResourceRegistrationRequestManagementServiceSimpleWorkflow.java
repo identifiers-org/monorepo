@@ -86,22 +86,50 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
         }
     }
 
+    @Transactional
     @Override
     public ResourceRegistrationSessionEventAmend amendRequest(ResourceRegistrationSession resourceRegistrationSession
             , ResourceRegistrationRequest amendedRequest, String actor, String additionalInformation) throws ResourceRegistrationRequestManagementServiceException {
-        return null;
+        // Check that the resource registration session is open
+        if (!isResourceRegistrationSessionOpen(resourceRegistrationSession)) {
+            throw new PrefixRegistrationRequestManagementServiceException("NO amendment requests ACCEPTED on ALREADY CLOSED Prefix Registration Session");
+        }
+        try {
+            // Persist the amended request
+            ResourceRegistrationRequest savedRequest = resourceRegistrationRequestRepository.save(amendedRequest);
+            // Create the event
+            ResourceRegistrationSessionEventAmend eventAmend = new ResourceRegistrationSessionEventAmend();
+            // Reference the amended request in the newly created event
+            eventAmend.setActor(actor)
+                    .setAdditionalInformation(additionalInformation)
+                    .setResourceRegistrationSession(resourceRegistrationSession)
+                    .setResourceRegistrationRequest(savedRequest);
+            eventAmend = resourceRegistrationSessionEventAmendRepository.save(eventAmend);
+            // Update the resource registration request referenced at session level
+            resourceRegistrationSession.setResourceRegistrationRequest(savedRequest);
+            resourceRegistrationSessionRepository.save(resourceRegistrationSession);
+            // Return the event
+            return eventAmend;
+        } catch (RuntimeException e) {
+            throw new PrefixRegistrationRequestManagementServiceException(
+                    String.format("While amending a resource registration request with provider name '%s', " +
+                            "the following error occurred: '%s'", amendedRequest.getProviderName(), e.getMessage()));
+        }
     }
 
+    @Transactional
     @Override
     public ResourceRegistrationSessionEventComment commentRequest(ResourceRegistrationSession resourceRegistrationSession, String comment, String actor, String additionalInformation) throws ResourceRegistrationRequestManagementServiceException {
         return null;
     }
 
+    @Transactional
     @Override
     public ResourceRegistrationSessionEventReject rejectRequest(ResourceRegistrationSession resourceRegistrationSession, String rejectionReason, String actor, String additionalInformation) throws ResourceRegistrationRequestManagementServiceException {
         return null;
     }
 
+    @Transactional
     @Override
     public ResourceRegistrationSessionEventAccept acceptRequest(ResourceRegistrationSession resourceRegistrationSession, String acceptanceReason, String actor, String additionalInformation) throws ResourceRegistrationRequestManagementServiceException {
         return null;
