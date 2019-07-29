@@ -28,7 +28,7 @@ public class ServiceRequestRegisterResourcePayload implements Serializable {
 
     // Namespace ('prefix') where this resource is being registered
     private String namespacePrefix;
-    
+
     // Home URL for the resource
     private String providerHomeUrl;
 

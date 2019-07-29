@@ -32,6 +32,10 @@ public class ResourceRegistrationRequest {
     @GeneratedValue
     private long id;
 
+    // Namespace 'prefix' where this resource is being registered
+    @Column(nullable = false)
+    private String namespacePrefix;
+
     // Home URL for the provider being registered
     @Column(nullable = false, length = 2000)
     private String providerHomeUrl;
