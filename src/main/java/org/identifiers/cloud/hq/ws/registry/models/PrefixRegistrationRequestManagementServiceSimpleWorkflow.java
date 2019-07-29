@@ -132,7 +132,6 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
             throw new PrefixRegistrationRequestManagementServiceException("NO comment requests ACCEPTED on ALREADY CLOSED Prefix Registration Session");
         }
         try {
-            // TODO
             // Create the event
             PrefixRegistrationSessionEventComment eventComment =
                     new PrefixRegistrationSessionEventComment().setComment(comment);
