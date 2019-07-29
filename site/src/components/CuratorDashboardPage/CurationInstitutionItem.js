@@ -28,8 +28,8 @@ class PrefixRegistrationSessionItem extends React.Component {
 
     return (
       <div>
-        <div className="card mb-3">
-          <div className="card-header">
+        <div className="card mb-1">
+          <div className="card-header py-1 pr-1">
             <div className="row justify-content-between">
               <div className="col col-md-10 col-lg-9 col-xl-10">
                 <a
@@ -38,18 +38,16 @@ class PrefixRegistrationSessionItem extends React.Component {
                   onClick={this.toggle}
                 >
                   <p className="m-0">
-                    <strong>Name: </strong>
-                    {name}
+                    <strong><i className="icon icon-common icon-sitemap mr-2" /></strong>{name}
                   </p>
                 </a>
               </div>
-              <div className="col col-md-2 col-lg-3 col-xl-2 pt-2">
-                <Link
-                  className="clear-link btn btn-warning btn-block"
-                  to={`/curator/${id}`}
+              <div className="col col-md-2 col-lg-3 col-xl-2 text-right">
+                <button
+                  className="clear-link btn btn-warning btn-sm m-0 py-0 px-2"
                 >
                   <i className="icon icon-common icon-ellipsis-h" /> Edit
-                </Link>
+                </button>
               </div>
             </div>
           </div>
