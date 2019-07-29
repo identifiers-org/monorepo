@@ -116,6 +116,7 @@ public class ApiAndDataModelsHelper {
                 .setProviderHomeUrl(payload.getProviderHomeUrl())
                 .setProviderLocation(payload.getProviderLocation())
                 .setProviderName(payload.getProviderName())
-                .setProviderUrlPattern(payload.getProviderUrlPattern());
+                .setProviderUrlPattern(payload.getProviderUrlPattern())
+                .setRequestedPrefix(payload.getNamespacePrefix());
     }
 }
