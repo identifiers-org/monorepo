@@ -2,6 +2,7 @@ package org.identifiers.cloud.hq.ws.registry.models;
 
 import org.identifiers.cloud.hq.ws.registry.data.models.*;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.*;
+import org.identifiers.cloud.hq.ws.registry.data.services.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +35,8 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
     // --- END Repositories ---
 
     // TODO - Services
+    @Autowired
+    private ResourceService resourceService;
 
     // TODO - Resource registration session completion actions
 
