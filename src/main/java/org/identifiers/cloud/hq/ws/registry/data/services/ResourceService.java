@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.data.services;
 
 import lombok.extern.slf4j.Slf4j;
+import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRepository;
 import org.identifiers.cloud.hq.ws.registry.models.MirIdService;
@@ -111,7 +112,12 @@ public class ResourceService {
         resource.setLocation(locationService.registerLocation(resource.getLocation()));
         // Register the institution
         resource.setInstitution(institutionService.registerInstitution(resource.getInstitution()));
-        // TODO Retrieve the namespace by its prefix
+        // Retrieve the namespace by its prefix
+        Namespace retrievedNamespace = namespaceService.getNamespaceByPrefix(namespacePrefix);
+        if (retrievedNamespace == null) {
+            throw new ResourceServiceException(String.format("Namespace '%s' NOT FOUND!!! When appending resource with name '%s'", namespacePrefix, resource.getName()));
+        }
+        resource.setNamespace(retrievedNamespace);
         // Register the resource within its namespace. Ok, why doing it this way? Because if this resource can't be
         // registered as provider within its associated namespace, the Namespace service will throw an exception that
         // will trigger a rollback in the database, as this method is transactional
