@@ -30,8 +30,18 @@ public interface ResourceRegistrationRequestManagementService {
                                                        String actor,
                                                        String additionalInformation) throws ResourceRegistrationRequestManagementServiceException;
 
+    /**
+     * Amend the resource registration request being processed in the given resource registration session.
+     * @param resourceRegistrationSession opened resource registration session where the request is being amended
+     * @param amendedRequest amended resource registration request, which is a copy of the latest version of the
+     *                       resource registration request, with some changes applied to it
+     * @param actor the actor that has triggered this action
+     * @param additionalInformation possible additional information related to this action
+     * @return the resource registration event registered as a consequence of executing this action
+     * @throws ResourceRegistrationRequestManagementServiceException
+     */
     ResourceRegistrationSessionEventAmend amendRequest(ResourceRegistrationSession resourceRegistrationSession,
-                                                       ResourceRegistrationRequest amendRequest,
+                                                       ResourceRegistrationRequest amendedRequest,
                                                        String actor,
                                                        String additionalInformation) throws ResourceRegistrationRequestManagementServiceException;
 

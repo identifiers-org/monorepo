@@ -38,7 +38,7 @@ public interface PrefixRegistrationRequestManagementService {
      *
      * @param prefixRegistrationSession opened prefix registration session where the request is being amended
      * @param amendedRequest amended prefix registration request, which is a copy of the latest version of the prefix
-     *                       registration requests, with some changes applied to it.
+     *                       registration request, with some changes applied to it.
      * @param actor the actor that has triggered this action
      * @param additionalInformation possible additional information related to this action
      * @return the prefix registration event registered as a consequence of executing this action
