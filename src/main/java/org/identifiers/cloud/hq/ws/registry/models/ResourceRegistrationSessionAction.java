@@ -16,5 +16,4 @@ public interface ResourceRegistrationSessionAction {
     // Having the report kind of makes sense, as it leaves the exception to true exceptional circumstances. Although it
     // doesn't stop being just another approach experiment...
     ResourceRegistrationSessionActionReport performAction(ResourceRegistrationSession session) throws ResourceRegistrationSessionActionException;
-
 }
