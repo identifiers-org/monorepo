@@ -74,7 +74,6 @@ public class PrefixRegistrationRequestValidatorRequestedPrefix implements Prefix
                 throw new PrefixRegistrationRequestValidatorException(shortErrorMessage);
             }
         } catch (RuntimeException e) {
-            // TODO
             errorMessage = String.format("While validating prefix '%s', the following error occurred: '%s'",
                     request.getRequestedPrefix(), e.getMessage());
             shortErrorMessage = e.getMessage();

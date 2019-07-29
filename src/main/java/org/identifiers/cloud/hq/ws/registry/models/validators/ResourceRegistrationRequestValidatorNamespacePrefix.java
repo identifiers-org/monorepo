@@ -2,6 +2,7 @@ package org.identifiers.cloud.hq.ws.registry.models.validators;
 
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourcePayload;
+import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,7 +35,22 @@ public class ResourceRegistrationRequestValidatorNamespacePrefix implements Reso
         String errorMessage = "--- no error message has been set ---";
         String shortErrorMessage = "--- no short error message has been set ---";
         try {
-            // TODO
+            Namespace foundNamespace = namespaceRepository.findByPrefix(request.getNamespacePrefix());
+            if (foundNamespace != null) {
+                if (foundNamespace.isDeprecated()) {
+                    shortErrorMessage = String.format("Prefix '%s' is deprecated", request.getNamespacePrefix());
+                    errorMessage = shortErrorMessage;
+                    log.error(errorMessage);
+                    throw new ResourceRegistrationRequestValidatorException(shortErrorMessage);
+                }
+                // Valid, just let it flow to the default 'true' return
+            } else {
+                // It doesn't even exist
+                errorMessage = String.format("Prefix '%s' IS NOT REGISTERED", request.getNamespacePrefix());
+                shortErrorMessage = errorMessage;
+                log.error(errorMessage);
+                throw new ResourceRegistrationRequestValidatorException(shortErrorMessage);
+            }
         } catch (RuntimeException e) {
             errorMessage = String.format("While validating prefix '%s', the following error occurred: '%s'",
                     request.getNamespacePrefix(), e.getMessage());
