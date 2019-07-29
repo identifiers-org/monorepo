@@ -1,6 +1,9 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
 import org.identifiers.cloud.hq.ws.registry.data.models.*;
+import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationRequestRepository;
+import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationSessionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,6 +18,8 @@ import org.springframework.stereotype.Component;
 public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implements ResourceRegistrationRequestManagementService {
 
     // TODO - Repositories
+    @Autowired
+    private ResourceRegistrationRequestRepository resourceRegistrationRequestRepository;
     // --- END Repositories ---
 
     // TODO - Services
