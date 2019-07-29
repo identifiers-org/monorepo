@@ -15,12 +15,12 @@ import java.util.Date;
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.data.models
- * Timestamp: 2019-03-15 11:42
+ * Timestamp: 2019-07-29 01:23
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  *
- * This is the base class that represents the events that are part of a prefix registration request session.
+ * This is the base class that represents the events that are part of a resource registration request session.
  */
 @Data
 @AllArgsConstructor
@@ -31,8 +31,8 @@ import java.util.Date;
 @Inheritance(strategy = InheritanceType.JOINED)
 @EntityListeners(AuditingEntityListener.class)
 @Table(indexes = {@Index(name = "idx_actor", columnList = "actor"),
-                    @Index(name = "idx_event_name", columnList = "eventName")})
-public class PrefixRegistrationSessionEvent {
+        @Index(name = "idx_event_name", columnList = "eventName")})
+public class ResourceRegistrationSessionEvent {
     @Id
     @GeneratedValue
     private long id;
@@ -51,10 +51,10 @@ public class PrefixRegistrationSessionEvent {
     private String additionalInformation;
 
     @ManyToOne(optional = false)
-    private PrefixRegistrationSession prefixRegistrationSession;
+    private ResourceRegistrationSession resourceRegistrationSession;
 
     @ManyToOne
-    private PrefixRegistrationRequest prefixRegistrationRequest;
+    private ResourceRegistrationRequest resourceRegistrationRequest;
 
     @Column(nullable = false, updatable = false)
     @CreatedDate
