@@ -86,5 +86,4 @@ public interface ResourceRegistrationRequestManagementService {
                                                          String acceptanceReason,
                                                          String actor,
                                                          String additionalInformation) throws ResourceRegistrationRequestManagementServiceException;
-    // TODO
 }
