@@ -41,6 +41,10 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
     private ResourceService resourceService;
 
     // TODO - Resource registration session completion actions
+    @Autowired
+    private ResourceRegistrationSessionActionRejection actionRejection;
+    @Autowired
+    private ResourceRegistrationSessionActionAcceptance actionAcceptance;
 
     // Helpers
     private boolean isResourceRegistrationSessionOpen(ResourceRegistrationSession session) {
@@ -92,7 +96,7 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
             , ResourceRegistrationRequest amendedRequest, String actor, String additionalInformation) throws ResourceRegistrationRequestManagementServiceException {
         // Check that the resource registration session is open
         if (!isResourceRegistrationSessionOpen(resourceRegistrationSession)) {
-            throw new PrefixRegistrationRequestManagementServiceException("NO amendment requests ACCEPTED on ALREADY CLOSED Resource Registration Session");
+            throw new ResourceRegistrationRequestManagementServiceException("NO amendment requests ACCEPTED on ALREADY CLOSED Resource Registration Session");
         }
         try {
             // Persist the amended request
@@ -122,7 +126,7 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
     public ResourceRegistrationSessionEventComment commentRequest(ResourceRegistrationSession resourceRegistrationSession, String comment, String actor, String additionalInformation) throws ResourceRegistrationRequestManagementServiceException {
         // Check that the resource registration session is open
         if (!isResourceRegistrationSessionOpen(resourceRegistrationSession)) {
-            throw new PrefixRegistrationRequestManagementServiceException("NO comment requests ACCEPTED on ALREADY CLOSED Resource Registration Session");
+            throw new ResourceRegistrationRequestManagementServiceException("NO comment requests ACCEPTED on ALREADY CLOSED Resource Registration Session");
         }
         try {
             // Create the event
@@ -149,7 +153,35 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
     @Transactional
     @Override
     public ResourceRegistrationSessionEventReject rejectRequest(ResourceRegistrationSession resourceRegistrationSession, String rejectionReason, String actor, String additionalInformation) throws ResourceRegistrationRequestManagementServiceException {
-        return null;
+        // Check that the resource registration session is open
+        if (!isResourceRegistrationSessionOpen(resourceRegistrationSession)) {
+            throw new ResourceRegistrationRequestManagementServiceException("NO rejection requests ACCEPTED on ALREADY CLOSED Resource Registration Session");
+        }
+        try {
+            // Create the event
+            ResourceRegistrationSessionEventReject eventReject =
+                    new ResourceRegistrationSessionEventReject().setRejectionReason(rejectionReason);
+            // Reference the current session prefix registration request
+            eventReject.setActor(actor)
+                    .setAdditionalInformation(additionalInformation)
+                    .setResourceRegistrationSession(resourceRegistrationSession)
+                    .setResourceRegistrationRequest(resourceRegistrationSession.getResourceRegistrationRequest());
+            // Persist the event
+            eventReject = resourceRegistrationSessionEventRejectRepository.save(eventReject);
+            resourceRegistrationSession.setClosed(true);
+            // Session is considered 'closed' right now
+            // Run the rejection action
+            actionRejection.performAction(resourceRegistrationSession);
+            // Return the event
+            return eventReject;
+        } catch (RuntimeException e) {
+            throw new ResourceRegistrationRequestManagementServiceException(
+                    String.format("While rejecting a resource registration request, with reason '%s', for provider name '%s', " +
+                                    "the following error occurred: '%s'",
+                            rejectionReason,
+                            resourceRegistrationSession.getResourceRegistrationRequest().getProviderName(),
+                            e.getMessage()));
+        }
     }
 
     @Transactional
