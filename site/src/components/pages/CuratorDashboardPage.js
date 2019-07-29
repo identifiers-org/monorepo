@@ -1,7 +1,9 @@
 import React from 'react';
 
-import PrefixRegistrationSessionList from '../CuratorDashboardPage/PrefixRegistrationSessionList';
+// Components.
+import CurationInstitutionList from '../CuratorDashboardPage/CurationInstitutionList';
 import PageTitle from '../common/PageTitle';
+import PrefixRegistrationSessionList from '../CuratorDashboardPage/PrefixRegistrationSessionList';
 
 
 class CuratorDashboardPage extends React.Component  {
@@ -20,15 +22,22 @@ class CuratorDashboardPage extends React.Component  {
                        requesting amendments or aproving/rejecting it."
         />
 
-        <div className="row">
+        <div className="row mb-5">
           <div className="col">
             <PrefixRegistrationSessionList />
           </div>
         </div>
 
+        <PageTitle
+          icon="icon-sitemap"
+          title="Institutions"
+          description="This is the list of Institutions currently stored in the registry. Clicking on one
+                       will show the detail fields and allow modifications or deletion."
+        />
+
         <div className="row">
           <div className="col">
-
+            <CurationInstitutionList />
           </div>
         </div>
       </>
