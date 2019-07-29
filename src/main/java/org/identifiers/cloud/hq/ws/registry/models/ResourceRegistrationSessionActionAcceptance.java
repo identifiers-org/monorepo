@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Project: registry
@@ -40,6 +41,11 @@ public class ResourceRegistrationSessionActionAcceptance implements ResourceRegi
         ResourceRegistrationSessionActionReport report = new ResourceRegistrationSessionActionReport();
         String messagePrefix = String.format("ACCEPTANCE ACTION for resource registration session with ID '%d', for provider name '%s'", session.getId(), session.getResourceRegistrationRequest().getProviderName());
         try {
+            // In this first implementation of the action, we will keep going upon error in any of the subactions, as these actions are not critical, but optional
+            List<ResourceRegistrationSessionActionReport> actionErrorReports = buildActionSequence().parallelStream()
+                    .map(action -> action.performAction(session))
+                    .filter(ResourceRegistrationSessionActionReport::isError)
+                    .collect(Collectors.toList());
             // TODO
         } catch (RuntimeException e) {
             // Some of the actions may not be capturing exceptions, let's go up to runtime top level
