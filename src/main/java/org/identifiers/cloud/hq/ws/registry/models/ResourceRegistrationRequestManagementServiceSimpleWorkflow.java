@@ -41,6 +41,18 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
     // TODO - Resource registration session completion actions
 
     // TODO Helpers
+    private boolean isResourceRegistrationSessionOpen(ResourceRegistrationSession session) {
+        // Check there is no 'reject' event
+        if (resourceRegistrationSessionEventRejectRepository.findByResourceRegistrationSessionId(session.getId()) != null) {
+            return false;
+        }
+        // Check there no 'accept' event
+        if (resourceRegistrationSessionEventAcceptRepository.findByResourceRegistrationSessionId(session.getId()) != null) {
+            return false;
+        }
+        return true;
+    }
+    // END - Helpers
 
     @Override
     public ResourceRegistrationSessionEventStart startRequest(ResourceRegistrationRequest request, String actor,
