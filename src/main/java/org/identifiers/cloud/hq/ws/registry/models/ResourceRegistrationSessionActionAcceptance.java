@@ -40,6 +40,7 @@ public class ResourceRegistrationSessionActionAcceptance implements ResourceRegi
     public ResourceRegistrationSessionActionReport performAction(ResourceRegistrationSession session) throws ResourceRegistrationSessionActionException {
         ResourceRegistrationSessionActionReport report = new ResourceRegistrationSessionActionReport();
         String messagePrefix = String.format("ACCEPTANCE ACTION for resource registration session with ID '%d', for provider name '%s'", session.getId(), session.getResourceRegistrationRequest().getProviderName());
+        // TODO Refactor this when possible joint with ResourceRegistrationSessionActionAcceptance
         try {
             // In this first implementation of the action, we will keep going upon error in any of the subactions, as these actions are not critical, but optional
             List<ResourceRegistrationSessionActionReport> actionErrorReports = buildActionSequence().parallelStream()
@@ -59,7 +60,6 @@ public class ResourceRegistrationSessionActionAcceptance implements ResourceRegi
             // Some of the actions may not be capturing exceptions, let's go up to runtime top level
             throw new ResourceRegistrationSessionActionException(String.format("%s, the following error occurred: %s", messagePrefix, e.getMessage()));
         }
-        // TODO
         return report;
     }
 }
