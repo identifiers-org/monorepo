@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
 import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationSession;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Project: registry
@@ -14,6 +15,10 @@ import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationSess
  * accepting the request
  */
 public class ResourceRegistrationSessionActionAcceptance implements ResourceRegistrationSessionAction {
+    // Related actions
+    @Autowired
+    private ResourceRegistrationSessionActionLogger actionLogger;
+    
     // TODO
     @Override
     public ResourceRegistrationSessionActionReport performAction(ResourceRegistrationSession session) throws ResourceRegistrationSessionActionException {
