@@ -1,10 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
 import org.identifiers.cloud.hq.ws.registry.data.models.*;
-import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationRequestRepository;
-import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationSessionEventAmendRepository;
-import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationSessionEventStartRepository;
-import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationSessionRepository;
+import org.identifiers.cloud.hq.ws.registry.data.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +25,8 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
     private ResourceRegistrationSessionEventStartRepository resourceRegistrationSessionEventStartRepository;
     @Autowired
     private ResourceRegistrationSessionEventAmendRepository resourceRegistrationSessionEventAmendRepository;
+    @Autowired
+    private ResourceRegistrationSessionEventRejectRepository resourceRegistrationSessionEventRejectRepository;
     // --- END Repositories ---
 
     // TODO - Services
