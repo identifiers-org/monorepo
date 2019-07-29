@@ -41,7 +41,7 @@ public class PrefixRegistrationSessionActionAcceptance implements PrefixRegistra
     public PrefixRegistrationSessionActionReport performAction(PrefixRegistrationSession session) throws PrefixRegistrationSessionActionException {
         PrefixRegistrationSessionActionReport report = new PrefixRegistrationSessionActionReport();
         String messagePrefix = String.format("ACCEPTANCE ACTION for prefix registration session " +
-                        "with ID '%d', for prefix '%s', ",
+                        "with ID '%d', for prefix '%s'",
                 session.getId(),
                 session.getPrefixRegistrationRequest().getRequestedPrefix());
         // TODO Refactor this out in future iterations
