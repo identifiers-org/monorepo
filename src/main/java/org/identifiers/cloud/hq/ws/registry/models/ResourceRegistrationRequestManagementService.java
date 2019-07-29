@@ -1,5 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
+import org.identifiers.cloud.hq.ws.registry.data.models.*;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.models
@@ -16,5 +18,28 @@ package org.identifiers.cloud.hq.ws.registry.models;
  */
 public interface ResourceRegistrationRequestManagementService {
 
+    ResourceRegistrationSessionEventStart startRequest(ResourceRegistrationRequest request,
+                                                       String actor,
+                                                       String additionalInformation) throws ResourceRegistrationRequestManagementServiceException;
+
+    ResourceRegistrationSessionEventAmend amendRequest(ResourceRegistrationSession resourceRegistrationSession,
+                                                       ResourceRegistrationRequest amendRequest,
+                                                       String actor,
+                                                       String additionalInformation) throws ResourceRegistrationRequestManagementServiceException;
+
+    ResourceRegistrationSessionEventComment commentRequest(ResourceRegistrationSession resourceRegistrationSession,
+                                                           String comment,
+                                                           String actor,
+                                                           String additionalInformation) throws ResourceRegistrationRequestManagementServiceException;
+
+    ResourceRegistrationSessionEventReject rejectRequest(ResourceRegistrationSession resourceRegistrationSession,
+                                                         String rejectionReason,
+                                                         String actor,
+                                                         String additionalInformation) throws ResourceRegistrationRequestManagementServiceException;
+
+    ResourceRegistrationSessionEventAccept acceptRequest(ResourceRegistrationSession resourceRegistrationSession,
+                                                         String acceptanceReason,
+                                                         String actor,
+                                                         String additionalInformation) throws ResourceRegistrationRequestManagementServiceException;
     // TODO
 }
