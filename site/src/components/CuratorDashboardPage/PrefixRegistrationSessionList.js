@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import Paginator from '../common/Paginator';
 import PrefixRegistrationSessionItem from './PrefixRegistrationSessionItem';
 
-import { getPrefixRegistrationSessionListFromRegistry } from '../../actions/PrefixRegistrationSessionList';
-import { setPrefixRegistrationSessionListParams} from '../../actions/PrefixRegistrationSessionListParams';
+import { getPrefixRegistrationSessionListFromRegistry } from '../../actions/CuratorDashboardPage/PrefixRegistrationSessionList';
+import { setPrefixRegistrationSessionListParams } from '../../actions/CuratorDashboardPage/PrefixRegistrationSessionListParams';
 
 import { equalParams } from '../../utils/equalParams';
 

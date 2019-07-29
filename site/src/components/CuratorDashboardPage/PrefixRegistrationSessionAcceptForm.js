@@ -4,8 +4,8 @@ import { withRouter } from 'react-router';
 
 import { Collapse } from 'reactstrap';
 
-import { prefixRegistrationRequestAccept } from '../../actions/PrefixRegistrationSession';
-import { setPrefixRegistrationSessionAccept } from '../../actions/PrefixRegistrationSessionAccept';
+import { prefixRegistrationRequestAccept } from '../../actions/CuratorDashboardPage/PrefixRegistrationSession';
+import { setPrefixRegistrationSessionAccept } from '../../actions/CuratorDashboardPage/PrefixRegistrationSessionAccept';
 
 import { swalSuccess, swalError } from '../../utils/swalDialogs';
 

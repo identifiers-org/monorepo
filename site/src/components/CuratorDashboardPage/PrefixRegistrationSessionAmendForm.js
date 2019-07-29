@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Collapse } from 'reactstrap';
 
 // Actions.
-import { prefixRegistrationRequestAmend } from '../../actions/PrefixRegistrationSession';
-import { setPrefixRegistrationSessionAmendField } from '../../actions/PrefixRegistrationSessionAmend';
+import { prefixRegistrationRequestAmend } from '../../actions/CuratorDashboardPage/PrefixRegistrationSession';
+import { setPrefixRegistrationSessionAmendField } from '../../actions/CuratorDashboardPage/PrefixRegistrationSessionAmend';
 
 // Components.
 import ReversibleField from '../common/ReversibleField';
