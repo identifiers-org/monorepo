@@ -40,7 +40,7 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
 
     // TODO - Resource registration session completion actions
 
-    // TODO Helpers
+    // Helpers
     private boolean isResourceRegistrationSessionOpen(ResourceRegistrationSession session) {
         // Check there is no 'reject' event
         if (resourceRegistrationSessionEventRejectRepository.findByResourceRegistrationSessionId(session.getId()) != null) {
