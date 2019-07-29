@@ -6,6 +6,8 @@ import org.identifiers.cloud.hq.ws.registry.data.services.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.models
@@ -54,10 +56,34 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
     }
     // END - Helpers
 
+    @Transactional
     @Override
     public ResourceRegistrationSessionEventStart startRequest(ResourceRegistrationRequest request, String actor,
                                                               String additionalInformation) throws ResourceRegistrationRequestManagementServiceException {
-        return null;
+        try {
+            // Persist the given resource registration request
+            ResourceRegistrationRequest savedRequest = resourceRegistrationRequestRepository.save(request);
+            // Open a new resource registration session
+            // Set the given prefix registration request
+            ResourceRegistrationSession session =
+                    new ResourceRegistrationSession().setResourceRegistrationRequest(savedRequest);
+            // TODO This is the place where some kind of generated hash should be introduced, for the user to be able to
+            //  check the status of the resource registration request in the future
+            session = resourceRegistrationSessionRepository.save(session);
+            // Create a 'start' event
+            ResourceRegistrationSessionEventStart sessionEventStart = new ResourceRegistrationSessionEventStart();
+            sessionEventStart.setActor(actor)
+                    .setAdditionalInformation(additionalInformation)
+                    .setResourceRegistrationRequest(savedRequest)
+                    .setResourceRegistrationSession(session);
+            // Return the event
+            return resourceRegistrationSessionEventStartRepository.save(sessionEventStart);
+        } catch (RuntimeException e) {
+            throw new ResourceRegistrationRequestManagementServiceException(
+                    String.format("While starting a resource registration session for resource registration request " +
+                                    "on '%s' provider, the following error occurred: '%s'",
+                            request.getProviderName(), e.getMessage()));
+        }
     }
 
     @Override
