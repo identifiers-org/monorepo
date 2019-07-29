@@ -13,4 +13,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface ResourceRegistrationSessionEventRejectRepository extends JpaRepository<ResourceRegistrationSessionEventReject, Long> {
     // TODO
+    ResourceRegistrationSessionEventReject findByResourceRegistrationSessionId(long id);
 }
