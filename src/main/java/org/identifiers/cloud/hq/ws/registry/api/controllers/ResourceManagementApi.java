@@ -69,7 +69,7 @@ public class ResourceManagementApi {
         return new ResponseEntity<>("WORK IN PROGRESS", HttpStatus.NOT_IMPLEMENTED);
     }
 
-    // TODO --- Resource Registration Request Validation ---
+    // --- Resource Registration Request Validation ---
     @PostMapping(value = "/validateNamespacePrefix")
     public ResponseEntity<?> validateNamespacePrefix(@RequestBody ServiceRequestRegisterResourceValidate request) {
         ServiceResponseRegisterResourceValidate response = model.validateNamespacePrefix(request);
