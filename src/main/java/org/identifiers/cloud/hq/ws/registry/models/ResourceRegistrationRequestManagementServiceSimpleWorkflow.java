@@ -20,6 +20,8 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
     // TODO - Repositories
     @Autowired
     private ResourceRegistrationRequestRepository resourceRegistrationRequestRepository;
+    @Autowired
+    private ResourceRegistrationSessionRepository resourceRegistrationSessionRepository;
     // --- END Repositories ---
 
     // TODO - Services
