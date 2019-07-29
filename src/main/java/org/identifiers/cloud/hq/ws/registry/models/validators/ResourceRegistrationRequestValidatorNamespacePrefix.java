@@ -25,6 +25,23 @@ public class ResourceRegistrationRequestValidatorNamespacePrefix implements Reso
 
     @Override
     public boolean validate(ServiceRequestRegisterResourcePayload request) throws ResourceRegistrationRequestValidatorException {
-        return false;
+        // TODO I may need to re-think this method, to have a way of sending back multiple error messages
+        // Check that the parameter is not null
+        if (request.getNamespacePrefix() == null) {
+            throw new ResourceRegistrationRequestValidatorException("MISSING Namespace Prefix");
+        }
+        // TODO - Check the namespace prefix corresponds to a valid active namespace
+        String errorMessage = "--- no error message has been set ---";
+        String shortErrorMessage = "--- no short error message has been set ---";
+        try {
+            // TODO
+        } catch (RuntimeException e) {
+            errorMessage = String.format("While validating prefix '%s', the following error occurred: '%s'",
+                    request.getNamespacePrefix(), e.getMessage());
+            shortErrorMessage = e.getMessage();
+            log.error(errorMessage);
+            throw new ResourceRegistrationRequestValidatorException(shortErrorMessage);
+        }
+        return true;
     }
 }
