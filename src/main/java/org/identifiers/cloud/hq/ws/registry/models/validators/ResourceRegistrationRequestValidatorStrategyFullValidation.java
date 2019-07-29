@@ -18,6 +18,10 @@ import java.util.List;
 @Component
 public class ResourceRegistrationRequestValidatorStrategyFullValidation implements ResourceRegistrationRequestValidatorStrategy {
     @Autowired
+    @Qualifier("ResourceRegistrationRequestValidatorNamespacePrefix")
+    private ResourceRegistrationRequestValidator namespacePrefixValidator;
+
+    @Autowired
     @Qualifier("ResourceRegistrationRequestValidatorProviderHomeUrl")
     private ResourceRegistrationRequestValidator providerHomeUrlValidator;
 
@@ -72,6 +76,7 @@ public class ResourceRegistrationRequestValidatorStrategyFullValidation implemen
     @Override
     public List<ResourceRegistrationRequestValidator> getValidationChain() {
         return Arrays.asList(
+                namespacePrefixValidator,
                 providerHomeUrlValidator,
                 providerNameValidator,
                 providerDescriptionValidator,
