@@ -68,6 +68,7 @@ public interface PrefixRegistrationRequestManagementService {
      * Close a prefix registration session, by rejecting its prefix registration request.
      *
      * @param prefixRegistrationSession opened prefix registration session where this action is being triggered
+     * @param rejectionReason the reason why the prefix registration request was rejected
      * @param actor the actor that has triggered this action
      * @param additionalInformation possible additional information related to this action
      * @return the prefix registration event registered as a consequence of executing this action

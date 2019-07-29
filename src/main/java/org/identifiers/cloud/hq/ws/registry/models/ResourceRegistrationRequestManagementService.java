@@ -59,10 +59,20 @@ public interface ResourceRegistrationRequestManagementService {
                                                            String actor,
                                                            String additionalInformation) throws ResourceRegistrationRequestManagementServiceException;
 
+    /**
+     * Close a resource registration session, by rejecting its resource registration request
+     * @param resourceRegistrationSession opened resource registration session where this action is being triggered
+     * @param rejectionReason the reason why the resource registration request was rejected
+     * @param actor the actor that has triggered this action
+     * @param additionalInformation additional information related to this action
+     * @return the resource registration event registered as a consequence of executing this action
+     * @throws ResourceRegistrationRequestManagementServiceException
+     */
     ResourceRegistrationSessionEventReject rejectRequest(ResourceRegistrationSession resourceRegistrationSession,
                                                          String rejectionReason,
                                                          String actor,
                                                          String additionalInformation) throws ResourceRegistrationRequestManagementServiceException;
+
 
     ResourceRegistrationSessionEventAccept acceptRequest(ResourceRegistrationSession resourceRegistrationSession,
                                                          String acceptanceReason,
