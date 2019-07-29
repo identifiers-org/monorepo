@@ -27,6 +27,10 @@ public class ResourceManagementApiModel {
 
     // --- Validators ---
     @Autowired
+    @Qualifier("ResourceRegistrationRequestValidatorNamespacePrefix")
+    private ResourceRegistrationRequestValidator namespacePrefixValidator;
+
+    @Autowired
     @Qualifier("ResourceRegistrationRequestValidatorProviderHomeUrl")
     private ResourceRegistrationRequestValidator providerHomeUrlValidator;
 
@@ -181,5 +185,9 @@ public class ResourceManagementApiModel {
 
     public ServiceResponseRegisterResourceValidate validateRequesterEmail(ServiceRequestRegisterResourceValidate request) {
         return doValidation(request, requesterEmailValidator);
+    }
+
+    public ServiceResponseRegisterResourceValidate validateNamespacePrefix(ServiceRequestRegisterResourceValidate request) {
+        return doValidation(request, namespacePrefixValidator);
     }
 }
