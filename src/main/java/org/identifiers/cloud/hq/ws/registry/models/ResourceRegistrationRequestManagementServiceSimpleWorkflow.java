@@ -92,7 +92,7 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
             , ResourceRegistrationRequest amendedRequest, String actor, String additionalInformation) throws ResourceRegistrationRequestManagementServiceException {
         // Check that the resource registration session is open
         if (!isResourceRegistrationSessionOpen(resourceRegistrationSession)) {
-            throw new PrefixRegistrationRequestManagementServiceException("NO amendment requests ACCEPTED on ALREADY CLOSED Prefix Registration Session");
+            throw new PrefixRegistrationRequestManagementServiceException("NO amendment requests ACCEPTED on ALREADY CLOSED Resource Registration Session");
         }
         try {
             // Persist the amended request
