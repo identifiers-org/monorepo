@@ -210,8 +210,16 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
             try {
                 resourceService.appendResourceToNamespace(resource, resourceRegistrationSession.getResourceRegistrationRequest().getNamespacePrefix());
             } catch (RuntimeException e) {
-                // TODO
+                throw new ResourceRegistrationRequestManagementServiceException(
+                        String.format("Resource registration request ACCEPTANCE COULD NOT BE COMPLETED for resource name '%s' within namespace prefix '%s' due to the following error '%s'",
+                                resourceRegistrationSession.getResourceRegistrationRequest().getProviderName(),
+                                resourceRegistrationSession.getResourceRegistrationRequest().getNamespacePrefix(),
+                                e.getMessage())
+                );
             }
+            // Acceptance action
+            actionAcceptance.performAction(resourceRegistrationSession);
+            // Return the event
             return eventAccept;
         } catch (RuntimeException e) {
             throw new ResourceRegistrationRequestManagementServiceException(
