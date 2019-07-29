@@ -136,7 +136,7 @@ class Header extends React.Component {
                             <>
                               <EBINavItem className="nav-item">
                                 <NavLink to="/curator" className="nav-link" activeClassName="active">
-                                  <i className="icon icon-common icon-tachometer-alt mr-1" />Curator dashboard
+                                  <i className="icon icon-common icon-tachometer-alt mr-1" />Curation dashboard
                                 </NavLink>
                               </EBINavItem>
                               <EBINavItem className="nav-item">
