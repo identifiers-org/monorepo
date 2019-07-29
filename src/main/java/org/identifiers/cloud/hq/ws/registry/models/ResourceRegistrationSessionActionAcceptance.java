@@ -46,12 +46,20 @@ public class ResourceRegistrationSessionActionAcceptance implements ResourceRegi
                     .map(action -> action.performAction(session))
                     .filter(ResourceRegistrationSessionActionReport::isError)
                     .collect(Collectors.toList());
-            // TODO
+            // Set own action report consistent with reports from subactions
+            if (!actionErrorReports.isEmpty()) {
+                report.setErrorMessage(String.format("%s, some actions COMPLETED WITH ERRORS", messagePrefix));
+                report.setSuccess(false);
+            } else {
+                report.setAdditionalInformation(String.format("%s, ALL actions SUCCESSFULY COMPLETED", messagePrefix));
+            }
+            // Log error reports
+            actionErrorReports.parallelStream().forEach(actionErrorReport -> log.error(actionErrorReport.getErrorMessage()));
         } catch (RuntimeException e) {
             // Some of the actions may not be capturing exceptions, let's go up to runtime top level
             throw new ResourceRegistrationSessionActionException(String.format("%s, the following error occurred: %s", messagePrefix, e.getMessage()));
         }
         // TODO
-        return null;
+        return report;
     }
 }
