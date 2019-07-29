@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { getPrefixRegistrationSessionFromRegistry } from '../../actions/PrefixRegistrationSession';
+import { getPrefixRegistrationSessionFromRegistry } from '../../actions/CuratorDashboardPage/PrefixRegistrationSession';
 
 import PrefixRegistrationSessionEvent from '../CuratorDashboardPage/PrefixRegistrationSessionEvent';
 import PrefixRegistrationSessionNewEventBtn from '../CuratorDashboardPage/PrefixRegistrationSessionNewEventBtn';
