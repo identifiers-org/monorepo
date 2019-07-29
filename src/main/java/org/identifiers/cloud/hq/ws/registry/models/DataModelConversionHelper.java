@@ -54,7 +54,11 @@ public class DataModelConversionHelper {
         return resource;
     }
 
-    // Get Resource from Resource Registration Request
+    /**
+     * Convert a data model that represents a resource registration request, to a resource data model
+     * @param resourceRegistrationRequest source model conversion
+     * @return a resource representation of the given source model
+     */
     public static Resource getResourceFrom(ResourceRegistrationRequest resourceRegistrationRequest) {
         Resource resource = new Resource();
         Person requester =
