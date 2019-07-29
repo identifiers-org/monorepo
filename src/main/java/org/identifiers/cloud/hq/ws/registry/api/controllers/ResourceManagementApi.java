@@ -70,6 +70,11 @@ public class ResourceManagementApi {
     }
 
     // TODO --- Resource Registration Request Validation ---
+    @PostMapping(value = "/validateNamespacePrefix")
+    public ResponseEntity<?> validateNamespacePrefix(@RequestBody ServiceRequestRegisterResourceValidate request) {
+        ServiceResponseRegisterResourceValidate response = model.validateNamespacePrefix(request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
+    }
 
     @PostMapping(value = "/validateProviderHomeUrl")
     public ResponseEntity<?> validateProviderHomeUrl(@RequestBody ServiceRequestRegisterResourceValidate request) {
