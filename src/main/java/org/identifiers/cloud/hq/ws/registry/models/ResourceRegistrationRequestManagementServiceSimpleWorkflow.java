@@ -29,6 +29,8 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
     private ResourceRegistrationSessionEventRejectRepository resourceRegistrationSessionEventRejectRepository;
     @Autowired
     private ResourceRegistrationSessionEventAcceptRepository resourceRegistrationSessionEventAcceptRepository;
+    @Autowired
+    private ResourceRegistrationSessionEventCommentRepository resourceRegistrationSessionEventCommentRepository;
     // --- END Repositories ---
 
     // TODO - Services
