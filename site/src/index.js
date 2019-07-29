@@ -9,7 +9,7 @@ import store from './store/store';
 
 // Actions.
 import { authInit, saveAuthRenewalIntervalHandler } from './actions/Auth';
-import { getInstitutionsListFromRegistry } from './actions/InstitutionList';
+import { getInstitutionListFromRegistry } from './actions/InstitutionList';
 import { getLocationListFromRegistry } from './actions/LocationList';
 
 // Routers.
@@ -33,7 +33,7 @@ const jsx = (
   // Get locations.
   await store.dispatch(getLocationListFromRegistry());
   // Get institutions.
-  await store.dispatch(getInstitutionsListFromRegistry());
+  await store.dispatch(getInstitutionListFromRegistry());
 
   // Init auth.
   store.getState().config.enableAuthFeatures && await store.dispatch(authInit());
