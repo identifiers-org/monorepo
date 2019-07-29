@@ -212,7 +212,7 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
             prefixRegistrationSession.setClosed(true);
             // Session is considered 'closed' right now
             // Activate the new Namespace with its first provider
-            Resource resource = DataModelConversionHelper.getFrom(prefixRegistrationSession.getPrefixRegistrationRequest());
+            Resource resource = DataModelConversionHelper.getResourceFrom(prefixRegistrationSession.getPrefixRegistrationRequest());
             try {
                 resourceService.registerResource(resource);
             } catch (RuntimeException e) {

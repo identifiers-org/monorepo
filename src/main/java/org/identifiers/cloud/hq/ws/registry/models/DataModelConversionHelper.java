@@ -19,7 +19,7 @@ public class DataModelConversionHelper {
      * @param prefixRegistrationRequest the source for the conversion
      * @return a resource built from the given prefix registration request
      */
-    public static Resource getFrom(PrefixRegistrationRequest prefixRegistrationRequest) {
+    public static Resource getResourceFrom(PrefixRegistrationRequest prefixRegistrationRequest) {
         Resource resource = new Resource();
         Person requester =
                 new Person()
