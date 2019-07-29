@@ -8,7 +8,7 @@ import { config } from '../config/Config';
 // Get institutions list from registry. Will dispatch setInstitutionList.
 // TODO: This gets the first 1000. Should paginate requests to get all institutions in case the total
 // amount of institutions grow above 1000.
-export const getInstitutionsListFromRegistry = () => {
+export const getInstitutionListFromRegistry = () => {
   return async (dispatch) => {
     let requestUrl = config.registryApi + '/restApi/institutions?size=1000';
 
