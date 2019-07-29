@@ -76,6 +76,16 @@ public class NamespaceService {
         return registeredNamespace;
     }
 
+    /**
+     * Given a prefix, get the namespace details
+     * @param namespacePrefix the given prefix
+     * @return namespace details object
+     * @throws NamespaceServiceException
+     */
+    public Namespace getNamespaceByPrefix(String namespacePrefix) throws NamespaceServiceException {
+        return repository.findByPrefix(namespacePrefix);
+    }
+
     // TODO - Deactivate a namespace
     // TODO - Reactivate a namespace
 
