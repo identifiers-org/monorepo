@@ -45,6 +45,15 @@ public interface ResourceRegistrationRequestManagementService {
                                                        String actor,
                                                        String additionalInformation) throws ResourceRegistrationRequestManagementServiceException;
 
+    /**
+     * Log a comment on the given resource registration session
+     * @param resourceRegistrationSession opened resource registration session where this action is being triggered
+     * @param comment the comment to be logged for this resource registration session
+     * @param actor the actor that has triggered this action
+     * @param additionalInformation additional information related to this action
+     * @return the resource registration event registered as a consequence of executing this action
+     * @throws ResourceRegistrationRequestManagementServiceException
+     */
     ResourceRegistrationSessionEventComment commentRequest(ResourceRegistrationSession resourceRegistrationSession,
                                                            String comment,
                                                            String actor,

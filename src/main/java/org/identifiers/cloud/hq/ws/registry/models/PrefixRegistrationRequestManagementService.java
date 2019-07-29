@@ -53,6 +53,7 @@ public interface PrefixRegistrationRequestManagementService {
      * Log a comment on the given prefix registration session.
      *
      * @param prefixRegistrationSession opened prefix registration session where this action is being triggered
+     * @param comment the comment to be logged for this resource registration session
      * @param actor the actor that has triggered this action
      * @param additionalInformation possible additional information related to this action
      * @return the prefix registration event registered as a consequence of executing this action
