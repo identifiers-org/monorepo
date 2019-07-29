@@ -17,12 +17,18 @@ class CuratorDashboardPage extends React.Component  {
           title="Prefix Registration Requests"
           description="This is the list of Prefix Registration Requests sent by resource administrators.
                        Clicking on one will expand the information and allow to perform actions like
-                       requesting ammendments or aproving/rejecting it."
+                       requesting amendments or aproving/rejecting it."
         />
 
         <div className="row">
           <div className="col">
             <PrefixRegistrationSessionList />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col">
+
           </div>
         </div>
       </>
