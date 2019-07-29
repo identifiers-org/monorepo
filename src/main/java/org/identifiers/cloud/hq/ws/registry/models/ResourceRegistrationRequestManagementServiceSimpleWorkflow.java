@@ -192,7 +192,19 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
             throw new ResourceRegistrationRequestManagementServiceException("NO acceptance requests ACCEPTED on ALREADY CLOSED Resource Registration Session");
         }
         try {
-            // TODO
+            // Create the event
+            ResourceRegistrationSessionEventAccept eventAccept =
+                    new ResourceRegistrationSessionEventAccept().setAcceptanceReason(acceptanceReason);
+            // Reference the current session prefix registration request
+            eventAccept.setActor(actor)
+                    .setAdditionalInformation(additionalInformation)
+                    .setResourceRegistrationSession(resourceRegistrationSession)
+                    .setResourceRegistrationRequest(resourceRegistrationSession.getResourceRegistrationRequest());
+            // Persist the event
+            eventAccept = resourceRegistrationSessionEventAcceptRepository.save(eventAccept);
+            resourceRegistrationSession.setClosed(true);
+            // Session is considered 'closed' right now
+            // TODO - Resource Registration
             return null;
         } catch (RuntimeException e) {
             throw new ResourceRegistrationRequestManagementServiceException(
