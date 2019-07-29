@@ -18,6 +18,14 @@ import org.identifiers.cloud.hq.ws.registry.data.models.*;
  */
 public interface ResourceRegistrationRequestManagementService {
 
+    /**
+     * This method starts the resource registration process for the given resource registration request.
+     * @param request the resource registration request to use for starting the process
+     * @param actor the actor that has triggered this action
+     * @param additionalInformation additional information related to this action
+     * @return the resource registration event registered as a consequence of executing this action
+     * @throws ResourceRegistrationRequestManagementServiceException
+     */
     ResourceRegistrationSessionEventStart startRequest(ResourceRegistrationRequest request,
                                                        String actor,
                                                        String additionalInformation) throws ResourceRegistrationRequestManagementServiceException;
