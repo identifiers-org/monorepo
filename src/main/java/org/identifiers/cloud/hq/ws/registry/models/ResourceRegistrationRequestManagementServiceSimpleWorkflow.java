@@ -187,6 +187,20 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
     @Transactional
     @Override
     public ResourceRegistrationSessionEventAccept acceptRequest(ResourceRegistrationSession resourceRegistrationSession, String acceptanceReason, String actor, String additionalInformation) throws ResourceRegistrationRequestManagementServiceException {
-        return null;
+        // Check that the resource registration session is open
+        if (!isResourceRegistrationSessionOpen(resourceRegistrationSession)) {
+            throw new ResourceRegistrationRequestManagementServiceException("NO acceptance requests ACCEPTED on ALREADY CLOSED Resource Registration Session");
+        }
+        try {
+            // TODO
+            return null;
+        } catch (RuntimeException e) {
+            throw new ResourceRegistrationRequestManagementServiceException(
+                    String.format("While accepting a resource registration request, with reason '%s', for provider name '%s', " +
+                                    "the following error occurred: '%s'",
+                            acceptanceReason,
+                            resourceRegistrationSession.getResourceRegistrationRequest().getProviderName(),
+                            e.getMessage()));
+        }
     }
 }
