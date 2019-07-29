@@ -204,8 +204,15 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
             eventAccept = resourceRegistrationSessionEventAcceptRepository.save(eventAccept);
             resourceRegistrationSession.setClosed(true);
             // Session is considered 'closed' right now
-            // TODO - Resource Registration
-            return null;
+            // Convert the data model
+            Resource resource = DataModelConversionHelper.getResourceFrom(resourceRegistrationSession.getResourceRegistrationRequest());
+            // Resource Registration
+            try {
+                resourceService.appendResourceToNamespace(resource, resourceRegistrationSession.getResourceRegistrationRequest().getNamespacePrefix());
+            } catch (RuntimeException e) {
+                // TODO
+            }
+            return eventAccept;
         } catch (RuntimeException e) {
             throw new ResourceRegistrationRequestManagementServiceException(
                     String.format("While accepting a resource registration request, with reason '%s', for provider name '%s', " +
