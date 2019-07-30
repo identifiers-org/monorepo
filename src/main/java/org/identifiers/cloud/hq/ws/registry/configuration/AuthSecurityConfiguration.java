@@ -236,11 +236,11 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.PUT, "/restApi/resourceRegistrationSessionEventStarts/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('restApiResourceRegistrationSessionEventStartPut'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
                     .antMatchers(HttpMethod.PATCH, "/restApi/resourceRegistrationSessionEventStarts/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('restApiResourceRegistrationSessionEventStartPatch'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
                     .antMatchers(HttpMethod.DELETE, "/restApi/resourceRegistrationSessionEventStarts/**").denyAll()
-                // REST Repository - Resolution API
+                // Resolution API
                     .antMatchers("/resolutionApi/**").permitAll()
-                // REST Repository - Semantic API
+                // Semantic API
                     .antMatchers("/semanticApi/**").permitAll()
-                // REST Repository - Prefix Registration API
+                // Prefix Registration API
                     .antMatchers(HttpMethod.POST, "/prefixRegistrationApi/registerPrefix").permitAll()
                     .antMatchers("/prefixRegistrationApi/amendPrefixRegistrationRequest/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('ApiPrefixRegistrationAmendPrefixRegistrationRequest'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
                     .antMatchers("/prefixRegistrationApi/commentPrefixRegistrationRequest/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('ApiPrefixRegistrationCommentPrefixRegistrationRequest'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
@@ -248,7 +248,7 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers("/prefixRegistrationApi/acceptPrefixRegistrationRequest/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('ApiPrefixRegistrationAcceptPrefixRegistrationRequest'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
                     .antMatchers(HttpMethod.POST, "/prefixRegistrationApi/validate*").permitAll()
                     .anyRequest().denyAll()
-                // REST Repository - Resource Registration API
+                // Resource Registration API
                     .antMatchers(HttpMethod.POST, "/resourceManagementApi/registerResource").permitAll()
                     .antMatchers("/resourceManagementApi/amendResourceRegistrationRequest/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('ApiResourceManagementAmendResourceRegistrationRequest'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
                     .antMatchers("/resourceManagementApi/commentResourceRegistrationRequest/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('ApiResourceManagementRegistrationCommentResourceRegistrationRequest'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
