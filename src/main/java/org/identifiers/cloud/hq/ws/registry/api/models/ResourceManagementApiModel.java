@@ -239,9 +239,14 @@ public class ResourceManagementApiModel {
         // TODO We need to get the actor from Spring Security
         String actor = "UNKNOWN";
         // Locate the resource registration request session
-
-        // TODO
-        return null;
+        ResourceRegistrationSession resourceRegistrationSession = getResourceRegistrationSession("AMEND", sessionId, request, response);
+        if (response.getHttpStatus() == HttpStatus.OK) {
+            // Transform the model
+            ResourceRegistrationRequest amendedResourceRegistrationRequest = ApiAndDataModelsHelper.getResourceRegistrationRequestFrom(request.getPayload().getResourceRegistrationRequest());
+            // Delegate on the resource registration request manager service
+            resourceRegistrationRequestManagementService.amendRequest(resourceRegistrationSession, amendedResourceRegistrationRequest, actor, getAdditionalInformationFrom(request));
+        }
+        return response;
     }
 
     public ServiceResponseRegisterResourceSessionEvent commentResourceRegistrationRequest(long sessionId, ServiceRequestRegisterResourceSessionEvent request) {
