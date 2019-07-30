@@ -7,6 +7,7 @@ import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegiste
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterResourceValidatePayload;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidator;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidatorException;
+import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidatorStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -89,6 +90,10 @@ public class ResourceManagementApiModel {
     @Autowired
     @Qualifier("ResourceRegistrationRequestValidatorRequesterEmail")
     private ResourceRegistrationRequestValidator requesterEmailValidator;
+
+    // Resource Registration Request validation strategy
+    @Autowired
+    private ResourceRegistrationRequestValidatorStrategy validatorStrategy;
 
     // --- Helpers ---
     // -- Helpers --
