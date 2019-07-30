@@ -131,6 +131,13 @@ public class ResourceManagementApiModel {
         return "No additional information specified";
     }
 
+    private String getCommentFrom(ServiceRequestRegisterResourceSessionEvent request) {
+        if (request.getPayload().getComment() != null) {
+            return request.getPayload().getComment();
+        }
+        return "No comment provided";
+    }
+
     private ServiceResponseRegisterResourceValidate doValidation(ServiceRequestRegisterResourceValidate request,
                                                                  ResourceRegistrationRequestValidator validator) {
         // TODO - Check API version information?
