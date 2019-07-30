@@ -138,6 +138,13 @@ public class ResourceManagementApiModel {
         return "No comment provided";
     }
 
+    private String getRejectionReason(ServiceRequestRegisterResourceSessionEvent request) {
+        if (request.getPayload().getRejectionReason() != null) {
+            return request.getPayload().getRejectionReason();
+        }
+        return "No rejection reason provided";
+    }
+
     private ServiceResponseRegisterResourceValidate doValidation(ServiceRequestRegisterResourceValidate request,
                                                                  ResourceRegistrationRequestValidator validator) {
         // TODO - Check API version information?
