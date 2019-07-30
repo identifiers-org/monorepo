@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
+import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResource;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceSessionEvent;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Component;
  *
  * Main model for resource management api controller
  */
+@Slf4j
 @Component
 public class ResourceManagementApiModel {
 
@@ -180,7 +182,7 @@ public class ResourceManagementApiModel {
 
     // --- API ---
     // Resource Registration API
-    public ServiceResponseRegisterResource registerResource(ServiceRequestRegisterResource requestRegisterResource) {
+    public ServiceResponseRegisterResource registerResource(ServiceRequestRegisterResource request) {
         // Create default response
         ServiceResponseRegisterResource response = createRegisterResourceDefaultResponse();
         boolean isValid = false;
@@ -190,9 +192,16 @@ public class ResourceManagementApiModel {
         String additionalInformation = "Open API for resource registration request submission";
         // Run request validation
         try {
-            // TODO
+            isValid = validatorStrategy.validate(request.getPayload());
         } catch (RuntimeException e) {
-            // TODO
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            String resourceName = "--- Resource Name NOT SPECIFIED ---";
+            if ((request.getPayload() != null) && (request.getPayload().getProviderName() != null)) {
+                resourceName = request.getPayload().getProviderName();
+            }
+            String errorMessage = String.format("INVALID Resource registration request for resource name '%s', due to '%s'", resourceName, e.getMessage());
+            response.setErrorMessage(errorMessage);
+            log.error(errorMessage);
         }
         if (isValid) {
             // TODO
