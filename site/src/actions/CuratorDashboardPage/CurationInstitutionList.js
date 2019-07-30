@@ -4,6 +4,9 @@ import { setCurationInstitutionListParams } from './CurationInstitutionListParam
 // Config.
 import { config } from '../../config/Config';
 
+// Utils.
+import { fetchAndAdd } from '../../utils/fetchAndAdd';
+
 
 //
 // CurationInstitutionList actions.
@@ -29,11 +32,15 @@ export const getCurationInstitutionListFromRegistry = (params) => {
 
     await dispatch(setCurationInstitutionListParams(json.page));
 
-    const institutions = json._embedded.institutions.map(institution => ({
-      id: institution._links.self.href,
-      name: institution.name,
-      homeUrl: institution.homeUrl,
-      description: institution.description
+    const institutions = await Promise.all(json._embedded.institutions.map(institution => {
+      let { _links, ...newInstitution } = institution;
+
+      // Add id to the resource as a field, we will need this for curation stuff.
+      newInstitution.id = _links.self.href;
+
+      return fetchAndAdd(newInstitution, [
+        {name: 'location', url: _links.location.href}
+      ], undefined, true);
     }));
 
     dispatch(setCurationInstitutionList(institutions));
