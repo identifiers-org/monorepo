@@ -185,6 +185,11 @@ public class ResourceManagementApiModel {
         return null;
     }
 
+    public ServiceResponseRegisterResourceSessionEvent commentResourceRegistrationRequest(long sessionId, ServiceRequestRegisterResourceSessionEvent request) {
+        // TODO
+        return null;
+    }
+
     // Validation API
     public ServiceResponseRegisterResourceValidate validateProviderHomeUrl(ServiceRequestRegisterResourceValidate request) {
         return doValidation(request, providerHomeUrlValidator);
