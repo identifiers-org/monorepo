@@ -8,7 +8,6 @@ import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegiste
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterResourceSessionEvent;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterResourceValidate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,9 +61,8 @@ public class ResourceManagementApi {
     // TODO Resource Registration Session, accept
     @PostMapping(value = "/acceptResourceRegistrationRequest/{sessionId}")
     public ResponseEntity<?> acceptResourceRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterResourceSessionEvent request) {
-//        ServiceResponseRegisterResourceSessionEvent response = model.acceptResourceRegistrationRequest(sessionId, request);
-//        return new ResponseEntity<>(response, response.getHttpStatus());
-        return new ResponseEntity<>("WORK IN PROGRESS", HttpStatus.NOT_IMPLEMENTED);
+        ServiceResponseRegisterResourceSessionEvent response = model.acceptResourceRegistrationRequest(sessionId, request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     // --- Resource Registration Request Validation ---
