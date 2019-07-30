@@ -8,7 +8,9 @@ import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterR
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceValidate;
 import org.identifiers.cloud.hq.ws.registry.api.responses.*;
 import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationRequest;
+import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationSession;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationRequestRepository;
+import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationSessionRepository;
 import org.identifiers.cloud.hq.ws.registry.models.ResourceRegistrationRequestManagementService;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidator;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidatorException;
@@ -17,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 /**
  * Project: registry
@@ -104,6 +108,8 @@ public class ResourceManagementApiModel {
     // Repositories
     @Autowired
     private ResourceRegistrationRequestRepository resourceRegistrationRequestRepository;
+    @Autowired
+    private ResourceRegistrationSessionRepository resourceRegistrationSessionRepository;
 
     // Services
     @Autowired
@@ -162,6 +168,18 @@ public class ResourceManagementApiModel {
         return "No acceptance reason provided";
     }
 
+    private ResourceRegistrationSession getResourceRegistrationSession(String eventName, long sessionId, ServiceRequestRegisterResourceSessionEvent request, ServiceResponseRegisterResourceSessionEvent response) {
+        Optional<ResourceRegistrationSession> resourceRegistrationSession = resourceRegistrationSessionRepository.findById(sessionId);
+        if (!resourceRegistrationSession.isPresent()) {
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            String errorMessage = String.format("INVALID Resource Registration '%s' request, session with ID '%d' IS NOT VALID", eventName, sessionId);
+            response.setErrorMessage(errorMessage);
+            log.error(errorMessage);
+            return null;
+        }
+        return resourceRegistrationSession.get();
+    }
+
     private ServiceResponseRegisterResourceValidate doValidation(ServiceRequestRegisterResourceValidate request,
                                                                  ResourceRegistrationRequestValidator validator) {
         // TODO - Check API version information?
@@ -216,6 +234,12 @@ public class ResourceManagementApiModel {
     }
 
     public ServiceResponseRegisterResourceSessionEvent amendResourceRegistrationRequest(long sessionId, ServiceRequestRegisterResourceSessionEvent request) {
+        // Default response
+        ServiceResponseRegisterResourceSessionEvent response = createRegisterResourceSessionEventDefaultResponse();
+        // TODO We need to get the actor from Spring Security
+        String actor = "UNKNOWN";
+        // Locate the resource registration request session
+
         // TODO
         return null;
     }
