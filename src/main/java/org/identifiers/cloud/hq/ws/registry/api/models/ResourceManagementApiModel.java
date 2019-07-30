@@ -2,9 +2,8 @@ package org.identifiers.cloud.hq.ws.registry.api.models;
 
 import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceValidate;
-import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponse;
-import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterResourceValidate;
-import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterResourceValidatePayload;
+import org.identifiers.cloud.hq.ws.registry.api.responses.*;
+import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationRequestRepository;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidator;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidatorException;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidatorStrategy;
@@ -95,8 +94,11 @@ public class ResourceManagementApiModel {
     @Autowired
     private ResourceRegistrationRequestValidatorStrategy validatorStrategy;
 
+    // Repositories
+    @Autowired
+    private ResourceRegistrationRequestRepository resourceRegistrationRequestRepository;
+
     // --- Helpers ---
-    // -- Helpers --
     /**
      * Initialize a response with the default values and the given payload.
      * @param response response to initialize
@@ -107,6 +109,12 @@ public class ResourceManagementApiModel {
         response.setApiVersion(ApiCentral.apiVersion)
                 .setHttpStatus(HttpStatus.OK);
         response.setPayload(payload);
+    }
+
+    private ServiceResponseRegisterResource createRegisterResourceDefaultResponse() {
+        ServiceResponseRegisterResource response = new ServiceResponseRegisterResource();
+        initDefaultResponse(response, new ServiceResponseRegisterResourcePayload());
+        return response;
     }
 
     private ServiceResponseRegisterResourceValidate doValidation(ServiceRequestRegisterResourceValidate request,
