@@ -278,8 +278,17 @@ public class ResourceManagementApiModel {
     }
 
     public ServiceResponseRegisterResourceSessionEvent acceptResourceRegistrationRequest(long sessionId, ServiceRequestRegisterResourceSessionEvent request) {
-        // TODO
-        return null;
+        // Default response
+        ServiceResponseRegisterResourceSessionEvent response = createRegisterResourceSessionEventDefaultResponse();
+        // TODO We need to get the actor from Spring Security
+        String actor = "UNKNOWN";
+        // Locate the resource registration request session
+        ResourceRegistrationSession resourceRegistrationSession = getResourceRegistrationSession("ACCEPT", sessionId, request, response);
+        if (response.getHttpStatus() == HttpStatus.OK) {
+            // Delegate on the resource registration request manager service
+            resourceRegistrationRequestManagementService.acceptRequest(resourceRegistrationSession, getAcceptanceReason(request), actor, getAdditionalInformationFrom(request));
+        }
+        return response;
     }
 
     // Validation API
