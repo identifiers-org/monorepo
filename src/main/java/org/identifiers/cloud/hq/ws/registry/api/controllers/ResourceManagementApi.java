@@ -48,9 +48,8 @@ public class ResourceManagementApi {
     // TODO Resource Registration Session, comment
     @PostMapping(value = "/commentResourceRegistrationRequest/{sessionId}")
     public ResponseEntity<?> commentResourceRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterResourceSessionEvent request) {
-//        ServiceResponseRegisterResourceSessionEvent response = model.commentResourceRegistrationRequest(sessionId, request);
-//        return new ResponseEntity<>(response, response.getHttpStatus());
-        return new ResponseEntity<>("WORK IN PROGRESS", HttpStatus.NOT_IMPLEMENTED);
+        ServiceResponseRegisterResourceSessionEvent response = model.commentResourceRegistrationRequest(sessionId, request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     // TODO Resource Registration Session, reject
