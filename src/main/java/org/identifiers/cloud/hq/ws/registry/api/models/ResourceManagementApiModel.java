@@ -6,6 +6,7 @@ import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterR
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceValidate;
 import org.identifiers.cloud.hq.ws.registry.api.responses.*;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationRequestRepository;
+import org.identifiers.cloud.hq.ws.registry.models.ResourceRegistrationRequestManagementService;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidator;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidatorException;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidatorStrategy;
@@ -99,6 +100,10 @@ public class ResourceManagementApiModel {
     // Repositories
     @Autowired
     private ResourceRegistrationRequestRepository resourceRegistrationRequestRepository;
+
+    // Services
+    @Autowired
+    private ResourceRegistrationRequestManagementService resourceRegistrationRequestManagementService;
 
     // --- Helpers ---
     /**
