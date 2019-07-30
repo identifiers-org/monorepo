@@ -5,6 +5,7 @@ import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterR
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceSessionEvent;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceValidate;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterResource;
+import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterResourceSessionEvent;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterResourceValidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,9 +41,8 @@ public class ResourceManagementApi {
     // TODO Resource Registration Session, amend
     @PostMapping(value = "/amendResourceRegistrationRequest/{sessionId}")
     public ResponseEntity<?> amendResourceRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterResourceSessionEvent request) {
-//        ServiceResponseRegisterResource response = model.amendResourceRegistrationRequest(sessionId, request);
-//        return new ResponseEntity<>(response, response.getHttpStatus());
-        return new ResponseEntity<>("WORK IN PROGRESS", HttpStatus.NOT_IMPLEMENTED);
+        ServiceResponseRegisterResourceSessionEvent response = model.amendResourceRegistrationRequest(sessionId, request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     // TODO Resource Registration Session, comment
