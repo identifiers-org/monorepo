@@ -2,10 +2,12 @@ package org.identifiers.cloud.hq.ws.registry.api.models;
 
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
+import org.identifiers.cloud.hq.ws.registry.api.data.helpers.ApiAndDataModelsHelper;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResource;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceSessionEvent;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceValidate;
 import org.identifiers.cloud.hq.ws.registry.api.responses.*;
+import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationRequest;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationRequestRepository;
 import org.identifiers.cloud.hq.ws.registry.models.ResourceRegistrationRequestManagementService;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidator;
@@ -204,9 +206,12 @@ public class ResourceManagementApiModel {
             log.error(errorMessage);
         }
         if (isValid) {
-            // TODO
+            // Translate the data model
+            ResourceRegistrationRequest resourceRegistrationRequest =
+                    ApiAndDataModelsHelper.getResourceRegistrationRequestFrom(request.getPayload());
+            // Delegate on resource registration request management service
+            resourceRegistrationRequestManagementService.startRequest(resourceRegistrationRequest, actor, additionalInformation);
         }
-        // TODO
         return response;
     }
 
