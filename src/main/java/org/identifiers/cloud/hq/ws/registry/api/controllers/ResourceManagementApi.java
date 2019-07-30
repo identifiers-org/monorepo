@@ -51,7 +51,7 @@ public class ResourceManagementApi {
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
-    // TODO Resource Registration Session, reject
+    // Resource Registration Session, reject
     @PostMapping(value = "/rejectResourceRegistrationRequest/{sessionId}")
     public ResponseEntity<?> rejectResourceRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterResourceSessionEvent request) {
         ServiceResponseRegisterResourceSessionEvent response = model.rejectResourceRegistrationRequest(sessionId, request);
