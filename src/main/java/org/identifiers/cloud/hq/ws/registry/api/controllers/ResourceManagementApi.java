@@ -29,7 +29,7 @@ public class ResourceManagementApi {
     private ResourceManagementApiModel model;
 
 
-    // TODO --- Resource Registration Request Management ---
+    // --- Resource Registration Request Management ---
     // TODO Resource Registration Request
     @PostMapping(value = "/registerResource")
     public ResponseEntity<?> registerResource(@RequestBody ServiceRequestRegisterResource request) {
