@@ -181,8 +181,24 @@ public class ResourceManagementApiModel {
     // --- API ---
     // Resource Registration API
     public ServiceResponseRegisterResource registerResource(ServiceRequestRegisterResource requestRegisterResource) {
+        // Create default response
+        ServiceResponseRegisterResource response = createRegisterResourceDefaultResponse();
+        boolean isValid = false;
+        // Actor
+        String actor = "ANONYMOUS";
+        // Additional information
+        String additionalInformation = "Open API for resource registration request submission";
+        // Run request validation
+        try {
+            // TODO
+        } catch (RuntimeException e) {
+            // TODO
+        }
+        if (isValid) {
+            // TODO
+        }
         // TODO
-        return null;
+        return response;
     }
 
     public ServiceResponseRegisterResourceSessionEvent amendResourceRegistrationRequest(long sessionId, ServiceRequestRegisterResourceSessionEvent request) {
