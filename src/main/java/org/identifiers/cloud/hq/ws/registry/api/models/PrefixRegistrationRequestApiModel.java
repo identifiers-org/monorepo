@@ -85,7 +85,7 @@ public class PrefixRegistrationRequestApiModel {
         if (request.getPayload().getAcceptanceReason() != null) {
             return request.getPayload().getAcceptanceReason();
         }
-        return "No acceptance reason provided provided";
+        return "No acceptance reason provided";
     }
 
     private PrefixRegistrationSession getPrefixRegistrationSession(String eventName, long sessionId, ServiceRequestRegisterPrefixSessionEvent request, ServiceResponseRegisterPrefixSessionEvent response) {

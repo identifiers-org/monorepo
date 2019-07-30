@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
 import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
+import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResource;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceSessionEvent;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceValidate;
 import org.identifiers.cloud.hq.ws.registry.api.responses.*;
@@ -173,8 +174,13 @@ public class ResourceManagementApiModel {
     }
 
     // --- API ---
+    // Resource Registration API
+    public ServiceResponseRegisterResource registerResource(ServiceRequestRegisterResource requestRegisterResource) {
+        // TODO
+        return null;
+    }
 
-    // --- Validation API ---
+    // Validation API
     public ServiceResponseRegisterResourceValidate validateProviderHomeUrl(ServiceRequestRegisterResourceValidate request) {
         return doValidation(request, providerHomeUrlValidator);
     }
