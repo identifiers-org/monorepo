@@ -30,7 +30,7 @@ public class ResourceManagementApi {
 
 
     // --- Resource Registration Request Management ---
-    // TODO Resource Registration Request
+    // Resource Registration Request
     @PostMapping(value = "/registerResource")
     public ResponseEntity<?> registerResource(@RequestBody ServiceRequestRegisterResource request) {
         ServiceResponseRegisterResource response = model.registerResource(request);
