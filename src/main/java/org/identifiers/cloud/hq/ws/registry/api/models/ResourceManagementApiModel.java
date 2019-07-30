@@ -145,6 +145,13 @@ public class ResourceManagementApiModel {
         return "No rejection reason provided";
     }
 
+    private String getAcceptanceReason(ServiceRequestRegisterResourceSessionEvent request) {
+        if (request.getPayload().getAcceptanceReason() != null) {
+            return request.getPayload().getAcceptanceReason();
+        }
+        return "No acceptance reason provided";
+    }
+
     private ServiceResponseRegisterResourceValidate doValidation(ServiceRequestRegisterResourceValidate request,
                                                                  ResourceRegistrationRequestValidator validator) {
         // TODO - Check API version information?
