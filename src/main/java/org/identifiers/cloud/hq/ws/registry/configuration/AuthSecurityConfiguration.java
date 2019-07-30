@@ -251,6 +251,7 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf()
                     .ignoringAntMatchers("/prefixRegistrationApi/registerPrefix")
+                    .ignoringAntMatchers("/resourceManagementApi/registerResource")
                     .ignoringAntMatchers("/prefixRegistrationApi/validate*")
                 .and()
                 .cors()
