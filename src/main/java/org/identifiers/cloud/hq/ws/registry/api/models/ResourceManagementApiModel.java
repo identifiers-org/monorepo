@@ -117,6 +117,12 @@ public class ResourceManagementApiModel {
         return response;
     }
 
+    private ServiceResponseRegisterResourceSessionEvent createRegisterResourceSessionEventDefaultResponse() {
+        ServiceResponseRegisterResourceSessionEvent response = new ServiceResponseRegisterResourceSessionEvent();
+        initDefaultResponse(response, new ServiceResponseRegisterResourceSessionEventPayload());
+        return response;
+    }
+
     private ServiceResponseRegisterResourceValidate doValidation(ServiceRequestRegisterResourceValidate request,
                                                                  ResourceRegistrationRequestValidator validator) {
         // TODO - Check API version information?
