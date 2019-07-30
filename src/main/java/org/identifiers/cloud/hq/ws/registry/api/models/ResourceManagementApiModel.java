@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
 import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
+import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceSessionEvent;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceValidate;
 import org.identifiers.cloud.hq.ws.registry.api.responses.*;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationRequestRepository;
@@ -121,6 +122,13 @@ public class ResourceManagementApiModel {
         ServiceResponseRegisterResourceSessionEvent response = new ServiceResponseRegisterResourceSessionEvent();
         initDefaultResponse(response, new ServiceResponseRegisterResourceSessionEventPayload());
         return response;
+    }
+
+    private String getAdditionalInformationFrom(ServiceRequestRegisterResourceSessionEvent request) {
+        if (request.getPayload().getAdditionalInformation() != null) {
+            return request.getPayload().getAdditionalInformation();
+        }
+        return "No additional information specified";
     }
 
     private ServiceResponseRegisterResourceValidate doValidation(ServiceRequestRegisterResourceValidate request,
