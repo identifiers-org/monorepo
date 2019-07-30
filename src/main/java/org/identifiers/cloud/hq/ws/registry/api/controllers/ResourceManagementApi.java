@@ -44,7 +44,7 @@ public class ResourceManagementApi {
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
-    // TODO Resource Registration Session, comment
+    // Resource Registration Session, comment
     @PostMapping(value = "/commentResourceRegistrationRequest/{sessionId}")
     public ResponseEntity<?> commentResourceRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterResourceSessionEvent request) {
         ServiceResponseRegisterResourceSessionEvent response = model.commentResourceRegistrationRequest(sessionId, request);
