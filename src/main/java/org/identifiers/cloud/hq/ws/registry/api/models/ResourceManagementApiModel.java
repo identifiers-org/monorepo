@@ -250,8 +250,17 @@ public class ResourceManagementApiModel {
     }
 
     public ServiceResponseRegisterResourceSessionEvent commentResourceRegistrationRequest(long sessionId, ServiceRequestRegisterResourceSessionEvent request) {
-        // TODO
-        return null;
+        // Default response
+        ServiceResponseRegisterResourceSessionEvent response = createRegisterResourceSessionEventDefaultResponse();
+        // TODO We need to get the actor from Spring Security
+        String actor = "UNKNOWN";
+        // Locate the resource registration request session
+        ResourceRegistrationSession resourceRegistrationSession = getResourceRegistrationSession("COMMENT", sessionId, request, response);
+        if (response.getHttpStatus() == HttpStatus.OK) {
+            // Delegate on the resource registration request manager service
+            resourceRegistrationRequestManagementService.commentRequest(resourceRegistrationSession, getCommentFrom(request), actor, getAdditionalInformationFrom(request));
+        }
+        return response;
     }
 
     public ServiceResponseRegisterResourceSessionEvent rejectResourceRegistrationRequest(long sessionId, ServiceRequestRegisterResourceSessionEvent request) {
