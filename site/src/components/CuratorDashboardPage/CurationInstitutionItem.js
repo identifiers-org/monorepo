@@ -75,7 +75,8 @@ class CurationInstitutionItem extends React.Component {
       props: {
         curationInstitutionListParams,
         getCurationInstitutionListFromRegistry,
-        patchInstitution
+        patchInstitution,
+        setInstitutionPatch
       }
     } = this;
 
@@ -83,6 +84,10 @@ class CurationInstitutionItem extends React.Component {
       infoToast('No changes to commit');
       return;
     }
+
+    // Make sure the current institution is in redux state for committing.
+    await setInstitutionPatch(institutionId, newInstitution);
+
 
     const result = await swalConfirmation.fire({
       title: 'Confirm changes to institution',
@@ -96,7 +101,7 @@ class CurationInstitutionItem extends React.Component {
 
       if (result.status === 200) {
         successToast('Changed committed successfully');
-        this.setState({editInstitution: false, institutionFieldsChanged: new Set()});
+        this.setState({editInstitution: false, expanded: false, institutionFieldsChanged: new Set()});
         await getCurationInstitutionListFromRegistry(curationInstitutionListParams);
       } else {
         failureToast('Error committing changes');
@@ -113,7 +118,7 @@ class CurationInstitutionItem extends React.Component {
     });
 
     if (result.value) {
-      this.setState({editInstitution: false});
+      this.setState({editInstitution: false, expanded: false});
     }
   };
 
@@ -145,7 +150,7 @@ class CurationInstitutionItem extends React.Component {
       handleClickCommitButton,
       handleClickEditButton,
       handleClickDiscardButton,
-      props: { institution: { id, name, homeUrl, description, location }, locationList },
+      props: { institution: { name, homeUrl, description, location }, locationList },
       state: { editInstitution, expanded }
      } = this;
 
@@ -246,7 +251,7 @@ class CurationInstitutionItem extends React.Component {
                           </ReversibleField>
                         </RoleConditional>
                       ) : (
-                        homeUrl
+                        description
                       )}
                     </td>
                   </tr>
