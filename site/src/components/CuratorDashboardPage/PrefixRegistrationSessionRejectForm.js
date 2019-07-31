@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import { Collapse } from 'reactstrap';
-
 import { prefixRegistrationRequestReject } from '../../actions/CuratorDashboardPage/PrefixRegistrationSession';
 import { setPrefixRegistrationSessionReject } from '../../actions/CuratorDashboardPage/PrefixRegistrationSessionReject';
 
@@ -65,8 +63,8 @@ class PrefixRegistrationSessionRejectForm extends React.Component {
       handleRejectionReasonChange
     } = this;
 
-    return (
-      <Collapse className="bg-gray pt-3 pb-2 px-4 rounded-all-but-top-right-lg" isOpen={isOpen}>
+    return isOpen ? (
+      <div className="bg-gray pt-3 pb-2 px-4 rounded-all-but-top-right-lg">
         <div className="row">
           <div className="col mb-3">
             <h4><i className="icon icon-common icon-check" /> Reject request</h4>
@@ -103,8 +101,8 @@ class PrefixRegistrationSessionRejectForm extends React.Component {
 
         {/* ======================================== FORM FOR REGISTRATION REJECT ======================================== */}
 
-      </Collapse>
-    );
+      </div>
+    ) : null;
   }
 }
 

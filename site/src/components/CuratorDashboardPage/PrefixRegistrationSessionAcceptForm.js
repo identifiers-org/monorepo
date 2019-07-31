@@ -2,12 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import { Collapse } from 'reactstrap';
-
+// Components.
 import { prefixRegistrationRequestAccept } from '../../actions/CuratorDashboardPage/PrefixRegistrationSession';
 import { setPrefixRegistrationSessionAccept } from '../../actions/CuratorDashboardPage/PrefixRegistrationSessionAccept';
 
+// Utils.
 import { swalSuccess, swalError } from '../../utils/swalDialogs';
+
 
 class PrefixRegistrationSessionAcceptForm extends React.Component {
   constructor(props) {
@@ -65,8 +66,8 @@ class PrefixRegistrationSessionAcceptForm extends React.Component {
       handleAcceptanceReasonChange
     } = this;
 
-    return (
-      <Collapse className="bg-gray pt-3 pb-2 px-4 rounded-all-but-top-left-lg" isOpen={isOpen}>
+    return isOpen ? (
+      <div className="bg-gray pt-3 pb-2 px-4 rounded-all-but-top-left-lg">
         <div className="row">
           <div className="col mb-3">
             <h4><i className="icon icon-common icon-check" /> Accept request</h4>
@@ -102,9 +103,8 @@ class PrefixRegistrationSessionAcceptForm extends React.Component {
         </div>
 
         {/* ======================================== TABLE FORM FOR REGISTRATION AMEND ======================================== */}
-
-      </Collapse>
-    );
+      </div>
+    ) : null;
   }
 }
 

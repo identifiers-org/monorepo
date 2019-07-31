@@ -2,12 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import { Collapse } from 'reactstrap';
-
+// Components.
 import { prefixRegistrationRequestComment } from '../../actions/CuratorDashboardPage/PrefixRegistrationSession';
 import { setPrefixRegistrationSessionComment } from '../../actions/CuratorDashboardPage/PrefixRegistrationSessionComment';
 
+// Utils.
 import { swalSuccess, swalError } from '../../utils/swalDialogs';
+
 
 class PrefixRegistrationSessionCommentForm extends React.Component {
   constructor(props) {
@@ -73,8 +74,8 @@ class PrefixRegistrationSessionCommentForm extends React.Component {
       handleCommentChange
     } = this;
 
-    return (
-      <Collapse className="bg-gray pt-3 pb-2 px-4" isOpen={isOpen}>
+    return isOpen ? (
+      <div className="bg-gray pt-3 pb-2 px-4">
         <div className="row">
           <div className="col mb-3">
             <h4><i className="icon icon-common icon-check" /> Add comment to request</h4>
@@ -112,8 +113,8 @@ class PrefixRegistrationSessionCommentForm extends React.Component {
 
         {/* ======================================== TABLE FORM FOR REGISTRATION AMEND ======================================== */}
 
-      </Collapse>
-    );
+      </div>
+    ) : null;
   }
 }
 

@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Collapse } from 'reactstrap';
-
+// Components.
 import PrefixRegistrationSessionRequest from './PrefixRegistrationSessionRequest';
 
 
@@ -48,11 +47,11 @@ class PrefixRegistrationSessionEventStart extends React.Component {
           </div>
         </div>
 
-        <Collapse isOpen={expanded}>
+        {expanded && (
           <div className="card-body">
             <PrefixRegistrationSessionRequest data={data.prefixRegistrationRequest} />
           </div>
-        </Collapse>
+        )}
       </>
     );
   }

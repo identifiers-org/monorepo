@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Collapse } from 'reactstrap';
-
 // Actions.
 import { prefixRegistrationRequestAmend } from '../../actions/CuratorDashboardPage/PrefixRegistrationSession';
 import { setPrefixRegistrationSessionAmendField } from '../../actions/CuratorDashboardPage/PrefixRegistrationSessionAmend';
@@ -112,8 +110,8 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
       handleClickValidate
     } = this;
 
-    return (
-      <Collapse className="bg-gray pt-3 pb-2 px-4" isOpen={isOpen}>
+    return isOpen ? (
+      <div className="bg-gray pt-3 pb-2 px-4">
         <div className="row">
           <div className="col mb-3">
             <h4><i className="icon icon-common icon-edit" /> New amend</h4>
@@ -386,8 +384,8 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
 
         {/* ================================   TABLE FORM FOR REGISTRATION AMEND  ================================== */}
 
-      </Collapse>
-    );
+      </div>
+    ) : null;
   }
 }
 
