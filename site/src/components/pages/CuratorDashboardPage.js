@@ -29,6 +29,7 @@ class CuratorDashboardPage extends React.Component  {
         </div>
 
         <PageTitle
+          id="curation-institution"
           icon="icon-sitemap"
           title="Institutions"
           description="This is the list of Institutions currently stored in the registry. Clicking on one
