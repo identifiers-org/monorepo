@@ -1,11 +1,11 @@
 import React from 'react';
 
 
-const PageTitle = ({ icon, title, extraTitle, description }) => (
+const PageTitle = ({ icon, id, title, extraTitle, description }) => (
   <>
     <div className="row">
       <div className="col">
-        <h1>
+        <h1 id={id}>
           <i className={`icon icon-common ${icon}`} />&nbsp;{title}
           <span className="font-italic"> {extraTitle}</span>
         </h1>
