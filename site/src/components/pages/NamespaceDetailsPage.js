@@ -173,7 +173,7 @@ class NamespaceDetailsPage extends React.Component {
         />
 
         {editNamespace ? (
-          <div className="row mb-3">
+          <div className="row mb-1">
             <div className="col">
               <RoleConditional
                 requiredRoles={['editNamespace']}
@@ -202,7 +202,7 @@ class NamespaceDetailsPage extends React.Component {
             </div>
           </div>
         ) : (
-          <div className="row mb-3">
+          <div className="row mb-1">
             <div className="col">
               <RoleConditional
                 requiredRoles={['editNamespace']}

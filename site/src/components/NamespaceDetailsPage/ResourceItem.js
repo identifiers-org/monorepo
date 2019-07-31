@@ -181,19 +181,19 @@ class ResourceItem extends React.Component {
             >
               <>
                 <button
-                  className="btn btn-sm btn-warning edit-button mb-3 mr-2"
+                  className="btn btn-sm btn-warning edit-button mb-1 mr-2 w-20"
                   onClick={handleClickValidateChangesButton}
                 >
                   <i className="icon icon-common icon-tasks mr-1" />Perform validation
                 </button>
                 <button
-                  className="btn btn-sm btn-success edit-button mb-3 mr-2"
+                  className="btn btn-sm btn-success edit-button mb-1 mr-2"
                   onClick={handleClickCommitChangesButton}
                 >
                   <i className="icon icon-common icon-check" /> Commit changes
                 </button>
                 <button
-                  className="btn btn-sm btn-danger edit-button mb-3"
+                  className="btn btn-sm btn-danger edit-button mb-1"
                   onClick={handleClickDiscardChangesButton}
                 >
                   <i className="icon icon-common icon-times" /> Discard changes
@@ -209,7 +209,7 @@ class ResourceItem extends React.Component {
                 requiredRoles={['editResource']}
               >
                 <button
-                  className="btn btn-sm btn-success edit-button mb-3"
+                  className="btn btn-sm btn-success edit-button mb-1 w-20"
                   onClick={handleClickEditButton}
                 >
                   <i className="icon icon-common icon-edit mr-1"/>Edit resource
