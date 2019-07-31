@@ -7,6 +7,7 @@ import configReducer from '../reducers/ConfigReducer';
 import curationInstitutionListReducer from '../reducers/CuratorDashboardPage/CurationInstitutionList';
 import curationInstitutionListParamsReducer from '../reducers/CuratorDashboardPage/CurationInstitutionListParams';
 import institutionListReducer from '../reducers/InstitutionList';
+import institutionPatchReducer from '../reducers/CuratorDashboardPage/InstitutionPatch';
 import locationListReducer from '../reducers/LocationList';
 import namespaceListReducer from '../reducers/RegistryBrowser/NamespaceList';
 import namespaceListParamsReducer from '../reducers/RegistryBrowser/NamespaceListParams';
@@ -40,6 +41,7 @@ const store = createStore(
     curatorDashboard: combineReducers({
       curationInstitutionList: curationInstitutionListReducer,
       curationInstitutionListParams: curationInstitutionListParamsReducer,
+      curatorEditInstitution: institutionPatchReducer,
       prefixRegistrationSessionList: prefixRegistrationSessionListReducer,
       prefixRegistrationSessionListParams: prefixRegistrationSessionListParamsReducer,
       prefixRegistrationSession: prefixRegistrationSessionReducer,
