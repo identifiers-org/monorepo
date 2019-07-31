@@ -21,6 +21,7 @@ export const getCurationInstitutionListFromRegistry = (params) => {
       requestURL = new URL(config.registryApi + '/restApi/institutions/search/findByNameContaining');
     } else {
       requestURL = new URL(config.registryApi + '/restApi/institutions');
+      params['sort'] = 'name,asc';
     }
 
     Object.keys(params).forEach(param => {
@@ -36,7 +37,7 @@ export const getCurationInstitutionListFromRegistry = (params) => {
       let { _links, ...newInstitution } = institution;
 
       // Add id to the resource as a field, we will need this for curation stuff.
-      newInstitution.id = _links.self.href;
+      newInstitution.id = _links.self.href.split('/').pop();
 
       return fetchAndAdd(newInstitution, [
         {name: 'location', url: _links.location.href}

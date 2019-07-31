@@ -1,12 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+// Actions.
+import { setInstitutionPatchField, patchInstitution, setInstitutionPatch } from '../../actions/CuratorDashboardPage/InstitutionPatch';
+import { getCurationInstitutionListFromRegistry } from '../../actions/CuratorDashboardPage/CurationInstitutionList';
+
 // Components.
 import ReversibleField from '../common/ReversibleField';
 import RoleConditional from '../common/RoleConditional';
 
 // Utils.
-import { swalConfirmation } from '../../utils/swalDialogs';
+import { swalConfirmation, successToast, failureToast, infoToast } from '../../utils/swalDialogs';
 
 
 class CurationInstitutionItem extends React.Component {
@@ -17,6 +21,7 @@ class CurationInstitutionItem extends React.Component {
       expanded: false,
       editInstitution: false,
       institutionFieldsChanged: new Set(),
+      institutionId: this.props.institution.id,
       newInstitution: {
         description: this.props.institution.description,
         homeUrl: this.props.institution.homeUrl,
@@ -56,12 +61,47 @@ class CurationInstitutionItem extends React.Component {
       });
     }
 
-    //this.props.setResourcePatchField(field, value);
+    this.props.setInstitutionPatchField(field, value);
   };
 
 
   handleClickCommitButton = async () => {
-    console.log('commit', this.state.newInstitution);
+    const {
+      state: {
+        institutionId,
+        institutionFieldsChanged,
+        newInstitution
+      },
+      props: {
+        curationInstitutionListParams,
+        getCurationInstitutionListFromRegistry,
+        patchInstitution
+      }
+    } = this;
+
+    if (institutionFieldsChanged.size === 0) {
+      infoToast('No changes to commit');
+      return;
+    }
+
+    const result = await swalConfirmation.fire({
+      title: 'Confirm changes to institution',
+      text: `Changed fields: ${[...institutionFieldsChanged].join(', ')}`,
+      confirmButtonText: 'Commit changes',
+      cancelButtonText: 'Cancel'
+    });
+
+    if (result.value) {
+      const result = await patchInstitution(institutionId, newInstitution);
+
+      if (result.status === 200) {
+        successToast('Changed committed successfully');
+        this.setState({editInstitution: false, institutionFieldsChanged: new Set()});
+        await getCurationInstitutionListFromRegistry(curationInstitutionListParams);
+      } else {
+        failureToast('Error committing changes');
+      }
+    }
   };
 
   handleClickDiscardButton = async () => {
@@ -78,12 +118,24 @@ class CurationInstitutionItem extends React.Component {
   };
 
   handleClickEditButton = () => {
-    const { institution } = this.props;
+    const {
+      props: { institution: { id, homeUrl, description, name, location }, setInstitutionPatch },
+      state: { editInstitution }
+    } = this;
 
-    this.state.editInstitution ?
-      this.setState(state => ({ editInstitution: false }))
-      :
+    const newInstitution = {
+      name,
+      description,
+      homeUrl,
+      location: location.id
+    }
+
+    if (editInstitution) {
+      this.setState({ editInstitution: false });
+    } else {
       this.setState({editInstitution: true, expanded: true});
+      setInstitutionPatch(id, newInstitution);
+    };
   };
 
 
@@ -247,8 +299,16 @@ class CurationInstitutionItem extends React.Component {
 // Redux Mappings
 //
 const mapStateToProps = (state) => ({
-  locationList: state.locationList
+  locationList: state.locationList,
+  curationInstitutionListParams: state.curatorDashboard.curationInstitutionListParams
+});
+
+const mapDispatchToProps = dispatch => ({
+  getCurationInstitutionListFromRegistry: (params) => dispatch(getCurationInstitutionListFromRegistry(params)),
+  setInstitutionPatch: (id, institution) => dispatch(setInstitutionPatch(id, institution)),
+  setInstitutionPatchField: (field, value) => dispatch(setInstitutionPatchField(field, value)),
+  patchInstitution: (id, newInstitution) => dispatch(patchInstitution(id, newInstitution))
 });
 
 
-export default connect(mapStateToProps)(CurationInstitutionItem);
+export default connect(mapStateToProps, mapDispatchToProps)(CurationInstitutionItem);
