@@ -10,7 +10,7 @@ import institutionListReducer from '../reducers/InstitutionList';
 import locationListReducer from '../reducers/LocationList';
 import namespaceListReducer from '../reducers/RegistryBrowser/NamespaceList';
 import namespaceListParamsReducer from '../reducers/RegistryBrowser/NamespaceListParams';
-import namespacePatchReducer from '../reducers/NamespacePatchReducer';
+import namespacePatchReducer from '../reducers/NamespacePatch';
 import prefixRegistrationRequestFieldReducer from '../reducers/PrefixRegistrationRequestField';
 import prefixRegistrationSessionListReducer from '../reducers/CuratorDashboardPage/PrefixRegistrationSessionList';
 import prefixRegistrationSessionListParamsReducer from '../reducers/CuratorDashboardPage/PrefixRegistrationSessionListParams';
@@ -19,7 +19,7 @@ import prefixRegistrationSessionAcceptReducer from '../reducers/CuratorDashboard
 import prefixRegistrationSessionAmendReducer from '../reducers/CuratorDashboardPage/PrefixRegistrationSessionAmend';
 import prefixRegistrationSessionCommentReducer from '../reducers/CuratorDashboardPage/PrefixRegistrationSessionComment';
 import prefixRegistrationSessionRejectReducer from '../reducers/CuratorDashboardPage/PrefixRegistrationSessionReject';
-import resourcePatchReducer from '../reducers/ResourcePatchReducer';
+import resourcePatchReducer from '../reducers/ResourcePatch';
 
 // Middlewares.
 // TODO: Convert validator to middleware.
