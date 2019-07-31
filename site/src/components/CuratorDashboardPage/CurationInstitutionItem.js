@@ -176,7 +176,8 @@ class CurationInstitutionItem extends React.Component {
                     href="#!"
                     onClick={this.toggle}
                   >
-                    <strong><i className="icon icon-common icon-sitemap mr-2" /></strong>
+                    {expanded ? <i className="icon icon-common icon-minus mr-2" /> : <i className="icon icon-common icon-plus mr-2" />}
+                    <i className="icon icon-common icon-sitemap mr-2" />
                     {name}
                   </a>
                 )}
