@@ -216,82 +216,86 @@ class CurationInstitutionItem extends React.Component {
 
           {expanded && (
             <div className="card-body">
-              <table className="table table-sm table-striped table-borderless">
-                <tbody>
-                  <tr>
-                    <td className="w-35">
-                      Home URL
-                    </td>
-                    <td>
-                      {editInstitution ? (
-                        <RoleConditional
-                          requiredRoles={['editInstitution']}
-                          fallbackComponent={homeUrl}
-                        >
-                          <ReversibleField fieldName="homeUrl" defaultValue={homeUrl} handleChangeField={handleChangeField}>
-                            <input type="text" />
-                          </ReversibleField>
-                        </RoleConditional>
-                      ) : (
-                        homeUrl
-                      )}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="w-35">
-                      Description
-                    </td>
-                    <td>
-                      {editInstitution ? (
-                        <RoleConditional
-                          requiredRoles={['editInstitution']}
-                          fallbackComponent={description}
-                        >
-                          <ReversibleField fieldName="description" defaultValue={description} handleChangeField={handleChangeField}>
-                            <textarea rows={5} />
-                          </ReversibleField>
-                        </RoleConditional>
-                      ) : (
-                        description
-                      )}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="w-35">
-                      Location
-                    </td>
-                    <td>
-                      {editInstitution ? (
-                        <RoleConditional
-                          requiredRoles={['editResource']}
-                          fallbackComponent={location.countryName}
-                        >
-                          <ReversibleField fieldName="location" defaultValue={location.id} handleChangeField={handleChangeField}>
-                            <select
-                              className="form-control"
-                              value={location}
+              <div className="row">
+                <div className="col bg-light p-2">
+                  <table className="table table-sm table-striped table-borderless mb-0">
+                    <tbody>
+                      <tr>
+                        <td className="w-15">
+                          <strong>Home URL</strong>
+                        </td>
+                        <td>
+                          {editInstitution ? (
+                            <RoleConditional
+                              requiredRoles={['editInstitution']}
+                              fallbackComponent={homeUrl}
                             >
-                              <option value="" disabled>Select location...</option>
-                              {
-                                locationList.map(location =>
-                                  <option
-                                    value={location.id}
-                                    key={`option-${location.id}`}
-                                  >
-                                    {location.label}
-                                  </option>
-                                )
-                              }
-                            </select>
-                          </ReversibleField>
-                        </RoleConditional>
-                      ) : (
-                        location.countryName
-                      )}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                              <ReversibleField fieldName="homeUrl" defaultValue={homeUrl} handleChangeField={handleChangeField}>
+                                <input type="text" />
+                              </ReversibleField>
+                            </RoleConditional>
+                          ) : (
+                            homeUrl
+                          )}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="w-15">
+                          <strong>Description</strong>
+                        </td>
+                        <td>
+                          {editInstitution ? (
+                            <RoleConditional
+                              requiredRoles={['editInstitution']}
+                              fallbackComponent={description}
+                            >
+                              <ReversibleField fieldName="description" defaultValue={description} handleChangeField={handleChangeField}>
+                                <textarea rows={5} />
+                              </ReversibleField>
+                            </RoleConditional>
+                          ) : (
+                            description
+                          )}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="w-15">
+                          <strong>Location</strong>
+                        </td>
+                        <td>
+                          {editInstitution ? (
+                            <RoleConditional
+                              requiredRoles={['editResource']}
+                              fallbackComponent={location.countryName}
+                            >
+                              <ReversibleField fieldName="location" defaultValue={location.id} handleChangeField={handleChangeField}>
+                                <select
+                                  className="form-control"
+                                  value={location}
+                                >
+                                  <option value="" disabled>Select location...</option>
+                                  {
+                                    locationList.map(location =>
+                                      <option
+                                        value={location.id}
+                                        key={`option-${location.id}`}
+                                      >
+                                        {location.label}
+                                      </option>
+                                    )
+                                  }
+                                </select>
+                              </ReversibleField>
+                            </RoleConditional>
+                          ) : (
+                            location.countryName
+                          )}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           )}
         </div>
