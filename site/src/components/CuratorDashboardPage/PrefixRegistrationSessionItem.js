@@ -3,8 +3,6 @@ import moment from 'moment';
 
 import { Link } from 'react-router-dom';
 
-import { Collapse } from 'reactstrap';
-
 import PrefixRegistrationSessionRequest from './PrefixRegistrationSessionRequest';
 
 
@@ -38,6 +36,7 @@ class PrefixRegistrationSessionItem extends React.Component {
                   onClick={this.toggle}
                 >
                   <p className="m-0">
+                    {expanded ? <i className="icon icon-common icon-minus mr-2" /> : <i className="icon icon-common icon-plus mr-2" />}
                     <strong>Requested Prefix: </strong>
                     {prefixRegistrationRequest.requestedPrefix}
                   </p>
@@ -60,11 +59,11 @@ class PrefixRegistrationSessionItem extends React.Component {
             </div>
           </div>
 
-          <Collapse isOpen={expanded}>
+          {expanded && (
             <div className="card-body">
               <PrefixRegistrationSessionRequest data={prefixRegistrationRequest} />
             </div>
-          </Collapse>
+          )}
         </div>
       </div>
     );
