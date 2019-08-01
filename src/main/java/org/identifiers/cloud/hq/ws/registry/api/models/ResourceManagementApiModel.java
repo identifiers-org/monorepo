@@ -3,6 +3,7 @@ package org.identifiers.cloud.hq.ws.registry.api.models;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
 import org.identifiers.cloud.hq.ws.registry.api.data.helpers.ApiAndDataModelsHelper;
+import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestReactivateResource;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResource;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceSessionEvent;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceValidate;
@@ -11,6 +12,7 @@ import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationRequ
 import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationSession;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationRequestRepository;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationSessionRepository;
+import org.identifiers.cloud.hq.ws.registry.models.ResourceLifecycleManagementContext;
 import org.identifiers.cloud.hq.ws.registry.models.ResourceLifecycleManagementService;
 import org.identifiers.cloud.hq.ws.registry.models.ResourceRegistrationRequestManagementService;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceLifecycleManagementOperationReport;
@@ -149,6 +151,13 @@ public class ResourceManagementApiModel {
         initDefaultResponse(response, new ServiceResponseDeactivateResourcePayload());
         return response;
     }
+
+    private ServiceResponseReactivateResource createResourceReactivationDefaultResponse() {
+        ServiceResponseReactivateResource response = new ServiceResponseReactivateResource();
+        initDefaultResponse(response, new ServiceResponseReactivateResourcePayload());
+        return response;
+    }
+
 
     private String getAdditionalInformationFrom(ServiceRequestRegisterResourceSessionEvent request) {
         if (request.getPayload().getAdditionalInformation() != null) {
@@ -367,6 +376,18 @@ public class ResourceManagementApiModel {
     }
 
     // TODO --- Resource Lifecycle Management API
+    // Helper
+    private void processResourceLifecycleManagementOperationReport(ServiceResponse<?> response,
+                                                                   ResourceLifecycleManagementOperationReport report) {
+        if (report.isError()) {
+            if (report.getResource() == null) {
+                response.setHttpStatus(HttpStatus.NOT_FOUND);
+            } else {
+                response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            }
+            response.setErrorMessage(report.getErrorMessage());
+        }
+    }
     public ServiceResponseDeactivateResource deactivateResource(long resourceId) {
         ServiceResponseDeactivateResource response = createResourceDeactivationDefaultResponse();
         // TODO Get this information from Spring Security
@@ -378,17 +399,22 @@ public class ResourceManagementApiModel {
                         actor,
                         additionalInformation);
         // Let's see what we got back
-        if (deactivationOperationReport.isError()) {
-            if (deactivationOperationReport.getResource() == null) {
-                response.setHttpStatus(HttpStatus.NOT_FOUND);
-            } else {
-                response.setHttpStatus(HttpStatus.BAD_REQUEST);
-            }
-            response.setErrorMessage(deactivationOperationReport.getErrorMessage());
-            response.getPayload().setComment(deactivationOperationReport.getAdditionalInformation());
-        } else {
-            response.getPayload().setComment(deactivationOperationReport.getAdditionalInformation());
-        }
+        processResourceLifecycleManagementOperationReport(response, deactivationOperationReport);
+        response.getPayload().setComment(deactivationOperationReport.getAdditionalInformation());
+        return response;
+    }
+
+    public ServiceResponseReactivateResource reactivateResource(long resourceId, ServiceRequestReactivateResource request) {
+        ServiceResponseReactivateResource response = createResourceReactivationDefaultResponse();
+        // TODO Get this from Spring Security
+        String actor = "UNKNOWN";
+        String additionalInformation = "--- no additional information specified ---";
+        // In the future, I may need a data model transformation helper
+        ResourceLifecycleManagementContext context = resourceLifecycleManagementService.createEmptyContext().setResourceReactivationUrlPattern(request.getPayload().getProviderUrlPattern());
+        ResourceLifecycleManagementOperationReport activationReport = resourceLifecycleManagementService.reactivateResource(resourceId, context, actor, additionalInformation);
+        // Let's see what we got back
+        processResourceLifecycleManagementOperationReport(response, activationReport);
+        response.getPayload().setComment(activationReport.getAdditionalInformation());
         return response;
     }
 
