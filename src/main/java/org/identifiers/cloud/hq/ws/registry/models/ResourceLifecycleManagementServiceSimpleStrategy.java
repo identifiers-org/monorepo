@@ -32,11 +32,6 @@ public class ResourceLifecycleManagementServiceSimpleStrategy implements Resourc
     @Value("${org.identifiers.cloud.hq.ws.lifecycle.resources.deprecation.urltemplate}")
     private String deprecationUrlTemplate;
 
-    // Factory methods
-    public ResourceLifecycleManagementServiceSimpleStrategyContext createEmptyContext() {
-        return new ResourceLifecycleManagementServiceSimpleStrategyContext();
-    }
-
     // Repositories
     private ResourceRepository resourceRepository;
 
@@ -59,6 +54,12 @@ public class ResourceLifecycleManagementServiceSimpleStrategy implements Resourc
     }
 
     // Interface
+    // Factory methods
+    @Override
+    public ResourceLifecycleManagementServiceSimpleStrategyContext createEmptyContext() {
+        return new ResourceLifecycleManagementServiceSimpleStrategyContext();
+    }
+
     @Transactional
     @Override
     public ResourceLifecycleManagementOperationReport deactivateResource(long resourceId,

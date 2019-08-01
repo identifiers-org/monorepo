@@ -33,6 +33,12 @@ import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceLifecycleM
 public interface ResourceLifecycleManagementService {
 
     /**
+     * This is a factory method that will create an empty context specific for the implementation being used
+     * @return an empty context
+     */
+    ResourceLifecycleManagementContext createEmptyContext();
+
+    /**
      * Given an active resource in the registry, perform a deactivation operation
      * @param resourceId internal ID of the resource to deactivate
      * @param actor who is performing the action
