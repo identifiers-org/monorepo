@@ -19,11 +19,18 @@ public class ResourceLifecycleManagementServiceSimpleStrategy implements Resourc
 
     // Factory methods
 
+    // Helpers
+    private ResourceLifecycleManagementOperationReport createDefaultReport() {
+        return (ResourceLifecycleManagementOperationReport) new ResourceLifecycleManagementOperationReport()
+                .setAdditionalInformation("--- No additional information set ---");
+    }
+
     // Interface
     @Override
     public ResourceLifecycleManagementOperationReport deactivateResource(Resource resource,
                                                                          ResourceLifecycleManagementContext context, String actor, String additionalInformation) throws ResourceLifecycleManagementServiceException {
         // TODO Create default report
+
         // TODO Check whether the given resource is active or not
         // TODO Deprecate the resource
         return null;
