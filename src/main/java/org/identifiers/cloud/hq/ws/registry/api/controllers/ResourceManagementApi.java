@@ -173,5 +173,4 @@ public class ResourceManagementApi {
         ServiceResponseReactivateResource response = model.reactivateResource(resourceId, request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
-    // TODO
 }
