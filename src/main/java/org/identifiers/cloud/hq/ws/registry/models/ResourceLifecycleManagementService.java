@@ -41,6 +41,7 @@ public interface ResourceLifecycleManagementService {
     /**
      * Given an active resource in the registry, perform a deactivation operation
      * @param resourceId internal ID of the resource to deactivate
+     * @param context operational context
      * @param actor who is performing the action
      * @param additionalInformation additional information related to this operation
      * @return a report on whether the operation was performed successfully or not
@@ -51,6 +52,7 @@ public interface ResourceLifecycleManagementService {
     /**
      * Given an deactivated resource in the registry, perform a reactivation operation
      * @param resourceId internal ID of the resource to deactivate
+     * @param context operational context
      * @param actor who is performing the action
      * @param additionalInformation additional information related to this operation
      * @return a report on whether the operation was performed successfully or not

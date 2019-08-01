@@ -36,6 +36,15 @@ public interface NamespaceLifecycleManagementService {
      */
     NamespaceLifecycleManagementContext createEmptyContext();
 
+    /**
+     * Given an active namespace in the registry, perform a deactivation operation
+     * @param namespaceId internal ID of the namespace to deactivate
+     * @param context operational context
+     * @param actor who is performing the action
+     * @param additionalInformation additional information related to this operation
+     * @return a report on whether the operation was performed successfully or not
+     * @throws NamespaceLifecycleManagementServiceException
+     */
     NamespaceLifecycleManagementOperationReport deactivateNamespace(long namespaceId, NamespaceLifecycleManagementContext context, String actor, String additionalInformation) throws NamespaceLifecycleManagementServiceException;
 
     NamespaceLifecycleManagementOperationReport reactivateNamespace(long namespaceId, NamespaceLifecycleManagementContext context, String actor, String additionalInformation) throws NamespaceLifecycleManagementServiceException;
