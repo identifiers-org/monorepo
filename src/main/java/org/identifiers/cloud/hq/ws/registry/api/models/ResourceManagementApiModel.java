@@ -355,4 +355,6 @@ public class ResourceManagementApiModel {
     public ServiceResponseRegisterResourceValidate validateNamespacePrefix(ServiceRequestRegisterResourceValidate request) {
         return doValidation(request, namespacePrefixValidator);
     }
+
+    // TODO Resource Lifecycle Management API
 }
