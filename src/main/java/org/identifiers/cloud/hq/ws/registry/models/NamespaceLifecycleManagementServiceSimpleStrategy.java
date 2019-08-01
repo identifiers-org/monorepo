@@ -1,8 +1,11 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
 import lombok.extern.slf4j.Slf4j;
+import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 /**
  * Project: registry
@@ -21,6 +24,18 @@ public class NamespaceLifecycleManagementServiceSimpleStrategy implements Namesp
     // Helpers
     private NamespaceLifecycleManagementOperationReport createDefaultReport() {
         return (NamespaceLifecycleManagementOperationReport) new NamespaceLifecycleManagementOperationReport().setAdditionalInformation("--- No additional information set ---");
+    }
+
+    private Namespace locateNamespace(long namespaceId, NamespaceLifecycleManagementOperationReport report) {
+        Optional<Namespace> locatedNamespace = namespaceRepository.findById(namespaceId);
+        if (locatedNamespace.isPresent()) {
+            return locatedNamespace.get();
+        }
+        String errorMessage = String.format("Namespace with ID '%d', NOT FOUND", namespaceId);
+        report.setErrorMessage(errorMessage);
+        report.setSuccess(false);
+        log.error(errorMessage);
+        return null;
     }
 
     // Interface
