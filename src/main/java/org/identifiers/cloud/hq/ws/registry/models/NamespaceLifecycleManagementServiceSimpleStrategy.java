@@ -5,6 +5,7 @@ import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.Optional;
 
@@ -45,6 +46,7 @@ public class NamespaceLifecycleManagementServiceSimpleStrategy implements Namesp
         return new NamespaceLifecycleManagementSimpleStrategyContext();
     }
 
+    @Transactional
     @Override
     public NamespaceLifecycleManagementOperationReport deactivateNamespace(long namespaceId,
                                                                            NamespaceLifecycleManagementContext context, String actor, String additionalInformation) throws NamespaceLifecycleManagementServiceException {
@@ -74,8 +76,32 @@ public class NamespaceLifecycleManagementServiceSimpleStrategy implements Namesp
         return report;
     }
 
+    @Transactional
     @Override
     public NamespaceLifecycleManagementOperationReport reactivateNamespace(long namespaceId, NamespaceLifecycleManagementContext context, String actor, String additionalInformation) throws NamespaceLifecycleManagementServiceException {
-        return null;
+        // Create default report
+        NamespaceLifecycleManagementOperationReport report = createDefaultReport();
+        // Locate namespace
+        Namespace namespace = locateNamespace(namespaceId, report);
+        if (namespace != null) {
+            report.setNamespace(namespace);
+            // Check whether the given namespace is active or not
+            if (!namespace.isDeprecated()) {
+                String errorMessage = String.format("Namespace with ID '%d', MIR ID '%s' CANNOT BE RE-ACTIVATED, because IT ALREADY IS ACTIVE", namespace.getId(), namespace.getMirId());
+                report.setErrorMessage(errorMessage);
+                report.setSuccess(false);
+                log.error(errorMessage);
+            } else {
+                // Should we do any cross check on whether there are active resources on the namespace or not? The same
+                // way cross checks from resource lifecycle management didn't make sense, they don't make sense either
+                // in the other direction
+                namespace.setDeprecated(false);
+                // By keeping the previous deprecation date, we have information on when was the last time the namespace was deactivated
+                String message = String.format("Namespace with ID '%d', MIR ID '%s' SUCCESSFULLY RE-ACTIVATED", namespace.getId(), namespace.getMirId());
+                report.setAdditionalInformation(message);
+                log.info(message);
+            }
+        }
+        return report;
     }
 }
