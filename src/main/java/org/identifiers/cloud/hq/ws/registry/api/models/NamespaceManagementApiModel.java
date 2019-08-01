@@ -62,8 +62,9 @@ public class NamespaceManagementApiModel {
         String additionalInformation = "--- no additional information specified ---";
         NamespaceLifecycleManagementContext context = namespaceLifecycleManagementService.createEmptyContext();
         NamespaceLifecycleManagementOperationReport report = namespaceLifecycleManagementService.deactivateNamespace(namespaceId, context, actor, additionalInformation);
-
-        // TODO
+        processNamespaceLifecycleManagementOperationReport(response, report);
+        response.getPayload().setComment(report.getAdditionalInformation());
+        return response;
     }
 
     public ServiceResponseReactivateNamespace reactivateNamespace(long namespaceId) {
