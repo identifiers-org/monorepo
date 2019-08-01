@@ -31,6 +31,10 @@ public class ResourceLifecycleManagementServiceSimpleStrategy implements Resourc
 
     @Override
     public ResourceLifecycleManagementOperationReport reactivateResource(Resource resource, ResourceLifecycleManagementContext context, String actor, String additionalInformation) throws ResourceLifecycleManagementServiceException {
+        // TODO Create default report
+        // TODO Check whether the given resource is active or not
+        // TODO Reactivation context validation?
+        // TODO Reactivate the resource
         return null;
     }
 }

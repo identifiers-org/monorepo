@@ -20,4 +20,7 @@ import lombok.experimental.Accessors;
 public class ResourceLifecycleManagementContext {
     // Base class for the information needed by any final resource lifecycle management service strategy, when it comes
     // to execute its operations
+
+    // This is the URL pattern that will be set upon re-activation of a given resource
+    String resourceReactivationUrlPattern;
 }
