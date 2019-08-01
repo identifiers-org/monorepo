@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators;
 
+import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
 import org.identifiers.cloud.hq.ws.registry.models.ActionReport;
 
 /**
@@ -12,4 +13,5 @@ import org.identifiers.cloud.hq.ws.registry.models.ActionReport;
  */
 public class ResourceLifecycleManagementOperationReport extends ActionReport {
     // Common report
+    Resource resource;
 }
