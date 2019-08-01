@@ -72,7 +72,6 @@ public class ApiAndDataModelsHelper {
     }
 
     public static Resource getResourceFrom(org.identifiers.cloud.hq.ws.registry.data.models.Resource resource) {
-        // TODO Add deprecation information
         return new Resource()
                 .setId(resource.getId())
                 .setMirId(resource.getMirId())
@@ -84,7 +83,9 @@ public class ApiAndDataModelsHelper {
                 .setSampleId(resource.getSampleId())
                 .setResourceHomeUrl(resource.getResourceHomeUrl())
                 .setInstitution(getInstitutionFrom(resource.getInstitution()))
-                .setLocation(getLocationFrom(resource.getLocation()));
+                .setLocation(getLocationFrom(resource.getLocation()))
+                .setDeprecated(resource.isDeprecated())
+                .setDeprecationDate(resource.getDeprecationDate());
     }
 
     public static Namespace getNamespaceFrom(org.identifiers.cloud.hq.ws.registry.data.models.Namespace namespace) {
