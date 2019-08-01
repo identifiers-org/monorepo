@@ -54,7 +54,6 @@ public class ResourceLifecycleManagementServiceSimpleStrategy implements Resourc
     }
 
     // Interface
-    // Factory methods
     @Override
     public ResourceLifecycleManagementServiceSimpleStrategyContext createEmptyContext() {
         return new ResourceLifecycleManagementServiceSimpleStrategyContext();
