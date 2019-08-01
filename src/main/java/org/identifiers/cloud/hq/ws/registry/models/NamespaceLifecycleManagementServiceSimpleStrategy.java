@@ -17,8 +17,11 @@ import org.springframework.stereotype.Component;
 public class NamespaceLifecycleManagementServiceSimpleStrategy implements NamespaceLifecycleManagementService {
     // Repositories
     private NamespaceRepository namespaceRepository;
-    
+
     // Helpers
+    private NamespaceLifecycleManagementOperationReport createDefaultReport() {
+        return (NamespaceLifecycleManagementOperationReport) new NamespaceLifecycleManagementOperationReport().setAdditionalInformation("--- No additional information set ---");
+    }
 
     // Interface
     @Override
