@@ -7,10 +7,12 @@ import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterR
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceSessionEvent;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceValidate;
 import org.identifiers.cloud.hq.ws.registry.api.responses.*;
+import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
 import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationRequest;
 import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationSession;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationRequestRepository;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationSessionRepository;
+import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRepository;
 import org.identifiers.cloud.hq.ws.registry.models.ResourceRegistrationRequestManagementService;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidator;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidatorException;
@@ -110,6 +112,9 @@ public class ResourceManagementApiModel {
     private ResourceRegistrationRequestRepository resourceRegistrationRequestRepository;
     @Autowired
     private ResourceRegistrationSessionRepository resourceRegistrationSessionRepository;
+    // Should I be using the resource ID instead of the repository?
+    @Autowired
+    private ResourceRepository resourceRepository;
 
     // Services
     @Autowired
@@ -364,6 +369,9 @@ public class ResourceManagementApiModel {
 
     // TODO Resource Lifecycle Management API
     public ServiceResponseDeactivateResource deactivateResource(long resourceId) {
+        ServiceResponseDeactivateResource response = createResourceDeactivationDefaultResponse();
+        // Locate resource
+        Resource resource =
         return null;
     }
 

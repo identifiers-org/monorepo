@@ -1,6 +1,5 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
-import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceLifecycleManagementOperationReport;
 
 /**
@@ -35,23 +34,23 @@ public interface ResourceLifecycleManagementService {
 
     /**
      * Given an active resource in the registry, perform a deactivation operation
-     * @param resource the resource to deactivate
+     * @param resourceId internal ID of the resource to deactivate
      * @param actor who is performing the action
      * @param additionalInformation additional information related to this operation
      * @return a report on whether the operation was performed successfully or not
      * @throws ResourceLifecycleManagementServiceException
      */
-    ResourceLifecycleManagementOperationReport deactivateResource(Resource resource, ResourceLifecycleManagementContext context, String actor, String additionalInformation) throws ResourceLifecycleManagementServiceException;
+    ResourceLifecycleManagementOperationReport deactivateResource(long resourceId, ResourceLifecycleManagementContext context, String actor, String additionalInformation) throws ResourceLifecycleManagementServiceException;
 
     /**
      * Given an deactivated resource in the registry, perform a reactivation operation
-     * @param resource
-     * @param actor
-     * @param additionalInformation
-     * @return
+     * @param resourceId internal ID of the resource to deactivate
+     * @param actor who is performing the action
+     * @param additionalInformation additional information related to this operation
+     * @return a report on whether the operation was performed successfully or not
      * @throws ResourceLifecycleManagementServiceException
      */
-    ResourceLifecycleManagementOperationReport reactivateResource(Resource resource, ResourceLifecycleManagementContext context, String actor, String additionalInformation) throws ResourceLifecycleManagementServiceException;
+    ResourceLifecycleManagementOperationReport reactivateResource(long resourceId, ResourceLifecycleManagementContext context, String actor, String additionalInformation) throws ResourceLifecycleManagementServiceException;
 
     // NOTE: It will be useful for implementation strategies to have a factory method for empty
     // ResourceLifecycleManagementContext objects, so the code can look cleaner
