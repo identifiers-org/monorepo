@@ -140,6 +140,12 @@ public class ResourceManagementApiModel {
         return response;
     }
 
+    private ServiceResponseDeactivateResource createResourceDeactivationDefaultResponse() {
+        ServiceResponseDeactivateResource response = new ServiceResponseDeactivateResource();
+        initDefaultResponse(response, new ServiceResponseDeactivateResourcePayload());
+        return response;
+    }
+
     private String getAdditionalInformationFrom(ServiceRequestRegisterResourceSessionEvent request) {
         if (request.getPayload().getAdditionalInformation() != null) {
             return request.getPayload().getAdditionalInformation();
@@ -357,4 +363,8 @@ public class ResourceManagementApiModel {
     }
 
     // TODO Resource Lifecycle Management API
+    public ServiceResponseDeactivateResource deactivateResource(long resourceId) {
+        return null;
+    }
+
 }
