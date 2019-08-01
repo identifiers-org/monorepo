@@ -41,7 +41,7 @@ public class NamespaceLifecycleManagementServiceSimpleStrategy implements Namesp
     // Interface
     @Override
     public NamespaceLifecycleManagementContext createEmptyContext() {
-        return null;
+        return new ;
     }
 
     @Override

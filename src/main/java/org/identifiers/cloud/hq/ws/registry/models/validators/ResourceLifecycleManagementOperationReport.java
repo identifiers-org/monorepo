@@ -2,6 +2,7 @@ package org.identifiers.cloud.hq.ws.registry.models.validators;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
@@ -18,6 +19,7 @@ import org.identifiers.cloud.hq.ws.registry.models.ActionReport;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 public class ResourceLifecycleManagementOperationReport extends ActionReport {
     // Common report
