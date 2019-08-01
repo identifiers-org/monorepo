@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
 import lombok.extern.slf4j.Slf4j;
+import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,7 +16,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class NamespaceLifecycleManagementServiceSimpleStrategy implements NamespaceLifecycleManagementService {
     // Repositories
-
+    private NamespaceRepository namespaceRepository;
+    
     // Helpers
 
     // Interface
