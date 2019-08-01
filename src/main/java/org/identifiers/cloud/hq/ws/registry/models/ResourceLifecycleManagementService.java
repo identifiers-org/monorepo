@@ -1,5 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
+import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
+import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceLifecycleManagementOperationReport;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.models
@@ -29,4 +32,6 @@ package org.identifiers.cloud.hq.ws.registry.models;
  * that already are in the registry.
  */
 public interface ResourceLifecycleManagementService {
+
+    ResourceLifecycleManagementOperationReport deactivateResource(Resource resource, String actor, String additionalInformation) throws ResourceLifecycleManagementServiceException;
 }
