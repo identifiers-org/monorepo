@@ -7,13 +7,13 @@ import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterR
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceSessionEvent;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceValidate;
 import org.identifiers.cloud.hq.ws.registry.api.responses.*;
-import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
 import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationRequest;
 import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationSession;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationRequestRepository;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationSessionRepository;
-import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRepository;
+import org.identifiers.cloud.hq.ws.registry.models.ResourceLifecycleManagementService;
 import org.identifiers.cloud.hq.ws.registry.models.ResourceRegistrationRequestManagementService;
+import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceLifecycleManagementOperationReport;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidator;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidatorException;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidatorStrategy;
@@ -112,13 +112,12 @@ public class ResourceManagementApiModel {
     private ResourceRegistrationRequestRepository resourceRegistrationRequestRepository;
     @Autowired
     private ResourceRegistrationSessionRepository resourceRegistrationSessionRepository;
-    // Should I be using the resource ID instead of the repository?
-    @Autowired
-    private ResourceRepository resourceRepository;
 
     // Services
     @Autowired
     private ResourceRegistrationRequestManagementService resourceRegistrationRequestManagementService;
+    @Autowired
+    private ResourceLifecycleManagementService resourceLifecycleManagementService;
 
     // --- Helpers ---
     /**
@@ -367,12 +366,30 @@ public class ResourceManagementApiModel {
         return doValidation(request, namespacePrefixValidator);
     }
 
-    // TODO Resource Lifecycle Management API
+    // TODO --- Resource Lifecycle Management API
     public ServiceResponseDeactivateResource deactivateResource(long resourceId) {
         ServiceResponseDeactivateResource response = createResourceDeactivationDefaultResponse();
-        // Locate resource
-        Resource resource =
-        return null;
+        // TODO Get this information from Spring Security
+        String actor = "UNKNOWN";
+        String additionalInformation = "--- no additional information specified ---";
+        ResourceLifecycleManagementOperationReport deactivationOperationReport =
+                resourceLifecycleManagementService.deactivateResource(resourceId,
+                        resourceLifecycleManagementService.createEmptyContext(),
+                        actor,
+                        additionalInformation);
+        // Let's see what we got back
+        if (deactivationOperationReport.isError()) {
+            if (deactivationOperationReport.getResource() == null) {
+                response.setHttpStatus(HttpStatus.NOT_FOUND);
+            } else {
+                response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            }
+            response.setErrorMessage(deactivationOperationReport.getErrorMessage());
+            response.getPayload().setComment(deactivationOperationReport.getAdditionalInformation());
+        } else {
+            response.getPayload().setComment(deactivationOperationReport.getAdditionalInformation());
+        }
+        return response;
     }
 
 }
