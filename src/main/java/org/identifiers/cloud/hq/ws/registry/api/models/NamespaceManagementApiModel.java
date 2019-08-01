@@ -68,6 +68,14 @@ public class NamespaceManagementApiModel {
     }
 
     public ServiceResponseReactivateNamespace reactivateNamespace(long namespaceId) {
-        // TODO
+        ServiceResponseReactivateNamespace response = createNamespaceReactivationDefaultResponse();
+        // TODO Get this from Spring Security
+        String actor = "UNKNOWN";
+        String additionalInformation = "--- no additional information specified ---";
+        NamespaceLifecycleManagementContext context = namespaceLifecycleManagementService.createEmptyContext();
+        NamespaceLifecycleManagementOperationReport report = namespaceLifecycleManagementService.reactivateNamespace(namespaceId, context, actor, additionalInformation);
+        processNamespaceLifecycleManagementOperationReport(response, report);
+        response.getPayload().setComment(report.getAdditionalInformation());
+        return response;
     }
 }
