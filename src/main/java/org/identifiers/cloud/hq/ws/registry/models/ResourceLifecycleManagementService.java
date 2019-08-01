@@ -50,7 +50,7 @@ public interface ResourceLifecycleManagementService {
     ResourceLifecycleManagementOperationReport deactivateResource(long resourceId, ResourceLifecycleManagementContext context, String actor, String additionalInformation) throws ResourceLifecycleManagementServiceException;
 
     /**
-     * Given an deactivated resource in the registry, perform a reactivation operation
+     * Given a deactivated resource in the registry, perform a reactivation operation
      * @param resourceId internal ID of the resource to deactivate
      * @param context operational context
      * @param actor who is performing the action
