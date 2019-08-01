@@ -23,4 +23,7 @@ public class ResourceLifecycleManagementContext {
 
     // This is the URL pattern that will be set upon re-activation of a given resource
     String resourceReactivationUrlPattern;
+    // NOTE, the minimum amount of information needed for reactivating a resource is its URL pattern, in case other
+    // details like 'institution', 'person' or 'location' have changed, this should be updated via the resource editing
+    // API.
 }
