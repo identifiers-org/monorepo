@@ -3,6 +3,8 @@ package org.identifiers.cloud.hq.ws.registry.api.models;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
 import org.identifiers.cloud.hq.ws.registry.api.responses.*;
+import org.identifiers.cloud.hq.ws.registry.models.NamespaceLifecycleManagementContext;
+import org.identifiers.cloud.hq.ws.registry.models.NamespaceLifecycleManagementOperationReport;
 import org.identifiers.cloud.hq.ws.registry.models.NamespaceLifecycleManagementService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -41,7 +43,26 @@ public class NamespaceManagementApiModel {
     }
 
     // API
+    // Helpers
+    private void processNamespaceLifecycleManagementOperationReport(ServiceResponse<?> response, NamespaceLifecycleManagementOperationReport report) {
+        if (report.isError()) {
+            if (report.getNamespace() == null) {
+                response.setHttpStatus(HttpStatus.NOT_FOUND);
+            } else {
+                response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            }
+            response.setErrorMessage(report.getErrorMessage());
+        }
+    }
+
     public ServiceResponseDeactivateNamespace deactivateNamespace(long namespaceId) {
+        ServiceResponseDeactivateNamespace response = createNamespaceDeactivationDefaultResponse();
+        // TODO Get this from Spring Security
+        String actor = "UNKNOWN";
+        String additionalInformation = "--- no additional information specified ---";
+        NamespaceLifecycleManagementContext context = namespaceLifecycleManagementService.createEmptyContext();
+        NamespaceLifecycleManagementOperationReport report = namespaceLifecycleManagementService.deactivateNamespace(namespaceId, context, actor, additionalInformation);
+
         // TODO
     }
 
