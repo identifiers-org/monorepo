@@ -73,6 +73,8 @@ public class ResourceLifecycleManagementServiceSimpleStrategy implements Resourc
     public ResourceLifecycleManagementOperationReport reactivateResource(Resource resource, ResourceLifecycleManagementContext context, String actor, String additionalInformation) throws ResourceLifecycleManagementServiceException {
         // Create default report
         ResourceLifecycleManagementOperationReport report = createDefaultReport();
+        // Specialised context
+        ResourceLifecycleManagementServiceSimpleStrategyContext operationContext = (ResourceLifecycleManagementServiceSimpleStrategyContext) context;
         // Check whether the given resource is active or not
         if (!resource.isDeprecated()) {
             String errorMessage = String.format("Resource with ID '%d', MIR ID '%s' CANNOT BE ACTIVATED, because IT ALREADY IS ACTIVE", resource.getId(), resource.getMirId());
@@ -80,8 +82,19 @@ public class ResourceLifecycleManagementServiceSimpleStrategy implements Resourc
             report.setSuccess(false);
             log.error(errorMessage);
         } else {
-            // TODO Reactivation context validation?
+            // Should we do cross validation with a namespace? In case of reactivating a resource within an active
+            // namespace, that's normal operation, and if the namespace is not active, it's also a real life situation
+            // where we're activating resources before bringing the namespace back to life. This means we don't really
+            // need to cross-validate this operation with namespaces
+            // TODO Reactivation context validation? We should probably introduce validators in the future, whenever
+            //  possible, to make sure the elements in the reactivation context are valid, e.g. the URL pattern, in a
+            //  similar way we always do it for prefix and resource registration requests
             // TODO Reactivate the resource
+            resource.setUrlPattern(operationContext.getResourceReactivationUrlPattern());
+            resource.setDeprecated(false);
+            String message = String.format("Resource with ID '%d', MIR ID '%s' SUCCESSFULY RE-ACTIVATED, its new URL pattern is '%s'", resource.getId(), resource.getMirId(), resource.getUrlPattern());
+            report.setAdditionalInformation(message);
+            log.info(message);
         }
         return report;
     }
