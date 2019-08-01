@@ -59,7 +59,4 @@ public interface ResourceLifecycleManagementService {
      * @throws ResourceLifecycleManagementServiceException
      */
     ResourceLifecycleManagementOperationReport reactivateResource(long resourceId, ResourceLifecycleManagementContext context, String actor, String additionalInformation) throws ResourceLifecycleManagementServiceException;
-
-    // NOTE: It will be useful for implementation strategies to have a factory method for empty
-    // ResourceLifecycleManagementContext objects, so the code can look cleaner
 }
