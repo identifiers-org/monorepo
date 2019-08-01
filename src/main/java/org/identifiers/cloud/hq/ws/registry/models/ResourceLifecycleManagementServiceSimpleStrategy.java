@@ -51,6 +51,11 @@ public class ResourceLifecycleManagementServiceSimpleStrategy implements Resourc
             report.setSuccess(false);
             log.error(errorMessage);
         } else {
+            // Should we also check at namespace level? If we think about it, deactivating a resource in a namespace
+            // that is not active makes sense, I may have deactivated the namespace before deactivating the resource,
+            // but also, deactivating a resource in an active namespace also makes perfect sense, it is a normal
+            // deactivation operation, so the answer is 'no, we don't need cross validation for this operation from the
+            // point of view of a namespace'
             // Deprecate the resource
             resource.setDeprecated(true);
             resource.setDeprecationDate(new Date(System.currentTimeMillis()));
@@ -66,10 +71,18 @@ public class ResourceLifecycleManagementServiceSimpleStrategy implements Resourc
     @Transactional
     @Override
     public ResourceLifecycleManagementOperationReport reactivateResource(Resource resource, ResourceLifecycleManagementContext context, String actor, String additionalInformation) throws ResourceLifecycleManagementServiceException {
-        // TODO Create default report
-        // TODO Check whether the given resource is active or not
-        // TODO Reactivation context validation?
-        // TODO Reactivate the resource
-        return null;
+        // Create default report
+        ResourceLifecycleManagementOperationReport report = createDefaultReport();
+        // Check whether the given resource is active or not
+        if (!resource.isDeprecated()) {
+            String errorMessage = String.format("Resource with ID '%d', MIR ID '%s' CANNOT BE ACTIVATED, because IT ALREADY IS ACTIVE", resource.getId(), resource.getMirId());
+            report.setErrorMessage(errorMessage);
+            report.setSuccess(false);
+            log.error(errorMessage);
+        } else {
+            // TODO Reactivation context validation?
+            // TODO Reactivate the resource
+        }
+        return report;
     }
 }
