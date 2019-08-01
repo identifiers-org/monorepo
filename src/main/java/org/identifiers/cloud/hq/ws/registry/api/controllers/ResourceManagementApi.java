@@ -4,10 +4,12 @@ import org.identifiers.cloud.hq.ws.registry.api.models.ResourceManagementApiMode
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResource;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceSessionEvent;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceValidate;
+import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseDeactivateResource;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterResource;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterResourceSessionEvent;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterResourceValidate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -162,6 +164,11 @@ public class ResourceManagementApi {
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
-    // TODO --- Resource Lifecycle Management
+    // --- Resource Lifecycle Management
+    @GetMapping(value = "/deactivateResource/{resourceId}")
+    public ResponseEntity<?> deactivateResource(@PathVariable long resourceId) {
+        ServiceResponseDeactivateResource response = model.deactivateResource(resourceId);
+        return new ResponseEntity<>(response, response.getHttpStatus());
+    }
     // TODO
 }
