@@ -86,9 +86,6 @@ public class NamespaceService {
         return repository.findByPrefix(namespacePrefix);
     }
 
-    // TODO - Deactivate a namespace
-    // TODO - Reactivate a namespace
-
     @Transactional
     public Namespace registerProvider(Namespace namespace, Resource resource) throws NamespaceServiceException {
         // Check the provider code is unique within the namespace

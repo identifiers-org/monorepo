@@ -5,6 +5,7 @@ import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -47,7 +48,30 @@ public class NamespaceLifecycleManagementServiceSimpleStrategy implements Namesp
     @Override
     public NamespaceLifecycleManagementOperationReport deactivateNamespace(long namespaceId,
                                                                            NamespaceLifecycleManagementContext context, String actor, String additionalInformation) throws NamespaceLifecycleManagementServiceException {
-        return null;
+        // Create default report
+        NamespaceLifecycleManagementOperationReport report = createDefaultReport();
+        // Locate namespace
+        Namespace namespace = locateNamespace(namespaceId, report);
+        if (namespace != null) {
+            report.setNamespace(namespace);
+            // Check whether the given namespace is active or not
+            if (namespace.isDeprecated()) {
+               String errorMessage = String.format("Namespace with ID '%d', MIR ID '%s' CANNOT BE DEACTIVATED, because IT ALREADY IS DEPRECATED", namespace.getId(), namespace.getMirId());
+               report.setErrorMessage(errorMessage);
+               report.setSuccess(false);
+               log.error(errorMessage);
+            } else {
+                // Should we do any cross check on whether there are active resources on the namespace or not? The same
+                // way cross checks from resource lifecycle management didn't make sense, they don't make sense either
+                // in the other direction
+                namespace.setDeprecated(true);
+                namespace.setDeprecationDate(new Date(System.currentTimeMillis()));
+                String message = String.format("Namespace with ID '%d', MIR ID '%s' SUCCESSFULLY DEPRECATED", namespace.getId(), namespace.getMirId());
+                report.setAdditionalInformation(message);
+                log.info(message);
+            }
+        }
+        return report;
     }
 
     @Override
