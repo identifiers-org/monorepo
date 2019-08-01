@@ -80,7 +80,7 @@ public class Resource {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private boolean deprecated = false;
 
-    // Information on when this namespace was deprecated
+    // Information on when this resource was deprecated
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date deprecationDate;
 
