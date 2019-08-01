@@ -48,4 +48,5 @@ public class Namespace implements Serializable {
     private String sampleId;
     // Whether this namespace has LUIs with embedded namespace prefix
     private boolean namespaceEmbeddedInLui;
+    // TODO Add deprecation information
 }
