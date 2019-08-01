@@ -1,7 +1,10 @@
 package org.identifiers.cloud.hq.ws.registry.data.repositories;
 
 import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import java.util.List;
 
@@ -19,7 +22,9 @@ public interface ResourceRepository extends JpaRepository<Resource, Long> {
 
     List<Resource> findByNamespaceIdAndProviderCode(long namespaceId, String providerCode);
 
+    @RestResource(exported = false)
     List<Resource> findByProviderCode(String providerCode);
+    Page<Resource> findByProviderCode(String providerCode, Pageable pageable);
 
     Resource findByMirId(String mirId);
 }
