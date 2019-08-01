@@ -34,4 +34,6 @@ import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceLifecycleM
 public interface ResourceLifecycleManagementService {
 
     ResourceLifecycleManagementOperationReport deactivateResource(Resource resource, String actor, String additionalInformation) throws ResourceLifecycleManagementServiceException;
+
+    ResourceLifecycleManagementOperationReport reactivateResource(Resource resource, String actor, String additionalInformation) throws ResourceLifecycleManagementServiceException;
 }
