@@ -40,5 +40,12 @@ public class NamespaceManagementApiModel {
         return response;
     }
 
-    // TODO
+    // API
+    public ServiceResponseDeactivateNamespace deactivateNamespace(long namespaceId) {
+        // TODO
+    }
+
+    public ServiceResponseReactivateNamespace reactivateNamespace(long namespaceId) {
+        // TODO
+    }
 }
