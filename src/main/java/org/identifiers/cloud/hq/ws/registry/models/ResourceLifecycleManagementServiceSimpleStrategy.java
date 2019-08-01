@@ -29,7 +29,11 @@ public class ResourceLifecycleManagementServiceSimpleStrategy implements Resourc
     private String deprecationPlaceholderLuiPattern;
     @Value("${org.identifiers.cloud.hq.ws.lifecycle.resources.deprecation.urltemplate}")
     private String deprecationUrlTemplate;
+
     // Factory methods
+    public ResourceLifecycleManagementServiceSimpleStrategyContext createEmptyContext() {
+        return new ResourceLifecycleManagementServiceSimpleStrategyContext();
+    }
 
     // Helpers
     private ResourceLifecycleManagementOperationReport createDefaultReport() {
