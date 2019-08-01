@@ -89,7 +89,6 @@ public class ApiAndDataModelsHelper {
     }
 
     public static Namespace getNamespaceFrom(org.identifiers.cloud.hq.ws.registry.data.models.Namespace namespace) {
-        // TODO Add deprecation information
         return new Namespace()
                 .setId(namespace.getId())
                 .setMirId(namespace.getMirId())
@@ -100,7 +99,9 @@ public class ApiAndDataModelsHelper {
                 .setCreated(namespace.getCreated())
                 .setModified(namespace.getModified())
                 .setSampleId(namespace.getSampleId())
-                .setNamespaceEmbeddedInLui(namespace.isNamespaceEmbeddedInLui());
+                .setNamespaceEmbeddedInLui(namespace.isNamespaceEmbeddedInLui())
+                .setDeprecated(namespace.isDeprecated())
+                .setDeprecationDate(namespace.getDeprecationDate());
     }
 
     // Get a Resource Registration Request from the request payload
