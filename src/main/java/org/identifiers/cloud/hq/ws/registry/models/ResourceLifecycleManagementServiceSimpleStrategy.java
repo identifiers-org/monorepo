@@ -1,7 +1,9 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
+import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceLifecycleManagementOperationReport;
+import org.springframework.stereotype.Component;
 
 /**
  * Project: registry
@@ -11,7 +13,13 @@ import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceLifecycleM
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+@Slf4j
+@Component
 public class ResourceLifecycleManagementServiceSimpleStrategy implements ResourceLifecycleManagementService {
+
+    // Factory methods
+
+    // Interface
     @Override
     public ResourceLifecycleManagementOperationReport deactivateResource(Resource resource,
                                                                          ResourceLifecycleManagementContext context, String actor, String additionalInformation) throws ResourceLifecycleManagementServiceException {
