@@ -33,6 +33,14 @@ import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceLifecycleM
  */
 public interface ResourceLifecycleManagementService {
 
+    /**
+     * Given an active resource in the registry, perform a deactivation operation
+     * @param resource the resource to deactivate
+     * @param actor who is performing the action
+     * @param additionalInformation additional information related to this operation
+     * @return a report on whether the operation was performed successfully or not
+     * @throws ResourceLifecycleManagementServiceException
+     */
     ResourceLifecycleManagementOperationReport deactivateResource(Resource resource, String actor, String additionalInformation) throws ResourceLifecycleManagementServiceException;
 
     ResourceLifecycleManagementOperationReport reactivateResource(Resource resource, String actor, String additionalInformation) throws ResourceLifecycleManagementServiceException;
