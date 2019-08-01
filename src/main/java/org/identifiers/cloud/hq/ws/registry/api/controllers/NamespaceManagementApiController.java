@@ -1,5 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.api.controllers;
 
+import org.identifiers.cloud.hq.ws.registry.api.models.NamespaceManagementApiModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,5 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("namespaceManagement")
 public class NamespaceManagementApiController {
+    @Autowired
+    private NamespaceManagementApiModel model;
+
+    
     // TODO
 }
