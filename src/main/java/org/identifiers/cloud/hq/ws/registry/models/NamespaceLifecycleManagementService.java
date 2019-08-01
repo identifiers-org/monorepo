@@ -38,4 +38,5 @@ public interface NamespaceLifecycleManagementService {
 
     NamespaceLifecycleManagementOperationReport deactivateNamespace(long namespaceId, NamespaceLifecycleManagementContext context, String actor, String additionalInformation) throws NamespaceLifecycleManagementServiceException;
 
+    NamespaceLifecycleManagementOperationReport reactivateNamespace(long namespaceId, NamespaceLifecycleManagementContext context, String actor, String additionalInformation) throws NamespaceLifecycleManagementServiceException;
 }
