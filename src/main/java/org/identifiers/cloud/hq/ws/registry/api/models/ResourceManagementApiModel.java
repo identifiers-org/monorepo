@@ -417,5 +417,4 @@ public class ResourceManagementApiModel {
         response.getPayload().setComment(activationReport.getAdditionalInformation());
         return response;
     }
-
 }

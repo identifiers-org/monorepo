@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("resourceManagementApi")
-public class ResourceManagementApi {
+public class ResourceManagementApiController {
 
     @Autowired
     private ResourceManagementApiModel model;
