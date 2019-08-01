@@ -36,5 +36,5 @@ public interface NamespaceLifecycleManagementService {
      */
     NamespaceLifecycleManagementContext createEmptyContext();
 
-    
+
 }
