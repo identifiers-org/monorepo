@@ -41,7 +41,18 @@ public interface ResourceLifecycleManagementService {
      * @return a report on whether the operation was performed successfully or not
      * @throws ResourceLifecycleManagementServiceException
      */
-    ResourceLifecycleManagementOperationReport deactivateResource(Resource resource, String actor, String additionalInformation) throws ResourceLifecycleManagementServiceException;
+    ResourceLifecycleManagementOperationReport deactivateResource(Resource resource, ResourceLifecycleManagementContext context, String actor, String additionalInformation) throws ResourceLifecycleManagementServiceException;
 
-    ResourceLifecycleManagementOperationReport reactivateResource(Resource resource, String actor, String additionalInformation) throws ResourceLifecycleManagementServiceException;
+    /**
+     * Given an deactivated resource in the registry, perform a reactivation operation
+     * @param resource
+     * @param actor
+     * @param additionalInformation
+     * @return
+     * @throws ResourceLifecycleManagementServiceException
+     */
+    ResourceLifecycleManagementOperationReport reactivateResource(Resource resource, ResourceLifecycleManagementContext context, String actor, String additionalInformation) throws ResourceLifecycleManagementServiceException;
+
+    // NOTE: It will be useful for implementation strategies to have a factory method for empty
+    // ResourceLifecycleManagementContext objects, so the code can look cleaner
 }

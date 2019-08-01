@@ -17,6 +17,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class ResourceReactivationContext {
-    // Base class for the information needed by any final resource lifecycle management service strategy
+public class ResourceLifecycleManagementContext {
+    // Base class for the information needed by any final resource lifecycle management service strategy, when it comes
+    // to execute its operations
 }
