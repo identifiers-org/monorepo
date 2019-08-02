@@ -77,7 +77,7 @@ spec:
                   - name: HQ_WS_REGISTRY_CONFIG_BACKEND_SERVICE_MIRID_CONTROLLER_PORT
                     value: "8181"
                   - name: HQ_WS_REGISTRY_CONFIG_CORS_ORIGIN
-                    value: "http://cloud.identifiers.org,https://cloud.identifiers.org,http://identifiers.org,https://identifiers.org,https://registry.identifiers.org,http://labs.identifiers.org,https://labs.identifiers.org"
+                    value: "http://cloud.identifiers.org,https://cloud.identifiers.org,http://identifiers.org,https://identifiers.org,https://registry.identifiers.org,http://labs.identifiers.org,https://labs.identifiers.org,https://www.ebi.ac.uk/biostudies/submissions"
                   - name: HQ_WS_REGISTRY_JVM_MEMORY_MAX
                     value: "420m"
                   - name: HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUERURI
