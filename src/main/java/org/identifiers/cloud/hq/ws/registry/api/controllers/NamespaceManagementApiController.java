@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  * ---
  */
 @RestController
-@RequestMapping("namespaceManagement")
+@RequestMapping("namespaceManagementApi")
 public class NamespaceManagementApiController {
     @Autowired
     private NamespaceManagementApiModel model;
