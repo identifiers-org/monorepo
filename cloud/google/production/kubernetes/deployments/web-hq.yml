@@ -84,7 +84,7 @@ spec:
                   resources:
                       requests:
                           memory: 64Mi
-                          cpu: 60m
+                          cpu: 50m
                   env:
                   - name: ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_API_REGISTRY_URL
                     value: "https://registry.api.identifiers.org"
