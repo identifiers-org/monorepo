@@ -2,7 +2,7 @@ import React from 'react';
 
 
 const EBINavItem = (props) => (
-  <li className={`nav-item ${props.className}`}>
+  <li className={props.className}>
     {props.children}
   </li>
 )

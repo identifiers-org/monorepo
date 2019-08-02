@@ -28,8 +28,10 @@ class EBINavBar extends React.Component {
     }, '') : '';
 
 
-    const visibleElements = Math.floor(window.innerWidth / 160) - 1;
+    const visibleElements = Math.floor(window.innerWidth / 170) - 1;
     const childrenList = React.Children.map(children, child => child);
+
+    console.log(`visibleElements ${visibleElements}, window.innerWidth`);
 
     return (
       <div className={`${EBINavBar.baseClass} ${modifierClasses}`}>
