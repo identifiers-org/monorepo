@@ -2,7 +2,7 @@ package org.identifiers.cloud.hq.ws.registry.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
@@ -15,7 +15,8 @@ import lombok.experimental.Accessors;
  */
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 public class ResourceLifecycleManagementServiceSimpleStrategyContext extends ResourceLifecycleManagementContext {
     // TODO
