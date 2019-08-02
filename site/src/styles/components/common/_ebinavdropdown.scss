@@ -1,0 +1,16 @@
+.EBINav-dropdown {
+  background-color: $dark;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 10000;
+  margin-left: 0;
+
+  li {
+    border: none !important;
+  }
+
+  .nav-item {
+    border: none !important;
+  }
+}

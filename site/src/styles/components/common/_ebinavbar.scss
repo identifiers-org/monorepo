@@ -20,8 +20,11 @@
   position: absolute;
   z-index: 10000;
 
+  li {
+    border: none !important;
+  }
+
   .nav-item {
     border: none !important;
   }
 }
-
