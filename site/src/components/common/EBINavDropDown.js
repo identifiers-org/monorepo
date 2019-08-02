@@ -13,23 +13,26 @@ class EBINavDropDown extends React.Component {
     };
   }
 
-
-  handleClickExpandLink = () => {
-    const { expanded } = this.state;
-
-    this.setState({expanded: !expanded});
+  handleClickChild = () => {
+    this.setState({expanded: false});
   };
+  handleClickExpandLink = () => {this.setState({expanded: !this.state.expanded});};
 
 
   render() {
     const {
+      handleClickChild,
       handleClickExpandLink,
-      props: { children, caption },
+      props: { handleClickChildFunction, children, caption },
       state: { expanded }
-     } = this;
+    } = this;
 
-    const childrenList = React.Children.map(children, child => child);
-    
+    const childrenList = React.Children.map(children, child => React.cloneElement(child, {handleClickChildFunction: () => {
+        handleClickChild();
+        handleClickChildFunction ? handleClickChildFunction() : null;
+      }
+    }));
+
     return (
       <EBINavItem>
         <a

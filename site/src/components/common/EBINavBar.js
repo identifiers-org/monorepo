@@ -1,10 +1,14 @@
 import React from 'react';
 
+// Components.
+import EBINavDropDown from './EBINavDropDown';
+
+
 class EBINavBar extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {width: window.innerWidth, extraItemsVisible: false};
+    this.state = {width: window.innerWidth};
   }
 
 
@@ -12,14 +16,10 @@ class EBINavBar extends React.Component {
     window.addEventListener('resize', () => this.setState({width: window.innerWidth}));
   }
 
-  handleClickExtraItems = () => this.setState({extraItemsVisible: !this.state.extraItemsVisible});
-
 
   render() {
     const {
-      handleClickExtraItems,
-      props: { children, modifiers },
-      state: { extraItemsVisible }
+      props: { children, modifiers }
     } = this;
 
     const modifierClasses = modifiers.length ? modifiers.reduce((result, modifier) => {
@@ -31,26 +31,15 @@ class EBINavBar extends React.Component {
     const visibleElements = Math.floor(window.innerWidth / 170) - 1;
     const childrenList = React.Children.map(children, child => child);
 
-    console.log(`visibleElements ${visibleElements}, window.innerWidth`);
-
     return (
       <div className={`${EBINavBar.baseClass} ${modifierClasses}`}>
         <nav>
           <ul id="local-nav" className="dropdown menu float-left" data-description="navigational">
             {childrenList.slice(0, visibleElements)}
             {childrenList.length > visibleElements && (
-              <>
-                <li>
-                  <a href="#!" onClick={handleClickExtraItems}>Also in this section <i className="icon icon-common icon-angle-down" /></a>
-                  <ul>
-                    {extraItemsVisible && (
-                      <div className="EBINavBar--extra-items-menu">
-                        {childrenList.slice(visibleElements)}
-                      </div>
-                    )}
-                  </ul>
-                </li>
-              </>
+              <EBINavDropDown caption="Also in this section">
+                {childrenList.slice(visibleElements)}
+              </EBINavDropDown>
             )}
           </ul>
         </nav>
