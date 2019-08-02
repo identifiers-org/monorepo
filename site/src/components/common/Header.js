@@ -12,6 +12,7 @@ import identifiersLogo from '../../assets/identifiers_logo.png';
 import EBINavBar from './EBINavBar';
 import EBINavItem from './EBINavItem';
 import Sticky from './Sticky';
+import EBINavDropDown from './EBINavDropDown';
 
 
 class Header extends React.Component {
@@ -102,57 +103,78 @@ class Header extends React.Component {
                         </NavLink>
                       </EBINavItem>
 
-                      <EBINavItem className="nav-item">
-                        <NavLink to="/prefixregistrationrequest" className="nav-link" activeClassName="active">
-                          <i className="icon icon-common icon-hand-point-up mr-1" />Request prefix
-                        </NavLink>
-                      </EBINavItem>
+                      <EBINavDropDown
+                        caption={<span><i className="icon icon-common icon-hand-point-up mr-1" />Make a request</span>}
+                      >
+                        <EBINavItem className="nav-item">
+                          <NavLink to="/prefixregistrationrequest" className="nav-link" activeClassName="active">
+                            <i className="icon icon-common icon-leaf mr-1" />Request prefix
+                          </NavLink>
+                        </EBINavItem>
+                        <EBINavItem className="nav-item">
+                          <NavLink to="/resourceregistrationrequest" className="nav-link" activeClassName="active">
+                            <i className="icon icon-common icon-cube mr-1" />Request resource
+                          </NavLink>
+                        </EBINavItem>
+                      </EBINavDropDown>
 
-                      <EBINavItem>
+                      <EBINavItem className="nav-item">
                         <a href={config.documentationUrl} className="nav-link nav-link-dark">
                           <i className="icon icon-common icon-documentation mr-1" />Documentation
                         </a>
                       </EBINavItem>
 
-                      <EBINavItem>
+                      <EBINavItem className="nav-item">
                         <a href={config.oldIdentifiersUrl} target="_blank" rel="noopener noreferrer" className="nav-link nav-link-dark">
                           <i className="icon icon-common icon-home mr-1" />Legacy platform
                         </a>
                       </EBINavItem>
 
                       {
-                        config.enableAuthFeatures && (
-                          // If not logged in.
-                          !auth.authenticated ? (
-                            <>
-                              <EBINavItem className="nav-item">
-                                <a href="#!" onClick={handleClickSignIn}>
-                                  <i className="icon icon-common icon-icon-sign-in-alt mr-1" />Sign in
-                                </a>
-                              </EBINavItem>
-                            </>
-                          ) : ( // If logged in.
-                            //TODO: RoleComponent <- wrapper
-                            <>
-                              <EBINavItem className="nav-item">
-                                <NavLink to="/curator" className="nav-link" activeClassName="active">
-                                  <i className="icon icon-common icon-tachometer-alt mr-1" />Curation dashboard
-                                </NavLink>
-                              </EBINavItem>
-                              <EBINavItem className="nav-item">
-                                <NavLink to="/account" className="nav-link" activeClassName="active">
-                                  <i className="icon icon-common icon-user mr-1" />Account
-                                </NavLink>
-                              </EBINavItem>
-                              <EBINavItem className="nav-item">
-                                <a href="#!" onClick={handleClickSignOut}>
-                                  <i className="icon icon-common icon-icon-sign-out-alt mr-1" />Sign out
-                                </a>
-                              </EBINavItem>
-                            </>
-                          )
+                        // If not logged in.
+                        config.enableAuthFeatures && !auth.authenticated && (
+                          <EBINavItem className="nav-item">
+                            <a href="#!" onClick={handleClickSignIn}>
+                              <i className="icon icon-common icon-icon-sign-in-alt mr-1" />Sign in
+                            </a>
+                          </EBINavItem>
                         )
                       }
+
+                      {/* Do not nest children, so responsive UI submenu does its work. */}
+                      {
+                        config.enableAuthFeatures && auth.authenticated && (
+                          // If logged in.
+                          <EBINavItem className="nav-item">
+                            <NavLink to="/curator" className="nav-link" activeClassName="active">
+                              <i className="icon icon-common icon-tachometer-alt mr-1" />Curation dashboard
+                            </NavLink>
+                          </EBINavItem>
+                          )
+                      }
+
+                      {
+                        config.enableAuthFeatures && auth.authenticated && (
+                          // If logged in.
+                          <EBINavItem className="nav-item">
+                            <NavLink to="/account" className="nav-link" activeClassName="active">
+                              <i className="icon icon-common icon-user mr-1" />Account
+                            </NavLink>
+                          </EBINavItem>
+                        )
+                      }
+
+                      {
+                        config.enableAuthFeatures && auth.authenticated && (
+                          // If logged in.
+                          <EBINavItem className="nav-item">
+                            <a href="#!" onClick={handleClickSignOut}>
+                              <i className="icon icon-common icon-sign-out-alt mr-1" />Sign out
+                            </a>
+                          </EBINavItem>
+                        )
+                      }
+
                       <EBINavItem className="nav-item float-right">
                         <a href={config.feedbackUrl} target="_blank" rel="noopener noreferrer" className="nav-link nav-link-dark">
                           <i className="icon icon-common icon-comments mr-1" />Feedback
