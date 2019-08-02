@@ -30,8 +30,8 @@ import java.util.Date;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @EntityListeners(AuditingEntityListener.class)
-@Table(indexes = {@Index(name = "idx_actor", columnList = "actor"),
-        @Index(name = "idx_event_name", columnList = "eventName")})
+@Table(indexes = {@Index(name = "idx_resource_registration_session_event_actor", columnList = "actor"),
+        @Index(name = "idx_resource_registration_session_event_event_name", columnList = "eventName")})
 public class ResourceRegistrationSessionEvent {
     @Id
     @GeneratedValue
