@@ -3,6 +3,7 @@ package org.identifiers.cloud.hq.ws.registry.models;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.retry.annotation.Backoff;
@@ -25,6 +26,18 @@ public class PrefixRegistrationSessionActionNotifierEmailCuratorStart implements
     private static final int MAIL_REQUEST_RETRY_BACK_OFF_PERIOD = 1500; // 1.5 seconds
 
     // Configuration
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.from}")
+    private String emailSender;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.curator.prefixreg.start.to}")
+    private String emailTo;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.curator.prefixreg.start.cc}")
+    private String emailCc;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.curator.prefixreg.start.cco}")
+    private String emailCco;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.curator.prefixreg.start.subject}")
+    private String emailSubject;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.curator.prefixreg.start.body.filename}")
+    private String emailBodyFileName;
 
     @Autowired
     private JavaMailSender javaMailSender;
