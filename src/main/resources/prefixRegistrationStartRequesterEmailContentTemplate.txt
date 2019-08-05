@@ -1,0 +1,19 @@
+Dear PLACEHOLDER_002_REQUESTER_NAME,
+
+At identifiers.org we would like to confirm that your prefix registration request for
+
+---
+Prefix Name: PLACEHOLDER_003_PREFIX_NAME
+Preferred Prefix: PLACEHOLDER_001_PREFIX
+Description:
+PLACEHOLDER_004_PREFIX_DESCRIPTION
+---
+
+Has been received and queued for processing.
+
+We would like to thank you for the confidence deposited in identifiers.org.
+
+Please, allow a few days for your request to be processed.
+
+Kind Regards,
+Identifiers.org Team
