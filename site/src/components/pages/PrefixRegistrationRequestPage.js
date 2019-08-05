@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 import { config } from '../../config/Config';
 import RequestField from '../common/RegistrationRequestField';
-import { requestValidation, setValidation, setValue, reset } from '../../actions/RegistrationRequestField';
+import { setValidation, reset } from '../../actions/RegistrationRequestField';
 import PageTitle from '../common/PageTitle';
 
 
