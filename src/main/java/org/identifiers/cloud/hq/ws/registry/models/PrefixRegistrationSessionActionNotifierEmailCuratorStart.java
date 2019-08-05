@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
@@ -19,7 +19,6 @@ import org.springframework.stereotype.Component;
  * ---
  */
 @Component
-@Scope("prototype")
 @Slf4j
 public class PrefixRegistrationSessionActionNotifierEmailCuratorStart implements PrefixRegistrationSessionAction {
     private static final int MAIL_REQUEST_RETRY_MAX_ATTEMPTS = 12;
@@ -34,7 +33,7 @@ public class PrefixRegistrationSessionActionNotifierEmailCuratorStart implements
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.curator.prefixreg.start.cc}")
     private String emailCc;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.curator.prefixreg.start.cco}")
-    private String emailCco;
+    private String emailBcc;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.curator.prefixreg.start.subject}")
     private String emailSubject;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.curator.prefixreg.start.body.filename}")
@@ -55,15 +54,30 @@ public class PrefixRegistrationSessionActionNotifierEmailCuratorStart implements
     @Autowired
     private JavaMailSender javaMailSender;
 
-    // Helper
-    @Retryable(maxAttempts = MAIL_REQUEST_RETRY_MAX_ATTEMPTS,
-            backoff = @Backoff(delay = MAIL_REQUEST_RETRY_BACK_OFF_PERIOD))
-    private void doSendEmail() {
+    private String parseEmailSubject(PrefixRegistrationSession session) {
         // TODO
+        return null;
     }
 
+    private String parseEmailBody(PrefixRegistrationSession session) {
+        // TODO
+        return null;
+    }
+
+    @Retryable(maxAttempts = MAIL_REQUEST_RETRY_MAX_ATTEMPTS,
+            backoff = @Backoff(delay = MAIL_REQUEST_RETRY_BACK_OFF_PERIOD))
     @Override
     public PrefixRegistrationSessionActionReport performAction(PrefixRegistrationSession session) throws PrefixRegistrationSessionActionException {
+        // Get a plain text message
+        SimpleMailMessage emailMessage = new SimpleMailMessage();
+        // Set message parameters
+        emailMessage.setFrom(emailSender);
+        emailMessage.setTo(emailTo.split(","));
+        emailMessage.setCc(emailCc.split(","));
+        emailMessage.setBcc(emailBcc.split(","));
+        emailMessage.setSubject(parseEmailSubject(session));
+        emailMessage.setText(parseEmailBody(session));
+        javaMailSender.send(emailMessage);
         return null;
     }
 }
