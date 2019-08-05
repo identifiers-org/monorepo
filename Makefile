@@ -27,7 +27,7 @@ set_next_development_version:
 deploy: clean container_production_push
 	@echo "<===|DEVOPS|===> [DEPLOY] Deploying service container version ${tag_version}"
 
-development_env_up:
+development_env_up: tmp
 	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing development environment UP"
 	@docker-compose -f $(docker_compose_development_file) up -d
 	@# TODO Clean this way of referencing the target name in future iterations
@@ -65,9 +65,18 @@ container_production_push: container_production_build
 dev_container_build: clean container_production_build
 	@echo "<===|DEVOPS|===> [DEV] Preparing local container"
 
-clean:
+# Folders
+tmp:
+	@echo "<===|DEVOPS|===> [FOLDER] Creating temporary folders"
+	@mkdir -p tmp/fakesmtp
+
+clean_tmp:
+	@echo "<===|DEVOPS|===> [HOUSEKEEPING] Cleaning temporary folders"
+	@rm -rf tmp
+
+clean: clean_tmp
 	@echo "<===|DEVOPS|===> [CLEAN] Cleaning the space"
 	@mvn clean > /dev/null
 	@mvn versions:commit
 
-.PHONY: all clean app_structure container_production_build container_production_push dev_container_build deploy release sync_project_version set_next_development_version
+.PHONY: all clean app_structure container_production_build container_production_push dev_container_build deploy release sync_project_version set_next_development_version clean_tmp
