@@ -2,12 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import {
+  setRegistrationRequestFieldField,
   setValue,
   setValidity,
   setErrorMessage,
   setLabel,
   validationDone
-} from '../../actions/PrefixRegistrationRequestField';
+} from '../../actions/RegistrationRequestField';
 
 import { config } from '../../config/Config';
 
@@ -257,11 +258,11 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  setValue: (value) => dispatch(setValue(ownProps.id, value)),
-  setValidity: (validity) => dispatch(setValidity(ownProps.id, validity)),
-  setErrorMessage: (errorMessage) => dispatch(setErrorMessage(ownProps.id, errorMessage)),
-  setLabel: (value) => dispatch(setLabel(ownProps.id, value)),
-  validationDone: () => dispatch(validationDone(ownProps.id))
+  setValue: (value) => dispatch(setRegistrationRequestFieldField(ownProps.registrationType, ownProps.id, 'value', value)),
+  setValidity: (validity) => dispatch(setRegistrationRequestFieldField(ownProps.registrationType, ownProps.id, 'valid', validity)),
+  setErrorMessage: (errorMessage) => dispatch(setRegistrationRequestFieldField(ownProps.registrationType, ownProps.id, 'errorMessage', errorMessage)),
+  setLabel: (value) => dispatch(setRegistrationRequestFieldField(ownProps.registrationType, ownProps.id, 'label', value)),
+  validationDone: () => dispatch(setRegistrationRequestFieldField(ownProps.registrationType, ownProps.id, 'requestedValidate' , false))
 });
 
 export default connect (mapStateToProps, mapDispatchToProps)(RegistrationRequestField);
