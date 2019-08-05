@@ -3,6 +3,7 @@ package org.identifiers.cloud.hq.ws.registry.models;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -25,6 +26,7 @@ import java.nio.file.Files;
  */
 @Component
 @Slf4j
+@Qualifier("PrefixRegistrationSessionActionNotifierEmailCuratorStart")
 public class PrefixRegistrationSessionActionNotifierEmailCuratorStart implements PrefixRegistrationSessionAction {
     private static final int MAIL_REQUEST_RETRY_MAX_ATTEMPTS = 12;
     private static final int MAIL_REQUEST_RETRY_BACK_OFF_PERIOD = 1500; // 1.5 seconds
