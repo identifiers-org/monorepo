@@ -23,6 +23,8 @@ public class PrefixRegistrationSessionActionStart implements PrefixRegistrationS
     private PrefixRegistrationSessionActionLogger actionLogger;
     @Autowired
     private PrefixRegistrationSessionActionNotifierEmailCuratorStart notifierEmailCuratorStart;
+    @Autowired
+    private PrefixRegistrationSessionActionNotifierEmailRequesterStart notifierEmailRequesterStart;
     // TODO Wire in the notifier for the requester
 
     @Override
@@ -39,7 +41,8 @@ public class PrefixRegistrationSessionActionStart implements PrefixRegistrationS
     public List<PrefixRegistrationSessionAction> buildActionSequence() {
         return Arrays.asList(
                 actionLogger,
-                notifierEmailCuratorStart
+                notifierEmailCuratorStart,
+                notifierEmailRequesterStart
         );
     }
 }
