@@ -26,6 +26,7 @@ public class PrefixRegistrationSessionActionNotifierEmailCuratorStart implements
     private static final int MAIL_REQUEST_RETRY_BACK_OFF_PERIOD = 1500; // 1.5 seconds
 
     // Configuration
+    // E-mail general configuration
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.from}")
     private String emailSender;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.curator.prefixreg.start.to}")
@@ -38,6 +39,18 @@ public class PrefixRegistrationSessionActionNotifierEmailCuratorStart implements
     private String emailSubject;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.curator.prefixreg.start.body.filename}")
     private String emailBodyFileName;
+    // Placeholders
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.prefix}")
+    private String placeholderPrefix;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.requestername}")
+    private String placeholderRequesterName;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.prefixname}")
+    private String placeholderPrefixName;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.prefixdescription}")
+    private String placeholderPrefixDescription;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.sessionid}")
+    private String placeholderSessionId;
+
 
     @Autowired
     private JavaMailSender javaMailSender;
