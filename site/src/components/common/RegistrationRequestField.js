@@ -1,15 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import {
-  setRegistrationRequestFieldField,
-  setValue,
-  setValidity,
-  setErrorMessage,
-  setLabel,
-  validationDone
-} from '../../actions/RegistrationRequestField';
+// actions.
+import { setRegistrationRequestFieldField } from '../../actions/RegistrationRequestField';
 
+// Config.
 import { config } from '../../config/Config';
 
 
@@ -25,7 +20,8 @@ class RegistrationRequestField extends React.Component {
     this.state = {
       value,
       errorMessage: undefined,
-      options: this.props.options
+      options: this.props.options,
+      debounceInput: undefined
     };
   }
 
@@ -124,22 +120,22 @@ class RegistrationRequestField extends React.Component {
 
 
   //
-  // Handlers
+  // Handlers.
   //
-  handleChange = (e) => {
+  handleChange = e => {
+    clearTimeout(this.state.debounceInput);
+
     // Parse value (split by lines if needed in a textarea).
     const value = this.props.splitByLines ? e.target.value.split('\n') : e.target.value;
 
-    // Send value to store (this will update state also).
-    this.props.setValue(value);
-
-    // Validate after a delay if the flag is set.
-    setTimeout(() => {
+    // Debouce search field.
+    this.setState({debounceInput: setTimeout(() => {
       if (this.props.field.shouldValidate) {
+        this.props.setValue(value);
         this.validate();
       }
-    }, config.VALIDATION_DELAY);
-  }
+    }, 500)});
+  };
 
   handleBlur = (e) => {
     // Parse value (split by lines if needed in a textarea).
@@ -154,7 +150,7 @@ class RegistrationRequestField extends React.Component {
 
     // Validate instantly.
     this.validate();
-  }
+  };
 
 
   render() {
@@ -186,7 +182,6 @@ class RegistrationRequestField extends React.Component {
                 onChange={this.handleChange}
                 placeholder={this.props.placeholder}
                 type={this.props.type}
-                value={this.state.value}
               />
             )
             case "textarea": return (
@@ -199,7 +194,6 @@ class RegistrationRequestField extends React.Component {
                 onChange={this.handleChange}
                 placeholder={this.props.placeholder}
                 rows={this.props.rows}
-                value={this.state.value}
               />
             )
             case "select": return (
@@ -210,7 +204,6 @@ class RegistrationRequestField extends React.Component {
                 id={this.props.id}
                 onBlur={this.handleBlur}
                 onChange={this.handleChange}
-                value={this.state.value}
               >
                 <option value="" disabled>{this.props.placeholder || 'Select...'}</option>
                 {
@@ -254,7 +247,7 @@ class RegistrationRequestField extends React.Component {
 
 // Mapping
 const mapStateToProps = (state, ownProps) => ({
-  field: state.prefixRegistrationRequestForm[ownProps.id]
+  field: state[`${ownProps.registrationType.toLowerCase()}RegistrationRequestForm`][ownProps.id]
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
