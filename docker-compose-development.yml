@@ -35,3 +35,9 @@ services:
         depends_on:
             - redis
             - miridpostgresql
+    fakesmtp:
+        image: digiplant/fake-smtp
+        ports:
+            - "1025:25"
+        volumes:
+            - ./tmp/fakesmtp:/var/mail
