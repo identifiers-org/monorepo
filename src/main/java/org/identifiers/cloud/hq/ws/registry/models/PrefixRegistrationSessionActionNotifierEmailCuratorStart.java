@@ -9,6 +9,11 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
 
 /**
  * Project: registry
@@ -37,7 +42,7 @@ public class PrefixRegistrationSessionActionNotifierEmailCuratorStart implements
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.curator.prefixreg.start.subject}")
     private String emailSubject;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.curator.prefixreg.start.body.filename}")
-    private String emailBodyFileName;
+    private String emailBodyFileResource;
     // Placeholders
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.prefix}")
     private String placeholderPrefix;
@@ -58,9 +63,20 @@ public class PrefixRegistrationSessionActionNotifierEmailCuratorStart implements
         return emailSubject.replace(placeholderPrefix, session.getPrefixRegistrationRequest().getRequestedPrefix());
     }
 
-    private String parseEmailBody(PrefixRegistrationSession session) {
-        // TODO
-        return null;
+    private String parseEmailBody(PrefixRegistrationSession session) throws PrefixRegistrationSessionActionException {
+        try {
+            String bodyTemplate = new String(Files.readAllBytes(ResourceUtils.getFile(emailBodyFileResource).toPath()));
+            return bodyTemplate
+                    .replace(placeholderPrefix, session.getPrefixRegistrationRequest().getRequestedPrefix())
+                    .replace(placeholderPrefixName, session.getPrefixRegistrationRequest().getName())
+                    .replace(placeholderPrefixDescription, session.getPrefixRegistrationRequest().getDescription())
+                    .replace(placeholderRequesterName, session.getPrefixRegistrationRequest().getRequesterName())
+                    .replace(placeholderSessionId, Long.toString(session.getId()));
+        } catch (FileNotFoundException e) {
+            throw new PrefixRegistrationSessionActionException(String.format("COULD NOT LOAD prefix request notification e-mail body template for curator at '%s', due to the following error '%s'", emailBodyFileResource, e.getMessage()));
+        } catch (IOException e) {
+            throw new PrefixRegistrationSessionActionException(String.format("COULD NOT READ prefix request notification e-mail body template for curator at '%s' due to the following error '%s'", emailBodyFileResource, e.getMessage()));
+        }
     }
 
     @Retryable(maxAttempts = MAIL_REQUEST_RETRY_MAX_ATTEMPTS,
