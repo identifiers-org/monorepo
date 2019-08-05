@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 import { config } from '../../config/Config';
 import RequestField from '../common/RegistrationRequestField';
-import { requestValidation, setValidation, setValue, reset } from '../../actions/PrefixRegistrationRequestField';
+import { requestValidation, setValidation, setValue, reset } from '../../actions/RegistrationRequestField';
 import PageTitle from '../common/PageTitle';
 
 
@@ -271,6 +271,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                       example="Protein Data Bank"
                       formsection="Prefix details"
                       label="Resource name"
+                      registrationType="PREFIX"
                       required={true}
                       type="text"
                       validationurl={validationUrlBase + 'validateName'}
@@ -283,6 +284,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                         data of biological macromolecules"
                       formsection="Prefix details"
                       label="Description"
+                      registrationType="PREFIX"
                       required={true}
                       rows="5"
                       type="textarea"
@@ -296,6 +298,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                       example="pdb"
                       formsection="Prefix details"
                       label="Requested prefix"
+                      registrationType="PREFIX"
                       required={true}
                       type="text"
                       validationurl={validationUrlBase + 'validateRequestedPrefix'}
@@ -307,6 +310,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                       example="2gc4"
                       formsection="Prefix details"
                       label="Sample Id"
+                      registrationType="PREFIX"
                       required={true}
                       type="text"
                       validationfields={{providerUrlPattern: this.props.providerUrlPattern.value}}
@@ -320,6 +324,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                       example="^[0-9][A-Za-z0-9]{3}$"
                       formsection="Prefix details"
                       label="Regex pattern"
+                      registrationType="PREFIX"
                       required={true}
                       type="text"
                       validationfields={{sampleId: this.props.sampleId.value}}
@@ -333,6 +338,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                       example="https://doi.org/10.1093/nar/28.1.235"
                       formsection="Prefix details"
                       label="Supporting references"
+                      registrationType="PREFIX"
                       required={false}
                       rows="5"
                       splitByLines={true}
@@ -344,6 +350,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                       description="Anything else you wish to tell or ask us."
                       formsection="Prefix details"
                       label="Additional information"
+                      registrationType="PREFIX"
                       required={false}
                       rows="5"
                       type="textarea"
@@ -368,6 +375,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                       formsection="Institution details"
                       example="European Bioinformatics Institute, Hinxton, Cambridge, UK"
                       label="Name"
+                      registrationType="PREFIX"
                       required={true}
                       type="text"
                       validationurl={validationUrlBase + 'validateInstitutionName'}
@@ -380,6 +388,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                         dedicated to big data and online services"
                       formsection="Institution details"
                       label="Description"
+                      registrationType="PREFIX"
                       required={true}
                       rows="5"
                       type="textarea"
@@ -392,6 +401,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                       example="https://www.ebi.ac.uk/"
                       formsection="Institution details"
                       label="Home URL"
+                      registrationType="PREFIX"
                       required={true}
                       type="text"
                       validationurl={validationUrlBase + 'validateInstitutionHomeUrl'}
@@ -405,6 +415,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                       optionlabelfield="countryName"
                       optionsfield="locations"
                       options={locationList}
+                      registrationType="PREFIX"
                       required={true}
                       type="select"
                       validationurl={validationUrlBase + 'validateInstitutionLocation'}
@@ -458,6 +469,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                       example="European Bioinformatics Institute, Hinxton, Cambridge, UK"
                       formsection="Provider details"
                       label="Name"
+                      registrationType="PREFIX"
                       required={true}
                       type="text"
                       validationurl={validationUrlBase + 'validateProviderName'}
@@ -471,6 +483,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                         data and online services"
                       formsection="Provider details"
                       label="Description"
+                      registrationType="PREFIX"
                       required={true}
                       rows="5"
                       type="textarea"
@@ -484,6 +497,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                       example="http://www.pdbe.org/"
                       formsection="Provider details"
                       label="Home URL"
+                      registrationType="PREFIX"
                       required={true}
                       rows="5"
                       type="text"
@@ -497,6 +511,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                       example="pdb"
                       formsection="Provider details"
                       label="Provider code"
+                      registrationType="PREFIX"
                       required={true}
                       type="text"
                       validationurl={validationUrlBase + 'validateProviderCode'}
@@ -509,6 +524,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                       example="http://www.ebi.ac.uk/pdbe/entry/pdb/{$id}"
                       formsection="Provider details"
                       label="URL Pattern"
+                      registrationType="PREFIX"
                       required={true}
                       type="text"
                       validationurl={validationUrlBase + 'validateProviderUrlPattern'}
@@ -523,6 +539,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                       optionlabelfield="countryName"
                       optionsfield="locations"
                       options={locationList}
+                      registrationType="PREFIX"
                       required={true}
                       type="select"
                       validationurl={validationUrlBase + 'validateProviderLocation'}
@@ -546,6 +563,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                       field="requesterName"
                       formsection="Requester details"
                       label="Full name"
+                      registrationType="PREFIX"
                       required={true}
                       type="text"
                       validation={this.standardValidator}
@@ -560,6 +578,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                       field="requesterEmail"
                       formsection="Requester details"
                       label="Email"
+                      registrationType="PREFIX"
                       required={true}
                       type="text"
                       validation={this.standardValidator}
@@ -678,10 +697,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setValue: (id, value) => dispatch(setValue(id, value)),
-  validate: (id) => dispatch(requestValidation(id)),
-  setValidation: (id, validation) => dispatch(setValidation(id, validation)),
-  reset: (id) => dispatch(reset(id))
+  setValue: (id, value) => dispatch(setRegistrationRequestFieldField('PREFIX', id, 'value', value)),
+  validate: (id) => dispatch(setRegistrationRequestFieldField('PREFIX', id, 'requestedValidate', true)),
+  setValidation: (id, validation) => dispatch(setValidation('PREFIX', id, validation)),
+  reset: (id) => dispatch(reset('PREFIX', id))
 });
 
 export default connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationRequestPage);
