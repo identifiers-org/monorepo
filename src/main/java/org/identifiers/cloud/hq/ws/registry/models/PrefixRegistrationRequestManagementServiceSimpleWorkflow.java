@@ -43,6 +43,8 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
     // Prefix registration session completion actions
     @Autowired
     private PrefixRegistrationSessionActionAcceptance actionAcceptance;
+    private PrefixRegistrationSessionActionNotifierEmailCuratorStart notifierEmailCuratorStart;
+
     @Autowired
     private PrefixRegistrationSessionActionRejection actionRejection;
     // END - Prefix registration session completion actions
@@ -80,6 +82,10 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
                     .setAdditionalInformation(additionalInformation)
                     .setPrefixRegistrationRequest(savedRequest)
                     .setPrefixRegistrationSession(session);
+            // Notify
+            // TODO In the future, I may need to create a particular action for starting a request, that, in fact, is a composite action running notifications, etc.
+            notifierEmailCuratorStart.performAction(session);
+            // TODO Notify requester
             // Return the event
             return prefixRegistrationSessionEventStartRepository.save(sessionEventStart);
         } catch (RuntimeException e) {
