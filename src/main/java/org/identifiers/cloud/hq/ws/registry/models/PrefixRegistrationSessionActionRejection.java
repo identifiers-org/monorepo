@@ -23,6 +23,8 @@ import java.util.List;
 public class PrefixRegistrationSessionActionRejection implements PrefixRegistrationSessionCompositeSequenceAction {
     @Autowired
     private PrefixRegistrationSessionActionLogger actionLogger;
+    @Autowired
+    private PrefixRegistrationSessionActionNotifierEmailRejection actionNotifierEmailRejection;
 
     @Override
     public Logger getLogger() {
@@ -38,7 +40,10 @@ public class PrefixRegistrationSessionActionRejection implements PrefixRegistrat
         // TODO
         // TODO - Right now we just log the closing of the prefix registration session, but in the future there will be
         //  notifications and other actions triggered by a rejected prefix registration request
-        return Arrays.asList(actionLogger);
+        return Arrays.asList(
+                actionLogger,
+                actionNotifierEmailRejection
+        );
     }
 
 }

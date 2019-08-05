@@ -28,6 +28,8 @@ public class PrefixRegistrationSessionActionAcceptance implements PrefixRegistra
 
     @Autowired
     private PrefixRegistrationSessionActionLogger actionLogger;
+    @Autowired
+    private PrefixRegistrationSessionActionNotifierEmailAcceptance actionNotifierEmailAcceptance;
 
     @Override
     public Logger getLogger() {
@@ -44,7 +46,10 @@ public class PrefixRegistrationSessionActionAcceptance implements PrefixRegistra
         // TODO
         // TODO - Right now we just log the closing of the prefix registration session, but in the future there will be
         //  notifications and other actions triggered by an accepted prefix registration request
-        return Arrays.asList(actionLogger);
+        return Arrays.asList(
+                actionLogger,
+                actionNotifierEmailAcceptance
+        );
     }
 
 }

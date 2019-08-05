@@ -3,7 +3,6 @@ package org.identifiers.cloud.hq.ws.registry.models;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -26,7 +25,6 @@ import java.nio.file.Files;
  */
 @Component
 @Slf4j
-@Qualifier("PrefixRegistrationSessionActionNotifierEmailCuratorStart")
 public class PrefixRegistrationSessionActionNotifierEmailCuratorStart implements PrefixRegistrationSessionAction {
     private static final int MAIL_REQUEST_RETRY_MAX_ATTEMPTS = 12;
     private static final int MAIL_REQUEST_RETRY_BACK_OFF_PERIOD = 1500; // 1.5 seconds
@@ -85,6 +83,7 @@ public class PrefixRegistrationSessionActionNotifierEmailCuratorStart implements
             backoff = @Backoff(delay = MAIL_REQUEST_RETRY_BACK_OFF_PERIOD))
     @Override
     public PrefixRegistrationSessionActionReport performAction(PrefixRegistrationSession session) throws PrefixRegistrationSessionActionException {
+        PrefixRegistrationSessionActionReport report = new PrefixRegistrationSessionActionReport();
         // Get a plain text message
         SimpleMailMessage emailMessage = new SimpleMailMessage();
         // Set message parameters
@@ -95,6 +94,7 @@ public class PrefixRegistrationSessionActionNotifierEmailCuratorStart implements
         emailMessage.setSubject(parseEmailSubject(session));
         emailMessage.setText(parseEmailBody(session));
         javaMailSender.send(emailMessage);
-        return null;
+        // TODO It would be nice to set something on the report
+        return report;
     }
 }

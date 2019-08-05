@@ -20,6 +20,8 @@ import java.util.List;
 @Component
 public class PrefixRegistrationSessionActionStart implements PrefixRegistrationSessionCompositeSequenceAction {
     @Autowired
+    private PrefixRegistrationSessionActionLogger actionLogger;
+    @Autowired
     private PrefixRegistrationSessionActionNotifierEmailCuratorStart notifierEmailCuratorStart;
     // TODO Wire in the notifier for the requester
 
@@ -35,6 +37,9 @@ public class PrefixRegistrationSessionActionStart implements PrefixRegistrationS
 
     @Override
     public List<PrefixRegistrationSessionAction> buildActionSequence() {
-        return Arrays.asList(notifierEmailCuratorStart);
+        return Arrays.asList(
+                actionLogger,
+                notifierEmailCuratorStart
+        );
     }
 }

@@ -82,7 +82,7 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
                     .setAdditionalInformation(additionalInformation)
                     .setPrefixRegistrationRequest(savedRequest)
                     .setPrefixRegistrationSession(session);
-            // Notify
+            // Take Action
             actionStart.performAction(session);
             // Return the event
             return prefixRegistrationSessionEventStartRepository.save(sessionEventStart);
