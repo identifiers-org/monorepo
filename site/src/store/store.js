@@ -21,6 +21,8 @@ import prefixRegistrationSessionAmendReducer from '../reducers/CuratorDashboardP
 import prefixRegistrationSessionCommentReducer from '../reducers/CuratorDashboardPage/PrefixRegistrationSessionComment';
 import prefixRegistrationSessionRejectReducer from '../reducers/CuratorDashboardPage/PrefixRegistrationSessionReject';
 import resourcePatchReducer from '../reducers/ResourcePatch';
+import resourceRegistrationRequestFieldReducer from '../reducers/ResourceRegistrationRequestField';
+
 
 // Middlewares.
 // TODO: Convert validator to middleware.
@@ -75,6 +77,22 @@ const store = createStore(
       providerLocation: prefixRegistrationRequestFieldReducer('providerLocation'),
       requesterName: prefixRegistrationRequestFieldReducer('requesterName'),
       requesterEmail: prefixRegistrationRequestFieldReducer('requesterEmail')
+    }),
+    resourceRegistrationRequestForm: combineReducers({
+      namespacePrefix: resourceRegistrationRequestFieldReducer('namespacePrefix'),
+      institutionName: resourceRegistrationRequestFieldReducer('institutionName'),
+      institutionDescription: resourceRegistrationRequestFieldReducer('institutionDescription'),
+      institutionHomeUrl: resourceRegistrationRequestFieldReducer('institutionHomeUrl'),
+      institutionLocation: resourceRegistrationRequestFieldReducer('institutionLocation'),
+      institutionIsProvider: resourceRegistrationRequestFieldReducer('institutionIsProvider'),
+      providerName: resourceRegistrationRequestFieldReducer('providerName'),
+      providerDescription: resourceRegistrationRequestFieldReducer('providerDescription'),
+      providerCode: resourceRegistrationRequestFieldReducer('providerCode'),
+      providerHomeUrl: resourceRegistrationRequestFieldReducer('providerHomeUrl'),
+      providerUrlPattern: resourceRegistrationRequestFieldReducer('providerUrlPattern'),
+      providerLocation: resourceRegistrationRequestFieldReducer('providerLocation'),
+      requesterName: resourceRegistrationRequestFieldReducer('requesterName'),
+      requesterEmail: resourceRegistrationRequestFieldReducer('requesterEmail')
     }),
     registryBrowser: combineReducers({
       namespaceList: namespaceListReducer,
