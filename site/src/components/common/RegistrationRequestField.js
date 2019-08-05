@@ -12,7 +12,7 @@ import {
 import { config } from '../../config/Config';
 
 
-class PrefixRegistrationRequestField extends React.Component {
+class RegistrationRequestField extends React.Component {
   constructor(props) {
     super(props);
 
@@ -264,4 +264,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   validationDone: () => dispatch(validationDone(ownProps.id))
 });
 
-export default connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationRequestField);
+export default connect (mapStateToProps, mapDispatchToProps)(RegistrationRequestField);

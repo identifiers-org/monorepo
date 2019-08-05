@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Swal from 'sweetalert2';
 
 import { config } from '../../config/Config';
-import RequestField from '../PrefixRegistrationRequestPage/PrefixRegistrationRequestField';
+import RequestField from '../common/RegistrationRequestField';
 import { requestValidation, setValidation, setValue, reset } from '../../actions/PrefixRegistrationRequestField';
 import PageTitle from '../common/PageTitle';
 
