@@ -14,5 +14,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class EmailSendAgent {
+    private static final int MAIL_REQUEST_RETRY_MAX_ATTEMPTS = 12;
+    private static final int MAIL_REQUEST_RETRY_BACK_OFF_PERIOD = 1500; // 1.5 seconds
+
     // TODO
 }
