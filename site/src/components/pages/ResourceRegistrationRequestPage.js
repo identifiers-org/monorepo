@@ -1,17 +1,158 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import Swal from 'sweetalert2';
+
+// Actions.
+import { setValidation, reset } from '../../actions/RegistrationRequestField';
+
 // Components.
 import PageTitle from '../common/PageTitle';
+import RequestField from '../common/RegistrationRequestField';
+
+// Config.
+import { config } from '../../config/Config';
 
 
 class ResourceRegistrationRequestPage extends React.Component  {
   constructor(props) {
     super(props);
+
+    this.state = {
+      institutionIsProvider: false,
+      valid: false,
+      invalidFields: [],
+      fields: [
+        'institutionName', 'institutionDescription', 'institutionHomeUrl', 'institutionLocation',
+        'providerName', 'providerDescription', 'providerCode', 'providerHomeUrl', 'providerUrlPattern', 'providerLocation',
+        'requesterName', 'requesterEmail'
+      ],
+      optionalFields: [],
+      speacialPayloads: [
+        {requester: this.createRequesterPayload}
+      ],
+      submitted: false,
+      result: undefined
+    }
   }
 
 
+  //
+  // Form update method.
+  //
+  updateForm = (newProps) => {
+    // Do not update submitted forms.
+    if (this.submitted) {
+      return;
+    }
+
+    // Propagate changes and validate for disabled provider fields if institutionIsProvider.
+    if (this.state.institutionIsProvider && this.fieldHasChanged('institutionName', newProps)) {
+      this.props.setValue('providerName', newProps.institutionName.value);
+      if (newProps.institutionName.value !== '') {
+        this.props.validate('providerName');
+      }
+    }
+
+    if (this.state.institutionIsProvider && this.fieldHasChanged('institutionDescription', newProps)) {
+      this.props.setValue('providerDescription', newProps.institutionDescription.value);
+      if (newProps.institutionDescription.value !== '') {
+        this.props.validate('providerDescription');
+      }
+    }
+
+    if (this.state.institutionIsProvider && this.fieldHasChanged('institutionHomeUrl', newProps)) {
+      this.props.setValue('providerHomeUrl', newProps.institutionHomeUrl.value);
+      if (newProps.institutionHomeUrl.value !== '') {
+        this.props.validate('providerHomeUrl');
+      }
+    }
+
+    if (this.state.institutionIsProvider && this.fieldHasChanged('institutionLocation', newProps)) {
+      this.props.setValue('providerLocation', newProps.institutionLocation.value);
+      if (newProps.institutionLocation.value !== '') {
+        this.props.validate('providerLocation');
+      }
+    }
+
+    // Calculate validity of the whole form.
+    const invalidFields = this.getInvalidFields();
+    const valid = invalidFields.length === 0;
+
+    if (valid !== this.state.valid || invalidFields !== this.state.invalidFields) {
+      this.setState({valid, invalidFields});
+    }
+  }
+
+  // Form update helpers: checks if a field has changed / is empty.
+  fieldHasChanged = (field, newProps) => this.props[field].value !== newProps[field].value;
+  fieldIsEmpty = (field, newProps) => this.props[field].value.length === 0 && newProps[field].value.length === 0;
+  changeValidity = (field, validity) => this.props[field].shouldValidate !== validity ? this.props.setValidation(field, validity) : undefined;
+
+
+  // Form update hook. Will update anytime new props are received.
+  // TODO: Refactor to getderivedstatefromprops
+  componentWillReceiveProps = (newProps) => {
+    this.updateForm(newProps);
+  }
+
+  //
+  // Form validity checker. Will check required fields validity value, and return those that are invalid.
+  //
+  getInvalidFields() {
+    const fieldsToCheck = this.state.fields.filter(f => !this.state.optionalFields.includes(f));
+
+    return fieldsToCheck.filter(f => this.props[f].valid !== true);
+  }
+
+
+  // Institution is provider check handler. Will copy values from institution to provider fields, enable validation and
+  // request a validation.
+  handleInstitutionIsProvider = (event) => {
+    const institutionIsProvider = event.target.checked;
+
+    this.setState({institutionIsProvider});
+
+    if (institutionIsProvider) {
+      this.props.setValue('providerName', this.props.institutionName.value);
+      this.props.setValidation('providerName', true);
+      this.props.validate('providerName');
+      this.props.setValue('providerDescription', this.props.institutionDescription.value);
+      this.props.setValidation('providerDescription', true);
+      this.props.validate('providerDescription');
+      this.props.setValue('providerHomeUrl', this.props.institutionHomeUrl.value);
+      this.props.setValidation('providerHomeUrl', true);
+      this.props.validate('providerHomeUrl');
+      this.props.setValue('providerLocation', this.props.institutionLocation.value);
+      this.props.setValidation('providerLocation', true);
+      this.props.validate('providerLocation');
+    }
+  }
+
+
+  // Handle submit of the form. Supposedly, all fields are valid, as validators would disable this otherwise.
+  // But still, some error cases must be treated.
+  handleSubmit = () => {
+    console.log('SUBMIT!');
+  }
+
+  // Custom requester payload creation (for validation and submittal).
+  createRequesterPayload = () => {
+    return {
+      requester: {
+        name: this.props.requesterName.value,
+        email: this.props.requesterEmail.value
+      }
+    };
+  }
+
+
+
   render() {
+    const validationUrlBase = `${config.registryApi}/${config.resourceRegistrationRequestValidationEndpoint}/`;
+    const { institutionIsProvider, valid, invalidFields } = this.state;
+    const { locationList } = this.props;
+
     return (
       <>
         <PageTitle
@@ -22,6 +163,330 @@ class ResourceRegistrationRequestPage extends React.Component  {
         />
 
         <div className="container py-3">
+          <div className="row">
+            <div className="mx-auto col-sm-12 col-lg-10">
+              <div className="form" role="form" autoComplete="off">
+                <div className="card mb-3">
+                  <div className="card-header">
+                    <h2 className="mb-3"><i className="icon icon-common icon-leaf" /> Namespace details</h2>
+                    <p className="text-muted">
+                      Select the namespace you want to add a new resource to. Start typing the prefix of your desired
+                      namespace, and choose one of the suggestions.
+                    </p>
+                  </div>
+
+                  <div className="card-body">
+                    NAMESPACE SELECTOR
+                  </div>
+                </div>
+
+                <div className="card mb-3">
+                  <div className="card-header">
+                    <h2 className="mb-2"><i className="icon icon-common icon-sitemap" /> Institution details</h2>
+                    <p>
+                      The resource&#39;s owner institution or organization, who is in charge of creating,
+                      developing and maintaining a resource. Examples are EMBL-EBI, Kyoto University
+                      or NCBI.
+                    </p>
+                  </div>
+
+                  <div className="card-body">
+                    <RequestField
+                      id="institutionName"
+                      description="The name of the organization in charge of the resource."
+                      formsection="Institution details"
+                      example="European Bioinformatics Institute, Hinxton, Cambridge, UK"
+                      label="Name"
+                      registrationType="RESOURCE"
+                      required={true}
+                      type="text"
+                      validationurl={validationUrlBase + 'validateInstitutionName'}
+                    />
+
+                    <RequestField
+                      id="institutionDescription"
+                      description="Short description of the institution in one or multiple sentences."
+                      example="The European Bioinformatics Institute (EMBL-EBI) is the part of EMBL
+                        dedicated to big data and online services"
+                      formsection="Institution details"
+                      label="Description"
+                      registrationType="RESOURCE"
+                      required={true}
+                      rows="5"
+                      type="textarea"
+                      validationurl={validationUrlBase + 'validateInstitutionDescription'}
+                    />
+
+                    <RequestField
+                      id="institutionHomeUrl"
+                      description="A valid URL for the homepage of the institution or organization."
+                      example="https://www.ebi.ac.uk/"
+                      formsection="Institution details"
+                      label="Home URL"
+                      registrationType="RESOURCE"
+                      required={true}
+                      type="text"
+                      validationurl={validationUrlBase + 'validateInstitutionHomeUrl'}
+                    />
+
+                    <RequestField
+                      id="institutionLocation"
+                      description="The home country of the institution or organization."
+                      formsection="Institution details"
+                      label="Location"
+                      optionlabelfield="countryName"
+                      optionsfield="locations"
+                      options={locationList}
+                      registrationType="RESOURCE"
+                      required={true}
+                      type="select"
+                      validationurl={validationUrlBase + 'validateInstitutionLocation'}
+                    />
+                  </div>
+                </div>
+
+                <div className="card mb-3">
+                  <div className="card-header">
+                    <h2 className="mb-2"><i className="icon icon-common icon-cube" /> Provider details</h2>
+                    <p>
+                      The <span className="text-italic">provider</span> is the institution or organization
+                      in charge of providing a resource. There can be more than one provider, and
+                      it can be the same or different than the institution in charge of the resource.
+                    </p>
+                  </div>
+
+                  <div className="card-body">
+                    <div className="form-group row">
+                      <label
+                        className="col-lg-3 col-form-label form-control-label"
+                        htmlFor="institutionIsProvider"
+                      >
+                        Self provided
+                      </label>
+                      <div className="col-lg-9">
+                        <div className="form-check">
+                          <input
+                            id="institutionIsProvider"
+                            className="form-check-input"
+                            defaultChecked={this.state.institutionIsProvider}
+                            onChange={this.handleInstitutionIsProvider}
+                            type="checkbox"
+                          />
+                          <label
+                            id="institutionIsProvider-helpblock"
+                            className="form-text"
+                            htmlFor="institutionIsProvider"
+                          >
+                            Tick this checkbox if the owner institution is also in charge of providing the resource
+                            online. In that case, you will only have to fill in the resource&#39;s URL.
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <RequestField
+                      id="providerName"
+                      description="The name of the organization providing the resource."
+                      disabled={institutionIsProvider}
+                      example="European Bioinformatics Institute, Hinxton, Cambridge, UK"
+                      formsection="Provider details"
+                      label="Name"
+                      registrationType="RESOURCE"
+                      required={true}
+                      type="text"
+                      validationurl={validationUrlBase + 'validateProviderName'}
+                    />
+
+                    <RequestField
+                      id="providerDescription"
+                      description="Short description of the provider in one or multiple sentences."
+                      disabled={institutionIsProvider}
+                      example="The European Bioinformatics Institute (EMBL-EBI) is the part of EMBL dedicated to big
+                        data and online services"
+                      formsection="Provider details"
+                      label="Description"
+                      registrationType="RESOURCE"
+                      required={true}
+                      rows="5"
+                      type="textarea"
+                      validationurl={validationUrlBase + 'validateProviderDescription'}
+                    />
+
+                    <RequestField
+                      id="providerHomeUrl"
+                      description="A valid URL describing the resource."
+                      disabled={institutionIsProvider}
+                      example="http://www.pdbe.org/"
+                      formsection="Provider details"
+                      label="Home URL"
+                      registrationType="RESOURCE"
+                      required={true}
+                      rows="5"
+                      type="text"
+                      validationurl={validationUrlBase + 'validateProviderHomeUrl'}
+                    />
+
+                    <RequestField
+                      id="providerCode"
+                      description="Character string meant to optionally designate this provider in identifiers. No
+                        spaces or punctuation, only lowercase alphanumerical characters, underscores and dots."
+                      example="pdb"
+                      formsection="Provider details"
+                      label="Provider code"
+                      registrationType="RESOURCE"
+                      required={true}
+                      type="text"
+                      validationurl={validationUrlBase + 'validateProviderCode'}
+                    />
+
+                    <RequestField
+                      id="providerUrlPattern"
+                      description="A URL-like string specifying a rule for resolving this identifier. The rule should
+                        contain the placeholder &#34;{$id}&#34;, which is a placeholder for the local identifier."
+                      example="http://www.ebi.ac.uk/pdbe/entry/pdb/{$id}"
+                      formsection="Provider details"
+                      label="URL Pattern"
+                      registrationType="RESOURCE"
+                      required={true}
+                      type="text"
+                      validationurl={validationUrlBase + 'validateProviderUrlPattern'}
+                    />
+
+                    <RequestField
+                      id="providerLocation"
+                      description="The home country of the provider institution or organization."
+                      disabled={institutionIsProvider}
+                      formsection="Provider details"
+                      label="Location"
+                      optionlabelfield="countryName"
+                      optionsfield="locations"
+                      options={locationList}
+                      registrationType="RESOURCE"
+                      required={true}
+                      type="select"
+                      validationurl={validationUrlBase + 'validateProviderLocation'}
+                    />
+                  </div>
+                </div>
+
+                <div className="card mb-3">
+                  <div className="card-header">
+                    <h2 className="mb-2"><i className="icon icon-common icon-user" /> Requester details</h2>
+                    <p>
+                      The requester details are required to contact the person who is creating
+                      this request if further information is required.
+                    </p>
+                  </div>
+
+                  <div className="card-body">
+                    <RequestField
+                      id="requesterName"
+                      description="The full name of the person making this request."
+                      field="requesterName"
+                      formsection="Requester details"
+                      label="Full name"
+                      registrationType="RESOURCE"
+                      required={true}
+                      type="text"
+                      validation={this.standardValidator}
+                      validationfields={['requesterEmail']}
+                      validationurl={validationUrlBase + 'validateRequesterName'}
+                      customvalidationpayload={this.createRequesterPayload}
+                    />
+
+                    <RequestField
+                      id="requesterEmail"
+                      description="The email address of the person making this request."
+                      field="requesterEmail"
+                      formsection="Requester details"
+                      label="Email"
+                      registrationType="RESOURCE"
+                      required={true}
+                      type="text"
+                      validation={this.standardValidator}
+                      validationfields={['requesterName']}
+                      validationurl={validationUrlBase + 'validateRequesterEmail'}
+                      customvalidationpayload={this.createRequesterPayload}
+                      defaultValue="asdf"
+                    />
+                  </div>
+                </div>
+
+                <div className="card m-5">
+                  <div className="card-header">
+                    <h2 className="mb-2"><i className="icon icon-common icon-tasks" /> Request form status</h2>
+                  </div>
+                  <div className="card-body">
+                    <>
+                      {
+                        valid ? (
+                          <div className="row">
+                            <div className="col">
+                              <div className="d-flex align-items-center">
+                                <h1 className="text-success mb-0 mr-1"><i className="icon icon-common icon-check" /></h1>
+                                <span className="font-weight-bold">Request is complete and ready to send.</span>
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          <>
+                            <div className="row">
+                              <div className="col">
+                                <div className="d-flex align-items-center">
+                                  <h1 className="text-danger mb-0 mr-1"><i className="icon icon-common icon-times" /></h1>
+                                  <span className="font-weight-bold">Request contains errors or empty required fields.</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="row">
+                              <div className="col mx-5 mb-3">
+                                <p className="mb-0">The following required fields are empty or contain errors:</p>
+                                <span className="text-muted"><small>please fill or correct them before submitting the request</small></span>
+                              </div>
+                            </div>
+                            <div className="row">
+                              <div className="col mx-5">
+                                <div className="list-group mb-3 px-5">
+                                  {
+                                    invalidFields.map((field, i) => (
+                                      <a
+                                        className="list-group-item list-group-item-action list-group-item-danger py-1"
+                                        href={`#${field}`}
+                                        key={`invalidField-${field}-${i}`}
+                                      >
+                                        {
+                                          this.props[field].label.map((label, i) => (
+                                            <span key={`labelcontainer-${label}-${i}`}>
+                                              <span key={`label-${label}-${i}`}>{label}</span>
+                                              {
+                                                i < this.props[field].label.length - 1 &&
+                                                <i key={`label-${label}-${i}-arrow`} className="icon icon-common icon-caret-right mx-1" />
+                                              }
+                                            </span>
+                                          ))
+                                        }
+                                      </a>
+                                    ))
+                                  }
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        )
+                      }
+                      <button
+                        className="form-control btn btn-primary"
+                        disabled={!this.state.valid && !this.state.sent}
+                        onClick={this.handleSubmit}
+                      >
+                        Submit prefix request
+                      </button>
+                    </>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </>
     );

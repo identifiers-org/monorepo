@@ -236,7 +236,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
 
 
   render() {
-    const validationUrlBase = `${config.registryApi}/${config.validationEndpoint}/`;
+    const validationUrlBase = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/`;
     const { institutionIsProvider, valid, invalidFields } = this.state;
     const { locationList } = this.props;
 
