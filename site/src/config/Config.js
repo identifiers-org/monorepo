@@ -1,7 +1,9 @@
 export const config = {
   registryApi: typeof configApiRegistryUrl !== 'undefined' ? configApiRegistryUrl : 'http://localhost:8180',
 
-  validationEndpoint: 'prefixRegistrationApi',
+  prefixRegistrationRequestValidationEndpoint: 'prefixRegistrationApi',
+  resourceRegistrationRequestValidationEndpoint: 'resourceManagementApi',
+  
   prefixRegistrationEndpoint: 'prefixRegistrationApi',
   prefixRequestEndpoint: 'prefixRegistrationApi/registerPrefix',
 
