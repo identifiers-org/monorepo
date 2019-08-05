@@ -15,32 +15,13 @@ const defaultState = {
 
 const prefixRegistrationRequestFieldReducer = (prefixRegistrationRequestField) => (state = defaultState, action) => {
   switch (action.type) {
-  case `${prefixRegistrationRequestField}/SET_PREFIXREGISTRATIONFIELDFIELD`:
+  case `${prefixRegistrationRequestField}/SET_PREFIXREGISTRATIONREQUESTFIELDFIELD`:
     return { ...state, [action.field]: action.value }
 
-  // TODO: Phase these out and use the generic setter.
-  case `${prefixRegistrationRequestField}/SET_VALUE`:
-    return { ...state, value: action.value };
-
-  case `${prefixRegistrationRequestField}/SET_VALIDITY`:
-    return { ...state, valid: action.validity };
-
-  case `${prefixRegistrationRequestField}/SET_ERRORMESSAGE`:
-    return { ...state, errorMessage: action.errorMessage };
-
-  case `${prefixRegistrationRequestField}/VALIDATE`:
-    return { ...state, requestedValidate: true };
-
-  case `${prefixRegistrationRequestField}/VALIDATION_DONE`:
-    return { ...state, requestedValidate: false};
-
-  case `${prefixRegistrationRequestField}/SET_VALIDATION`:
+  case `${prefixRegistrationRequestField}/SET_PREFIXREGISTRATIONREQUESTFIELDVALIDATION`:
     return { ...state, shouldValidate: action.validation, valid: undefined };
 
-  case `${prefixRegistrationRequestField}/SET_LABEL`:
-    return { ...state, label: action.label };
-
-  case `${prefixRegistrationRequestField}/RESET`:
+  case `${prefixRegistrationRequestField}/PREFIXREGISTRATIONREQUESTFIELDRESET`:
     return { ...state, value: '', valid: undefined, requestValidate: false, shouldValidate: true };
 
   default:
