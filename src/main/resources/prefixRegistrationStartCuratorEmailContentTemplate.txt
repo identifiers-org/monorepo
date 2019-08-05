@@ -1,0 +1,14 @@
+Dear curator,
+
+A new prefix registration request for prefix 'PLACEHOLDER_PREFIX' has been submitted.
+
+Prefix Name: 'PLACEHOLDER_PREFIX_NAME'
+Prefix Description:
+'PLACEHOLDER_PREFIX_DESCRIPTION'
+
+Requester Name: 'PLACEHOLDER_REQUESTER_NAME'
+
+A corresponding Prefix Registration Session with ID 'PLACEHOLDER_SESSION_ID' has been created.
+
+Kind Regards,
+Identifiers.org Central Registry
