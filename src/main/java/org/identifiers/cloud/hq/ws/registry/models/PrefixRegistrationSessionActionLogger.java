@@ -44,10 +44,10 @@ public class PrefixRegistrationSessionActionLogger implements PrefixRegistration
             report.setAdditionalInformation(message);
             log.info(message);
         } else {
-            message = String.format("%s HAS NOT BEEN CLOSED!!!", logMessagePrefix);
-            report.setErrorMessage(message);
-            report.setSuccess(false);
-            log.error(message);
+            message = String.format("%s IS OPEN", logMessagePrefix);
+            report.setAdditionalInformation(message);
+            report.setSuccess(true);
+            log.info(message);
         }
         return report;
     }
