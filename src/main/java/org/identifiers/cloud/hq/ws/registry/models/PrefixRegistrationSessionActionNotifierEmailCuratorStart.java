@@ -55,8 +55,7 @@ public class PrefixRegistrationSessionActionNotifierEmailCuratorStart implements
     private JavaMailSender javaMailSender;
 
     private String parseEmailSubject(PrefixRegistrationSession session) {
-        // TODO
-        return null;
+        return emailSubject.replace(placeholderPrefix, session.getPrefixRegistrationRequest().getRequestedPrefix());
     }
 
     private String parseEmailBody(PrefixRegistrationSession session) {
