@@ -41,7 +41,7 @@ public class ResolutionApiModel {
             // If the namespace is deprecated, we perform the resolution as always, because all its resources should be
             // deprecated, thus, redirecting to any of them will report the situation to the user
             // If the namespace is not deprecated, we should exclude deprecated resources from the redirection choices.
-            // TODO Choose the highest ranking resource
+            // Choose the highest ranking resource
             if (!responseResolve.getPayload().getResolvedResources().isEmpty())
             responseResolve.getPayload().getResolvedResources().sort((o1, o2) -> Integer.compare(o2.getRecommendation().getRecommendationIndex(), o1.getRecommendation().getRecommendationIndex()));
             // Return redirect
