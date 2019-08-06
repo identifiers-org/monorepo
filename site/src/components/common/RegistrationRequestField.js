@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 // actions.
 import { setRegistrationRequestFieldField } from '../../actions/RegistrationRequestField';
 
+// Components.
+import Search from '../HomePage/Search';
+
 // Config.
 import { config } from '../../config/Config';
 
@@ -152,14 +155,28 @@ class RegistrationRequestField extends React.Component {
     this.validate();
   };
 
+  handleSearchAction = (query) => { 
+    clearTimeout(this.state.debounceInput);
+
+    // Debouce search field.
+    this.setState({debounceInput: setTimeout(() => {
+      if (this.props.field.shouldValidate) {
+        this.props.setValue(query);
+        this.validate();
+      }
+    }, 500)});
+  }
+
 
   render() {
+    const {
+      handleSearchAction,
+      props: { validationtooltip },
+      state: { errorMessage, options }
+    } = this;
+
     const id = `form-control-${this.props.id}`;
-    const { valid } = this.props.field;
-    const { errorMessage, options } = this.state;
-
-    const { validationtooltip } = this.props;
-
+    
     return (
       <div className="form-group row">
         <label
@@ -218,7 +235,16 @@ class RegistrationRequestField extends React.Component {
                 }
               </select>
             )
-            }
+            case "search": return (
+              <Search
+                id={this.props.id}
+                handleChangeAction={handleSearchAction}
+                handleSuggestionAction={handleSearchAction}
+                placeholderCaption={this.props.placeholderCaption}
+                showSuggestions={this.props.showSuggestions}
+                showValidIndicator={this.props.showValidIndicator}
+              />
+            )}
           })()}
           {
             validationtooltip && (
@@ -227,7 +253,7 @@ class RegistrationRequestField extends React.Component {
               </div>
             )
           }
-          <div className="invalid-feedback">
+          <div className={errorMessage ? 'd-block text-danger' : 'd-none'}>
             <i className="icon icon-common icon-times-circle" /> {errorMessage}
           </div>
           <small
