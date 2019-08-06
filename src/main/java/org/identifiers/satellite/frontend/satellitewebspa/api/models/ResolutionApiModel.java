@@ -49,7 +49,7 @@ public class ResolutionApiModel {
                     return Integer.compare(o2.getRecommendation().getRecommendationIndex(), o1.getRecommendation().getRecommendationIndex());
                 }
             });
-            // TODO - Return redirect
+            // Return redirect
             HttpHeaders headers = new HttpHeaders();
             try {
                 headers.setLocation(new URI(responseResolve.getPayload().getResolvedResources().get(0).getCompactIdentifierResolvedUrl()));
