@@ -4,6 +4,7 @@ import org.identifiers.cloud.hq.ws.registry.data.models.*;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.*;
 import org.identifiers.cloud.hq.ws.registry.data.services.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -42,11 +43,14 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
 
     // Prefix registration session completion actions
     @Autowired
-    private PrefixRegistrationSessionActionStart actionStart;
+    @Qualifier("PrefixRegistrationSessionActionStart")
+    private PrefixRegistrationSessionAction actionStart;
     @Autowired
-    private PrefixRegistrationSessionActionAcceptance actionAcceptance;
+    @Qualifier("PrefixRegistrationSessionActionAcceptance")
+    private PrefixRegistrationSessionAction actionAcceptance;
     @Autowired
-    private PrefixRegistrationSessionActionRejection actionRejection;
+    @Qualifier("PrefixRegistrationSessionActionRejection")
+    private PrefixRegistrationSessionAction actionRejection;
     // END - Prefix registration session completion actions
 
     // Helpers
