@@ -25,6 +25,7 @@ import java.util.Random;
 @Component
 public class ResolverDataUpdater extends Thread {
     private static final int WAIT_TIME_LIMIT_SECONDS = 1800;
+    private static final int WAIT_TIME_UPON_ERROR_LIMIT_SECONDS = 300;
     private Logger logger = LoggerFactory.getLogger(ResolverDataUpdater.class);
 
     private boolean shutdown = false;
@@ -51,10 +52,12 @@ public class ResolverDataUpdater extends Thread {
             // TODO - Do your stuff
             logger.info("---> Creating instance of Namespace ---");
             List<Namespace> namespaces = new ArrayList<>();
+            int nextTimeLimitSeconds = WAIT_TIME_LIMIT_SECONDS;
             try {
                 namespaces = resolverDataSourcer.getResolverData();
             } catch (ResolverDataSourcerException e) {
                 logger.error("Failed to obtained resolver data update because '{}'", e.getMessage());
+                nextTimeLimitSeconds = WAIT_TIME_UPON_ERROR_LIMIT_SECONDS;
             }
             if (namespaces.size() > 0) {
                 logger.info("Resolver data update, #{} Namespaces", namespaces.size());
@@ -62,12 +65,13 @@ public class ResolverDataUpdater extends Thread {
                 namespaceRespository.saveAll(namespaces);
             } else {
                 logger.warn("EMPTY resolver data update!");
+                nextTimeLimitSeconds = WAIT_TIME_UPON_ERROR_LIMIT_SECONDS;
             }
             // TODO - Somewhere I need to test how to access the data I put on the backend
             // TODO - Once data access has been tested, the next step is the algorithm that solves contexts and prefixes
             // Wait for a predefined period of time before the next announcement
             try {
-                long waitTime = random.nextInt(WAIT_TIME_LIMIT_SECONDS) * 1000;
+                long waitTime = random.nextInt(nextTimeLimitSeconds) * 1000;
                 logger.info("Waiting {}s before we check again for the resolver data", waitTime / 1000);
                 Thread.sleep(waitTime);
             } catch (InterruptedException e) {
