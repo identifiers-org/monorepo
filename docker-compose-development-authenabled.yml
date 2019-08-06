@@ -51,6 +51,7 @@ services:
             - hqregistrypostgresql
             - hqmiridcontroller
             - localkeycloak
+            - fakesmtp
         restart: on-failure
     hqmiridcontroller:
         image: identifiersorg/cloud-hq-ws-mirid-controller
@@ -92,6 +93,12 @@ services:
         healthcheck:
             test: curl -f http://localhost:8080/auth/
             start_period: 30s
+    fakesmtp:
+        image: digiplant/fake-smtp
+        ports:
+            - "1025:25"
+        volumes:
+            - ./tmp/fakesmtp:/var/mail
 networks:
     default:
         name: hqwebnet
