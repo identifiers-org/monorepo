@@ -1,0 +1,56 @@
+# Development environment HQ Registry API Service
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+version: "3"
+services:
+    postgresql:
+        image: postgres
+        environment:
+            - POSTGRES_DB=devdatabase
+            - POSTGRES_USER=devusername
+            - POSTGRES_PASSWORD=devpassword
+        ports:
+            - "5429:5432"
+    miridpostgresql:
+        image: postgres
+        environment:
+            - POSTGRES_DB=devdatabase
+            - POSTGRES_USER=devusername
+            - POSTGRES_PASSWORD=devpassword
+        ports:
+            - "5431:5432"
+    redis:
+        image: redis:4.0.8-alpine
+        ports:
+            - "6379:6379"
+    miridcontroller:
+        image: identifiersorg/cloud-hq-ws-mirid-controller
+        environment:
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_JDBC_URL=jdbc:postgresql://miridpostgresql:5432/devdatabase
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_USERNAME=devusername
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_PASSWORD:devpassword
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_REDIS_HOST=redis
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_APPLICATION_ACTIVE_PROFILE=development,authdisabled
+        ports:
+            - "8181:8181"
+        depends_on:
+            - redis
+            - miridpostgresql
+    hqregistry:
+        image: b6633987e8c8
+        environment:
+            - HQ_WS_REGISTRY_CONFIG_APPLICATION_ACTIVE_PROFILE=development,authdisabled
+            - HQ_WS_REGISTRY_CONFIG_JDBC_URL=jdbc:postgresql://postgresql:5432/devdatabase
+            - WS_REGISTRY_CONFIG_EMAIL_HOST=fakesmtp
+            - WS_REGISTRY_CONFIG_EMAIL_PORT=25
+        ports:
+            - "8180:8180"
+        depends_on:
+            - fakesmtp
+            - postgresql
+            - miridcontroller
+    fakesmtp:
+        image: digiplant/fake-smtp
+        ports:
+            - "1025:25"
+        volumes:
+            - ./tmp/fakesmtp:/var/mail
