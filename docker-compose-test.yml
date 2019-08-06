@@ -40,8 +40,8 @@ services:
         environment:
             - HQ_WS_REGISTRY_CONFIG_APPLICATION_ACTIVE_PROFILE=development,authdisabled
             - HQ_WS_REGISTRY_CONFIG_JDBC_URL=jdbc:postgresql://postgresql:5432/devdatabase
-            - WS_REGISTRY_CONFIG_EMAIL_HOST=fakesmtp
-            - WS_REGISTRY_CONFIG_EMAIL_PORT=25
+            - HQ_WS_REGISTRY_CONFIG_EMAIL_HOST=fakesmtp
+            - HQ_WS_REGISTRY_CONFIG_EMAIL_PORT=25
         ports:
             - "8180:8180"
         depends_on:
