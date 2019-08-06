@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
 
 import org.identifiers.cloud.libapi.models.linkchecker.responses.ServiceResponseScoringRequest;
 import org.identifiers.cloud.libapi.services.ApiServicesFactory;
+import org.identifiers.cloud.ws.resourcerecommender.api.data.models.ResolvedResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

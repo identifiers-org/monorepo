@@ -7,7 +7,7 @@ import org.identifiers.cloud.ws.resourcerecommender.api.requests.ServiceRequestR
 import org.identifiers.cloud.ws.resourcerecommender.api.responses.ResponseRecommendPayload;
 import org.identifiers.cloud.ws.resourcerecommender.api.responses.ServiceResponseRecommend;
 import org.identifiers.cloud.ws.resourcerecommender.models.RecommendationStrategy;
-import org.identifiers.cloud.ws.resourcerecommender.models.ResolvedResource;
+import org.identifiers.cloud.ws.resourcerecommender.api.data.models.ResolvedResource;
 import org.identifiers.cloud.ws.resourcerecommender.models.ResourceRecommendation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

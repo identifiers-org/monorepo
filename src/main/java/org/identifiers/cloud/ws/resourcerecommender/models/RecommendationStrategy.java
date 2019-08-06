@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import org.identifiers.cloud.ws.resourcerecommender.api.data.models.ResolvedResource;
+
 import java.util.List;
 
 /**

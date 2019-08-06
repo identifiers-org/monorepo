@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import org.identifiers.cloud.ws.resourcerecommender.api.data.models.ResolvedResource;
+
 /**
  * Project: resource-recommender
  * Package: org.identifiers.cloud.ws.resourcerecommender.models

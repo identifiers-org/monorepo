@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
 import org.assertj.core.util.Lists;
+import org.identifiers.cloud.ws.resourcerecommender.api.data.models.ResolvedResource;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;

@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
 import lombok.extern.slf4j.Slf4j;
+import org.identifiers.cloud.ws.resourcerecommender.api.data.models.ResolvedResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;

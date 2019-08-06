@@ -1,6 +1,10 @@
-package org.identifiers.cloud.ws.resourcerecommender.models;
+package org.identifiers.cloud.ws.resourcerecommender.api.data.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -11,6 +15,10 @@ import java.io.Serializable;
  * Timestamp: 2018-02-27 11:06
  * ---
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ResolvedResource implements Serializable {
     // Even if we have access to another service that, given a resource ID, could provide information on that resource,
@@ -26,30 +34,4 @@ public class ResolvedResource implements Serializable {
     private boolean official;
     // TODO - This field represents the Home URL for the given provider
 
-    public String getId() {
-        return id;
-    }
-
-    public ResolvedResource setId(String id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getAccessURL() {
-        return accessURL;
-    }
-
-    public ResolvedResource setAccessURL(String accessURL) {
-        this.accessURL = accessURL;
-        return this;
-    }
-
-    public boolean isOfficial() {
-        return official;
-    }
-
-    public ResolvedResource setOfficial(boolean official) {
-        this.official = official;
-        return this;
-    }
 }

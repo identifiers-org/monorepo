@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import org.identifiers.cloud.ws.resourcerecommender.api.data.models.ResolvedResource;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
