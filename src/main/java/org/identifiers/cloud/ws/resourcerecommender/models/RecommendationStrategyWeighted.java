@@ -31,7 +31,8 @@ public class RecommendationStrategyWeighted implements RecommendationStrategy {
                         weightedScore.getWeight()
                                 * weightedScore.getScoreProvider().getScoreForResource(resolvedResource))
                 .sum() / 100;
-        log.info(String.format("Computed recommendation score for resolved resource ID '%s', MIR ID '%s', URL '%s' is '%d'",
+        log.info(String.format("Computed recommendation score within namespace '%s', for resolved resource ID '%s', MIR ID '%s', URL '%s' is '%d'",
+                resolvedResource.getNamespacePrefix(),
                 resolvedResource.getId(),
                 resolvedResource.getMirId(),
                 resolvedResource.getCompactIdentifierResolvedUrl(),
