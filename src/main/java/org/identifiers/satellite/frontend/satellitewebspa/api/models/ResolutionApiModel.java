@@ -36,7 +36,6 @@ public class ResolutionApiModel {
     private String resolverSchema;
 
     public ResponseEntity<?> resolveRawCompactIdentifier(String rawCompactIdentifier) {
-        // TODO
         ServiceResponseResolve responseResolve =
                 ApiServicesFactory.getResolverService(resolverHost, resolverPort)
                         .requestResolutionRawRequest(rawCompactIdentifier);
