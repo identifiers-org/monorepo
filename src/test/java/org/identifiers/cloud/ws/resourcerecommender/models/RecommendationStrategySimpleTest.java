@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -38,17 +39,17 @@ public class RecommendationStrategySimpleTest {
     public static void prepareResolvedResources() {
         unOfficialResolvedResources = new CopyOnWriteArrayList<>();
         officialResolvedResources = new CopyOnWriteArrayList<>();
-        IntStream.range(0, 10).parallel().forEach(operand ->
+        LongStream.range(0, 10).parallel().forEach(operand ->
                 unOfficialResolvedResources.add(new ResolvedResource()
                         .setOfficial(false)
-                        .setId(Integer.toString(operand))
-                        .setAccessURL(String.format("http://endpoint/%d", operand)))
+                        .setId(Long.toString(operand))
+                        .setCompactIdentifierResolvedUrl(String.format("http://endpoint/%d", operand)))
         );
         IntStream.range(10, 20).parallel().forEach(operand ->
                 officialResolvedResources.add(new ResolvedResource()
                         .setOfficial(true)
-                        .setId(Integer.toString(operand))
-                        .setAccessURL(String.format("http://endpoint/%d", operand)))
+                        .setId(Long.toString(operand))
+                        .setCompactIdentifierResolvedUrl(String.format("http://endpoint/%d", operand)))
         );
     }
 
