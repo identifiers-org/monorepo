@@ -2,8 +2,8 @@
   background-color: $dark;
   display: flex;
   flex-direction: column;
-  position: relative;
-  z-index: 10000;
+  position: absolute;
+  z-index: 9;
   margin-left: 0;
 
   li {

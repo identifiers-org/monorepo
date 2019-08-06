@@ -8,7 +8,7 @@
   left: 0;
   right: 0;
   top: 0;
-  z-index: 1000;
+  z-index: 8;
   box-shadow: 0 0 10px 0 $dark;
 }
 
@@ -18,7 +18,7 @@
   flex-direction: column;
   margin-left: -20px;
   position: absolute;
-  z-index: 10000;
+  z-index: 9;
 
   li {
     border: none !important;

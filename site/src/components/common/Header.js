@@ -49,7 +49,7 @@ class Header extends React.Component {
       // This is EMBL-EBI Enforced boilerplate header.
       <>
         <header id="masthead-black-bar" className="clearfix masthead-black-bar expanded">
-          <nav>
+          <nav className="position-relative">
             <ul id="global-nav" className="menu">
               <li className="home-mobile"><a href="//www.ebi.ac.uk"></a></li>
               <li className="home"><a href="//www.ebi.ac.uk">EMBL-EBI</a></li>
