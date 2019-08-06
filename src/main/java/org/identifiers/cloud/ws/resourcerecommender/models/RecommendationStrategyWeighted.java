@@ -26,11 +26,14 @@ public class RecommendationStrategyWeighted implements RecommendationStrategy {
 
     // Helper method to compute a resource recommendation score for a given resolved resource
     private int getResourceRecommendationScore(ResolvedResource resolvedResource) {
-        int score = scoringFunctionProvider.getFunctionComponents().stream()
-                .mapToInt(weightedScore ->
-                        weightedScore.getWeight()
-                                * weightedScore.getScoreProvider().getScoreForResource(resolvedResource))
-                .sum() / 100;
+        int score = 0;
+        if (!resolvedResource.isDeprecatedResource() && !resolvedResource.isDeprecatedNamespace()) {
+            score = scoringFunctionProvider.getFunctionComponents().stream()
+                    .mapToInt(weightedScore ->
+                            weightedScore.getWeight()
+                                    * weightedScore.getScoreProvider().getScoreForResource(resolvedResource))
+                    .sum() / 100;
+        }
         log.info(String.format("Computed recommendation score within namespace '%s', for resolved resource ID '%s', MIR ID '%s', URL '%s' is '%d'",
                 resolvedResource.getNamespacePrefix(),
                 resolvedResource.getId(),
