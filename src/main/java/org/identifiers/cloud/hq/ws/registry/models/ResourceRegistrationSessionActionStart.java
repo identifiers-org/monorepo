@@ -25,6 +25,8 @@ public class ResourceRegistrationSessionActionStart implements ResourceRegistrat
     private ResourceRegistrationSessionActionLogger actionLogger;
     @Autowired
     private ResourceRegistrationSessionActionNotifierEmailCuratorStart actionNotifierEmailCuratorStart;
+    @Autowired
+    private ResourceRegistrationSessionActionNotifierEmailRequesterStart actionNotifierEmailRequesterStart;
 
     @Override
     public Logger getLogger() {
@@ -40,7 +42,8 @@ public class ResourceRegistrationSessionActionStart implements ResourceRegistrat
     public List<ResourceRegistrationSessionAction> buildActionSequence() {
         return Arrays.asList(
                 actionLogger,
-                actionNotifierEmailCuratorStart
+                actionNotifierEmailCuratorStart,
+                actionNotifierEmailRequesterStart
         );
     }
 }
