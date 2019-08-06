@@ -178,7 +178,7 @@ class Search extends React.Component {
   render() {
     const {
       handleChange, handleFocusShowSuggestions, handleKeyDown, handleMouseOver, handleSubmit, handleSuggestionClick, isValidQuery,
-      props: { button = false, buttonCaption, id = 'search-bar', placeholderCaption, showValidIndicator = false },
+      props: { button = false, buttonCaption, id = 'searchbar', placeholderCaption, showValidIndicator = false },
       state: { namespaceList, activeSuggestion, query, queryParts, showSuggestions }
     } = this;
 
