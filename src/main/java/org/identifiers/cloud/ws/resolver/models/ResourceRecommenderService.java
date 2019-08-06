@@ -33,7 +33,7 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
     private String resourceRecommenderServicePort;
 
     @Override
-    public List<ResourceRecommendation> getRecommendations(List<org.identifiers.cloud.ws.resolver.models.ResolvedResource> resources) throws ResourceRecommenderStrategyException {
+    public List<ResourceRecommendation> getRecommendations(List<org.identifiers.cloud.ws.resolver.api.data.models.ResolvedResource> resources) throws ResourceRecommenderStrategyException {
         // Whatever happens, the client library will always return a default empty answer that is valid
         return ApiServicesFactory
                 .getResourceRecommenderService(resourceRecommenderServiceHost, resourceRecommenderServicePort)

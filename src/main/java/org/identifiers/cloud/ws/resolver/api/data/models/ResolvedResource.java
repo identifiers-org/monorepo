@@ -1,4 +1,4 @@
-package org.identifiers.cloud.ws.resolver.models;
+package org.identifiers.cloud.ws.resolver.api.data.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.identifiers.cloud.ws.resolver.data.models.Institution;
 import org.identifiers.cloud.ws.resolver.data.models.Location;
+import org.identifiers.cloud.ws.resolver.models.Recommendation;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -41,4 +43,10 @@ public class ResolvedResource implements Serializable {
     private String resourceHomeUrl;
     // Recommendation scoring information
     private Recommendation recommendation;
+    // Deprecation information
+    private String namespacePrefix;
+    private boolean deprecatedNamespace;
+    private String namespaceDeprecationDate;
+    private boolean deprecatedResource;
+    private Date resourceDeprecationDate;
 }
