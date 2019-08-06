@@ -4,12 +4,11 @@ import { connect } from 'react-redux';
 import Swal from 'sweetalert2';
 
 // Actions.
-import { setValidation, reset } from '../../actions/RegistrationRequestField';
+import { setValidation, reset, setRegistrationRequestFieldField } from '../../actions/RegistrationRequestField';
 
 // Components.
 import PageTitle from '../common/PageTitle';
 import RequestField from '../common/RegistrationRequestField';
-import Search from '../HomePage/Search';
 
 // Config.
 import { config } from '../../config/Config';
@@ -97,6 +96,7 @@ class ResourceRegistrationRequestPage extends React.Component  {
   // TODO: Refactor to getderivedstatefromprops
   componentWillReceiveProps = (newProps) => {
     this.updateForm(newProps);
+    console.log(newProps)
   }
 
   //
@@ -537,10 +537,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setValue: (id, value) => dispatch(setRegistrationRequestFieldField('PREFIX', id, 'value', value)),
-  validate: (id) => dispatch(setRegistrationRequestFieldField('PREFIX', id, 'requestedValidate', true)),
-  setValidation: (id, validation) => dispatch(setValidation('PREFIX', id, validation)),
-  reset: (id) => dispatch(reset('PREFIX', id))
+  setValue: (id, value) => dispatch(setRegistrationRequestFieldField('RESOURCE', id, 'value', value)),
+  validate: (id) => dispatch(setRegistrationRequestFieldField('RESOURCE', id, 'requestedValidate', true)),
+  setValidation: (id, validation) => dispatch(setValidation('RESOURCE', id, validation)),
+  reset: (id) => dispatch(reset('RESOURCE', id))
 });
 
 export default connect (mapStateToProps, mapDispatchToProps)(ResourceRegistrationRequestPage);
