@@ -30,6 +30,7 @@ class Search extends React.Component {
         bad: []
       },
       activeSuggestion: -1,
+      showSuggestions: true,
       namespaceList: []
     }
   }
@@ -75,7 +76,8 @@ class Search extends React.Component {
 
     this.setState({
       query: this.search.value,
-      queryParts: querySplit(this.search.value)
+      queryParts: querySplit(this.search.value),
+      showSuggestions: true
     }, () => {
       updateNamespaceList();
     });
@@ -93,7 +95,7 @@ class Search extends React.Component {
 
   handleKeyDown = (e) => {
     const {
-      props: { handleSearchAction, handleSuggestionAction },
+      handleSuggestionClick,
       state: { namespaceList, activeSuggestion, query }
     } = this;
 
@@ -101,9 +103,9 @@ class Search extends React.Component {
     case 13: {  // Enter key
       e.preventDefault();
       if (activeSuggestion === -1) {
-        handleSearchAction(query);
+        handleSuggestionClick(query);
       } else {
-        handleSuggestionAction(namespaceList[activeSuggestion].prefix);
+        handleSuggestionClick(namespaceList[activeSuggestion].prefix);
         break;
       }
     }
@@ -129,7 +131,18 @@ class Search extends React.Component {
   }
 
   handleSuggestionClick = (prefix) => {
-    const { handleSuggestionAction } = this.props;
+    const { 
+      updateNamespaceList,
+      props: { handleSuggestionAction }
+     } = this;
+
+    this.setState({
+      query: prefix,
+      queryParts: querySplit(prefix),
+      showSuggestions: false
+    }, () => {
+      updateNamespaceList();
+    });
 
     handleSuggestionAction(prefix);
   }
@@ -150,12 +163,12 @@ class Search extends React.Component {
     const {
       handleChange, handleFocusShowSuggestions, handleKeyDown, handleMouseOver, handleSubmit, handleSuggestionClick,
       props: { button = false, buttonCaption, placeholderCaption },
-      state: { namespaceList, activeSuggestion, query, queryParts}
+      state: { namespaceList, activeSuggestion, query, queryParts, showSuggestions }
     } = this;
 
     return (
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
+        <div className="form-group search-form-group">
           <div className="input-group inline-search-input-group">
             <input
               autoFocus={!isSmallScreen()}
@@ -165,6 +178,7 @@ class Search extends React.Component {
               placeholder={placeholderCaption}
               onFocus={handleFocusShowSuggestions}
               ref={input => this.search = input}
+              spellCheck={false}
               value={query}
             />
             {button && (
@@ -175,14 +189,16 @@ class Search extends React.Component {
               </div>
             )}
           </div>
-          <SearchSuggestions
-            mouseOver={handleMouseOver}
-            onClick={handleSuggestionClick}
-            query={query}
-            queryParts={queryParts}
-            searchSuggestionList={namespaceList}
-            selectedSearchSuggestion={activeSuggestion}
-          />
+          {showSuggestions && (
+            <SearchSuggestions
+              mouseOver={handleMouseOver}
+              onClick={handleSuggestionClick}
+              query={query}
+              queryParts={queryParts}
+              searchSuggestionList={namespaceList}
+              selectedSearchSuggestion={activeSuggestion}
+            />
+          )}
         </div>
       </form>
     )
