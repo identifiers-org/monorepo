@@ -9,6 +9,7 @@ import { setValidation, reset } from '../../actions/RegistrationRequestField';
 // Components.
 import PageTitle from '../common/PageTitle';
 import RequestField from '../common/RegistrationRequestField';
+import Search from '../HomePage/Search';
 
 // Config.
 import { config } from '../../config/Config';
@@ -20,9 +21,11 @@ class ResourceRegistrationRequestPage extends React.Component  {
 
     this.state = {
       institutionIsProvider: false,
+      namespacePrefix: undefined,
       valid: false,
       invalidFields: [],
       fields: [
+        'namespacePrefix',
         'institutionName', 'institutionDescription', 'institutionHomeUrl', 'institutionLocation',
         'providerName', 'providerDescription', 'providerCode', 'providerHomeUrl', 'providerUrlPattern', 'providerLocation',
         'requesterName', 'requesterEmail'
@@ -147,11 +150,18 @@ class ResourceRegistrationRequestPage extends React.Component  {
   }
 
 
+  handleNamespacePrefixSuggestionAction = (query) => { this.setState({namespacePrefix: query}); }
+  handleNamespacePrefixChangeAction = (query) => { console.log('changing namespace prefix selected to ', query);  this.setState({namespacePrefix: query}); }
+
 
   render() {
     const validationUrlBase = `${config.registryApi}/${config.resourceRegistrationRequestValidationEndpoint}/`;
-    const { institutionIsProvider, valid, invalidFields } = this.state;
-    const { locationList } = this.props;
+
+    const {
+      handleNamespacePrefixChangeAction, handleNamespacePrefixSuggestionAction,
+      props: { locationList },
+      state: { institutionIsProvider, invalidFields, namespacePrefix, valid },
+    } = this;
 
     return (
       <>
@@ -176,7 +186,21 @@ class ResourceRegistrationRequestPage extends React.Component  {
                   </div>
 
                   <div className="card-body">
-                    NAMESPACE SELECTOR
+                    <RequestField
+                      id="namespacePrefix"
+                      handleChangeAction={handleNamespacePrefixChangeAction}
+                      handleSuggestionAction={handleNamespacePrefixSuggestionAction}
+                      buttonCaption={<span><i className="icon icon-common icon-search mr-1" /> Search</span>}
+                      placeholderCaption="Select the namespace where you want to add a resource"
+                      formsection="Namespace details"
+                      label="Namespace"
+                      registrationType="RESOURCE"
+                      required={true}
+                      showSuggestions={!namespacePrefix}
+                      showValidIndicator={true}
+                      type="search"
+                      validationurl={validationUrlBase + 'validateNamespacePrefix'}
+                    />
                   </div>
                 </div>
 
