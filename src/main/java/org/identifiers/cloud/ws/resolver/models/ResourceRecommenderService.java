@@ -50,6 +50,7 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
                                         .setDeprecatedResource(resolvedResource.isDeprecatedResource())
                                         .setResourceDeprecationDate(resolvedResource.getResourceDeprecationDate())
                                         .setMirId(resolvedResource.getMirId())
+                                        .setNamespacePrefix(resolvedResource.getNamespacePrefix())
                                         .setLocation(
                                                 new Location()
                                                         .setCountryName(resolvedResource.getLocation().getCountryName())
