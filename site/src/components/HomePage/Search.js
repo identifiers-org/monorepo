@@ -31,6 +31,7 @@ class Search extends React.Component {
       },
       activeSuggestion: -1,
       showSuggestions: true,
+      correctQuery: false,
       namespaceList: []
     }
   }
@@ -72,15 +73,21 @@ class Search extends React.Component {
 
 
   handleChange = () => {
-    const { updateNamespaceList } = this;
+    const { 
+      updateNamespaceList,
+      props: { handleChangeAction = () => {} }
+    } = this;
 
     this.setState({
       query: this.search.value,
       queryParts: querySplit(this.search.value),
-      showSuggestions: true
+      showSuggestions: true,
+      validQuery: false
     }, () => {
       updateNamespaceList();
     });
+
+    handleChangeAction();
   };
 
   handleFocusShowSuggestions = () => {
@@ -139,7 +146,8 @@ class Search extends React.Component {
     this.setState({
       query: prefix,
       queryParts: querySplit(prefix),
-      showSuggestions: false
+      showSuggestions: false,
+      validQuery: true
     }, () => {
       updateNamespaceList();
     });
@@ -157,12 +165,20 @@ class Search extends React.Component {
     handleSearchAction(query);
   }
 
+  isValidQuery = () => {
+    const {
+      props: { namespaceList }
+    } = this;
 
+    if (!this.state.query) return '';
+    return namespaceList.find(namespace => namespace.prefix === this.state.query) ? 'is-valid' : 'is-invalid';
+  }
+  
 
   render() {
     const {
-      handleChange, handleFocusShowSuggestions, handleKeyDown, handleMouseOver, handleSubmit, handleSuggestionClick,
-      props: { button = false, buttonCaption, placeholderCaption },
+      handleChange, handleFocusShowSuggestions, handleKeyDown, handleMouseOver, handleSubmit, handleSuggestionClick, isValidQuery,
+      props: { button = false, buttonCaption, placeholderCaption, showValidIndicator = false },
       state: { namespaceList, activeSuggestion, query, queryParts, showSuggestions }
     } = this;
 
@@ -172,7 +188,7 @@ class Search extends React.Component {
           <div className="input-group inline-search-input-group">
             <input
               autoFocus={!isSmallScreen()}
-              className="form-control search-input"
+              className={`form-control search-input ${showValidIndicator ? isValidQuery() : ''}`}
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               placeholder={placeholderCaption}
