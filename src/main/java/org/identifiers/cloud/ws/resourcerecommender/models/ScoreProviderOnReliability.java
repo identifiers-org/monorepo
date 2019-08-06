@@ -31,7 +31,7 @@ public class ScoreProviderOnReliability implements ScoreProvider {
     public int getScoreForResource(ResolvedResource resolvedResource) {
         ServiceResponseScoringRequest response = ApiServicesFactory
                 .getLinkCheckerService(linkCheckerServiceHost, linkCheckerServicePort)
-                .getScoreForResolvedId(resolvedResource.getId(), resolvedResource.getAccessURL());
+                .getScoreForResolvedId(resolvedResource.getId(), resolvedResource.getCompactIdentifierResolvedUrl());
         if (response.getHttpStatus() != HttpStatus.OK) {
             // Just report the error an keep going with the default scoring
             logger.error("FAILED Reliability score for " +
@@ -39,7 +39,7 @@ public class ScoreProviderOnReliability implements ScoreProvider {
                             "URL '{}', " +
                             "reason '{}'",
                     resolvedResource.getId(),
-                    resolvedResource.getAccessURL(),
+                    resolvedResource.getCompactIdentifierResolvedUrl(),
                     response.getErrorMessage());
         }
         return response.getPayload().getScore();
@@ -56,7 +56,7 @@ public class ScoreProviderOnReliability implements ScoreProvider {
                 "as there may not be enough information to perform the request to the link checker on the provider. " +
                         "Default scoring of '{}' is being used",
                 resolvedResource.getId(),
-                resolvedResource.getAccessURL(),
+                resolvedResource.getCompactIdentifierResolvedUrl(),
                 defaultScoring);
         return defaultScoring;
     }

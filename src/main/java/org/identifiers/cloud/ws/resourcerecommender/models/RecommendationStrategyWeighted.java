@@ -31,14 +31,18 @@ public class RecommendationStrategyWeighted implements RecommendationStrategy {
                         weightedScore.getWeight()
                                 * weightedScore.getScoreProvider().getScoreForResource(resolvedResource))
                 .sum() / 100;
-        log.info(String.format("Computed recommendation score for resolved resource ID '%s', URL '%s' is '%d'", resolvedResource.getId(), resolvedResource.getAccessURL(), score));
+        log.info(String.format("Computed recommendation score for resolved resource ID '%s', MIR ID '%s', URL '%s' is '%d'",
+                resolvedResource.getId(),
+                resolvedResource.getMirId(),
+                resolvedResource.getCompactIdentifierResolvedUrl(),
+                score));
         return score;
     }
 
     @Override
     public List<ResourceRecommendation> getRecommendations(List<ResolvedResource> resolvedResources) {
         return resolvedResources.parallelStream().map(resolvedResource -> new ResourceRecommendation()
-                        .setAccessURL(resolvedResource.getAccessURL())
+                        .setCompactIdentifierResolvedUrl(resolvedResource.getCompactIdentifierResolvedUrl())
                         .setId(resolvedResource.getId())
                         .setRecommendationExplanation("Function based recommendation")
                         .setRecommendationIndex(getResourceRecommendationScore(resolvedResource)))
