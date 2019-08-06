@@ -58,6 +58,7 @@ public class PrefixRegistrationSessionActionNotifierEmailRequesterStart implemen
     @Autowired
     private JavaMailSender javaMailSender;
 
+    // Helpers
     private String parseEmailSubject(PrefixRegistrationSession session) {
         return emailSubject.replace(placeholderPrefix, session.getPrefixRegistrationRequest().getRequestedPrefix());
     }
@@ -77,6 +78,7 @@ public class PrefixRegistrationSessionActionNotifierEmailRequesterStart implemen
         }
     }
 
+    // Interface
     @Retryable(maxAttempts = MAIL_REQUEST_RETRY_MAX_ATTEMPTS,
             backoff = @Backoff(delay = MAIL_REQUEST_RETRY_BACK_OFF_PERIOD))
     @Override
