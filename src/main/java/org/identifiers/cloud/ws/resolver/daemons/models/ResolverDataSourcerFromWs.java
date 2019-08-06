@@ -28,6 +28,7 @@ public class ResolverDataSourcerFromWs implements ResolverDataSourcer {
     private static final Logger logger = LoggerFactory.getLogger(ResolverDataSourcerFromWs.class);
 
     // Re-try pattern, externalize this later if needed
+    // TODO refactor this to do it in a more modern way
     private static final RetryTemplate retryTemplate;
     static {
         SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy();
