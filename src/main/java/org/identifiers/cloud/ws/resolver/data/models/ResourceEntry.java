@@ -17,6 +17,7 @@ import java.io.Serializable;
 // TODO - Remove this model from the service
 @JsonIgnoreProperties(ignoreUnknown = true)
 @RedisHash("ResolverResourceEntries")
+@Deprecated
 public class ResourceEntry implements Serializable {
     @Id
     private String id;
