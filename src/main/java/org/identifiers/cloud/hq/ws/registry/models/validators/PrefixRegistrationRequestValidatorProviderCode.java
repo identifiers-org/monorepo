@@ -21,7 +21,7 @@ public class PrefixRegistrationRequestValidatorProviderCode implements PrefixReg
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
         // Provider code must be provided
-        if (request.getProviderCode() == null) {
+        if ((request.getProviderCode() == null) || (request.getProviderCode().length() == 0)) {
             // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
             throw new PrefixRegistrationRequestValidatorException("Provider Code is REQUIRED, but it's missing");
         }
