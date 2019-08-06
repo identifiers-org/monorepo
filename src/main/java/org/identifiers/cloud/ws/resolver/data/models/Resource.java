@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Project: resolver
@@ -39,5 +40,7 @@ public class Resource implements Serializable {
     private String resourceHomeUrl;
     private Institution institution;
     private Location location;
-
+    // Deprecation / deactivation
+    private boolean deprecated;
+    private Date deprecationDate;
 }
