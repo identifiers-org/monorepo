@@ -9,11 +9,11 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
 /**
  * Project: registry
@@ -64,16 +64,16 @@ public class PrefixRegistrationSessionActionNotifierEmailCuratorStart implements
 
     private String parseEmailBody(PrefixRegistrationSession session) throws PrefixRegistrationSessionActionException {
         try {
-            String bodyTemplate = new String(Files.readAllBytes(ResourceUtils.getFile(emailBodyFileResource).toPath()));
+            InputStream in = getClass().getResourceAsStream(emailBodyFileResource);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String bodyTemplate = reader.lines().collect(Collectors.joining(System.lineSeparator()));
             return bodyTemplate
                     .replace(placeholderPrefix, session.getPrefixRegistrationRequest().getRequestedPrefix())
                     .replace(placeholderPrefixName, session.getPrefixRegistrationRequest().getName())
                     .replace(placeholderPrefixDescription, session.getPrefixRegistrationRequest().getDescription())
                     .replace(placeholderRequesterName, session.getPrefixRegistrationRequest().getRequesterName())
                     .replace(placeholderSessionId, Long.toString(session.getId()));
-        } catch (FileNotFoundException e) {
-            throw new PrefixRegistrationSessionActionException(String.format("COULD NOT LOAD prefix request notification e-mail body template for curator at '%s', due to the following error '%s'", emailBodyFileResource, e.getMessage()));
-        } catch (IOException e) {
+        } catch (RuntimeException e) {
             throw new PrefixRegistrationSessionActionException(String.format("COULD NOT READ prefix request notification e-mail body template for curator at '%s' due to the following error '%s'", emailBodyFileResource, e.getMessage()));
         }
     }
