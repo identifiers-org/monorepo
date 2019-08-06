@@ -135,7 +135,7 @@ public class CompactIdParsingHelper {
         if (parsedCompactIdentifier.getNamespace() != null) {
             log.info(String.format("Collecting deprecation information on namespace '%s'", parsedCompactIdentifier.getNamespace()));
             Namespace foundNamespace = namespaceRespository.findByPrefix(parsedCompactIdentifier.getNamespace());
-            if (foundNamespace.isDeprecated()) {
+            if ((foundNamespace != null) && (foundNamespace.isDeprecated())) {
                 parsedCompactIdentifier.setDeprecatedNamespace(true);
                 parsedCompactIdentifier.setNamespaceDeprecationDate(foundNamespace.getDeprecationDate());
             }
