@@ -1,10 +1,10 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -14,8 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.charset.Charset;
 
 /**
  * Project: registry
@@ -68,8 +67,7 @@ public class PrefixRegistrationSessionActionNotifierEmailCuratorStart implements
 
     private String parseEmailBody(PrefixRegistrationSession session) throws PrefixRegistrationSessionActionException {
         try {
-            Resource fileResource = resourceLoader.getResource(emailBodyFileResource);
-            String bodyTemplate = new String(Files.readAllBytes(Paths.get(fileResource.getURI())));
+            String bodyTemplate = IOUtils.toString(resourceLoader.getResource(emailBodyFileResource).getInputStream(), Charset.defaultCharset());
             return bodyTemplate
                     .replace(placeholderPrefix, session.getPrefixRegistrationRequest().getRequestedPrefix())
                     .replace(placeholderPrefixName, session.getPrefixRegistrationRequest().getName())
