@@ -131,10 +131,11 @@ class RegistrationRequestField extends React.Component {
     // Parse value (split by lines if needed in a textarea).
     const value = this.props.splitByLines ? e.target.value.split('\n') : e.target.value;
 
+    this.props.setValue(value);
+
     // Debouce search field.
     this.setState({debounceInput: setTimeout(() => {
       if (this.props.field.shouldValidate) {
-        this.props.setValue(value);
         this.validate();
       }
     }, 500)});
@@ -171,7 +172,7 @@ class RegistrationRequestField extends React.Component {
   render() {
     const {
       handleSearchAction,
-      props: { validationtooltip },
+      props: { validationtooltip, field: { valid } },
       state: { errorMessage, options }
     } = this;
 
@@ -199,6 +200,7 @@ class RegistrationRequestField extends React.Component {
                 onChange={this.handleChange}
                 placeholder={this.props.placeholder}
                 type={this.props.type}
+                value={this.state.value}
               />
             )
             case "textarea": return (
@@ -211,6 +213,7 @@ class RegistrationRequestField extends React.Component {
                 onChange={this.handleChange}
                 placeholder={this.props.placeholder}
                 rows={this.props.rows}
+                value={this.state.value}
               />
             )
             case "select": return (
@@ -221,6 +224,7 @@ class RegistrationRequestField extends React.Component {
                 id={this.props.id}
                 onBlur={this.handleBlur}
                 onChange={this.handleChange}
+                value={this.state.value || ''}
               >
                 <option value="" disabled>{this.props.placeholder || 'Select...'}</option>
                 {
