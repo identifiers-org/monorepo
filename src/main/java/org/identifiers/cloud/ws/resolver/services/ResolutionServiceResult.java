@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.identifiers.cloud.ws.resolver.api.data.models.ResolvedResource;
+import org.identifiers.cloud.ws.resolver.models.ResolvedResource;
 
 import java.util.ArrayList;
 import java.util.List;

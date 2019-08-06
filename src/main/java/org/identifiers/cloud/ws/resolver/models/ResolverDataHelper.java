@@ -1,7 +1,6 @@
 package org.identifiers.cloud.ws.resolver.models;
 
 import org.identifiers.cloud.libapi.models.resourcerecommender.ResourceRecommendation;
-import org.identifiers.cloud.ws.resolver.api.data.models.ResolvedResource;
 import org.identifiers.cloud.ws.resolver.data.models.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,9 +61,14 @@ public class ResolverDataHelper {
         return new ResolvedResource()
                 .setId(resource.getId())
                 .setProviderCode(resource.getProviderCode())
-                .setDescription(resource.getDescription()).setInstitution(resource.getInstitution())
-                .setLocation(resource.getLocation()).setOfficial(resource.isOfficial())
-                .setResourceHomeUrl(resource.getResourceHomeUrl());
+                .setDescription(resource.getDescription())
+                .setInstitution(resource.getInstitution())
+                .setLocation(resource.getLocation())
+                .setOfficial(resource.isOfficial())
+                .setResourceHomeUrl(resource.getResourceHomeUrl())
+                .setDeprecatedResource(resource.isDeprecated())
+                .setResourceDeprecationDate(resource.getDeprecationDate())
+                .setMirId(resource.getMirId());
     }
 
     private Map<String, ResourceRecommendation> getRecommendationsByResourceId(List<ResolvedResource> resolvedResources) {
@@ -91,6 +95,9 @@ public class ResolverDataHelper {
         List<ResolvedResource> resolvedResources =
                 resources.parallelStream()
                         .map(resource -> getResolvedResourceFrom(resource)
+                                .setDeprecatedNamespace(parsedCompactIdentifier.isDeprecatedNamespace())
+                                .setNamespaceDeprecationDate(parsedCompactIdentifier.getNamespaceDeprecationDate())
+                                .setNamespacePrefix(parsedCompactIdentifier.getNamespace())
                                 .setCompactIdentifierResolvedUrl(resolveUrlForLocalId(resource.getUrlPattern(),
                                         (parsedCompactIdentifier.isNamespaceEmbeddedInLui() ? compactIdParsingHelper.trimOutEmbeddedNamespacePrefixFromLui(parsedCompactIdentifier.getLocalId()) : parsedCompactIdentifier.getLocalId())))
                                 .setRecommendation(new Recommendation())).collect(Collectors.toList());
@@ -112,6 +119,9 @@ public class ResolverDataHelper {
         // TODO Review this in the future to find out whether it's the best way of doing this or not
         resolverDataFetcher.findAllNamespaces().forEach(namespace -> resolvedResources.addAll(namespace
                 .getResources().parallelStream().map(resource -> getResolvedResourceFrom(resource)
+                        .setDeprecatedNamespace(namespace.isDeprecated())
+                        .setNamespaceDeprecationDate(namespace.getDeprecationDate())
+                        .setNamespacePrefix(namespace.getPrefix())
                         .setCompactIdentifierResolvedUrl(resolveUrlForLocalId(resource.getUrlPattern(),
                                 resource.getSampleId()))
                         .setRecommendation(new Recommendation())).collect(Collectors.toList())));

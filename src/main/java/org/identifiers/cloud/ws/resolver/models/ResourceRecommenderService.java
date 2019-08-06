@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.resolver.models;
 
 import lombok.extern.slf4j.Slf4j;
+import org.identifiers.cloud.libapi.models.resourcerecommender.Location;
 import org.identifiers.cloud.libapi.models.resourcerecommender.ResolvedResource;
 import org.identifiers.cloud.libapi.models.resourcerecommender.ResourceRecommendation;
 import org.identifiers.cloud.libapi.services.ApiServicesFactory;
@@ -33,7 +34,7 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
     private String resourceRecommenderServicePort;
 
     @Override
-    public List<ResourceRecommendation> getRecommendations(List<org.identifiers.cloud.ws.resolver.api.data.models.ResolvedResource> resources) throws ResourceRecommenderStrategyException {
+    public List<ResourceRecommendation> getRecommendations(List<org.identifiers.cloud.ws.resolver.models.ResolvedResource> resources) throws ResourceRecommenderStrategyException {
         // Whatever happens, the client library will always return a default empty answer that is valid
         return ApiServicesFactory
                 .getResourceRecommenderService(resourceRecommenderServiceHost, resourceRecommenderServicePort)
@@ -41,8 +42,18 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
                         .map(resolvedResource ->
                                 new ResolvedResource()
                                         .setOfficial(resolvedResource.isOfficial())
-                                        .setAccessURL(resolvedResource.getCompactIdentifierResolvedUrl())
-                                        .setId(Long.toString(resolvedResource.getId())))
+                                        .setCompactIdentifierResolvedUrl(resolvedResource.getCompactIdentifierResolvedUrl())
+                                        .setId(Long.toString(resolvedResource.getId()))
+                                        .setResourceHomeUrl(resolvedResource.getResourceHomeUrl())
+                                        .setDeprecatedNamespace(resolvedResource.isDeprecatedNamespace())
+                                        .setNamespaceDeprecationDate(resolvedResource.getNamespaceDeprecationDate())
+                                        .setDeprecatedResource(resolvedResource.isDeprecatedResource())
+                                        .setResourceDeprecationDate(resolvedResource.getResourceDeprecationDate())
+                                        .setMirId(resolvedResource.getMirId())
+                                        .setLocation(
+                                                new Location()
+                                                        .setCountryName(resolvedResource.getLocation().getCountryName())
+                                                        .setCountryCode(resolvedResource.getLocation().getCountryCode())))
                         .collect(Collectors.toList()))
                 .getPayload()
                 .getResourceRecommendations();
