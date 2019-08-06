@@ -45,8 +45,8 @@ public class ResolvedResource implements Serializable {
     private Recommendation recommendation;
     // Deprecation information
     private String namespacePrefix;
-    private boolean deprecatedNamespace;
+    private boolean deprecatedNamespace = false;
     private String namespaceDeprecationDate;
-    private boolean deprecatedResource;
+    private boolean deprecatedResource = false;
     private Date resourceDeprecationDate;
 }

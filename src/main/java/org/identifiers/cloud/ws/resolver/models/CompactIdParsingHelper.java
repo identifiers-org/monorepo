@@ -132,6 +132,14 @@ public class CompactIdParsingHelper {
                 }
             }
         }
+        if (parsedCompactIdentifier.getNamespace() != null) {
+            log.info(String.format("Collecting deprecation information on namespace '%s'", parsedCompactIdentifier.getNamespace()));
+            Namespace foundNamespace = namespaceRespository.findByPrefix(parsedCompactIdentifier.getNamespace());
+            if (foundNamespace.isDeprecated()) {
+                parsedCompactIdentifier.setDeprecatedNamespace(true);
+                parsedCompactIdentifier.setNamespaceDeprecationDate(foundNamespace.getDeprecationDate());
+            }
+        }
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             log.info(String.format("Parsed Compact Identifier '%s'", objectMapper.writeValueAsString(parsedCompactIdentifier)));

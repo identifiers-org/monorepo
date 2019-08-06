@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Project: resolver
@@ -31,4 +32,7 @@ public class ParsedCompactIdentifier implements Serializable {
     private String rawRequest;
     // This will flag the clients on whether this compact identifier has the namespace embedded in LUI or not.
     private boolean namespaceEmbeddedInLui = false;
+    // Deprecation Information
+    private boolean deprecatedNamespace = false;
+    private Date namespaceDeprecationDate;
 }
