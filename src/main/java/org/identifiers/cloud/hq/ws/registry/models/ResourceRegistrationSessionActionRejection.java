@@ -27,6 +27,8 @@ public class ResourceRegistrationSessionActionRejection implements ResourceRegis
     // Related actions
     @Autowired
     private ResourceRegistrationSessionActionLogger actionLogger;
+    @Autowired
+    private ResourceRegistrationSessionActionNotifierEmailRejection actionNotifierEmailRejection;
 
     @Override
     public Logger getLogger() {
@@ -41,9 +43,10 @@ public class ResourceRegistrationSessionActionRejection implements ResourceRegis
     // Director
     @Override
     public List<ResourceRegistrationSessionAction> buildActionSequence() {
-        // TODO - Right now, we just log the closing of the resource registration session, but in the future there will
-        //  be notifications and other actions triggered by an accepted prefix registration request
-        return Arrays.asList(actionLogger);
+        return Arrays.asList(
+                actionLogger,
+                actionNotifierEmailRejection
+        );
     }
 
 }
