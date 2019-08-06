@@ -26,7 +26,7 @@ class ResourceRegistrationRequestPage extends React.Component  {
       fields: [
         'namespacePrefix',
         'institutionName', 'institutionDescription', 'institutionHomeUrl', 'institutionLocation',
-        'providerName', 'providerDescription', 'providerCode', 'providerHomeUrl', 'providerUrlPattern', 'providerLocation',
+        'providerName', 'providerDescription', 'providerCode', 'providerHomeUrl', 'providerUrlPattern', 'sampleId', 'providerLocation',
         'requesterName', 'requesterEmail'
       ],
       optionalFields: [],
@@ -96,7 +96,6 @@ class ResourceRegistrationRequestPage extends React.Component  {
   // TODO: Refactor to getderivedstatefromprops
   componentWillReceiveProps = (newProps) => {
     this.updateForm(newProps);
-    console.log(newProps)
   }
 
   //
@@ -136,22 +135,86 @@ class ResourceRegistrationRequestPage extends React.Component  {
   // Handle submit of the form. Supposedly, all fields are valid, as validators would disable this otherwise.
   // But still, some error cases must be treated.
   handleSubmit = () => {
-    console.log('SUBMIT!');
+    this.setState({submitted: true}, async () => {
+      let body = {
+        apiVersion: config.apiVersion,
+        payload: this.state.fields.reduce((o, f) => {
+          o[f] = this.props[f].value;
+          return o;
+        }, {})
+      };
+
+      // Add special payloads.
+      this.state.speacialPayloads.forEach(sp => {
+        Object.keys(sp).forEach(k => {
+          body.payload = {
+            ...body.payload,
+            ...sp[k]()
+          };
+        })
+      });
+
+      const init = {
+        method: 'POST',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify(body)
+      };
+
+      console.log(JSON.stringify(body));
+
+      // Make request and update the store.
+      const requestUrl = `${config.registryApi}/${config.resourceRequestEndpoint}`;
+      const response = await fetch(requestUrl, init);
+      const responseStatusCode = response.status;
+      const json = await response.json();
+      const res = { valid: responseStatusCode === 200, errorMessage: json.errorMessage };
+
+      if (res.valid) {
+        // Scroll to top.
+        window.scrollTo(0, 0);
+
+        // Empty form.
+        this.state.fields.forEach(id => {
+          this.props.reset(id);
+        });
+
+        this.setState({ valid: false, submitted: false });
+
+        await Swal.fire({
+          title: 'Resource registration request sent',
+          text: 'Thank you. We will contact you shortly with more information about your request.',
+          type: 'success'
+        });
+
+        this.props.history.push('/');
+      }
+      else {
+        this.setState({ submitted: false });
+        Swal.fire({
+          title: 'Error',
+          text: 'Please, try again later. The form contents will be saved until you navigate away from identifiers.org.',
+          type: 'error'
+        });
+      }
+    });
   }
 
   // Custom requester payload creation (for validation and submittal).
-  createRequesterPayload = () => {
-    return {
-      requester: {
-        name: this.props.requesterName.value,
-        email: this.props.requesterEmail.value
-      }
-    };
-  }
+  createRequesterPayload = () => ({
+    requester: {
+      name: this.props.requesterName.value,
+      email: this.props.requesterEmail.value
+    }
+  });
+
+  createProviderSampleIdPayload = () => ({
+    sampleId: this.props.providerSampleId.value,
+    providerUrlPattern: this.props.providerUrlPattern.value
+  });
 
 
   handleNamespacePrefixSuggestionAction = (query) => { this.setState({namespacePrefix: query}); }
-  handleNamespacePrefixChangeAction = (query) => { console.log('changing namespace prefix selected to ', query);  this.setState({namespacePrefix: query}); }
+  handleNamespacePrefixChangeAction = (query) => { this.setState({namespacePrefix: query}); }
 
 
   render() {
@@ -377,6 +440,20 @@ class ResourceRegistrationRequestPage extends React.Component  {
                     />
 
                     <RequestField
+                      id="sampleId"
+                      description="An example local identifier."
+                      example="2gc4"
+                      formsection="Provider details"
+                      label="Sample Id"
+                      registrationType="RESOURCE"
+                      required={true}
+                      type="text"
+                      validationfields={{providerUrlPattern: this.props.providerUrlPattern.value}}
+                      validationtooltip={<span>Make sure you wrote <strong>http</strong> or <strong>https</strong> correctly in the <a href="#providerUrlPattern">provider URL pattern</a>.</span>}
+                      validationurl={validationUrlBase + 'validateSampleId'}
+                    />
+
+                    <RequestField
                       id="providerLocation"
                       description="The home country of the provider institution or organization."
                       disabled={institutionIsProvider}
@@ -530,6 +607,7 @@ const mapStateToProps = (state) => ({
   providerCode: state.resourceRegistrationRequestForm.providerCode,
   providerHomeUrl: state.resourceRegistrationRequestForm.providerHomeUrl,
   providerUrlPattern: state.resourceRegistrationRequestForm.providerUrlPattern,
+  sampleId: state.resourceRegistrationRequestForm.sampleId,
   providerLocation: state.resourceRegistrationRequestForm.providerLocation,
   requesterName: state.resourceRegistrationRequestForm.requesterName,
   requesterEmail: state.resourceRegistrationRequestForm.requesterEmail,

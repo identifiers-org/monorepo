@@ -5,7 +5,9 @@ export const config = {
   resourceRegistrationRequestValidationEndpoint: 'resourceManagementApi',
   
   prefixRegistrationEndpoint: 'prefixRegistrationApi',
+  
   prefixRequestEndpoint: 'prefixRegistrationApi/registerPrefix',
+  resourceRequestEndpoint: 'resourceManagementApi/registerResource',
 
   satelliteUrl: 'https://identifiers.org',
   feedbackUrl: 'https://github.com/identifiers-org/identifiers-org.github.io/issues/new',
