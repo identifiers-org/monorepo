@@ -56,7 +56,7 @@ development_authenabled_env_up: development_instantiate_index_template developme
 
 developmentauthenabled_authenabled_env_down: development_authenabled_env_backend_down
 
-development_env_backend_up:
+development_env_backend_up: tmp
 	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing backend UP"
 	@docker-compose -f $(docker_compose_development_file) up -d
 	@# TODO Clean this way of referencing the target name in future iterations
@@ -70,7 +70,7 @@ development_env_backend_down:
 	@rm -f development_env_backend_up
 	@touch development_env_backend_down
 
-development_authenabled_env_backend_up:
+development_authenabled_env_backend_up: tmp
 	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing backend UP"
 	@docker-compose -f $(docker_compose_development_authenabled_file) up -d
 	@# TODO Clean this way of referencing the target name in future iterations
@@ -110,10 +110,19 @@ container_production_push: container_production_build
 dev_container_build: clean container_production_build
 	@echo "<===|DEVOPS|===> [DEV] Preparing local container"
 
-clean:
+# Folders
+tmp:
+	@echo "<===|DEVOPS|===> [FOLDER] Creating temporary folders"
+	@mkdir -p tmp/fakesmtp
+
+clean_tmp:
+	@echo "<===|DEVOPS|===> [HOUSEKEEPING] Cleaning temporary folders"
+	@rm -rf tmp
+
+clean: clean_tmp
 	@echo "<===|DEVOPS|===> [CLEAN] Housekeeping"
 	@rm -rf ${folder_site_dist}
 	@rm -rf ${dev_site_root_folder}/node_modules
 	@rm -rf ${dev_site_root_folder}/.cache
 
-.PHONY: all clean app_structure container_production_build container_production_push dev_container_build deploy release sync_project_version set_next_development_version instantiate_index_template instantiate_base_index_template force_npm_install
+.PHONY: all clean app_structure container_production_build container_production_push dev_container_build deploy release sync_project_version set_next_development_version instantiate_index_template instantiate_base_index_template force_npm_install clean_tmp
