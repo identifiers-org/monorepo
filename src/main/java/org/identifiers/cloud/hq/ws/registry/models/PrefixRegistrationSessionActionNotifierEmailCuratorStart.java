@@ -55,7 +55,6 @@ public class PrefixRegistrationSessionActionNotifierEmailCuratorStart implements
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.sessionid}")
     private String placeholderSessionId;
 
-
     @Autowired
     private JavaMailSender javaMailSender;
 
