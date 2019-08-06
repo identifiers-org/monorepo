@@ -34,8 +34,8 @@ public class PrefixRegistrationSessionActionNotifierEmailAcceptance implements P
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.from}")
     private String emailSender;
     // TODO Prefilled with the default value, in case it is missing
-    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.requester.prefixreg.acceptance.to}")
-    private String emailTo;
+    //@Value("${org.identifiers.cloud.hq.ws.registry.notifiers.requester.prefixreg.acceptance.to}")
+    //private String emailTo;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.requester.prefixreg.acceptance.cc}")
     private String emailCc;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.requester.prefixreg.acceptance.cco}")
