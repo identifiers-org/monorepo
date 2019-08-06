@@ -149,7 +149,7 @@ class Search extends React.Component {
   render() {
     const {
       handleChange, handleFocusShowSuggestions, handleKeyDown, handleMouseOver, handleSubmit, handleSuggestionClick,
-      props: { buttonCaption, placeholderCaption },
+      props: { button = false, buttonCaption, placeholderCaption },
       state: { namespaceList, activeSuggestion, query, queryParts}
     } = this;
 
@@ -167,11 +167,13 @@ class Search extends React.Component {
               ref={input => this.search = input}
               value={query}
             />
-            <div className="input-group-append">
-              <button className="btn btn-primary">
-                {buttonCaption}
-              </button>
-            </div>
+            {button && (
+              <div className="input-group-append">
+                <button className="btn btn-primary">
+                  {buttonCaption}
+                </button>
+              </div>
+            )}
           </div>
           <SearchSuggestions
             mouseOver={handleMouseOver}
