@@ -23,6 +23,8 @@ import java.util.List;
 public class ResourceRegistrationSessionActionStart implements ResourceRegistrationSessionCompositeSequenceAction {
     @Autowired
     private ResourceRegistrationSessionActionLogger actionLogger;
+    @Autowired
+    private ResourceRegistrationSessionActionNotifierEmailCuratorStart actionNotifierEmailCuratorStart;
 
     @Override
     public Logger getLogger() {
@@ -36,6 +38,9 @@ public class ResourceRegistrationSessionActionStart implements ResourceRegistrat
 
     @Override
     public List<ResourceRegistrationSessionAction> buildActionSequence() {
-        return Arrays.asList(actionLogger);
+        return Arrays.asList(
+                actionLogger,
+                actionNotifierEmailCuratorStart
+        );
     }
 }
