@@ -90,6 +90,7 @@ const store = createStore(
       providerCode: resourceRegistrationRequestFieldReducer('providerCode'),
       providerHomeUrl: resourceRegistrationRequestFieldReducer('providerHomeUrl'),
       providerUrlPattern: resourceRegistrationRequestFieldReducer('providerUrlPattern'),
+      sampleId: resourceRegistrationRequestFieldReducer('sampleId'),
       providerLocation: resourceRegistrationRequestFieldReducer('providerLocation'),
       requesterName: resourceRegistrationRequestFieldReducer('requesterName'),
       requesterEmail: resourceRegistrationRequestFieldReducer('requesterEmail')
