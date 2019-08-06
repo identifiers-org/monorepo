@@ -1,18 +1,19 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
+import org.apache.commons.io.IOUtils;
 import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.nio.charset.Charset;
 
 /**
  * Project: registry
@@ -55,6 +56,8 @@ public class ResourceRegistrationSessionActionNotifierEmailRejection implements 
 
     @Autowired
     private JavaMailSender javaMailSender;
+    @Autowired
+    private ResourceLoader resourceLoader;
 
     private String parseEmailSubject(ResourceRegistrationSession session) {
         return emailSubject.replace(placeholderPrefix, session.getResourceRegistrationRequest().getNamespacePrefix());
@@ -62,7 +65,7 @@ public class ResourceRegistrationSessionActionNotifierEmailRejection implements 
 
     private String parseEmailBody(ResourceRegistrationSession session) throws PrefixRegistrationSessionActionException {
         try {
-            String bodyTemplate = new String(Files.readAllBytes(ResourceUtils.getFile(emailBodyFileResource).toPath()));
+            String bodyTemplate = IOUtils.toString(resourceLoader.getResource(emailBodyFileResource).getInputStream(), Charset.defaultCharset());
             return bodyTemplate
                     .replace(placeholderPrefix, session.getResourceRegistrationRequest().getNamespacePrefix())
                     .replace(placeholderResourceName, session.getResourceRegistrationRequest().getProviderName())
