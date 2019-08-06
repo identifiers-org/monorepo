@@ -57,4 +57,7 @@ public class Namespace implements Serializable {
     // have to be treated differently depending on the different resolver domain operations (see HQ Registry for more
     // information)
     private boolean namespaceEmbeddedInLui = false;
+    // Deprecation / deactivation
+    private boolean deprecated;
+    private Date deprecationDate;
 }
