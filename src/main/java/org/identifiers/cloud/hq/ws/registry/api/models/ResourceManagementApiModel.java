@@ -74,7 +74,7 @@ public class ResourceManagementApiModel {
     private ResourceRegistrationRequestValidator institutionHomeUrlValidator;
 
     @Autowired
-    @Qualifier("ResourceRegistrationRequestValidatorInstitutionName")
+    @Qualifier("ResourceRegistrationRequestValidatorInstitutionDescription")
     private ResourceRegistrationRequestValidator institutionDescriptionValidator;
 
     @Autowired
