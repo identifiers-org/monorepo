@@ -1,6 +1,7 @@
 package org.identifiers.satellite.frontend.satellitewebspa.api.models;
 
 import lombok.extern.slf4j.Slf4j;
+import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
 import org.identifiers.cloud.libapi.models.resolver.ServiceResponseResolve;
 import org.identifiers.cloud.libapi.services.ApiServicesFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Project: satellite-webspa
@@ -42,18 +45,40 @@ public class ResolutionApiModel {
             // deprecated, thus, redirecting to any of them will report the situation to the user
             // If the namespace is not deprecated, we should exclude deprecated resources from the redirection choices.
             // Choose the highest ranking resource
-            if (!responseResolve.getPayload().getResolvedResources().isEmpty())
-            responseResolve.getPayload().getResolvedResources().sort((o1, o2) -> Integer.compare(o2.getRecommendation().getRecommendationIndex(), o1.getRecommendation().getRecommendationIndex()));
-            // Return redirect
-            HttpHeaders headers = new HttpHeaders();
             try {
-                headers.setLocation(new URI(responseResolve.getPayload().getResolvedResources().get(0).getCompactIdentifierResolvedUrl()));
-                return new ResponseEntity<>("", headers, HttpStatus.FOUND);
+                // Return redirect
+                HttpHeaders headers = new HttpHeaders();
+                if (!responseResolve.getPayload().getResolvedResources().isEmpty()) {
+                    // We have resources
+                    if (responseResolve.getPayload().getParsedCompactIdentifier().isDeprecatedNamespace()) {
+                        // The namespace is deprecated, we just choose among its resources, just in case they're all not deprecated, we sort them
+                        responseResolve.getPayload().getResolvedResources().sort((o1, o2) -> Integer.compare(o2.getRecommendation().getRecommendationIndex(), o1.getRecommendation().getRecommendationIndex()));
+                        headers.setLocation(new URI(responseResolve.getPayload().getResolvedResources().get(0).getCompactIdentifierResolvedUrl()));
+                    } else {
+                        // The namespace is ACTIVE, so we filter out the deprecated resources
+                        List<ResolvedResource> activeResolvedResources =
+                                responseResolve.getPayload().getResolvedResources().stream().filter(resolvedResource -> !resolvedResource.isDeprecatedResource()).collect(Collectors.toList());
+                        if (!activeResolvedResources.isEmpty()) {
+                            // We sort them and choose the highest ranking one
+                            activeResolvedResources.sort((o1, o2) -> Integer.compare(o2.getRecommendation().getRecommendationIndex(), o1.getRecommendation().getRecommendationIndex()));
+                            headers.setLocation(new URI(activeResolvedResources.get(0).getCompactIdentifierResolvedUrl()));
+                        } else {
+                            String errorMessage = String.format("Namespace '%s' is ACTIVE but ALL ITS RESOURCES ARE " +
+                                    "DEPRECATED",
+                                    responseResolve.getPayload().getParsedCompactIdentifier().getNamespace());
+                            log.error(errorMessage);
+                            return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+                        }
+                    }
+                    return new ResponseEntity<>("", headers, HttpStatus.FOUND);
+                }
+                return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
             } catch (URISyntaxException e) {
-                String errorMessage = String.format("Compact Identifiers '%s' resolved to provider with internal ID '%d', " +
-                        "description '%s', " +
-                        "institution '%s', " +
-                        "with an INVALID RESOLVED URL '%s'",
+                String errorMessage = String.format("Compact Identifiers '%s' resolved to provider with internal ID " +
+                                "'%d', " +
+                                "description '%s', " +
+                                "institution '%s', " +
+                                "with an INVALID RESOLVED URL '%s'",
                         rawCompactIdentifier,
                         responseResolve.getPayload().getResolvedResources().get(0).getId(),
                         responseResolve.getPayload().getResolvedResources().get(0).getDescription(),
