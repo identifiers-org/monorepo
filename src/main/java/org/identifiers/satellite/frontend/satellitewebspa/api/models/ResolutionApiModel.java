@@ -41,6 +41,7 @@ public class ResolutionApiModel {
                 ApiServicesFactory.getResolverService(resolverHost, resolverPort)
                         .requestResolutionRawRequest(rawCompactIdentifier);
         if (responseResolve.getHttpStatus().is2xxSuccessful()) {
+
             // TODO Choose the highest ranking resource
             if (!responseResolve.getPayload().getResolvedResources().isEmpty())
             responseResolve.getPayload().getResolvedResources().sort(new Comparator<ResolvedResource>() {
