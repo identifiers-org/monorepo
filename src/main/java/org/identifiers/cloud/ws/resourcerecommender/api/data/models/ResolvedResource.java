@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -28,10 +29,20 @@ public class ResolvedResource implements Serializable {
 
     // This field references the ID of the resource within the context of the current Compact ID resolved request
     private String id;
-    // This field references the final URL that points to the current resolved resource request
-    private String accessURL;
-    // For this particular resolved resource request, provides information on whether the resource is official or not
+    // Resource MIR ID
+    private String mirId;
+    // This is the resolved URL for the given compact identifier
+    private String compactIdentifierResolvedUrl;
+    // Location information for this resource
+    private Location location;
+    // Whether this resource is official or not
     private boolean official;
-    // TODO - This field represents the Home URL for the given provider
-
+    // Home URL for this resource within the context of the namespace where it's registered
+    private String resourceHomeUrl;
+    // Deprecation information
+    private String namespacePrefix;
+    private boolean deprecatedNamespace = false;
+    private String namespaceDeprecationDate;
+    private boolean deprecatedResource = false;
+    private Date resourceDeprecationDate;
 }
