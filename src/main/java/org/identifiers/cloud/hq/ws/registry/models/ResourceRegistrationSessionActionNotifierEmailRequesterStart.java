@@ -61,7 +61,7 @@ public class ResourceRegistrationSessionActionNotifierEmailRequesterStart implem
 
     private String parseEmailBody(ResourceRegistrationSession session) throws PrefixRegistrationSessionActionException {
         try {
-            String bodyTemplate = IOUtils.toString(resourceLoader.getResource(emailBodyFileResource).getInputStream(), Charset.defaultCharset());
+            String bodyTemplate = IOUtils.toString(resourceLoader.getResource(emailBodyFileResource).getInputStream(), Charset.forName("UTF-8"));
             return bodyTemplate
                     .replace(placeholderPrefix, session.getResourceRegistrationRequest().getNamespacePrefix())
                     .replace(placeholderResourceName, session.getResourceRegistrationRequest().getProviderName())
