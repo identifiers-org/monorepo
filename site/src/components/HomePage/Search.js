@@ -87,7 +87,7 @@ class Search extends React.Component {
       updateNamespaceList();
     });
 
-    handleChangeAction();
+    handleChangeAction(this.search.value);
   };
 
   handleFocusShowSuggestions = () => {
