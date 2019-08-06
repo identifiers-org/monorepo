@@ -68,7 +68,9 @@ public class ResolverApiModel {
                 response.setHttpStatus(HttpStatus.NOT_FOUND);
             } else {
                 // Resolved with resources
-                response.getPayload().setResolvedResources(resolutionServiceResult.getResolvedResources());
+                response.getPayload()
+                        .setResolvedResources(resolutionServiceResult.getResolvedResources())
+                        .setParsedCompactIdentifier(parsedCompactIdentifier);
             }
             // Return response from resolver
             return response;

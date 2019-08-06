@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.identifiers.cloud.ws.resolver.models.ParsedCompactIdentifier;
 import org.identifiers.cloud.ws.resolver.models.ResolvedResource;
 
 import java.io.Serializable;
@@ -24,4 +25,5 @@ import java.util.List;
 @Accessors(chain = true)
 public class ResponseResolvePayload implements Serializable {
     private List<ResolvedResource> resolvedResources;
+    private ParsedCompactIdentifier parsedCompactIdentifier;
 }
