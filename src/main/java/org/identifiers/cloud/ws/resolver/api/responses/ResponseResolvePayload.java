@@ -1,5 +1,10 @@
 package org.identifiers.cloud.ws.resolver.api.responses;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import org.identifiers.cloud.ws.resolver.models.ResolvedResource;
 
 import java.io.Serializable;
@@ -12,15 +17,11 @@ import java.util.List;
  * Timestamp: 2018-03-07 7:40
  * ---
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@Accessors(chain = true)
 public class ResponseResolvePayload implements Serializable {
     private List<ResolvedResource> resolvedResources;
-
-    public List<ResolvedResource> getResolvedResources() {
-        return resolvedResources;
-    }
-
-    public ResponseResolvePayload setResolvedResources(List<ResolvedResource> resolvedResources) {
-        this.resolvedResources = resolvedResources;
-        return this;
-    }
 }
