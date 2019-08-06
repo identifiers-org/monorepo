@@ -23,6 +23,10 @@ public class ResourceRegistrationRequestValidatorInstitutionDescription implemen
 
     @Override
     public boolean validate(ServiceRequestRegisterResourcePayload request) throws ResourceRegistrationRequestValidatorException {
-        return delegateValidator.validate(ApiAndDataModelsHelper.getFrom(request));
+        try {
+            return delegateValidator.validate(ApiAndDataModelsHelper.getFrom(request));
+        } catch (PrefixRegistrationRequestValidatorException e) {
+            throw new ResourceRegistrationRequestValidatorException(e.getMessage());
+        }
     }
 }
