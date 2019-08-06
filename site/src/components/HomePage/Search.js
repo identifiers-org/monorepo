@@ -178,12 +178,12 @@ class Search extends React.Component {
   render() {
     const {
       handleChange, handleFocusShowSuggestions, handleKeyDown, handleMouseOver, handleSubmit, handleSuggestionClick, isValidQuery,
-      props: { button = false, buttonCaption, placeholderCaption, showValidIndicator = false },
+      props: { button = false, buttonCaption, id = 'search-bar', placeholderCaption, showValidIndicator = false },
       state: { namespaceList, activeSuggestion, query, queryParts, showSuggestions }
     } = this;
 
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} id={id}>
         <div className="form-group search-form-group">
           <div className="input-group inline-search-input-group">
             <input
