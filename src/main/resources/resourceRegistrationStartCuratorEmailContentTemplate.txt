@@ -1,0 +1,14 @@
+Dear curator,
+
+A new resource registration request for prefix 'PLACEHOLDER_001_PREFIX' has been submitted.
+
+Resource Name: 'PLACEHOLDER_006_RESOURCE_NAME'
+Resource Description:
+PLACEHOLDER_007_RESOURCE_DESCRIPTION
+
+Requester Name: 'PLACEHOLDER_002_REQUESTER_NAME'
+
+A corresponding Prefix Registration Session with ID 'PLACEHOLDER_005_SESSION_ID' has been created.
+
+Kind Regards,
+Identifiers.org Central Registry
