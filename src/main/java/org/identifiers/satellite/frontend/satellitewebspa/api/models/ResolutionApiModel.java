@@ -1,7 +1,6 @@
 package org.identifiers.satellite.frontend.satellitewebspa.api.models;
 
 import lombok.extern.slf4j.Slf4j;
-import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
 import org.identifiers.cloud.libapi.models.resolver.ServiceResponseResolve;
 import org.identifiers.cloud.libapi.services.ApiServicesFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Comparator;
 
 /**
  * Project: satellite-webspa
@@ -40,15 +38,12 @@ public class ResolutionApiModel {
                 ApiServicesFactory.getResolverService(resolverHost, resolverPort)
                         .requestResolutionRawRequest(rawCompactIdentifier);
         if (responseResolve.getHttpStatus().is2xxSuccessful()) {
-
+            // If the namespace is deprecated, we perform the resolution as always, because all its resources should be
+            // deprecated, thus, redirecting to any of them will report the situation to the user
+            // If the namespace is not deprecated, we should exclude deprecated resources from the redirection choices.
             // TODO Choose the highest ranking resource
             if (!responseResolve.getPayload().getResolvedResources().isEmpty())
-            responseResolve.getPayload().getResolvedResources().sort(new Comparator<ResolvedResource>() {
-                @Override
-                public int compare(ResolvedResource o1, ResolvedResource o2) {
-                    return Integer.compare(o2.getRecommendation().getRecommendationIndex(), o1.getRecommendation().getRecommendationIndex());
-                }
-            });
+            responseResolve.getPayload().getResolvedResources().sort((o1, o2) -> Integer.compare(o2.getRecommendation().getRecommendationIndex(), o1.getRecommendation().getRecommendationIndex()));
             // Return redirect
             HttpHeaders headers = new HttpHeaders();
             try {
