@@ -2,7 +2,6 @@ import React from 'react';
 import SearchSuggestions from './SearchSuggestions';
 
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 // Actions.
 import { getNamespacesFromRegistry } from '../../actions/NamespaceList';
@@ -94,16 +93,17 @@ class Search extends React.Component {
 
   handleKeyDown = (e) => {
     const {
-      state: {namespaceList, activeSuggestion, query}
+      props: { handleSearchAction, handleSuggestionAction },
+      state: { namespaceList, activeSuggestion, query }
     } = this;
 
     switch (e.keyCode) {
     case 13: {  // Enter key
       e.preventDefault();
       if (activeSuggestion === -1) {
-        this.props.history.push(`/registry?query=${query}`);
+        handleSearchAction(query);
       } else {
-        this.props.history.push(`/registry/${namespaceList[activeSuggestion].prefix}`);
+        handleSuggestionAction(namespaceList[activeSuggestion].prefix);
         break;
       }
     }
@@ -129,21 +129,28 @@ class Search extends React.Component {
   }
 
   handleSuggestionClick = (prefix) => {
-    this.props.history.push(`/registry/${prefix}`);
+    const { handleSuggestionAction } = this.props;
+
+    handleSuggestionAction(prefix);
   }
 
-  handleSubmit = (e) => {
-    const {query} = this.state;
+  handleSubmit = e => {
+    const {
+      props: { handleSearchAction },
+      state: { query }
+    } = this;
 
     e.preventDefault();
-    this.props.history.push(`/registry?query=${query}`);
+    handleSearchAction(query);
   }
+
 
 
   render() {
     const {
       handleChange, handleFocusShowSuggestions, handleKeyDown, handleMouseOver, handleSubmit, handleSuggestionClick,
-      state: {namespaceList, activeSuggestion, query, queryParts}
+      props: { buttonCaption, placeholderCaption },
+      state: { namespaceList, activeSuggestion, query, queryParts}
     } = this;
 
     return (
@@ -155,14 +162,14 @@ class Search extends React.Component {
               className="form-control search-input"
               onChange={handleChange}
               onKeyDown={handleKeyDown}
-              placeholder="Enter a namespace to search the registry"
+              placeholder={placeholderCaption}
               onFocus={handleFocusShowSuggestions}
               ref={input => this.search = input}
               value={query}
             />
             <div className="input-group-append">
               <button className="btn btn-primary">
-                <i className="icon icon-common icon-search" /> Search
+                {buttonCaption}
               </button>
             </div>
           </div>
@@ -189,4 +196,4 @@ const mapDispatchToProps = (dispatch) => ({
   getNamespacesFromRegistry: (params) => dispatch(getNamespacesFromRegistry(params))
 });
 
-export default withRouter(connect (mapStateToProps, mapDispatchToProps)(Search));
+export default connect (mapStateToProps, mapDispatchToProps)(Search);
