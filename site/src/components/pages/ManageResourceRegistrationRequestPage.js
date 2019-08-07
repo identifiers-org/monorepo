@@ -9,10 +9,10 @@ import RegistrationSessionNewEventBtn from '../CurationDashboardPage/Registratio
 
 import RegistrationSessionEvent from '../CurationDashboardPage/RegistrationSessionEvent';
 
-// import RegistrationSessionAcceptForm from '../CurationDashboardPage/ResourceRegistrationSessionAcceptForm';
-// import RegistrationSessionAmendForm from '../CurationDashboardPage/ResourceRegistrationSessionAmendForm';
-// import RegistrationSessionCommentForm from '../CurationDashboardPage/ResourceRegistrationSessionCommentForm';
-// import RegistrationSessionRejectForm from '../CurationDashboardPage/ResourceRegistrationSessionRejectForm';
+import ResourceRegistrationSessionAcceptForm from '../CurationDashboardPage/ResourceRegistrationSessionAcceptForm';
+import ResourceRegistrationSessionAmendForm from '../CurationDashboardPage/ResourceRegistrationSessionAmendForm';
+import ResourceRegistrationSessionCommentForm from '../CurationDashboardPage/ResourceRegistrationSessionCommentForm';
+import ResourceRegistrationSessionRejectForm from '../CurationDashboardPage/ResourceRegistrationSessionRejectForm';
 
 import ResourceRegistrationSessionRequestDetails from '../CurationDashboardPage/ResourceRegistrationSessionRequest';
 import PageTitle from '../common/PageTitle';
@@ -142,7 +142,7 @@ class ManageResourceRegistrationRequestPage extends React.Component {
           />
         </div>
 
-        {/* <ResourceRegistrationSessionAcceptForm
+        <ResourceRegistrationSessionAcceptForm
           id={id}
           isOpen={acceptFormVisible}
         />
@@ -166,7 +166,7 @@ class ManageResourceRegistrationRequestPage extends React.Component {
           isOpen={rejectFormVisible}
           handleShow={() => handleFormVisibility('acceptForm')}
           handleFormSubmit={handleFormSubmit}
-        /> */}
+        />
 
         <hr className="my-5" />
 
