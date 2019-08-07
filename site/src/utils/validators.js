@@ -18,6 +18,7 @@ async function validateThroughAPI (url, payload) {
   const response = await fetch(url, init);
   const responseStatusCode = response.status;
   const json = await response.json();
+
   return {
     valid: responseStatusCode === 200,
     errorMessage: json.errorMessage
@@ -25,125 +26,136 @@ async function validateThroughAPI (url, payload) {
 }
 
 
+const validationEndpoint = {
+  'prefix': config.prefixRegistrationEndpoint,
+  'resource': config.resourceRegistrationEndpoint
+}
+
+
 const validators = {
-  name: async (name) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateName`;
+  namespacePrefix: async (namespacePrefix, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateNamespacePrefix`;
+    return validateThroughAPI(url, {namespacePrefix});
+  },
+
+  name: async (name, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateName`;
     return validateThroughAPI(url, {name});
   },
 
-  description: async (description) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateDescription`;
+  description: async (description, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateDescription`;
     return validateThroughAPI(url, {description});
   },
 
-  requestedPrefix: async (requestedPrefix) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateRequestedPrefix`;
+  requestedPrefix: async (requestedPrefix, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateRequestedPrefix`;
     return validateThroughAPI(url, {requestedPrefix});
   },
 
-  // TODO: Fix when validators are refactored in backend. Hack: if no url pattern is present, all sampleIds are ok.
-  sampleId: async (sampleId, prefixRegistrationRequest) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateSampleId`;
-    if (typeof prefixRegistrationRequest.providerUrlPattern === 'undefined') {
+  sampleId: async (sampleId, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateSampleId`;
+    if (typeof registrationRequest.providerUrlPattern === 'undefined') {
       return {valid: true};
     }
-    return validateThroughAPI(url, {sampleId, providerUrlPattern: prefixRegistrationRequest.providerUrlPattern});
+    return validateThroughAPI(url, {sampleId, providerUrlPattern: registrationRequest.providerUrlPattern});
   },
 
-  idRegexPattern: async (idRegexPattern, prefixRegistrationRequest) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateIdRegexPattern`;
-    return validateThroughAPI(url, {idRegexPattern, sampleId: prefixRegistrationRequest.sampleId});
+  idRegexPattern: async (idRegexPattern, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateIdRegexPattern`;
+    return validateThroughAPI(url, {idRegexPattern, sampleId: registrationRequest.sampleId});
   },
 
-  pattern: async (idRegexPattern, prefixRegistrationRequest) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateIdRegexPattern`;
-    return validateThroughAPI(url, {idRegexPattern, sampleId: prefixRegistrationRequest.sampleId});
+  pattern: async (idRegexPattern, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateIdRegexPattern`;
+    return validateThroughAPI(url, {idRegexPattern, sampleId: registrationRequest.sampleId});
   },
 
-  supportingReferences: async (supportingReferences) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateReferences`;
-    return validateThroughAPI(url, {supportingReferences});
+  supportingReferences: async (supportingReferences, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateReferences`;
+    console.log(supportingReferences)
+    return validateThroughAPI(url, {supportingReferences: supportingReferences.split('\n')});
   },
 
-  additionalInformation: async (additionalInformation) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateAdditionalInformation`;
+  additionalInformation: async (additionalInformation, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateAdditionalInformation`;
     return validateThroughAPI(url, {additionalInformation});
   },
 
   institution: () => {valid: true},
 
-  institutionName: async (institutionName) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateInstitutionName`;
+  institutionName: async (institutionName, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateInstitutionName`;
     return validateThroughAPI(url, {institutionName});
   },
 
-  institutionDescription: async (institutionDescription) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateInstitutionDescription`;
+  institutionDescription: async (institutionDescription, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateInstitutionDescription`;
     return validateThroughAPI(url, {institutionDescription});
   },
 
-  institutionHomeUrl: async (institutionHomeUrl) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateInstitutionHomeUrl`;
+  institutionHomeUrl: async (institutionHomeUrl, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateInstitutionHomeUrl`;
     return validateThroughAPI(url, {institutionHomeUrl});
   },
 
-  institutionLocation: async (institutionLocation) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateInstitutionLocation`;
+  institutionLocation: async (institutionLocation, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateInstitutionLocation`;
     return validateThroughAPI(url, {institutionLocation});
   },
 
-  namespaceEmbeddedInLui: async (namespaceEmbeddedInLui) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateNamespaceEmbeddedInLui`;
+  namespaceEmbeddedInLui: async (namespaceEmbeddedInLui, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateNamespaceEmbeddedInLui`;
     return validateThroughAPI(url, {namespaceEmbeddedInLui});
   },
 
-  providerName: async (providerName) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateProviderName`;
+  providerName: async (providerName, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateProviderName`;
     return validateThroughAPI(url, {providerName});
   },
 
-  providerDescription: async (providerDescription) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateProviderDescription`;
+  providerDescription: async (providerDescription, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateProviderDescription`;
     return validateThroughAPI(url, {providerDescription});
   },
 
-  providerHomeUrl: async (providerHomeUrl) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateProviderHomeUrl`;
+  providerHomeUrl: async (providerHomeUrl, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateProviderHomeUrl`;
     return validateThroughAPI(url, {providerHomeUrl});
   },
 
-  resourceHomeUrl: async (providerHomeUrl) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateProviderHomeUrl`;
+  resourceHomeUrl: async (providerHomeUrl, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateProviderHomeUrl`;
     return validateThroughAPI(url, {providerHomeUrl});
   },
 
-  providerCode: async (providerCode) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateProviderCode`;
+  providerCode: async (providerCode, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateProviderCode`;
     return validateThroughAPI(url, {providerCode});
   },
 
-  providerUrlPattern: async (providerUrlPattern) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateProviderUrlPattern`;
+  providerUrlPattern: async (providerUrlPattern, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateProviderUrlPattern`;
     return validateThroughAPI(url, {providerUrlPattern});
   },
 
-  urlPattern: async (providerUrlPattern) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateProviderUrlPattern`;
+  urlPattern: async (providerUrlPattern, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateProviderUrlPattern`;
     return validateThroughAPI(url, {providerUrlPattern});
   },
 
-  providerLocation: async (providerLocation) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateProviderLocation`;
+  providerLocation: async (providerLocation, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateProviderLocation`;
     return validateThroughAPI(url, {providerLocation});
   },
 
-  requesterName: async (requesterName) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateRequesterName`;
+  requesterName: async (requesterName, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateRequesterName`;
     return validateThroughAPI(url, {requester: {name: requesterName}});
   },
 
-  requesterEmail: async (requesterEmail) => {
-    const url = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/validateRequesterEmail`;
+  requesterEmail: async (requesterEmail, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateRequesterEmail`;
     return validateThroughAPI(url, {requester: {email: requesterEmail}});
   }
 };

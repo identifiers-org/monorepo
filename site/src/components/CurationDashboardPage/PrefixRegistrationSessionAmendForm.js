@@ -54,7 +54,7 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
     // TODO: This has to be refactored to merge with the request prefix form. Take validators to a global place and use
     // them everywhere.
     const validations = await Promise.all(fieldsToValidate
-      .map(field => validators[field](prefixRegistrationSessionAmend[field], prefixRegistrationSessionAmend))
+      .map(field => validators[field](prefixRegistrationSessionAmend[field], prefixRegistrationSessionAmend, 'prefix'))
     );
     const toastMessage = validations
       .filter(validations => !validations.valid)

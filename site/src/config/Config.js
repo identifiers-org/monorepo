@@ -5,6 +5,7 @@ export const config = {
   resourceRegistrationRequestValidationEndpoint: 'resourceManagementApi',
   
   prefixRegistrationEndpoint: 'prefixRegistrationApi',
+  resourceRegistrationEndpoint: 'resourceManagementApi',
   
   prefixRequestEndpoint: 'prefixRegistrationApi/registerPrefix',
   resourceRequestEndpoint: 'resourceManagementApi/registerResource',

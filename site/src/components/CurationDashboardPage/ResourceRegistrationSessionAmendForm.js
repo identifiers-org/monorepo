@@ -51,10 +51,8 @@ class ResourceRegistrationSessionAmendForm extends React.Component {
       return;
     }
 
-    // TODO: This has to be refactored to merge with the request resource form. Take validators to a global place and use
-    // them everywhere.
     const validations = await Promise.all(fieldsToValidate
-      .map(field => validators[field](resourceRegistrationSessionAmend[field], resourceRegistrationSessionAmend))
+      .map(field => validators[field](resourceRegistrationSessionAmend[field], resourceRegistrationSessionAmend, 'resource'))
     );
     const toastMessage = validations
       .filter(validations => !validations.valid)
@@ -130,7 +128,7 @@ class ResourceRegistrationSessionAmendForm extends React.Component {
                 <tr>
                   <td className="w-25 align-middle pl-2 font-weight-bold align-middle">Namespace Prefix</td>
                   <td className="w-75">
-                    <ReversibleField fieldName="name" defaultValue={resourceRegistrationRequest.namespacePrefix} handleChangeField={handleChangeField}>
+                    <ReversibleField fieldName="namespacePrefix" defaultValue={resourceRegistrationRequest.namespacePrefix} handleChangeField={handleChangeField}>
                       <input type="text" />
                     </ReversibleField>
                   </td>
