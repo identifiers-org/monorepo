@@ -47,3 +47,5 @@ npm_install
 # Keycloak database
 data/keycloak
 
+# fake mail files
+tmp/
