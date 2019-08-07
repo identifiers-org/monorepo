@@ -1,12 +1,11 @@
-// Namespaces List reducer
+// Prefix Registration Session List reducer
 
 const defaultState = [];
 
 const prefixRegistrationSessionListReducer = (state = defaultState, action) => {
   switch (action.type) {
-  // Set store namespace list to the supplied one.
   case 'SET_PREFIXREGISTRATIONSESSIONLIST':
-    return action.prefixRegistrationSessionList;
+    return action.registrationSessionList;
 
   default:
     return state;
