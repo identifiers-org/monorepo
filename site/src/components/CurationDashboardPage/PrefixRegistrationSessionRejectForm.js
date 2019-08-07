@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import { prefixRegistrationRequestReject } from '../../actions/CurationDashboardPage/PrefixRegistrationSession';
-import { setPrefixRegistrationSessionReject } from '../../actions/CurationDashboardPage/PrefixRegistrationSessionReject';
+import { setRegistrationSessionReject } from '../../actions/CurationDashboardPage/RegistrationSessionReject';
 
 import { swalSuccess, swalError } from '../../utils/swalDialogs';
 
@@ -114,7 +114,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   prefixRegistrationRequestReject: (id, reason) => dispatch(prefixRegistrationRequestReject(id, reason)),
-  setPrefixRegistrationSessionReject: (rejectionReason) => dispatch(setPrefixRegistrationSessionReject(rejectionReason))
+  setPrefixRegistrationSessionReject: (rejectionReason) => dispatch(setRegistrationSessionReject(rejectionReason, undefined, 'prefix'))
 });
 
 export default withRouter( connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationSessionRejectForm));

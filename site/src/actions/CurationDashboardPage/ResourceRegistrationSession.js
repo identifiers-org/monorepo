@@ -10,14 +10,14 @@ import { renewToken } from '../../utils/auth';
 
 
 //
-// PrefixRegistrationSession actions.
+// ResourceRegistrationSession actions.
 //
 
-// Get Prefix Registration Session from registry. Will dispatch setPrefixRegistrationSession.
-export const getPrefixRegistrationSessionFromRegistry = (id) => {
+// Get Resource Registration Session from registry. Will dispatch setResourceRegistrationSession.
+export const getResourceRegistrationSessionFromRegistry = (id) => {
   return async (dispatch, getState) => {
     const authToken = await renewToken();
-    const requestUrl = new URL(`${config.registryApi}/restApi/prefixRegistrationSessions/${id}`);
+    const requestUrl = new URL(`${config.registryApi}/restApi/resourceRegistrationSessions/${id}`);
     const init = {headers: {'Authorization': `Bearer ${authToken}`}};
 
     let data;
@@ -25,63 +25,63 @@ export const getPrefixRegistrationSessionFromRegistry = (id) => {
       const response = await fetch(requestUrl, init);
       data = await response.json();
 
-      // Fetches current prefixRegistrationRequest.
+      // Fetches current resourceRegistrationRequest.
       await fetchAndAdd(data, [
-        {name: 'prefixRegistrationRequest', url: data._links.prefixRegistrationRequest.href}
+        {name: 'resourceRegistrationRequest', url: data._links.resourceRegistrationRequest.href}
       ], init);
     }
     catch (err) {
-      console.error('Error fetching prefix registration request: ', err);
+      console.log('Error fetching resource registration request: ', err);
     }
 
-    const eventsUrl = `${config.registryApi}/restApi/prefixRegistrationSessionEvents/search/findByPrefixRegistrationSessionId?id=${id}`
+    const eventsUrl = `${config.registryApi}/restApi/resourceRegistrationSessionEvents/search/findByResourceRegistrationSessionId?id=${id}`
     const eventsResponse = await fetch(eventsUrl, init);
 
     let eventsData = await eventsResponse.json();
 
-    // Fetch amend event prefixRegistrationRequest.
-    if (eventsData._embedded.prefixRegistrationSessionEventAmends) {
-      eventsData._embedded.prefixRegistrationSessionEventAmends = await Promise.all(eventsData._embedded.prefixRegistrationSessionEventAmends.map(event => {
+    // Fetch amend event resourceRegistrationRequest.
+    if (eventsData._embedded.resourceRegistrationSessionEventAmends) {
+      eventsData._embedded.resourceRegistrationSessionEventAmends = await Promise.all(eventsData._embedded.resourceRegistrationSessionEventAmends.map(event => {
         return fetchAndAdd(event, [
-          {name: 'prefixRegistrationRequest', url: event._links.prefixRegistrationRequest.href}
+          {name: 'resourceRegistrationRequest', url: event._links.resourceRegistrationRequest.href}
         ], init);
       }));
     }
 
-    // Also fetch start event prefixRegistrationRequest.
-    const event = eventsData._embedded.prefixRegistrationSessionEventStarts[0];
-    eventsData._embedded.prefixRegistrationSessionEventStarts[0] = await fetchAndAdd(event, [
-      {name: 'prefixRegistrationRequest', url: event._links.prefixRegistrationRequest.href}
+    // Also fetch start event resourceRegistrationRequest.
+    const event = eventsData._embedded.resourceRegistrationSessionEventStarts[0];
+    eventsData._embedded.resourceRegistrationSessionEventStarts[0] = await fetchAndAdd(event, [
+      {name: 'resourceRegistrationRequest', url: event._links.resourceRegistrationRequest.href}
     ], init);
 
 
     // Flatten event list and sort by date.
     let events = Object.keys(eventsData._embedded).map(_ => eventsData._embedded[_]);
-    data.prefixRegistrationSessionEvents = events.flat()
-    data.prefixRegistrationSessionEvents.sort((a, b) => new Date(b.created) - new Date(a.created));
+    data.resourceRegistrationSessionEvents = events.flat()
+    data.resourceRegistrationSessionEvents.sort((a, b) => new Date(b.created) - new Date(a.created));
 
     // Dispatch redux state update.
-    dispatch(setPrefixRegistrationSession(data));
+    dispatch(setResourceRegistrationSession(data));
 
     // Prepare amend template in state as a copy of the request.
-    dispatch(setRegistrationSessionAmend(data.prefixRegistrationRequest, 'prefix'))
+    dispatch(setRegistrationSessionAmend(data.resourceRegistrationRequest, 'resource'))
   };
 };
 
 
-// Redux store update for prefixRegistrationSession.
-export const setPrefixRegistrationSession = (prefixRegistrationSession) => {
+// Redux store update for resourceRegistrationSession.
+export const setResourceRegistrationSession = (resourceRegistrationSession) => {
   return {
     type: 'SET_PREFIXREGISTRATIONSESSION',
-    prefixRegistrationSession
+    resourceRegistrationSession
   };
 };
 
 
-// Accept prefixRegistrationRequest.
-export const prefixRegistrationRequestAccept = (id, reason) => {
+// Accept resourceRegistrationRequest.
+export const resourceRegistrationRequestAccept = (id, reason) => {
   return async () => {
-    const requestUrl = `${config.registryApi}/${config.prefixRegistrationEndpoint}/acceptPrefixRegistrationRequest/${id}`;
+    const requestUrl = `${config.registryApi}/${config.resourceRegistrationEndpoint}/acceptResourceRegistrationRequest/${id}`;
     const authToken = await renewToken();
     const init = {
       method: 'POST',
@@ -103,10 +103,10 @@ export const prefixRegistrationRequestAccept = (id, reason) => {
 };
 
 
-// Reject prefixRegistrationRequest.
-export const prefixRegistrationRequestReject = (id, reason) => {
+// Reject resourceRegistrationRequest.
+export const resourceRegistrationRequestReject = (id, reason) => {
   return async () => {
-    const requestUrl = `${config.registryApi}/${config.prefixRegistrationEndpoint}/rejectPrefixRegistrationRequest/${id}`;
+    const requestUrl = `${config.registryApi}/${config.resourceRegistrationEndpoint}/rejectResourceRegistrationRequest/${id}`;
     const authToken = await renewToken();
     const init = {
       method: 'POST',
@@ -128,10 +128,10 @@ export const prefixRegistrationRequestReject = (id, reason) => {
 };
 
 
-// Comment prefixRegistrationRequest.
-export const prefixRegistrationRequestComment = (id, comment) => {
+// Comment resourceRegistrationRequest.
+export const resourceRegistrationRequestComment = (id, comment) => {
   return async (undefined, getState) => {
-    const requestUrl = `${config.registryApi}/${config.prefixRegistrationEndpoint}/commentPrefixRegistrationRequest/${id}`;
+    const requestUrl = `${config.registryApi}/${config.resourceRegistrationEndpoint}/commentResourceRegistrationRequest/${id}`;
     const authToken = await renewToken();
     const init = {
       method: 'POST',
@@ -153,17 +153,17 @@ export const prefixRegistrationRequestComment = (id, comment) => {
 };
 
 
-// Amend prefixRegistrationRequest.
-export const prefixRegistrationRequestAmend = (id, prefixRegistrationRequest, additionalInformation) => {
+// Amend resourceRegistrationRequest.
+export const resourceRegistrationRequestAmend = (id, resourceRegistrationRequest, additionalInformation) => {
   return async () => {
-    const requestUrl = `${config.registryApi}/${config.prefixRegistrationEndpoint}/amendPrefixRegistrationRequest/${id}`;
+    const requestUrl = `${config.registryApi}/${config.resourceRegistrationEndpoint}/amendResourceRegistrationRequest/${id}`;
 
     // Supporting references must be an array to talk to the API. It is split here by commas. It is not ideal, but will stay like this
     // until we find a better solution.
-    prefixRegistrationRequest.supportingReferences = prefixRegistrationRequest.supportingReferences.split(',');
+    resourceRegistrationRequest.supportingReferences = resourceRegistrationRequest.supportingReferences.split(',');
 
     // Also, requester data must be inside a subobject.
-    prefixRegistrationRequest['requester'] = {name: prefixRegistrationRequest.requesterName, email: prefixRegistrationRequest.requesterEmail};
+    resourceRegistrationRequest['requester'] = {name: resourceRegistrationRequest.requesterName, email: resourceRegistrationRequest.requesterEmail};
 
     const authToken = await renewToken();
     const init = {
@@ -176,7 +176,7 @@ export const prefixRegistrationRequestAmend = (id, prefixRegistrationRequest, ad
         apiVersion: config.apiVersion,
         payload: {
           additionalInformation: additionalInformation || 'Source: curation web interface',
-          prefixRegistrationRequest
+          resourceRegistrationRequest
         }
       })
     };

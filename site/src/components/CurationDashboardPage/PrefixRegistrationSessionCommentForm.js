@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 
 // Components.
 import { prefixRegistrationRequestComment } from '../../actions/CurationDashboardPage/PrefixRegistrationSession';
-import { setPrefixRegistrationSessionComment } from '../../actions/CurationDashboardPage/PrefixRegistrationSessionComment';
+import { setRegistrationSessionComment } from '../../actions/CurationDashboardPage/RegistrationSessionComment';
 
 // Utils.
 import { swalSuccess, swalError } from '../../utils/swalDialogs';
@@ -126,7 +126,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   prefixRegistrationRequestComment: (id, reason) => dispatch(prefixRegistrationRequestComment(id, reason)),
-  setPrefixRegistrationSessionComment: (comment) => dispatch(setPrefixRegistrationSessionComment(comment))
+  setPrefixRegistrationSessionComment: (comment) => dispatch(setRegistrationSessionComment(comment, undefined, 'prefix'))
 });
 
 export default withRouter( connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationSessionCommentForm));

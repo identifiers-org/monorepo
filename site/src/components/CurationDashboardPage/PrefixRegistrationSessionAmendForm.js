@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 // Actions.
 import { prefixRegistrationRequestAmend } from '../../actions/CurationDashboardPage/PrefixRegistrationSession';
-import { setPrefixRegistrationSessionAmendField } from '../../actions/CurationDashboardPage/PrefixRegistrationSessionAmend';
+import { setRegistrationSessionAmendField } from '../../actions/CurationDashboardPage/RegistrationSessionAmend';
 
 // Components.
 import ReversibleField from '../common/ReversibleField';
@@ -405,7 +405,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(prefixRegistrationRequestAmend(id, prefixRegistrationRequest, additionalInformation)),
 
   setPrefixRegistrationSessionAmendField: (field, value) =>
-    dispatch(setPrefixRegistrationSessionAmendField(field, value)),
+    dispatch(setRegistrationSessionAmendField(field, value, 'prefix')),
 });
 
 export default connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationSessionAmendForm);

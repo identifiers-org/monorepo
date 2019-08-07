@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-// Components.
+// Actions.
 import { prefixRegistrationRequestAccept } from '../../actions/CurationDashboardPage/PrefixRegistrationSession';
-import { setPrefixRegistrationSessionAccept } from '../../actions/CurationDashboardPage/PrefixRegistrationSessionAccept';
+import { setRegistrationSessionAccept } from '../../actions/CurationDashboardPage/RegistrationSessionAccept';
 
 // Utils.
 import { swalSuccess, swalError } from '../../utils/swalDialogs';
@@ -116,7 +116,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   prefixRegistrationRequestAccept: (id, reason) => dispatch(prefixRegistrationRequestAccept(id, reason)),
-  setPrefixRegistrationSessionAccept: (acceptanceReason) => dispatch(setPrefixRegistrationSessionAccept(acceptanceReason))
+  setPrefixRegistrationSessionAccept: (acceptanceReason) => dispatch(setRegistrationSessionAccept(acceptanceReason, undefined, 'prefix'))
 });
 
 export default withRouter( connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationSessionAcceptForm));
