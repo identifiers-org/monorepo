@@ -117,6 +117,7 @@ public class ApiAndDataModelsHelper {
                 .setProviderDescription(payload.getProviderDescription())
                 .setProviderHomeUrl(payload.getProviderHomeUrl())
                 .setProviderLocation(payload.getProviderLocation())
+                .setSampleId(payload.getSampleId())
                 .setProviderName(payload.getProviderName())
                 .setProviderUrlPattern(payload.getProviderUrlPattern())
                 .setRequesterEmail(payload.getRequester().getEmail())
