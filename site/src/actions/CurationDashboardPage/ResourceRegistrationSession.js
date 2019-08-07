@@ -158,10 +158,6 @@ export const resourceRegistrationRequestAmend = (id, resourceRegistrationRequest
   return async () => {
     const requestUrl = `${config.registryApi}/${config.resourceRegistrationEndpoint}/amendResourceRegistrationRequest/${id}`;
 
-    // Supporting references must be an array to talk to the API. It is split here by commas. It is not ideal, but will stay like this
-    // until we find a better solution.
-    resourceRegistrationRequest.supportingReferences = resourceRegistrationRequest.supportingReferences.split(',');
-
     // Also, requester data must be inside a subobject.
     resourceRegistrationRequest['requester'] = {name: resourceRegistrationRequest.requesterName, email: resourceRegistrationRequest.requesterEmail};
 
