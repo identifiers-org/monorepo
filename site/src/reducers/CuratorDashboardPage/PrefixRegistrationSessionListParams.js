@@ -1,4 +1,4 @@
-// Namespaces List reducer
+// Prefix Registration List Params reducer
 
 const defaultState = {
   number: 0,
