@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import Paginator from '../common/Paginator';
 import PrefixRegistrationSessionItem from './PrefixRegistrationSessionItem';
 
-import { getPrefixRegistrationSessionListFromRegistry } from '../../actions/CuratorDashboardPage/PrefixRegistrationSessionList';
-import { setPrefixRegistrationSessionListParams } from '../../actions/CuratorDashboardPage/PrefixRegistrationSessionListParams';
+import { getRegistrationSessionListFromRegistry } from '../../actions/CuratorDashboardPage/RegistrationSessionList';
+import { setRegistrationSessionListParams } from '../../actions/CuratorDashboardPage/RegistrationSessionListParams';
 
 import { equalParams } from '../../utils/equalParams';
 
@@ -88,8 +88,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getPrefixRegistrationSessionList: (params) => dispatch(getPrefixRegistrationSessionListFromRegistry(params)),
-  setPrefixregistrationSessionListParams: (params) => dispatch(setPrefixRegistrationSessionListParams(params))
+  getPrefixRegistrationSessionList: (params) => dispatch(getRegistrationSessionListFromRegistry(params, 'prefix')),
+  setPrefixregistrationSessionListParams: (params) => dispatch(setRegistrationSessionListParams(params, 'prefix'))
 });
 
 export default connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationSessionList);
