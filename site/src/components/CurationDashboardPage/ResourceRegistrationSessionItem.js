@@ -3,7 +3,7 @@ import moment from 'moment';
 
 import { Link } from 'react-router-dom';
 
-//import ResourceRegistrationSessionRequest from './ResourceRegistrationSessionRequest';
+import ResourceRegistrationSessionRequest from './ResourceRegistrationSessionRequest';
 
 
 class ResourceRegistrationSessionItem extends React.Component {
@@ -61,7 +61,7 @@ class ResourceRegistrationSessionItem extends React.Component {
 
           {expanded && (
             <div className="card-body">
-              {/* <PrefixRegistrationSessionRequest data={prefixRegistrationRequest} /> */}
+              <ResourceRegistrationSessionRequest data={resourceRegistrationRequest} />
             </div>
           )}
         </div>
