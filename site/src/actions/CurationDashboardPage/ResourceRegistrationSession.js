@@ -72,7 +72,7 @@ export const getResourceRegistrationSessionFromRegistry = (id) => {
 // Redux store update for resourceRegistrationSession.
 export const setResourceRegistrationSession = (resourceRegistrationSession) => {
   return {
-    type: 'SET_PREFIXREGISTRATIONSESSION',
+    type: 'SET_RESOURCEREGISTRATIONSESSION',
     resourceRegistrationSession
   };
 };

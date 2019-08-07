@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-class PrefixRegistrationSessionNewEventBtn extends React.Component {
+class RegistrationSessionNewEventBtn extends React.Component {
   constructor(props) {
     super(props);
 
@@ -58,5 +58,5 @@ class PrefixRegistrationSessionNewEventBtn extends React.Component {
 
 
 // Mapping
-export default PrefixRegistrationSessionNewEventBtn;
+export default RegistrationSessionNewEventBtn;
 

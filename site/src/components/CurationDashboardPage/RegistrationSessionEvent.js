@@ -1,15 +1,15 @@
 import React from 'react';
 
-import PrefixRegistrationSessionEventStart from './PrefixRegistrationSessionEventStart';
-import PrefixRegistrationSessionEventAmend from './PrefixRegistrationSessionEventAmend';
-import PrefixRegistrationSessionEventComment from './PrefixRegistrationSessionEventComment';
-import PrefixRegistrationSessionEventAccept from './PrefixRegistrationSessionEventAccept';
-import PrefixRegistrationSessionEventReject from './PrefixRegistrationSessionEventReject';
+import RegistrationSessionEventStart from './RegistrationSessionEventStart';
+import RegistrationSessionEventAmend from './RegistrationSessionEventAmend';
+import RegistrationSessionEventComment from './PrefixRegistrationSessionEventComment';
+import RegistrationSessionEventAccept from './RegistrationSessionEventAccept';
+import RegistrationSessionEventReject from './RegistrationSessionEventReject';
 
 import Moment from 'moment';
 
 
-const PrefixRegistrationSessionEvent = ({ data }) => (
+const RegistrationSessionEvent = ({ data, registrationSessionType }) => (
   <>
     {
       data.eventName === 'START' &&
@@ -19,7 +19,7 @@ const PrefixRegistrationSessionEvent = ({ data }) => (
             <i className="icon icon-common icon-search-document" />&nbsp;
             <strong>Original request submission at {Moment(data.created).format('llll')}</strong>
           </div>
-          <PrefixRegistrationSessionEventStart data={data} />
+          <RegistrationSessionEventStart data={data} registrationSessionType={registrationSessionType} />
         </div>
     } {
       data.eventName === 'AMEND' &&
@@ -28,7 +28,7 @@ const PrefixRegistrationSessionEvent = ({ data }) => (
             <i className="icon icon-common icon-edit" />&nbsp;
             <strong>Request amend at {Moment(data.created).format('llll')}</strong>
           </div>
-          <PrefixRegistrationSessionEventAmend data={data} />
+          <RegistrationSessionEventAmend data={data} registrationSessionType={registrationSessionType} />
         </div>
     } {
       data.eventName === 'COMMENT' &&
@@ -37,7 +37,7 @@ const PrefixRegistrationSessionEvent = ({ data }) => (
             <i className="icon icon-common icon-comment" />&nbsp;
             <strong>Request comment at {Moment(data.created).format('llll')}</strong>
           </div>
-          <PrefixRegistrationSessionEventComment data={data} />
+          <RegistrationSessionEventComment data={data} registrationSessionType={registrationSessionType} />
         </div>
     } {
       data.eventName === 'ACCEPT' &&
@@ -46,7 +46,7 @@ const PrefixRegistrationSessionEvent = ({ data }) => (
             <i className="icon icon-common icon-check" />&nbsp;
             <strong>Request accept at {Moment(data.created).format('llll')}</strong>
           </div>
-          <PrefixRegistrationSessionEventAccept data={data} />
+          <RegistrationSessionEventAccept data={data} registrationSessionType={registrationSessionType} />
         </div>
     } {
       data.eventName === 'REJECT' &&
@@ -55,11 +55,11 @@ const PrefixRegistrationSessionEvent = ({ data }) => (
             <i className="icon icon-common icon-times" />&nbsp;
             <strong>Request reject at {Moment(data.created).format('llll')}</strong>
           </div>
-          <PrefixRegistrationSessionEventReject data={data} />
+          <RegistrationSessionEventReject data={data} registrationSessionType={registrationSessionType} />
         </div>
     }
   </>
 );
 
 
-export default PrefixRegistrationSessionEvent;
+export default RegistrationSessionEvent;

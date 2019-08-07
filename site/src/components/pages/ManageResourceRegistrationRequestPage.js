@@ -2,9 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // Actions.
-
+import { getResourceRegistrationSessionFromRegistry } from '../../actions/CurationDashboardPage/ResourceRegistrationSession';
 
 // Components.
+import RegistrationSessionNewEventBtn from '../CurationDashboardPage/RegistrationSessionNewEventBtn';
+
+import RegistrationSessionEvent from '../CurationDashboardPage/RegistrationSessionEvent';
+
+// import RegistrationSessionAcceptForm from '../CurationDashboardPage/ResourceRegistrationSessionAcceptForm';
+// import RegistrationSessionAmendForm from '../CurationDashboardPage/ResourceRegistrationSessionAmendForm';
+// import RegistrationSessionCommentForm from '../CurationDashboardPage/ResourceRegistrationSessionCommentForm';
+// import RegistrationSessionRejectForm from '../CurationDashboardPage/ResourceRegistrationSessionRejectForm';
+
+import ResourceRegistrationSessionRequestDetails from '../CurationDashboardPage/ResourceRegistrationSessionRequest';
 import PageTitle from '../common/PageTitle';
 
 
@@ -23,12 +33,12 @@ class ManageResourceRegistrationRequestPage extends React.Component {
   componentDidMount() {
     const { id } = this.props.match.params;
 
-    //this.updatePrefixRegistrationSession(id);
+    this.updateResourceRegistrationSession(id);
   }
 
 
-  updatePrefixRegistrationSession = (id) => {
-    //this.props.getPrefixRegistrationSession(id);
+  updateResourceRegistrationSession = (id) => {
+    this.props.getResourceRegistrationSession(id);
   }
 
 
@@ -49,14 +59,14 @@ class ManageResourceRegistrationRequestPage extends React.Component {
 
     this.hideAllForms();
     this.setState({[`${formName}Visible`]: !this.state[`${formName}Visible`]});
-    this.updatePrefixRegistrationSession(id);
+    this.updateResourceRegistrationSession(id);
   }
 
   handleFormSubmit = () => {
     const { id } = this.props.match.params;
 
     this.hideAllForms();
-    this.updatePrefixRegistrationSession(id);
+    this.updateResourceRegistrationSession(id);
   }
 
 
@@ -65,9 +75,9 @@ class ManageResourceRegistrationRequestPage extends React.Component {
       handleFormSubmit,
       handleFormVisibility,
       props: {
-        prefixRegistrationSession: {
-          prefixRegistrationRequest,
-          prefixRegistrationSessionEvents
+        resourceRegistrationSession: {
+          resourceRegistrationRequest,
+          resourceRegistrationSessionEvents
         },
         match: { params: { id } }
       },
@@ -81,13 +91,99 @@ class ManageResourceRegistrationRequestPage extends React.Component {
 
 
     return (
-      !prefixRegistrationRequest ? '' : (
+      !resourceRegistrationRequest ? '' : (
       <>
         <PageTitle
-          icon="icon-cube"
+          icon="icon-leaf"
           title={`Managing request:`}
-          extraTitle="yup" //{prefixRegistrationRequest.name}
+          extraTitle={resourceRegistrationRequest.providerCode}
         />
+
+        <div className="row">
+          <div className="col">
+            <div className="card-body">
+              <h4><i className="icon icon-common icon-hand-point-up" /> Current request details</h4>
+              <ResourceRegistrationSessionRequestDetails
+                data={resourceRegistrationRequest}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="row mt-5 mx-0">
+          <RegistrationSessionNewEventBtn
+            caption="Accept"
+            color="success"
+            handleShow={() => handleFormVisibility('acceptForm')}
+            icon="check"
+            isCancel={acceptFormVisible}
+
+          />
+          <RegistrationSessionNewEventBtn
+            caption="Amend"
+            color="warning"
+            handleShow={() => handleFormVisibility('amendForm')}
+            icon="edit"
+            isCancel={amendFormVisible}
+          />
+          <RegistrationSessionNewEventBtn
+            caption="Comment"
+            color="secondary"
+            handleShow={() => handleFormVisibility('commentForm')}
+            icon="comment"
+            isCancel={commentFormVisible}
+          />
+          <RegistrationSessionNewEventBtn
+            caption="Reject"
+            color="danger"
+            handleShow={() => handleFormVisibility('rejectForm')}
+            icon="times"
+            isCancel={rejectFormVisible}
+          />
+        </div>
+
+        {/* <ResourceRegistrationSessionAcceptForm
+          id={id}
+          isOpen={acceptFormVisible}
+        />
+
+        <ResourceRegistrationSessionAmendForm
+          id={id}
+          isOpen={amendFormVisible}
+          handleShow={() => handleFormVisibility('acceptForm')}
+          handleFormSubmit={handleFormSubmit}
+        />
+
+        <ResourceRegistrationSessionCommentForm
+          id={id}
+          isOpen={commentFormVisible}
+          handleShow={() => handleFormVisibility('acceptForm')}
+          handleFormSubmit={handleFormSubmit}
+        />
+
+        <ResourceRegistrationSessionRejectForm
+          id={id}
+          isOpen={rejectFormVisible}
+          handleShow={() => handleFormVisibility('acceptForm')}
+          handleFormSubmit={handleFormSubmit}
+        /> */}
+
+        <hr className="my-5" />
+
+        <div className="row">
+          <div className="col">
+            <h4><i className="icon icon-common icon-history" /> Previous events</h4>
+            {
+              resourceRegistrationSessionEvents.map(prse =>
+                <RegistrationSessionEvent
+                  key={`prse-${prse.name}-${prse.created}`}
+                  data={prse}
+                  registrationSessionType="resource"
+                />
+              )
+            }
+          </div>
+        </div>
       </>
       )
     );
@@ -97,11 +193,11 @@ class ManageResourceRegistrationRequestPage extends React.Component {
 
 // Mapping
 const mapStateToProps = (state) => ({
-  //prefixRegistrationSession: state.curationDashboard.prefixRegistrationSession
+  resourceRegistrationSession: state.curationDashboard.resourceRegistrationSession
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  //getResourceRegistrationSession: (params) => dispatch(getPrefixRegistrationSessionFromRegistry(params)),
+  getResourceRegistrationSession: (params) => dispatch(getResourceRegistrationSessionFromRegistry(params)),
 });
 
 export default connect (mapStateToProps, mapDispatchToProps)(ManageResourceRegistrationRequestPage);

@@ -2,9 +2,10 @@ import React from 'react';
 
 // Components.
 import PrefixRegistrationSessionRequest from './PrefixRegistrationSessionRequest';
+import ResourceRegistrationSessionRequest from './ResourceRegistrationSessionRequest';
 
 
-class PrefixRegistrationSessionEventStart extends React.Component {
+class RegistrationSessionEventAmend extends React.Component {
   constructor(props) {
     super(props);
 
@@ -19,7 +20,7 @@ class PrefixRegistrationSessionEventStart extends React.Component {
 
 
   render() {
-    const { data } = this.props;
+    const { data, registrationSessionType } = this.props;
     const { expanded } = this.state;
 
     return (
@@ -49,7 +50,8 @@ class PrefixRegistrationSessionEventStart extends React.Component {
 
         {expanded && (
           <div className="card-body">
-            <PrefixRegistrationSessionRequest data={data.prefixRegistrationRequest} />
+            {registrationSessionType === 'prefix' && <PrefixRegistrationSessionRequest data={data.prefixRegistrationRequest} />}
+            {registrationSessionType === 'resource' && <ResourceRegistrationSessionRequest data={data.resourceRegistrationRequest} />}
           </div>
         )}
       </>
@@ -58,4 +60,4 @@ class PrefixRegistrationSessionEventStart extends React.Component {
 }
 
 
-export default PrefixRegistrationSessionEventStart;
+export default RegistrationSessionEventAmend;

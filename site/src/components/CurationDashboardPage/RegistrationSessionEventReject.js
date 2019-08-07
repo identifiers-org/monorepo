@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const PrefixRegistrationSessionEventReject = ({ data }) => (
+const RegistrationSessionEventReject = ({ data }) => (
   <div className="card">
     <div className="card-body">
       <span className="text-danger font-weight-bold mr-3">Rejection reason:</span>
@@ -14,4 +14,4 @@ const PrefixRegistrationSessionEventReject = ({ data }) => (
 );
 
 
-export default PrefixRegistrationSessionEventReject;
+export default RegistrationSessionEventReject;

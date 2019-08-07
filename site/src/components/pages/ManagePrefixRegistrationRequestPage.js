@@ -1,10 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+// Actions.
 import { getPrefixRegistrationSessionFromRegistry } from '../../actions/CurationDashboardPage/PrefixRegistrationSession';
 
-import PrefixRegistrationSessionEvent from '../CurationDashboardPage/PrefixRegistrationSessionEvent';
-import PrefixRegistrationSessionNewEventBtn from '../CurationDashboardPage/PrefixRegistrationSessionNewEventBtn';
+// Components.
+import RegistrationSessionNewEventBtn from '../CurationDashboardPage/RegistrationSessionNewEventBtn';
+
+import RegistrationSessionEvent from '../CurationDashboardPage/RegistrationSessionEvent';
 
 import PrefixRegistrationSessionAcceptForm from '../CurationDashboardPage/PrefixRegistrationSessionAcceptForm';
 import PrefixRegistrationSessionAmendForm from '../CurationDashboardPage/PrefixRegistrationSessionAmendForm';
@@ -108,7 +111,7 @@ class ManagePrefixRegistrationRequestPage extends React.Component {
         </div>
 
         <div className="row mt-5 mx-0">
-          <PrefixRegistrationSessionNewEventBtn
+          <RegistrationSessionNewEventBtn
             caption="Accept"
             color="success"
             handleShow={() => handleFormVisibility('acceptForm')}
@@ -116,21 +119,21 @@ class ManagePrefixRegistrationRequestPage extends React.Component {
             isCancel={acceptFormVisible}
 
           />
-          <PrefixRegistrationSessionNewEventBtn
+          <RegistrationSessionNewEventBtn
             caption="Amend"
             color="warning"
             handleShow={() => handleFormVisibility('amendForm')}
             icon="edit"
             isCancel={amendFormVisible}
           />
-          <PrefixRegistrationSessionNewEventBtn
+          <RegistrationSessionNewEventBtn
             caption="Comment"
             color="secondary"
             handleShow={() => handleFormVisibility('commentForm')}
             icon="comment"
             isCancel={commentFormVisible}
           />
-          <PrefixRegistrationSessionNewEventBtn
+          <RegistrationSessionNewEventBtn
             caption="Reject"
             color="danger"
             handleShow={() => handleFormVisibility('rejectForm')}
@@ -172,9 +175,10 @@ class ManagePrefixRegistrationRequestPage extends React.Component {
             <h4><i className="icon icon-common icon-history" /> Previous events</h4>
             {
               prefixRegistrationSessionEvents.map(prse =>
-                <PrefixRegistrationSessionEvent
+                <RegistrationSessionEvent
                   key={`prse-${prse.name}-${prse.created}`}
                   data={prse}
+                  registrationSessionType="prefix"
                 />
               )
             }
