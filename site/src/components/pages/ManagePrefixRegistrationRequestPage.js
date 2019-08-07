@@ -1,17 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { getPrefixRegistrationSessionFromRegistry } from '../../actions/CuratorDashboardPage/PrefixRegistrationSession';
+import { getPrefixRegistrationSessionFromRegistry } from '../../actions/CurationDashboardPage/PrefixRegistrationSession';
 
-import PrefixRegistrationSessionEvent from '../CuratorDashboardPage/PrefixRegistrationSessionEvent';
-import PrefixRegistrationSessionNewEventBtn from '../CuratorDashboardPage/PrefixRegistrationSessionNewEventBtn';
+import PrefixRegistrationSessionEvent from '../CurationDashboardPage/PrefixRegistrationSessionEvent';
+import PrefixRegistrationSessionNewEventBtn from '../CurationDashboardPage/PrefixRegistrationSessionNewEventBtn';
 
-import PrefixRegistrationSessionAcceptForm from '../CuratorDashboardPage/PrefixRegistrationSessionAcceptForm';
-import PrefixRegistrationSessionAmendForm from '../CuratorDashboardPage/PrefixRegistrationSessionAmendForm';
-import PrefixRegistrationSessionCommentForm from '../CuratorDashboardPage/PrefixRegistrationSessionCommentForm';
-import PrefixRegistrationSessionRejectForm from '../CuratorDashboardPage/PrefixRegistrationSessionRejectForm';
+import PrefixRegistrationSessionAcceptForm from '../CurationDashboardPage/PrefixRegistrationSessionAcceptForm';
+import PrefixRegistrationSessionAmendForm from '../CurationDashboardPage/PrefixRegistrationSessionAmendForm';
+import PrefixRegistrationSessionCommentForm from '../CurationDashboardPage/PrefixRegistrationSessionCommentForm';
+import PrefixRegistrationSessionRejectForm from '../CurationDashboardPage/PrefixRegistrationSessionRejectForm';
 
-import PrefixRegistrationSessionRequestDetails from '../CuratorDashboardPage/PrefixRegistrationSessionRequest';
+import PrefixRegistrationSessionRequestDetails from '../CurationDashboardPage/PrefixRegistrationSessionRequest';
 import PageTitle from '../common/PageTitle';
 
 
@@ -91,7 +91,7 @@ class ManagePrefixRegistrationRequestPage extends React.Component {
       !prefixRegistrationRequest ? '' : (
       <>
         <PageTitle
-          icon="icon-check-square"
+          icon="icon-leaf"
           title={`Managing request:`}
           extraTitle={prefixRegistrationRequest.name}
         />
@@ -189,7 +189,7 @@ class ManagePrefixRegistrationRequestPage extends React.Component {
 
 // Mapping
 const mapStateToProps = (state) => ({
-  prefixRegistrationSession: state.curatorDashboard.prefixRegistrationSession
+  prefixRegistrationSession: state.curationDashboard.prefixRegistrationSession
 });
 
 const mapDispatchToProps = (dispatch) => ({

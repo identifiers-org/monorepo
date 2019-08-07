@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 // Components.
-import { prefixRegistrationRequestAccept } from '../../actions/CuratorDashboardPage/PrefixRegistrationSession';
-import { setPrefixRegistrationSessionAccept } from '../../actions/CuratorDashboardPage/PrefixRegistrationSessionAccept';
+import { prefixRegistrationRequestAccept } from '../../actions/CurationDashboardPage/PrefixRegistrationSession';
+import { setPrefixRegistrationSessionAccept } from '../../actions/CurationDashboardPage/PrefixRegistrationSessionAccept';
 
 // Utils.
 import { swalSuccess, swalError } from '../../utils/swalDialogs';
@@ -40,7 +40,7 @@ class PrefixRegistrationSessionAcceptForm extends React.Component {
       });
 
       setPrefixRegistrationSessionAccept('', '');
-      history.push('/curator');
+      history.push('/curation');
     } else {
       await swalError.fire({
         title: 'Error',
@@ -111,7 +111,7 @@ class PrefixRegistrationSessionAcceptForm extends React.Component {
 
 // Mapping
 const mapStateToProps = (state) => ({
-  prefixRegistrationSessionAccept: state.curatorDashboard.prefixRegistrationSessionAccept
+  prefixRegistrationSessionAccept: state.curationDashboard.prefixRegistrationSessionAccept
 });
 
 const mapDispatchToProps = (dispatch) => ({

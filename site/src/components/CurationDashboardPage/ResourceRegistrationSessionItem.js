@@ -51,7 +51,7 @@ class ResourceRegistrationSessionItem extends React.Component {
               <div className="col col-md-2 col-lg-3 col-xl-2 pt-2">
                 <Link
                   className="clear-link btn btn-warning btn-block"
-                  to={`/curator/${id}`}
+                  to={`/curation/resourceRegistration/${id}`}
                 >
                   <i className="icon icon-common icon-ellipsis-h" /> Manage
                 </Link>

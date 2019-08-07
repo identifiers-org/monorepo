@@ -1,12 +1,13 @@
 import React from 'react';
 
 // Components.
-import CurationInstitutionList from '../CuratorDashboardPage/CurationInstitutionList';
+import CurationInstitutionList from '../CurationDashboardPage/CurationInstitutionList';
 import PageTitle from '../common/PageTitle';
-import PrefixRegistrationSessionList from '../CuratorDashboardPage/PrefixRegistrationSessionList';
+import PrefixRegistrationSessionList from '../CurationDashboardPage/PrefixRegistrationSessionList';
+import ResourceRegistrationSessionList from '../CurationDashboardPage/ResourceRegistrationSessionList';
 
 
-class CuratorDashboardPage extends React.Component  {
+class CurationDashboardPage extends React.Component  {
   constructor(props) {
     super(props);
   }
@@ -15,7 +16,7 @@ class CuratorDashboardPage extends React.Component  {
     return (
       <>
         <PageTitle
-          icon="icon-check-square"
+          icon="icon-leaf"
           title="Prefix Registration Requests"
           description="This is the list of Prefix Registration Requests sent by resource administrators.
                        Clicking on one will expand the information and allow to perform actions like
@@ -25,6 +26,19 @@ class CuratorDashboardPage extends React.Component  {
         <div className="row mb-5">
           <div className="col">
             <PrefixRegistrationSessionList />
+          </div>
+        </div>
+
+        <PageTitle
+          icon="icon-cube"
+          title="Resource Registration Requests"
+          description="This is the list of Resource Registration Requests sent by resource administrators.
+                       Clicking one will expand information and actions like in the one above."
+        />
+
+        <div className="row mb-5">
+          <div className="col">
+            <ResourceRegistrationSessionList />
           </div>
         </div>
 
@@ -46,4 +60,4 @@ class CuratorDashboardPage extends React.Component  {
   }
 }
 
-export default CuratorDashboardPage;
+export default CurationDashboardPage;

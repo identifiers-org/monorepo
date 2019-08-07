@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // Actions.
-import { prefixRegistrationRequestAmend } from '../../actions/CuratorDashboardPage/PrefixRegistrationSession';
-import { setPrefixRegistrationSessionAmendField } from '../../actions/CuratorDashboardPage/PrefixRegistrationSessionAmend';
+import { prefixRegistrationRequestAmend } from '../../actions/CurationDashboardPage/PrefixRegistrationSession';
+import { setPrefixRegistrationSessionAmendField } from '../../actions/CurationDashboardPage/PrefixRegistrationSessionAmend';
 
 // Components.
 import ReversibleField from '../common/ReversibleField';
@@ -395,8 +395,8 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
 
 // Mapping
 const mapStateToProps = (state) => ({
-  prefixRegistrationSession: state.curatorDashboard.prefixRegistrationSession,
-  prefixRegistrationSessionAmend: state.curatorDashboard.prefixRegistrationSessionAmend,
+  prefixRegistrationSession: state.curationDashboard.prefixRegistrationSession,
+  prefixRegistrationSessionAmend: state.curationDashboard.prefixRegistrationSessionAmend,
   locationList: state.locationList
 });
 

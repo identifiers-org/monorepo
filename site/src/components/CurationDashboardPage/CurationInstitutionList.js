@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // Actions.
-import { getCurationInstitutionListFromRegistry } from '../../actions/CuratorDashboardPage/CurationInstitutionList';
-import { setCurationInstitutionListParams } from '../../actions/CuratorDashboardPage/CurationInstitutionListParams';
+import { getCurationInstitutionListFromRegistry } from '../../actions/CurationDashboardPage/CurationInstitutionList';
+import { setCurationInstitutionListParams } from '../../actions/CurationDashboardPage/CurationInstitutionListParams';
 
 // Components.
 import Paginator from '../common/Paginator';
@@ -106,8 +106,8 @@ class CurationInstitutionList extends React.Component {
 
 // Redux mapping functions.
 const mapStateToProps = (state) => ({
-  curationInstitutionList: state.curatorDashboard.curationInstitutionList,
-  curationInstitutionListParams: state.curatorDashboard.curationInstitutionListParams,
+  curationInstitutionList: state.curationDashboard.curationInstitutionList,
+  curationInstitutionListParams: state.curationDashboard.curationInstitutionListParams,
 });
 
 const mapDispatchToProps = (dispatch) => ({

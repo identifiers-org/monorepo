@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import { prefixRegistrationRequestReject } from '../../actions/CuratorDashboardPage/PrefixRegistrationSession';
-import { setPrefixRegistrationSessionReject } from '../../actions/CuratorDashboardPage/PrefixRegistrationSessionReject';
+import { prefixRegistrationRequestReject } from '../../actions/CurationDashboardPage/PrefixRegistrationSession';
+import { setPrefixRegistrationSessionReject } from '../../actions/CurationDashboardPage/PrefixRegistrationSessionReject';
 
 import { swalSuccess, swalError } from '../../utils/swalDialogs';
 
@@ -37,7 +37,7 @@ class PrefixRegistrationSessionRejectForm extends React.Component {
       });
 
       setPrefixRegistrationSessionReject('', '');
-      history.push('/curator');
+      history.push('/curation');
     } else {
       await swalError.fire({
         title: 'Error',
@@ -109,7 +109,7 @@ class PrefixRegistrationSessionRejectForm extends React.Component {
 
 // Mapping
 const mapStateToProps = (state) => ({
-  prefixRegistrationSessionReject: state.curatorDashboard.prefixRegistrationSessionReject
+  prefixRegistrationSessionReject: state.curationDashboard.prefixRegistrationSessionReject
 });
 
 const mapDispatchToProps = (dispatch) => ({

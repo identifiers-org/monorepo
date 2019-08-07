@@ -12,7 +12,7 @@ import { fetchAndAdd } from '../../utils/fetchAndAdd';
 // CurationInstitutionList actions.
 //
 
-// Get institutions list from registry. Will dispatch setCuratorInstitutionList.
+// Get institutions list from registry. Will dispatch setCurationInstitutionList.
 export const getCurationInstitutionListFromRegistry = (params) => {
   return async (dispatch) => {
     let requestURL;

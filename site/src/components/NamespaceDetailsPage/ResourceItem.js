@@ -70,7 +70,7 @@ class ResourceItem extends React.Component {
 
 
   handleClickAddInstitution = () => {
-    this.props.history.push('/curator/#curation-institution');
+    this.props.history.push('/curation/#curation-institution');
   };
 
 

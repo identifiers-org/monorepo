@@ -6,10 +6,10 @@ import authReducer from '../reducers/Auth';
 
 import configReducer from '../reducers/ConfigReducer';
 
-import curationInstitutionListReducer from '../reducers/CuratorDashboardPage/CurationInstitutionList';
-import curationInstitutionListParamsReducer from '../reducers/CuratorDashboardPage/CurationInstitutionListParams';
+import curationInstitutionListReducer from '../reducers/CurationDashboardPage/CurationInstitutionList';
+import curationInstitutionListParamsReducer from '../reducers/CurationDashboardPage/CurationInstitutionListParams';
 import institutionListReducer from '../reducers/InstitutionList';
-import institutionPatchReducer from '../reducers/CuratorDashboardPage/InstitutionPatch';
+import institutionPatchReducer from '../reducers/CurationDashboardPage/InstitutionPatch';
 
 import locationListReducer from '../reducers/LocationList';
 
@@ -18,19 +18,19 @@ import namespaceListParamsReducer from '../reducers/RegistryBrowser/NamespaceLis
 import namespacePatchReducer from '../reducers/NamespacePatch';
 
 import prefixRegistrationRequestFieldReducer from '../reducers/PrefixRegistrationRequestField';
-import prefixRegistrationSessionListReducer from '../reducers/CuratorDashboardPage/PrefixRegistrationSessionList';
-import prefixRegistrationSessionListParamsReducer from '../reducers/CuratorDashboardPage/PrefixRegistrationSessionListParams';
-import prefixRegistrationSessionReducer from '../reducers/CuratorDashboardPage/PrefixRegistrationSession';
-import prefixRegistrationSessionAcceptReducer from '../reducers/CuratorDashboardPage/PrefixRegistrationSessionAccept';
-import prefixRegistrationSessionAmendReducer from '../reducers/CuratorDashboardPage/PrefixRegistrationSessionAmend';
-import prefixRegistrationSessionCommentReducer from '../reducers/CuratorDashboardPage/PrefixRegistrationSessionComment';
-import prefixRegistrationSessionRejectReducer from '../reducers/CuratorDashboardPage/PrefixRegistrationSessionReject';
+import prefixRegistrationSessionListReducer from '../reducers/CurationDashboardPage/PrefixRegistrationSessionList';
+import prefixRegistrationSessionListParamsReducer from '../reducers/CurationDashboardPage/PrefixRegistrationSessionListParams';
+import prefixRegistrationSessionReducer from '../reducers/CurationDashboardPage/PrefixRegistrationSession';
+import prefixRegistrationSessionAcceptReducer from '../reducers/CurationDashboardPage/PrefixRegistrationSessionAccept';
+import prefixRegistrationSessionAmendReducer from '../reducers/CurationDashboardPage/PrefixRegistrationSessionAmend';
+import prefixRegistrationSessionCommentReducer from '../reducers/CurationDashboardPage/PrefixRegistrationSessionComment';
+import prefixRegistrationSessionRejectReducer from '../reducers/CurationDashboardPage/PrefixRegistrationSessionReject';
 
 import resourcePatchReducer from '../reducers/ResourcePatch';
 
 import resourceRegistrationRequestFieldReducer from '../reducers/ResourceRegistrationRequestField';
-import resourceRegistrationSessionListReducer from '../reducers/CuratorDashboardPage/ResourceRegistrationSessionList';
-import resourceRegistrationSessionListParamsReducer from '../reducers/CuratorDashboardPage/ResourceRegistrationSessionListParams';
+import resourceRegistrationSessionListReducer from '../reducers/CurationDashboardPage/ResourceRegistrationSessionList';
+import resourceRegistrationSessionListParamsReducer from '../reducers/CurationDashboardPage/ResourceRegistrationSessionListParams';
 
 
 
@@ -50,10 +50,10 @@ const store = createStore(
   combineReducers({
     auth: authReducer,
     config: configReducer,
-    curatorDashboard: combineReducers({
+    curationDashboard: combineReducers({
       curationInstitutionList: curationInstitutionListReducer,
       curationInstitutionListParams: curationInstitutionListParamsReducer,
-      curatorEditInstitution: institutionPatchReducer,
+      curationEditInstitution: institutionPatchReducer,
       prefixRegistrationSessionList: prefixRegistrationSessionListReducer,
       prefixRegistrationSessionListParams: prefixRegistrationSessionListParamsReducer,
       prefixRegistrationSession: prefixRegistrationSessionReducer,
@@ -64,8 +64,8 @@ const store = createStore(
       resourceRegistrationSessionList: resourceRegistrationSessionListReducer,
       resourceRegistrationSessionListParams: resourceRegistrationSessionListParamsReducer
     }),
-    curatorEditNamespace: namespacePatchReducer,
-    curatorEditResource: resourcePatchReducer,
+    curationEditNamespace: namespacePatchReducer,
+    curationEditResource: resourcePatchReducer,
     locationList: locationListReducer,
     institutionList: institutionListReducer,
     prefixRegistrationRequestForm: combineReducers({

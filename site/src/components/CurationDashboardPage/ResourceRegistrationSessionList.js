@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import Paginator from '../common/Paginator';
 import ResourceRegistrationSessionItem from './ResourceRegistrationSessionItem';
 
-import { getRegistrationSessionListFromRegistry } from '../../actions/CuratorDashboardPage/RegistrationSessionList';
-import { setRegistrationSessionListParams } from '../../actions/CuratorDashboardPage/RegistrationSessionListParams';
+import { getRegistrationSessionListFromRegistry } from '../../actions/CurationDashboardPage/RegistrationSessionList';
+import { setRegistrationSessionListParams } from '../../actions/CurationDashboardPage/RegistrationSessionListParams';
 
 import { equalParams } from '../../utils/equalParams';
 
@@ -83,8 +83,8 @@ class ResourceRegistrationSessionList extends React.Component {
 
 // Mapping
 const mapStateToProps = (state) => ({
-  resourceRegistrationSessionList: state.curatorDashboard.resourceRegistrationSessionList,
-  resourceRegistrationSessionListParams: state.curatorDashboard.resourceRegistrationSessionListParams
+  resourceRegistrationSessionList: state.curationDashboard.resourceRegistrationSessionList,
+  resourceRegistrationSessionListParams: state.curationDashboard.resourceRegistrationSessionListParams
 });
 
 const mapDispatchToProps = (dispatch) => ({

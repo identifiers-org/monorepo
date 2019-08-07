@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // Actions.
-import { setInstitutionPatchField, patchInstitution, setInstitutionPatch } from '../../actions/CuratorDashboardPage/InstitutionPatch';
-import { getCurationInstitutionListFromRegistry } from '../../actions/CuratorDashboardPage/CurationInstitutionList';
+import { setInstitutionPatchField, patchInstitution, setInstitutionPatch } from '../../actions/CurationDashboardPage/InstitutionPatch';
+import { getCurationInstitutionListFromRegistry } from '../../actions/CurationDashboardPage/CurationInstitutionList';
 
 // Components.
 import ReversibleField from '../common/ReversibleField';
@@ -310,7 +310,7 @@ class CurationInstitutionItem extends React.Component {
 //
 const mapStateToProps = (state) => ({
   locationList: state.locationList,
-  curationInstitutionListParams: state.curatorDashboard.curationInstitutionListParams
+  curationInstitutionListParams: state.curationDashboard.curationInstitutionListParams
 });
 
 const mapDispatchToProps = dispatch => ({

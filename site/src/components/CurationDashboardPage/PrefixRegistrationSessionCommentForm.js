@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 // Components.
-import { prefixRegistrationRequestComment } from '../../actions/CuratorDashboardPage/PrefixRegistrationSession';
-import { setPrefixRegistrationSessionComment } from '../../actions/CuratorDashboardPage/PrefixRegistrationSessionComment';
+import { prefixRegistrationRequestComment } from '../../actions/CurationDashboardPage/PrefixRegistrationSession';
+import { setPrefixRegistrationSessionComment } from '../../actions/CurationDashboardPage/PrefixRegistrationSessionComment';
 
 // Utils.
 import { swalSuccess, swalError } from '../../utils/swalDialogs';
@@ -121,7 +121,7 @@ class PrefixRegistrationSessionCommentForm extends React.Component {
 
 // Mapping
 const mapStateToProps = (state) => ({
-  prefixRegistrationSessionComment: state.curatorDashboard.prefixRegistrationSessionComment
+  prefixRegistrationSessionComment: state.curationDashboard.prefixRegistrationSessionComment
 });
 
 const mapDispatchToProps = (dispatch) => ({

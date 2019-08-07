@@ -146,7 +146,7 @@ class Header extends React.Component {
                         config.enableAuthFeatures && auth.authenticated && (
                           // If logged in.
                           <EBINavItem className="nav-item">
-                            <NavLink to="/curator" className="nav-link" activeClassName="active">
+                            <NavLink to="/curation" className="nav-link" activeClassName="active">
                               <i className="icon icon-common icon-tachometer-alt mr-1" />Curation dashboard
                             </NavLink>
                           </EBINavItem>

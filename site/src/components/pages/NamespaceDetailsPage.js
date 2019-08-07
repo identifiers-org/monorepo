@@ -376,7 +376,7 @@ class NamespaceDetailsPage extends React.Component {
 const mapStateToProps = (state) => {
   return ({
     namespaceList: state.registryBrowser.namespaceList,
-    newNamespace: state.curatorEditNamespace
+    newNamespace: state.curationEditNamespace
   })
 };
 
