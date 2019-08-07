@@ -3,15 +3,20 @@ import thunk from 'redux-thunk';
 
 // Reducers.
 import authReducer from '../reducers/Auth';
+
 import configReducer from '../reducers/ConfigReducer';
+
 import curationInstitutionListReducer from '../reducers/CuratorDashboardPage/CurationInstitutionList';
 import curationInstitutionListParamsReducer from '../reducers/CuratorDashboardPage/CurationInstitutionListParams';
 import institutionListReducer from '../reducers/InstitutionList';
 import institutionPatchReducer from '../reducers/CuratorDashboardPage/InstitutionPatch';
+
 import locationListReducer from '../reducers/LocationList';
+
 import namespaceListReducer from '../reducers/RegistryBrowser/NamespaceList';
 import namespaceListParamsReducer from '../reducers/RegistryBrowser/NamespaceListParams';
 import namespacePatchReducer from '../reducers/NamespacePatch';
+
 import prefixRegistrationRequestFieldReducer from '../reducers/PrefixRegistrationRequestField';
 import prefixRegistrationSessionListReducer from '../reducers/CuratorDashboardPage/PrefixRegistrationSessionList';
 import prefixRegistrationSessionListParamsReducer from '../reducers/CuratorDashboardPage/PrefixRegistrationSessionListParams';
@@ -20,8 +25,13 @@ import prefixRegistrationSessionAcceptReducer from '../reducers/CuratorDashboard
 import prefixRegistrationSessionAmendReducer from '../reducers/CuratorDashboardPage/PrefixRegistrationSessionAmend';
 import prefixRegistrationSessionCommentReducer from '../reducers/CuratorDashboardPage/PrefixRegistrationSessionComment';
 import prefixRegistrationSessionRejectReducer from '../reducers/CuratorDashboardPage/PrefixRegistrationSessionReject';
+
 import resourcePatchReducer from '../reducers/ResourcePatch';
+
 import resourceRegistrationRequestFieldReducer from '../reducers/ResourceRegistrationRequestField';
+import resourceRegistrationSessionListReducer from '../reducers/CuratorDashboardPage/ResourceRegistrationSessionList';
+import resourceRegistrationSessionListParamsReducer from '../reducers/CuratorDashboardPage/ResourceRegistrationSessionListParams';
+
 
 
 // Middlewares.
@@ -50,7 +60,9 @@ const store = createStore(
       prefixRegistrationSessionAccept: prefixRegistrationSessionAcceptReducer,
       prefixRegistrationSessionAmend: prefixRegistrationSessionAmendReducer,
       prefixRegistrationSessionComment: prefixRegistrationSessionCommentReducer,
-      prefixRegistrationSessionReject: prefixRegistrationSessionRejectReducer
+      prefixRegistrationSessionReject: prefixRegistrationSessionRejectReducer,
+      resourceRegistrationSessionList: resourceRegistrationSessionListReducer,
+      resourceRegistrationSessionListParams: resourceRegistrationSessionListParamsReducer
     }),
     curatorEditNamespace: namespacePatchReducer,
     curatorEditResource: resourcePatchReducer,
