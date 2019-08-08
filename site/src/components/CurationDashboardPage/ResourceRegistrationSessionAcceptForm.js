@@ -29,7 +29,7 @@ class ResourceRegistrationSessionAcceptForm extends React.Component {
 
 
   handleAccept = async () => {
-    const { id, resourceRegistrationRequestAccept, setResourceRegistrationSessionAccept } = this.props;
+    const { id, history, resourceRegistrationRequestAccept, setResourceRegistrationSessionAccept } = this.props;
     const { acceptanceReason } = this.state;
 
     const response = await resourceRegistrationRequestAccept(id, acceptanceReason || 'No acceptance reason specified.');

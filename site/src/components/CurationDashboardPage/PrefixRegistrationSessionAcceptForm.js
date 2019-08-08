@@ -29,7 +29,7 @@ class PrefixRegistrationSessionAcceptForm extends React.Component {
 
 
   handleAccept = async () => {
-    const { id, prefixRegistrationRequestAccept, setPrefixRegistrationSessionAccept } = this.props;
+    const { id, history, prefixRegistrationRequestAccept, setPrefixRegistrationSessionAccept } = this.props;
     const { acceptanceReason } = this.state;
 
     const response = await prefixRegistrationRequestAccept(id, acceptanceReason || 'No acceptance reason specified.');
