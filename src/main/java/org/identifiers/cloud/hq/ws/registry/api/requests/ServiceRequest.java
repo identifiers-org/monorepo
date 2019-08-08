@@ -1,6 +1,11 @@
 package org.identifiers.cloud.hq.ws.registry.api.requests;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -12,26 +17,13 @@ import java.io.Serializable;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@Accessors(chain = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ServiceRequest<T> implements Serializable {
     private String apiVersion;
     private T payload;
-
-    public String getApiVersion() {
-        return apiVersion;
-    }
-
-    public ServiceRequest setApiVersion(String apiVersion) {
-        this.apiVersion = apiVersion;
-        return this;
-    }
-
-    public T getPayload() {
-        return payload;
-    }
-
-    public ServiceRequest setPayload(T payload) {
-        this.payload = payload;
-        return this;
-    }
 }
