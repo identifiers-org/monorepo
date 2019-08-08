@@ -158,12 +158,16 @@ export const prefixRegistrationRequestAmend = (id, prefixRegistrationRequest, ad
   return async () => {
     const requestUrl = `${config.registryApi}/${config.prefixRegistrationEndpoint}/amendPrefixRegistrationRequest/${id}`;
 
-    // Supporting references must be an array to talk to the API. It is split here by commas. It is not ideal, but will stay like this
-    // until we find a better solution.
+    // Data transformation for the API. This should be extracted to a model converter.
+    // Supporting references must be an array to talk to the API. It is split here by commas.
     prefixRegistrationRequest.supportingReferences = prefixRegistrationRequest.supportingReferences.split(',');
 
     // Also, requester data must be inside a subobject.
     prefixRegistrationRequest['requester'] = {name: prefixRegistrationRequest.requesterName, email: prefixRegistrationRequest.requesterEmail};
+
+    // Also, country codes must be trimmed in institutionLocation and providerLocation.
+    prefixRegistrationRequest.institutionLocation = prefixRegistrationRequest.institutionLocation.split('/').pop();
+    prefixRegistrationRequest.providerLocation = prefixRegistrationRequest.providerLocation.split('/').pop();
 
     const authToken = await renewToken();
     const init = {

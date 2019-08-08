@@ -157,9 +157,14 @@ export const resourceRegistrationRequestComment = (id, comment) => {
 export const resourceRegistrationRequestAmend = (id, resourceRegistrationRequest, additionalInformation) => {
   return async () => {
     const requestUrl = `${config.registryApi}/${config.resourceRegistrationEndpoint}/amendResourceRegistrationRequest/${id}`;
-
-    // Also, requester data must be inside a subobject.
+    
+    // Data transformation for the API. This should be extracted to a model converter.
+    // Requester data must be inside a subobject.
     resourceRegistrationRequest['requester'] = {name: resourceRegistrationRequest.requesterName, email: resourceRegistrationRequest.requesterEmail};
+    
+    // Also, country codes must be trimmed in institutionLocation and providerLocation.
+    resourceRegistrationRequest.institutionLocation = resourceRegistrationRequest.institutionLocation.split('/').pop();
+    resourceRegistrationRequest.providerLocation = resourceRegistrationRequest.providerLocation.split('/').pop();
 
     const authToken = await renewToken();
     const init = {
