@@ -3,6 +3,7 @@ package org.identifiers.cloud.hq.ws.registry.models;
 import org.apache.commons.io.IOUtils;
 import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.mail.SimpleMailMessage;
@@ -24,6 +25,7 @@ import java.nio.charset.Charset;
  * ---
  */
 @Component
+@Qualifier("ResourceRegistrationSessionActionNotifierEmailAcceptance")
 public class ResourceRegistrationSessionActionNotifierEmailAcceptance implements ResourceRegistrationSessionAction {
     private static final int MAIL_REQUEST_RETRY_MAX_ATTEMPTS = 12;
     private static final int MAIL_REQUEST_RETRY_BACK_OFF_PERIOD = 1500; // 1.5 seconds

@@ -36,7 +36,7 @@ import_registry_local:
 
 import_registry_authenabled_local:
 	@echo "<===|DEVOPS|===> [IMPORT] Authenticating and importing HQ Registry Dataset with MIR ID loading"
-	@pipenv run registry_import/registry_import/populate_registry.py -f registry_import/data/identifiers.json -z -a test 1234
+	@pipenv run registry_import/registry_import/populate_registry.py -f registry_import/data/identifiers.json -z -a test test
 
 
 clean_dev:

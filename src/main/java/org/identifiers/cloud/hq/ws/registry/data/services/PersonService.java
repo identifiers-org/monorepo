@@ -35,6 +35,7 @@ public class PersonService {
      */
     @Transactional
     public Person registerPerson(Person person) throws PersonServiceException {
+        log.info(String.format("Locating person by e-mail '%s'", person.getEmail()));
         Person registeredPerson = repository.findByEmail(person.getEmail());
         if (registeredPerson == null) {
             // TODO Check that the provided e-mail is valid

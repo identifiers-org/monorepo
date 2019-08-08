@@ -231,7 +231,7 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
             return eventAccept;
         } catch (RuntimeException e) {
             throw new ResourceRegistrationRequestManagementServiceException(
-                    String.format("While accepting a resource registration request, with reason '%s', for provider name '%s', " +
+                    String.format("While accepting a resource registration request, with acceptance reason '%s', for provider name '%s', " +
                                     "the following error occurred: '%s'",
                             acceptanceReason,
                             resourceRegistrationSession.getResourceRegistrationRequest().getProviderName(),

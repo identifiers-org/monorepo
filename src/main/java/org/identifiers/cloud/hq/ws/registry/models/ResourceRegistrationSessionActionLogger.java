@@ -46,7 +46,7 @@ public class ResourceRegistrationSessionActionLogger implements ResourceRegistra
             message = String.format("%s IS OPEN", logMessagePrefix);
             report.setErrorMessage(message);
             report.setSuccess(false);
-            log.error(message);
+            log.info(message);
         }
         return report;
     }
