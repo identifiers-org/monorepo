@@ -46,7 +46,7 @@ services:
             - HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTSECRET=clientsecret
             - HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI=http://localkeycloak:8080/auth/realms/idorg
             - HQ_WS_REGISTRY_CONFIG_EMAIL_HOST=fakesmtp
-            - HQ_WS_REGISTRY_CONFIG_EMAIL_HOST=25
+            - HQ_WS_REGISTRY_CONFIG_EMAIL_PORT=25
         ports:
             - "8180:8180"
         depends_on:
