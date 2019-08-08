@@ -31,6 +31,8 @@ services:
             - HQ_WS_REGISTRY_CONFIG_BACKEND_SERVICE_MIRID_CONTROLLER_HOST=hqmiridcontroller
             - HQ_WS_REGISTRY_CONFIG_BACKEND_SERVICE_MIRID_CONTROLLER_PORT=8181
             - HQ_WS_REGISTRY_CONFIG_APPLICATION_ACTIVE_PROFILE=development,authdisabled
+            - HQ_WS_REGISTRY_CONFIG_EMAIL_HOST=fakesmtp
+            - HQ_WS_REGISTRY_CONFIG_EMAIL_HOST=25
         ports:
             - "8180:8180"
         depends_on:
