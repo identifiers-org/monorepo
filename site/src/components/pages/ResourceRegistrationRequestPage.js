@@ -131,7 +131,7 @@ class ResourceRegistrationRequestPage extends React.Component  {
     }
   }
 
-
+  // TODO: This should be an action.
   // Handle submit of the form. Supposedly, all fields are valid, as validators would disable this otherwise.
   // But still, some error cases must be treated.
   handleSubmit = () => {
@@ -143,6 +143,10 @@ class ResourceRegistrationRequestPage extends React.Component  {
           return o;
         }, {})
       };
+
+      // Fix for location not using hateoas link.
+      body.payload.institutionLocation = body.payload.institutionLocation.split('/').pop();
+      body.payload.providerLocation = body.payload.providerLocation.split('/').pop();
 
       // Add special payloads.
       this.state.speacialPayloads.forEach(sp => {
