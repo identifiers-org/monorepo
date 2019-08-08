@@ -97,7 +97,7 @@ class ResourceRegistrationSessionAcceptForm extends React.Component {
               href="#!"
               onClick={handleAccept}
             >
-              <i className="icon icon-common icon-check" /> Confirm amend
+              <i className="icon icon-common icon-check" /> Confirm acception
             </a>
           </div>
         </div>
