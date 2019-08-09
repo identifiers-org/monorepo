@@ -80,7 +80,7 @@ export const querySplit = function (query) {
 // Also, if the namespace is special (prefix embedded in LUI), take prefix from pattern instead, because
 // they are allowed to have caps.
 export const completeQuery = (resource, namespace, id) => {
-  const prefix = namespace.namespaceEmbeddedInLui ? namespace.pattern.slice(1).split(':')[0] : namespace.prefix;
+  const prefix = namespace.namespaceEmbeddedInLui ? namespace.pattern.slice(1).split(':')[0].replace(/[\(\/\\\)]/gm, '') : namespace.prefix;
 
   return `${resource ? resource + '/' : ''}${prefix}:${id}`;
 };

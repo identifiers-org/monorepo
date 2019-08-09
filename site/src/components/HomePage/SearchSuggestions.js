@@ -84,8 +84,7 @@ class SearchSuggestions extends React.Component {
 
               <ul className="suggestion-list pb-2" ref={ref => setSuggestionListRef(ref)}>
                 {
-                  searchSuggestionList.map((result, index) => {
-                  return (
+                  searchSuggestionList.map((result, index) => (
                     <li
                       key={`suggestion-${index}`}
                       onMouseOver={() => {mouseOver(index)}}
@@ -100,7 +99,7 @@ class SearchSuggestions extends React.Component {
                             key={result.prefix}
                             onClick={() => {handleClick(result)}}
                           >
-                            {highlightQuery(result.namespaceEmbeddedInLui ? result.pattern.slice(1).split(':')[0] : result.prefix, queryParts.prefix)}
+                            {highlightQuery(result.namespaceEmbeddedInLui ? result.pattern.slice(1).split(':')[0].replace(/[\(\/\\\)]/gm, '') : result.prefix, queryParts.prefix)}
 
                             <ResourceNameTag
                               className={`mb-0 ml-2 ${selectedSearchSuggestion === index ? 'text-white' : ''} text-ellipsis`}
@@ -121,10 +120,9 @@ class SearchSuggestions extends React.Component {
                         </div>
                       </div>
                     </li>
-                  );
-                })
-              }
-            </ul>
+                  ))
+                }
+              </ul>
             </div>
           )
         }

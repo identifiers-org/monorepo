@@ -1,8 +1,9 @@
 import React from 'react';
-import SearchSuggestions from './SearchSuggestions';
-
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+
+// Components.
+import SearchSuggestions from './SearchSuggestions';
 
 // Actions.
 import { getNamespacesFromRegistry } from '../../actions/NamespaceList';
@@ -53,6 +54,7 @@ class Search extends React.Component {
     this.setState({activeSuggestion: -1});
 
     await getNamespacesFromRegistry(prefixEffectiveValue);
+
     this.setState({
       namespaceList: this.props.namespaceList.sort((a, b) => {
         if (a.prefix.startsWith(prefixEffectiveValue) && !b.prefix.startsWith(prefixEffectiveValue)) {
@@ -67,8 +69,6 @@ class Search extends React.Component {
       }).slice(0, suggestionListSize)
     });
   }
-
-  handleBlurHideSuggestions = () => {this.props.setConfig({showSearchSuggestions: false})};
 
   handleFocusShowSuggestions = () => {
     const {
@@ -113,7 +113,7 @@ class Search extends React.Component {
 
     switch (e.keyCode) {
     case 13: {  // Enter key
-      e.preventDefault();
+      e.preventDefault();   // Do not send form.
 
       if (activeSuggestion === -1) {
         handleSearch();
@@ -126,6 +126,8 @@ class Search extends React.Component {
     }
 
     case 38: {  // Up key
+      e.preventDefault();   // Do not take cursor to start of input text.
+
       if (this.state.activeSuggestion > -1) {
         this.setState({activeSuggestion: activeSuggestion - 1});
         // Scroll up to that item.
@@ -137,6 +139,8 @@ class Search extends React.Component {
     }
 
     case 40: {  // Down key
+      e.preventDefault();   // Do not take cursor to end of input text.
+
       if (activeSuggestion < namespaceList.length - 1) {
         this.setState({activeSuggestion: activeSuggestion + 1});
         // Scroll down to that item.
@@ -183,7 +187,6 @@ class Search extends React.Component {
 
   render() {
     const {
-      handleBlurHideSuggestions,
       handleChange,
       handleClick,
       handleFocusShowSuggestions,
