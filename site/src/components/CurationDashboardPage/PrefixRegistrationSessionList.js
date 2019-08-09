@@ -35,6 +35,14 @@ class PrefixRegistrationSessionList extends React.Component {
     }
   }
 
+  handleSetSize = e => {
+    const size = parseInt(e.target.value);
+    const number = 0;
+
+    this.props.setPrefixregistrationSessionListParams({size, number});
+    this.updatePrefixRegistrationSessionList({size});
+  }
+
   navigate = (number) => {
     const params = {
       ...this.props.prefixRegistrationSessionListParams,
@@ -47,17 +55,23 @@ class PrefixRegistrationSessionList extends React.Component {
 
   render() {
     const {
-      prefixRegistrationSessionListParams: { number, totalPages },
-      prefixRegistrationSessionList
-    } = this.props;
-    const { navigate } = this;
+      handleSetSize,
+      navigate,
+      props: {
+        prefixRegistrationSessionListParams: { number, size, totalElements, totalPages },
+        prefixRegistrationSessionList
+      }
+    } = this;
 
     return (
       <>
         <Paginator
-          number={number}
-          totalPages={totalPages}
           navigate={navigate}
+          number={number}
+          setSize={handleSetSize}
+          size={size}
+          totalElements={totalElements}
+          totalPages={totalPages}
         />
         <div className="row justify-content-md-center mt-2">
           <div className="col">

@@ -35,6 +35,14 @@ class ResourceRegistrationSessionList extends React.Component {
     }
   }
 
+  handleSetSize = e => {
+    const size = parseInt(e.target.value);
+    const number = 0;
+
+    this.props.setResourceRegistrationSessionListParams({size, number});
+    this.updateResourceRegistrationSessionList({size});
+  }
+
   navigate = (number) => {
     const params = {
       ...this.props.resourceRegistrationSessionListParams,
@@ -47,17 +55,23 @@ class ResourceRegistrationSessionList extends React.Component {
 
   render() {
     const {
-      resourceRegistrationSessionListParams: { number, totalPages },
-      resourceRegistrationSessionList
-    } = this.props;
-    const { navigate } = this;
+      handleSetSize,
+      navigate,
+      props: {
+        resourceRegistrationSessionListParams: { number, size, totalElements, totalPages },
+        resourceRegistrationSessionList
+      }
+    } = this;
 
     return (
       <>
         <Paginator
-          number={number}
-          totalPages={totalPages}
           navigate={navigate}
+          number={number}
+          setSize={handleSetSize}
+          size={size}
+          totalElements={totalElements}
+          totalPages={totalPages}
         />
         <div className="row justify-content-md-center mt-2">
           <div className="col">
