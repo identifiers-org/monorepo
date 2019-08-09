@@ -79,7 +79,7 @@ class NamespaceList extends React.Component {
     this.setState({
       namespaceListParams: {
         ...namespaceListParams,
-        size: e.target.value,
+        size: parseInt(e.target.value),
         number: 0
       }
     }, () => this.updateNamespaceList());

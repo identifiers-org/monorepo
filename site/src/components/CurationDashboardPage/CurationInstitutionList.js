@@ -45,9 +45,10 @@ class CurationInstitutionList extends React.Component {
   }
 
   handleSetSize = e => {
-    const size = e.target.value;
+    const size = parseInt(e.target.value);
+    const number = 0;
 
-    this.props.setCurationInstitutionListParams({size});
+    this.props.setCurationInstitutionListParams({size, number});
     this.updateCurationInstitutionList({size});
   }
 
