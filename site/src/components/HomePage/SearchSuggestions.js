@@ -37,6 +37,7 @@ const SearchSuggestions = (props) => {
     return '';
   }
 
+
   return (
     <div className="inline-search-container">
       <div className="suggestions-box">
@@ -47,37 +48,35 @@ const SearchSuggestions = (props) => {
         </div>
 
         <ul className="suggestion-list pb-2">
-                {
-                  searchSuggestionList.map((result, index) => {
-                  return (
-                    <li
-                      key={`suggestion-${index}`}
-                      onMouseOver={() => {mouseOver(index)}}
-                      className={`suggestion ${selectedSearchSuggestion === index ? 'suggestion__selected' : ''}`}
+          {
+            searchSuggestionList.map((result, index) => (
+              <li
+                key={`suggestion-${index}`}
+                onMouseOver={() => {mouseOver(index)}}
+                className={`suggestion ${selectedSearchSuggestion === index ? 'suggestion__selected' : ''}`}
+              >
+                <div className="row no-gutters py-1 mx-2">
+                  <div className="col">
+                    <a
+                      className="clear-link d-flex align-items-center"
+                      href="#!"
+                      id={result.prefix}
+                      key={result.prefix}
+                      onClick={() => {onClick(result.prefix)}}
                     >
-                      <div className="row no-gutters py-1 mx-2">
-                        <div className="col">
-                         <a
-                            className="clear-link d-flex align-items-center"
-                            href="#!"
-                            id={result.prefix}
-                            key={result.prefix}
-                            onClick={() => {onClick(result.prefix)}}
-                          >
-                            {highlightQuery(result.namespaceEmbeddedInLui ? result.pattern.slice(1).split(':')[0] : result.prefix, queryParts.prefix)}
-                            <p
-                              className={`mb-0 ml-2 ${selectedSearchSuggestion === index ? 'text-white' : ''}`}
-                            >
-                              {result.name}
-                            </p>
-                          </a>
-                        </div>
-                      </div>
-                    </li>
-                  );
-                })
-              }
-            </ul>
+                      {highlightQuery(result.namespaceEmbeddedInLui ? result.pattern.slice(1).split(':')[0].replace(/[\(\/\\\)]/gm, '') : result.prefix, queryParts.prefix)}
+                      <p
+                        className={`mb-0 ml-2 ${selectedSearchSuggestion === index ? 'text-white' : ''}`}
+                      >
+                        {result.name}
+                      </p>
+                    </a>
+                  </div>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
       </div>
     </div>
   );
