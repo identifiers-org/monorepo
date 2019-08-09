@@ -23,7 +23,7 @@ class Paginator extends React.Component {
   render() {
     const entriesPerPage = [5, 20, 50, 100];
     const { pageWindow } = this.state;
-    const { number = 0, totalPages = 0, size = 0, totalElements = 0, setsize } = this.props;
+    const { number = 0, totalPages = 0, size = 0, totalElements = 0, setSize } = this.props;
 
     const smallerThan = (size) => window.matchMedia(`(max-width: ${size}px)`).matches;
 
@@ -124,7 +124,7 @@ class Paginator extends React.Component {
             <select
               className="custom-select"
               id="perPageSelect"
-              onChange={setsize}
+              onChange={setSize}
               defaultValue={size}
             >
               {entriesPerPage.map(option => (

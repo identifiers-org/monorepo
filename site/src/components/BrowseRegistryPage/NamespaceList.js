@@ -192,7 +192,7 @@ class NamespaceList extends React.Component {
           <Paginator
             navigate={handleNavigate}
             number={number}
-            setsize={handleSetSize}
+            setSize={handleSetSize}
             size={size}
             totalPages={totalPages}
             totalElements={totalElements}

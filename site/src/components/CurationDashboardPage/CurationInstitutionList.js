@@ -39,15 +39,23 @@ class CurationInstitutionList extends React.Component {
   }
 
 
-  handleNavigate = (number) => {
+  handleNavigate = number => {
     this.props.setCurationInstitutionListParams({number});
     this.updateCurationInstitutionList({page: number});
+  }
+
+  handleSetSize = e => {
+    const size = e.target.value;
+
+    this.props.setCurationInstitutionListParams({size});
+    this.updateCurationInstitutionList({size});
   }
 
   render() {
     const {
       handleChangeSearchInput,
       handleNavigate,
+      handleSetSize,
       props: {
         curationInstitutionList,
         curationInstitutionListParams: { number, totalPages }
@@ -81,6 +89,7 @@ class CurationInstitutionList extends React.Component {
           number={number}
           totalPages={totalPages}
           navigate={handleNavigate}
+          setSize={handleSetSize}
         />
         <div className="row justify-content-md-center mt-2">
           <div className="col">
