@@ -112,7 +112,7 @@ class Paginator extends React.Component {
 
         <div className={`col col-12 col-lg-3 col-xl-4 mb-2 ${smallOrder1}`}>
           <span className="pager">
-            {number * size + 1} to {(number + 1) * size} of {totalElements}
+            {number * size + 1} to {(number + 1) * size} of {Math.max(totalElements, (number + 1) * size)}
           </span>
         </div>
 
