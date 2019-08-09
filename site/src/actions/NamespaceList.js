@@ -31,17 +31,19 @@ export const getNamespacesFromRegistry = (params) => {
     requestUrl.searchParams.append('size', params.size);
     requestUrl.searchParams.append('sort', params.sort);
 
+    let data;
+
     try {
       const response = await fetch(requestUrl);
-      const data = await response.json();
-      dispatch(setNamespaceList(data._embedded.namespaces));
-      dispatch(setNamespaceListParams({...params, ...data.page}));
-
-      return response;
-    }
-    catch (err) {
+      data = await response.json();
+    } catch (err) {
       console.log('Error fetching namespaces: ', err);
     }
+
+    dispatch(setNamespaceList(data._embedded.namespaces));
+    dispatch(setNamespaceListParams({...params, ...data.page}));
+
+    return data;
   };
 };
 
@@ -50,17 +52,18 @@ export const getNamespacesFromRegistry = (params) => {
 export const getNamespaceFromRegistry = (prefix) => {
   return async (dispatch) => {
     let requestUrl = new URL(`${config.registryApi}/restApi/namespaces/search/findByPrefix?prefix=${prefix}`);
+    let data;
 
     try {
       const response = await fetch(requestUrl);
-      const data = await response.json();
-      dispatch(setNamespaceList([data]));
-
-      return response;
-    }
-    catch (err) {
+      data = await response.json();
+    } catch (err) {
       console.log('Error fetching namespace', err);
     }
+
+    dispatch(setNamespaceList([data]));
+
+    return data;
   };
 };
 
@@ -70,27 +73,31 @@ export const getResourcesFromRegistry = (namespace) => {
   return async (dispatch) => {
     let requestUrl = new URL(`${config.registryApi}/restApi/resources/search/findAllByNamespaceId`);
     requestUrl.searchParams.append('id', namespace._links.self.href.split('/').pop());
+    let data;
 
     try {
       const response = await fetch(requestUrl);
-      const data = await response.json();
-      const resources = await Promise.all(data._embedded.resources.map(resource => {
-        let { _links, ...newResource } = resource;
-
-        // Add id to the resource as a field, we will need this for curation stuff.
-        newResource.id = _links.self.href.split('/').pop();
-
-        return fetchAndAdd(newResource, [
-          {name: 'institution', url: _links.institution.href},
-          {name: 'location', url: _links.location.href}
-        ]);
-      }));
-
-      dispatch(setResources(namespace.prefix, resources));
-    }
-    catch (err) {
+      data = await response.json();
+    } catch (err) {
       console.log('Error fetching namespaces: ', err);
+      return;
     };
+
+    const resources = await Promise.all(data._embedded.resources.map(resource => {
+      let { _links, ...newResource } = resource;
+
+      // Add id to the resource as a field, we will need this for curation stuff.
+      newResource.id = _links.self.href.split('/').pop();
+
+      return fetchAndAdd(newResource, [
+        {name: 'institution', url: _links.institution.href},
+        {name: 'location', url: _links.location.href}
+      ]);
+    }));
+
+    dispatch(setResources(namespace.prefix, resources));
+
+    return data;
   };
 };
 

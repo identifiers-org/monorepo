@@ -19,20 +19,20 @@ export const getResourceRegistrationSessionFromRegistry = (id) => {
     const authToken = await renewToken();
     const requestUrl = new URL(`${config.registryApi}/restApi/resourceRegistrationSessions/${id}`);
     const init = {headers: {'Authorization': `Bearer ${authToken}`}};
-
     let data;
+
     try {
       const response = await fetch(requestUrl, init);
       data = await response.json();
-
-      // Fetches current resourceRegistrationRequest.
-      await fetchAndAdd(data, [
-        {name: 'resourceRegistrationRequest', url: data._links.resourceRegistrationRequest.href}
-      ], init);
-    }
-    catch (err) {
+    } catch (err) {
       console.log('Error fetching resource registration request: ', err);
+      return;
     }
+
+    // Fetches current resourceRegistrationRequest.
+    await fetchAndAdd(data, [
+      {name: 'resourceRegistrationRequest', url: data._links.resourceRegistrationRequest.href}
+    ], init);
 
     const eventsUrl = `${config.registryApi}/restApi/resourceRegistrationSessionEvents/search/findByResourceRegistrationSessionId?id=${id}`
     const eventsResponse = await fetch(eventsUrl, init);
@@ -64,7 +64,9 @@ export const getResourceRegistrationSessionFromRegistry = (id) => {
     dispatch(setResourceRegistrationSession(data));
 
     // Prepare amend template in state as a copy of the request.
-    dispatch(setRegistrationSessionAmend(data.resourceRegistrationRequest, 'resource'))
+    dispatch(setRegistrationSessionAmend(data.resourceRegistrationRequest, 'resource'));
+
+    return data;
   };
 };
 
@@ -157,11 +159,11 @@ export const resourceRegistrationRequestComment = (id, comment) => {
 export const resourceRegistrationRequestAmend = (id, resourceRegistrationRequest, additionalInformation) => {
   return async () => {
     const requestUrl = `${config.registryApi}/${config.resourceRegistrationEndpoint}/amendResourceRegistrationRequest/${id}`;
-    
+
     // Data transformation for the API. This should be extracted to a model converter.
     // Requester data must be inside a subobject.
     resourceRegistrationRequest['requester'] = {name: resourceRegistrationRequest.requesterName, email: resourceRegistrationRequest.requesterEmail};
-    
+
     // Also, country codes must be trimmed in institutionLocation and providerLocation.
     resourceRegistrationRequest.institutionLocation = resourceRegistrationRequest.institutionLocation.split('/').pop();
     resourceRegistrationRequest.providerLocation = resourceRegistrationRequest.providerLocation.split('/').pop();

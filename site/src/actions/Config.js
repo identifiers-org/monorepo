@@ -16,6 +16,7 @@ export const getConfigFromConfigFile = (url) => {
 export const getConfigFromDevopsApi = (url) => {
   return async (dispatch) => {
     let requestUrl = new URL(`${url}/devopsApi/getSpaConfiguration`);
+    let data;
 
     if (process.env.NODE_ENV === 'development') {
       console.log('fetching config from', requestUrl);
@@ -23,14 +24,12 @@ export const getConfigFromDevopsApi = (url) => {
 
     try {
       const response = await fetch(requestUrl);
-      const data = await response.json();
-
-      dispatch(setConfig(data));
-    }
-
-    catch (err) {
+      data = await response.json();
+    } catch (err) {
       console.log('Error fetching config, falling back to defaults.', err);
     }
+
+    dispatch(setConfig(data));
   }
 };
 

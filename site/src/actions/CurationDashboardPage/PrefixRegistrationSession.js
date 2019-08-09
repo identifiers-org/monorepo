@@ -19,20 +19,20 @@ export const getPrefixRegistrationSessionFromRegistry = (id) => {
     const authToken = await renewToken();
     const requestUrl = new URL(`${config.registryApi}/restApi/prefixRegistrationSessions/${id}`);
     const init = {headers: {'Authorization': `Bearer ${authToken}`}};
-
     let data;
+
     try {
       const response = await fetch(requestUrl, init);
       data = await response.json();
+    } catch (err) {
+      console.error('Error fetching prefix registration request: ', err);
+      return;
+    }
 
       // Fetches current prefixRegistrationRequest.
       await fetchAndAdd(data, [
         {name: 'prefixRegistrationRequest', url: data._links.prefixRegistrationRequest.href}
       ], init);
-    }
-    catch (err) {
-      console.error('Error fetching prefix registration request: ', err);
-    }
 
     const eventsUrl = `${config.registryApi}/restApi/prefixRegistrationSessionEvents/search/findByPrefixRegistrationSessionId?id=${id}`
     const eventsResponse = await fetch(eventsUrl, init);
@@ -64,7 +64,9 @@ export const getPrefixRegistrationSessionFromRegistry = (id) => {
     dispatch(setPrefixRegistrationSession(data));
 
     // Prepare amend template in state as a copy of the request.
-    dispatch(setRegistrationSessionAmend(data.prefixRegistrationRequest, 'prefix'))
+    dispatch(setRegistrationSessionAmend(data.prefixRegistrationRequest, 'prefix'));
+
+    return data;
   };
 };
 
