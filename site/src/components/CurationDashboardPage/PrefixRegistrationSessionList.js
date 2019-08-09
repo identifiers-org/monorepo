@@ -24,12 +24,11 @@ class PrefixRegistrationSessionList extends React.Component {
     this.updatePrefixRegistrationSessionList(this.props.prefixRegistrationSessionListParams);
   }
 
-  // Updates list if params have changed.
-  componentWillReceiveProps = (newProps) => {
-    if (!equalParams(this.props.prefixRegistrationSessionListParams, newProps.prefixRegistrationSessionListParams)) {
+  componentDidUpdate(prevProps) {
+    if (!equalParams(this.props.prefixRegistrationSessionListParams, prevProps.prefixRegistrationSessionListParams)) {
       const params = {
-        page: newProps.prefixRegistrationSessionListParams.number,
-        size: newProps.prefixRegistrationSessionListParams.size
+        page: this.props.prefixRegistrationSessionListParams.number,
+        size: this.props.prefixRegistrationSessionListParams.size
       };
 
       this.updatePrefixRegistrationSessionList(params);

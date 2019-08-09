@@ -93,9 +93,15 @@ class ResourceRegistrationRequestPage extends React.Component  {
 
 
   // Form update hook. Will update anytime new props are received.
-  // TODO: Refactor to getderivedstatefromprops
-  componentWillReceiveProps = (newProps) => {
-    this.updateForm(newProps);
+  componentDidUpdate = (prevProps) => {
+    const { state: { fields }, updateForm } = this;
+
+    // Update form if a field changed.
+    fields.forEach(field => {
+      if (this.props[field] !== prevProps[field]) {
+        updateForm(this.props);
+      }
+    });
   }
 
   //
@@ -163,8 +169,6 @@ class ResourceRegistrationRequestPage extends React.Component  {
         headers: {'content-type': 'application/json'},
         body: JSON.stringify(body)
       };
-
-      console.log(JSON.stringify(body));
 
       // Make request and update the store.
       const requestUrl = `${config.registryApi}/${config.resourceRequestEndpoint}`;

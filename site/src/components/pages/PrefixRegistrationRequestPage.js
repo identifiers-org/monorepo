@@ -57,7 +57,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
   //
   // Form update method.
   //
-  updateForm = (newProps) => {
+  updateForm = async (newProps) => {
     // Do not update submitted forms.
     if (this.submitted) {
       return;
@@ -65,12 +65,12 @@ class PrefixRegistrationRequestPage extends React.Component  {
 
     // Validate idRegenPattern if it is not empty if sampleId has changed.
     if (!this.fieldIsEmpty('idRegexPattern', newProps) && this.fieldHasChanged('sampleId', newProps)) {
-      this.props.validate('idRegexPattern');
+      await this.props.validate('idRegexPattern');
     }
 
     // Validate sampleId if it is not empty and providerUrlPattern has changed.
     if (!this.fieldIsEmpty('sampleId', newProps) && this.fieldHasChanged('providerUrlPattern', newProps)) {
-      this.props.validate('sampleId');
+      await this.props.validate('sampleId');
     }
 
     // Enable validation of sampleId only when providerUrlPattern is not empty.
@@ -78,30 +78,30 @@ class PrefixRegistrationRequestPage extends React.Component  {
 
     // Propagate changes and validate for disabled provider fields if institutionIsProvider.
     if (this.state.institutionIsProvider && this.fieldHasChanged('institutionName', newProps)) {
-      this.props.setValue('providerName', newProps.institutionName.value);
+      await this.props.setValue('providerName', newProps.institutionName.value);
       if (newProps.institutionName.value !== '') {
-        this.props.validate('providerName');
+        await this.props.validate('providerName');
       }
     }
 
     if (this.state.institutionIsProvider && this.fieldHasChanged('institutionDescription', newProps)) {
-      this.props.setValue('providerDescription', newProps.institutionDescription.value);
+      await this.props.setValue('providerDescription', newProps.institutionDescription.value);
       if (newProps.institutionDescription.value !== '') {
-        this.props.validate('providerDescription');
+        await this.props.validate('providerDescription');
       }
     }
 
     if (this.state.institutionIsProvider && this.fieldHasChanged('institutionHomeUrl', newProps)) {
-      this.props.setValue('providerHomeUrl', newProps.institutionHomeUrl.value);
+      await this.props.setValue('providerHomeUrl', newProps.institutionHomeUrl.value);
       if (newProps.institutionHomeUrl.value !== '') {
-        this.props.validate('providerHomeUrl');
+        await this.props.validate('providerHomeUrl');
       }
     }
 
     if (this.state.institutionIsProvider && this.fieldHasChanged('institutionLocation', newProps)) {
-      this.props.setValue('providerLocation', newProps.institutionLocation.value);
+      await this.props.setValue('providerLocation', newProps.institutionLocation.value);
       if (newProps.institutionLocation.value !== '') {
-        this.props.validate('providerLocation');
+        await this.props.validate('providerLocation');
       }
     }
 
@@ -121,9 +121,17 @@ class PrefixRegistrationRequestPage extends React.Component  {
 
 
   // Form update hook. Will update anytime new props are received.
-  componentWillReceiveProps = (newProps) => {
-    this.updateForm(newProps);
+  componentDidUpdate = (prevProps) => {
+    const { state: { fields }, updateForm } = this;
+
+    // Update form if a field changed.
+    fields.forEach(field => {
+      if (this.props[field] !== prevProps[field]) {
+        updateForm(this.props);
+      }
+    });
   }
+
 
   //
   // Form validity checker. Will check required fields validity value, and return those that are invalid.
@@ -158,7 +166,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
     }
   }
 
-  
+
   // TODO: This should be an action.
   // Handle submit of the form. Supposedly, all fields are valid, as validators would disable this otherwise.
   // But still, some error cases must be treated.
@@ -659,7 +667,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                       }
                       <button
                         className="form-control btn btn-primary"
-                        disabled={!this.state.valid && !this.state.sent}
+                        disabled={!this.state.valid && !this.state.submitted}
                         onClick={this.handleSubmit}
                       >
                         Submit prefix request

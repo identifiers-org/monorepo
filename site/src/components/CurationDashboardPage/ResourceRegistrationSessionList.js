@@ -24,12 +24,11 @@ class ResourceRegistrationSessionList extends React.Component {
     this.updateResourceRegistrationSessionList(this.props.resourceRegistrationSessionListParams);
   }
 
-  // Updates list if params have changed.
-  componentWillReceiveProps = (newProps) => {
-    if (!equalParams(this.props.resourceRegistrationSessionListParams, newProps.resourceRegistrationSessionListParams)) {
+  componentDidUpdate(prevProps) {
+    if (!equalParams(this.props.resourceRegistrationSessionListParams, prevProps.resourceRegistrationSessionListParams)) {
       const params = {
-        page: newProps.resourceRegistrationSessionListParams.number,
-        size: newProps.resourceRegistrationSessionListParams.size
+        page: this.props.resourceRegistrationSessionListParams.number,
+        size: this.props.resourceRegistrationSessionListParams.size
       };
 
       this.updateResourceRegistrationSessionList(params);
