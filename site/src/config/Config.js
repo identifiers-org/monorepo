@@ -3,10 +3,10 @@ export const config = {
 
   prefixRegistrationRequestValidationEndpoint: 'prefixRegistrationApi',
   resourceRegistrationRequestValidationEndpoint: 'resourceManagementApi',
-  
+
   prefixRegistrationEndpoint: 'prefixRegistrationApi',
   resourceRegistrationEndpoint: 'resourceManagementApi',
-  
+
   prefixRequestEndpoint: 'prefixRegistrationApi/registerPrefix',
   resourceRequestEndpoint: 'resourceManagementApi/registerResource',
 
