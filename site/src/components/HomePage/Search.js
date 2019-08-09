@@ -1,10 +1,11 @@
 import React from 'react';
-import SearchSuggestions from './SearchSuggestions';
-
 import { connect } from 'react-redux';
 
 // Actions.
 import { getNamespacesFromRegistry } from '../../actions/NamespaceList';
+
+// Components.
+import SearchSuggestions from './SearchSuggestions';
 
 // Config.
 import { config } from '../../config/Config';
@@ -55,6 +56,7 @@ class Search extends React.Component {
     await getNamespacesFromRegistry({
       content: prefixEffectiveValue
     });
+
     this.setState({
       namespaceList: this.props.namespaceList.sort((a, b) => {
         if (a.prefix.startsWith(prefixEffectiveValue) && !b.prefix.startsWith(prefixEffectiveValue)) {
@@ -73,7 +75,7 @@ class Search extends React.Component {
 
 
   handleChange = () => {
-    const { 
+    const {
       updateNamespaceList,
       props: { handleChangeAction = () => {} }
     } = this;
@@ -108,7 +110,8 @@ class Search extends React.Component {
 
     switch (e.keyCode) {
     case 13: {  // Enter key
-      e.preventDefault();
+      e.preventDefault();   // Do not send form.
+
       if (activeSuggestion === -1) {
         handleSuggestionClick(query);
       } else {
@@ -118,6 +121,8 @@ class Search extends React.Component {
     }
 
     case 38: {  // Up key
+      e.preventDefault();   // Do not take cursor to start of input text.
+
       if (this.state.activeSuggestion > -1) {
         this.setState({activeSuggestion: activeSuggestion - 1});
       }
@@ -125,6 +130,8 @@ class Search extends React.Component {
     }
 
     case 40: {  // Down key
+      e.preventDefault();   // Do not take cursor to end of input text.
+
       if (activeSuggestion < namespaceList.length - 1) {
         this.setState({activeSuggestion: activeSuggestion + 1});
       }
@@ -138,7 +145,7 @@ class Search extends React.Component {
   }
 
   handleSuggestionClick = (prefix) => {
-    const { 
+    const {
       updateNamespaceList,
       props: { handleSuggestionAction }
      } = this;
@@ -173,7 +180,7 @@ class Search extends React.Component {
     if (!this.state.query) return '';
     return namespaceList.find(namespace => namespace.prefix === this.state.query) ? 'is-valid' : 'is-invalid';
   }
-  
+
 
   render() {
     const {
