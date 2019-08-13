@@ -47,10 +47,7 @@ class Paginator extends React.Component {
       firstIndex -= pageWindow + number + 1;
     }
 
-    const linkArray = [...Array(totalPages).keys()]
-      .slice(firstIndex, lastIndex);
-
-    console.log('totalElements', totalElements);
+    const linkArray = [...Array(totalPages).keys()].slice(firstIndex, lastIndex);
 
     return (
       <div className="row justify-content-between">
