@@ -33,6 +33,7 @@ public class ResourceLifecycleManagementServiceSimpleStrategy implements Resourc
     private String deprecationUrlTemplate;
 
     // Repositories
+    @Autowired
     private ResourceRepository resourceRepository;
 
     // Helpers
