@@ -389,9 +389,6 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
   }
 }
 
-// *****************************************************************************************
-// TODO - Amend state should fill from request.                              <--------------
-// *****************************************************************************************
 
 // Mapping
 const mapStateToProps = (state) => ({
