@@ -6,6 +6,7 @@ import org.identifiers.cloud.hq.ws.registry.api.responses.*;
 import org.identifiers.cloud.hq.ws.registry.models.NamespaceLifecycleManagementContext;
 import org.identifiers.cloud.hq.ws.registry.models.NamespaceLifecycleManagementOperationReport;
 import org.identifiers.cloud.hq.ws.registry.models.NamespaceLifecycleManagementService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class NamespaceManagementApiModel {
     // Services
+    @Autowired
     private NamespaceLifecycleManagementService namespaceLifecycleManagementService;
 
     // Helpers
