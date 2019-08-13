@@ -338,9 +338,6 @@ class ResourceRegistrationSessionAmendForm extends React.Component {
   }
 }
 
-// *****************************************************************************************
-// TODO - Amend state should fill from request.                              <--------------
-// *****************************************************************************************
 
 // Mapping
 const mapStateToProps = (state) => ({
