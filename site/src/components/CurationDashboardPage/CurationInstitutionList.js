@@ -59,7 +59,7 @@ class CurationInstitutionList extends React.Component {
       handleSetSize,
       props: {
         curationInstitutionList,
-        curationInstitutionListParams: { number, totalPages }
+        curationInstitutionListParams: { number, size, totalElements, totalPages }
       },
       state: { nameContent }
     } = this;
@@ -89,8 +89,10 @@ class CurationInstitutionList extends React.Component {
         <Paginator
           number={number}
           totalPages={totalPages}
+          totalElements={totalElements}
           navigate={handleNavigate}
           setSize={handleSetSize}
+          size={size}
         />
         <div className="row justify-content-md-center mt-2">
           <div className="col">
