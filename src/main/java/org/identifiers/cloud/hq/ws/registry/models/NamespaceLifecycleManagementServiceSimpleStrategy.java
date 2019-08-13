@@ -3,6 +3,7 @@ package org.identifiers.cloud.hq.ws.registry.models;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -21,6 +22,7 @@ import java.util.Optional;
 @Component
 public class NamespaceLifecycleManagementServiceSimpleStrategy implements NamespaceLifecycleManagementService {
     // Repositories
+    @Autowired
     private NamespaceRepository namespaceRepository;
 
     // Helpers
