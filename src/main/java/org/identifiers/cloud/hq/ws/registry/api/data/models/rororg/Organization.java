@@ -41,5 +41,5 @@ public class Organization implements Serializable {
     // TODO Wikidata
     // GRID
     @JsonAlias({"GRID"})
-    private GridId grid;
+    private OrganizationGridIdInfo grid;
 }

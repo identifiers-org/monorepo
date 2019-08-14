@@ -23,7 +23,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode
 @Accessors(chain = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class GridId {
+public class OrganizationGridIdInfo {
     private String preferred;
     private String all;
 }
