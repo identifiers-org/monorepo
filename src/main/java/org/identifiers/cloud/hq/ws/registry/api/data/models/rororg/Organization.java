@@ -36,10 +36,5 @@ public class Organization implements Serializable {
     private String wikipediaUrl;
     // Country
     private Country country;
-    // TODO ISNI
-    // TODO OrgRef
-    // TODO Wikidata
-    // GRID
-    @JsonAlias({"GRID"})
-    private OrganizationGridIdInfo grid;
+    // TODO Wire in external IDs, although I may not use them
 }
