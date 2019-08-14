@@ -29,10 +29,10 @@ export const getPrefixRegistrationSessionFromRegistry = (id) => {
       return;
     }
 
-      // Fetches current prefixRegistrationRequest.
-      await fetchAndAdd(data, [
-        {name: 'prefixRegistrationRequest', url: data._links.prefixRegistrationRequest.href}
-      ], init);
+    // Fetches current prefixRegistrationRequest.
+    await fetchAndAdd(data, [
+      {name: 'prefixRegistrationRequest', url: data._links.prefixRegistrationRequest.href}
+    ], init);
 
     const eventsUrl = `${config.registryApi}/restApi/prefixRegistrationSessionEvents/search/findByPrefixRegistrationSessionId?id=${id}`
     const eventsResponse = await fetch(eventsUrl, init);
