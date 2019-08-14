@@ -11,6 +11,7 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Project: registry
@@ -37,4 +38,6 @@ public class Organization implements Serializable {
     // Country
     private Country country;
     // TODO Wire in external IDs, although I may not use them
+    @JsonAlias({"external_ids"})
+    private Map<String, Object> externalIds;
 }
