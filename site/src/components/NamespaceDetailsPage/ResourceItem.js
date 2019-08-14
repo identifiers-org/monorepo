@@ -4,7 +4,13 @@ import { withRouter } from 'react-router-dom';
 
 // Actions.
 import { getResourcesFromRegistry } from '../../actions/NamespaceList';
-import { setResourcePatch, setResourcePatchField, patchResource } from '../../actions/ResourcePatch';
+import {
+  setResourcePatch,
+  setResourcePatchField,
+  patchResource,
+  reactivateResource,
+  deactivateResource
+} from '../../actions/ResourcePatch';
 
 // Components.
 import ReversibleField from '../common/ReversibleField';
@@ -24,6 +30,7 @@ class ResourceItem extends React.Component {
 
     this.state = {
       editResource: params.get('editResource') === 'true' || false,
+      reactivateResource: params.get('reactivateResource') === 'true' || false,
       resourceId: undefined,
       resourceFieldsChanged: new Set(),
       newResource: this.props.newResource
@@ -77,28 +84,33 @@ class ResourceItem extends React.Component {
   handleClickCommitChangesButton = async () => {
     const {
       state: { resourceId, resourceFieldsChanged, newResource },
-      props: { patchResource, namespace }
+      props: { editResource, namespace, patchResource, reactivateResource }
     } = this;
 
-    if (resourceFieldsChanged.size === 0) {
+    const dialogTitleCaption = editResource ? 'Confirm changes to resource' : reactivateResource ? 'Confirm reactivation' : undefined;
+    const dialogTextCaption = editResource ? `Changed fields: ${[...resourceFieldsChanged].join(', ')}` : undefined;
+    const buttonCaption = editResource ? 'edition' : reactivateResource ? 'reactivation' : undefined;
+
+
+    if (editResource && resourceFieldsChanged.size === 0) {
       infoToast('No changes to commit');
       return;
     }
 
     const result = await swalConfirmation.fire({
-      title: 'Confirm changes to resource',
-      text: `Changed fields: ${[...resourceFieldsChanged].join(', ')}`,
-      confirmButtonText: 'Commit changes',
-      cancelButtonText: 'Cancel'
+      title: dialogTitleCaption,
+      text: dialogTextCaption,
+      confirmButtonText: `Commit ${buttonCaption}`,
+      cancelButtonText: `Cancel ${buttonCaption}`
     });
 
     if (result.value) {
-      const result = await patchResource(resourceId, newResource);
+      const result = editResource ? await patchResource(resourceId, newResource) : await reactivateResource(resourceId, newResource);
 
       if (result.status === 200) {
-        successToast('Changed committed successfully');
+        successToast('Changes committed successfully');
         await this.props.getResourcesFromRegistry(namespace);
-        this.setState({editResource: false, resourceFieldsChanged: new Set()});
+        this.setState({editResource: false, reactivateResource: false, resourceFieldsChanged: new Set()});
       } else {
         failureToast('Error committing changes');
       }
@@ -114,7 +126,32 @@ class ResourceItem extends React.Component {
     });
 
     if (result.value) {
-      this.setState({editResource: false});
+      this.setState({editResource: false, reactivateResource: false});
+    }
+  };
+
+  handleClickDeactivateButton = async () => {
+    const {
+      state: { resourceId },
+      props: { deactivateResource, namespace }
+    } = this;
+
+    const result = await swalConfirmation.fire({
+      title: 'Confirm deactivation',
+      confirmButtonText: 'Confirm',
+      cancelButtonText: 'Cancel'
+    });
+
+    if (result.value) {
+      const result = await deactivateResource(resourceId);
+
+      if (result.status === 200) {
+        successToast('Resource deactivation successful');
+        await this.props.getResourcesFromRegistry(namespace);
+        this.setState({editResource: false, resourceFieldsChanged: new Set()});
+      } else {
+        failureToast('Error deactivating resource');
+      }
     }
   };
 
@@ -130,7 +167,7 @@ class ResourceItem extends React.Component {
     console.log('fields', resourceFieldsToValidate);
 
     const validations = await Promise.all(resourceFieldsToValidate
-      .map(field => validators[field](newResource[field], newResource))
+      .map(field => validators[field](newResource[field], newResource, 'resource'))
     );
     const toastMessage = validations
       .filter(validations => !validations.valid)
@@ -144,11 +181,11 @@ class ResourceItem extends React.Component {
   }
 
   handleClickEditButton = () => {
-    this.setState({editNamespace: true});
-  }
-
-  handleClickEditButton = () => {
     this.setState({editResource: true});
+  };
+
+  handleClickReactivateButton = async () => {
+    this.setState({reactivateResource: true});
   };
 
 
@@ -158,21 +195,25 @@ class ResourceItem extends React.Component {
       handleChangeField,
       handleClickAddInstitution,
       handleClickCommitChangesButton,
+      handleClickDeactivateButton,
       handleClickDiscardChangesButton,
       handleClickEditButton,
+      handleClickReactivateButton,
       handleClickValidateChangesButton,
       props: { institutionList, locationList, resource },
-      state: { editResource }
+      state: { editResource, reactivateResource }
     } = this;
 
     const providerCodeLabel = resource.providerCode === 'CURATOR_REVIEW' ? 'Empty provider code' : resource.providerCode;
     const locationCountryCode = resource ? resource.location._links.self.href : undefined;
     const institutionId = resource ? resource.institution._links.self.href : undefined;
 
+    const buttonCaption = editResource ? 'edition' : reactivateResource ? 'reactivation' : undefined;
+
 
     return (
       <>
-        {editResource ? (
+        {editResource || reactivateResource ? (
           <div className="row">
             <div className="col">
             <RoleConditional
@@ -186,16 +227,16 @@ class ResourceItem extends React.Component {
                   <i className="icon icon-common icon-tasks mr-1" />Perform validation
                 </button>
                 <button
-                  className="btn btn-sm btn-success edit-button mb-1 mr-2"
+                  className="btn btn-sm btn-success edit-button mb-1 mr-2 w-15"
                   onClick={handleClickCommitChangesButton}
                 >
-                  <i className="icon icon-common icon-check" /> Commit changes
+                  <i className="icon icon-common icon-check" /> {`Commit ${buttonCaption}`}
                 </button>
                 <button
-                  className="btn btn-sm btn-danger edit-button mb-1"
+                  className="btn btn-sm btn-danger edit-button mb-1 w-15"
                   onClick={handleClickDiscardChangesButton}
                 >
-                  <i className="icon icon-common icon-times" /> Discard changes
+                  <i className="icon icon-common icon-times" /> {`Discard ${buttonCaption}`}
                 </button>
               </>
             </RoleConditional>
@@ -207,12 +248,30 @@ class ResourceItem extends React.Component {
               <RoleConditional
                 requiredRoles={['editResource']}
               >
-                <button
-                  className="btn btn-sm btn-success edit-button mb-1 w-20"
-                  onClick={handleClickEditButton}
-                >
-                  <i className="icon icon-common icon-edit mr-1"/>Edit resource
-                </button>
+                <>
+                  <button
+                    className="btn btn-sm btn-success edit-button mb-1 w-20"
+                    onClick={handleClickEditButton}
+                  >
+                    <i className="icon icon-common icon-edit mr-1"/>Edit resource
+                  </button>
+                  {resource.deprecated ? (
+                    <button
+                      className="btn btn-sm btn-warning edit-button ml-2 mb-1 w-15"
+                      onClick={handleClickReactivateButton}
+                    >
+                      {/* TODO: change to trash-restore when EBI adds it to EBI-Font-icons */}
+                      <i className="icon icon-common icon-caret-square-up mr-1"/>Reactivate resource
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-sm btn-danger edit-button ml-2 mb-1 w-15"
+                      onClick={handleClickDeactivateButton}
+                    >
+                      <i className="icon icon-common icon-trash mr-1"/>Deactivate resource
+                    </button>
+                  )}
+                </>
               </RoleConditional>
             </div>
           </div>
@@ -225,8 +284,9 @@ class ResourceItem extends React.Component {
                 <tr>
                   <td
                     rowSpan="6"
-                    className={`w-20 align-middle ${resource.official ? 'bg-warning' : 'bg-primary text-white'}`}
+                    className={`w-20 align-middle ${resource.deprecated ? 'bg-danger' : resource.official ? 'bg-warning' : 'bg-primary text-white'}`}
                   >
+                    {resource.deprecated && <p className="font-weight-bold text-center mb-3">DEACTIVATED</p>}
                     {editResource ? (
                       <RoleConditional
                         requiredRoles={['editResource']}
@@ -265,7 +325,7 @@ class ResourceItem extends React.Component {
                 <tr>
                   <td className="px-3">Access URL</td>
                   <td>
-                    {editResource ? (
+                    {editResource || reactivateResource ? (
                       <RoleConditional
                         requiredRoles={['editResource']}
                         fallbackComponent={resource.urlPattern}
@@ -406,7 +466,9 @@ const mapDispatchToProps = dispatch => ({
   getResourcesFromRegistry: (namespace) => dispatch(getResourcesFromRegistry(namespace)),
   setResourcePatch: (id, resource) => dispatch(setResourcePatch(id, resource)),
   setResourcePatchField: (field, value) => dispatch(setResourcePatchField(field, value)),
-  patchResource: (id, newResource) => dispatch(patchResource(id, newResource))
+  patchResource: (id, newResource) => dispatch(patchResource(id, newResource)),
+  deactivateResource: (id) => dispatch(deactivateResource(id)),
+  reactivateResource: (id, newResource) => dispatch(reactivateResource(id, newResource))
 });
 
 
