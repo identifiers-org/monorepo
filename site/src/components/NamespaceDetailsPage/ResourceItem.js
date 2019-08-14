@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import moment from 'moment';
 
 // Actions.
 import { getResourcesFromRegistry } from '../../actions/NamespaceList';
@@ -294,7 +295,12 @@ class ResourceItem extends React.Component {
                     rowSpan="6"
                     className={`w-20 align-middle ${resource.deprecated ? 'bg-danger' : resource.official ? 'bg-warning' : 'bg-primary text-white'}`}
                   >
-                    {resource.deprecated && <p className="font-weight-bold text-center mb-3">DEACTIVATED</p>}
+                    {resource.deprecated && (
+                      <>
+                        <p className="font-weight-bold text-center mb-0 lh-05">DEACTIVATED</p>
+                        <p className="text-center mb-3"><small>on {moment(resource.deprecationDate).format('llll')}</small></p>
+                      </>
+                    )}
                     {editResource ? (
                       <RoleConditional
                         requiredRoles={['editResource']}
