@@ -188,7 +188,7 @@ class NamespaceDetailsPage extends React.Component {
     }
 
     const validations = await Promise.all(namespaceFieldsToValidate
-      .map(field => validators[field](newNamespace[field], newNamespace))
+      .map(field => validators[field](newNamespace[field], newNamespace, 'prefix'))
     );
     const toastMessage = validations
       .filter(validations => !validations.valid)
