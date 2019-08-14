@@ -54,7 +54,7 @@ spec:
                         topologyKey: "kubernetes.io/hostname"
             containers:
                 - name: cloud-hq-ws-mirid-controller
-                  image: identifiersorg/cloud-hq-ws-mirid-controller:1.0.2
+                  image: identifiersorg/cloud-hq-ws-mirid-controller:1.0.4
                   resources:
                       requests:
                           memory: 420Mi
