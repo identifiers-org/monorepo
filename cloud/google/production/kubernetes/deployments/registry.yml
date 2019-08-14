@@ -119,7 +119,15 @@ spec:
                     value: "true"
                   - name: HQ_WS_REGISTRY_CONFIG_EMAIL_BOOLEAN_START_TLS
                     value: "true"
-                  # E-mail Notifiers configuration
+                  # E-mail Notifiers configuration - Common
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_FROM
+                    value: "curator@identifiers.org"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REPLY_TO
+                    value: "identifiers-org@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_EMAIL_CURATION
+                    value: "identifiers-org-curators@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_PLACEHOLDER_DONOTUSE
+                    value: "PLACEHOLDER_do_not_use_this"
                   ports:
                   - containerPort: 8180
                   readinessProbe:
