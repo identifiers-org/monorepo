@@ -43,9 +43,9 @@ const validators = {
     return validateThroughAPI(url, {name});
   },
 
-  description: async (description, registrationRequest, registrationRequestType) => {
-    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateDescription`;
-    return validateThroughAPI(url, {description});
+  description: async (providerDescription, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateProviderDescription`;
+    return validateThroughAPI(url, {providerDescription});
   },
 
   requestedPrefix: async (requestedPrefix, registrationRequest, registrationRequestType) => {
@@ -82,7 +82,9 @@ const validators = {
     return validateThroughAPI(url, {additionalInformation});
   },
 
-  institution: () => {valid: true},
+  // Location and institution when selected from a dropdown will always be valid.
+  institution: () => ({valid: true}),
+  location: () => ({valid: true}),
 
   institutionName: async (institutionName, registrationRequest, registrationRequestType) => {
     const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateInstitutionName`;
