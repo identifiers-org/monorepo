@@ -240,8 +240,8 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
                         {
                           locationList.map(location =>
                             <option
-                              value={location.id}
-                              key={`option-${location.id}`}
+                              value={location.shortId}
+                              key={`option-${location.shortId}`}
                             >
                               {location.label}
                             </option>
@@ -315,8 +315,8 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
                         {
                           locationList.map(location =>
                             <option
-                              value={location.id}
-                              key={`option-${location.id}`}
+                              value={location.shortId}
+                              key={`option-${location.shortId}`}
                               >
                               {location.label}
                             </option>
