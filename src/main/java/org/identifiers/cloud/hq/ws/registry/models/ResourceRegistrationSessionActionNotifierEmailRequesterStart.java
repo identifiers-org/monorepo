@@ -32,6 +32,8 @@ public class ResourceRegistrationSessionActionNotifierEmailRequesterStart implem
     // E-mail general configuration
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.from}")
     private String emailSender;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.replyto}")
+    private String emailReplyTo;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.requester.resourcereg.start.cc}")
     private String emailCc;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.requester.resourcereg.start.cco}")
@@ -83,6 +85,7 @@ public class ResourceRegistrationSessionActionNotifierEmailRequesterStart implem
         SimpleMailMessage emailMessage = new SimpleMailMessage();
         // Set message parameters
         emailMessage.setFrom(emailSender);
+        emailMessage.setReplyTo(emailReplyTo);
         emailMessage.setTo(session.getResourceRegistrationRequest().getRequesterEmail());
         emailMessage.setCc(emailCc.split(","));
         emailMessage.setBcc(emailBcc.split(","));

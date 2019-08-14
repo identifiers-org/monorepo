@@ -32,6 +32,8 @@ public class ResourceRegistrationSessionActionNotifierEmailRejection implements 
     // E-mail general configuration
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.from}")
     private String emailSender;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.replyto}")
+    private String emailReplyTo;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.requester.resourcereg.rejection.cc}")
     private String emailCc;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.requester.resourcereg.rejection.cco}")
@@ -88,6 +90,7 @@ public class ResourceRegistrationSessionActionNotifierEmailRejection implements 
         SimpleMailMessage emailMessage = new SimpleMailMessage();
         // Set message parameters
         emailMessage.setFrom(emailSender);
+        emailMessage.setReplyTo(emailReplyTo);
         emailMessage.setTo(session.getResourceRegistrationRequest().getRequesterEmail());
         emailMessage.setCc(emailCc.split(","));
         emailMessage.setBcc(emailBcc.split(","));

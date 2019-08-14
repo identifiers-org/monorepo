@@ -32,6 +32,8 @@ public class PrefixRegistrationSessionActionNotifierEmailRequesterStart implemen
     // E-mail general configuration
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.from}")
     private String emailSender;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.replyto}")
+    private String emailReplyTo;
     // TODO Prefilled with the default value, in case it is missing
     //@Value("${org.identifiers.cloud.hq.ws.registry.notifiers.requester.prefixreg.start.to}")
     //private String emailTo;
@@ -91,6 +93,7 @@ public class PrefixRegistrationSessionActionNotifierEmailRequesterStart implemen
         SimpleMailMessage emailMessage = new SimpleMailMessage();
         // Set message parameters
         emailMessage.setFrom(emailSender);
+        emailMessage.setReplyTo(emailReplyTo);
         emailMessage.setTo(session.getPrefixRegistrationRequest().getRequesterEmail());
         emailMessage.setCc(emailCc.split(","));
         emailMessage.setBcc(emailBcc.split(","));

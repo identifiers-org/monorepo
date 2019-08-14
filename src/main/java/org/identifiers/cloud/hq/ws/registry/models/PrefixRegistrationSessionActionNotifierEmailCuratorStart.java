@@ -34,6 +34,8 @@ public class PrefixRegistrationSessionActionNotifierEmailCuratorStart implements
     // E-mail general configuration
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.from}")
     private String emailSender;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.replyto}")
+    private String emailReplyTo;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.curator.prefixreg.start.to}")
     private String emailTo;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.curator.prefixreg.start.cc}")
@@ -90,6 +92,7 @@ public class PrefixRegistrationSessionActionNotifierEmailCuratorStart implements
         SimpleMailMessage emailMessage = new SimpleMailMessage();
         // Set message parameters
         emailMessage.setFrom(emailSender);
+        emailMessage.setReplyTo(emailReplyTo);
         emailMessage.setTo(emailTo.split(","));
         emailMessage.setCc(emailCc.split(","));
         emailMessage.setBcc(emailBcc.split(","));

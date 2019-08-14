@@ -32,6 +32,8 @@ public class ResourceRegistrationSessionActionNotifierEmailCuratorStart implemen
     // E-mail general configuration
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.from}")
     private String emailSender;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.replyto}")
+    private String emailReplyTo;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.curator.resourcereg.start.to}")
     private String emailTo;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.curator.resourcereg.start.cc}")
@@ -88,6 +90,7 @@ public class ResourceRegistrationSessionActionNotifierEmailCuratorStart implemen
         SimpleMailMessage emailMessage = new SimpleMailMessage();
         // Set message parameters
         emailMessage.setFrom(emailSender);
+        emailMessage.setReplyTo(emailReplyTo);
         emailMessage.setTo(emailTo.split(","));
         emailMessage.setCc(emailCc.split(","));
         emailMessage.setBcc(emailBcc.split(","));
