@@ -298,7 +298,7 @@ class ResourceItem extends React.Component {
                     {resource.deprecated && (
                       <>
                         <p className="font-weight-bold text-center mb-0 lh-05">DEACTIVATED</p>
-                        <p className="text-center mb-3"><small>on {moment(resource.deprecationDate).format('llll')}</small></p>
+                        <p className="text-center mb-3"><small>on {moment(resource.deprecationDate).format('ll')}</small></p>
                       </>
                     )}
                     {editResource ? (
