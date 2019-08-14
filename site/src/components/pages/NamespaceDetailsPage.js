@@ -433,12 +433,32 @@ class NamespaceDetailsPage extends React.Component {
               </div>
             </div>
           ) || (
-            namespace.resources.map(resource =>
-              <ResourceItem
+            namespace.resources.sort((a, b) => {
+              // Official resources always go first.
+              if (b.official - a.official !== 0) {
+                return b.official - a.official;
+              }
+
+              // Deprecated resources always go last.
+              if (a.deprecated - b.deprecated !== 0) {
+                return a.deprecated - b.deprecated;
+              }
+
+              // CURATOR_REVIEW provider code resources always go last.
+              if (a.providerCode === 'CURATOR_REVIEW' && b.providerCode !== 'CURATOR_REVIEW') return 1;
+              if (a.providerCode !== 'CURATOR_REVIEW' && b.providerCode === 'CURATOR_REVIEW') return -1;
+
+              console.log(`${b.providerCode} - ${a.providerCode} ${b.providerCode < a.providerCode}`);
+
+              return a.providerCode > b.providerCode ? 1 : a.providerCode < b.providerCode ? -1 : 0;
+            }).map(resource => {
+              console.log('resource.providerCode', resource.providerCode);
+              return (<ResourceItem
                 key={`resource-${resource.mirId}`}
                 namespace={namespace}
                 resource={resource}
-              />
+              />)
+            }
             )
           )
         }
