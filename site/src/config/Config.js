@@ -10,6 +10,9 @@ export const config = {
   prefixRequestEndpoint: 'prefixRegistrationApi/registerPrefix',
   resourceRequestEndpoint: 'resourceManagementApi/registerResource',
 
+  namespaceManagementEndpoint: 'namespaceManagementApi',
+  resourceManagementEndpoint: 'resourceManagementApi',
+
   satelliteUrl: 'https://identifiers.org',
   feedbackUrl: 'https://github.com/identifiers-org/identifiers-org.github.io/issues/new',
   documentationUrl: 'http://docs.identifiers.org',
