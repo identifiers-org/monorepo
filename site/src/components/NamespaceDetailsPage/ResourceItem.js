@@ -42,8 +42,19 @@ class ResourceItem extends React.Component {
     // Prepares model for resource patching.
     const { resource } = this.props;
 
-    this.setState({resourceId: resource.id, newResource: resource});
-    this.props.setResourcePatch(resource.id, resource);
+    const newResource = {
+      providerCode: resource.providerCode,
+      description: resource.description,
+      urlPattern: resource.urlPattern,
+      institution: resource.institution._links.self.href,
+      resourceHomeUrl: resource.resourceHomeUrl,
+      location: resource.location._links.self.href,
+      sampleId: resource.sampleId,
+      official: resource.official
+    }
+
+    this.setState({resourceId: resource.id, newResource});
+    this.props.setResourcePatch(resource.id, newResource);
   }
 
 
@@ -51,9 +62,7 @@ class ResourceItem extends React.Component {
   // Field manipulation handler. Undefined 'value' field will revert to default.
   //
   handleChangeField = (field, value) => {
-    const {
-      props: { institutionList, locationList, resource }
-    } = this;
+    const { resource } = this.props;
 
     // Add/remove field to changed list if modified/reset, so it is validated or not when clicked on the perform
     // validation button.
@@ -83,8 +92,8 @@ class ResourceItem extends React.Component {
 
   handleClickCommitChangesButton = async () => {
     const {
-      state: { resourceId, resourceFieldsChanged, newResource },
-      props: { editResource, namespace, patchResource, reactivateResource }
+      state: { editResource, newResource, resourceId, resourceFieldsChanged },
+      props: { namespace, patchResource, reactivateResource }
     } = this;
 
     const dialogTitleCaption = editResource ? 'Confirm changes to resource' : reactivateResource ? 'Confirm reactivation' : undefined;
@@ -105,7 +114,7 @@ class ResourceItem extends React.Component {
     });
 
     if (result.value) {
-      const result = editResource ? await patchResource(resourceId, newResource) : await reactivateResource(resourceId, newResource);
+      const result = editResource ? await patchResource(resourceId, newResource) : reactivateResource ? await reactivateResource(resourceId, newResource) : undefined;
 
       if (result.status === 200) {
         successToast('Changes committed successfully');
@@ -164,11 +173,10 @@ class ResourceItem extends React.Component {
       return;
     }
 
-    console.log('fields', resourceFieldsToValidate);
-
     const validations = await Promise.all(resourceFieldsToValidate
       .map(field => validators[field](newResource[field], newResource, 'resource'))
     );
+
     const toastMessage = validations
       .filter(validations => !validations.valid)
       .map(validations => validations.errorMessage).join('\n');
