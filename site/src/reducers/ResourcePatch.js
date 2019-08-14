@@ -3,14 +3,14 @@
 const defaultState = {
   id: undefined,
   resource: {
-    mirId: undefined,
-    urlPattern: undefined,
-    name: undefined,
-    description: undefined,
-    official: undefined,
     providerCode: undefined,
+    description: undefined,
+    urlPattern: undefined,
+    institution: undefined,
+    resourceHomeUrl: undefined,
+    location: undefined,
     sampleId: undefined,
-    resourceHomeUrl: undefined
+    official: undefined
   }
 };
 
@@ -30,14 +30,14 @@ const resourcePatchReducer = (state = defaultState, action) => {
     return {
       id: action.id,
       resource: {
-        mirId: action.resource.mirId,
-        urlPattern: action.resource.urlPattern,
-        name: action.resource.name,
-        description: action.resource.description,
-        official: action.resource.official,
         providerCode: action.resource.providerCode,
+        description: action.resource.description,
+        urlPattern: action.resource.urlPattern,
+        institution: action.resource.institution,
+        resourceHomeUrl: action.resource.resourceHomeUrl,
+        location: action.resource.location,
         sampleId: action.resource.sampleId,
-        resourceHomeUrl: action.resource.resourceHomeUrl
+        official: action.resource.official
       }
     };
   }
