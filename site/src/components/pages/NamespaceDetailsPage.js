@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 // Actions.
 import { getNamespaceFromRegistry, getResourcesFromRegistry } from '../../actions/NamespaceList';
@@ -230,6 +231,22 @@ class NamespaceDetailsPage extends React.Component {
           extraTitle={namespace.name}
         />
 
+        {namespace.deprecated && (
+          <div className="row justify-content-md-center p-3 mb-3">
+            <div className="col col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-8 bg-danger p-2">
+              <h3 className="text-center text-white mb-2">
+                <i className="icon icon-common icon-trash mr-3" />
+                This namespace is deactivated
+              </h3>
+              <p className="mb-0 text-white">
+                The service has been marked as deactivated since {moment(namespace.deprecationDate).format('ll')}. This
+                means either the institution abandoned it, or no providers are available for it. You can try looking in
+                the institution's web below for more information.
+              </p>
+            </div>
+          </div>
+        )}
+
         {editNamespace ? (
           <div className="row mb-1">
             <div className="col">
@@ -448,17 +465,13 @@ class NamespaceDetailsPage extends React.Component {
               if (a.providerCode === 'CURATOR_REVIEW' && b.providerCode !== 'CURATOR_REVIEW') return 1;
               if (a.providerCode !== 'CURATOR_REVIEW' && b.providerCode === 'CURATOR_REVIEW') return -1;
 
-              console.log(`${b.providerCode} - ${a.providerCode} ${b.providerCode < a.providerCode}`);
-
               return a.providerCode > b.providerCode ? 1 : a.providerCode < b.providerCode ? -1 : 0;
-            }).map(resource => {
-              console.log('resource.providerCode', resource.providerCode);
-              return (<ResourceItem
+            }).map(resource =>
+              <ResourceItem
                 key={`resource-${resource.mirId}`}
                 namespace={namespace}
                 resource={resource}
-              />)
-            }
+              />
             )
           )
         }
