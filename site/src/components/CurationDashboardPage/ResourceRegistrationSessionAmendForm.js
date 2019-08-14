@@ -266,7 +266,7 @@ class ResourceRegistrationSessionAmendForm extends React.Component {
                             <option
                               value={location.id}
                               key={`option-${location.id}`}
-                              >
+                            >
                               {location.label}
                             </option>
                           )
