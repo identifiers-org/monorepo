@@ -15,6 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("rorIdApi")
-public class RorOrgApiController {
+public class RorIdApiController {
     // TODO
 }
