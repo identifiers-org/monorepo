@@ -50,3 +50,45 @@ export const patchResource = (id, newResource) => {
     return await fetch(requestUrl, init);
   }
 };
+
+// Deactivate a resource.
+export const deactivateResource = (id) => {
+  return async () => {
+    const requestUrl = `${config.registryApi}/${config.resourceManagementEndpoint}/deactivateResource/${id}`;
+    console.log('requestUrl', requestUrl);
+    const authToken = await renewToken();
+    const init = {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${authToken}`
+      }
+    };
+
+    return await fetch(requestUrl, init);
+  };
+};
+
+
+export const reactivateResource = (id, newResource) => {
+  return async () => {
+    const requestUrl = `${config.registryApi}/${config.resourceManagementEndpoint}/reactivateResource/${id}`;
+    const authToken = await renewToken();
+    const init = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`
+      },
+      body: JSON.stringify({
+        apiVersion: '1.0',
+        payload: {
+          providerUrlPattern: newResource.urlPattern
+        }
+      })
+    };
+
+    console.log('init', init);
+
+    return await fetch(requestUrl, init);
+  };
+};
