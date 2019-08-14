@@ -56,4 +56,8 @@ public class Institution {
 
     @ManyToOne(optional = false)
     private Location location;
+
+    // ROR IDs, long URL just in case...
+    @Column(length = 2000)
+    private String rorId;
 }
