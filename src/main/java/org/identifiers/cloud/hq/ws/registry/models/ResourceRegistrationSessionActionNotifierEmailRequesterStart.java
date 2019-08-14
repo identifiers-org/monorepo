@@ -51,6 +51,8 @@ public class ResourceRegistrationSessionActionNotifierEmailRequesterStart implem
     private String placeholderResourceDescription;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.requestername}")
     private String placeholderRequesterName;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.donotuse}")
+    private String placeholderDoNotUse;
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -87,8 +89,8 @@ public class ResourceRegistrationSessionActionNotifierEmailRequesterStart implem
         emailMessage.setFrom(emailSender);
         emailMessage.setReplyTo(emailReplyTo);
         emailMessage.setTo(session.getResourceRegistrationRequest().getRequesterEmail());
-        emailMessage.setCc(emailCc.split(","));
-        emailMessage.setBcc(emailBcc.split(","));
+        if (!emailCc.equals(placeholderDoNotUse)) emailMessage.setCc(emailCc.split(","));
+        if (!emailBcc.equals(placeholderDoNotUse)) emailMessage.setBcc(emailBcc.split(","));
         emailMessage.setSubject(parseEmailSubject(session));
         emailMessage.setText(parseEmailBody(session));
         javaMailSender.send(emailMessage);
