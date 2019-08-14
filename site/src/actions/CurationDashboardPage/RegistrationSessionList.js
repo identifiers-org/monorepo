@@ -29,7 +29,7 @@ export const getRegistrationSessionListFromRegistry = (params, registrationSessi
       data = await response.json();
     }
     catch (err) {
-      console.log(`Error fetching ${registrationSessionType} registration request list: `, err);
+      console.error(`Error fetching ${registrationSessionType} registration request list: `, err);
       return;
     };
 
