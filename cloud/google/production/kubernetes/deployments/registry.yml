@@ -146,6 +146,10 @@ spec:
                   - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_ACCEPTANCE_CCO
                     value: "PLACEHOLDER_do_not_use_this"
                   # E-mail Notifiers configuration - REQUESTER - Prefix Registration Request REJECTION
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_REJECTION_CC
+                    value: "identifiers-org-curators@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_REJECTION_CCO
+                    value: "PLACEHOLDER_do_not_use_this"
                   ports:
                   - containerPort: 8180
                   readinessProbe:
