@@ -62,6 +62,8 @@ public class PrefixRegistrationSessionActionNotifierEmailRejection implements Pr
     private String placeholderSessionId;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.email.curation}")
     private String placeholderEmailCuration;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.donotuse}")
+    private String placeholderDoNotUse;
 
 
     @Autowired
@@ -103,8 +105,8 @@ public class PrefixRegistrationSessionActionNotifierEmailRejection implements Pr
         emailMessage.setFrom(emailSender);
         emailMessage.setReplyTo(emailReplyTo);
         emailMessage.setTo(session.getPrefixRegistrationRequest().getRequesterEmail());
-        emailMessage.setCc(emailCc.split(","));
-        emailMessage.setBcc(emailBcc.split(","));
+        if (!emailCc.equals(placeholderDoNotUse)) emailMessage.setCc(emailCc.split(","));
+        if (!emailBcc.equals(placeholderDoNotUse)) emailMessage.setBcc(emailBcc.split(","));
         emailMessage.setSubject(parseEmailSubject(session));
         emailMessage.setText(parseEmailBody(session));
         javaMailSender.send(emailMessage);
