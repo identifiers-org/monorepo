@@ -236,7 +236,7 @@ class NamespaceDetailsPage extends React.Component {
             <div className="col col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-8 bg-danger p-2">
               <h3 className="text-center text-white mb-2">
                 <i className="icon icon-common icon-trash mr-3" />
-                This namespace is deactivated
+                This namespace is <strong>deactivated</strong>
               </h3>
               <p className="mb-0 text-white">
                 The service has been marked as deactivated since {moment(namespace.deprecationDate).format('ll')}. This
