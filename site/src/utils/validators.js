@@ -73,7 +73,6 @@ const validators = {
 
   supportingReferences: async (supportingReferences, registrationRequest, registrationRequestType) => {
     const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateReferences`;
-    console.log(supportingReferences)
     return validateThroughAPI(url, {supportingReferences: supportingReferences.split('\n')});
   },
 

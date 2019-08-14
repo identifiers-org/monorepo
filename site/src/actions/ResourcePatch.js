@@ -55,7 +55,6 @@ export const patchResource = (id, newResource) => {
 export const deactivateResource = (id) => {
   return async () => {
     const requestUrl = `${config.registryApi}/${config.resourceManagementEndpoint}/deactivateResource/${id}`;
-    console.log('requestUrl', requestUrl);
     const authToken = await renewToken();
     const init = {
       method: 'GET',
@@ -86,8 +85,6 @@ export const reactivateResource = (id, newResource) => {
         }
       })
     };
-
-    console.log('init', init);
 
     return await fetch(requestUrl, init);
   };

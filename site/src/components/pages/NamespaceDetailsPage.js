@@ -186,8 +186,6 @@ class NamespaceDetailsPage extends React.Component {
       return;
     }
 
-    console.log('fields', namespaceFieldsToValidate);
-
     const validations = await Promise.all(namespaceFieldsToValidate
       .map(field => validators[field](newNamespace[field], newNamespace))
     );

@@ -37,7 +37,7 @@ export const getNamespacesFromRegistry = (params) => {
       const response = await fetch(requestUrl);
       data = await response.json();
     } catch (err) {
-      console.log('Error fetching namespaces: ', err);
+      console.error('Error fetching namespaces: ', err);
     }
 
     dispatch(setNamespaceList(data._embedded.namespaces));
@@ -58,7 +58,7 @@ export const getNamespaceFromRegistry = (prefix) => {
       const response = await fetch(requestUrl);
       data = await response.json();
     } catch (err) {
-      console.log('Error fetching namespace', err);
+      console.error('Error fetching namespace', err);
     }
 
     dispatch(setNamespaceList([data]));
@@ -79,7 +79,7 @@ export const getResourcesFromRegistry = (namespace) => {
       const response = await fetch(requestUrl);
       data = await response.json();
     } catch (err) {
-      console.log('Error fetching namespaces: ', err);
+      console.error('Error fetching namespaces: ', err);
       return;
     };
 

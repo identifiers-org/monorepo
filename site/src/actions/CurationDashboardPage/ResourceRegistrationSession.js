@@ -25,7 +25,7 @@ export const getResourceRegistrationSessionFromRegistry = (id) => {
       const response = await fetch(requestUrl, init);
       data = await response.json();
     } catch (err) {
-      console.log('Error fetching resource registration request: ', err);
+      console.error('Error fetching resource registration request: ', err);
       return;
     }
 
