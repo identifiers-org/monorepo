@@ -3,7 +3,13 @@ import { connect } from 'react-redux';
 
 // Actions.
 import { getNamespaceFromRegistry, getResourcesFromRegistry } from '../../actions/NamespaceList';
-import { setNamespacePatch, setNamespacePatchField, patchNamespace } from '../../actions/NamespacePatch';
+import {
+  setNamespacePatch,
+  setNamespacePatchField,
+  patchNamespace,
+  deactivateNamespace,
+  reactivateNamespace
+} from '../../actions/NamespacePatch';
 
 // Components.
 import PageTitle from '../common/PageTitle';
@@ -104,7 +110,7 @@ class NamespaceDetailsPage extends React.Component {
         failureToast('Error committing changes');
       }
     }
-  }
+  };
 
   handleClickDiscardChangesButton = async () => {
     const result = await swalConfirmation.fire({
@@ -117,7 +123,59 @@ class NamespaceDetailsPage extends React.Component {
     if (result.value) {
       this.setState({editNamespace: false});
     }
-  }
+  };
+
+  handleClickDeactivateButton = async () => {
+    const {
+      state: { namespaceId },
+      props: { deactivateNamespace }
+    } = this;
+
+    const result = await swalConfirmation.fire({
+      title: 'Confirm deactivation',
+      confirmButtonText: 'Confirm',
+      cancelButtonText: 'Cancel'
+    });
+
+    if (result.value) {
+      const result = await deactivateNamespace(namespaceId);
+
+      if (result.status === 200) {
+        successToast('Namespace deactivation successful');
+        await this.props.getNamespaceFromRegistry(this.props.match.params.prefix);
+        await this.props.getResourcesFromRegistry(this.props.namespaceList[0]);
+        this.setState({editNamespace: false, namespaceFieldsChanged: new Set()});
+      } else {
+        failureToast('Error deactivating namespace');
+      }
+    }
+  };
+
+  handleClickReactivateButton = async () => {
+    const {
+      state: { namespaceId },
+      props: { reactivateNamespace }
+    } = this;
+
+    const result = await swalConfirmation.fire({
+      title: 'Confirm reactivation',
+      confirmButtonText: 'Confirm',
+      cancelButtonText: 'Cancel'
+    });
+
+    if (result.value) {
+      const result = await reactivateNamespace(namespaceId);
+
+      if (result.status === 200) {
+        successToast('Namespace reactivation successful');
+        await this.props.getNamespaceFromRegistry(this.props.match.params.prefix);
+        await this.props.getResourcesFromRegistry(this.props.namespaceList[0]);
+        this.setState({editNamespace: false, namespaceFieldsChanged: new Set()});
+      } else {
+        failureToast('Error reactivating namespace');
+      }
+    }
+  };
 
   handleClickValidateChangesButton = async () => {
     const { newNamespace } = this.state;
@@ -142,11 +200,11 @@ class NamespaceDetailsPage extends React.Component {
     } else {
       successToast('All fields OK!');
     }
-  }
+  };
 
   handleClickEditButton = () => {
     this.setState({editNamespace: true});
-  }
+  };
 
 
   render() {
@@ -154,7 +212,9 @@ class NamespaceDetailsPage extends React.Component {
       handleChangeField,
       handleClickCommitChangesButton,
       handleClickDiscardChangesButton,
+      handleClickDeactivateButton,
       handleClickEditButton,
+      handleClickReactivateButton,
       handleClickValidateChangesButton,
       state: { editNamespace }
     } = this;
@@ -207,12 +267,30 @@ class NamespaceDetailsPage extends React.Component {
               <RoleConditional
                 requiredRoles={['editNamespace']}
                 >
-                <button
-                  className="btn btn-sm btn-success edit-button"
-                  onClick={handleClickEditButton}
-                  >
-                  <i className="icon icon-common icon-edit mr-1"/>Edit namespace
-                </button>
+                <>
+                  <button
+                    className="btn btn-sm btn-success edit-button"
+                    onClick={handleClickEditButton}
+                    >
+                    <i className="icon icon-common icon-edit mr-1"/>Edit namespace
+                  </button>
+                  {namespace.deprecated ? (
+                    <button
+                      className="btn btn-sm btn-warning edit-button ml-2"
+                      onClick={handleClickReactivateButton}
+                    >
+                      {/* TODO: change to trash-restore when EBI adds it to EBI-Font-icons */}
+                      <i className="icon icon-common icon-caret-square-up mr-1"/>Reactivate namespace
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-sm btn-danger edit-button ml-2"
+                      onClick={handleClickDeactivateButton}
+                    >
+                      <i className="icon icon-common icon-trash mr-1"/>Deactivate namespace
+                    </button>
+                  )}
+                </>
               </RoleConditional>
             </div>
           </div>
@@ -385,7 +463,9 @@ const mapDispatchToProps = dispatch => ({
   getResourcesFromRegistry: (namespace) => dispatch(getResourcesFromRegistry(namespace)),
   setNamespacePatch: (id, namespace) => dispatch(setNamespacePatch(id, namespace)),
   setNamespacePatchField: (field, value) => dispatch(setNamespacePatchField(field, value)),
-  patchNamespace: (id, newNamespace) => dispatch(patchNamespace(id, newNamespace))
+  patchNamespace: (id, newNamespace) => dispatch(patchNamespace(id, newNamespace)),
+  deactivateNamespace: (id) => dispatch(deactivateNamespace(id)),
+  reactivateNamespace: (id) => dispatch(reactivateNamespace(id))
 });
 
 
