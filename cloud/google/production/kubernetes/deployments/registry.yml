@@ -11,7 +11,7 @@ spec:
             tier: api
             app: registry
             deployment: hq
-    replicas: 1
+    replicas: 2
     template:
         metadata:
             labels:
