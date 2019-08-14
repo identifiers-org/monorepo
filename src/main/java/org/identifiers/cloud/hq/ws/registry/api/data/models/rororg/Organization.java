@@ -34,7 +34,8 @@ public class Organization implements Serializable {
     private List<String> acronyms = new ArrayList<>();
     @JsonAlias({"wikipedia_url"})
     private String wikipediaUrl;
-    // TODO Country
+    // Country
+    private Country country;
     // TODO ISNI
     // TODO OrgRef
     // TODO Wikidata
