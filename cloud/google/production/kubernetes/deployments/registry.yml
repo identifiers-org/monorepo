@@ -150,6 +150,28 @@ spec:
                     value: "identifiers-org-curators@ebi.ac.uk"
                   - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_REJECTION_CCO
                     value: "PLACEHOLDER_do_not_use_this"
+                  # E-mail Notifiers configuration - CURATOR - Resource Registration Request START
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_CURATOR_RESOURCEREG_START_TO
+                    value: "identifiers-org@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_CURATOR_RESOURCEREG_START_CC
+                    value: "identifiers-org-curators@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_CURATOR_RESOURCEREG_START_CCO
+                    value: "PLACEHOLDER_do_not_use_this"
+                  # E-mail Notifiers configuration - REQUESTER - Resource Registration Request START
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_START_CC
+                    value: "identifiers-org-curators@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_START_CCO
+                    value: "PLACEHOLDER_do_not_use_this"
+                  # E-mail Notifiers configuration - REQUESTER - Resource Registration Request ACCEPTANCE
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_ACCEPTANCE_CC
+                    value: "identifiers-org-curators@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_ACCEPTANCE_CCO
+                    value: "PLACEHOLDER_do_not_use_this"
+                  # E-mail Notifiers configuration - REQUESTER - Resource Registration Request REJECTION
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_REJECTION_CC
+                    value: "identifiers-org-curators@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_REJECTION_CCO
+                    value: "PLACEHOLDER_do_not_use_this"
                   ports:
                   - containerPort: 8180
                   readinessProbe:
