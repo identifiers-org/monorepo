@@ -39,5 +39,7 @@ public class Organization implements Serializable {
     // TODO ISNI
     // TODO OrgRef
     // TODO Wikidata
-    // TODO GRID
+    // GRID
+    @JsonAlias({"GRID"})
+    private GridId grid;
 }
