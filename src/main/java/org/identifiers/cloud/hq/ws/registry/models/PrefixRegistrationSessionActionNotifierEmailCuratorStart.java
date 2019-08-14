@@ -57,6 +57,8 @@ public class PrefixRegistrationSessionActionNotifierEmailCuratorStart implements
     private String placeholderPrefixDescription;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.sessionid}")
     private String placeholderSessionId;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.donotuse}")
+    private String placeholderDoNotUse;
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -94,8 +96,8 @@ public class PrefixRegistrationSessionActionNotifierEmailCuratorStart implements
         emailMessage.setFrom(emailSender);
         emailMessage.setReplyTo(emailReplyTo);
         emailMessage.setTo(emailTo.split(","));
-        emailMessage.setCc(emailCc.split(","));
-        emailMessage.setBcc(emailBcc.split(","));
+        if (!emailCc.equals(placeholderDoNotUse)) emailMessage.setCc(emailCc.split(","));
+        if (!emailBcc.equals(placeholderDoNotUse)) emailMessage.setBcc(emailBcc.split(","));
         emailMessage.setSubject(parseEmailSubject(session));
         emailMessage.setText(parseEmailBody(session));
         javaMailSender.send(emailMessage);
