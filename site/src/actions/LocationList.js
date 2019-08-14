@@ -13,7 +13,7 @@ export const getLocationListFromRegistry = () => {
     const response = await fetch(requestUrl);
     const json = await response.json();
     const locations = json._embedded.locations.map(location => ({
-      id: location._links.self.href.split('/').pop(),
+      id: location._links.self.href, //.split('/').pop(),
       label: location.countryName
     })).sort((a, b) => a.name > b.name ? -1 : a.name < b.name ? 1 : 0);
 
