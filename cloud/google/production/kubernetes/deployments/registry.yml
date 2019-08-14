@@ -54,7 +54,7 @@ spec:
                         topologyKey: "kubernetes.io/hostname"
             containers:
                 - name: cloud-hq-ws-registry
-                  image: identifiersorg/cloud-hq-ws-registry:1.0.15
+                  image: identifiersorg/cloud-hq-ws-registry:1.3.0
                   resources:
                       requests:
                           memory: 420Mi
@@ -98,6 +98,28 @@ spec:
                     value: "https://auth.identifiers.org/auth/realms/idorg"
                   - name: HQ_WS_REGISTRY_CONFIG_APPLICATION_ACTIVE_PROFILE
                     value: "authenabled"
+                  # E-mail Server configuration
+                  - name: HQ_WS_REGISTRY_CONFIG_EMAIL_HOST
+                    value: "smtp.eu.mailgun.org"
+                  - name: HQ_WS_REGISTRY_CONFIG_EMAIL_PORT
+                    value: "587"
+                  - name: HQ_WS_REGISTRY_CONFIG_EMAIL_USERNAME
+                    valueFrom:
+                      secretKeyRef:
+                        name: hq-registry-smtp-credentials
+                        key: username
+                  - name: HQ_WS_REGISTRY_CONFIG_EMAIL_PASSWORD
+                    valueFrom:
+                      secretKeyRef:
+                        name: hq-registry-smtp-credentials
+                        key: password
+                  - name: HQ_WS_REGISTRY_CONFIG_EMAIL_TRANSPORT_PROTOCOL
+                    value: "smtp"
+                  - name: HQ_WS_REGISTRY_CONFIG_EMAIL_BOOLEAN_SMTP_AUTH
+                    value: "true"
+                  - name: HQ_WS_REGISTRY_CONFIG_EMAIL_BOOLEAN_START_TLS
+                    value: "true"
+                  # E-mail Notifiers configuration
                   ports:
                   - containerPort: 8180
                   readinessProbe:
