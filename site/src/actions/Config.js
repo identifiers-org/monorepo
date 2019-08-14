@@ -19,14 +19,14 @@ export const getConfigFromDevopsApi = (url) => {
     let data;
 
     if (process.env.NODE_ENV === 'development') {
-      console.log('fetching config from', requestUrl);
+      console.info('fetching config from', requestUrl);
     }
 
     try {
       const response = await fetch(requestUrl);
       data = await response.json();
     } catch (err) {
-      console.log('Error fetching config, falling back to defaults.', err);
+      console.error('Error fetching config, falling back to defaults.', err);
     }
 
     dispatch(setConfig(data));
