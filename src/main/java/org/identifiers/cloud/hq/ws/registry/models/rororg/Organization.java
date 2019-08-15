@@ -72,10 +72,26 @@ public class Organization implements Serializable {
                 try {
                     isni = objectMapper.readValue(objectMapper.writeValueAsString(externalIds.get(KEY_EXTERNAL_ID_ISNI)), OrganizationIsniInformation.class);
                 } catch (IOException e) {
-                    log.error(String.format("Could NOT build ISNI from existing information in Organization with ROR ID '%s'", id));
+                    log.error(String.format("Could NOT build ISNI from existing information in Organization with ROR ID '%s', due to '%s'", id, e.getMessage()));
                 }
             }
         }
         return isni;
+    }
+
+    @JsonIgnore
+    public OrganizationOrgRefInformation getOrgRef() {
+        if (orgRef == null) {
+            if (externalIds.get(KEY_EXTERNAL_ID_ORGREF) != null) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                try {
+                    orgRef =
+                            objectMapper.readValue(objectMapper.writeValueAsString(externalIds.get(KEY_EXTERNAL_ID_ORGREF)), OrganizationOrgRefInformation.class);
+                } catch (IOException e) {
+                    log.error(String.format("Could NOT build OrgRef from existing information in Organization with ROR ID '%s', due to '%s'", id, e.getMessage()));
+                }
+            }
+        }
+        return orgRef;
     }
 }

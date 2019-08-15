@@ -77,9 +77,9 @@ public class RorOrgApiServiceApiClient implements RorOrgApiService {
                 ObjectMapper objectMapper = new ObjectMapper();
                 log.info(String.format("For ROR ID '%s', response body '%s'", rorId, objectMapper.writeValueAsString(response.getBody())));
                 // TODO
-                if (response.getBody().getIsni() != null) {
-                    log.info(String.format("ROR ID '%s', has #%d ISNIs, '%s'", rorId, response.getBody().getIsni().getAll().size(), String.join(",", response.getBody().getIsni().getAll())));
-                }
+//                if (response.getBody().getIsni() != null) {
+//                    log.info(String.format("ROR ID '%s', has #%d ISNIs, '%s'", rorId, response.getBody().getIsni().getAll().size(), String.join(",", response.getBody().getIsni().getAll())));
+//                }
                 if (!response.hasBody()) {
                     String errorMessage = String.format("Organization information fetch for ROR ID '%s' came back with EMTPY RESPONSE BODY", rorId);
                     log.error(errorMessage);
