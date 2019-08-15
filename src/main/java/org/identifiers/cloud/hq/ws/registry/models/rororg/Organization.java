@@ -94,4 +94,20 @@ public class Organization implements Serializable {
         }
         return orgRef;
     }
+
+    @JsonIgnore
+    public OrganizationWikidataInformation getWikidata() {
+        if (wikidata == null) {
+            if (externalIds.get(KEY_EXTERNAL_ID_WIKIDATA) != null) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                try {
+                    wikidata =
+                            objectMapper.readValue(objectMapper.writeValueAsString(externalIds.get(KEY_EXTERNAL_ID_WIKIDATA)), OrganizationWikidataInformation.class);
+                } catch (IOException e) {
+                    log.error(String.format("Could NOT build Wikidata from existing information in Organization with ROR ID '%s', due to '%s'", id, e.getMessage()));
+                }
+            }
+        }
+        return wikidata;
+    }
 }
