@@ -30,5 +30,4 @@ public class RorDataModelsHelper {
         institution.setDescription(String.format("Organization information obtained from ROR API using ROR ID '%s'", organization.getId()));
         return institution;
     }
-
 }
