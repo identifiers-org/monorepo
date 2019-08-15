@@ -1,4 +1,4 @@
-package org.identifiers.cloud.hq.ws.registry.api.data.models.rororg;
+package org.identifiers.cloud.hq.ws.registry.models.rororg;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * Project: registry
- * Package: org.identifiers.cloud.hq.ws.registry.api.data.models.rororg
+ * Package: org.identifiers.cloud.hq.ws.registry.models.rororg
  * Timestamp: 2019-08-14 17:32
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>

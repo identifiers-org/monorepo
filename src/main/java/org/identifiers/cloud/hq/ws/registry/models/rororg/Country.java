@@ -1,5 +1,6 @@
-package org.identifiers.cloud.hq.ws.registry.api.data.models.rororg;
+package org.identifiers.cloud.hq.ws.registry.models.rororg;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,13 +10,13 @@ import lombok.experimental.Accessors;
 
 /**
  * Project: registry
- * Package: org.identifiers.cloud.hq.ws.registry.api.data.models.rororg
- * Timestamp: 2019-08-14 17:29
+ * Package: org.identifiers.cloud.hq.ws.registry.models.rororg
+ * Timestamp: 2019-08-14 17:25
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  *
- * ROR data model for GRID link from an organization
+ * ror.org "country" data model
  */
 @Data
 @AllArgsConstructor
@@ -23,7 +24,9 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode
 @Accessors(chain = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OrganizationGridIdInfo {
-    private String preferred;
-    private String all;
+public class Country {
+    @JsonAlias({"country_name"})
+    private String countryName;
+    @JsonAlias({"country_code"})
+    private String countryCode;
 }
