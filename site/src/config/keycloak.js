@@ -1,6 +1,6 @@
 export const keycloakConf = {
   'realm': 'idorg',
-  'url': typeof configAuthUrl !== 'undefined' ? configAuthUrl : 'http://localkeycloak:8080/auth',
+  'url': typeof configAuthUrl !== 'undefined' ? `${configAuthUrl}/auth` : 'http://localkeycloak:8080/auth',
   'ssl-required': 'external',
   'resource': 'hq-web-frontend',
   'public-client': true,
