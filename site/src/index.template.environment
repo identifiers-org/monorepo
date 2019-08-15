@@ -1,4 +1,5 @@
 <script type="application/javascript">
     const configApiRegistryUrl = 'ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_API_REGISTRY_URL';
     const configAuthUrl = 'ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_AUTH_URL';
+    const configAuthRedirectUri = 'ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_AUTH_REDIRECT_URI';
 </script>
