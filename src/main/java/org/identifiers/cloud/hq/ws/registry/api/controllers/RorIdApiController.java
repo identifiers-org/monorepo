@@ -2,14 +2,13 @@ package org.identifiers.cloud.hq.ws.registry.api.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.api.models.RorIdApiModel;
+import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRorApiGetInstitution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Project: registry
@@ -30,7 +29,7 @@ public class RorIdApiController {
 
     // TODO
     @PostMapping(value = "/getInstitutionForRorId")
-    public ResponseEntity<?> getInstitutionForRorId(@PathVariable String rorId, HttpServletRequest request) {
-        return model.getInstitutionForRorId(rorId);
+    public ResponseEntity<?> getInstitutionForRorId(@RequestBody ServiceRequestRorApiGetInstitution request) {
+        return model.getInstitutionForRorId(request.getPayload().getRorId());
     }
 }
