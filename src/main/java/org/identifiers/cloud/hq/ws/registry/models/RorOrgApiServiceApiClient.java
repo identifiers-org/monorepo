@@ -3,6 +3,8 @@ package org.identifiers.cloud.hq.ws.registry.models;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.models.rororg.Organization;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,10 +25,12 @@ public class RorOrgApiServiceApiClient implements RorOrgApiService {
     // Configuration
     @Value("${org.identifiers.cloud.hq.ws.registry.ror.api.baseurl}")
     private String rorApiBaseUrl;
-    
-    // TODO
+
+    @Retryable(maxAttempts = WS_REQUEST_RETRY_MAX_ATTEMPTS,
+            backoff = @Backoff(delay = WS_REQUEST_RETRY_BACK_OFF_PERIOD))
     @Override
     public Organization getOrganizationDetails(String rorId) throws RorOrgApiServiceException {
+        // TODO
         return null;
     }
 }
