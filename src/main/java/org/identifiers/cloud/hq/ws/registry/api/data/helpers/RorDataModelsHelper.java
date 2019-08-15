@@ -27,6 +27,14 @@ public class RorDataModelsHelper {
                 institution.setLocation(new Location().setCountryCode(organization.getCountry().getCountryCode()));
             }
         }
+        String wikidataInformation = "no Wikidata information";
+        if (organization.getWikidata() != null) {
+            wikidataInformation = String.format("Wikidata IDs [%s]", String.join(",", organization.getWikidata().getAll()));
+        }
+        String isniInformation = "no ISNI information";
+        if (organization.getIsni() != null) {
+            isniInformation = String.format("ISNI IDs [%s]", String.join(",", organization.getIsni().getAll()));
+        }
         institution.setDescription(String.format("Organization information obtained from ROR API using ROR ID '%s'", organization.getId()));
         return institution;
     }
