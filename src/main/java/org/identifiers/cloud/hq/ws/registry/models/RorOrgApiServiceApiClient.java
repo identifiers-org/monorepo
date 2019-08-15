@@ -2,6 +2,7 @@ package org.identifiers.cloud.hq.ws.registry.models;
 
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.models.rororg.Organization;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,6 +19,10 @@ public class RorOrgApiServiceApiClient implements RorOrgApiService {
     // Re-try configuration
     public static final int WS_REQUEST_RETRY_MAX_ATTEMPTS = 12;
     public static final int WS_REQUEST_RETRY_BACK_OFF_PERIOD = 1500; // 1.5 seconds
+
+    // Configuration
+    @Value("${org.identifiers.cloud.hq.ws.registry.ror.api.baseurl}")
+    private String rorApiBaseUrl;
     
     // TODO
     @Override
