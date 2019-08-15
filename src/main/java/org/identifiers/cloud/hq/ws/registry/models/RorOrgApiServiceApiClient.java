@@ -13,6 +13,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class RorOrgApiServiceApiClient implements RorOrgApiService {
+    // Re-try configuration
+    public static final int WS_REQUEST_RETRY_MAX_ATTEMPTS = 12;
+    public static final int WS_REQUEST_RETRY_BACK_OFF_PERIOD = 1500; // 1.5 seconds
+    
     // TODO
     @Override
     public Organization getOrganizationDetails(String rorId) throws RorOrgApiServiceException {
