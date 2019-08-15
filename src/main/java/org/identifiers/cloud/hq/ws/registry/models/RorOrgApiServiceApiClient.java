@@ -1,16 +1,20 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.models.rororg.Organization;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriUtils;
+
+import java.net.URI;
+import java.util.Collections;
 
 /**
  * Project: registry
@@ -42,7 +46,19 @@ public class RorOrgApiServiceApiClient implements RorOrgApiService {
         // Configure requests time outs
         simpleClientHttpRequestFactory.setConnectTimeout(WS_REQUEST_CONNECT_TIMEOUT);
         simpleClientHttpRequestFactory.setReadTimeout(WS_REQUEST_READ_TIMEOUT);
-        return new RestTemplate(simpleClientHttpRequestFactory);
+        RestTemplate restTemplate = new RestTemplate(simpleClientHttpRequestFactory);
+        restTemplate.setInterceptors(Collections.singletonList(new RequestResponseLoggingInterceptor()));
+        return restTemplate;
+    }
+
+    private String getEncodedQueryPath(String rorId) throws RorOrgApiServiceException {
+        try {
+            return UriUtils.encodePath(rorId, "UTF-8");
+        } catch (RuntimeException e) {
+            String errorMessage = String.format("FAILED encode ROR ID '%s'", rorId);
+            log.error(errorMessage);
+            throw new RorOrgApiServiceException(errorMessage);
+        }
     }
 
     @Retryable(maxAttempts = WS_REQUEST_RETRY_MAX_ATTEMPTS,
@@ -51,27 +67,36 @@ public class RorOrgApiServiceApiClient implements RorOrgApiService {
     public Organization getOrganizationDetails(String rorId) throws RorOrgApiServiceException {
         // TODO
         // TODO - Run some ROR ID validation first... maybe?
-        String queryUrl = String.format("%s/%s/%s", rorApiBaseUrl, rorApiUrlSuffixOrganization, rorId);
+        String queryUrl = String.format("%s/%s/%s", rorApiBaseUrl, rorApiUrlSuffixOrganization, getEncodedQueryPath(rorId));
         log.info(String.format("Fetching Organization Information for ROR ID '%s', query URL '%s'", rorId, queryUrl));
-        ResponseEntity<?> response = getRestTemplate().getForEntity(queryUrl, Organization.class);
-        if (response.getStatusCode().is2xxSuccessful()) {
-            ObjectMapper objectMapper = new ObjectMapper();
-            try {
-                log.info(String.format("For ROR ID '%s', de-serialized object '%s'", rorId, objectMapper.writeValueAsString(response.getBody())));
-            } catch (JsonProcessingException e) {
-                // TODO ignore
-                e.printStackTrace();
+        try {
+            //ResponseEntity<Organization> response = getRestTemplate().getForEntity(new URI(queryUrl), Organization.class);
+            ResponseEntity<Organization> response = getRestTemplate().exchange(new URI(queryUrl), HttpMethod.GET, null, Organization.class);
+            log.info(String.format("Fetching Organization Information for ROR ID '%s', query URL '%s', response code '%d'", rorId, queryUrl, response.getStatusCodeValue()));
+            if (response.getStatusCode().is2xxSuccessful()) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                log.info(String.format("For ROR ID '%s', response body '%s'", rorId, objectMapper.writeValueAsString(response.getBody())));
+                // TODO
+                if (response.getBody().getIsni() != null) {
+                    log.info(String.format("ROR ID '%s', has #%d ISNIs, '%s'", rorId, response.getBody().getIsni().getAll().size(), String.join(",", response.getBody().getIsni().getAll())));
+                }
+                if (!response.hasBody()) {
+                    String errorMessage = String.format("Organization information fetch for ROR ID '%s' came back with EMTPY RESPONSE BODY", rorId);
+                    log.error(errorMessage);
+                    throw new RorOrgApiServiceException(errorMessage);
+                }
+                return response.getBody();
             }
-            if (!response.hasBody()) {
-                String errorMessage = String.format("Organization information fetch for ROR ID '%s' came back with EMTPY RESPONSE BODY", rorId);
-                log.error(errorMessage);
-                throw new RorOrgApiServiceException(errorMessage);
-            }
-            return (Organization) response.getBody();
+            // There was an error
+            String errorMessage = String.format("Organization information fetch for ROR ID '%s' came back with HTTP STATUS '%d'", rorId, response.getStatusCodeValue());
+            log.error(errorMessage);
+            throw new RorOrgApiServiceException(errorMessage);
+        } catch (RorOrgApiServiceException e) {
+            throw e;
+        } catch (Exception e) {
+            String errorMessage = String.format("Organization information fetch for ROR ID '%s' FAILED due to the following error, '%s'", rorId, e.getMessage());
+            log.error(errorMessage);
+            throw new RorOrgApiServiceException(errorMessage);
         }
-        // There was an error
-        String errorMessage = String.format("Organization information fetch for ROR ID '%s' came back with HTTP STATUS '%d'", rorId, response.getStatusCodeValue());
-        log.error(errorMessage);
-        throw new RorOrgApiServiceException(errorMessage);
     }
 }
