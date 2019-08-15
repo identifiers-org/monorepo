@@ -1,5 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
+import org.identifiers.cloud.hq.ws.registry.models.rororg.Organization;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.models
@@ -12,4 +14,5 @@ package org.identifiers.cloud.hq.ws.registry.models;
  */
 public interface RorOrgApiService {
     // TODO
+    Organization getOrganizationDetails(String rorId) throws RorOrgApiServiceException;
 }
