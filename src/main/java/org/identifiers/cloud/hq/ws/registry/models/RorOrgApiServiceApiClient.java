@@ -33,7 +33,7 @@ public class RorOrgApiServiceApiClient implements RorOrgApiService {
     // Configuration
     @Value("${org.identifiers.cloud.hq.ws.registry.ror.api.baseurl}")
     private String rorApiBaseUrl;
-    @Value("${org.identifiers.cloud.hq.ws.registry.ror.api.urlsuffix.organization")
+    @Value("${org.identifiers.cloud.hq.ws.registry.ror.api.urlsuffix.organization}")
     private String rorApiUrlSuffixOrganization;
 
     // Factory method
@@ -51,8 +51,8 @@ public class RorOrgApiServiceApiClient implements RorOrgApiService {
     public Organization getOrganizationDetails(String rorId) throws RorOrgApiServiceException {
         // TODO
         // TODO - Run some ROR ID validation first... maybe?
-        log.info(String.format("Fetching Organization Information for ROR ID '%s'", rorId));
         String queryUrl = String.format("%s/%s/%s", rorApiBaseUrl, rorApiUrlSuffixOrganization, rorId);
+        log.info(String.format("Fetching Organization Information for ROR ID '%s', query URL '%s'", rorId, queryUrl));
         ResponseEntity<?> response = getRestTemplate().getForEntity(queryUrl, Organization.class);
         if (response.getStatusCode().is2xxSuccessful()) {
             ObjectMapper objectMapper = new ObjectMapper();
