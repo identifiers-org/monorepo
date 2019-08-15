@@ -3,6 +3,7 @@ package org.identifiers.cloud.hq.ws.registry.models;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.models.rororg.Organization;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,15 @@ public class RorOrgApiServiceApiClient implements RorOrgApiService {
     // TODO Maybe refactor this in the future
     private static final int WS_REQUEST_CONNECT_TIMEOUT = 2000; // 2 seconds
     private static final int WS_REQUEST_READ_TIMEOUT = 2000; // 2 seconds
+
+    // Factory method
+    private RestTemplate getRestTemplate() {
+        SimpleClientHttpRequestFactory simpleClientHttpRequestFactory = new SimpleClientHttpRequestFactory();
+        // Configure requests time outs
+        simpleClientHttpRequestFactory.setConnectTimeout(WS_REQUEST_CONNECT_TIMEOUT);
+        simpleClientHttpRequestFactory.setReadTimeout(WS_REQUEST_READ_TIMEOUT);
+        return new RestTemplate(simpleClientHttpRequestFactory);
+    }
 
     // Configuration
     @Value("${org.identifiers.cloud.hq.ws.registry.ror.api.baseurl}")
