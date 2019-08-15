@@ -35,7 +35,7 @@ public class RorDataModelsHelper {
         if (organization.getIsni() != null) {
             isniInformation = String.format("ISNI IDs [%s]", String.join(",", organization.getIsni().getAll()));
         }
-        institution.setDescription(String.format("Organization information obtained from ROR API using ROR ID '%s'", organization.getId()));
+        institution.setDescription(String.format("Organization information obtained from ROR API using ROR ID '%s' with %s, and %s", organization.getId(), wikidataInformation, isniInformation));
         return institution;
     }
 }
