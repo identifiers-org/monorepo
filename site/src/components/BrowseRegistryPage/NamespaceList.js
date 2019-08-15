@@ -1,10 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+// Actions.
 import { getNamespacesFromRegistry } from '../../actions/NamespaceList';
 
+// Components.
 import NamespaceItem from './NamespaceItem';
 import Paginator from '../common/Paginator';
+
+// Config.
+import { config } from '../../config/Config';
 
 
 class NamespaceList extends React.Component {
@@ -12,22 +17,23 @@ class NamespaceList extends React.Component {
     super(props);
 
     this.state = {
+      debounceSearch: undefined,
       namespaceListParams: {
         ...this.props.namespaceListParams,
         content: this.props.query,
         size: 20
       }
     };
-  }
+  };
 
   updateNamespaceList = async () => {
     await this.props.getNamespacesFromRegistry(this.state.namespaceListParams);
     this.setState({namespaceListParams: this.props.namespaceListParams});
-  }
+  };
 
   componentDidMount() {
     this.updateNamespaceList();
-  }
+  };
 
 
   handleNavigate = (where) => {
@@ -41,7 +47,7 @@ class NamespaceList extends React.Component {
         number: where
       }
     }, () => this.updateNamespaceList());
-  }
+  };
 
   handleAlphabeticSearch = e => {
     const { namespaceListParams } = this.state;
@@ -56,22 +62,23 @@ class NamespaceList extends React.Component {
     }, () => {
       this.updateNamespaceList();
     });
-  }
+  };
 
   handleSearch = e => {
     const { namespaceListParams } = this.state;
 
+    clearTimeout(this.state.debounceSearch);
+
     this.setState({
+      debounceSearch: setTimeout(() => { this.updateNamespaceList(); }, config.DEBOUNCE_DELAY),
       namespaceListParams: {
         ...namespaceListParams,
         prefixStart: '',
         content: e.currentTarget.value,
         number: 0
       }
-    }, () => {
-      this.updateNamespaceList();
     });
-  }
+  };
 
   handleSetSize = e => {
     const { namespaceListParams } = this.state;
@@ -83,7 +90,7 @@ class NamespaceList extends React.Component {
         number: 0
       }
     }, () => this.updateNamespaceList());
-  }
+  };
 
 
   render() {
@@ -176,9 +183,21 @@ class NamespaceList extends React.Component {
                     <tbody>
                     {
                       // Page data.
-                      namespaceList.map(namespace => (
-                        <NamespaceItem key={`namespace-${namespace.prefix}`} {...namespace} />
-                      ))
+                      namespaceList
+                        .sort((a, b) => {
+                          const { content } = this.state.namespaceListParams;
+                          if (a.prefix.startsWith(content) && !b.prefix.startsWith(content)) {
+                            return -1;
+                          }
+
+                          if (!a.prefix.startsWith(content) && b.prefix.startsWith(content)) {
+                            return 1;
+                          }
+
+                          return a.prefix - b.prefix;
+                        })
+                        .map(namespace => <NamespaceItem key={`namespace-${namespace.prefix}`} {...namespace} />
+                      )
                     }
                   </tbody>
                 </table>
