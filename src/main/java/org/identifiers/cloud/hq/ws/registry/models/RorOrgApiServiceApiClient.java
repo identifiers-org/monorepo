@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * Project: registry
@@ -21,6 +22,10 @@ public class RorOrgApiServiceApiClient implements RorOrgApiService {
     // Re-try configuration
     public static final int WS_REQUEST_RETRY_MAX_ATTEMPTS = 12;
     public static final int WS_REQUEST_RETRY_BACK_OFF_PERIOD = 1500; // 1.5 seconds
+    // RestTemplate configuration
+    // TODO Maybe refactor this in the future
+    private static final int WS_REQUEST_CONNECT_TIMEOUT = 2000; // 2 seconds
+    private static final int WS_REQUEST_READ_TIMEOUT = 2000; // 2 seconds
 
     // Configuration
     @Value("${org.identifiers.cloud.hq.ws.registry.ror.api.baseurl}")
@@ -31,6 +36,9 @@ public class RorOrgApiServiceApiClient implements RorOrgApiService {
     @Override
     public Organization getOrganizationDetails(String rorId) throws RorOrgApiServiceException {
         // TODO
+        log.info(String.format("Fetching Organization Information for ROR ID '%s'", rorId));
+        RestTemplate restTemplate = new RestTemplate();
+
         return null;
     }
 }
