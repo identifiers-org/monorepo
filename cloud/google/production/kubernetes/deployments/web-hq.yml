@@ -79,7 +79,7 @@ spec:
                       topologyKey: "kubernetes.io/hostname"
             containers:
                 - name: hq-registry-web
-                  image: identifiersorg/cloud-hq-web-frontend:1.2.3
+                  image: identifiersorg/cloud-hq-web-frontend:1.2.5
                   imagePullPolicy: Always
                   resources:
                       requests:
@@ -90,6 +90,8 @@ spec:
                     value: "https://registry.api.identifiers.org"
                   - name: ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_AUTH_URL
                     value: "https://auth.identifiers.org"
+                  - name: ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_AUTH_REDIRECT_URI
+                    value: "https://registry.identifiers.org"
                   ports:
                   - containerPort: 80
                   readinessProbe:
