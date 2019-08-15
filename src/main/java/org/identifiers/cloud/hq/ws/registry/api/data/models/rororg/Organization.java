@@ -26,8 +26,14 @@ import java.util.Map;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Accessors(chain = true)
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true, value = {"KEY_EXTERNAL_ID_ISNI", "KEY_EXTERNAL_ID_ORGREF", "KEY_EXTERNAL_ID_WIKIDATA", "KEY_EXTERNAL_ID_GRID"})
 public class Organization implements Serializable {
+    // Unmapped property keys
+    private static final String KEY_EXTERNAL_ID_ISNI = "ISNI";
+    private static final String KEY_EXTERNAL_ID_ORGREF = "OrgRef";
+    private static final String KEY_EXTERNAL_ID_WIKIDATA = "Wikidata";
+    private static final String KEY_EXTERNAL_ID_GRID = "GRID";
+
     private String id;
     private String name;
     private List<String> types = new ArrayList<>();
@@ -39,5 +45,5 @@ public class Organization implements Serializable {
     private Country country;
     // TODO Wire in external IDs, although I may not use them
     @JsonAlias({"external_ids"})
-    private Map<String, Object> externalIds;
+    private Map<String, String> externalIds;
 }
