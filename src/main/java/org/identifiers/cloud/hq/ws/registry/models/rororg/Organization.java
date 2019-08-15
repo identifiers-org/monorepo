@@ -39,6 +39,7 @@ public class Organization implements Serializable {
     private List<String> types = new ArrayList<>();
     private List<String> aliases = new ArrayList<>();
     private List<String> acronyms = new ArrayList<>();
+    private List<String> links = new ArrayList<>();
     @JsonAlias({"wikipedia_url"})
     private String wikipediaUrl;
     // Country
