@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
+import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.models.rororg.Organization;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
  * ---
  */
 @Component
+@Slf4j
 public class RorOrgApiServiceApiClient implements RorOrgApiService {
     // Re-try configuration
     public static final int WS_REQUEST_RETRY_MAX_ATTEMPTS = 12;
