@@ -33,7 +33,7 @@ public class RorOrgApiServiceApiClient implements RorOrgApiService {
     // Configuration
     @Value("${org.identifiers.cloud.hq.ws.registry.ror.api.baseurl}")
     private String rorApiBaseUrl;
-    @Value("${org.identifiers.cloud.hq.ws.registry.ror.api.urlsuffix.organization}")
+    @Value("${org.identifiers.cloud.hq.ws.registry.ror.api.query.suffix.organizations}")
     private String rorApiUrlSuffixOrganization;
 
     // Factory method
