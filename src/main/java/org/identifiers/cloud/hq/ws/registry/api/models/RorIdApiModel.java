@@ -1,5 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
+import org.identifiers.cloud.hq.ws.registry.models.RorOrgApiService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,5 +15,12 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class RorIdApiModel {
-    // TODO
+    @Autowired
+    private RorOrgApiService rorOrgApiService;
+
+    public ResponseEntity<?> getInstitutionForRorId(String rorId) {
+        // TODO - Fetch the Organization
+        // TODO - Transform model
+        return null;
+    }
 }
