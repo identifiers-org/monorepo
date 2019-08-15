@@ -79,7 +79,7 @@ spec:
                       topologyKey: "kubernetes.io/hostname"
             containers:
                 - name: hq-registry-web
-                  image: identifiersorg/cloud-hq-web-frontend:1.2.2
+                  image: identifiersorg/cloud-hq-web-frontend:1.2.3
                   imagePullPolicy: Always
                   resources:
                       requests:
