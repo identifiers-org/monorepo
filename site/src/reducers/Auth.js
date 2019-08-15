@@ -1,6 +1,6 @@
 // Keycloak.
 import Keycloak from '../utils/keycloak';
-import keycloakConf from '../config/keycloak.json';
+import { keycloakConf } from '../config/keycloak.js';
 
 
 // Auth reducer
