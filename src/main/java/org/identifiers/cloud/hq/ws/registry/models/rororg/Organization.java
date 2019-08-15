@@ -110,4 +110,19 @@ public class Organization implements Serializable {
         }
         return wikidata;
     }
+
+    @JsonIgnore
+    public OrganizationGridIdInfo getGrid() {
+        if (grid == null) {
+            if (externalIds.get(KEY_EXTERNAL_ID_GRID) != null) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                try {
+                    grid = objectMapper.readValue(objectMapper.writeValueAsString(externalIds.get(KEY_EXTERNAL_ID_GRID)), OrganizationGridIdInfo.class);
+                } catch (IOException e) {
+                    log.error(String.format("Could NOT build GRID from existing information in Organization with ROR ID '%s', due to '%s'", id, e.getMessage()));
+                }
+            }
+        }
+        return grid;
+    }
 }
