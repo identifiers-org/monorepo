@@ -28,6 +28,7 @@ export const config = {
   apiVersion: '1.0',
 
   VALIDATION_DELAY: 1000,
+  DEBOUNCE_DELAY: 500,
 
   enableAuthFeatures: true
 };
