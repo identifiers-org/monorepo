@@ -26,10 +26,10 @@ class HomePage extends React.Component {
           <h1 className="text-primary mb-4">Identifiers.org Resolution Service</h1>
           <div className="d-flex">
             <p className="mb-0 text-justify text-muted">
-            The Identifiers.org Resolution Service provides consistent access to life science data using Compact
-            Identifiers. Compact Identifiers consist of an assigned unique prefix and a local provider designated
-            accession number (prefix:accession). The resolving location of Compact Identifiers is determined using
-            information that is stored in the Identifiers.org  <a
+              The Identifiers.org Resolution Service provides consistent access to life science data using Compact
+              Identifiers. Compact Identifiers consist of an assigned unique prefix and a local provider designated
+              accession number (prefix:accession). The resolving location of Compact Identifiers is determined using
+              information that is stored in the Identifiers.org  <a
                 href={config.registryUrl}
                 className="text-primary"
               >
@@ -43,7 +43,12 @@ class HomePage extends React.Component {
           <h4 className={`mt-3 ${boxPadding}`}><i className="icon icon-common icon-search mr-2" />Resolve a Compact Identifier</h4>
           <div className={`row justify-content-center mt-2 ${searchBarPadding}`}>
             <div className="col col-lg-7 col-xl-12">
-              <Search />
+              <Search
+                button={true}
+                buttonCaption={<span><i className="icon icon-common icon-search mr-1" /> Resolve</span>}
+                floatingGoToButton={false}
+                placeholderCaption="Enter an identifier to resolve"
+              />
             </div>
           </div>
         </div>

@@ -5,6 +5,9 @@ import { withRouter } from 'react-router-dom';
 // Components.
 import SearchSuggestions from './SearchSuggestions';
 
+// Config.
+import { config } from '../../config/Config';
+
 // Actions.
 import { getNamespacesFromRegistry } from '../../actions/NamespaceList';
 import { setConfig } from '../../actions/Config';
@@ -170,18 +173,32 @@ class Search extends React.Component {
 
   handleSearch = () => {
     const {
-      props: { config, history },
-      state: { namespaceList, query, queryParts }
+      props: { history },
+      state: { query }
+    } = this;
+
+    if (this.handleEvaluateSearch()) {
+      history.push(`resolve?query=${query}`);
+    }
+  }
+
+  handleEvaluateSearch = () => {
+    const {
+      props: { config },
+      state: { namespaceList, queryParts }
     } = this;
 
     const evaluation = evaluateSearch(queryParts, namespaceList, config.enableResourcePrediction);
 
-    if (evaluation !== 'ok') {
-      return;
-    }
+    return evaluation === 'ok';
+  }
 
+  handleClickGoToButton = e => {
+    const { queryParts } = this.state;
 
-    history.push(`resolve?query=${query}`);
+    e.preventDefault();
+
+    window.location.href = `${config.resolverHardcodedUrl}/${queryParts.prefix}:${queryParts.id}`;
   }
 
 
@@ -189,14 +206,15 @@ class Search extends React.Component {
     const {
       handleChange,
       handleClick,
+      handleClickGoToButton,
+      handleEvaluateSearch,
       handleFocusShowSuggestions,
       handleKeyDown,
       handleMouseOver,
       handleSubmit,
       setSuggestionListRef,
-      props: { config },
+      props: { button = false, buttonCaption, config, floatingGoToButton, placeholderCaption },
       state: { activeSuggestion, namespaceList, query, queryParts }
-
     } = this;
 
     return (
@@ -210,17 +228,28 @@ class Search extends React.Component {
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               onFocus={handleFocusShowSuggestions}
-              placeholder="Enter an identifier to resolve it"
+              placeholder={placeholderCaption}
               ref={input => this.search = input}
               value={query}
             />
             <div className="input-group-append">
-              <button
-                className="btn btn-primary search-button"
-                onFocus={handleFocusShowSuggestions}
-              >
-                <i className="icon icon-common icon-search" /> Resolve
-              </button>
+              {floatingGoToButton && handleEvaluateSearch() && (
+                <button
+                  className="button-floating"
+                  onClick={handleClickGoToButton}
+                  tabIndex={-1}
+                >
+                  <i className="icon icon-common icon-external-link-square-alt size-150" />
+                </button>
+              )}
+              {button && (
+                <button
+                  className="btn btn-primary search-button"
+                  onFocus={handleFocusShowSuggestions}
+                >
+                  {buttonCaption}
+                </button>
+              )}
             </div>
             { config.showSearchSuggestions &&
               <SearchSuggestions

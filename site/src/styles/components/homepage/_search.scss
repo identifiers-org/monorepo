@@ -1,0 +1,12 @@
+.button-floating {
+    margin-left: -4rem;
+    margin-top: -5px;
+    width: 4rem;
+    z-index: 7;
+    height: 2rem;
+    align-self: center;
+
+    &:focus {
+        outline: none;
+    }
+}

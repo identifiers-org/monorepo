@@ -4,7 +4,7 @@
   margin-top: 2.6rem;
   position: absolute;
   width: 100%;
-  z-index: 100;
+  z-index: 5;
 }
 
 .suggestion-list {
@@ -47,9 +47,9 @@
 .search-input {
   height: 2.5rem !important;
   padding-top: .5rem;
-  z-index: 101 !important;
+  z-index: 6 !important;
 }
 
 .search-button {
-  z-index: 101 !important;
+  z-index: 6 !important;
 }
