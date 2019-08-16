@@ -1,7 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+// Components.
 import Search from '../HomePage/Search';
+
+// Utils.
+import { isIpadScreen, isSmallScreen } from '../../utils/responsive';
 
 
 class HomePage extends React.Component {
@@ -18,8 +22,8 @@ class HomePage extends React.Component {
 
   handleClickPrefixRegistrationRequestForm = () => { this.props.history.push('/prefixregistrationrequest') };
   handleClickRegistryBrowser = () => { this.props.history.push('/registry') };
-  handleSuggestionAction = (query) => { this.props.history.push(`/registry/${query}`); }  
-  
+  handleSuggestionAction = (query) => { this.props.history.push(`/registry/${query}`); }
+
   // Takes user to search if there are no prefixes matching that exact query in the namespace list, otherwise
   // will redirect to the matching namespace page.
   handleSearchAction = (query) => {
@@ -42,10 +46,9 @@ class HomePage extends React.Component {
       state: { query }
     } = this;
 
-    const isSmallScreen = window.matchMedia("(max-width: 768px)").matches;
-    const boxPadding = isSmallScreen ? 'p-3' : 'p-5';
-    const searchBarPadding = isSmallScreen ? 'p-1' : 'px-5';
-    const topSpacer = isSmallScreen ? '' : 'spacer-8';
+    const boxPadding = isSmallScreen() || isIpadScreen() ? 'p-3' : 'p-5';
+    const searchBarPadding = isSmallScreen() ? 'p-1' : 'px-5';
+    const topSpacer = isSmallScreen() ? '' : 'spacer-8';
 
     return (
       <div className={`row border ${topSpacer}`}>
