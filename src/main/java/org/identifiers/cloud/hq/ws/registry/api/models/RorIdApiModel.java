@@ -24,7 +24,8 @@ public class RorIdApiModel {
 
     public ResponseEntity<?> getInstitutionForRorId(String rorId) {
         try {
-            // Fetch
+            // TODO Check if the institution already is in the registry
+            // Fetch if the institution is not in the registry
             Organization organization = rorOrgApiService.getOrganizationDetails(rorId);
             // Model transformation
             return new ResponseEntity<>(RorDataModelsHelper.getInstitutionFromRorOrganization(organization), HttpStatus.OK);
