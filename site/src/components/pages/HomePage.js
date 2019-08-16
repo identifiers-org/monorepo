@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Search from '../HomePage/Search';
 
 // Utils.
-import { isSmallScreen } from '../../utils/responsive';
+import { isSmallScreen, isIpadScreen } from '../../utils/responsive';
 
 
 class HomePage extends React.Component {
@@ -16,7 +16,7 @@ class HomePage extends React.Component {
   render() {
     const { config } = this.props;
 
-    const boxPadding = isSmallScreen() ? 'p-3' : 'p-5';
+    const boxPadding = isSmallScreen() || isIpadScreen() ? 'p-3' : 'p-5';
     const searchBarPadding = isSmallScreen() ? 'p-1' : 'px-5';
     const topSpacer = isSmallScreen() ? '' : 'spacer-8';
 
