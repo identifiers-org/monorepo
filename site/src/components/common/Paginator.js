@@ -50,7 +50,6 @@ class Paginator extends React.Component {
     const linkArray = [...Array(totalPages).keys()].slice(firstIndex, lastIndex);
 
     const firstElement = number * size + 1;
-    console.log('number', number, 'totalelements', totalElements, 'totalpages', totalPages, 'size', size);
     const lastElement = number < (totalPages - 1) ? (number + 1) * size : (number * size) + (totalElements % size);
 
     return (
