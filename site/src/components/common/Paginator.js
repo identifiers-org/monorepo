@@ -49,6 +49,10 @@ class Paginator extends React.Component {
 
     const linkArray = [...Array(totalPages).keys()].slice(firstIndex, lastIndex);
 
+    const firstElement = number * size + 1;
+    console.log('number', number, 'totalelements', totalElements, 'totalpages', totalPages, 'size', size);
+    const lastElement = number < (totalPages - 1) ? (number + 1) * size : (number * size) + (totalElements % size);
+
     return (
       <div className="row justify-content-between">
         <div className={`col col-12 col-md-8 col-lg-6 col-xl-6 paginator mb-2 ${smallOrder2}`}>
@@ -111,7 +115,7 @@ class Paginator extends React.Component {
 
         <div className={`col col-12 col-lg-3 col-xl-4 mb-2 ${smallOrder1}`}>
           <span className="pager">
-            {totalElements === 0 ? '' : `${number * size + 1} to ${(number + 1) * size} of ${Math.max(totalElements, (number + 1) * size)}`}
+            {totalElements === 0 ? '' : `${firstElement} to ${lastElement} of ${totalElements}`}
           </span>
         </div>
 
