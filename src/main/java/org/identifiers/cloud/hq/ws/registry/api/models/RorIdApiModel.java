@@ -1,6 +1,9 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
+import org.identifiers.cloud.hq.ws.registry.api.data.helpers.ApiAndDataModelsHelper;
 import org.identifiers.cloud.hq.ws.registry.api.data.helpers.RorDataModelsHelper;
+import org.identifiers.cloud.hq.ws.registry.data.models.Institution;
+import org.identifiers.cloud.hq.ws.registry.data.repositories.InstitutionRepository;
 import org.identifiers.cloud.hq.ws.registry.models.RorOrgApiService;
 import org.identifiers.cloud.hq.ws.registry.models.RorOrgApiServiceException;
 import org.identifiers.cloud.hq.ws.registry.models.rororg.Organization;
@@ -21,10 +24,17 @@ import org.springframework.stereotype.Component;
 public class RorIdApiModel {
     @Autowired
     private RorOrgApiService rorOrgApiService;
+    @Autowired
+    private InstitutionRepository institutionRepository;
 
     public ResponseEntity<?> getInstitutionForRorId(String rorId) {
         try {
-            // TODO Check if the institution already is in the registry
+            // TODO I would put this into a model transformer strategy / provider as a strategy pattern
+            // TCheck if the institution already is in the registry
+            Institution institution = institutionRepository.findByRorId(rorId);
+            if (institution != null) {
+                return new ResponseEntity<>(ApiAndDataModelsHelper.getInstitutionFrom(institution), HttpStatus.OK);
+            }
             // Fetch if the institution is not in the registry
             Organization organization = rorOrgApiService.getOrganizationDetails(rorId);
             // Model transformation
