@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,5 +13,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SchemaOrgApiModel {
+    @Value("${org.identifiers.cloud.hq.ws.registry.schemaorg.jsonld.platform.template.filename}")
+    private String jsonldPlatformTemplateFilename;
     // TODO
+
+
 }
