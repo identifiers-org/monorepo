@@ -26,8 +26,7 @@ public class SchemaOrgApiController {
 
     @GetMapping("getAnnotationForPlatform")
     public ResponseEntity<?> getAnnotationForPlatform() {
-        // TODO
-        return new ResponseEntity<>("This is the annotation for the general platform", HttpStatus.OK);
+        return model.getAnnotationForPlatform();
     }
 
     @GetMapping("getAnnotationForNamespace/{id}")
