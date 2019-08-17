@@ -32,12 +32,12 @@ public class SchemaOrgApiController {
     @GetMapping("getAnnotationForNamespace/{id}")
     public ResponseEntity<?> getAnnotationForNamespace(@PathVariable long id) {
         // TODO
-        return new ResponseEntity<>("This is the annotation for NAMESPACE", HttpStatus.OK);
+        return new ResponseEntity<>("This is the annotation for NAMESPACE", HttpStatus.NOT_IMPLEMENTED);
     }
 
     @GetMapping("getAnnotationForResource/{id}")
     public ResponseEntity<?> getAnnotationForResource(@PathVariable long id) {
         // TODO
-        return new ResponseEntity<>("This is the annotation for RESOURCE", HttpStatus.OK);
+        return new ResponseEntity<>("This is the annotation for RESOURCE", HttpStatus.NOT_IMPLEMENTED);
     }
 }
