@@ -17,8 +17,8 @@ import java.util.List;
  * ---
  */
 public interface InstitutionRepository extends JpaRepository<Institution, Long> {
-    // TODO
     Institution findByName(String name);
+    Institution findByRorId(String rorId);
 
     @RestResource(exported = false)
     List<Institution> findByNameContaining(String nameContent);
