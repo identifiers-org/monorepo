@@ -3,6 +3,7 @@ package org.identifiers.cloud.hq.ws.registry.api.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,5 +26,9 @@ public class SchemaOrgApiController {
         return new ResponseEntity<>("This is the annotation for the general platform", HttpStatus.OK);
     }
 
-    
+    @GetMapping("getAnnotationForNamespace/{id}")
+    public ResponseEntity<?> getAnnotationForNamespace(@PathVariable long id) {
+        // TODO
+        return new ResponseEntity<>("This is the annotation for NAMESPACE", HttpStatus.OK);
+    }
 }
