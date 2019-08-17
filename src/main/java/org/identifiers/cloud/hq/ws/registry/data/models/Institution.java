@@ -30,7 +30,8 @@ import java.util.Date;
 @Accessors(chain = true)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(indexes = {@Index(name = "idx_name", columnList = "name", unique = true)})
+@Table(indexes = {@Index(name = "idx_name", columnList = "name", unique = true),
+        @Index(name = "idx_institution_ror_id", columnList = "rorId", unique = true)})
 public class Institution {
     @Id
     @GeneratedValue
@@ -58,6 +59,6 @@ public class Institution {
     private Location location;
 
     // ROR IDs, long URL just in case...
-    @Column(length = 2000)
+    @Column(length = 2000, unique = true)
     private String rorId;
 }
