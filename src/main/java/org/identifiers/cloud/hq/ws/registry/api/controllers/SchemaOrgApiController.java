@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class SchemaOrgApiController {
     // TODO
 
-    @GetMapping("getPlatformAnnotation")
-    public ResponseEntity<?> getPlatformAnnotation() {
+    @GetMapping("getAnnotationForPlatform")
+    public ResponseEntity<?> getAnnotationForPlatform() {
         // TODO
         return new ResponseEntity<>("This is the annotation for the general platform", HttpStatus.OK);
     }
+
+    
 }
