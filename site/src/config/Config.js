@@ -16,7 +16,7 @@ export const config = {
   resourceManagementEndpoint: 'resourceManagementApi',
 
   // Schema.org metadata endpoints.
-  schemaOrgPlatformEndpoint: 'schemaOrgApi/schemaOrgApi/getMetadataForPlatform',
+  schemaOrgPlatformEndpoint: 'schemaOrgApi/getMetadataForPlatform',
   schemaOrgNamespaceEndpoint: 'schemaOrgApi/getMetadataForNamespace',
 
   satelliteUrl: 'https://identifiers.org',
