@@ -4,6 +4,7 @@ import org.identifiers.cloud.hq.ws.registry.models.schemaorg.*;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -50,6 +51,17 @@ public class SchemaOrgMetadataBioschemasProvider implements SchemaOrgMetadataPro
         // Set the organization contact point
         organization.setContactPoint(contactPoint);
         return organization;
+    }
+
+    private DataCatalog startPlatformMetadataTree() {
+        DataCatalog dataCatalog = new DataCatalog();
+        dataCatalog.makeItRootNode();
+        dataCatalog.setName("Identifiers.org");
+        dataCatalog.setDescription("The Identifiers.org registry contains registered namespace and provider prefixes with associated access URIs for a large number of high quality data collections. These prefixes are used in web resolution of compact identifiers of the form PREFIX:ACCESSION commonly used to specify bioinformatics and other data resources.");
+        dataCatalog.setUrl("https://identifiers.org/");
+        dataCatalog.setKeywords("registry,life sciences,compact identifier");
+        dataCatalog.setAlternateName(Arrays.asList("Identifiers.org Central Registry"));
+        return dataCatalog;
     }
 
     @Override
