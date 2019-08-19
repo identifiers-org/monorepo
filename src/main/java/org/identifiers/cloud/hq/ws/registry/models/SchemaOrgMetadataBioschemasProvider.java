@@ -104,6 +104,6 @@ public class SchemaOrgMetadataBioschemasProvider implements SchemaOrgMetadataPro
             String errorMessage = String.format("Schema.org metadata for namespace with ID '%d' COULD NOT BE PROVIDED, the namespace DOES NOT exist", namespaceId);
             throw new SchemaOrgMetadataProviderException(errorMessage);
         }
-        return getForPlatform().setDataset(getDatasetFromNamespace(namespace.get()));
+        return ((DataCatalog) getForPlatform()).setDataset(getDatasetFromNamespace(namespace.get()));
     }
 }
