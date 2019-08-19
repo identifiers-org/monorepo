@@ -1,3 +1,4 @@
+// Config.
 import { config } from '../config/Config';
 
 
@@ -11,7 +12,13 @@ export const getSchemaOrgMetadataFromRegistry = (id) => {
     let requestUrl = !id ? config.schemaOrgPlatformEndpoint : `${config.schemaOrgNamespaceEndpoint}/${id}`;
 
     const response = await fetch(requestUrl);
+
+    console.log('response', response);
+
     const json = await response.json();
+
+    console.log('json', json);
+
 
     dispatch(setLocationList(json));
   };
