@@ -150,16 +150,16 @@ class Header extends React.Component {
                               <i className="icon icon-common icon-tachometer-alt mr-1" />Curation dashboard
                             </NavLink>
                           </EBINavItem>
-                          )
+                        )
                       }
 
                       {
                         config.enableAuthFeatures && auth.authenticated && (
                           // If logged in.
                           <EBINavItem className="nav-item">
-                            <NavLink to="/account" className="nav-link" activeClassName="active">
+                            <a href={`${config.authApi}/realms/idorg/account`} target="_blank" rel="noopener noreferrer" className="nav-link nav-link-dark">
                               <i className="icon icon-common icon-user mr-1" />Account
-                            </NavLink>
+                            </a>
                           </EBINavItem>
                         )
                       }
