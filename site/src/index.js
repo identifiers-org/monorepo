@@ -11,7 +11,7 @@ import store from './store/store';
 import { authInit, saveAuthRenewalIntervalHandler } from './actions/Auth';
 import { getInstitutionListFromRegistry } from './actions/InstitutionList';
 import { getLocationListFromRegistry } from './actions/LocationList';
-import { getSchemaOrgMetadataFromRegistry } from './actions/SchemaOrgMetadata';
+import { getSchemaOrgMetadataFromRegistry, getSchemaOrgMetadataByPrefixFromRegistry } from './actions/SchemaOrgMetadata';
 
 // Routers.
 import AppRouter from './routers/AppRouter';
@@ -39,8 +39,14 @@ const jsx = (
   await store.dispatch(getLocationListFromRegistry());
   // Get institutions.
   await store.dispatch(getInstitutionListFromRegistry());
-  // Get Schema.org Metadata and append it to the document's head.
-  await store.dispatch(getSchemaOrgMetadataFromRegistry());
+  // Get Schema.org Metadata depending on current path and append it to the document's head.
+  const prefix = window.location.pathname.split('/').pop();
+  if (window.location.pathname.includes('registry') && !['', 'registry'].includes(prefix)) {
+    await store.dispatch(getSchemaOrgMetadataByPrefixFromRegistry(prefix));
+  } else {
+    await store.dispatch(getSchemaOrgMetadataFromRegistry());
+  }
+
   appendSchemaOrg(store.getState().schemaOrgMetadata);
 
   // Init auth.
