@@ -29,4 +29,12 @@ public interface SchemaOrgMetadataProvider {
      * @throws SchemaOrgMetadataProviderException
      */
     SchemaOrgNode getForNamespace(long namespaceId) throws SchemaOrgMetadataProviderException;
+
+    /**
+     * Get Schema.org metadata for the platform, including information about a particular namespace
+     * @param namespacePrefix namespace prefix
+     * @return root node of the Schema.org metadata tree
+     * @throws SchemaOrgMetadataProviderException
+     */
+    SchemaOrgNode getForNamespacePrefix(String namespacePrefix) throws SchemaOrgMetadataProviderException;
 }
