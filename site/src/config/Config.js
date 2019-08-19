@@ -18,6 +18,7 @@ export const config = {
   // Schema.org metadata endpoints.
   schemaOrgPlatformEndpoint: 'schemaOrgApi/getMetadataForPlatform',
   schemaOrgNamespaceEndpoint: 'schemaOrgApi/getMetadataForNamespace',
+  schemaOrgNamespacePrefixEndpoint: 'schemaOrgApi/getMetadataForNamespacePrefix',
 
   satelliteUrl: 'https://identifiers.org',
   feedbackUrl: 'https://github.com/identifiers-org/identifiers-org.github.io/issues/new',
