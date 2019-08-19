@@ -106,4 +106,14 @@ public class SchemaOrgMetadataBioschemasProvider implements SchemaOrgMetadataPro
         }
         return ((DataCatalog) getForPlatform()).setDataset(getDatasetFromNamespace(namespace.get()));
     }
+
+    @Override
+    public SchemaOrgNode getForNamespacePrefix(String namespacePrefix) throws SchemaOrgMetadataProviderException {
+        Namespace namespace = namespaceRepository.findByPrefix(namespacePrefix);
+        if (namespace == null) {
+            String errorMessage = String.format("Schema.org metadata for namespace with prefix '%s' COULD NOT BE PROVIDED, the namespace DOES NOT exist", namespacePrefix);
+            throw new SchemaOrgMetadataProviderException(errorMessage);
+        }
+        return ((DataCatalog) getForPlatform()).setDataset(getDatasetFromNamespace(namespace));
+    }
 }
