@@ -1,8 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
-import org.identifiers.cloud.hq.ws.registry.models.schemaorg.CreativeWork;
-import org.identifiers.cloud.hq.ws.registry.models.schemaorg.PublicationEvent;
-import org.identifiers.cloud.hq.ws.registry.models.schemaorg.SchemaOrgNode;
+import org.identifiers.cloud.hq.ws.registry.models.schemaorg.*;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -37,6 +35,21 @@ public class SchemaOrgMetadataBioschemasProvider implements SchemaOrgMetadataPro
         license.setName("Creative Commons CC4 Attribution");
         license.setUrl("https://creativecommons.org/licenses/by/4.0/");
         return license;
+    }
+
+    private Organization getPlatformProvider() {
+        // Create the contact point
+        ContactPoint contactPoint = new ContactPoint();
+        contactPoint.setContactType("customer support");
+        contactPoint.setEmail("identifiers-org@ebi.ac.uk");
+        contactPoint.setUrl("https://github.com/identifiers-org/identifiers-org.github.io/issues/new");
+        // Create the Organization
+        Organization organization = new Organization();
+        organization.setName("The European Bioinformatics Institute (EMBL-EBI)");
+        organization.setUrl("http://www.ebi.ac.uk/");
+        // Set the organization contact point
+        organization.setContactPoint(contactPoint);
+        return organization;
     }
 
     @Override
