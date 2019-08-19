@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
+import org.identifiers.cloud.hq.ws.registry.models.schemaorg.CreativeWork;
 import org.identifiers.cloud.hq.ws.registry.models.schemaorg.PublicationEvent;
 import org.identifiers.cloud.hq.ws.registry.models.schemaorg.SchemaOrgNode;
 import org.springframework.stereotype.Component;
@@ -28,6 +29,14 @@ public class SchemaOrgMetadataBioschemasProvider implements SchemaOrgMetadataPro
         publicationEvent.setName("Identifiers.org and MIRIAM Registry: community resources to provide persistent identification.");
         publicationEvent.setUrl("https://identifiers.org/pubmed:22140103");
         publicationEvents.add(publicationEvent);
+        return publicationEvents;
+    }
+
+    private CreativeWork getPlatformLicense() {
+        CreativeWork license = new CreativeWork();
+        license.setName("Creative Commons CC4 Attribution");
+        license.setUrl("https://creativecommons.org/licenses/by/4.0/");
+        return license;
     }
 
     @Override
