@@ -1,12 +1,15 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
+import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
+import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
 import org.identifiers.cloud.hq.ws.registry.models.schemaorg.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Project: registry
@@ -18,6 +21,10 @@ import java.util.List;
  */
 @Component
 public class SchemaOrgMetadataBioschemasProvider implements SchemaOrgMetadataProvider {
+    // Repositories
+    @Autowired
+    private NamespaceRepository namespaceRepository;
+
     // Helpers
     private List<PublicationEvent> getPlatformPublicationEvents() {
         List<PublicationEvent> publicationEvents = new ArrayList<>();
@@ -65,6 +72,21 @@ public class SchemaOrgMetadataBioschemasProvider implements SchemaOrgMetadataPro
         return dataCatalog;
     }
 
+    private Dataset getDatasetFromNamespace(Namespace namespace) {
+        // TODO Refactor some things here in the future, if we ever need to extend this
+        // Some values
+        String idorgNamespaceUrl = String.format("https://registry.identifiers.org/registry/%s#!", namespace.getPrefix());
+        String keywords = String.format("registry,life sciences,compact identifier, %s", namespace.getPrefix());
+        // Build the Dataset node
+        Dataset dataset = new Dataset();
+        dataset.setName(namespace.getName());
+        dataset.setDescription(namespace.getDescription());
+        dataset.setUrl(idorgNamespaceUrl);
+        dataset.setKeywords(keywords);
+        dataset.setIdentifier(idorgNamespaceUrl);
+        return dataset;
+    }
+
     @Override
     public SchemaOrgNode getForPlatform() throws SchemaOrgMetadataProviderException {
         // Somewhat of a builder
@@ -77,6 +99,11 @@ public class SchemaOrgMetadataBioschemasProvider implements SchemaOrgMetadataPro
 
     @Override
     public SchemaOrgNode getForNamespace(long namespaceId) throws SchemaOrgMetadataProviderException {
-        return null;
+        Optional<Namespace> namespace = namespaceRepository.findById(namespaceId);
+        if (!namespace.isPresent()) {
+            String errorMessage = String.format("Schema.org metadata for namespace with ID '%d' COULD NOT BE PROVIDED, the namespace DOES NOT exist", namespaceId);
+            throw new SchemaOrgMetadataProviderException(errorMessage);
+        }
+        return getForPlatform().setDataset(getDatasetFromNamespace(namespace.get()));
     }
 }
