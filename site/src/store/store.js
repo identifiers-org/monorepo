@@ -37,6 +37,8 @@ import resourceRegistrationSessionAmendReducer from '../reducers/CurationDashboa
 import resourceRegistrationSessionCommentReducer from '../reducers/CurationDashboardPage/ResourceRegistrationSessionComment';
 import resourceRegistrationSessionRejectReducer from '../reducers/CurationDashboardPage/ResourceRegistrationSessionReject';
 
+import schemaOrgMetadataReducer from '../reducers/SchemaOrgMetadataReducer';
+
 
 // Middlewares.
 // TODO: Convert validator to middleware.
@@ -60,7 +62,7 @@ const store = createStore(
       curationInstitutionList: curationInstitutionListReducer,
       curationInstitutionListParams: curationInstitutionListParamsReducer,
       curationEditInstitution: institutionPatchReducer,
-      
+
       prefixRegistrationSessionList: prefixRegistrationSessionListReducer,
       prefixRegistrationSessionListParams: prefixRegistrationSessionListParamsReducer,
       prefixRegistrationSession: prefixRegistrationSessionReducer,
@@ -68,7 +70,7 @@ const store = createStore(
       prefixRegistrationSessionAmend: prefixRegistrationSessionAmendReducer,
       prefixRegistrationSessionComment: prefixRegistrationSessionCommentReducer,
       prefixRegistrationSessionReject: prefixRegistrationSessionRejectReducer,
-      
+
       resourceRegistrationSessionList: resourceRegistrationSessionListReducer,
       resourceRegistrationSessionListParams: resourceRegistrationSessionListParamsReducer,
       resourceRegistrationSession: resourceRegistrationSessionReducer,
@@ -113,7 +115,7 @@ const store = createStore(
 
     resourceRegistrationRequestForm: combineReducers({
       namespacePrefix: resourceRegistrationRequestFieldReducer('namespacePrefix'),
-      
+
       institutionName: resourceRegistrationRequestFieldReducer('institutionName'),
       institutionDescription: resourceRegistrationRequestFieldReducer('institutionDescription'),
       institutionHomeUrl: resourceRegistrationRequestFieldReducer('institutionHomeUrl'),
@@ -136,6 +138,8 @@ const store = createStore(
       namespaceList: namespaceListReducer,
       namespaceListParams: namespaceListParamsReducer
     }),
+
+    schemaOrgMetadata: schemaOrgMetadataReducer
   }),
   composeEnhancers(applyMiddleware(thunk))
 );
