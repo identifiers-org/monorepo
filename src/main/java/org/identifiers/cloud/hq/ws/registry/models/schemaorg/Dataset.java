@@ -30,4 +30,10 @@ public class Dataset extends SchemaOrgNode implements Serializable {
     private String keywords;
     @JsonProperty("@id")
     private String identifier;
+
+    // Set the node type
+    @Override
+    public String delegateGetNodeType() {
+        return "Dataset";
+    }
 }
