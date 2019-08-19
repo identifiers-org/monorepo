@@ -15,6 +15,10 @@ export const config = {
   namespaceManagementEndpoint: 'namespaceManagementApi',
   resourceManagementEndpoint: 'resourceManagementApi',
 
+  // Schema.org metadata endpoints.
+  schemaOrgPlatformEndpoint: 'schemaOrgApi/schemaOrgApi/getMetadataForPlatform',
+  schemaOrgNamespaceEndpoint: 'schemaOrgApi/getMetadataForNamespace',
+
   satelliteUrl: 'https://identifiers.org',
   feedbackUrl: 'https://github.com/identifiers-org/identifiers-org.github.io/issues/new',
   documentationUrl: 'http://docs.identifiers.org',
