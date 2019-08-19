@@ -37,6 +37,6 @@ export const config = {
   apiVersion: '1.0',
 
   // Schema.org metadata endpoints.
-  schemaOrgPlatformEndpoint: 'schemaOrgApi/schemaOrgApi/getMetadataForPlatform',
+  schemaOrgPlatformEndpoint: 'schemaOrgApi/getMetadataForPlatform',
   schemaOrgNamespaceEndpoint: 'schemaOrgApi/getMetadataForNamespace'
 };
