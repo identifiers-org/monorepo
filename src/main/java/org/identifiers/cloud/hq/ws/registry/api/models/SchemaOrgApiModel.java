@@ -31,4 +31,14 @@ public class SchemaOrgApiModel {
             return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    public ResponseEntity<?> getMetadataForNamespace(long namespaceId) {
+        try {
+            return new ResponseEntity<>(schemaOrgMetadataProvider.getForNamespace(namespaceId), HttpStatus.OK);
+        } catch (SchemaOrgMetadataProviderException e) {
+            String errorMessage = String.format("Could not produce metadata for namespace ID '%d' due to '%s'", namespaceId, e.getMessage());
+            log.error(errorMessage);
+            return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+        }
+    }
 }

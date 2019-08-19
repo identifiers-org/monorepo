@@ -32,6 +32,6 @@ public class SchemaOrgApiController {
     @GetMapping("getMetadataForNamespace/{id}")
     public ResponseEntity<?> getMetadataForNamespace(@PathVariable long id) {
         // TODO
-        return new ResponseEntity<>("This is the annotation for NAMESPACE", HttpStatus.NOT_IMPLEMENTED);
+        return model.getMetadataForNamespace(id);
     }
 }
