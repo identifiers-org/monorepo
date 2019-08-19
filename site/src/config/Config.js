@@ -34,5 +34,9 @@ export const config = {
   // Old platform Url. Used in navbar.
   oldIdentifiersUrl: 'https://ebi.identifiers.org',
 
-  apiVersion: '1.0'
+  apiVersion: '1.0',
+
+  // Schema.org metadata endpoints.
+  schemaOrgPlatformEndpoint: 'schemaOrgApi/schemaOrgApi/getMetadataForPlatform',
+  schemaOrgNamespaceEndpoint: 'schemaOrgApi/getMetadataForNamespace'
 };
