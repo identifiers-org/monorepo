@@ -28,7 +28,6 @@ public class ContactPoint extends SchemaOrgNode implements Serializable {
     private String url;
 
     // Set node type
-
     @Override
     public String delegateGetNodeType() {
         return "ContactPoint";
