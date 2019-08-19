@@ -2,6 +2,7 @@ package org.identifiers.cloud.hq.ws.registry.models.schemaorg;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -28,7 +29,9 @@ public abstract class SchemaOrgNode implements Serializable {
 
     // Include this one if, and only if, it is not null
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonProperty("@context")
     private String context;
+    @JsonProperty("@type")
     private String type;
 
     // Helpers

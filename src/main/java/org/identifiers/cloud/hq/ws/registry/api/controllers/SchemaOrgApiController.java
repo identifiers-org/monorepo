@@ -24,20 +24,14 @@ public class SchemaOrgApiController {
     @Autowired
     private SchemaOrgApiModel model;
 
-    @GetMapping("getAnnotationForPlatform")
-    public ResponseEntity<?> getAnnotationForPlatform() {
-        return model.getAnnotationForPlatform();
+    @GetMapping("getMetadataForPlatform")
+    public ResponseEntity<?> getMetadataForPlatform() {
+        return model.getMetadataForPlatform();
     }
 
-    @GetMapping("getAnnotationForNamespace/{id}")
-    public ResponseEntity<?> getAnnotationForNamespace(@PathVariable long id) {
+    @GetMapping("getMetadataForNamespace/{id}")
+    public ResponseEntity<?> getMetadataForNamespace(@PathVariable long id) {
         // TODO
         return new ResponseEntity<>("This is the annotation for NAMESPACE", HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    @GetMapping("getAnnotationForResource/{id}")
-    public ResponseEntity<?> getAnnotationForResource(@PathVariable long id) {
-        // TODO
-        return new ResponseEntity<>("This is the annotation for RESOURCE", HttpStatus.NOT_IMPLEMENTED);
     }
 }

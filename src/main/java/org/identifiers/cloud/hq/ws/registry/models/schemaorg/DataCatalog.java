@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.models.schemaorg;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -33,6 +34,7 @@ public class DataCatalog extends SchemaOrgNode implements Serializable {
     private CreativeWork license;
     private List<PublicationEvent> publication = new ArrayList<>();
     private List<String> alternateName = new ArrayList<>();
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Dataset dataset;
 
     // Set the node type
