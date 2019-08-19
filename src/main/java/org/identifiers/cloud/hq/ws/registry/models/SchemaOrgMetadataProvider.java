@@ -1,5 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
+import org.identifiers.cloud.hq.ws.registry.models.schemaorg.SchemaOrgNode;
+
 /**
  * Project: registry
  * Package: org.identifiers.cloud.hq.ws.registry.models
@@ -12,4 +14,6 @@ package org.identifiers.cloud.hq.ws.registry.models;
  */
 public interface SchemaOrgMetadataProvider {
     // TODO
+
+    SchemaOrgNode getForPlatform() throws SchemaOrgMetadataProviderException;
 }
