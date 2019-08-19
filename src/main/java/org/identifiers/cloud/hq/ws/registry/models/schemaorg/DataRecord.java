@@ -23,6 +23,13 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 public class DataRecord extends SchemaOrgNode implements Serializable {
+    // Node Attributes
     @JsonProperty("@id")
     private String identifier;
+
+    // Set the node type
+    @Override
+    public String delegateGetNodeType() {
+        return "DataRecord";
+    }
 }
