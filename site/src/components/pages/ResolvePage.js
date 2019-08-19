@@ -1,10 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+// Actions.
 import { getResolvedResources } from '../../actions/ResolvedResources';
+import { getSchemaOrgMetadataFromRegistry } from '../../actions/SchemaOrgMetadata';
+
+// Components.
+import Spinner from '../common/Spinner';
 import ResourceList from '../ResolverPage/ResourceList';
 
-import Spinner from '../common/Spinner';
+// Utils.
 import { swalToast } from '../../utils/swalDialogs';
 
 
@@ -26,8 +31,20 @@ class ResolvePage extends React.Component {
       state: { query }
     } = this;
 
-    await getResolvedResources(query)
+    await getResolvedResources(query);
     this.setState({isLoading: false});
+
+    // Get Schema.org Metadata and append it to the document's head.
+    getSchemaOrgMetadataFromRegistry(query);
+  }
+
+  async componentWillUnmount() {
+    const {
+      getSchemaOrgMetadataFromRegistry
+    } = this.props;
+
+    // Get Schema.org Metadata for the platform and append it to the document's head.
+    await getSchemaOrgMetadataFromRegistry();
   }
 
 
@@ -104,11 +121,13 @@ class ResolvePage extends React.Component {
 
 // Redux mappings.
 const mapStateToProps = (state) => ({
-  config: state.config
+  config: state.config,
+  schemaOrgMetadata: state.schemaOrgMetadata
 });
 
 const mapDispatchToProps = dispatch => ({
-  getResolvedResources: (query) => dispatch(getResolvedResources(query))
+  getResolvedResources: (query) => dispatch(getResolvedResources(query)),
+  getSchemaOrgMetadataFromRegistry: (namespaceId) => dispatch(getSchemaOrgMetadataFromRegistry(namespaceId)),
 });
 
 export default connect (mapStateToProps, mapDispatchToProps)(ResolvePage);
