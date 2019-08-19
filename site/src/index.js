@@ -11,13 +11,18 @@ import store from './store/store';
 import { authInit, saveAuthRenewalIntervalHandler } from './actions/Auth';
 import { getInstitutionListFromRegistry } from './actions/InstitutionList';
 import { getLocationListFromRegistry } from './actions/LocationList';
+import { getSchemaOrgMetadataFromRegistry } from './actions/SchemaOrgMetadata';
 
 // Routers.
 import AppRouter from './routers/AppRouter';
 
+// Utils.
+import { appendSchemaOrg } from './utils/schemaOrg';
+
 // CSS.
 import './styles/styles.scss';
 import { renewToken } from './utils/auth';
+
 
 
 // App container.
@@ -34,6 +39,10 @@ const jsx = (
   await store.dispatch(getLocationListFromRegistry());
   // Get institutions.
   await store.dispatch(getInstitutionListFromRegistry());
+  // Get Schema.org Metadata and append it to the document's head.
+  await store.dispatch(getSchemaOrgMetadataFromRegistry());
+  appendSchemaOrg(store.getState().schemaOrgMetadata);
+
 
   // Init auth.
   store.getState().config.enableAuthFeatures && await store.dispatch(authInit());
