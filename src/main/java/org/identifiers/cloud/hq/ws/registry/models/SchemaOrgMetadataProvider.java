@@ -15,5 +15,18 @@ import org.identifiers.cloud.hq.ws.registry.models.schemaorg.SchemaOrgNode;
 public interface SchemaOrgMetadataProvider {
     // TODO
 
+    /**
+     * Get Schema.org metadata describing the platform
+     * @return root node of the Schema.org metadata tree
+     * @throws SchemaOrgMetadataProviderException
+     */
     SchemaOrgNode getForPlatform() throws SchemaOrgMetadataProviderException;
+
+    /**
+     * Get Schema.org metadata for the platform, including information about a particular namespace
+     * @param namespaceId namespace ID (internal)
+     * @return root node of the Schema.org metadata tree
+     * @throws SchemaOrgMetadataProviderException
+     */
+    SchemaOrgNode getForNamespace(long namespaceId) throws SchemaOrgMetadataProviderException;
 }
