@@ -3,6 +3,7 @@ package org.identifiers.cloud.hq.ws.registry.models;
 import org.identifiers.cloud.hq.ws.registry.models.schemaorg.*;
 import org.springframework.stereotype.Component;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -67,7 +68,11 @@ public class SchemaOrgMetadataBioschemasProvider implements SchemaOrgMetadataPro
     @Override
     public SchemaOrgNode getForPlatform() throws SchemaOrgMetadataProviderException {
         // Somewhat of a builder
-        return null;
+        DataCatalog dataCatalog = startPlatformMetadataTree();
+        dataCatalog.setProvider(getPlatformProvider());
+        dataCatalog.setLicense(getPlatformLicense());
+        dataCatalog.setPublication(getPlatformPublicationEvents());
+        return dataCatalog;
     }
 
     @Override
