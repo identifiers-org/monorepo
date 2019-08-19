@@ -34,4 +34,10 @@ public class SchemaOrgApiController {
         // TODO
         return model.getMetadataForNamespace(id);
     }
+
+    @GetMapping("getMetadataForNamespacePrefix/{namespacePrefix}")
+    public ResponseEntity<?> getMetadataForNamespacePrefix(@PathVariable String namespacePrefix) {
+        // TODO
+        return model.getMetadataForNamespacePrefix(namespacePrefix);
+    }
 }

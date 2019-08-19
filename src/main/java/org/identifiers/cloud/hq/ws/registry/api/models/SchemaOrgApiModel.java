@@ -41,4 +41,14 @@ public class SchemaOrgApiModel {
             return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
         }
     }
+
+    public ResponseEntity<?> getMetadataForNamespacePrefix(String namespacePrefix) {
+        try {
+            return new ResponseEntity<>(schemaOrgMetadataProvider.getForNamespacePrefix(namespacePrefix.toLowerCase()), HttpStatus.OK);
+        } catch (SchemaOrgMetadataProviderException e) {
+            String errorMessage = String.format("Could not produce metadata for namespace with prefix '%s' due to '%s'", namespacePrefix, e.getMessage());
+            log.error(errorMessage);
+            return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+        }
+    }
 }
