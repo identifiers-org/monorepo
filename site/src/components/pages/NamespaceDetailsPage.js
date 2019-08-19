@@ -11,6 +11,7 @@ import {
   deactivateNamespace,
   reactivateNamespace
 } from '../../actions/NamespacePatch';
+import { getSchemaOrgMetadataFromRegistry } from '../../actions/SchemaOrgMetadata';
 
 // Components.
 import PageTitle from '../common/PageTitle';
@@ -42,17 +43,36 @@ class NamespaceDetailsPage extends React.Component {
 
 
   async componentDidMount() {
-    await this.props.getNamespaceFromRegistry(this.props.match.params.prefix);
-    await this.props.getResourcesFromRegistry(this.props.namespaceList[0]);
+    const {
+      getNamespaceFromRegistry,
+      getResourcesFromRegistry,
+      getSchemaOrgMetadataFromRegistry,
+      match: { params: { prefix } },
+      setNamespacePatch
+    } = this.props;
+
+    await getNamespaceFromRegistry(prefix);
+    await getResourcesFromRegistry(this.props.namespaceList[0]);
 
     // Prepares model for namespace patching.
     const {resources, _links, ...newNamespace} = this.props.namespaceList[0];
     const namespaceId = _links.self.href.split('/').pop();
 
     this.setState({namespaceId, newNamespace});
-    this.props.setNamespacePatch(namespaceId, newNamespace);
+    setNamespacePatch(namespaceId, newNamespace);
+
+    // Get Schema.org Metadata and append it to the document's head.
+    getSchemaOrgMetadataFromRegistry(namespaceId);
   }
 
+  async componentWillUnmount() {
+    const {
+      getSchemaOrgMetadataFromRegistry
+    } = this.props;
+
+    // Get Schema.org Metadata for the platform and append it to the document's head.
+    await getSchemaOrgMetadataFromRegistry();
+  }
 
   //
   // Field manipulation handler. Undefined 'value' field will revert to default.
@@ -485,13 +505,15 @@ class NamespaceDetailsPage extends React.Component {
 const mapStateToProps = (state) => {
   return ({
     namespaceList: state.registryBrowser.namespaceList,
-    newNamespace: state.curationEditNamespace
+    newNamespace: state.curationEditNamespace,
+    schemaOrgMetadata: state.schemaOrgMetadata
   })
 };
 
 const mapDispatchToProps = dispatch => ({
   getNamespaceFromRegistry: (prefix) => dispatch(getNamespaceFromRegistry(prefix)),
   getResourcesFromRegistry: (namespace) => dispatch(getResourcesFromRegistry(namespace)),
+  getSchemaOrgMetadataFromRegistry: (namespaceId) => dispatch(getSchemaOrgMetadataFromRegistry(namespaceId)),
   setNamespacePatch: (id, namespace) => dispatch(setNamespacePatch(id, namespace)),
   setNamespacePatchField: (field, value) => dispatch(setNamespacePatchField(field, value)),
   patchNamespace: (id, newNamespace) => dispatch(patchNamespace(id, newNamespace)),
