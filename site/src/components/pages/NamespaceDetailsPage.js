@@ -48,6 +48,7 @@ class NamespaceDetailsPage extends React.Component {
       getResourcesFromRegistry,
       getSchemaOrgMetadataFromRegistry,
       match: { params: { prefix } },
+      schemaOrgMetadata,
       setNamespacePatch
     } = this.props;
 
@@ -62,7 +63,9 @@ class NamespaceDetailsPage extends React.Component {
     setNamespacePatch(namespaceId, newNamespace);
 
     // Get Schema.org Metadata and append it to the document's head.
-    getSchemaOrgMetadataFromRegistry(namespaceId);
+    if (!schemaOrgMetadata.dataset || (schemaOrgMetadata.dataset && schemaOrgMetadata.dataset.name !== this.props.namespaceList[0].name)) {
+      getSchemaOrgMetadataFromRegistry(namespaceId);
+    }
   }
 
   async componentWillUnmount() {
