@@ -33,7 +33,7 @@ public class DataCatalog extends SchemaOrgNode implements Serializable {
     private CreativeWork license;
     private List<PublicationEvent> publication = new ArrayList<>();
     private List<String> alternateName = new ArrayList<>();
-    // TODO Dataset link
+    private Dataset dataset;
 
     // Set the node type
     @Override
