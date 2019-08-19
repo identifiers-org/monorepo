@@ -1,5 +1,7 @@
 export const config = {
   registryApi: typeof configApiRegistryUrl !== 'undefined' ? configApiRegistryUrl : 'http://localhost:8180',
+  authApi: typeof configAuthUrl !== 'undefined' ? `${configAuthUrl}/auth` : 'http://localkeycloak:8080/auth',
+  authRedirectUri: typeof configAuthRedirectUri !== 'undefined' ? configAuthRedirectUri : 'http://127.0.0.1:8182/',
 
   prefixRegistrationRequestValidationEndpoint: 'prefixRegistrationApi',
   resourceRegistrationRequestValidationEndpoint: 'resourceManagementApi',
