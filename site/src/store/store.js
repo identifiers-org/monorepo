@@ -18,7 +18,8 @@ const store = createStore(
   combineReducers({
     config: configReducer,
     namespaceList: namespaceListReducer,
-    resolvedResources: resolvedResourcesReducer
+    resolvedResources: resolvedResourcesReducer,
+    schemaOrgMetadata: schemaOrgMetadataReducer
   }),
   composeEnhancers(applyMiddleware(thunk))
 );
