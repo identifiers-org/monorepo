@@ -43,7 +43,6 @@ const jsx = (
   await store.dispatch(getSchemaOrgMetadataFromRegistry());
   appendSchemaOrg(store.getState().schemaOrgMetadata);
 
-
   // Init auth.
   store.getState().config.enableAuthFeatures && await store.dispatch(authInit());
 
