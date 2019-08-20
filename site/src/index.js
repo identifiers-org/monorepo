@@ -44,6 +44,7 @@ const jsx = (
   if (window.location.pathname.includes('registry')) {
     if ((prefix !== "registry") (prefix !== "")) {
         await store.dispatch(getSchemaOrgMetadataByPrefixFromRegistry(prefix));
+    }
   } else {
     await store.dispatch(getSchemaOrgMetadataFromRegistry());
   }
