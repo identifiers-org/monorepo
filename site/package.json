@@ -1,6 +1,6 @@
 {
   "name": "cloud-satellite-web-frontend",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Identifiers.org satellite web frontend",
   "main": "index.js",
   "scripts": {
