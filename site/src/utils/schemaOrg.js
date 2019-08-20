@@ -1,6 +1,5 @@
 export function appendSchemaOrg(contents) {
-
-  const script = document.createElement('script');
+  const script = document.getElementById('schemaorg-metadata') || document.createElement('script');
 
   script.id = 'schemaorg-metadata';
   script.type = 'application/ld+json';
