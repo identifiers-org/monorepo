@@ -28,10 +28,10 @@ const jsx = (
 (async () => {
   // Get initial data.
   // Configuration from devops endpoint, which will be residing in the same url as the app.
-  const configUrlPort = process.env.NODE_ENV === 'development' ? 9090 : window.location.port;
+  const configUrlPort = process.env.NODE_ENV === 'development' ? 9091 : window.location.port;
   const configUrl = `${window.location.protocol}//${window.location.hostname}:${configUrlPort}`;
 
-  store.dispatch(getConfigFromDevopsApi(configUrl));
+  await store.dispatch(getConfigFromDevopsApi(configUrl));
 
   // Get Schema.org Metadata depending on current path and append it to the document's head.
   const searchParams = new URLSearchParams(window.location.search);
