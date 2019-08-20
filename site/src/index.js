@@ -11,10 +11,9 @@ import AppRouter from './routers/AppRouter';
 import store from './store/store';
 
 // Utils.
-import { appendSchemaOrg } from './utils/schemaOrg';
+import { querySplit } from './utils/identifiers';
 
 import './styles/styles.scss';
-import { querySplit } from './utils/identifiers';
 
 
 // App container.
