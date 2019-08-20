@@ -34,12 +34,15 @@ const jsx = (
   await store.dispatch(getConfigFromDevopsApi(configUrl));
 
   // Get Schema.org Metadata depending on current path and append it to the document's head.
+  /* Do not use URLSearchParams so google structured search tool can use this. ( <= chrome 42)
   const searchParams = new URLSearchParams(window.location.search);
   const query = searchParams.get('query');
+  */
+  const query = window.location.search.split('query=').pop();
 
   if (query) {
-    const { prefix } = querySplit(searchParams.get('query'));
-    await store.dispatch(getSchemaOrgMetadataByPrefixFromRegistry(prefix));
+    const splitQuery = querySplit(query);
+    await store.dispatch(getSchemaOrgMetadataByPrefixFromRegistry(splitQuery.prefix));
   } else {
     await store.dispatch(getSchemaOrgMetadataFromRegistry());
   }
