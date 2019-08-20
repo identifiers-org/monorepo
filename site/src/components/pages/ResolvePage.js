@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 // Actions.
 import { getResolvedResources } from '../../actions/ResolvedResources';
-import { getSchemaOrgMetadataFromRegistry } from '../../actions/SchemaOrgMetadata';
+import { getSchemaOrgMetadataFromRegistry, getSchemaOrgMetadataByPrefixFromRegistry } from '../../actions/SchemaOrgMetadata';
 
 // Components.
 import Spinner from '../common/Spinner';
@@ -11,6 +11,7 @@ import ResourceList from '../ResolverPage/ResourceList';
 
 // Utils.
 import { swalToast } from '../../utils/swalDialogs';
+import { querySplit } from '../../utils/identifiers';
 
 
 class ResolvePage extends React.Component {
@@ -27,24 +28,24 @@ class ResolvePage extends React.Component {
 
   componentDidMount = async () => {
     const {
-      props: { getResolvedResources },
+      props: { getResolvedResources, getSchemaOrgMetadataByPrefixFromRegistry, schemaOrgMetadata },
       state: { query }
     } = this;
 
+    // Load and update schema.org metadata.
+    const { prefix } = querySplit(query);
+    if (!schemaOrgMetadata.dataset) {
+      getSchemaOrgMetadataByPrefixFromRegistry(prefix);
+    }
+
     await getResolvedResources(query);
     this.setState({isLoading: false});
-
-    // Get Schema.org Metadata and append it to the document's head.
-    getSchemaOrgMetadataFromRegistry(query);
   }
 
   async componentWillUnmount() {
-    const {
-      getSchemaOrgMetadataFromRegistry
-    } = this.props;
+    const { getSchemaOrgMetadataFromRegistry } = this.props;
 
-    // Get Schema.org Metadata for the platform and append it to the document's head.
-    await getSchemaOrgMetadataFromRegistry();
+    getSchemaOrgMetadataFromRegistry();
   }
 
 
@@ -128,6 +129,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => ({
   getResolvedResources: (query) => dispatch(getResolvedResources(query)),
   getSchemaOrgMetadataFromRegistry: (namespaceId) => dispatch(getSchemaOrgMetadataFromRegistry(namespaceId)),
+  getSchemaOrgMetadataByPrefixFromRegistry: (namespaceId) => dispatch(getSchemaOrgMetadataByPrefixFromRegistry(namespaceId))
 });
 
 export default connect (mapStateToProps, mapDispatchToProps)(ResolvePage);
