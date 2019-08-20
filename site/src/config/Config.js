@@ -6,7 +6,7 @@ export const config = {
   resolverHardcodedUrl: 'https://identifiers.org',
 
   // Registry API Url used to fetch namespaces for the suggestions box.
-  registryApi: 'http://localhost:8180',
+  registryApi: 'https://registry.api.identifiers.org',
 
   // This requires a working HQ architecture with a central registry.
   showSearchSuggestions: true,
