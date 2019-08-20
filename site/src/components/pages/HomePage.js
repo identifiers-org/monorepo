@@ -35,8 +35,6 @@ class HomePage extends React.Component {
     this.props.history.push(redirectUrl);
   }
 
-  handle
-
   render() {
     const {
       handleClickPrefixRegistrationRequestForm,
