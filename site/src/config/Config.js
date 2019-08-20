@@ -37,5 +37,5 @@ export const config = {
   VALIDATION_DELAY: 1000,
   DEBOUNCE_DELAY: 500,
 
-  enableAuthFeatures: true
+  enableAuthFeatures: false
 };
