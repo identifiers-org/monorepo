@@ -42,7 +42,7 @@ const jsx = (
   // Get Schema.org Metadata depending on current path and append it to the document's head.
   const prefix = window.location.pathname.split('/').pop();
   if (window.location.pathname.includes('registry')) {
-    if ((prefix !== "registry") (prefix !== "")) {
+    if ((prefix !== "registry") && (prefix !== "")) {
         await store.dispatch(getSchemaOrgMetadataByPrefixFromRegistry(prefix));
     }
   } else {
