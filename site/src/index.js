@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 
 // Actions.
 import { getConfigFromDevopsApi } from './actions/Config';
-import { getSchemaOrgMetadataFromRegistry } from './actions/SchemaOrgMetadata';
+import { getSchemaOrgMetadataFromRegistry, getSchemaOrgMetadataByPrefixFromRegistry } from './actions/SchemaOrgMetadata';
 
 // Components.
 import AppRouter from './routers/AppRouter';
@@ -14,6 +14,7 @@ import store from './store/store';
 import { appendSchemaOrg } from './utils/schemaOrg';
 
 import './styles/styles.scss';
+import { querySplit } from './utils/identifiers';
 
 
 // App container.
@@ -33,9 +34,16 @@ const jsx = (
 
   store.dispatch(getConfigFromDevopsApi(configUrl));
 
-  // Get Schema.org Metadata and append it to the document's head.
-  await store.dispatch(getSchemaOrgMetadataFromRegistry());
-  appendSchemaOrg(store.getState().schemaOrgMetadata);
+  // Get Schema.org Metadata depending on current path and append it to the document's head.
+  const searchParams = new URLSearchParams(window.location.search);
+  const query = searchParams.get('query');
+
+  if (query) {
+    const { prefix } = querySplit(searchParams.get('query'));
+    await store.dispatch(getSchemaOrgMetadataByPrefixFromRegistry(prefix));
+  } else {
+    await store.dispatch(getSchemaOrgMetadataFromRegistry());
+  }
 
 
 
