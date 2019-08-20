@@ -16,6 +16,8 @@ export const getConfigFromDevopsApi = (url) => {
       const data = await response.json();
 
       dispatch(setConfig(data));
+
+      return data;
     }
 
     catch (err) {

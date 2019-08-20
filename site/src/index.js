@@ -28,7 +28,7 @@ const jsx = (
 (async () => {
   // Get initial data.
   // Configuration from devops endpoint, which will be residing in the same url as the app.
-  const configUrlPort = process.env.NODE_ENV === 'development' ? 9091 : window.location.port;
+  const configUrlPort = process.env.NODE_ENV === 'development' ? 9090 : window.location.port;
   const configUrl = `${window.location.protocol}//${window.location.hostname}:${configUrlPort}`;
 
   await store.dispatch(getConfigFromDevopsApi(configUrl));
