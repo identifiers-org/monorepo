@@ -41,8 +41,9 @@ const jsx = (
   await store.dispatch(getInstitutionListFromRegistry());
   // Get Schema.org Metadata depending on current path and append it to the document's head.
   const prefix = window.location.pathname.split('/').pop();
-  if (window.location.pathname.includes('registry') && !['', 'registry'].includes(prefix)) {
-    await store.dispatch(getSchemaOrgMetadataByPrefixFromRegistry(prefix));
+  if (window.location.pathname.includes('registry')) {
+    if ((prefix !== "registry") (prefix !== "")) {
+        await store.dispatch(getSchemaOrgMetadataByPrefixFromRegistry(prefix));
   } else {
     await store.dispatch(getSchemaOrgMetadataFromRegistry());
   }
