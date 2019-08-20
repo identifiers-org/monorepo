@@ -35,25 +35,6 @@ const jsx = (
 
 // ==================== APP Initialization ====================
 (async () => {
-  // Get locations.
-  await store.dispatch(getLocationListFromRegistry());
-  // Get institutions.
-  await store.dispatch(getInstitutionListFromRegistry());
-  // Get Schema.org Metadata depending on current path and append it to the document's head.
-  const prefix = window.location.pathname.split('/').pop();
-  if (window.location.pathname.includes('registry')) {
-    if ((prefix !== "registry") && (prefix !== "")) {
-        await store.dispatch(getSchemaOrgMetadataByPrefixFromRegistry(prefix));
-    }
-  } else {
-    await store.dispatch(getSchemaOrgMetadataFromRegistry());
-  }
-
-  appendSchemaOrg(store.getState().schemaOrgMetadata);
-
-  // Init auth.
-  store.getState().config.enableAuthFeatures && await store.dispatch(authInit());
-
   // Auth token periodic renewal.
   if (store.getState().auth.authenticated) {
     const keycloak = store.getState().auth.keycloak;
@@ -63,6 +44,24 @@ const jsx = (
 
     store.dispatch(saveAuthRenewalIntervalHandler(renewToken, tokenDuration - (tokenDuration * .1)));
   }
+
+  // Get locations.
+  store.dispatch(getLocationListFromRegistry());
+  // Get institutions.
+  store.dispatch(getInstitutionListFromRegistry());
+  // Get Schema.org Metadata depending on current path and append it to the document's head.
+  const prefix = window.location.pathname.split('/').pop();
+
+  if (window.location.pathname.includes('registry') && (prefix !== "registry" && prefix !== "")) {
+    await store.dispatch(getSchemaOrgMetadataByPrefixFromRegistry(prefix));
+  } else {
+    await store.dispatch(getSchemaOrgMetadataFromRegistry());
+  }
+
+  appendSchemaOrg(store.getState().schemaOrgMetadata);
+
+  // Init auth.
+  store.getState().config.enableAuthFeatures && await store.dispatch(authInit());
 
   // Render app.
   ReactDOM.render(jsx, document.getElementById("app"));
