@@ -1,0 +1,81 @@
+# Development environment definition
+# Author: Manuel Bernal Llinares
+version: "3.5"
+services:
+    hqregistrypostgresql:
+        image: postgres
+        environment:
+            - POSTGRES_DB=devdatabase
+            - POSTGRES_USER=devusername
+            - POSTGRES_PASSWORD=devpassword
+        ports:
+            - "5430:5432"
+    hqmiridpostgresql:
+        image: postgres
+        environment:
+            - POSTGRES_DB=devdatabase
+            - POSTGRES_USER=devusername
+            - POSTGRES_PASSWORD=devpassword
+        ports:
+            - "5431:5432"
+    keycloakpostgresql:
+        image: postgres
+        environment:
+            - POSTGRES_DB=devdatabase
+            - POSTGRES_USER=devusername
+            - POSTGRES_PASSWORD=devpassword
+        ports:
+            - "5432:5432"
+    redis:
+        image: redis:4.0.8-alpine
+        ports:
+            - "6379:6379"
+    hqmiridcontroller:
+        image: identifiersorg/cloud-hq-ws-mirid-controller
+        environment:
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_JDBC_URL=jdbc:postgresql://hqmiridpostgresql:5432/devdatabase
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_USERNAME=devusername
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_PASSWORD:devpassword
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_REDIS_HOST=redis
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_REDIS_PORT=6379
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_APPLICATION_ACTIVE_PROFILE=development,authenabled
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUERURI=http://localkeycloak:8080/auth/realms/idorg/
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTID=hq-mirid-controller
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTSECRET=clientsecret
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI=http://localkeycloak:8080/auth/realms/idorg
+        ports:
+            - "8181:8181"
+        depends_on:
+            - redis
+            - hqmiridpostgresql
+            - localkeycloak
+        restart: on-failure
+    localkeycloak:
+        image: jboss/keycloak:6.0.1
+        volumes:
+            - ./data/keycloak:/srv/keycloak
+        environment:
+            - KEYCLOAK_USER=devadmin
+            - KEYCLOAK_PASSWORD=devpassword
+            - DB_VENDOR=postgres
+            - DB_ADDR=keycloakpostgresql
+            - DB_DATABASE=devdatabase
+            - DB_USER=devusername
+            - DB_PASSWORD=devpassword
+            - KEYCLOAK_IMPORT=/srv/keycloak/realm-idorg-dev.json
+        ports:
+            - "8080:8080"
+        depends_on:
+            - keycloakpostgresql
+        healthcheck:
+            test: curl -f http://localhost:8080/auth/
+            start_period: 30s
+    fakesmtp:
+        image: digiplant/fake-smtp
+        ports:
+            - "1025:25"
+        volumes:
+            - ./tmp/fakesmtp:/var/mail
+networks:
+    default:
+        name: hqregistrynet
