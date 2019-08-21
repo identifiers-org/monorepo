@@ -7,7 +7,10 @@ package org.identifiers.cloud.hq.ws.registry.models.helpers;
  *
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
+ *
+ * It provides help on working with the authentication layer, specially when it comes to extracting information from it.
  */
 public class AuthHelper {
     // TODO
+
 }

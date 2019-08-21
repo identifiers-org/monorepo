@@ -1,6 +1,5 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -17,9 +16,7 @@ import org.springframework.stereotype.Component;
  * ---
  */
 @Component
-@Slf4j
 public class DevAuthApiModel {
-    // TODO
     public ResponseEntity<?> getPrincipal() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return new ResponseEntity<>(authentication.getPrincipal(), HttpStatus.OK);
