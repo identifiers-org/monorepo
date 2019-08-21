@@ -1,10 +1,11 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
+import org.identifiers.cloud.hq.ws.registry.models.helpers.AuthHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,17 +18,17 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DevAuthApiModel {
+    @Autowired
+    private AuthHelper authHelper;
+
     public ResponseEntity<?> getPrincipal() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return new ResponseEntity<>(authentication.getPrincipal(), HttpStatus.OK);
     }
 
+    
+
     public ResponseEntity<?> getUsername() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getPrincipal() instanceof Jwt) {
-            Jwt jwtToken = (Jwt) authentication.getPrincipal();
-            return new ResponseEntity<>(jwtToken.getClaims().getOrDefault("preferred_username", "UNKNOWN_USER"), HttpStatus.OK);
-        }
-        return new ResponseEntity<>("NOT JWT", HttpStatus.OK);
+        return new ResponseEntity<>(authHelper.getCurrentUsername(), HttpStatus.OK);
     }
 }
