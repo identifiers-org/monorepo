@@ -15,6 +15,10 @@ export const setValidation = (registrationType, id, validation) => ({
   validation
 });
 
+export const resetValidityStatus = (registrationType, id) => ({
+  type: `${id}/RESET_${registrationType}REGISTRATIONREQUESTFIELDVALIDITYSTATUS`
+})
+
 export const reset = (registrationType, id) => ({
   type: `${id}/${registrationType}REGISTRATIONREQUESTFIELDRESET`
 });
