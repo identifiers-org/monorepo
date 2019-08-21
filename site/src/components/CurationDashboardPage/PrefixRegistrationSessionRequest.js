@@ -49,6 +49,7 @@ const PrefixRegistrationSessionRequestDetails = ({ data }) => (
             <tr><td className="w-25 pl-2 font-weight-bold">Home URL</td><td className="w-75 text-block">{data.providerHomeUrl}</td></tr>
             <tr><td className="w-25 pl-2 font-weight-bold">Provider code</td><td className="w-75 text-block">{data.providerCode}</td></tr>
             <tr><td className="w-25 pl-2 font-weight-bold">URL Pattern</td><td className="w-75 text-block">{data.providerUrlPattern}</td></tr>
+            <tr><td className="w-25 pl-2 font-weight-bold">Sample Id</td><td className="w-75 text-block">{data.sampleId}</td></tr>
             <tr><td className="w-25 pl-2 font-weight-bold">Location</td><td className="w-75 text-block">{data.providerLocation}</td></tr>
           </tbody>
         </table>
