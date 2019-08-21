@@ -266,6 +266,8 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers("/schemaOrgApi/**").permitAll()
                 // Development Auth API
                     .antMatchers("/devAuthApi/**").permitAll()
+                // Registry Insight API
+                    .antMatchers(HttpMethod.GET, "/registryInsightApi/getAllNamespacePrefixes").permitAll()
                 .anyRequest().denyAll()
                 .and()
                 .csrf()
