@@ -22,7 +22,6 @@ class RegistrationRequestField extends React.Component {
 
     this.state = {
       value,
-      errorMessage: undefined,
       options: this.props.options,
       debounceInput: undefined
     };
@@ -115,7 +114,7 @@ class RegistrationRequestField extends React.Component {
       errorMessage: json.errorMessage
     };
     this.props.setValidity(res.valid);
-    this.setState({ errorMessage: res.errorMessage });
+    this.props.setErrorMessage(res.errorMessage);
     this.props.validationDone();
 
     return response;
@@ -156,7 +155,7 @@ class RegistrationRequestField extends React.Component {
     this.validate();
   };
 
-  handleSearchAction = (query) => { 
+  handleSearchAction = (query) => {
     clearTimeout(this.state.debounceInput);
 
     // Debouce search field.
@@ -172,21 +171,21 @@ class RegistrationRequestField extends React.Component {
   render() {
     const {
       handleSearchAction,
-      props: { validationtooltip, field: { valid } },
-      state: { errorMessage, options }
+      props: { validationtooltip, field: { valid, errorMessage } },
+      state: { options }
     } = this;
 
     const id = `form-control-${this.props.id}`;
-    
+
     return (
       <div className="form-group row">
         <label
-          className="col-lg-3 col-form-label form-control-label"
+          className="col col-lg-3 col-form-label form-control-label"
           htmlFor={id}
         >
           {this.props.label}{!this.props.required && <p className="text-muted">(Optional)</p>}
         </label>
-        <div className="col-lg-9">
+        <div className="col col-lg-9">
           {(() => {
             switch (this.props.type) {
             case "text":
