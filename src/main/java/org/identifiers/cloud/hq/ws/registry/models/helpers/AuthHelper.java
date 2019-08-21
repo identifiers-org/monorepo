@@ -26,8 +26,7 @@ public class AuthHelper {
         }
         return true;
     }
-
-    // TODO
+    
     public String getCurrentUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (isAuthenticated()) {
