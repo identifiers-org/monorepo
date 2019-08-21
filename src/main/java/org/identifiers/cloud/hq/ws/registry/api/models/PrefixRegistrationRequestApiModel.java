@@ -13,6 +13,7 @@ import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSessio
 import org.identifiers.cloud.hq.ws.registry.data.repositories.PrefixRegistrationSessionRepository;
 import org.identifiers.cloud.hq.ws.registry.models.PrefixRegistrationRequestManagementService;
 import org.identifiers.cloud.hq.ws.registry.api.data.helpers.ApiAndDataModelsHelper;
+import org.identifiers.cloud.hq.ws.registry.models.helpers.AuthHelper;
 import org.identifiers.cloud.hq.ws.registry.models.validators.PrefixRegistrationRequestValidatorStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,10 @@ public class PrefixRegistrationRequestApiModel {
     // Prefix Registration Request Management Service
     @Autowired
     private PrefixRegistrationRequestManagementService prefixRegistrationRequestManagementService;
+
+    // Auth Helper
+    @Autowired
+    private AuthHelper authHelper;
 
     // Repositories
     @Autowired
@@ -106,7 +111,7 @@ public class PrefixRegistrationRequestApiModel {
         ServiceResponseRegisterPrefix response = createRegisterPrefixDefaultResponse();
         boolean isValid = false;
         // Determine who is the actor of this
-        String actor = "ANONYMOUS";
+        String actor = authHelper.getCurrentUsername();
         // Possible additional information
         String additionalInformation = "Source, Open API for prefix registration request submission";
         // Run request validation
@@ -136,7 +141,7 @@ public class PrefixRegistrationRequestApiModel {
     public ServiceResponseRegisterPrefixSessionEvent amendPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
         ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
         // TODO Actor unknnown right now, until we get Spring Security
-        String actor = "UNKNOWN";
+        String actor = authHelper.getCurrentUsername();
         // Locate the prefix registration request session
         PrefixRegistrationSession prefixRegistrationSession = getPrefixRegistrationSession("AMEND", sessionId, request, response);
         if (response.getHttpStatus() == HttpStatus.OK) {
@@ -154,7 +159,7 @@ public class PrefixRegistrationRequestApiModel {
     public ServiceResponseRegisterPrefixSessionEvent commentPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
         ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
         // TODO Actor unknnown right now, until we get Spring Security
-        String actor = "UNKNOWN";
+        String actor = authHelper.getCurrentUsername();
         // Locate the prefix registration request session
         PrefixRegistrationSession prefixRegistrationSession = getPrefixRegistrationSession("COMMENT", sessionId, request, response);
         if (response.getHttpStatus() == HttpStatus.OK) {
@@ -169,7 +174,7 @@ public class PrefixRegistrationRequestApiModel {
     public ServiceResponseRegisterPrefixSessionEvent rejectPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
         ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
         // TODO Actor unknnown right now, until we get Spring Security
-        String actor = "UNKNOWN";
+        String actor = authHelper.getCurrentUsername();
         // Locate the prefix registration request session
         PrefixRegistrationSession prefixRegistrationSession = getPrefixRegistrationSession("REJECT", sessionId, request, response);
         if (response.getHttpStatus() == HttpStatus.OK) {
@@ -183,7 +188,7 @@ public class PrefixRegistrationRequestApiModel {
     public ServiceResponseRegisterPrefixSessionEvent acceptPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
         ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
         // TODO Actor unknnown right now, until we get Spring Security
-        String actor = "UNKNOWN";
+        String actor = authHelper.getCurrentUsername();
         // Locate the prefix registration request session
         PrefixRegistrationSession prefixRegistrationSession = getPrefixRegistrationSession("ACCEPT", sessionId, request, response);
         if (response.getHttpStatus() == HttpStatus.OK) {
