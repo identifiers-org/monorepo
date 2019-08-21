@@ -37,7 +37,7 @@ url_registry_spa = os.getenv(SITEMAP_BUILDER_CONFIG_URL_REGISTRY_SPA, 'https://r
 url_registry_api_get_namespace_prefixes = "{}/registryInsightApi/getAllNamespacePrefixes".format(url_registry_api)
 url_template_registry_namespace_landing_page = "{}/registry/{}#!".format(url_registry_spa, PLACEHOLDER_NAMESPACE_PREFIX)
 path_file_sitemap = os.getenv(SITEMAP_BUILDER_CONFIG_PATH_FILE_SITEMAP, 'sitemap.txt')
-path_file_sitemap_staging = "{}_staging".format(path_file_sitemap)
+path_file_sitemap_staging = "{}_staging".format(os.path.basename(path_file_sitemap))
 
 # Get the list of namespaces
 try:

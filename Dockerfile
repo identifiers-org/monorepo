@@ -2,6 +2,9 @@
 FROM nginx
 LABEL maintainer="Manuel Bernal Llinares <mbdebian@gmail.com>"
 
+# Prepare Python environment
+RUN apt-get install -y python3 python3-pip; pip3 install requests
+
 # Configure the default site
 COPY nginx_conf/site_default.conf /etc/nginx/conf.d/default.conf
 # Prepare startup Application
