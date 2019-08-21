@@ -5,6 +5,7 @@
  */
 
 const defaultState = {
+  errorMessage: undefined,
   label: '',
   shouldValidate: true,
   requestedValidate: false,
