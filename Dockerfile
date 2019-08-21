@@ -2,6 +2,9 @@
 FROM nginx
 LABEL maintainer="Manuel Bernal Llinares <mbdebian@gmail.com>"
 
+# Default Environment
+ENV SITEMAP_BUILDER_CONFIG_PATH_FILE_SITEMAP=/home/site/sitemap.txt
+
 # Prepare Python environment
 RUN apt-get install -y python3 python3-pip; pip3 install requests
 
@@ -12,6 +15,9 @@ RUN mkdir -p /home/app
 # Copy startup script
 COPY scripts/startup.sh /home/app/startup.sh
 RUN chmod 750 /home/app/startup.sh
+# Copy sitemap updater
+COPY scripts/sitemap_updater.py /home/app/sitemap_updater.py
+RUN chmod 750 /home/app/sitemap_updater.py
 # Prepare site
 RUN mkdir -p /home/site
 ADD site/dist/. /home/site
