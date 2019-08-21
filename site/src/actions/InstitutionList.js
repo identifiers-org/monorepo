@@ -1,4 +1,8 @@
+// Config.
 import { config } from '../config/Config';
+
+// Utils.
+import { fetchAndAdd } from '../utils/fetchAndAdd';
 
 
 //
@@ -15,20 +19,54 @@ export const getInstitutionListFromRegistry = () => {
     const response = await fetch(requestUrl);
     const json = await response.json();
     const institutions = json._embedded.institutions.map(institution => ({
-      id: institution._links.self.href, //.split('/').pop(),
+      id: institution._links.self.href,
+      shortId: institution._links.self.href.split('/').pop(),
       name: institution.name,
       homeUrl: institution.homeUrl,
       description: institution.description
-    })).sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
+    }));
 
     dispatch(setInstitutionList(institutions));
   };
 };
+
+// Get a single institutions from registry, including its hateoas links. Will dispatch setInstitution.
+export const getInstitutionFromRegistry = (id) => {
+  return async (dispatch) => {
+    let requestUrl = config.registryApi + `/restApi/institutions/${id}`;
+
+    const response = await fetch(requestUrl);
+    const institution = await response.json();
+
+    let newInstitution = {
+      id: institution._links.self.href,
+      shortId: institution._links.self.href.split('/').pop(),
+      name: institution.name,
+      homeUrl: institution.homeUrl,
+      description: institution.description
+    };
+
+    newInstitution = await fetchAndAdd(newInstitution, [
+      {name: 'location', url: institution._links.location.href}
+    ], undefined, true);
+
+    dispatch(setInstitution(newInstitution));
+
+    return newInstitution;
+  };
+}
 
 
 export const setInstitutionList = (institutionList) => {
   return {
     type: 'SET_INSTITUTIONLIST',
     institutionList
+  }
+}
+
+export const setInstitution = (institution) => {
+  return {
+    type: 'SET_INSTITUTION',
+    institution
   }
 }
