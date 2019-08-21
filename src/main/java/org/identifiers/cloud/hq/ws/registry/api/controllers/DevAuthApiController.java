@@ -28,6 +28,26 @@ public class DevAuthApiController {
         return model.getPrincipal();
     }
 
+    @GetMapping("getDetails")
+    public ResponseEntity<?> getDetails() {
+        return model.getDetails();
+    }
+
+    @GetMapping("getCredentials")
+    public ResponseEntity<?> getCredentials() {
+        return model.getCredentials();
+    }
+
+    @GetMapping("getName")
+    public ResponseEntity<?> getName() {
+        return model.getName();
+    }
+
+    @GetMapping("getAuthorities")
+    public ResponseEntity<?> getAuthorities() {
+        return model.getAuthorities();
+    }
+
     @GetMapping("getUsername")
     public ResponseEntity<?> getUsername() {
         return model.getUsername();

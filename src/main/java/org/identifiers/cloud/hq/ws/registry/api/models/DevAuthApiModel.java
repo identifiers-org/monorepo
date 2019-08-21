@@ -26,7 +26,25 @@ public class DevAuthApiModel {
         return new ResponseEntity<>(authentication.getPrincipal(), HttpStatus.OK);
     }
 
-    
+    public ResponseEntity<?> getDetails() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return new ResponseEntity<>(authentication.getDetails(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> getCredentials() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return new ResponseEntity<>(authentication.getCredentials(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> getName() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return new ResponseEntity<>(authentication.getName(), HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> getAuthorities() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return new ResponseEntity<>(authentication.getAuthorities(), HttpStatus.OK);
+    }
 
     public ResponseEntity<?> getUsername() {
         return new ResponseEntity<>(authHelper.getCurrentUsername(), HttpStatus.OK);
