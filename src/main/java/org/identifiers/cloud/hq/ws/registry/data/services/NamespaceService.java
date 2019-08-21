@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Project: registry
@@ -99,6 +102,11 @@ public class NamespaceService {
                     resource.getProviderCode()));
         }
         return namespace;
+    }
+
+    public List<String> getAllNamespacePrefixes() {
+        // TODO Is this a mess or a good way to do it? Am I overusing streams?
+        return repository.findAllPrefixes().stream().flatMap(Arrays::stream).map(Object::toString).collect(Collectors.toList());
     }
 
 }
