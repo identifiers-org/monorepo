@@ -15,6 +15,7 @@ import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrati
 import org.identifiers.cloud.hq.ws.registry.models.ResourceLifecycleManagementContext;
 import org.identifiers.cloud.hq.ws.registry.models.ResourceLifecycleManagementService;
 import org.identifiers.cloud.hq.ws.registry.models.ResourceRegistrationRequestManagementService;
+import org.identifiers.cloud.hq.ws.registry.models.helpers.AuthHelper;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceLifecycleManagementOperationReport;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidator;
 import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidatorException;
@@ -108,6 +109,10 @@ public class ResourceManagementApiModel {
     // Resource Registration Request validation strategy
     @Autowired
     private ResourceRegistrationRequestValidatorStrategy validatorStrategy;
+
+    // Auth Helper
+    @Autowired
+    private AuthHelper authHelper;
 
     // Repositories
     @Autowired
@@ -226,7 +231,7 @@ public class ResourceManagementApiModel {
         ServiceResponseRegisterResource response = createRegisterResourceDefaultResponse();
         boolean isValid = false;
         // Actor
-        String actor = "ANONYMOUS";
+        String actor = authHelper.getCurrentUsername();
         // Additional information
         String additionalInformation = "Open API for resource registration request submission";
         // Run request validation
@@ -256,7 +261,7 @@ public class ResourceManagementApiModel {
         // Default response
         ServiceResponseRegisterResourceSessionEvent response = createRegisterResourceSessionEventDefaultResponse();
         // TODO We need to get the actor from Spring Security
-        String actor = "UNKNOWN";
+        String actor = authHelper.getCurrentUsername();
         // Locate the resource registration request session
         ResourceRegistrationSession resourceRegistrationSession = getResourceRegistrationSession("AMEND", sessionId, request, response);
         if (response.getHttpStatus() == HttpStatus.OK) {
@@ -272,7 +277,7 @@ public class ResourceManagementApiModel {
         // Default response
         ServiceResponseRegisterResourceSessionEvent response = createRegisterResourceSessionEventDefaultResponse();
         // TODO We need to get the actor from Spring Security
-        String actor = "UNKNOWN";
+        String actor = authHelper.getCurrentUsername();
         // Locate the resource registration request session
         ResourceRegistrationSession resourceRegistrationSession = getResourceRegistrationSession("COMMENT", sessionId, request, response);
         if (response.getHttpStatus() == HttpStatus.OK) {
@@ -286,7 +291,7 @@ public class ResourceManagementApiModel {
         // Default response
         ServiceResponseRegisterResourceSessionEvent response = createRegisterResourceSessionEventDefaultResponse();
         // TODO We need to get the actor from Spring Security
-        String actor = "UNKNOWN";
+        String actor = authHelper.getCurrentUsername();
         // Locate the resource registration request session
         ResourceRegistrationSession resourceRegistrationSession = getResourceRegistrationSession("REJECT", sessionId, request, response);
         if (response.getHttpStatus() == HttpStatus.OK) {
@@ -300,7 +305,7 @@ public class ResourceManagementApiModel {
         // Default response
         ServiceResponseRegisterResourceSessionEvent response = createRegisterResourceSessionEventDefaultResponse();
         // TODO We need to get the actor from Spring Security
-        String actor = "UNKNOWN";
+        String actor = authHelper.getCurrentUsername();
         // Locate the resource registration request session
         ResourceRegistrationSession resourceRegistrationSession = getResourceRegistrationSession("ACCEPT", sessionId, request, response);
         if (response.getHttpStatus() == HttpStatus.OK) {
@@ -391,7 +396,7 @@ public class ResourceManagementApiModel {
     public ServiceResponseDeactivateResource deactivateResource(long resourceId) {
         ServiceResponseDeactivateResource response = createResourceDeactivationDefaultResponse();
         // TODO Get this information from Spring Security
-        String actor = "UNKNOWN";
+        String actor = authHelper.getCurrentUsername();
         String additionalInformation = "--- no additional information specified ---";
         ResourceLifecycleManagementOperationReport deactivationOperationReport =
                 resourceLifecycleManagementService.deactivateResource(resourceId,
@@ -407,7 +412,7 @@ public class ResourceManagementApiModel {
     public ServiceResponseReactivateResource reactivateResource(long resourceId, ServiceRequestReactivateResource request) {
         ServiceResponseReactivateResource response = createResourceReactivationDefaultResponse();
         // TODO Get this from Spring Security
-        String actor = "UNKNOWN";
+        String actor = authHelper.getCurrentUsername();
         String additionalInformation = "--- no additional information specified ---";
         // In the future, I may need a data model transformation helper
         ResourceLifecycleManagementContext context = resourceLifecycleManagementService.createEmptyContext().setResourceReactivationUrlPattern(request.getPayload().getProviderUrlPattern());
