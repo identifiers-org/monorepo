@@ -6,6 +6,7 @@ import org.identifiers.cloud.hq.ws.registry.api.responses.*;
 import org.identifiers.cloud.hq.ws.registry.models.NamespaceLifecycleManagementContext;
 import org.identifiers.cloud.hq.ws.registry.models.NamespaceLifecycleManagementOperationReport;
 import org.identifiers.cloud.hq.ws.registry.models.NamespaceLifecycleManagementService;
+import org.identifiers.cloud.hq.ws.registry.models.helpers.AuthHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,10 @@ public class NamespaceManagementApiModel {
     // Services
     @Autowired
     private NamespaceLifecycleManagementService namespaceLifecycleManagementService;
+
+    // Auth Helper
+    @Autowired
+    private AuthHelper authHelper;
 
     // Helpers
     private <T> void initDefaultResponse(ServiceResponse<T> response, T payload) {
@@ -60,7 +65,7 @@ public class NamespaceManagementApiModel {
     public ServiceResponseDeactivateNamespace deactivateNamespace(long namespaceId) {
         ServiceResponseDeactivateNamespace response = createNamespaceDeactivationDefaultResponse();
         // TODO Get this from Spring Security
-        String actor = "UNKNOWN";
+        String actor = authHelper.getCurrentUsername();
         String additionalInformation = "--- no additional information specified ---";
         NamespaceLifecycleManagementContext context = namespaceLifecycleManagementService.createEmptyContext();
         NamespaceLifecycleManagementOperationReport report = namespaceLifecycleManagementService.deactivateNamespace(namespaceId, context, actor, additionalInformation);
@@ -72,7 +77,7 @@ public class NamespaceManagementApiModel {
     public ServiceResponseReactivateNamespace reactivateNamespace(long namespaceId) {
         ServiceResponseReactivateNamespace response = createNamespaceReactivationDefaultResponse();
         // TODO Get this from Spring Security
-        String actor = "UNKNOWN";
+        String actor = authHelper.getCurrentUsername();
         String additionalInformation = "--- no additional information specified ---";
         NamespaceLifecycleManagementContext context = namespaceLifecycleManagementService.createEmptyContext();
         NamespaceLifecycleManagementOperationReport report = namespaceLifecycleManagementService.reactivateNamespace(namespaceId, context, actor, additionalInformation);
