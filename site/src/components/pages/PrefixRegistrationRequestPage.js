@@ -3,9 +3,15 @@ import { connect } from 'react-redux'
 
 import Swal from 'sweetalert2';
 
+// Actions.
+import { setValidation, reset, setRegistrationRequestFieldField, resetValidityStatus } from '../../actions/RegistrationRequestField';
+import { getInstitutionFromRegistry } from '../../actions/InstitutionList';
+
+// Config.
 import { config } from '../../config/Config';
+
+// Components.
 import RequestField from '../common/RegistrationRequestField';
-import { setValidation, reset, setRegistrationRequestFieldField } from '../../actions/RegistrationRequestField';
 import PageTitle from '../common/PageTitle';
 
 
@@ -22,6 +28,11 @@ class PrefixRegistrationRequestPage extends React.Component  {
 
     this.state = {
       institutionIsProvider: false,
+      institutionSelect: true,
+      institutionEnterRORID: false,
+      institutionCreate: false,
+      institutionSelected: '',
+      institutionRORID: '',
       valid: false,
       invalidFields: [],
       fields: [
@@ -248,10 +259,88 @@ class PrefixRegistrationRequestPage extends React.Component  {
   }
 
 
+  handleSelectInstitution = async e => {
+    const { getInstitutionFromRegistry, setValue, setValidation, validate } = this.props;
+    const institutionId = e.target.value;
+    const institution = await getInstitutionFromRegistry(institutionId);
+
+    this.setState({institutionSelected: institutionId});
+
+    setValue('institutionName', institution.name);
+    setValidation('institutionName', true);
+    validate('institutionName');
+    setValue('institutionDescription', institution.description);
+    setValidation('institutionDescription', true);
+    validate('institutionDescription');
+    setValue('institutionHomeUrl', institution.homeUrl);
+    setValidation('institutionHomeUrl', true);
+    validate('institutionHomeUrl');
+    setValue('institutionLocation', institution.location.id);
+    setValidation('institutionLocation', true);
+    validate('institutionLocation');
+  }
+
+  resetInstitutionFieldsValidityStatus = () => {
+    const { setValue, resetValidityStatus } = this.props;
+    setValue('institutionName', '');
+    resetValidityStatus('institutionName');
+    setValue('institutionDescription', '');
+    resetValidityStatus('institutionDescription');
+    setValue('institutionHomeUrl', '');
+    resetValidityStatus('institutionHomeUrl');
+    setValue('institutionLocation', '');
+    resetValidityStatus('institutionLocation');
+  }
+
+  handleClickCreateInstitutionRadio = () => {
+    this.setState({institutionCreate: true,
+    institutionEnterRORID: false,
+    institutionSelect: false,
+    institutionSelected: '',
+    institutionRORID: ''
+  });
+    this.resetInstitutionFieldsValidityStatus();
+  }
+
+  handleClickSelectInstitutionRadio = () => {
+    this.setState({
+      institutionCreate: false,
+      institutionEnterRORID: false,
+      institutionSelect: true,
+      institutionRORID: ''
+    });
+    this.resetInstitutionFieldsValidityStatus();
+  }
+
+  handleClickEnterRORIDInstitutionRadio = () => {
+    this.setState({
+      institutionCreate: false,
+      institutionEnterRORID: true,
+      institutionSelect: false,
+      institutionSelected: ''
+    });
+    this.resetInstitutionFieldsValidityStatus();
+  }
+
+  handleChangeInstutionRORID = (e) => {
+    const institutionRORID = e.target.value;
+
+    this.setState({institutionRORID});
+  }
+
+
   render() {
     const validationUrlBase = `${config.registryApi}/${config.prefixRegistrationRequestValidationEndpoint}/`;
-    const { institutionIsProvider, valid, invalidFields } = this.state;
-    const { locationList } = this.props;
+    const {
+      handleClickCreateInstitutionRadio,
+      handleChangeInstutionRORID,
+      handleClickEnterRORIDInstitutionRadio,
+      handleClickSelectInstitutionRadio,
+      handleSelectInstitution,
+      props: { institutionList, locationList },
+      state: { institutionSelect, institutionEnterRORID, institutionCreate, institutionIsProvider, institutionSelected, institutionRORID, valid, invalidFields }
+    } = this;
+
 
     return (
       <>
@@ -382,9 +471,108 @@ class PrefixRegistrationRequestPage extends React.Component  {
                   </div>
 
                   <div className="card-body">
+                    <div className="form-group row">
+
+                      <div className="col col-lg-3 col-form-label">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            name="institution-radio"
+                            id="selectinstitution-radio"
+                            value="selectinstitution"
+                            checked={institutionSelect}
+                            onChange={handleClickSelectInstitutionRadio}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="selectinstitution-radio"
+                          >
+                            Select an existing institution
+                          </label>
+                        </div>
+                      </div>
+
+                      <div className="col col-lg-9">
+                        <select
+                          className="form-control"
+                          id="institutiondropdown"
+                          value={institutionSelected}
+                          onChange={handleSelectInstitution}
+                          disabled={!institutionSelect}
+                        >
+                          <option value="">{this.props.placeholder || 'Select an institution...'}</option>
+                          {
+                            institutionList.map(institution => (
+                              <option
+                                value={institution.shortId}
+                                key={`institution-${institution.shortId}`}
+                              >
+                                {institution.name}
+                              </option>
+                            ))
+                          }
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="form-group row">
+                      <div className="col col-lg-3 col-form-label form-control-label">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            name="institution-radio"
+                            id="enterroridinstitution-radio"
+                            value="enterroridinstitution"
+                            checked={institutionEnterRORID}
+                            onChange={handleClickEnterRORIDInstitutionRadio}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="enterroridinstitution-radio"
+                          >
+                            Enter a <a href="https://ror.org/" target="_blank" rel="noopener noreferrer">ROR ID</a>
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col col-log-9">
+                        <input
+                          className="form-control"
+                          disabled={!institutionEnterRORID}
+                          value={institutionRORID}
+                          onChange={handleChangeInstutionRORID}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group row">
+                      <div className="col col-lg-3 col-form-label">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            name="institution-radio"
+                            id="createinstitution-radio"
+                            value={institutionCreate}
+                            onChange={handleClickCreateInstitutionRadio}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="createinstitution-radio"
+                          >
+                            Create a new institution
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+
+
                     <RequestField
                       id="institutionName"
                       description="The name of the organization in charge of the resource."
+                      disabled={!institutionCreate}
                       formsection="Institution details"
                       example="European Bioinformatics Institute, Hinxton, Cambridge, UK"
                       label="Name"
@@ -397,6 +585,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                     <RequestField
                       id="institutionDescription"
                       description="Short description of the institution in one or multiple sentences."
+                      disabled={!institutionCreate}
                       example="The European Bioinformatics Institute (EMBL-EBI) is the part of EMBL
                         dedicated to big data and online services"
                       formsection="Institution details"
@@ -411,6 +600,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                     <RequestField
                       id="institutionHomeUrl"
                       description="A valid URL for the homepage of the institution or organization."
+                      disabled={!institutionCreate}
                       example="https://www.ebi.ac.uk/"
                       formsection="Institution details"
                       label="Home URL"
@@ -423,6 +613,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                     <RequestField
                       id="institutionLocation"
                       description="The home country of the institution or organization."
+                      disabled={!institutionCreate}
                       formsection="Institution details"
                       label="Location"
                       optionlabelfield="countryName"
@@ -454,7 +645,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                       >
                         Self provided
                       </label>
-                      <div className="col-lg-9">
+                      <div className="col col-lg-9">
                         <div className="form-check">
                           <input
                             id="institutionIsProvider"
@@ -693,6 +884,7 @@ const mapStateToProps = (state) => ({
   idRegexPattern: state.prefixRegistrationRequestForm.idRegexPattern,
   supportingReferences: state.prefixRegistrationRequestForm.supportingReferences,
   additionalInformation: state.prefixRegistrationRequestForm.additionalInformation,
+  institutionList: state.institutionList,
   institutionName: state.prefixRegistrationRequestForm.institutionName,
   institutionDescription: state.prefixRegistrationRequestForm.institutionDescription,
   institutionHomeUrl: state.prefixRegistrationRequestForm.institutionHomeUrl,
@@ -710,9 +902,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  getInstitutionFromRegistry: (institutionId) => dispatch(getInstitutionFromRegistry(institutionId)),
   setValue: (id, value) => dispatch(setRegistrationRequestFieldField('PREFIX', id, 'value', value)),
   validate: (id) => dispatch(setRegistrationRequestFieldField('PREFIX', id, 'requestedValidate', true)),
   setValidation: (id, validation) => dispatch(setValidation('PREFIX', id, validation)),
+  resetValidityStatus: (id) => dispatch(resetValidityStatus('PREFIX', id)),
   reset: (id) => dispatch(reset('PREFIX', id))
 });
 
