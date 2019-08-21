@@ -10,5 +10,8 @@ do
         sed -i "s@${configparam}@$value@g" /home/site/index.html
     fi
 done
+echo "[START] Sitemap updater"
+export 
+python3 sitemap_updater.py &
 echo "[START] Starting HQ Registry Web Frontend"
 nginx -g "daemon off;"
