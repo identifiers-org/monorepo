@@ -42,9 +42,13 @@ $container-max-widths: (
 
 
 // Input inset box shadow.
-input {
+input:not([type=radio]):not([type=checkbox]) {
   box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
   height: 39px !important;
+}
+
+textarea {
+  box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
 }
 
 // Fix ugly form focus color.
