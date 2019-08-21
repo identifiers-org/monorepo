@@ -5,6 +5,7 @@
  */
 
 const defaultState = {
+  errorMessage: undefined,
   label: '',
   shouldValidate: true,
   requestedValidate: false,
@@ -20,6 +21,9 @@ const prefixRegistrationRequestFieldReducer = (prefixRegistrationRequestField) =
 
   case `${prefixRegistrationRequestField}/SET_PREFIXREGISTRATIONREQUESTFIELDVALIDATION`:
     return { ...state, shouldValidate: action.validation, valid: undefined };
+
+  case `${prefixRegistrationRequestField}/RESET_PREFIXREGISTRATIONREQUESTFIELDVALIDITYSTATUS`:
+    return { ...state, valid: undefined, errorMessage: undefined};
 
   case `${prefixRegistrationRequestField}/PREFIXREGISTRATIONREQUESTFIELDRESET`:
     return { ...state, value: '', valid: undefined, requestValidate: false, shouldValidate: true };
