@@ -6,7 +6,7 @@ LABEL maintainer="Manuel Bernal Llinares <mbdebian@gmail.com>"
 ENV SITEMAP_BUILDER_CONFIG_PATH_FILE_SITEMAP=/home/site/sitemap.txt
 
 # Prepare Python environment
-RUN apt-get install -y python3 python3-pip; pip3 install requests
+RUN apt-get update -y; apt-get install -y python3 python3-pip; pip3 install requests
 
 # Configure the default site
 COPY nginx_conf/site_default.conf /etc/nginx/conf.d/default.conf
