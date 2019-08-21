@@ -21,6 +21,7 @@ RUN chmod 750 /home/app/sitemap_updater.py
 # Prepare site
 RUN mkdir -p /home/site
 ADD site/dist/. /home/site
+ADD seo/. /home/site
 RUN chown nginx:nginx -R /home/site
 
 # Publish the following ports
