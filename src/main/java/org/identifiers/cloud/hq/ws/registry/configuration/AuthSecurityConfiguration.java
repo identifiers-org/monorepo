@@ -264,6 +264,8 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers("/rorIdApi/**").permitAll()
                 // Schema.org API
                     .antMatchers("/schemaOrgApi/**").permitAll()
+                // Development Auth API
+                    .antMatchers("/devAuthApi/**").permitAll()
                 .anyRequest().denyAll()
                 .and()
                 .csrf()
