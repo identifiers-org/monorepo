@@ -53,8 +53,8 @@ public class InstitutionLifecycleManagementServiceSimpleStrategy implements Inst
                 log.error(errorMessage);
             }
         } else {
-            report.setInstitutionFound(false);
             report.setSuccess(false);
+            report.setInstitutionFound(false);
             String errorMessage = String.format("Institution with ID '%d', NOT FOUND, on delete request by '%s', additional information '%s'", id, actor, additionalInformation);
             report.setErrorMessage(errorMessage);
         }
