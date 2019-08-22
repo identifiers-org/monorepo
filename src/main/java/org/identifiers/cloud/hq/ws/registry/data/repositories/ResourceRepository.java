@@ -20,6 +20,8 @@ public interface ResourceRepository extends JpaRepository<Resource, Long> {
     // TODO
     List<Resource> findAllByNamespaceId(long id);
 
+    List<Resource> findAllByInstitutionId(long id);
+
     List<Resource> findByNamespaceIdAndProviderCode(long namespaceId, String providerCode);
 
     @RestResource(exported = false)
