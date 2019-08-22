@@ -23,6 +23,7 @@ public interface InstitutionRepository extends JpaRepository<Institution, Long> 
     @RestResource(exported = false)
     List<Institution> findByNameContaining(String nameContent);
     Page<Institution> findByNameContaining(String nameContent, Pageable pageable);
+    Page<Institution> findByNameContainingIgnoreCase(String nameContent, Pageable pageable);
 
     @RestResource(exported = false)
     List<Institution> findByLocationCountryCode(String countryCode);
