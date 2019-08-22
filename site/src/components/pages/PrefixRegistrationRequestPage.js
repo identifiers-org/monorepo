@@ -13,6 +13,7 @@ import { config } from '../../config/Config';
 // Components.
 import RequestField from '../common/RegistrationRequestField';
 import PageTitle from '../common/PageTitle';
+import RORIDInput from '../common/RORIDInput';
 
 
 /* TODO: This class has to be completely refactored.
@@ -537,11 +538,10 @@ class PrefixRegistrationRequestPage extends React.Component  {
                         </div>
                       </div>
                       <div className="col col-log-9">
-                        <input
-                          className="form-control"
+                        <RORIDInput
                           disabled={!institutionEnterRORID}
-                          value={institutionRORID}
                           onChange={handleChangeInstutionRORID}
+                          value={institutionRORID}
                         />
                       </div>
                     </div>
