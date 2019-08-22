@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+// Components.
+import Spinner from '../../components/common/Spinner';
+
 // Config.
 import { config } from '../../config/Config';
 import { getInstitutionForRORIDFromRegistry } from '../../actions/CurationDashboardPage/CurationInstitutionList';
@@ -19,20 +22,22 @@ class RORIDInput extends React.Component {
   }
 
 
-  getInstitutionsForRORID = async (rorid) => {
+  getInstitutionForRORID = async (rorid) => {
     const { getInstitutionForRORID } = this.props;
 
     this.setState({isLoading: true});
 
     const institution = await getInstitutionForRORID(rorid);
     this.setState({institution, isLoading: false});
+
+    return institution;
   };
 
 
   handleInputChange = e => {
     const {
-      getInstitutionsForRORID,
-      props: { onChange },
+      getInstitutionForRORID,
+      props: { onChange, onInstitutionFound },
       state: { debounceValue },
     } = this;
     const value = e.target.value;
@@ -41,7 +46,10 @@ class RORIDInput extends React.Component {
 
     // Debounces value change.
     clearTimeout(debounceValue);
-    this.setState({debounceValue: setTimeout(() => { getInstitutionsForRORID(value) }, config.DEBOUNCE_DELAY)});
+    this.setState({debounceValue: setTimeout(async () => {
+      const institution = await getInstitutionForRORID(value);
+      onInstitutionFound(institution);
+    }, config.DEBOUNCE_DELAY)});
 
     // Updates parent.
     onChange(e);
@@ -52,12 +60,8 @@ class RORIDInput extends React.Component {
     const {
       handleInputChange,
       props: { disabled },
-      state: { institution, isLoading, value }
+      state: { isLoading, value }
     } = this;
-
-
-    const institutionLoadingSpinner = <p>LOADING</p>
-    const institutionNotFound = <p>NOTFOUND</p>
 
     return (
       <>
@@ -66,8 +70,9 @@ class RORIDInput extends React.Component {
           disabled={disabled}
           value={value}
           onChange={handleInputChange}
+          spellCheck={false}
         />
-      {/* TODO: USAR MENSAJES DE ERROR DEL INPUT CON BOOTSTRAP */}
+        {isLoading && <Spinner noText noCenter />}
       </>
     );
   }
