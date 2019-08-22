@@ -261,7 +261,7 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.GET, "/namespaceManagementApi/deactivateNamespace/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('ApiNamespaceLifecycleManagementDeactivateNamespaceRequest'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
                     .antMatchers(HttpMethod.GET, "/namespaceManagementApi/reactivateNamespace/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('ApiNamespaceLifecycleManagementReactivateNamespaceRequest'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
                 // ROR ID API
-                    .antMatchers("/rorIdApi/**").permitAll()
+                    .antMatchers(HttpMethod.POST, "/rorIdApi/**").permitAll()
                 // Schema.org API
                     .antMatchers("/schemaOrgApi/**").permitAll()
                 // Development Auth API
@@ -275,6 +275,7 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .ignoringAntMatchers("/prefixRegistrationApi/validate*")
                     .ignoringAntMatchers("/resourceManagementApi/registerResource")
                     .ignoringAntMatchers("/resourceManagementApi/validate*")
+                    .ignoringAntMatchers("/rorIdApi/**")
                 .and()
                 .cors()
                 .and()
