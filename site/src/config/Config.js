@@ -12,6 +12,9 @@ export const config = {
   prefixRequestEndpoint: 'prefixRegistrationApi/registerPrefix',
   resourceRequestEndpoint: 'resourceManagementApi/registerResource',
 
+  rorIdEndpoint: 'rorIdApi',
+
+  institutionManagementEndpoint: 'institutionManagementApi',
   namespaceManagementEndpoint: 'namespaceManagementApi',
   resourceManagementEndpoint: 'resourceManagementApi',
 
