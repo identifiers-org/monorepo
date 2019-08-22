@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+import withReactContent from 'sweetalert2-react-content';
 
 
 export const swalConfirmation = Swal.mixin({
@@ -13,6 +14,20 @@ export const swalConfirmation = Swal.mixin({
   showCancelButton: true,
   type: 'question'
 });
+
+export const namespacesUsingInstitutionsModal = withReactContent(Swal.mixin({
+  backdrop: true,
+  buttonsStyling: false,
+  confirmButtonText: 'Open those namespaces',
+  cancelButtonText: 'Ok',
+  customClass: {
+    confirmButton: 'btn btn-success mx-2',
+    cancelButton: 'btn btn-primary mx-2'
+  },
+  showCancelButton: true,
+  title: 'Error deleting institution',
+  type: 'error'
+}));
 
 
 export const swalSuccess = Swal.mixin({

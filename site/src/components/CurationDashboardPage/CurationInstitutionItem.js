@@ -10,7 +10,7 @@ import ReversibleField from '../common/ReversibleField';
 import RoleConditional from '../common/RoleConditional';
 
 // Utils.
-import { swalConfirmation, successToast, failureToast, infoToast } from '../../utils/swalDialogs';
+import { swalConfirmation, successToast, failureToast, infoToast, namespacesUsingInstitutionsModal } from '../../utils/swalDialogs';
 
 
 class CurationInstitutionItem extends React.Component {
@@ -145,7 +145,7 @@ class CurationInstitutionItem extends React.Component {
 
   handleClickDeleteButton = async () => {
     const {
-      props: { deleteInstitution },
+      props: { curationInstitutionListParams, deleteInstitution, getCurationInstitutionListFromRegistry },
       state: { institutionId }
     } = this;
 
@@ -158,13 +158,48 @@ class CurationInstitutionItem extends React.Component {
     if (modalResponse.value) {
       const result = await deleteInstitution(institutionId);
 
+      // Correct deletion.
       if (result.status === 200) {
         successToast('Institution deleted successfully');
         this.setState({editInstitution: false, expanded: false, institutionFieldsChanged: new Set()});
         await getCurationInstitutionListFromRegistry(curationInstitutionListParams);
+
+      // Some namespaces are using the institution.
       } else if (result.status === 400) {
-        // TODO: Show resources using that institution.
-        failureToast('That institution is being used by a resource');
+        const namespaceDetailsUrl = `${window.location.protocol}//${window.location.host}/registry`;
+        const html = (
+          <div>
+            <p>The following Namespaces are using that Institution:</p>
+            {result.namespacesUsingInstitution.map(namespace => (
+              <div className="row" key={`namespace-${namespace.prefix}`}>
+                <div className="col mb-3">
+                  <div className="d-inline border bg-light p-1">
+                    <a href={`${namespaceDetailsUrl}/${namespace.prefix}`} target="_blank" rel="noopener noreferrer">
+                      <span
+                        className="align-top text-warning font-weight-bold border border-secondary badge badge-dark mr-2"
+                      >
+                        {namespace.prefix}
+                      </span>
+                      <span
+                        className="clear-link"
+                      >
+                        {namespace.name}
+                      </span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+
+        const namespacesUsingInstitutionsModalResult = await namespacesUsingInstitutionsModal.fire({html});
+
+        if (namespacesUsingInstitutionsModalResult.value) {
+          result.namespacesUsingInstitution.forEach(namespace => window.open(`${namespaceDetailsUrl}/${namespace.prefix}`, '_blank'));
+        };
+
+      // Failed deletion.
       } else {
         failureToast('Error deleting institution');
       }

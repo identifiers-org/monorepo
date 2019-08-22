@@ -6,6 +6,7 @@ import { config } from '../../config/Config';
 
 // Utils.
 import { fetchAndAdd } from '../../utils/fetchAndAdd';
+import { renewToken } from '../../utils/auth';
 
 
 //
@@ -49,16 +50,63 @@ export const getCurationInstitutionListFromRegistry = (params) => {
 };
 
 
+// Get institution using a ROR ID.
+export const getInstitutionForRORIDFromRegistry = (rorId) => {
+  return async (dispatch) => {
+    let requestURL = new URL(`${config.registryApi}/${config.rorIdEndpoint}/getInstitutionForRorId`);
+    const init = {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        apiVersion: '1.0',
+        payload: {rorId}
+      })
+    };
+
+    const response = await fetch(requestURL, init);
+
+    return response.status !== 200 ? null : await response.json();
+  };
+};
+
+
 // Delete an institution from the registry.
 export const deleteInstitutionFromRegistry = (institutionId) => {
   return async (dispatch) => {
-    let requestURL = new URL(config.registryApi + `/institutionManagementApi/deleteById/${institutionId}`);
+    const authToken = await renewToken();
+    const init = {
+      headers: {Authorization: `Bearer ${authToken}`}
+    };
+    let requestURL = new URL(`${config.registryApi}/${config.institutionManagementEndpoint}/deleteById/${institutionId}`);
 
-    const response = await fetch(requestURL);
+    const response = await fetch(requestURL, init);
+    let namespacesUsingInstitution = [];
+
+    // If unable to delete, determine which namespaces are using that institution and return them.
+    if (response.status === 400) {
+      let namespacesUsingInstitutionRequestURL = new URL(`${config.registryApi}/restApi/resources/search/findAllByInstitutionId?id=${institutionId}`);
+
+      const resourcesUsingInstitutionResponse =  await fetch(namespacesUsingInstitutionRequestURL);
+      const resourcesUsingInstitutionData = await resourcesUsingInstitutionResponse.json();
+      const resourcesUsingInstitution = await Promise.all(resourcesUsingInstitutionData._embedded.resources.map(resource => {
+        let { _links, ...newResource } = resource;
+
+        return fetchAndAdd(newResource, [
+          {name: 'namespace', url: _links.namespace.href}
+        ], undefined, true);
+      }));
+
+      namespacesUsingInstitution = resourcesUsingInstitution.map(resource => ({
+        name: resource.namespace.name,
+        prefix: resource.namespace.prefix
+      }));
+    }
 
     return {
-      status: response.status
-      // TODO: add field for namespaces using that institution.
+      status: response.status,
+      namespacesUsingInstitution
     }
   };
 };
