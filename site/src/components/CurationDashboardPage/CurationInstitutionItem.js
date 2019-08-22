@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 // Actions.
 import { setInstitutionPatchField, patchInstitution, setInstitutionPatch } from '../../actions/CurationDashboardPage/InstitutionPatch';
-import { getCurationInstitutionListFromRegistry } from '../../actions/CurationDashboardPage/CurationInstitutionList';
+import { getCurationInstitutionListFromRegistry, deleteInstitutionFromRegistry } from '../../actions/CurationDashboardPage/CurationInstitutionList';
 
 // Components.
 import ReversibleField from '../common/ReversibleField';
@@ -89,14 +89,14 @@ class CurationInstitutionItem extends React.Component {
     await setInstitutionPatch(institutionId, newInstitution);
 
 
-    const result = await swalConfirmation.fire({
+    const modalResponse = await swalConfirmation.fire({
       title: 'Confirm changes to institution',
       text: `Changed fields: ${[...institutionFieldsChanged].join(', ')}`,
       confirmButtonText: 'Commit changes',
       cancelButtonText: 'Cancel'
     });
 
-    if (result.value) {
+    if (modalResponse.value) {
       const result = await patchInstitution(institutionId, newInstitution);
 
       if (result.status === 200) {
@@ -110,14 +110,14 @@ class CurationInstitutionItem extends React.Component {
   };
 
   handleClickDiscardButton = async () => {
-    const result = await swalConfirmation.fire({
+    const modalResponse = await swalConfirmation.fire({
       title: 'Are you sure?',
       text: 'All data changed will be lost',
       confirmButtonText: 'Discard changes',
       cancelButtonText: 'Continue editing'
     });
 
-    if (result.value) {
+    if (modalResponse.value) {
       this.setState({editInstitution: false, expanded: false});
     }
   };
@@ -143,11 +143,40 @@ class CurationInstitutionItem extends React.Component {
     };
   };
 
+  handleClickDeleteButton = async () => {
+    const {
+      props: { deleteInstitution },
+      state: { institutionId }
+    } = this;
+
+    const modalResponse = await swalConfirmation.fire({
+      title: 'Confirm institution deletion',
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
+    });
+
+    if (modalResponse.value) {
+      const result = await deleteInstitution(institutionId);
+
+      if (result.status === 200) {
+        successToast('Institution deleted successfully');
+        this.setState({editInstitution: false, expanded: false, institutionFieldsChanged: new Set()});
+        await getCurationInstitutionListFromRegistry(curationInstitutionListParams);
+      } else if (result.status === 400) {
+        // TODO: Show resources using that institution.
+        failureToast('That institution is being used by a resource');
+      } else {
+        failureToast('Error deleting institution');
+      }
+    }
+  }
+
 
   render() {
     const {
       handleChangeField,
       handleClickCommitButton,
+      handleClickDeleteButton,
       handleClickEditButton,
       handleClickDiscardButton,
       props: { institution: { name, homeUrl, description, location }, locationList },
@@ -187,12 +216,20 @@ class CurationInstitutionItem extends React.Component {
                   <RoleConditional
                     requiredRoles={['editInstitution']}
                   >
-                    <button
-                      className="clear-link btn btn-warning btn-sm m-0 py-0 px-2"
-                      onClick={handleClickEditButton}
-                    >
-                      <i className="icon icon-common icon-ellipsis-h" /> Edit
-                    </button>
+                    <>
+                      <button
+                        className="clear-link btn btn-warning btn-sm m-0 mr-2 py-0 px-2"
+                        onClick={handleClickEditButton}
+                      >
+                        <i className="icon icon-common icon-ellipsis-h mr-1" />Edit
+                      </button>
+                      <button
+                        className="clear-link btn btn-danger btn-sm m-0 py-0 px-2"
+                        onClick={handleClickDeleteButton}
+                      >
+                        <i className="icon icon-common icon-trash mr-1" />Delete
+                      </button>
+                    </>
                   </RoleConditional>
                 ) : (
                   <>
@@ -200,13 +237,13 @@ class CurationInstitutionItem extends React.Component {
                       className="clear-link btn btn-success btn-sm m-0 mr-2 py-0 px-2"
                       onClick={handleClickCommitButton}
                     >
-                      <i className="icon icon-common icon-check" /> Commit
+                      <i className="icon icon-common icon-check mr-1" />Commit
                     </button>
                     <button
                       className="clear-link btn btn-danger btn-sm m-0 py-0 px-2"
                       onClick={handleClickDiscardButton}
                     >
-                      <i className="icon icon-common icon-ellipsis-h" /> Discard
+                      <i className="icon icon-common icon-ellipsis-h mr-1" />Discard
                     </button>
                   </>
                 )}
@@ -314,6 +351,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  deleteInstitution: (institutionId) => dispatch(deleteInstitutionFromRegistry(institutionId)),
   getCurationInstitutionListFromRegistry: (params) => dispatch(getCurationInstitutionListFromRegistry(params)),
   setInstitutionPatch: (id, institution) => dispatch(setInstitutionPatch(id, institution)),
   setInstitutionPatchField: (field, value) => dispatch(setInstitutionPatchField(field, value)),
