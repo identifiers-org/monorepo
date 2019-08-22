@@ -247,7 +247,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
         });
       }
     });
-  }
+  };
 
   // Custom requester payload creation (for validation and submittal).
   createRequesterPayload = () => {
@@ -257,15 +257,17 @@ class PrefixRegistrationRequestPage extends React.Component  {
         email: this.props.requesterEmail.value
       }
     };
-  }
+  };
 
 
-  handleSelectInstitution = async e => {
-    const { getInstitutionFromRegistry, setValue, setValidation, validate } = this.props;
-    const institutionId = e.target.value;
-    const institution = await getInstitutionFromRegistry(institutionId);
+  //
+  // Helper functions for institution fields.
+  //
+  // Set institution fields given an institution.
+  setInstitutionFields = institution => {
+    const { setValue, setValidation, validate } = this.props;
 
-    this.setState({institutionSelected: institutionId});
+    // Fixes countryCode coming from a ROR ID.
 
     setValue('institutionName', institution.name);
     setValidation('institutionName', true);
@@ -276,11 +278,12 @@ class PrefixRegistrationRequestPage extends React.Component  {
     setValue('institutionHomeUrl', institution.homeUrl);
     setValidation('institutionHomeUrl', true);
     validate('institutionHomeUrl');
-    setValue('institutionLocation', institution.location.id);
+    setValue('institutionLocation', institution.location.id || institution.location.countryCode);
     setValidation('institutionLocation', true);
     validate('institutionLocation');
   }
 
+  // Reset institution fields.
   resetInstitutionFieldsValidityStatus = () => {
     const { setValue, resetValidityStatus } = this.props;
     setValue('institutionName', '');
@@ -291,7 +294,20 @@ class PrefixRegistrationRequestPage extends React.Component  {
     resetValidityStatus('institutionHomeUrl');
     setValue('institutionLocation', '');
     resetValidityStatus('institutionLocation');
-  }
+  };
+
+
+  //
+  // Handlers for institution fields.
+  //
+  handleSelectInstitution = async e => {
+    const { getInstitutionFromRegistry } = this.props;
+    const institutionId = e.target.value;
+    const institution = await getInstitutionFromRegistry(institutionId);
+
+    this.setState({institutionSelected: institutionId});
+    this.setInstitutionFields(institution);
+  };
 
   handleClickCreateInstitutionRadio = () => {
     this.setState({institutionCreate: true,
@@ -301,7 +317,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
     institutionRORID: ''
   });
     this.resetInstitutionFieldsValidityStatus();
-  }
+  };
 
   handleClickSelectInstitutionRadio = () => {
     this.setState({
@@ -311,7 +327,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
       institutionRORID: ''
     });
     this.resetInstitutionFieldsValidityStatus();
-  }
+  };
 
   handleClickEnterRORIDInstitutionRadio = () => {
     this.setState({
@@ -321,13 +337,17 @@ class PrefixRegistrationRequestPage extends React.Component  {
       institutionSelected: ''
     });
     this.resetInstitutionFieldsValidityStatus();
-  }
+  };
 
-  handleChangeInstutionRORID = (e) => {
+  handleChangeInstutionRORID = e => {
     const institutionRORID = e.target.value;
 
     this.setState({institutionRORID});
-  }
+  };
+
+  handleInstutionRORIDFound = institution => {
+    this.setInstitutionFields(institution);
+  };
 
 
   render() {
@@ -337,6 +357,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
       handleChangeInstutionRORID,
       handleClickEnterRORIDInstitutionRadio,
       handleClickSelectInstitutionRadio,
+      handleInstutionRORIDFound,
       handleSelectInstitution,
       props: { institutionList, locationList },
       state: { institutionSelect, institutionEnterRORID, institutionCreate, institutionIsProvider, institutionSelected, institutionRORID, valid, invalidFields }
@@ -541,6 +562,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                         <RORIDInput
                           disabled={!institutionEnterRORID}
                           onChange={handleChangeInstutionRORID}
+                          onInstitutionFound={handleInstutionRORIDFound}
                           value={institutionRORID}
                         />
                       </div>
