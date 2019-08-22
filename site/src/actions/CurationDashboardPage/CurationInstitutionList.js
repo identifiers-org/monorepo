@@ -49,9 +49,24 @@ export const getCurationInstitutionListFromRegistry = (params) => {
 };
 
 
+// Delete an institution from the registry.
+export const deleteInstitutionFromRegistry = (institutionId) => {
+  return async (dispatch) => {
+    let requestURL = new URL(config.registryApi + `/institutionManagementApi/deleteById/${institutionId}`);
+
+    const response = await fetch(requestURL);
+
+    return {
+      status: response.status
+      // TODO: add field for namespaces using that institution.
+    }
+  };
+};
+
+
 export const setCurationInstitutionList = (curationInstitutionList) => {
   return {
     type: 'SET_CURATIONINSTITUTIONLIST',
     curationInstitutionList
-  }
-}
+  };
+};
