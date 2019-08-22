@@ -22,12 +22,12 @@ class RORIDInput extends React.Component {
   getInstitutionsForRORID = async (rorid) => {
     const { getInstitutionForRORID } = this.props;
 
-    console.log(`must get institutions using ${rorid}.`);
+    this.setState({isLoading: true});
 
     const institution = await getInstitutionForRORID(rorid);
-
-    console.log('institution', institution);
+    this.setState({institution, isLoading: false});
   };
+
 
   handleInputChange = e => {
     const {
@@ -52,16 +52,23 @@ class RORIDInput extends React.Component {
     const {
       handleInputChange,
       props: { disabled },
-      state: { value }
+      state: { institution, isLoading, value }
     } = this;
 
+
+    const institutionLoadingSpinner = <p>LOADING</p>
+    const institutionNotFound = <p>NOTFOUND</p>
+
     return (
-      <input
-        className="form-control"
-        disabled={disabled}
-        value={value}
-        onChange={handleInputChange}
-      />
+      <>
+        <input
+          className="form-control"
+          disabled={disabled}
+          value={value}
+          onChange={handleInputChange}
+        />
+      {/* TODO: USAR MENSAJES DE ERROR DEL INPUT CON BOOTSTRAP */}
+      </>
     );
   }
 }
