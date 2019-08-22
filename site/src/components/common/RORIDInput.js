@@ -72,6 +72,7 @@ class RORIDInput extends React.Component {
           onChange={handleInputChange}
           spellCheck={false}
         />
+        {/* TODO: This should be in a small div */}
         {isLoading && <Spinner noText noCenter />}
       </>
     );
