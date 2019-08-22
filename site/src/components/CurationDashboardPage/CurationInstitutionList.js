@@ -27,6 +27,8 @@ class CurationInstitutionList extends React.Component {
 
 
   handleChangeSearchInput = e => {
+    const { curationInstitutionListParams } = this.props;
+
     clearTimeout(this.state.debounceSearch);
 
     const nameContent = e.currentTarget.value;
@@ -34,22 +36,25 @@ class CurationInstitutionList extends React.Component {
     // Debouce search field.
     this.setState({debounceSearch: setTimeout(() => {
       this.props.setCurationInstitutionListParams({nameContent});
-      this.updateCurationInstitutionList({nameContent});
+      this.updateCurationInstitutionList({...curationInstitutionListParams, nameContent});
     }, 500)});
   }
 
 
   handleNavigate = number => {
+    const { curationInstitutionListParams } = this.props;
+
     this.props.setCurationInstitutionListParams({number});
-    this.updateCurationInstitutionList({page: number});
+    this.updateCurationInstitutionList({...curationInstitutionListParams, page: number});
   }
 
   handleSetSize = e => {
+    const { curationInstitutionListParams } = this.props;
     const size = parseInt(e.target.value);
     const number = 0;
 
     this.props.setCurationInstitutionListParams({size, number});
-    this.updateCurationInstitutionList({size});
+    this.updateCurationInstitutionList({...curationInstitutionListParams, size});
   }
 
   render() {
