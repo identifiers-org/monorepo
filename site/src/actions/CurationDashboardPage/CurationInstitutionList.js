@@ -49,10 +49,33 @@ export const getCurationInstitutionListFromRegistry = (params) => {
 };
 
 
+// Get institution using a ROR ID.
+export const getInstitutionForRORIDFromRegistry = (rorId) => {
+  return async (dispatch) => {
+    let requestURL = new URL(`${config.registryApi}/${config.rorIdEndpoint}/getInstitutionForRorId`);
+    const init = {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        apiVersion: '1.0',
+        payload: {rorId}
+      })
+    };
+
+    const response = await fetch(requestURL, init);
+    const json = await response.json();
+
+    return response.status !== 200 ? undefined : json;
+  };
+};
+
+
 // Delete an institution from the registry.
 export const deleteInstitutionFromRegistry = (institutionId) => {
   return async (dispatch) => {
-    let requestURL = new URL(config.registryApi + `/institutionManagementApi/deleteById/${institutionId}`);
+    let requestURL = new URL(`${config.registryApi}/${config.institutionManagementEndpoint}/deleteById/${institutionId}`);
 
     const response = await fetch(requestURL);
 
