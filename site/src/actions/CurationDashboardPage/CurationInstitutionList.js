@@ -19,7 +19,7 @@ export const getCurationInstitutionListFromRegistry = (params) => {
     let requestURL;
 
     if (params.nameContent && params.nameContent.length > 2) {
-      requestURL = new URL(config.registryApi + '/restApi/institutions/search/findByNameContaining');
+      requestURL = new URL(config.registryApi + '/restApi/institutions/search/findByNameContainingIgnoreCase');
     } else {
       requestURL = new URL(config.registryApi + '/restApi/institutions');
       params['sort'] = 'name,asc';
