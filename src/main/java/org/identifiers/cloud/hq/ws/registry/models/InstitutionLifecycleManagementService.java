@@ -12,4 +12,5 @@ package org.identifiers.cloud.hq.ws.registry.models;
  */
 public interface InstitutionLifecycleManagementService {
     // TODO
+    InstitutionLifecycleMangementOperationReport deleteById(long id) throws InstitutionLifecycleManagementServiceException;
 }
