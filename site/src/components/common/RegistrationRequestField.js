@@ -229,8 +229,8 @@ class RegistrationRequestField extends React.Component {
                 {
                   options.map(option => (
                     <option
-                      value={option.id}
-                      key={`option-${option.id}`}
+                      value={option.shortId}
+                      key={`option-${option.shortId}`}
                     >
                       {option.label}
                     </option>
