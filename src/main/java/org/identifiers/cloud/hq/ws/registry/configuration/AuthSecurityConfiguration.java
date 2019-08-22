@@ -281,5 +281,4 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .oauth2ResourceServer().jwt();
     }
-    // TODO
 }
