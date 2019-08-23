@@ -28,12 +28,12 @@ import java.util.Collections;
 @Slf4j
 public class RorOrgApiServiceApiClient implements RorOrgApiService {
     // Re-try configuration
-    public static final int WS_REQUEST_RETRY_MAX_ATTEMPTS = 7;
-    public static final int WS_REQUEST_RETRY_BACK_OFF_PERIOD = 1500; // 1.5 seconds
+    public static final int WS_REQUEST_RETRY_MAX_ATTEMPTS = 3;
+    public static final int WS_REQUEST_RETRY_BACK_OFF_PERIOD = 500; // 1.5 seconds
     // RestTemplate configuration
     // TODO Maybe refactor this in the future
-    private static final int WS_REQUEST_CONNECT_TIMEOUT = 2000; // 2 seconds
-    private static final int WS_REQUEST_READ_TIMEOUT = 2000; // 2 seconds
+    private static final int WS_REQUEST_CONNECT_TIMEOUT = 500; // 0.5 seconds
+    private static final int WS_REQUEST_READ_TIMEOUT = 500; // 0.5 seconds
     // Configuration
     @Value("${org.identifiers.cloud.hq.ws.registry.ror.api.baseurl}")
     private String rorApiBaseUrl;
@@ -67,6 +67,7 @@ public class RorOrgApiServiceApiClient implements RorOrgApiService {
     public Organization getOrganizationDetails(String rorId) throws RorOrgApiServiceException {
         // TODO
         // TODO - Run some ROR ID validation first... maybe?
+        // TODO - If 404, do not re-try
         String queryUrl = String.format("%s/%s/%s", rorApiBaseUrl, rorApiUrlSuffixOrganization, getEncodedQueryPath(rorId));
         log.info(String.format("Fetching Organization Information for ROR ID '%s', query URL '%s'", rorId, queryUrl));
         try {
