@@ -34,6 +34,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
       institutionCreate: false,
       institutionSelected: '',
       institutionRORID: '',
+      institutionRORIDId: 0,
       valid: false,
       invalidFields: [],
       fields: [
@@ -310,7 +311,8 @@ class PrefixRegistrationRequestPage extends React.Component  {
   };
 
   handleClickCreateInstitutionRadio = () => {
-    this.setState({institutionCreate: true,
+    this.setState({
+    institutionCreate: true,
     institutionEnterRORID: false,
     institutionSelect: false,
     institutionSelected: '',
@@ -346,7 +348,10 @@ class PrefixRegistrationRequestPage extends React.Component  {
   };
 
   handleInstutionRORIDFound = institution => {
-    this.setInstitutionFields(institution);
+    if (institution) {
+      this.setState({institutionRODIDId: institution.id});
+      this.setInstitutionFields(institution);
+    }
   };
 
 
@@ -359,10 +364,24 @@ class PrefixRegistrationRequestPage extends React.Component  {
       handleClickSelectInstitutionRadio,
       handleInstutionRORIDFound,
       handleSelectInstitution,
-      props: { institutionList, locationList },
-      state: { institutionSelect, institutionEnterRORID, institutionCreate, institutionIsProvider, institutionSelected, institutionRORID, valid, invalidFields }
+      props: {
+        institutionList,
+        locationList
+      },
+      state: {
+        institutionSelect,
+        institutionEnterRORID,
+        institutionCreate,
+        institutionIsProvider,
+        institutionSelected,
+        institutionRORID,
+        institutionRORIDId,
+        valid,
+        invalidFields
+      }
     } = this;
 
+    const institutionFieldDisabled = (institutionEnterRORID && institutionRORIDId !== 0) || (institutionSelect) ? true : false;
 
     return (
       <>
@@ -523,7 +542,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                           onChange={handleSelectInstitution}
                           disabled={!institutionSelect}
                         >
-                          <option value="">{this.props.placeholder || 'Select an institution...'}</option>
+                          <option value="">{institutionSelect ? 'Select an institution...' : ''}</option>
                           {
                             institutionList.map(institution => (
                               <option
@@ -594,7 +613,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                     <RequestField
                       id="institutionName"
                       description="The name of the organization in charge of the resource."
-                      disabled={!institutionCreate}
+                      disabled={institutionFieldDisabled}
                       formsection="Institution details"
                       example="European Bioinformatics Institute, Hinxton, Cambridge, UK"
                       label="Name"
@@ -607,7 +626,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                     <RequestField
                       id="institutionDescription"
                       description="Short description of the institution in one or multiple sentences."
-                      disabled={!institutionCreate}
+                      disabled={institutionFieldDisabled}
                       example="The European Bioinformatics Institute (EMBL-EBI) is the part of EMBL
                         dedicated to big data and online services"
                       formsection="Institution details"
@@ -622,7 +641,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                     <RequestField
                       id="institutionHomeUrl"
                       description="A valid URL for the homepage of the institution or organization."
-                      disabled={!institutionCreate}
+                      disabled={institutionFieldDisabled}
                       example="https://www.ebi.ac.uk/"
                       formsection="Institution details"
                       label="Home URL"
@@ -635,7 +654,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                     <RequestField
                       id="institutionLocation"
                       description="The home country of the institution or organization."
-                      disabled={!institutionCreate}
+                      disabled={institutionFieldDisabled}
                       formsection="Institution details"
                       label="Location"
                       optionlabelfield="countryName"

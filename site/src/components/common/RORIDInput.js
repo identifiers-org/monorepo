@@ -6,7 +6,10 @@ import Spinner from '../../components/common/Spinner';
 
 // Config.
 import { config } from '../../config/Config';
-import { getInstitutionForRORIDFromRegistry } from '../../actions/CurationDashboardPage/CurationInstitutionList';
+import { getInstitutionForRORIDFromRegistry } from '../../actions/InstitutionList';
+
+// Utils.
+import validators from '../../utils/validators';
 
 
 class RORIDInput extends React.Component {
@@ -14,10 +17,10 @@ class RORIDInput extends React.Component {
     super(props);
 
     this.state = {
-      value: this.props.value,
       debounceValue: undefined,
       isLoading: false,
-      institution: undefined
+      institution: undefined,
+      valid: undefined
     }
   }
 
@@ -28,6 +31,7 @@ class RORIDInput extends React.Component {
     this.setState({isLoading: true});
 
     const institution = await getInstitutionForRORID(rorid);
+    // TODO GETTING 400a always
     this.setState({institution, isLoading: false});
 
     return institution;
@@ -42,13 +46,17 @@ class RORIDInput extends React.Component {
     } = this;
     const value = e.target.value;
 
-    this.setState({value});
-
     // Debounces value change.
     clearTimeout(debounceValue);
+
     this.setState({debounceValue: setTimeout(async () => {
-      const institution = await getInstitutionForRORID(value);
-      onInstitutionFound(institution);
+      const valid = validators['rorid'](value);
+      if (value && valid) {
+        const institution = await getInstitutionForRORID(value);
+        onInstitutionFound(institution);
+      } else {
+        this.setState({isLoading: false, valid: false});
+      }
     }, config.DEBOUNCE_DELAY)});
 
     // Updates parent.
@@ -59,21 +67,30 @@ class RORIDInput extends React.Component {
   render() {
     const {
       handleInputChange,
-      props: { disabled },
-      state: { isLoading, value }
+      props: { disabled, value },
+      state: { isLoading, institution, valid }
     } = this;
 
     return (
       <>
         <input
-          className="form-control"
+          className={`form-control ${typeof valid === 'undefined' ? '' : valid ? 'is-valid' : 'is-invalid'}`}
           disabled={disabled}
           value={value}
           onChange={handleInputChange}
           spellCheck={false}
+          placeholder={!disabled ? 'Enter a ROR Id in the form https://ror.org/<ror_id>' : ''}
         />
-        {/* TODO: This should be in a small div */}
-        {isLoading && <Spinner noText noCenter />}
+        {typeof valid !== 'undefined' && !valid ? (
+          <div className="h-2 mt-1">
+            <i className="icon icon-common icon-exclamation-triangle mr-1" />
+            Invalid ROR Id.
+          </div>
+        ) : (
+          <small className="form-text text-muted h-2">
+            {isLoading ? <Spinner noText noCenter /> : <>The ROR ID of the organization</>}
+          </small>
+        )}
       </>
     );
   }
