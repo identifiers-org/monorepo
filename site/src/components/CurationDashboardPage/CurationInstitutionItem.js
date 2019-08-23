@@ -110,6 +110,13 @@ class CurationInstitutionItem extends React.Component {
   };
 
   handleClickDiscardButton = async () => {
+    const { institutionFieldsChanged } = this.state;
+
+    if (institutionFieldsChanged.size === 0) {
+      this.setState({editInstitution: false, expanded: false});
+      return;
+    }
+
     const modalResponse = await swalConfirmation.fire({
       title: 'Are you sure?',
       text: 'All data changed will be lost',
