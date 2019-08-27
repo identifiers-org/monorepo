@@ -16,7 +16,6 @@ const authReducer = (state = defaultState, action) => {
       return {authenticated: action.keycloak.authenticated, keycloak: action.keycloak};
 
     case 'SET_AUTHRENEWALINTERVALHANDLER':
-
       return {...state, authRenewalIntervalHandler: setInterval(action.authRenewalIntervalHandler, action.timeout)};
 
     default:
