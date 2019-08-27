@@ -31,8 +31,12 @@ class RORIDInput extends React.Component {
     this.setState({isLoading: true});
 
     const institution = await getInstitutionForRORID(rorid);
-    // TODO GETTING 400a always
-    this.setState({institution, isLoading: false});
+
+    if (institution) {
+      this.setState({institution, isLoading: false, valid: true});
+    } else {
+      this.setState({institution: undefined, isLoading: false, valid: false});
+    }
 
     return institution;
   };
