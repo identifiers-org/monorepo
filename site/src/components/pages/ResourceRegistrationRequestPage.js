@@ -36,9 +36,9 @@ class ResourceRegistrationRequestPage extends React.Component  {
     this.state = {
       institutionIsProvider: false,
       namespacePrefix: undefined,
-      institutionSelect: true,
+      institutionSelect: config.enableRegistrationRequestInstitutionDropdownSelection ? true : false,
       institutionEnterRORID: false,
-      institutionCreate: false,
+      institutionCreate: config.enableRegistrationRequestInstitutionDropdownSelection ? false : true,
       institutionSelected: '',
       institutionRORID: '',
       institutionRORIDId: 0,
@@ -431,80 +431,83 @@ class ResourceRegistrationRequestPage extends React.Component  {
 
 
                   <div className="card-body">
-                    <div className="form-group row">
+                    {config. enableRegistrationRequestInstitutionDropdownSelection && (
+                      <div className="form-group row">
+                        <div className="col col-lg-3 col-form-label">
+                          <div className="form-check">
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name="institution-radio"
+                              id="selectinstitution-radio"
+                              value="selectinstitution"
+                              checked={institutionSelect}
+                              onChange={handleClickSelectInstitutionRadio}
+                            />
+                            <label
+                              className="form-check-label"
+                              htmlFor="selectinstitution-radio"
+                            >
+                              Select an existing institution
+                            </label>
+                          </div>
+                        </div>
 
-                      <div className="col col-lg-3 col-form-label">
-                        <div className="form-check">
-                          <input
-                            className="form-check-input"
-                            type="radio"
-                            name="institution-radio"
-                            id="selectinstitution-radio"
-                            value="selectinstitution"
-                            checked={institutionSelect}
-                            onChange={handleClickSelectInstitutionRadio}
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="selectinstitution-radio"
+                        <div className="col col-lg-9">
+                          <select
+                            className="form-control"
+                            id="institutiondropdown"
+                            value={institutionSelected}
+                            onChange={handleSelectInstitution}
+                            disabled={!institutionSelect}
                           >
-                            Select an existing institution
-                          </label>
+                            <option value="">{institutionSelect ? 'Select an institution...' : ''}</option>
+                            {
+                              institutionList.map(institution => (
+                                <option
+                                  value={institution.shortId}
+                                  key={`institution-${institution.shortId}`}
+                                >
+                                  {institution.name}
+                                </option>
+                              ))
+                            }
+                          </select>
                         </div>
                       </div>
+                    )}
 
-                      <div className="col col-lg-9">
-                        <select
-                          className="form-control"
-                          id="institutiondropdown"
-                          value={institutionSelected}
-                          onChange={handleSelectInstitution}
-                          disabled={!institutionSelect}
-                        >
-                          <option value="">{institutionSelect ? 'Select an institution...' : ''}</option>
-                          {
-                            institutionList.map(institution => (
-                              <option
-                                value={institution.shortId}
-                                key={`institution-${institution.shortId}`}
-                              >
-                                {institution.name}
-                              </option>
-                            ))
-                          }
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className="form-group row">
-                      <div className="col col-lg-3 col-form-label form-control-label">
-                        <div className="form-check">
-                          <input
-                            className="form-check-input"
-                            type="radio"
-                            name="institution-radio"
-                            id="enterroridinstitution-radio"
-                            value="enterroridinstitution"
-                            checked={institutionEnterRORID}
-                            onChange={handleClickEnterRORIDInstitutionRadio}
+                    {config.enableRegistrationRequestRORIDinstitutionSelection && (
+                      <div className="form-group row">
+                        <div className="col col-lg-3 col-form-label form-control-label">
+                          <div className="form-check">
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name="institution-radio"
+                              id="enterroridinstitution-radio"
+                              value="enterroridinstitution"
+                              checked={institutionEnterRORID}
+                              onChange={handleClickEnterRORIDInstitutionRadio}
+                            />
+                            <label
+                              className="form-check-label"
+                              htmlFor="enterroridinstitution-radio"
+                            >
+                              Enter a <a href="https://ror.org/" target="_blank" rel="noopener noreferrer">ROR ID</a>
+                            </label>
+                          </div>
+                        </div>
+                        <div className="col col-log-9">
+                          <RORIDInput
+                            disabled={!institutionEnterRORID}
+                            onChange={handleChangeInstutionRORID}
+                            onInstitutionFound={handleInstutionRORIDFound}
+                            value={institutionRORID}
                           />
-                          <label
-                            className="form-check-label"
-                            htmlFor="enterroridinstitution-radio"
-                          >
-                            Enter a <a href="https://ror.org/" target="_blank" rel="noopener noreferrer">ROR ID</a>
-                          </label>
                         </div>
                       </div>
-                      <div className="col col-log-9">
-                        <RORIDInput
-                          disabled={!institutionEnterRORID}
-                          onChange={handleChangeInstutionRORID}
-                          onInstitutionFound={handleInstutionRORIDFound}
-                          value={institutionRORID}
-                        />
-                      </div>
-                    </div>
+                    )}
 
                     <div className="form-group row">
                       <div className="col col-lg-3 col-form-label">
@@ -514,7 +517,7 @@ class ResourceRegistrationRequestPage extends React.Component  {
                             type="radio"
                             name="institution-radio"
                             id="createinstitution-radio"
-                            value={institutionCreate}
+                            checked={institutionCreate}
                             onChange={handleClickCreateInstitutionRadio}
                           />
                           <label
@@ -598,12 +601,12 @@ class ResourceRegistrationRequestPage extends React.Component  {
                   <div className="card-body">
                     <div className="form-group row">
                       <label
-                        className="col-lg-3 col-form-label form-control-label"
+                        className="col col-lg-3 col-form-label form-control-label"
                         htmlFor="institutionIsProvider"
                       >
                         Self provided
                       </label>
-                      <div className="col-lg-9">
+                      <div className="col col-lg-9">
                         <div className="form-check">
                           <input
                             id="institutionIsProvider"
