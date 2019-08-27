@@ -11,8 +11,8 @@ import { getInstitutionFromRegistry } from '../../actions/InstitutionList';
 import { config } from '../../config/Config';
 
 // Components.
-import RequestField from '../common/RegistrationRequestField';
 import PageTitle from '../common/PageTitle';
+import RequestField from '../common/RegistrationRequestField';
 import RORIDInput from '../common/RORIDInput';
 
 
@@ -607,8 +607,6 @@ class PrefixRegistrationRequestPage extends React.Component  {
                         </div>
                       </div>
                     </div>
-
-
 
                     <RequestField
                       id="institutionName"
