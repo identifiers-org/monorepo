@@ -35,16 +35,6 @@ const jsx = (
 
 // ==================== APP Initialization ====================
 (async () => {
-  // Auth token periodic renewal.
-  if (store.getState().auth.authenticated) {
-    const keycloak = store.getState().auth.keycloak;
-    const tokenDuration = (moment.unix(keycloak.tokenParsed.exp) - moment.unix(keycloak.tokenParsed.iat));
-
-    console.debug(`Auth -> Setting auth token renewal interval to ${(tokenDuration - tokenDuration * .1) / 1000} seconds.`);
-
-    store.dispatch(saveAuthRenewalIntervalHandler(renewToken, tokenDuration - (tokenDuration * .1)));
-  }
-
   // Get locations.
   store.dispatch(getLocationListFromRegistry());
   // Get institutions.
@@ -62,6 +52,16 @@ const jsx = (
 
   // Init auth.
   store.getState().config.enableAuthFeatures && await store.dispatch(authInit());
+
+  // Auth token periodic renewal.
+  if (store.getState().auth.authenticated) {
+    const keycloak = store.getState().auth.keycloak;
+    const tokenDuration = (moment.unix(keycloak.tokenParsed.exp) - moment.unix(keycloak.tokenParsed.iat));
+
+    console.debug(`Auth -> Setting auth token renewal interval to ${(tokenDuration - tokenDuration * .1) / 1000} seconds.`);
+
+    store.dispatch(saveAuthRenewalIntervalHandler(renewToken, tokenDuration - (tokenDuration * .1)));
+  }
 
   // Render app.
   ReactDOM.render(jsx, document.getElementById("app"));
