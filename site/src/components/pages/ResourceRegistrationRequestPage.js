@@ -494,7 +494,7 @@ class ResourceRegistrationRequestPage extends React.Component  {
                               className="form-check-label"
                               htmlFor="enterroridinstitution-radio"
                             >
-                              Enter a <a href="https://ror.org/" target="_blank" rel="noopener noreferrer">ROR ID</a>
+                              Enter a <a href="https://ror.org/" target="_blank" rel="noopener noreferrer" tabIndex={-1}>ROR ID</a>
                             </label>
                           </div>
                         </div>
