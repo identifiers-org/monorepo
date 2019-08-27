@@ -40,5 +40,11 @@ export const config = {
   VALIDATION_DELAY: 1000,
   DEBOUNCE_DELAY: 500,
 
+  // Enable ROR ID selection in registration request institution fields.
+  enableRegistrationRequestRORIDinstitutionSelection: true,
+
+  // Enable institution dropdown selection in registration request.
+  enableRegistrationRequestInstitutionDropdownSelection: false,
+
   enableAuthFeatures: true
 };
