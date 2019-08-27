@@ -110,6 +110,13 @@ class CurationInstitutionItem extends React.Component {
   };
 
   handleClickDiscardButton = async () => {
+    const { institutionFieldsChanged } = this.state;
+
+    if (institutionFieldsChanged.size === 0) {
+      this.setState({editInstitution: false, expanded: false});
+      return;
+    }
+
     const modalResponse = await swalConfirmation.fire({
       title: 'Are you sure?',
       text: 'All data changed will be lost',
@@ -214,7 +221,7 @@ class CurationInstitutionItem extends React.Component {
       handleClickDeleteButton,
       handleClickEditButton,
       handleClickDiscardButton,
-      props: { institution: { name, homeUrl, description, location }, locationList },
+      props: { institution: { name, homeUrl, description, location, rorId }, locationList },
       state: { editInstitution, expanded }
      } = this;
 
@@ -293,7 +300,7 @@ class CurationInstitutionItem extends React.Component {
                   <table className="table table-sm table-striped table-borderless mb-0">
                     <tbody>
                       <tr>
-                        <td className="w-15">
+                        <td className="w-15 align-middle">
                           <strong>Home URL</strong>
                         </td>
                         <td>
@@ -312,7 +319,7 @@ class CurationInstitutionItem extends React.Component {
                         </td>
                       </tr>
                       <tr>
-                        <td className="w-15">
+                        <td className="w-15 align-middle">
                           <strong>Description</strong>
                         </td>
                         <td>
@@ -331,7 +338,7 @@ class CurationInstitutionItem extends React.Component {
                         </td>
                       </tr>
                       <tr>
-                        <td className="w-15">
+                        <td className="w-15 align-middle">
                           <strong>Location</strong>
                         </td>
                         <td>
@@ -361,6 +368,25 @@ class CurationInstitutionItem extends React.Component {
                             </RoleConditional>
                           ) : (
                             location.countryName
+                          )}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="w-15 align-middle">
+                          <strong>ROR Id</strong>
+                        </td>
+                        <td>
+                          {editInstitution ? (
+                            <RoleConditional
+                              requiredRoles={['editInstitution']}
+                              fallbackComponent={rorId}
+                            >
+                              <ReversibleField fieldName="rorId" defaultValue={rorId || ''} handleChangeField={handleChangeField}>
+                                <input type="text" />
+                              </ReversibleField>
+                            </RoleConditional>
+                          ) : (
+                            rorId || 'No ROR Id stored'
                           )}
                         </td>
                       </tr>
