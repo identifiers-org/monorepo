@@ -25,12 +25,12 @@ class RORIDInput extends React.Component {
   }
 
 
-  getInstitutionForRORID = async (rorid) => {
+  getInstitutionForRORID = async (rorId) => {
     const { getInstitutionForRORID } = this.props;
 
     this.setState({isLoading: true});
 
-    const institution = await getInstitutionForRORID(rorid);
+    const institution = await getInstitutionForRORID(rorId);
 
     if (institution) {
       this.setState({institution, isLoading: false, valid: true});
@@ -54,7 +54,7 @@ class RORIDInput extends React.Component {
     clearTimeout(debounceValue);
 
     this.setState({debounceValue: setTimeout(async () => {
-      const valid = validators['rorid'](value).errorMessage === null;
+      const valid = validators['rorId'](value).errorMessage === null;
       if (value && valid) {
         const institution = await getInstitutionForRORID(value);
         onInstitutionFound(institution);
@@ -102,7 +102,7 @@ class RORIDInput extends React.Component {
 
 // Redux Mappings.
 const mapDispatchToProps = (dispatch) => ({
-  getInstitutionForRORID: (rorid) => dispatch(getInstitutionForRORIDFromRegistry(rorid))
+  getInstitutionForRORID: (rorId) => dispatch(getInstitutionForRORIDFromRegistry(rorId))
 });
 
 export default connect(undefined, mapDispatchToProps)(RORIDInput);
