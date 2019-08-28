@@ -72,6 +72,10 @@ public class ResourceRegistrationRequest {
     @Column(nullable = false)
     private String institutionLocation;
 
+    // ROR ID for this institution
+    @Column(length = 2000)
+    private String institutionRorId;
+
     // Originally called 'resourceAccessRule', ported from the original identifiers.org form at https://identifiers.org/request/prefix
     @Column(nullable = false, length = 2000)
     private String providerUrlPattern;
