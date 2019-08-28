@@ -23,6 +23,7 @@ const ResourceRegistrationSessionRequestDetails = ({ data }) => (
       <div className="col col-sm-8 col-lg-9 col-xl-10">
         <table className="table table-sm m-0 table-borderless table-striped">
           <tbody>
+            <tr><td className="w-25 pl-2 font-weight-bold">ROR Id</td><td className="w-75 text-block">{data.institutionRorId}</td></tr>
             <tr><td className="w-25 pl-2 font-weight-bold">Name</td><td className="w-75 text-block">{data.institutionName}</td></tr>
             <tr><td className="w-25 pl-2 font-weight-bold">description</td><td className="w-75 text-block small align-middle">{data.institutionDescription}</td></tr>
             <tr><td className="w-25 pl-2 font-weight-bold">Home URL</td><td className="w-75 text-block">{data.institutionHomeUrl}</td></tr>
