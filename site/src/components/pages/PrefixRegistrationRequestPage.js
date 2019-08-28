@@ -207,6 +207,11 @@ class PrefixRegistrationRequestPage extends React.Component  {
         })
       });
 
+      // Add ror id.
+      if (this.state.institutionEnterRORID) {
+        body.payload['institutionRorId'] = this.state.institutionRORID;
+      }
+
       const init = {
         method: 'POST',
         headers: {'content-type': 'application/json'},

@@ -185,11 +185,19 @@ class ResourceRegistrationRequestPage extends React.Component  {
         })
       });
 
+      // Add ror id.
+      if (this.state.institutionEnterRORID) {
+        console.log('adding rorid', this.state.institutionRORID);
+        body.payload['institutionRorId'] = this.state.institutionRORID;
+      }
+
       const init = {
         method: 'POST',
         headers: {'content-type': 'application/json'},
         body: JSON.stringify(body)
       };
+
+      console.log('init', init);
 
       // Make request and update the store.
       const requestUrl = `${config.registryApi}/${config.resourceRequestEndpoint}`;
