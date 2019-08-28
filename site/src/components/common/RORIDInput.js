@@ -54,7 +54,7 @@ class RORIDInput extends React.Component {
     clearTimeout(debounceValue);
 
     this.setState({debounceValue: setTimeout(async () => {
-      const valid = validators['rorid'](value);
+      const valid = validators['rorid'](value).errorMessage === null;
       if (value && valid) {
         const institution = await getInstitutionForRORID(value);
         onInstitutionFound(institution);
