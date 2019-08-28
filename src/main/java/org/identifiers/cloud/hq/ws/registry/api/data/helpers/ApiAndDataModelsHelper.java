@@ -41,6 +41,7 @@ public class ApiAndDataModelsHelper {
                 .setInstitutionDescription(sourceModel.getInstitutionDescription())
                 .setInstitutionLocation(sourceModel.getInstitutionLocation())
                 .setInstitutionHomeUrl(sourceModel.getInstitutionHomeUrl())
+                .setInstitutionRorId(sourceModel.getInstitutionRorId())
                 .setRequestedPrefix(sourceModel.getRequestedPrefix())
                 .setProviderUrlPattern(sourceModel.getProviderUrlPattern())
                 .setSampleId(sourceModel.getSampleId())
@@ -68,6 +69,7 @@ public class ApiAndDataModelsHelper {
                 .setName(institution.getName())
                 .setDescription(institution.getDescription())
                 .setHomeUrl(institution.getHomeUrl())
+                .setRorId(institution.getRorId())
                 .setLocation(getLocationFrom(institution.getLocation()));
     }
 
@@ -110,6 +112,7 @@ public class ApiAndDataModelsHelper {
                 .setAdditionalInformation(payload.getAdditionalInformation())
                 .setInstitutionDescription(payload.getInstitutionDescription())
                 .setInstitutionHomeUrl(payload.getInstitutionHomeUrl())
+                .setInstitutionRorId(payload.getInstitutionRorId())
                 .setInstitutionLocation(payload.getInstitutionLocation())
                 .setInstitutionName(payload.getInstitutionName())
                 .setNamespacePrefix(payload.getNamespacePrefix())
@@ -132,6 +135,7 @@ public class ApiAndDataModelsHelper {
                 .setSampleId(payload.getSampleId())
                 .setInstitutionDescription(payload.getInstitutionDescription())
                 .setInstitutionHomeUrl(payload.getInstitutionHomeUrl())
+                .setInstitutionRorId(payload.getInstitutionRorId())
                 .setInstitutionLocation(payload.getInstitutionLocation())
                 .setInstitutionName(payload.getInstitutionName())
                 .setProviderCode(payload.getProviderCode())
