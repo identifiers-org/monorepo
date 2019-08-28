@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // Actions.
+import { getInstitutionFromRegistry } from '../../actions/InstitutionList';
 import { resourceRegistrationRequestAmend } from '../../actions/CurationDashboardPage/ResourceRegistrationSession';
 import { setRegistrationSessionAmendField } from '../../actions/CurationDashboardPage/RegistrationSessionAmend';
 
@@ -18,8 +19,18 @@ class ResourceRegistrationSessionAmendForm extends React.Component {
     super(props);
 
     this.state = {
-      fieldsChanged: new Set()
+      fieldsChanged: new Set(),
+      institutionSelected: ''
     }
+
+    // Refs to chaneg institution fiends when one is loaded from the dropdown.
+    // ReversibleInput component wasn't intended to be changed from the outside. This is a hack but
+    // there is no time to refactor the component.
+    this.institutionRorIdRef = React.createRef();
+    this.institutionNameRef = React.createRef();
+    this.institutionDescriptionRef = React.createRef();
+    this.institutionHomeUrlRef = React.createRef();
+    this.institutionLocationRef = React.createRef();
   }
 
 
@@ -50,8 +61,6 @@ class ResourceRegistrationSessionAmendForm extends React.Component {
       infoToast('No fields have changed');
       return;
     }
-
-    console.log('fieldsToValidate', fieldsToValidate);
 
     const validations = await Promise.all(fieldsToValidate
       .map(field => validators[field](resourceRegistrationSessionAmend[field], resourceRegistrationSessionAmend, 'resource'))
@@ -96,18 +105,39 @@ class ResourceRegistrationSessionAmendForm extends React.Component {
   }
 
 
+  handleSelectInstitution = async e => {
+    const { getInstitutionFromRegistry} = this.props;
+    const institutionShortId = e.target.value;
+    const institution = await getInstitutionFromRegistry(institutionShortId);
+
+    this.setState({ institutionSelected: institutionShortId });
+    this.handleChangeField('rorId', institution.rorId);
+    this.institutionRorIdRef.current.handleChangeField(institution.rorId || '');
+    this.handleChangeField('institutionName', institution.name);
+    this.institutionNameRef.current.handleChangeField(institution.name);
+    this.handleChangeField('institutionDescription', institution.description);
+    this.institutionDescriptionRef.current.handleChangeField(institution.description);
+    this.handleChangeField('institutionHomeUrl', institution.homeUrl);
+    this.institutionHomeUrlRef.current.handleChangeField(institution.homeUrl);
+    this.handleChangeField('institutionLocation', institution.location.shortId);
+    this.institutionLocationRef.current.handleChangeField(institution.location.shortId);
+  }
+
+
   render() {
     const {
+      handleChangeField,
+      handleClickAmend,
+      handleClickValidate,
+      handleSelectInstitution,
       props: {
+        institutionList,
         isOpen,
         locationList,
         resourceRegistrationSession: { resourceRegistrationRequest },
         resourceRegistrationSessionAmend
       },
-      fieldChanged,
-      handleChangeField,
-      handleClickAmend,
-      handleClickValidate
+      state: { institutionSelected }
     } = this;
 
     return isOpen ? (
@@ -148,9 +178,37 @@ class ResourceRegistrationSessionAmendForm extends React.Component {
             <table className="table table-sm m-0 table-borderless table-striped">
               <tbody>
                 <tr>
+                  <td className="w-25 align-middle pl-2 font-weight-bold">Institution</td>
+                  <td className="w-75">
+                    <select
+                      className="form-control"
+                      id="institutiondropdown"
+                      value={institutionSelected}
+                      onChange={handleSelectInstitution}
+                    >
+                      <option value="">Autofill institution...</option>
+                      {
+                        institutionList.map(institution => (
+                          <option
+                            value={institution.shortId}
+                            key={`institution-${institution.shortId}`}
+                          >
+                            {institution.name}
+                          </option>
+                        ))
+                      }
+                    </select>
+                  </td>
+                </tr>
+                <tr>
                   <td className="w-25 align-middle pl-2 font-weight-bold">ROR Id</td>
                   <td className="w-75">
-                    <ReversibleField fieldName="rorid" defaultValue={resourceRegistrationRequest.institutionRorId} handleChangeField={handleChangeField}>
+                    <ReversibleField
+                      fieldName="rorId"
+                      defaultValue={resourceRegistrationRequest.institutionRorId || ''}
+                      handleChangeField={handleChangeField}
+                      ref={this.institutionRorIdRef}
+                    >
                       <input type="text" />
                     </ReversibleField>
                   </td>
@@ -158,7 +216,12 @@ class ResourceRegistrationSessionAmendForm extends React.Component {
                 <tr>
                   <td className="w-25 align-middle pl-2 font-weight-bold">Name</td>
                   <td className="w-75">
-                    <ReversibleField fieldName="institutionName" defaultValue={resourceRegistrationRequest.institutionName} handleChangeField={handleChangeField}>
+                    <ReversibleField
+                      fieldName="institutionName"
+                      defaultValue={resourceRegistrationRequest.institutionName}
+                      handleChangeField={handleChangeField}
+                      ref={this.institutionNameRef}
+                    >
                       <input type="text" />
                     </ReversibleField>
                   </td>
@@ -166,7 +229,12 @@ class ResourceRegistrationSessionAmendForm extends React.Component {
                 <tr>
                   <td className="w-25 align-middle pl-2 font-weight-bold">description</td>
                   <td className="w-75">
-                    <ReversibleField fieldName="institutionDescription" defaultValue={resourceRegistrationRequest.institutionDescription} handleChangeField={handleChangeField}>
+                    <ReversibleField
+                      fieldName="institutionDescription"
+                      defaultValue={resourceRegistrationRequest.institutionDescription}
+                      handleChangeField={handleChangeField}
+                      ref={this.institutionDescriptionRef}
+                    >
                       <textarea rows={5} />
                     </ReversibleField>
                   </td>
@@ -174,7 +242,12 @@ class ResourceRegistrationSessionAmendForm extends React.Component {
                 <tr>
                   <td className="w-25 align-middle pl-2 font-weight-bold">Home URL</td>
                   <td className="w-75">
-                    <ReversibleField fieldName="institutionHomeUrl" defaultValue={resourceRegistrationRequest.institutionHomeUrl} handleChangeField={handleChangeField}>
+                    <ReversibleField
+                      fieldName="institutionHomeUrl"
+                      defaultValue={resourceRegistrationRequest.institutionHomeUrl}
+                      handleChangeField={handleChangeField}
+                      ref={this.institutionHomeUrlRef}
+                    >
                       <input type="text" />
                     </ReversibleField>
                   </td>
@@ -182,7 +255,12 @@ class ResourceRegistrationSessionAmendForm extends React.Component {
                 <tr>
                   <td className="w-25 align-middle pl-2 font-weight-bold">Location</td>
                   <td className="w-75">
-                    <ReversibleField fieldName="institutionLocation" defaultValue={resourceRegistrationRequest.institutionLocation} handleChangeField={handleChangeField}>
+                    <ReversibleField
+                      fieldName="institutionLocation"
+                      defaultValue={resourceRegistrationRequest.institutionLocation}
+                      handleChangeField={handleChangeField}
+                      ref={this.institutionLocationRef}
+                    >
                       <select
                         className="form-control"
                         value={resourceRegistrationSessionAmend.institutionLocation}
@@ -353,13 +431,14 @@ class ResourceRegistrationSessionAmendForm extends React.Component {
 const mapStateToProps = (state) => ({
   resourceRegistrationSession: state.curationDashboard.resourceRegistrationSession,
   resourceRegistrationSessionAmend: state.curationDashboard.resourceRegistrationSessionAmend,
+  institutionList: state.institutionList,
   locationList: state.locationList
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  getInstitutionFromRegistry: (institutionId) => dispatch(getInstitutionFromRegistry(institutionId)),
   resourceRegistrationRequestAmend: (id, resourceRegistrationRequest, additionalInformation) =>
     dispatch(resourceRegistrationRequestAmend(id, resourceRegistrationRequest, additionalInformation)),
-
   setResourceRegistrationSessionAmendField: (field, value) =>
     dispatch(setRegistrationSessionAmendField(field, value, 'resource')),
 });

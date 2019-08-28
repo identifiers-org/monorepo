@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // Actions.
+import { getInstitutionFromRegistry } from '../../actions/InstitutionList';
 import { prefixRegistrationRequestAmend } from '../../actions/CurationDashboardPage/PrefixRegistrationSession';
 import { setRegistrationSessionAmendField } from '../../actions/CurationDashboardPage/RegistrationSessionAmend';
 
@@ -18,8 +19,18 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
     super(props);
 
     this.state = {
-      fieldsChanged: new Set()
+      fieldsChanged: new Set(),
+      institutionSelected: ''
     }
+
+    // Refs to chaneg institution fiends when one is loaded from the dropdown.
+    // ReversibleInput component wasn't intended to be changed from the outside. This is a hack but
+    // there is no time to refactor the component.
+    this.institutionRorIdRef = React.createRef();
+    this.institutionNameRef = React.createRef();
+    this.institutionDescriptionRef = React.createRef();
+    this.institutionHomeUrlRef = React.createRef();
+    this.institutionLocationRef = React.createRef();
   }
 
 
@@ -96,18 +107,39 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
   }
 
 
+  handleSelectInstitution = async e => {
+    const { getInstitutionFromRegistry} = this.props;
+    const institutionShortId = e.target.value;
+    const institution = await getInstitutionFromRegistry(institutionShortId);
+
+    this.setState({ institutionSelected: institutionShortId });
+    this.handleChangeField('rorId', institution.rorId);
+    this.institutionRorIdRef.current.handleChangeField(institution.rorId || '');
+    this.handleChangeField('institutionName', institution.name);
+    this.institutionNameRef.current.handleChangeField(institution.name);
+    this.handleChangeField('institutionDescription', institution.description);
+    this.institutionDescriptionRef.current.handleChangeField(institution.description);
+    this.handleChangeField('institutionHomeUrl', institution.homeUrl);
+    this.institutionHomeUrlRef.current.handleChangeField(institution.homeUrl);
+    this.handleChangeField('institutionLocation', institution.location.shortId);
+    this.institutionLocationRef.current.handleChangeField(institution.location.shortId);
+  }
+
+
   render() {
     const {
+      handleChangeField,
+      handleClickAmend,
+      handleClickValidate,
+      handleSelectInstitution,
       props: {
         isOpen,
+        institutionList,
         locationList,
         prefixRegistrationSession: { prefixRegistrationRequest },
         prefixRegistrationSessionAmend
       },
-      fieldChanged,
-      handleChangeField,
-      handleClickAmend,
-      handleClickValidate
+      state: { institutionSelected }
     } = this;
 
     return isOpen ? (
@@ -205,9 +237,37 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
             <table className="table table-sm m-0 table-borderless table-striped">
               <tbody>
                 <tr>
+                  <td className="w-25 align-middle pl-2 font-weight-bold">Institution</td>
+                  <td className="w-75">
+                    <select
+                      className="form-control"
+                      id="institutiondropdown"
+                      value={institutionSelected}
+                      onChange={handleSelectInstitution}
+                    >
+                      <option value="">Autofill institution...</option>
+                      {
+                        institutionList.map(institution => (
+                          <option
+                            value={institution.shortId}
+                            key={`institution-${institution.shortId}`}
+                          >
+                            {institution.name}
+                          </option>
+                        ))
+                      }
+                    </select>
+                  </td>
+                </tr>
+                <tr>
                   <td className="w-25 align-middle pl-2 font-weight-bold">ROR Id</td>
                   <td className="w-75">
-                    <ReversibleField fieldName="rorid" defaultValue={prefixRegistrationRequest.institutionRorId} handleChangeField={handleChangeField}>
+                    <ReversibleField
+                      fieldName="rorId"
+                      defaultValue={prefixRegistrationRequest.institutionRorId}
+                      handleChangeField={handleChangeField}
+                      ref={this.institutionRorIdRef}
+                    >
                       <input type="text" />
                     </ReversibleField>
                   </td>
@@ -215,7 +275,12 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
                 <tr>
                   <td className="w-25 align-middle pl-2 font-weight-bold">Name</td>
                   <td className="w-75">
-                    <ReversibleField fieldName="institutionName" defaultValue={prefixRegistrationRequest.institutionName} handleChangeField={handleChangeField}>
+                    <ReversibleField
+                      fieldName="institutionName"
+                      defaultValue={prefixRegistrationRequest.institutionName}
+                      handleChangeField={handleChangeField}
+                      ref={this.institutionNameRef}
+                    >
                       <input type="text" />
                     </ReversibleField>
                   </td>
@@ -223,7 +288,12 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
                 <tr>
                   <td className="w-25 align-middle pl-2 font-weight-bold">description</td>
                   <td className="w-75">
-                    <ReversibleField fieldName="institutionDescription" defaultValue={prefixRegistrationRequest.institutionDescription} handleChangeField={handleChangeField}>
+                    <ReversibleField
+                      fieldName="institutionDescription"
+                      defaultValue={prefixRegistrationRequest.institutionDescription}
+                      handleChangeField={handleChangeField}
+                      ref={this.institutionDescriptionRef}
+                    >
                       <textarea rows={5} />
                     </ReversibleField>
                   </td>
@@ -231,7 +301,12 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
                 <tr>
                   <td className="w-25 align-middle pl-2 font-weight-bold">Home URL</td>
                   <td className="w-75">
-                    <ReversibleField fieldName="institutionHomeUrl" defaultValue={prefixRegistrationRequest.institutionHomeUrl} handleChangeField={handleChangeField}>
+                    <ReversibleField
+                      fieldName="institutionHomeUrl"
+                      defaultValue={prefixRegistrationRequest.institutionHomeUrl}
+                      handleChangeField={handleChangeField}
+                      ref={this.institutionHomeUrlRef}
+                    >
                       <input type="text" />
                     </ReversibleField>
                   </td>
@@ -239,7 +314,12 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
                 <tr>
                   <td className="w-25 align-middle pl-2 font-weight-bold">Location</td>
                   <td className="w-75">
-                    <ReversibleField fieldName="institutionLocation" defaultValue={prefixRegistrationRequest.institutionLocation} handleChangeField={handleChangeField}>
+                    <ReversibleField
+                      fieldName="institutionLocation"
+                      defaultValue={prefixRegistrationRequest.institutionLocation}
+                      handleChangeField={handleChangeField}
+                      ref={this.institutionLocationRef}
+                    >
                       <select
                         className="form-control"
                         value={prefixRegistrationSessionAmend.institutionLocation}
@@ -402,13 +482,14 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
 const mapStateToProps = (state) => ({
   prefixRegistrationSession: state.curationDashboard.prefixRegistrationSession,
   prefixRegistrationSessionAmend: state.curationDashboard.prefixRegistrationSessionAmend,
+  institutionList: state.institutionList,
   locationList: state.locationList
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  getInstitutionFromRegistry: (institutionId) => dispatch(getInstitutionFromRegistry(institutionId)),
   prefixRegistrationRequestAmend: (id, prefixRegistrationRequest, additionalInformation) =>
     dispatch(prefixRegistrationRequestAmend(id, prefixRegistrationRequest, additionalInformation)),
-
   setPrefixRegistrationSessionAmendField: (field, value) =>
     dispatch(setRegistrationSessionAmendField(field, value, 'prefix')),
 });
