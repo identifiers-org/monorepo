@@ -76,6 +76,10 @@ public class PrefixRegistrationRequest {
     @Column(nullable = false)
     private String institutionLocation;
 
+    // ROR ID for this institution
+    @Column(length = 2000)
+    private String institutionRorId;
+
     // Originally called 'preferredPrefix', ported from the original identifiers.org form at https://identifiers.org/request/prefix
     @Column(nullable = false)
     private String requestedPrefix;
