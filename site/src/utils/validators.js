@@ -163,12 +163,28 @@ const validators = {
   rorid: rorid => {
     const rorIdLastPart = rorid.split('/').pop();
 
-    if (rorid.slice(0, 8) !== 'https://') return false;                          // Start with 'https://'.
-    if (rorIdLastPart.length !== 9) return false;                                // Last part is not 9 long.
-    if (rorIdLastPart[0] !== '0') return false;                                  // Last part not starting with 0.
-    if (isNaN(parseInt(rorIdLastPart.split(rorIdLastPart.length - 2)))) return false;   // Last two chars not numbers.
+    const bad = {
+      apiVersion: "1.0",
+      errorMessage: "Incorrect ROR Id",
+      payload: {
+        "comment": "VALIDATION FAILED"
+      }
+    };
 
-    return true;
+    const good = {
+      apiVersion: "1.0",
+      errorMessage: null,
+      payload: {
+        "comment": "VALIDATION OK"
+      }
+    };
+
+    if (rorid.slice(0, 8) !== 'https://') return bad;                                 // Start with 'https://'.
+    if (rorIdLastPart.length !== 9) return bad;                                       // Last part is not 9 long.
+    if (rorIdLastPart[0] !== '0') return bad;                                         // Last part not starting with 0.
+    if (isNaN(parseInt(rorIdLastPart.split(rorIdLastPart.length - 2)))) return bad;   // Last two chars not numbers.
+
+    return good;
   }
 };
 
