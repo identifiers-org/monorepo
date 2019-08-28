@@ -187,7 +187,6 @@ class ResourceRegistrationRequestPage extends React.Component  {
 
       // Add ror id.
       if (this.state.institutionEnterRORID) {
-        console.log('adding rorid', this.state.institutionRORID);
         body.payload['institutionRorId'] = this.state.institutionRORID;
       }
 
@@ -196,8 +195,6 @@ class ResourceRegistrationRequestPage extends React.Component  {
         headers: {'content-type': 'application/json'},
         body: JSON.stringify(body)
       };
-
-      console.log('init', init);
 
       // Make request and update the store.
       const requestUrl = `${config.registryApi}/${config.resourceRequestEndpoint}`;
@@ -293,15 +290,9 @@ class ResourceRegistrationRequestPage extends React.Component  {
   handleSelectInstitution = async e => {
     const { getInstitutionFromRegistry } = this.props;
     const institutionId = e.target.value;
-
-    console.log('institutionId', institutionId);
-
     const institution = await getInstitutionFromRegistry(institutionId);
 
     this.setState({institutionSelected: institutionId});
-
-    console.log('institution', institution);
-
     this.setInstitutionFields(institution);
   };
 
