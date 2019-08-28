@@ -59,6 +59,9 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
     // Location of the institution that owns the resource that's being registered as first provider for this namespace
     private String institutionLocation;
 
+    // ROR ID for this institution
+    private String institutionRorId;
+
     // Originally called 'preferredPrefix', ported from the original identifiers.org form at https://identifiers.org/request/prefix
     private String requestedPrefix;
 
