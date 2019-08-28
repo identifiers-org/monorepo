@@ -2,6 +2,7 @@
 
 const defaultState = {
   namespacePrefix: undefined,
+  institutionRorId: undefined,
   institutionName: undefined,
   institutionDescription: undefined,
   institutionHomeUrl: undefined,
@@ -27,6 +28,7 @@ const resourceRegistrationSessionAmendReducer = (state = defaultState, action) =
     return {
       ...state,
       namespacePrefix: action.registrationSessionAmend.namespacePrefix,
+      institutionRorId: action.registrationSessionAmend.institutionRorId,
       institutionName: action.registrationSessionAmend.institutionName,
       institutionDescription: action.registrationSessionAmend.institutionDescription,
       institutionHomeUrl: action.registrationSessionAmend.institutionHomeUrl,
