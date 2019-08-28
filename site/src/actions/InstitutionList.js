@@ -41,6 +41,7 @@ export const getInstitutionFromRegistry = (id) => {
     let newInstitution = {
       id: institution._links.self.href,
       shortId: institution._links.self.href.split('/').pop(),
+      rorId: institution.rorId,
       name: institution.name,
       homeUrl: institution.homeUrl,
       description: institution.description
@@ -49,6 +50,8 @@ export const getInstitutionFromRegistry = (id) => {
     newInstitution = await fetchAndAdd(newInstitution, [
       {name: 'location', url: institution._links.location.href}
     ], undefined, true);
+
+    newInstitution.location.shortId = newInstitution.location.id.split('/').pop();
 
     dispatch(setInstitution(newInstitution));
 
