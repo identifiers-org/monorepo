@@ -160,8 +160,8 @@ const validators = {
     return validateThroughAPI(url, {requester: {email: requesterEmail}});
   },
 
-  rorid: rorid => {
-    const rorIdLastPart = rorid.split('/').pop();
+  rorId: rorId => {
+    const rorIdLastPart = rorId.split('/').pop();
 
     const bad = {
       apiVersion: "1.0",
@@ -179,7 +179,7 @@ const validators = {
       }
     };
 
-    if (rorid.slice(0, 8) !== 'https://') return bad;                                 // Start with 'https://'.
+    if (rorId.slice(0, 8) !== 'https://') return bad;                                 // Start with 'https://'.
     if (rorIdLastPart.length !== 9) return bad;                                       // Last part is not 9 long.
     if (rorIdLastPart[0] !== '0') return bad;                                         // Last part not starting with 0.
     if (isNaN(parseInt(rorIdLastPart.split(rorIdLastPart.length - 2)))) return bad;   // Last two chars not numbers.
