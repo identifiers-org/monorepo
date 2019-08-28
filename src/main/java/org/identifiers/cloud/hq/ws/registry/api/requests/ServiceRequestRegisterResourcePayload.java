@@ -59,6 +59,9 @@ public class ServiceRequestRegisterResourcePayload implements Serializable {
     // Location of the institution that owns the resource that's being registered
     private String institutionLocation;
 
+    // ROR ID for this institution
+    private String institutionRorId;
+
     // This is a sample LUI that is covered by the resource being registered
     private String sampleId;
 
