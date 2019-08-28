@@ -51,6 +51,8 @@ class ResourceRegistrationSessionAmendForm extends React.Component {
       return;
     }
 
+    console.log('fieldsToValidate', fieldsToValidate);
+
     const validations = await Promise.all(fieldsToValidate
       .map(field => validators[field](resourceRegistrationSessionAmend[field], resourceRegistrationSessionAmend, 'resource'))
     );
@@ -145,6 +147,14 @@ class ResourceRegistrationSessionAmendForm extends React.Component {
           <div className="col col-sm-8 col-lg-9 col-xl-10">
             <table className="table table-sm m-0 table-borderless table-striped">
               <tbody>
+                <tr>
+                  <td className="w-25 align-middle pl-2 font-weight-bold">ROR Id</td>
+                  <td className="w-75">
+                    <ReversibleField fieldName="rorid" defaultValue={resourceRegistrationRequest.institutionRorId} handleChangeField={handleChangeField}>
+                      <input type="text" />
+                    </ReversibleField>
+                  </td>
+                </tr>
                 <tr>
                   <td className="w-25 align-middle pl-2 font-weight-bold">Name</td>
                   <td className="w-75">

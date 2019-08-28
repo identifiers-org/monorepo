@@ -205,6 +205,14 @@ class PrefixRegistrationSessionAmendForm extends React.Component {
             <table className="table table-sm m-0 table-borderless table-striped">
               <tbody>
                 <tr>
+                  <td className="w-25 align-middle pl-2 font-weight-bold">ROR Id</td>
+                  <td className="w-75">
+                    <ReversibleField fieldName="rorid" defaultValue={prefixRegistrationRequest.institutionRorId} handleChangeField={handleChangeField}>
+                      <input type="text" />
+                    </ReversibleField>
+                  </td>
+                </tr>
+                <tr>
                   <td className="w-25 align-middle pl-2 font-weight-bold">Name</td>
                   <td className="w-75">
                     <ReversibleField fieldName="institutionName" defaultValue={prefixRegistrationRequest.institutionName} handleChangeField={handleChangeField}>
