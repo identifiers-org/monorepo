@@ -137,6 +137,12 @@ class NamespaceDetailsPage extends React.Component {
   };
 
   handleClickDiscardChangesButton = async () => {
+    console.log('this.state.namespaceFieldsChanged', this.state.namespaceFieldsChanged);
+    if (this.state.namespaceFieldsChanged.size === 0) {
+      this.setState({editNamespace: false});
+      return;
+    }
+
     const result = await swalConfirmation.fire({
       title: 'Are you sure?',
       text: 'All data changed will be lost',
@@ -250,7 +256,7 @@ class NamespaceDetailsPage extends React.Component {
       <>
         <PageTitle
           icon="icon-leaf"
-          title={`Data collection:`}
+          title="Namespace:"
           extraTitle={namespace.name}
         />
 
@@ -346,7 +352,7 @@ class NamespaceDetailsPage extends React.Component {
               <tbody>
                 <tr>
                   <td className="w-35">
-                    Resource Name
+                    Name
                   </td>
                   <td>
                     {editNamespace ? (
@@ -381,7 +387,7 @@ class NamespaceDetailsPage extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td>Identifier pattern</td>
+                  <td>Local Unique Identifier (LUI) pattern</td>
                   <td>
                     {editNamespace ? (
                       <RoleConditional
@@ -398,7 +404,7 @@ class NamespaceDetailsPage extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td>Registry identifier</td>
+                  <td>Legacy registry identifier</td>
                   <td>{namespace.mirId}</td>
                 </tr>
               </tbody>
@@ -419,7 +425,7 @@ class NamespaceDetailsPage extends React.Component {
               <tbody>
                 <tr>
                   <td className="w-35">
-                    Namespace
+                    Prefix
                   </td>
                   <td>
                     {namespace.prefix}
@@ -438,7 +444,7 @@ class NamespaceDetailsPage extends React.Component {
                   <td>{namespace.prefix}:{namespace.sampleId}</td>
                 </tr>
                 <tr>
-                  <td>Sample Id</td>
+                  <td>Sample ID (LUI)</td>
                   <td>
                     {editNamespace ? (
                         <RoleConditional

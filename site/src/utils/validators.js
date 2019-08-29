@@ -31,16 +31,16 @@ const validationEndpoint = {
   'resource': config.resourceRegistrationEndpoint
 }
 
-
 const validators = {
   namespacePrefix: async (namespacePrefix, registrationRequest, registrationRequestType) => {
     const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateNamespacePrefix`;
     return validateThroughAPI(url, {namespacePrefix});
   },
 
-  name: async (name, registrationRequest, registrationRequestType) => {
-    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateName`;
-    return validateThroughAPI(url, {name});
+  // Resource edition provider name.
+  name: async (providerName, registrationRequest, registrationRequestType) => {
+    const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateProviderName`;
+    return validateThroughAPI(url, {providerName});
   },
 
   description: async (providerDescription, registrationRequest, registrationRequestType) => {
