@@ -128,6 +128,11 @@ class ResourceItem extends React.Component {
   };
 
   handleClickDiscardChangesButton = async () => {
+    if (this.state.resourceFieldsChanged.size === 0) {
+      this.setState({editResource: false});
+      return;
+    }
+
     const result = await swalConfirmation.fire({
       title: 'Are you sure?',
       text: 'All data changed will be lost',
@@ -292,7 +297,7 @@ class ResourceItem extends React.Component {
               <tbody>
                 <tr>
                   <td
-                    rowSpan="6"
+                    rowSpan="8"
                     className={`w-20 align-middle ${resource.deprecated ? 'bg-danger text-white' : resource.official ? 'bg-warning' : 'bg-primary text-white'}`}
                   >
                     {resource.deprecated && (
@@ -319,8 +324,24 @@ class ResourceItem extends React.Component {
                     <p className="text-center m-0">{resource.mirId}</p>
                     <p className="font-weight-bold text-center m-0">{resource.official ? 'Primary' : ''}</p>
                   </td>
-                  <td className="w-15 px-3">
-                    Description</td>
+                  <td className="w-15 px-3">Name</td>
+                  <td className="resourceitem-table__wide">
+                    {editResource ? (
+                      <RoleConditional
+                        requiredRoles={['editResource']}
+                        fallbackComponent={resource.name}
+                      >
+                        <ReversibleField fieldName="name" defaultValue={resource.name} handleChangeField={handleChangeField}>
+                          <input type="text" />
+                        </ReversibleField>
+                      </RoleConditional>
+                    ) : (
+                      resource.name
+                    )}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="w-15 px-3">Description</td>
                   <td className="resourceitem-table__wide">
                     {editResource ? (
                       <RoleConditional
@@ -337,7 +358,7 @@ class ResourceItem extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-3">Access URL</td>
+                  <td className="px-3">URL Pattern</td>
                   <td>
                     {editResource || reactivateResource ? (
                       <RoleConditional
@@ -354,47 +375,7 @@ class ResourceItem extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-3">Institution</td>
-                  <td className="d-flex">
-                    {editResource ? (
-                      <RoleConditional
-                        requiredRoles={['editResource']}
-                        fallbackComponent={resource.institution.name}
-                      >
-                        <>
-                          <ReversibleField fieldName="institution" defaultValue={institutionId} handleChangeField={handleChangeField}>
-                            <select
-                              className="form-control"
-                              value={institutionId}
-                            >
-                              <option value="" disabled>Select institution...</option>
-                              {
-                                institutionList.map(institution =>
-                                  <option
-                                    value={institution.id}
-                                    key={`option-${institution.id}`}
-                                  >
-                                    {institution.name}
-                                  </option>
-                                )
-                              }
-                            </select>
-                          </ReversibleField>
-                          <button
-                            className="btn btn-sm btn-primary ml-2"
-                            onClick={handleClickAddInstitution}
-                          >
-                            <i className="icon icon-common icon-plus" />
-                          </button>
-                        </>
-                      </RoleConditional>
-                    ) : (
-                      resource.institution.name
-                    )}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-3">Website</td>
+                  <td className="px-3 align-middle">Home URL</td>
                   <td>
                   {editResource ? (
                       <RoleConditional
@@ -443,7 +424,7 @@ class ResourceItem extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-3">Sample Id</td>
+                  <td className="px-3">Sample ID (LUI)</td>
                   <td>
                   {editResource ? (
                       <RoleConditional
@@ -458,6 +439,50 @@ class ResourceItem extends React.Component {
                       resource.sampleId
                     )}
                   </td>
+                </tr>
+                <tr>
+                  <td className="px-3">Institution</td>
+                  <td className="d-flex">
+                    {editResource ? (
+                      <RoleConditional
+                        requiredRoles={['editResource']}
+                        fallbackComponent={resource.institution.name}
+                      >
+                        <>
+                          <ReversibleField fieldName="institution" defaultValue={institutionId} handleChangeField={handleChangeField}>
+                            <select
+                              className="form-control"
+                              value={institutionId}
+                            >
+                              <option value="" disabled>Select institution...</option>
+                              {
+                                institutionList.map(institution =>
+                                  <option
+                                    value={institution.id}
+                                    key={`option-${institution.id}`}
+                                  >
+                                    {institution.name}
+                                  </option>
+                                )
+                              }
+                            </select>
+                          </ReversibleField>
+                          <button
+                            className="btn btn-sm btn-primary ml-2"
+                            onClick={handleClickAddInstitution}
+                          >
+                            <i className="icon icon-common icon-plus" />
+                          </button>
+                        </>
+                      </RoleConditional>
+                    ) : (
+                      resource.institution.name
+                    )}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="w-15 px-3">Institution ROR ID</td>
+                  <td className="resourceitem-table__wide">{resource.institution.rorId || ''}</td>
                 </tr>
               </tbody>
             </table>
