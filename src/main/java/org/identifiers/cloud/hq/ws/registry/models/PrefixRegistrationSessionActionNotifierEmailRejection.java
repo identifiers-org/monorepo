@@ -49,6 +49,8 @@ public class PrefixRegistrationSessionActionNotifierEmailRejection implements Pr
     private String emailBodyFileResource;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.email.curation}")
     private String emailAddressCuration;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.supportEmail}")
+    private String emailAddressSupport;
     // Placeholders
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.prefix}")
     private String placeholderPrefix;
@@ -84,7 +86,7 @@ public class PrefixRegistrationSessionActionNotifierEmailRejection implements Pr
                     .replace(placeholderPrefixName, session.getPrefixRegistrationRequest().getName())
                     .replace(placeholderPrefixDescription, session.getPrefixRegistrationRequest().getDescription())
                     .replace(placeholderRequesterName, session.getPrefixRegistrationRequest().getRequesterName())
-                    .replace(placeholderEmailCuration, emailAddressCuration);
+                    .replace(placeholderEmailCuration, emailAddressSupport);
         } catch (FileNotFoundException e) {
             throw new PrefixRegistrationSessionActionException(String.format("COULD NOT LOAD prefix request notification e-mail body template for requester at '%s', due to the following error '%s'", emailBodyFileResource, e.getMessage()));
         } catch (IOException e) {
