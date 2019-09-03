@@ -44,6 +44,8 @@ public class ResourceRegistrationSessionActionNotifierEmailRejection implements 
     private String emailBodyFileResource;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.email.curation}")
     private String emailAddressCuration;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.supportEmail}")
+    private String emailAddressSupport;
     // Placeholders
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.prefix}")
     private String placeholderPrefix;
@@ -55,6 +57,8 @@ public class ResourceRegistrationSessionActionNotifierEmailRejection implements 
     private String placeholderRequesterName;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.email.curation}")
     private String placeholderEmailCuration;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.email.support}")
+    private String placeholderEmailSupport;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.donotuse}")
     private String placeholderDoNotUse;
 
@@ -70,12 +74,13 @@ public class ResourceRegistrationSessionActionNotifierEmailRejection implements 
     private String parseEmailBody(ResourceRegistrationSession session) throws PrefixRegistrationSessionActionException {
         try {
             String bodyTemplate = IOUtils.toString(resourceLoader.getResource(emailBodyFileResource).getInputStream(), Charset.forName("UTF-8"));
+            // TODO The placeholder substitution process can be externalized to a loop over map (placeholder, value)
             return bodyTemplate
                     .replace(placeholderPrefix, session.getResourceRegistrationRequest().getNamespacePrefix())
                     .replace(placeholderResourceName, session.getResourceRegistrationRequest().getProviderName())
                     .replace(placeholderResourceDescription, session.getResourceRegistrationRequest().getProviderDescription())
                     .replace(placeholderRequesterName, session.getResourceRegistrationRequest().getRequesterName())
-                    .replace(placeholderEmailCuration, emailAddressCuration);
+                    .replace(placeholderEmailSupport, emailAddressSupport);
         } catch (FileNotFoundException e) {
             throw new PrefixRegistrationSessionActionException(String.format("COULD NOT LOAD notification e-mail body template at '%s', due to the following error '%s'", emailBodyFileResource, e.getMessage()));
         } catch (IOException e) {

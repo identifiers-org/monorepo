@@ -9,7 +9,7 @@ Description:
 PLACEHOLDER_007_RESOURCE_DESCRIPTION
 ---
 
-Has been REJECTED, please, don't hesitate to get in touch with our curation team at PLACEHOLDER_005_EMAIL_CURATION if
+Has been REJECTED, please, don't hesitate to get in touch with our curation team at PLACEHOLDER_008_EMAIL_SUPPORT if
 you had any questions.
 
 We would like to thank you for the confidence deposited in identifiers.org.

@@ -64,6 +64,8 @@ public class PrefixRegistrationSessionActionNotifierEmailRejection implements Pr
     private String placeholderSessionId;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.email.curation}")
     private String placeholderEmailCuration;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.email.support}")
+    private String placeholderEmailSupport;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.donotuse}")
     private String placeholderDoNotUse;
 
@@ -81,12 +83,13 @@ public class PrefixRegistrationSessionActionNotifierEmailRejection implements Pr
     private String parseEmailBody(PrefixRegistrationSession session) throws PrefixRegistrationSessionActionException {
         try {
             String bodyTemplate = IOUtils.toString(resourceLoader.getResource(emailBodyFileResource).getInputStream(), Charset.forName("UTF-8"));
+            // TODO The placeholder substitution process can be externalized to a loop over map (placeholder, value)
             return bodyTemplate
                     .replace(placeholderPrefix, session.getPrefixRegistrationRequest().getRequestedPrefix())
                     .replace(placeholderPrefixName, session.getPrefixRegistrationRequest().getName())
                     .replace(placeholderPrefixDescription, session.getPrefixRegistrationRequest().getDescription())
                     .replace(placeholderRequesterName, session.getPrefixRegistrationRequest().getRequesterName())
-                    .replace(placeholderEmailCuration, emailAddressSupport);
+                    .replace(placeholderEmailSupport, emailAddressSupport);
         } catch (FileNotFoundException e) {
             throw new PrefixRegistrationSessionActionException(String.format("COULD NOT LOAD prefix request notification e-mail body template for requester at '%s', due to the following error '%s'", emailBodyFileResource, e.getMessage()));
         } catch (IOException e) {
