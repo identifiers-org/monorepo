@@ -44,7 +44,7 @@ public class ResourceRegistrationSessionActionNotifierEmailRejection implements 
     private String emailBodyFileResource;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.email.curation}")
     private String emailAddressCuration;
-    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.supportEmail}")
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.email.support}")
     private String emailAddressSupport;
     // Placeholders
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.prefix}")
