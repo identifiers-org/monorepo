@@ -54,7 +54,7 @@ spec:
                         topologyKey: "kubernetes.io/hostname"
             containers:
                 - name: cloud-hq-ws-registry
-                  image: identifiersorg/cloud-hq-ws-registry:1.7.3
+                  image: identifiersorg/cloud-hq-ws-registry:1.7.5
                   resources:
                       requests:
                           memory: 420Mi
@@ -126,6 +126,8 @@ spec:
                     value: "identifiers-org@ebi.ac.uk"
                   - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_EMAIL_CURATION
                     value: "identifiers-org-curators@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_EMAIL_SUPPORT
+                    value: "identifiers-org@ebi.ac.uk"
                   - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_PLACEHOLDER_DONOTUSE
                     value: "PLACEHOLDER_do_not_use_this"
                   # E-mail Notifiers configuration - CURATOR - Prefix Registration Request START
