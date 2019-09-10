@@ -39,6 +39,7 @@ public class DataModelConversionHelper {
                 .setPattern(prefixRegistrationRequest.getIdRegexPattern())
                 .setDescription(prefixRegistrationRequest.getDescription())
                 .setSampleId(prefixRegistrationRequest.getSampleId())
+                .setNamespaceEmbeddedInLui(prefixRegistrationRequest.isNamespaceEmbeddedInLui())
                 .setContactPerson(requester)
         );
         // Create and fill in the resource (provider) information
