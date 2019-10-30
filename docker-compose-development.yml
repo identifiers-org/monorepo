@@ -26,3 +26,6 @@ services:
             - "8084:8084"
         depends_on:
             - redis
+networks:
+    default:
+        name: idorg-dev-satellite-resolver
