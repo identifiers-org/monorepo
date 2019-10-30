@@ -1,6 +1,6 @@
 # Standalone environment for working with the Compact ID Resolution Service
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
-version: "3"
+version: "3.5"
 services:
     resolver:
         image: identifiersorg/cloud-ws-resolver
@@ -39,3 +39,6 @@ services:
             - "8084:8084"
         depends_on:
             - redis
+networks:
+    default:
+        name: idorg-standalone-api-resolver
