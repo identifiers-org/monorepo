@@ -8,7 +8,7 @@
 # future, we should try to avoid circular dependencies. In addition, for those unit tests that are testing resource
 # recommender internals, no other services are needed, and the rest of the tests, e.g. integration tests, the resource
 # recommender will run fully, so... let's see how it goes, hahaha!
-version: "3"
+version: "3.5"
 services:
     link-checker:
         image: identifiersorg/cloud-ws-link-checker
@@ -39,3 +39,6 @@ services:
         image: redis:4.0.8-alpine
         ports:
             - "6379:6379"
+networks:
+    default:
+        name: idorg-dev-satellite-resource-recommender
