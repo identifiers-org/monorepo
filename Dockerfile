@@ -1,5 +1,7 @@
 # This Docker file defines a production container for the Resolver Web Service
-FROM identifiersorg/linux-java8
+#FROM identifiersorg/linux-java8
+# TESTING - OpenJDK based container
+FROM openjdk:8
 LABEL maintainer="Manuel Bernal Llinares <mbdebian@gmail.com>"
 
 # Environment - defaults
