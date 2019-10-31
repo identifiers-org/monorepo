@@ -39,3 +39,6 @@ services:
             - WS_RESOURCE_RECOMMENDER_CONFIG_BACKEND_SERVICE_LINK_CHECKER_HOST=link-checker
         ports:
             - "8083:8083"
+networks:
+    default:
+        name: idorg-standalone-api-link-checker
