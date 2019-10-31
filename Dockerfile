@@ -5,7 +5,9 @@ FROM identifiersorg/linux-java8
 LABEL maintainer="Manuel Bernal Llinares <mbdebian@gmail.com>"
 
 # Add chrome driver
-RUN apk --no-cache upgrade && apk add chromium chromium-chromedriver
+#RUN apk --no-cache upgrade && apk add chromium chromium-chromedriver
+RUN apt-get update ; \
+    apt-get install -y chromium chromium-driver
 
 # Environment - defaults
 ENV WS_METADATA_JVM_MEMORY_MAX 1024m
