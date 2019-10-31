@@ -25,7 +25,7 @@ services:
         image: identifiersorg/cloud-ws-resource-recommender
         environment:
             - WS_RESOURCE_RECOMMENDER_JVM_MEMORY_MAX=1024m
-            - WS_RESOURCE_RECOMMENDER_CONFIG_BACKEND_SERVICE_LINK_CHECKER_HOST=localhost
+            - WS_RESOURCE_RECOMMENDER_CONFIG_BACKEND_SERVICE_LINK_CHECKER_HOST=host.docker.internal
         ports:
             - "8083:8083"
 networks:
