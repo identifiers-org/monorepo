@@ -1,6 +1,6 @@
 # This docker-compose file can be used to run this service in standalone mode, i.e. on its own, isolated
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
-version: "3"
+version: "3.5"
 services:
     metadata:
         image: identifiersorg/cloud-ws-metadata

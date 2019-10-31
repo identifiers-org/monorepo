@@ -1,6 +1,6 @@
 # This docker-compose file defines the development environment
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
-version: "3"
+version: "3.5"
 services:
     resolver:
         image: identifiersorg/cloud-ws-resolver
@@ -38,3 +38,6 @@ services:
         image: redis:4.0.8-alpine
         ports:
             - "6379:6379"
+networks:
+    default:
+        name: idorg-dev-api-metadata
