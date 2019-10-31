@@ -28,3 +28,6 @@ services:
             - WS_RESOURCE_RECOMMENDER_CONFIG_BACKEND_SERVICE_LINK_CHECKER_HOST=localhost
         ports:
             - "8083:8083"
+networks:
+    default:
+        name: idorg-dev-satellite-link-checker
