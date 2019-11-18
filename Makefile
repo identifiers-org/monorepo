@@ -12,6 +12,8 @@ file_template_site_index = $(dev_site_root_folder)/src/index.html.template
 file_template_environment_site_index = $(dev_site_root_folder)/src/index.template.environment
 file_instance_site_index = $(dev_site_root_folder)/src/index.html
 development_url_registry_service = http://127.0.0.1:8180
+development_url_auth_url = http://127.0.0.1:8080
+development_url_auth_redirect_uri = http://127.0.0.1:8180
 folder_site_dist = site/dist
 file_instance_app_structure_index = $(folder_site_dist)/index.html
 environment_content = $(shell cat $(file_template_environment_site_index))
@@ -34,6 +36,8 @@ development_instantiate_index_template: instantiate_base_index_template
 	@sed -i "s@<!--ENVIRONMENT_PLACEHOLDER-->@${environment_content}@g" ${file_instance_site_index}
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Set development environment"
 	@sed -i "s@ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_API_REGISTRY_URL@${development_url_registry_service}@g" ${file_instance_site_index}
+	@sed -i "s@ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_AUTH_URL@${development_url_auth_url}@g" ${file_instance_site_index}
+	@sed -i "s@ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_AUTH_REDIRECT_URI@${development_url_auth_redirect_uri}@g" ${file_instance_site_index}
 
 force_npm_reinstall:
 	@echo "<===|DEVOPS|===> [CLEAN] Deleting npm updated flag"
