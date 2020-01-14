@@ -1,6 +1,6 @@
 # Development environment HQ Registry API Service
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
-version: "3"
+version: "3.5"
 services:
     postgresql:
         image: postgres
@@ -41,3 +41,6 @@ services:
             - "1025:25"
         volumes:
             - ./tmp/fakesmtp:/var/mail
+networks:
+    default:
+        name: idorg-dev-hq-registry
