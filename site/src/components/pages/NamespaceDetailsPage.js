@@ -248,7 +248,7 @@ class NamespaceDetailsPage extends React.Component {
     } = this;
 
     const namespace = this.props.namespaceList[0];
-    const sampleUrl = namespace ? `${config.satelliteUrl}/${namespace.prefix}:${namespace.sampleId}` : '';
+    const sampleUrl = namespace ? `${config.satelliteUrl}/${(namespace.namespaceEmbeddedInLui ? namespace.prefix.toUpperCase() : namespace.prefix)}:${namespace.sampleId}` : '';
 
     return !namespace ? (
       '' // Placeholder for empty/not found.
@@ -441,7 +441,7 @@ class NamespaceDetailsPage extends React.Component {
                 </tr>
                 <tr>
                   <td>Sample Compact identifier</td>
-                  <td>{namespace.prefix}:{namespace.sampleId}</td>
+                  <td>{(namespace.namespaceEmbeddedInLui ? namespace.prefix.toUpperCase() : namespace.prefix)}:{namespace.sampleId}</td>
                 </tr>
                 <tr>
                   <td>Sample ID (LUI)</td>
