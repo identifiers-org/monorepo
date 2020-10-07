@@ -393,9 +393,9 @@ class PrefixRegistrationRequestPage extends React.Component  {
         <PageTitle
           icon="icon-list"
           title="Request prefix form"
-          description="Please complete this form to register an identifier prefix that can be recognized by the
-                       meta-resolver at identifiers.org. Completing all fields will enable a swift processing of
-                       your request."
+          description='Please complete this form to register an identifier prefix that can be recognized by the
+                       meta-resolvers at <a href="https://identifiers.org">identifiers.org</a> and <a href="http://n2t.net">n2t.net</a>. Completing all fields will enable a swift processing of
+                       your request.'
         />
 
         <div className="container py-3">
