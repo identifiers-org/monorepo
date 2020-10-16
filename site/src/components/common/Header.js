@@ -124,12 +124,6 @@ class Header extends React.Component {
                         </a>
                       </EBINavItem>
 
-                      <EBINavItem className="nav-item">
-                        <a href={config.oldIdentifiersUrl} target="_blank" rel="noopener noreferrer" className="nav-link nav-link-dark">
-                          <i className="icon icon-common icon-home mr-1" />Legacy platform
-                        </a>
-                      </EBINavItem>
-
                       {
                         // If not logged in.
                         config.enableAuthFeatures && !auth.authenticated && (
