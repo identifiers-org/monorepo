@@ -619,7 +619,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
 
                     <RequestField
                       id="institutionName"
-                      description="The name of the organization that runs the provider."
+                      description="The name of the institution that runs the provider."
                       disabled={institutionFieldDisabled}
                       formsection="Institution details"
                       example="European Bioinformatics Institute, Hinxton, Cambridge, UK"
@@ -647,7 +647,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
 
                     <RequestField
                       id="institutionHomeUrl"
-                      description="A valid URL for the homepage of the institution or organization."
+                      description="A valid URL for the homepage of the institution."
                       disabled={institutionFieldDisabled}
                       example="https://www.ebi.ac.uk/"
                       formsection="Institution details"
@@ -660,7 +660,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
 
                     <RequestField
                       id="institutionLocation"
-                      description="The home country of the institution or organization."
+                      description="The home country of the institution."
                       disabled={institutionFieldDisabled}
                       formsection="Institution details"
                       label="Location"
@@ -801,7 +801,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                     <h2 className="mb-2"><i className="icon icon-common icon-user" /> Requester details</h2>
                     <p>
                       Contact details associated with this prefix registration request for identifiers.org curator team to reach out
-                       if need it, for both resolution of this request and future updates to the namespace information and / or the 
+                       if needed, for both resolution of this request and future updates to the namespace information and / or the 
                        first registered provider.
                     </p>
                   </div>
