@@ -5,7 +5,7 @@ all:
 
 install_requirements:
 	@echo "<===|DEVOPS|===> [INSTALL] Installing Application Requirements"
-	@pip install --user pipenv
+	@pip3 install --user pipenv
 	@PIPENV_VENV_IN_PROJECT=1 pipenv install
 
 tmp:
