@@ -405,10 +405,9 @@ class PrefixRegistrationRequestPage extends React.Component  {
               <div className="form" role="form" autoComplete="off">
                 <div className="card mb-3">
                   <div className="card-header">
-                    <h2 className="mb-3"><i className="icon icon-common icon-leaf" /> Prefix details</h2>
+                    <h2 className="mb-3"><i className="icon icon-common icon-leaf" /> Namespace Details</h2>
                     <p className="text-muted">
-                      The prefix is a label that identifies the set of data that is being provided in a
-                      resource. <strong>Examples:</strong> <span className="text-dark">pdb</span>,
+                      This section collects information related to the new ID space that is being requested, including its requested prefix, e.g. <span className="text-dark">pdb</span>,
                       <span className="text-dark"> uniprot </span> or <span className="text-dark">kegg.genes</span>.
                     </p>
                   </div>
@@ -416,10 +415,10 @@ class PrefixRegistrationRequestPage extends React.Component  {
                   <div className="card-body">
                     <RequestField
                       id="name"
-                      description="The name of the resource."
+                      description="The name of the new ID space."
                       example="Protein Data Bank"
                       formsection="Prefix details"
-                      label="Resource name"
+                      label="Namespace Name"
                       registrationType="PREFIX"
                       required={true}
                       type="text"
@@ -428,7 +427,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
 
                     <RequestField
                       id="description"
-                      description="Short description of the resource in one or multiple sentences."
+                      description="Short description of the ID space in one or multiple sentences."
                       example="The Protein Data Bank is the single worldwide archive of structural
                         data of biological macromolecules"
                       formsection="Prefix details"
@@ -446,7 +445,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                         punctuation, only lowercase alphanumerical characters, underscores and dots."
                       example="pdb"
                       formsection="Prefix details"
-                      label="Requested prefix"
+                      label="Requested Prefix"
                       registrationType="PREFIX"
                       required={true}
                       type="text"
@@ -469,7 +468,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
 
                     <RequestField
                       id="idRegexPattern"
-                      description="A regular expression specifying the form of string expected for this identifier."
+                      description="A regular expression definition of the IDs in this namespace."
                       example="^[0-9][A-Za-z0-9]{3}$"
                       formsection="Prefix details"
                       label="Regex pattern"
@@ -511,8 +510,8 @@ class PrefixRegistrationRequestPage extends React.Component  {
                   <div className="card-header">
                     <h2 className="mb-2"><i className="icon icon-common icon-sitemap" /> Institution details</h2>
                     <p>
-                      The resource&#39;s owner institution or organization, who is in charge of creating,
-                      developing and maintaining a resource. Examples are EMBL-EBI, Kyoto University
+                      This section of the form collects the information of the institution that runs the first provider being registered 
+                      in the new namespace being requested. Examples are EMBL-EBI, Kyoto University
                       or NCBI.
                     </p>
                   </div>
@@ -620,7 +619,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
 
                     <RequestField
                       id="institutionName"
-                      description="The name of the organization in charge of the resource."
+                      description="The name of the organization that runs the provider."
                       disabled={institutionFieldDisabled}
                       formsection="Institution details"
                       example="European Bioinformatics Institute, Hinxton, Cambridge, UK"
@@ -680,9 +679,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                   <div className="card-header">
                     <h2 className="mb-2"><i className="icon icon-common icon-cube" /> Provider details</h2>
                     <p>
-                      The <span className="text-italic">provider</span> is the institution or organization
-                      in charge of providing a resource. There can be more than one provider, and
-                      it can be the same or different than the institution in charge of the resource.
+                      This section collects information related to the first provider being registered in this new namespace.
                     </p>
                   </div>
 
@@ -692,7 +689,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                         className="col-lg-3 col-form-label form-control-label"
                         htmlFor="institutionIsProvider"
                       >
-                        Self provided
+                        Copy Institution details
                       </label>
                       <div className="col col-lg-9">
                         <div className="form-check">
@@ -708,8 +705,8 @@ class PrefixRegistrationRequestPage extends React.Component  {
                             className="form-text"
                             htmlFor="institutionIsProvider"
                           >
-                            Tick this checkbox if the owner institution is also in charge of providing the resource
-                            online. In that case, you will only have to fill in the resource&#39;s URL.
+                            Tick this box to copy the details provided for the owning institution of the provider. Please, 
+                            keep in mind that 'URL Pattern' and 'Provider code' will need to be filled after the autofill.
                           </label>
                         </div>
                       </div>
@@ -717,9 +714,9 @@ class PrefixRegistrationRequestPage extends React.Component  {
 
                     <RequestField
                       id="providerName"
-                      description="The name of the organization providing the resource."
+                      description="The name of the provider."
                       disabled={institutionIsProvider}
-                      example="European Bioinformatics Institute, Hinxton, Cambridge, UK"
+                      example="ChEBI (Chemical Entities of Biological Interest)"
                       formsection="Provider details"
                       label="Name"
                       registrationType="PREFIX"
@@ -732,8 +729,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                       id="providerDescription"
                       description="Short description of the provider in one or multiple sentences."
                       disabled={institutionIsProvider}
-                      example="The European Bioinformatics Institute (EMBL-EBI) is the part of EMBL dedicated to big
-                        data and online services"
+                      example="ChEBI (Chemical Entities of Biological Interest) at EMBL-EBI"
                       formsection="Provider details"
                       label="Description"
                       registrationType="PREFIX"
@@ -745,7 +741,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
 
                     <RequestField
                       id="providerHomeUrl"
-                      description="A valid URL describing the resource."
+                      description="URL for a home page that describes the role of the provider in the current namespace."
                       disabled={institutionIsProvider}
                       example="http://www.pdbe.org/"
                       formsection="Provider details"
@@ -759,7 +755,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
 
                     <RequestField
                       id="providerCode"
-                      description="Character string meant to optionally designate this provider in identifiers. No
+                      description="This is a unique identifier for the provider within the namespace, for forced resolution requests. No
                         spaces or punctuation, only lowercase alphanumerical characters, underscores and dots."
                       example="pdb"
                       formsection="Provider details"
@@ -773,7 +769,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
                     <RequestField
                       id="providerUrlPattern"
                       description="A URL-like string specifying a rule for resolving this identifier. The rule should
-                        contain the placeholder &#34;{$id}&#34;, which is a placeholder for the local identifier."
+                        contain the key &#34;{$id}&#34;, which acts as a placeholder for the resolution services."
                       example="http://www.ebi.ac.uk/pdbe/entry/pdb/{$id}"
                       formsection="Provider details"
                       label="URL Pattern"
@@ -785,7 +781,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
 
                     <RequestField
                       id="providerLocation"
-                      description="The home country of the provider institution or organization."
+                      description="The location from which the provider is offering its services (main location in case of multiple ones)."
                       disabled={institutionIsProvider}
                       formsection="Provider details"
                       label="Location"
@@ -804,8 +800,9 @@ class PrefixRegistrationRequestPage extends React.Component  {
                   <div className="card-header">
                     <h2 className="mb-2"><i className="icon icon-common icon-user" /> Requester details</h2>
                     <p>
-                      The requester details are required to contact the person who is creating
-                      this request if further information is required.
+                      Contact details associated with this prefix registration request for identifiers.org curator team to reach out
+                       if need it, for both resolution of this request and future updates to the namespace information and / or the 
+                       first registered provider.
                     </p>
                   </div>
 
