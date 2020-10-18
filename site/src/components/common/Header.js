@@ -87,12 +87,6 @@ class Header extends React.Component {
                         </a>
                       </EBINavItem>
 
-                      <EBINavItem className="nav-item">
-                        <a href={config.oldIdentifiersUrl} target="_blank" className="nav-link nav-link-dark">
-                          <i className="icon icon-common icon-home" /> Legacy platform
-                        </a>
-                      </EBINavItem>
-
                       <EBINavItem className="nav-item float-right">
                         <a href={config.feedbackUrl} target="_blank" className="nav-link nav-link-dark">
                           <i className="icon icon-common icon-comments" /> Feedback
