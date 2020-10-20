@@ -833,7 +833,7 @@ class ResourceRegistrationRequestPage extends React.Component  {
                         disabled={!this.state.valid && !this.state.sent}
                         onClick={this.handleSubmit}
                       >
-                        Submit prefix request
+                        Submit resource request
                       </button>
                     </>
                   </div>
