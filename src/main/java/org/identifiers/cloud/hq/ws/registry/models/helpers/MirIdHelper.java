@@ -22,7 +22,7 @@ public class MirIdHelper {
      * @param mirId MIR ID to validate
      * @return true if valid, false otherwise
      */
-    public boolean isValid(String mirId) {
+    public static boolean isValid(String mirId) {
         Pattern pattern = Pattern.compile(MIR_ID_REGEX);
         Matcher matcher = pattern.matcher(mirId);
         return matcher.matches();
