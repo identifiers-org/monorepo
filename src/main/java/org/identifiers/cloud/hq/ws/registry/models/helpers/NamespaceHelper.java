@@ -48,4 +48,18 @@ public class NamespaceHelper {
         }
         return String.format("{}:{}", namespace.getPrefix(), lui);
     }
+
+    /**
+     * Get the Identifiers.org URL given a namespace and a LUI
+     * @param namespace namespace for ID context
+     * @param lui LUI as defined by the context
+     * @return The Identifiers.org URL, a.k.a. Interoperability URL, null if the LUI is not valid
+     */
+    public String getInteroperabilityUrl(Namespace namespace, String lui) {
+        String compactIdentifier = getCompactIdentifier(namespace, lui);
+        if (compactIdentifier != null) {
+            return String.format("{}/{}", this.interoperabilityBaseUrl, compactIdentifier);
+        }
+        return null;
+    }
 }
