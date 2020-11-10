@@ -69,11 +69,11 @@ public class FairApiModel {
                     response.setResponse(compactIdentifier);
                 } else {
                     response.setHttpStatus(HttpStatus.BAD_REQUEST);
-                    response.setAdditionalInformation(String.format("INVALID LUI '{}' for namespace '{}'", payload.getLui(), payload.getNamespace()));
+                    response.setAdditionalInformation(String.format("INVALID LUI '%s' for namespace '%s'", payload.getLui(), payload.getNamespace()));
                 }
             } else {
                 response.setHttpStatus(HttpStatus.NOT_FOUND);
-                response.setAdditionalInformation(String.format("INVALID Namespace '{}'", payload.getNamespace()));
+                response.setAdditionalInformation(String.format("INVALID Namespace '%s'", payload.getNamespace()));
             }
         } else {
             response.setHttpStatus(HttpStatus.BAD_REQUEST);
@@ -93,11 +93,11 @@ public class FairApiModel {
                     response.setResponse(interoperabilityUrl);
                 } else {
                     response.setHttpStatus(HttpStatus.BAD_REQUEST);
-                    response.setAdditionalInformation(String.format("INVALID LUI '{}' for namespace '{}'", payload.getLui(), payload.getNamespace()));
+                    response.setAdditionalInformation(String.format("INVALID LUI '%s' for namespace '%s'", payload.getLui(), payload.getNamespace()));
                 }
             } else {
                 response.setHttpStatus(HttpStatus.NOT_FOUND);
-                response.setAdditionalInformation(String.format("INVALID Namespace '{}'", payload.getNamespace()));
+                response.setAdditionalInformation(String.format("INVALID Namespace '%s'", payload.getNamespace()));
             }
         } else {
             response.setHttpStatus(HttpStatus.BAD_REQUEST);
