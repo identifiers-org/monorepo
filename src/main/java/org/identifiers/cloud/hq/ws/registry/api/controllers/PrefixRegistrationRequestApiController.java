@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("prefixRegistrationApi")
 public class PrefixRegistrationRequestApiController {
-    // TODO Refactor this into a "Namespace Management API
+    // TODO Refactor this into a "Namespace Management API"
 
     @Autowired
     private PrefixRegistrationRequestApiModel model;
