@@ -62,7 +62,7 @@ public class FairApiModel {
     public FairApiInteroperabilityResponse getCompactIdentifier(FairApiInteroperabilityPayload payload) {
         FairApiInteroperabilityResponse response = new FairApiInteroperabilityResponse();
         if ((payload.getNamespace() != null) && (payload.getLui() != null)) {
-            Namespace foundNamespace = namespaceRepository.findByPrefix(payload.getNamespace());
+            Namespace foundNamespace = namespaceRepository.findByPrefix(payload.getNamespace().toLowerCase());
             if ( foundNamespace != null) {
                 String compactIdentifier = NamespaceHelper.getCompactIdentifier(foundNamespace, payload.getLui());
                 if (compactIdentifier != null) {
@@ -86,7 +86,7 @@ public class FairApiModel {
         // TODO
         FairApiInteroperabilityResponse response = new FairApiInteroperabilityResponse();
         if ((payload.getNamespace() != null) && (payload.getLui() != null)) {
-            Namespace foundNamespace = namespaceRepository.findByPrefix(payload.getNamespace());
+            Namespace foundNamespace = namespaceRepository.findByPrefix(payload.getNamespace().toLowerCase());
             if ( foundNamespace != null) {
                 String interoperabilityUrl = namespaceHelper.getInteroperabilityUrl(foundNamespace, payload.getLui());
                 if (interoperabilityUrl != null) {
