@@ -46,7 +46,7 @@ public class NamespaceHelper {
         if (namespace.isNamespaceEmbeddedInLui()) {
             return lui;
         }
-        return String.format("{}:{}", namespace.getPrefix(), lui);
+        return String.format("%s:%s", namespace.getPrefix(), lui);
     }
 
     /**
@@ -58,7 +58,7 @@ public class NamespaceHelper {
     public String getInteroperabilityUrl(Namespace namespace, String lui) {
         String compactIdentifier = getCompactIdentifier(namespace, lui);
         if (compactIdentifier != null) {
-            return String.format("{}/{}", this.interoperabilityBaseUrl, compactIdentifier);
+            return String.format("%s/%s", interoperabilityBaseUrl, compactIdentifier);
         }
         return null;
     }
