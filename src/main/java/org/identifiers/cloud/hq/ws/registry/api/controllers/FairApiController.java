@@ -44,9 +44,9 @@ public class FairApiController {
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
-    @PostMapping(value = "/interoperability/getInteroperabilityUrl")
-    public ResponseEntity<?> getInteroperabilityUrl(@RequestBody FairApiInteroperabilityPayload payload) {
-        FairApiInteroperabilityResponse response = model.getInteroperabilityUrl(payload);
+    @PostMapping(value = "/interoperability/getInteroperableUrl")
+    public ResponseEntity<?> getInteroperableUrl(@RequestBody FairApiInteroperabilityPayload payload) {
+        FairApiInteroperabilityResponse response = model.getInteroperableUrl(payload);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 }

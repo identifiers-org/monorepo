@@ -82,7 +82,7 @@ public class FairApiModel {
         return response;
     }
 
-    public FairApiInteroperabilityResponse getInteroperabilityUrl(FairApiInteroperabilityPayload payload) {
+    public FairApiInteroperabilityResponse getInteroperableUrl(FairApiInteroperabilityPayload payload) {
         // TODO
         FairApiInteroperabilityResponse response = new FairApiInteroperabilityResponse();
         if ((payload.getNamespace() != null) && (payload.getLui() != null)) {
