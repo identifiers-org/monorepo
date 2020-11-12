@@ -271,7 +271,8 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // Registry Insight API
                     .antMatchers(HttpMethod.GET, "/registryInsightApi/getAllNamespacePrefixes").permitAll()
                 // FAIR API
-                    .antMatchers("/fairapi/**").permitAll()
+                    .antMatchers(HttpMethod.POST, "/fairapi/**").permitAll()
+                    .antMatchers(HttpMethod.GET, "/fairapi/**").permitAll()
                 .anyRequest().denyAll()
                 .and()
                 .csrf()
