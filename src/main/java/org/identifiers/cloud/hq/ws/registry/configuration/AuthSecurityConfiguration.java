@@ -271,8 +271,9 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // Registry Insight API
                     .antMatchers(HttpMethod.GET, "/registryInsightApi/getAllNamespacePrefixes").permitAll()
                 // FAIR API
-                    .antMatchers(HttpMethod.POST, "/fairapi/**").permitAll()
-                    .antMatchers(HttpMethod.GET, "/fairapi/**").permitAll()
+                    .antMatchers(HttpMethod.POST, "/fairapi/coverage/**").permitAll()
+                    .antMatchers(HttpMethod.POST, "/fairapi/interoperability/**").permitAll()
+                    .antMatchers(HttpMethod.GET, "/fairapi/health/**").permitAll()
                 .anyRequest().denyAll()
                 .and()
                 .csrf()
@@ -281,6 +282,7 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .ignoringAntMatchers("/resourceManagementApi/registerResource")
                     .ignoringAntMatchers("/resourceManagementApi/validate*")
                     .ignoringAntMatchers("/rorIdApi/**")
+                    .ignoringAntMatchers("/fairapi/**")
                 .and()
                 .cors()
                 .and()

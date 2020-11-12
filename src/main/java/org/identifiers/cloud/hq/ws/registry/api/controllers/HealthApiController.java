@@ -20,13 +20,13 @@ public class HealthApiController {
     private HealthApiModel model;
 
     // liveness probe
-    @GetMapping(value = {"/healthApi/liveness_check", "/fairapi/healthApi/liveness_check"})
+    @GetMapping(value = {"/healthApi/liveness_check", "/fairapi/health/liveness_check"})
     public String livenessCheck() {
         return model.livenessCheck();
     }
 
     // Readiness check
-    @GetMapping(value = {"/healthApi/readiness_check", "/fairapi/healthApi/readiness_check"})
+    @GetMapping(value = {"/healthApi/readiness_check", "/fairapi/health/readiness_check"})
     public String readinessCheck() {
         return model.readinessCheck();
     }
