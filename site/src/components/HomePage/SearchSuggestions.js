@@ -90,7 +90,7 @@ class SearchSuggestions extends React.Component {
                       onMouseOver={() => {mouseOver(index)}}
                       className={`suggestion ${selectedSearchSuggestion === index ? 'suggestion__selected' : ''}`}
                     >
-                      <div className="row no-gutters py-1 mx-2">
+                      <div className="row g-0 py-1 mx-2">
                         <div className="col col-11">
                          <a
                             className="clear-link d-flex align-items-center"

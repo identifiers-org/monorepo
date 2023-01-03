@@ -1,11 +1,11 @@
 {
   "name": "cloud-satellite-web-frontend",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
   "version": "0.5.7",
   "description": "Identifiers.org satellite web frontend",
-  "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=development parcel src/index.html --port 9091 --hmr-port 50001",
-    "build": "NODE_ENV=production parcel build src/index.html --out-dir dist  --experimental-scope-hoisting",
+    "build": "NODE_ENV=production parcel build src/index.html --dist-dir dist",
     "precommit": "lint-staged",
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d dist",
@@ -23,16 +23,18 @@
   },
   "homepage": "https://github.com/javfg/cloud-satellite-web-frontend#readme",
   "dependencies": {
-    "EBI-Icon-fonts": "^1.3.0",
+    "@popperjs/core": "^2.11.6",
     "bootstrap": "^4.3.1",
-    "moment": "^2.24.0",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-redux": "^6.0.1",
-    "react-router-dom": "^4.3.1",
-    "redux": "^4.0.4",
-    "redux-thunk": "^2.3.0",
-    "sweetalert2": "^8.15.2"
+    "ebi-framework": "^1.4.0-rc.1",
+    "EBI-Icon-fonts": "^1.3.0",
+    "moment": "^2.29.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.0.0",
+    "react-router-dom": "^6.4.0",
+    "redux": "^4.2.0",
+    "redux-thunk": "^2.4.0",
+    "sweetalert2": "^11.4.8"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -41,21 +43,17 @@
     "@babel/plugin-transform-runtime": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
+    "@parcel/transformer-sass": "^2.8.0",
     "autoprefixer": "^9.6.1",
-    "babel-eslint": "^10.0.2",
     "eslint": "^5.16.0",
     "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-react": "^7.14.3",
-    "node-sass": "^4.12.0",
-    "parcel-bundler": "^1.12.3",
-    "parcel-plugin-bundle-visualiser": "^1.2.0"
+    "parcel": "^2.0.0",
+    "postcss": "^8.4.19",
+    "process": "^0.11.10",
+    "sass": "^1.56.1"
   },
-  "postcss": {
-    "modules": false,
-    "plugins": {
-      "autoprefixer": {
-        "flexbox": "no-2009"
-      }
-    }
+  "engines": {
+    "node": ">= 10"
   }
 }

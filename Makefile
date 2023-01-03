@@ -93,5 +93,6 @@ clean:
 	@echo "<===|DEVOPS|===> [CLEAN] Housekeeping"
 	@rm -rf ${folder_site_dist}
 	@rm -rf ${dev_site_root_folder}/node_modules
+	@rm -f npm_install	development_env_backend_up development_env_backend_down development_env_up development_env_down
 
 .PHONY: all clean app_structure container_production_build development_env_up development_env_down container_production_push dev_container_build deploy release sync_project_version set_next_development_version force_npm_install

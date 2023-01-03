@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux';
 
 // Actions.
@@ -13,16 +13,11 @@ import store from './store/store';
 // Utils.
 import { querySplit } from './utils/identifiers';
 
-import './styles/styles.scss';
-
-
-// App container.
-const jsx = (
-  <Provider store={store}>
-    <AppRouter />
-  </Provider>
-);
-
+//import '../node_modules/EBI-Icon-fonts/fonts.css';
+//import '../node_modules/ebi-framework/css/ebi-lite.css';
+//import '../node_modules/ebi-framework/js/script.js';
+//
+//import './styles/styles.scss';
 
 // ==================== APP Initialization ====================
 (async () => {
@@ -50,19 +45,26 @@ const jsx = (
 
 
   // Render app.
-  ReactDOM.render(jsx, document.getElementById("app"));
+  const rootElement = document.getElementById("app");
+  const reactRoot = createRoot(rootElement)
+  reactRoot.render(
+    <Provider store={store}>
+      <AppRouter />
+    </Provider>
+  );
 
-  // Run ebi framework stuff.
-  ebiFrameworkPopulateBlackBar();
-  ebiFrameworkActivateBlackBar();
-  ebiFrameworkExternalLinks();
-  ebiFrameworkManageGlobalSearch();
-  ebiFrameworkSearchNullError();
-  ebiFrameworkHideGlobalNav();
-  ebiFrameworkAssignImageByMetaTags();
-  ebiFrameworkInsertEMBLdropdown();
-  ebiFrameworkUpdateFoot();
-  ebiFrameworkUpdateFooterMeta();
-  ebiFrameworkIncludeAnnouncements();
-  ebiFrameworkRunDataProtectionBanner('1.3');
+//  // Run ebi framework stuff.
+//  ebiFrameworkPopulateBlackBar();
+//  ebiFrameworkActivateBlackBar();
+//  ebiFrameworkExternalLinks();
+//  ebiFrameworkManageGlobalSearch();
+//  ebiFrameworkSearchNullError();
+//  ebiFrameworkHideGlobalNav();
+//  ebiFrameworkAssignImageByMetaTags();
+//  ebiFrameworkInsertEMBLdropdown();
+//  ebiFrameworkUpdateFoot();
+//  ebiFrameworkUpdateFooterMeta();
+//  ebiFrameworkIncludeAnnouncements();
+//  ebiFrameworkRunDataProtectionBanner('1.3');
+  ebiFrameworkInvokeScripts();
 })()

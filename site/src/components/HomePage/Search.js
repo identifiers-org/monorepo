@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 // Components.
 import SearchSuggestions from './SearchSuggestions';
@@ -173,12 +173,12 @@ class Search extends React.Component {
 
   handleSearch = () => {
     const {
-      props: { history },
+      // props: { history },
       state: { query }
     } = this;
-
+    const navigate = useNavigate();
     if (this.handleEvaluateSearch()) {
-      history.push(`resolve?query=${query}`);
+      navigate(`resolve?query=${query}`);
     }
   }
 
@@ -279,4 +279,4 @@ const mapDispatchToProps = dispatch => ({
   setConfig: (config) => dispatch(setConfig(config))
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Search));
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

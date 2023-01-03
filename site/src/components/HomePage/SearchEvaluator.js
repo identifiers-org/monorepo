@@ -17,7 +17,7 @@ class SearchEvaluator extends React.Component {
 
     return (
       <>
-        <div className="row no-gutters ml-3 mr-2">
+        <div className="row g-0 ml-3 mr-2">
           <div className="col d-flex align-items-center">
             {(() => {
               switch (evaluation) {
@@ -96,7 +96,7 @@ class SearchEvaluator extends React.Component {
           </div>
         </div>
 
-        <div className="row no-gutters ml-3 mr-2">
+        <div className="row g-0 ml-3 mr-2">
           <div className="col ml-5">
             <div className="table-responsive">
               <table className="table table-borderless">

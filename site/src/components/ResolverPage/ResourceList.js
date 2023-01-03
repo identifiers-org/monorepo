@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import ResourceItem from './ResourceItem';
 
@@ -16,7 +16,8 @@ class ResourceList extends React.Component {
       resolvedResources,
     } = this.props;
 
-    const query = new URLSearchParams(this.props.location.search).get('query');
+    const location = useLocation();
+    const query = new URLSearchParams(location.search).get('query');
 
     return (
       resolvedResources.length === 0 ? (
@@ -56,4 +57,4 @@ const mapStateToProps = (state) => ({
 });
 
 
-export default withRouter(connect (mapStateToProps)(ResourceList));
+export default connect(mapStateToProps)(ResourceList);

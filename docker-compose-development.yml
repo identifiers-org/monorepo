@@ -108,6 +108,17 @@ services:
             - "6379:6379"
         networks:
             - satwebspanet
+    satspa:
+        image: identifiersorg/cloud-satellite-web-spa:latest
+        ports:
+            - "9090:9090"
+        networks:
+            - satwebspanet
+        depends_on:
+            - link-checker
+            - recommender
+            - resolver
+            - hqwebspa
 networks:
     satwebspanet:
         name: satwebspanet

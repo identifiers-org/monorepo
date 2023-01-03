@@ -1,3 +1,7 @@
+.parcel-cache
+src/main/resources/static/
+site/node_modules/
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 
