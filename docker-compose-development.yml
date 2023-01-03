@@ -10,6 +10,8 @@ services:
             - POSTGRES_PASSWORD=devpassword
         ports:
             - "5430:5432"
+        volumes:
+            - "registry:/var/lib/postgresql/data"
     miridpostgresql:
         image: postgres
         environment:
@@ -44,3 +46,7 @@ services:
 networks:
     default:
         name: idorg-dev-hq-registry
+
+volumes:
+    registry:
+        driver: local
