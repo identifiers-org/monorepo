@@ -31,7 +31,7 @@ class NamespaceDetailsPage extends React.Component {
   constructor (props) {
     super(props);
 
-    const params = new URLSearchParams(props.location.search);
+    const params = new URLSearchParams(window.location.search);
 
     this.state = {
       editNamespace: params.get('editNamespace') === 'true' || false,

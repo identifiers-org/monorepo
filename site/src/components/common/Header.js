@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink as BaseNavLink } from 'react-router-dom';
 
 // Actions.
 import { doSignIn, doSignOut } from '../../actions/Auth';
 
 // Assets.
-import identifiersLogo from '../../assets/identifiers_logo.png';
+const identifiersLogo = new URL('../../assets/identifiers_logo.png', import.meta.url);
 
 // Components.
 import EBINavBar from './EBINavBar';
@@ -14,12 +14,47 @@ import EBINavItem from './EBINavItem';
 import Sticky from './Sticky';
 import EBINavDropDown from './EBINavDropDown';
 
+// This code was written for v5 and code adjusts v6 to have the same behavious as v5
+// https://reactrouter.com/en/main/components/nav-link
+const NavLink = React.forwardRef(
+  ({ activeClassName, activeStyle, ...props }, ref) => {
+    return (
+      <BaseNavLink
+        ref={ref}
+        {...props}
+        className={({ isActive }) =>
+          [
+            props.className,
+            isActive ? activeClassName : null,
+          ]
+            .filter(Boolean)
+            .join(" ")
+        }
+        style={({ isActive }) => ({
+          ...props.style,
+          ...(isActive ? activeStyle : null),
+        })}
+      />
+    );
+  }
+);
+
 
 class Header extends React.Component {
   constructor(props) {
     super(props);
   }
 
+  componentDidMount() {
+      ebiFrameworkPopulateBlackBar();
+      ebiFrameworkActivateBlackBar();
+      ebiFrameworkExternalLinks();
+      ebiFrameworkManageGlobalSearch();
+      ebiFrameworkSearchNullError();
+      ebiFrameworkHideGlobalNav();
+      ebiFrameworkAssignImageByMetaTags();
+      ebiFrameworkInsertEMBLdropdown();
+    }
 
   handleClickSignIn = () => {
     const { auth, doSignIn } = this.props;
@@ -92,7 +127,7 @@ class Header extends React.Component {
                       </EBINavItem>
 
                       <EBINavItem className="nav-item">
-                        <NavLink exact to="/" className="nav-link" activeClassName="active">
+                        <NavLink to="/" className="nav-link" activeClassName="active">
                           <i className="icon icon-common icon-list mr-1" />Registry
                         </NavLink>
                       </EBINavItem>

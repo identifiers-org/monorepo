@@ -242,7 +242,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
           type: 'success'
         });
 
-        this.props.history.push('/');
+        navigate('/');
       }
       else {
         this.setState({ submitted: false });

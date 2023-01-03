@@ -1,11 +1,11 @@
 {
   "name": "identifiers-org-cloud-hq-web-frontend",
-  "version": "1.6.5",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "version": "1.6.6",
   "description": "Identifiers.org HQ web frontend written in js",
-  "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=development parcel src/index.html --port 8182",
-    "build": "NODE_ENV=production parcel build src/index.html --out-dir dist",
+    "build": "NODE_ENV=production parcel build src/index.html --dist-dir dist",
     "precommit": "lint-staged",
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d dist",
@@ -23,17 +23,20 @@
   },
   "homepage": "https://github.com/javfg/identifiers-org-cloud-hq-web-frontend#readme",
   "dependencies": {
+    "ebi-framework": "^1.4.0-rc.1",
+    "EBI-Icon-fonts": "^1.3.0",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@popperjs/core": "^2.11.6",
     "bootstrap": "^4.3.1",
-    "moment": "^2.24.0",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-redux": "^6.0.1",
-    "react-router-dom": "^4.3.1",
-    "redux": "^4.0.4",
-    "redux-thunk": "^2.3.0",
-    "sweetalert2": "^8.19.0",
-    "sweetalert2-react-content": "^1.1.0"
+    "moment": "^2.29.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.0.0",
+    "react-router-dom": "^6.4.0",
+    "redux": "^4.2.0",
+    "redux-thunk": "^2.4.0",
+    "sweetalert2": "^11.4.8",
+    "sweetalert2-react-content": "^5.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
@@ -42,22 +45,19 @@
     "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.7.1",
     "@babel/preset-react": "^7.7.0",
-    "EBI-Icon-fonts": "^1.3.0",
+    "@parcel/transformer-sass": "^2.8.1",
     "autoprefixer": "^9.7.1",
     "babel-eslint": "^10.0.3",
+    "ebi-framework": "^1.4.0-rc.1",
+    "EBI-Icon-fonts": "^1.3.0",
     "eslint": "^5.16.0",
     "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-react": "^7.16.0",
-    "node-sass": "^4.13.0",
-    "parcel-bundler": "^1.12.4",
-    "sass": "^1.23.6"
+    "parcel": "^2.0.0",
+    "process": "^0.11.10",
+    "sass": "^1.56.0"
   },
-  "postcss": {
-    "modules": false,
-    "plugins": {
-      "autoprefixer": {
-        "flexbox": "no-2009"
-      }
-    }
+  "engines": {
+    "node": ">= 10"
   }
 }

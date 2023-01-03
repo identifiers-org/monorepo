@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width initial-scale=1">
     <title>Identifiers.org</title>
     <link rel="shortcut icon" type="image/ico" href="./assets/favicon.ico">
-    <link rel="stylesheet" href="/styles/styles.scss">
+    <link rel="stylesheet" href="../node_modules/ebi-framework/css/ebi-lite.css" />
+
+    <link rel="stylesheet" href="./styles/styles.scss">
+
+    <script src="../node_modules/ebi-framework/js/script.min.js"></script>
     <link rel="stylesheet" href="../node_modules/EBI-Icon-fonts/fonts.css">
-    <script src="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/js/script.js"></script>
-    <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/css/ebi-lite.css" />
 </head>
 
   <body>
       <div id="app"></div>
       <!--ENVIRONMENT_PLACEHOLDER-->
       <div id="config_placeholder"></div>
-      <script src="/index.js"></script>
+      <script type="module" src="./index.js"></script>
   </body>
 </html>

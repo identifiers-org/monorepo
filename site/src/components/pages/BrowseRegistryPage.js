@@ -10,7 +10,7 @@ class BrowseRegistryPage extends React.Component {
   constructor (props) {
     super(props);
 
-    const params = new URLSearchParams(props.location.search);
+    const params = new URLSearchParams(window.location.search);
 
     this.state = {
       query: params.get('query') || ''

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import { useNavigate } from 'react-router-dom';
 // Components.
 import Search from '../HomePage/Search';
 
@@ -12,17 +12,16 @@ class HomePage extends React.Component {
   constructor(props) {
     super(props);
 
-    const params = new URLSearchParams(props.location.search);
-
+    const params = new URLSearchParams(window.location.search);
     this.state = {
       query: params.get('query') || ''
     };
   }
 
 
-  handleClickPrefixRegistrationRequestForm = () => { this.props.history.push('/prefixregistrationrequest') };
-  handleClickRegistryBrowser = () => { this.props.history.push('/registry') };
-  handleSuggestionAction = (query) => { this.props.history.push(`/registry/${query}`); }
+  handleClickPrefixRegistrationRequestForm = () => { useNavigate()('/prefixregistrationrequest') };
+  handleClickRegistryBrowser = () => { useNavigate()('/registry') };
+  handleSuggestionAction = (query) => { useNavigate()(`/registry/${query}`); }
 
   // Takes user to search if there are no prefixes matching that exact query in the namespace list, otherwise
   // will redirect to the matching namespace page.
@@ -32,7 +31,7 @@ class HomePage extends React.Component {
     const exactMatch = namespaceList.find(namespace => namespace.prefix === query);
     const redirectUrl = exactMatch ? `/registry/${query}` : `/registry?query=${query}`;
 
-    this.props.history.push(redirectUrl);
+    navigate(redirectUrl);
   }
 
   render() {

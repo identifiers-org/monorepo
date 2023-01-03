@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-
+import { useNavigate } from 'react-router-dom'
 import { prefixRegistrationRequestReject } from '../../actions/CurationDashboardPage/PrefixRegistrationSession';
 import { setRegistrationSessionReject } from '../../actions/CurationDashboardPage/RegistrationSessionReject';
 
@@ -26,7 +25,8 @@ class PrefixRegistrationSessionRejectForm extends React.Component {
 
 
   handleReject = async () => {
-    const { id, history, prefixRegistrationRequestReject, setPrefixRegistrationSessionReject } = this.props;
+    const { id, prefixRegistrationRequestReject, setPrefixRegistrationSessionReject } = this.props;
+    let navigate = useNavigate();
     const { rejectionReason } = this.state;
 
     const response = await prefixRegistrationRequestReject(id, rejectionReason || 'No rejection reason specified.');
@@ -37,7 +37,7 @@ class PrefixRegistrationSessionRejectForm extends React.Component {
       });
 
       setPrefixRegistrationSessionReject('', '');
-      history.push('/curation');
+      navigate('/curation');
     } else {
       await swalError.fire({
         title: 'Error',
@@ -117,5 +117,5 @@ const mapDispatchToProps = (dispatch) => ({
   setPrefixRegistrationSessionReject: (rejectionReason) => dispatch(setRegistrationSessionReject(rejectionReason, undefined, 'prefix'))
 });
 
-export default withRouter( connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationSessionRejectForm));
+export default connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationSessionRejectForm);
 

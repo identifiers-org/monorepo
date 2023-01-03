@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 
 // Components.
 import { prefixRegistrationRequestComment } from '../../actions/CurationDashboardPage/PrefixRegistrationSession';
@@ -129,5 +128,5 @@ const mapDispatchToProps = (dispatch) => ({
   setPrefixRegistrationSessionComment: (comment) => dispatch(setRegistrationSessionComment(comment, undefined, 'prefix'))
 });
 
-export default withRouter( connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationSessionCommentForm));
+export default connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationSessionCommentForm);
 

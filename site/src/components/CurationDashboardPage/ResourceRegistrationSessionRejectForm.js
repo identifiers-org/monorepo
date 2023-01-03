@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 import { resourceRegistrationRequestReject } from '../../actions/CurationDashboardPage/ResourceRegistrationSession';
 import { setRegistrationSessionReject } from '../../actions/CurationDashboardPage/RegistrationSessionReject';
@@ -26,9 +26,9 @@ class ResourceRegistrationSessionRejectForm extends React.Component {
 
 
   handleReject = async () => {
-    const { id, history, resourceRegistrationRequestReject, setResourceRegistrationSessionReject } = this.props;
+    const { id, resourceRegistrationRequestReject, setResourceRegistrationSessionReject } = this.props;
     const { rejectionReason } = this.state;
-
+    const navigate = useNavigate();
     const response = await resourceRegistrationRequestReject(id, rejectionReason || 'No rejection reason specified.');
 
     if (response.status === 200) {
@@ -37,7 +37,7 @@ class ResourceRegistrationSessionRejectForm extends React.Component {
       });
 
       setResourceRegistrationSessionReject('', '');
-      history.push('/curation');
+      navigate('/curation');
     } else {
       await swalError.fire({
         title: 'Error',
@@ -117,5 +117,5 @@ const mapDispatchToProps = (dispatch) => ({
   setResourceRegistrationSessionReject: (rejectionReason) => dispatch(setRegistrationSessionReject(rejectionReason, undefined, 'resource'))
 });
 
-export default withRouter( connect (mapStateToProps, mapDispatchToProps)(ResourceRegistrationSessionRejectForm));
+export default connect (mapStateToProps, mapDispatchToProps)(ResourceRegistrationSessionRejectForm);
 

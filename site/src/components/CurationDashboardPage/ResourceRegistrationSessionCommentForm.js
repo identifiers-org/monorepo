@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 
 // Components.
 import { resourceRegistrationRequestComment } from '../../actions/CurationDashboardPage/ResourceRegistrationSession';
@@ -129,5 +128,5 @@ const mapDispatchToProps = (dispatch) => ({
   setResourceRegistrationSessionComment: (comment) => dispatch(setRegistrationSessionComment(comment, undefined, 'resource'))
 });
 
-export default withRouter( connect (mapStateToProps, mapDispatchToProps)(ResourceRegistrationSessionCommentForm));
+export default connect (mapStateToProps, mapDispatchToProps)(ResourceRegistrationSessionCommentForm);
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
 // Actions.
@@ -27,7 +27,7 @@ class ResourceItem extends React.Component {
   constructor(props) {
     super(props);
 
-    const params = new URLSearchParams(props.location.search);
+    const params = new URLSearchParams(window.location.search);
 
     this.state = {
       editResource: params.get('editResource') === 'true' || false,
@@ -87,7 +87,8 @@ class ResourceItem extends React.Component {
 
 
   handleClickAddInstitution = () => {
-    this.props.history.push('/curation/#curation-institution');
+    const navigate = useNavigate();
+    navigate('/curation/#curation-institution');
   };
 
 
@@ -512,4 +513,4 @@ const mapDispatchToProps = dispatch => ({
 
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ResourceItem));
+export default connect(mapStateToProps, mapDispatchToProps)(ResourceItem);

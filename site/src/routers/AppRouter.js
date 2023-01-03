@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 // Components.
 import Header from '../components/common/Header';
@@ -27,29 +28,36 @@ import ManageResourceRegistrationRequestPage from '../components/pages/ManageRes
 // Router.
 import PrivateRoute from './privateRoute';
 
+const condRoute = (auth, element, path) => {
+  const hasRole = auth.keycloak.hasResourceRole('curationDashboard'),
+        redirectElem = <Navigate replace to={"/"} />;
+  return <Route path={path} element={hasRole ? element : redirectElem} />
+}
 
-const AppRouter = () => (
+const AppRouter = (props) => (
   <BrowserRouter>
     <>
       <Header />
       <div className="container mt-5">
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/registry" component={BrowseRegistryPage} />
-          <Route exact path="/registry/:prefix" component={NamespaceDetailsPage} />
-          <Route exact path="/prefixregistrationrequest" component={PrefixRegistrationRequestPage} />
-          <Route exact path="/resourceregistrationrequest" component={ResourceRegistrationRequestPage} />
-          {config.enableAuthFeatures && <PrivateRoute exact path="/curation" component={CurationDashboardPage} requiredRoles={['curationDashboard']} />}
-          {config.enableAuthFeatures && <PrivateRoute exact path="/curation/prefixRegistration/:id" component={ManagePrefixRegistrationRequestPage} requiredRoles={['curationDashboard']} />}
-          {config.enableAuthFeatures && <PrivateRoute exact path="/curation/resourceRegistration/:id" component={ManageResourceRegistrationRequestPage} requiredRoles={['curationDashboard']} />}
-          {config.enableAuthFeatures && <PrivateRoute path="/account" component={AccountPage} requiredRoles={['curationDashboard']} />}
+        <Routes>
+          <Route path="/" element={<HomePage/>} />
+          <Route path="/registry" element={<BrowseRegistryPage/>} />
+          <Route path="/registry/:prefix" element={<NamespaceDetailsPage/>} />
+          <Route path="/prefixregistrationrequest" element={<PrefixRegistrationRequestPage/>} />
+          <Route path="/resourceregistrationrequest" element={<ResourceRegistrationRequestPage/>} />
+          { config.enableAuthFeatures && condRoute(props.auth, <CurationDashboardPage/>, "/curation") }
+          { config.enableAuthFeatures && condRoute(props.auth, <ManagePrefixRegistrationRequestPage/>,
+                                                              "/curation/prefixRegistration/:id") }
+          { config.enableAuthFeatures && condRoute(props.auth, <ManageResourceRegistrationRequestPage/>,
+                                                              "/curation/resourceRegistration/:id") }
+          { config.enableAuthFeatures && condRoute(props.auth, <AccountPage/>, "/account") }
           <Route component={NotFoundPage} />
-        </Switch>
+        </Routes>
       </div>
       <Footer />
     </>
   </BrowserRouter>
 );
 
-
-export default AppRouter;
+const mapStateToProps = (state) => ({ auth: state.auth });
+export default connect(mapStateToProps)(AppRouter);

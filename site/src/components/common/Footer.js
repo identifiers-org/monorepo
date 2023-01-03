@@ -1,11 +1,18 @@
 import React from 'react';
 
-import elixirKiteMark from '../../assets/elixir_kitemark-60px.png';
+const elixirKiteMark = new URL('../../assets/elixir_kitemark-60px.png', import.meta.url);
 
 
 class Footer extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    ebiFrameworkUpdateFoot();
+    ebiFrameworkUpdateFooterMeta();
+    ebiFrameworkIncludeAnnouncements();
+    ebiFrameworkRunDataProtectionBanner('1.4');
   }
 
   render() {

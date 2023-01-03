@@ -58,7 +58,7 @@ development_authenabled_env_up: development_instantiate_index_template developme
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Launch development environment"
 	@docker run --user node --network=hqwebnet -p 8182:8182 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site start"
 
-developmentauthenabled_authenabled_env_down: development_authenabled_env_backend_down
+development_authenabled_env_down: development_authenabled_env_backend_down
 
 development_env_backend_up: tmp
 	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing backend UP"
@@ -128,5 +128,7 @@ clean: clean_tmp
 	@rm -rf ${folder_site_dist}
 	@rm -rf ${dev_site_root_folder}/node_modules
 	@rm -rf ${dev_site_root_folder}/.cache
+	@rm -f npm_install development_env_backend_up development_env_backend_down \
+			development_authenabled_env_backend_up development_authenabled_env_backend_down
 
 .PHONY: all clean app_structure container_production_build container_production_push dev_container_build deploy release sync_project_version set_next_development_version instantiate_index_template instantiate_base_index_template force_npm_install clean_tmp

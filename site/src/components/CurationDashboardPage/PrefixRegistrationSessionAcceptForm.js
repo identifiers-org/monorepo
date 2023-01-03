@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 // Actions.
 import { prefixRegistrationRequestAccept } from '../../actions/CurationDashboardPage/PrefixRegistrationSession';
@@ -29,9 +29,9 @@ class PrefixRegistrationSessionAcceptForm extends React.Component {
 
 
   handleAccept = async () => {
-    const { id, history, prefixRegistrationRequestAccept, setPrefixRegistrationSessionAccept } = this.props;
+    const { id, prefixRegistrationRequestAccept, setPrefixRegistrationSessionAccept } = this.props;
     const { acceptanceReason } = this.state;
-
+    const navigate = useNavigate();
     const response = await prefixRegistrationRequestAccept(id, acceptanceReason || 'No acceptance reason specified.');
 
     if (response.status === 200) {
@@ -40,7 +40,7 @@ class PrefixRegistrationSessionAcceptForm extends React.Component {
       });
 
       setPrefixRegistrationSessionAccept('', '');
-      history.push('/curation');
+      navigate('/curation');
     } else {
       await swalError.fire({
         title: 'Error',
@@ -119,5 +119,5 @@ const mapDispatchToProps = (dispatch) => ({
   setPrefixRegistrationSessionAccept: (acceptanceReason) => dispatch(setRegistrationSessionAccept(acceptanceReason, undefined, 'prefix'))
 });
 
-export default withRouter( connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationSessionAcceptForm));
+export default connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationSessionAcceptForm);
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 // Actions.
@@ -202,6 +202,7 @@ class ResourceRegistrationRequestPage extends React.Component  {
       const responseStatusCode = response.status;
       const json = await response.json();
       const res = { valid: responseStatusCode === 200, errorMessage: json.errorMessage };
+      const navigate = useNavigate();
 
       if (res.valid) {
         // Scroll to top.
@@ -220,7 +221,7 @@ class ResourceRegistrationRequestPage extends React.Component  {
           type: 'success'
         });
 
-        this.props.history.push('/');
+        navigate('/');
       }
       else {
         this.setState({ submitted: false });

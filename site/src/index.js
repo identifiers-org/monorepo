@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 
 import moment from 'moment';
@@ -24,13 +24,6 @@ import './styles/styles.scss';
 import { renewToken } from './utils/auth';
 
 
-
-// App container.
-const jsx = (
-  <Provider store={store}>
-    <AppRouter />
-  </Provider>
-);
 
 
 // ==================== APP Initialization ====================
@@ -64,19 +57,11 @@ const jsx = (
   }
 
   // Render app.
-  ReactDOM.render(jsx, document.getElementById("app"));
-
-  // Run ebi framework stuff.
-  ebiFrameworkPopulateBlackBar();
-  ebiFrameworkActivateBlackBar();
-  ebiFrameworkExternalLinks();
-  ebiFrameworkManageGlobalSearch();
-  ebiFrameworkSearchNullError();
-  ebiFrameworkHideGlobalNav();
-  ebiFrameworkAssignImageByMetaTags();
-  ebiFrameworkInsertEMBLdropdown();
-  ebiFrameworkUpdateFoot();
-  ebiFrameworkUpdateFooterMeta();
-  ebiFrameworkIncludeAnnouncements();
-  ebiFrameworkRunDataProtectionBanner('1.3');
+  const container = document.getElementById("app");
+  const root = createRoot(container);
+  root.render(
+    <Provider store={store}>
+      <AppRouter />
+    </Provider>
+  );
 })()

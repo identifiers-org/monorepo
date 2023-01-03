@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 // Actions.
 import { resourceRegistrationRequestAccept } from '../../actions/CurationDashboardPage/ResourceRegistrationSession';
@@ -29,8 +29,9 @@ class ResourceRegistrationSessionAcceptForm extends React.Component {
 
 
   handleAccept = async () => {
-    const { id, history, resourceRegistrationRequestAccept, setResourceRegistrationSessionAccept } = this.props;
+    const { id, resourceRegistrationRequestAccept, setResourceRegistrationSessionAccept } = this.props;
     const { acceptanceReason } = this.state;
+    const navigate = useNavigate();
 
     const response = await resourceRegistrationRequestAccept(id, acceptanceReason || 'No acceptance reason specified.');
 
@@ -40,7 +41,7 @@ class ResourceRegistrationSessionAcceptForm extends React.Component {
       });
 
       setResourceRegistrationSessionAccept('', '');
-      history.push('/curation');
+      navigate('/curation');
     } else {
       await swalError.fire({
         title: 'Error',
@@ -119,5 +120,5 @@ const mapDispatchToProps = (dispatch) => ({
   setResourceRegistrationSessionAccept: (acceptanceReason) => dispatch(setRegistrationSessionAccept(acceptanceReason, undefined, 'resource'))
 });
 
-export default withRouter( connect (mapStateToProps, mapDispatchToProps)(ResourceRegistrationSessionAcceptForm));
+export default connect (mapStateToProps, mapDispatchToProps)(ResourceRegistrationSessionAcceptForm);
 
