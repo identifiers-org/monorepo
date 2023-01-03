@@ -65,11 +65,6 @@ container_production_push: container_production_build
 dev_container_build: clean container_production_build
 	@echo "<===|DEVOPS|===> [DEV] Preparing local container"
 
-dev_start: clean app_structure development_env_up
-	@echo "<=== Starting dev server ===>"
-	@java -jar -Dspring.profiles.active=$(springboot_development_profile),authdisabled \
-	  		"target/registry-${tag_version}.jar"
-
 # Folders
 tmp:
 	@echo "<===|DEVOPS|===> [FOLDER] Creating temporary folders"
