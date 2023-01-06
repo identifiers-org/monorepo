@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 // Actions.
 import { getResourceRegistrationSessionFromRegistry } from '../../actions/CurationDashboardPage/ResourceRegistrationSession';
@@ -31,7 +32,7 @@ class ManageResourceRegistrationRequestPage extends React.Component {
   }
 
   componentDidMount() {
-    const { id } = this.props.match.params;
+    const { id } = this.props.params;
 
     this.updateResourceRegistrationSession(id);
   }
@@ -55,7 +56,7 @@ class ManageResourceRegistrationRequestPage extends React.Component {
   }
 
   handleFormVisibility = (formName) => {
-    const { id } = this.props.match.params;
+    const { id } = this.props.params;
 
     this.hideAllForms();
     this.setState({[`${formName}Visible`]: !this.state[`${formName}Visible`]});
@@ -63,7 +64,7 @@ class ManageResourceRegistrationRequestPage extends React.Component {
   }
 
   handleFormSubmit = () => {
-    const { id } = this.props.match.params;
+    const { id } = this.props.params;
 
     this.hideAllForms();
     this.updateResourceRegistrationSession(id);
@@ -79,7 +80,7 @@ class ManageResourceRegistrationRequestPage extends React.Component {
           resourceRegistrationRequest,
           resourceRegistrationSessionEvents
         },
-        match: { params: { id } }
+        params: { id }
       },
       state: {
         acceptFormVisible,
@@ -200,4 +201,9 @@ const mapDispatchToProps = (dispatch) => ({
   getResourceRegistrationSession: (params) => dispatch(getResourceRegistrationSessionFromRegistry(params)),
 });
 
-export default connect (mapStateToProps, mapDispatchToProps)(ManageResourceRegistrationRequestPage);
+const ConnectedManageResourceRegistrationRequestPage = connect (mapStateToProps, mapDispatchToProps)(ManageResourceRegistrationRequestPage);
+export default function(props) {
+  const params = useParams();
+
+  return <ConnectedManageResourceRegistrationRequestPage {...props} params={params} />
+}

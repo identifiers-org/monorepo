@@ -18,10 +18,9 @@ class HomePage extends React.Component {
     };
   }
 
-
-  handleClickPrefixRegistrationRequestForm = () => { useNavigate()('/prefixregistrationrequest') };
-  handleClickRegistryBrowser = () => { useNavigate()('/registry') };
-  handleSuggestionAction = (query) => { useNavigate()(`/registry/${query}`); }
+  handleClickPrefixRegistrationRequestForm = () => { this.props.navigate('/prefixregistrationrequest') };
+  handleClickRegistryBrowser = () => { this.props.navigate('/registry') };
+  handleSuggestionAction = (query) => { this.props.navigate(`/registry/${query}`); }
 
   // Takes user to search if there are no prefixes matching that exact query in the namespace list, otherwise
   // will redirect to the matching namespace page.
@@ -98,4 +97,9 @@ const mapStateToProps = (state) => ({
   namespaceList: state.registryBrowser.namespaceList
 });
 
-export default connect (mapStateToProps)(HomePage);
+const ConnectedHomepage = connect (mapStateToProps)(HomePage)
+export default function(props) {
+  const navigate = useNavigate();
+
+  return <ConnectedHomepage {...props} navigate={navigate}/>
+}

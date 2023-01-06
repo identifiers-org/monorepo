@@ -31,7 +31,6 @@ class PrefixRegistrationSessionAcceptForm extends React.Component {
   handleAccept = async () => {
     const { id, prefixRegistrationRequestAccept, setPrefixRegistrationSessionAccept } = this.props;
     const { acceptanceReason } = this.state;
-    const navigate = useNavigate();
     const response = await prefixRegistrationRequestAccept(id, acceptanceReason || 'No acceptance reason specified.');
 
     if (response.status === 200) {
@@ -40,7 +39,7 @@ class PrefixRegistrationSessionAcceptForm extends React.Component {
       });
 
       setPrefixRegistrationSessionAccept('', '');
-      navigate('/curation');
+      this.props.navigate('/curation');
     } else {
       await swalError.fire({
         title: 'Error',
@@ -119,5 +118,10 @@ const mapDispatchToProps = (dispatch) => ({
   setPrefixRegistrationSessionAccept: (acceptanceReason) => dispatch(setRegistrationSessionAccept(acceptanceReason, undefined, 'prefix'))
 });
 
-export default connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationSessionAcceptForm);
+const ConnectedPrefixRegistrationSessionAcceptForm = connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationSessionAcceptForm);
+export default function(props) {
+  const navigate = useNavigate();
+
+  return <ConnectedPrefixRegistrationSessionAcceptForm {...props} navigate={navigate} />
+}
 

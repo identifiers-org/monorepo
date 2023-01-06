@@ -15,6 +15,7 @@ import PageTitle from '../common/PageTitle';
 import RequestField from '../common/RegistrationRequestField';
 import RORIDInput from '../common/RORIDInput';
 
+import { useNavigate } from 'react-router-dom';
 
 /* TODO: This class has to be completely refactored.
  *
@@ -242,7 +243,7 @@ class PrefixRegistrationRequestPage extends React.Component  {
           type: 'success'
         });
 
-        navigate('/');
+        this.props.navigate('/');
       }
       else {
         this.setState({ submitted: false });
@@ -956,4 +957,9 @@ const mapDispatchToProps = (dispatch) => ({
   reset: (id) => dispatch(reset('PREFIX', id))
 });
 
-export default connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationRequestPage);
+const ConnectedPrefixRegistrationRequestPage = connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationRequestPage)
+export default function(props) {
+  const navigate = useNavigate();
+
+  return <ConnectedPrefixRegistrationRequestPage {...props} navigate={navigate} />;
+}

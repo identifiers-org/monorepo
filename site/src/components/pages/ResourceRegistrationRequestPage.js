@@ -202,7 +202,6 @@ class ResourceRegistrationRequestPage extends React.Component  {
       const responseStatusCode = response.status;
       const json = await response.json();
       const res = { valid: responseStatusCode === 200, errorMessage: json.errorMessage };
-      const navigate = useNavigate();
 
       if (res.valid) {
         // Scroll to top.
@@ -221,7 +220,7 @@ class ResourceRegistrationRequestPage extends React.Component  {
           type: 'success'
         });
 
-        navigate('/');
+        this.props.navigate('/');
       }
       else {
         this.setState({ submitted: false });
@@ -878,4 +877,9 @@ const mapDispatchToProps = (dispatch) => ({
   reset: (id) => dispatch(reset('RESOURCE', id))
 });
 
-export default connect (mapStateToProps, mapDispatchToProps)(ResourceRegistrationRequestPage);
+const ConnectedResourceRegistrationRequestPage = connect (mapStateToProps, mapDispatchToProps)(ResourceRegistrationRequestPage);
+export default function(props) {
+  const navigate = useNavigate();
+
+  return <ConnectedResourceRegistrationRequestPage {...props} navigate={navigate} />
+}

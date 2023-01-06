@@ -17,6 +17,7 @@ import PrefixRegistrationSessionRejectForm from '../CurationDashboardPage/Prefix
 import PrefixRegistrationSessionRequestDetails from '../CurationDashboardPage/PrefixRegistrationSessionRequest';
 import PageTitle from '../common/PageTitle';
 
+import { useParams } from 'react-router-dom';
 
 class ManagePrefixRegistrationRequestPage extends React.Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class ManagePrefixRegistrationRequestPage extends React.Component {
   }
 
   componentDidMount() {
-    const { id } = this.props.match.params;
+    const { id } = this.props.params;
 
     this.updatePrefixRegistrationSession(id);
   }
@@ -55,7 +56,7 @@ class ManagePrefixRegistrationRequestPage extends React.Component {
   }
 
   handleFormVisibility = (formName) => {
-    const { id } = this.props.match.params;
+    const { id } = this.props.params;
 
     this.hideAllForms();
     this.setState({[`${formName}Visible`]: !this.state[`${formName}Visible`]});
@@ -63,7 +64,7 @@ class ManagePrefixRegistrationRequestPage extends React.Component {
   }
 
   handleFormSubmit = () => {
-    const { id } = this.props.match.params;
+    const { id } = this.props.params;
 
     this.hideAllForms();
     this.updatePrefixRegistrationSession(id);
@@ -79,7 +80,7 @@ class ManagePrefixRegistrationRequestPage extends React.Component {
           prefixRegistrationRequest,
           prefixRegistrationSessionEvents
         },
-        match: { params: { id } }
+        params: { id }
       },
       state: {
         acceptFormVisible,
@@ -200,4 +201,9 @@ const mapDispatchToProps = (dispatch) => ({
   getPrefixRegistrationSession: (params) => dispatch(getPrefixRegistrationSessionFromRegistry(params)),
 });
 
-export default connect (mapStateToProps, mapDispatchToProps)(ManagePrefixRegistrationRequestPage);
+const ConnectedManagePrefixRegistrationRequestPage = connect (mapStateToProps, mapDispatchToProps)(ManagePrefixRegistrationRequestPage)
+export default function(props) {
+  const params = useParams();
+
+  return <ConnectedManagePrefixRegistrationRequestPage {...props} params={params} />
+}

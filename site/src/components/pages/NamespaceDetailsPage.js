@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { useParams } from 'react-router-dom'
 
 // Actions.
 import { getNamespaceFromRegistry, getResourcesFromRegistry } from '../../actions/NamespaceList';
@@ -47,7 +48,7 @@ class NamespaceDetailsPage extends React.Component {
       getNamespaceFromRegistry,
       getResourcesFromRegistry,
       getSchemaOrgMetadataFromRegistry,
-      match: { params: { prefix } },
+      params: { prefix },
       schemaOrgMetadata,
       setNamespacePatch
     } = this.props;
@@ -127,7 +128,7 @@ class NamespaceDetailsPage extends React.Component {
 
       if (result.status === 200) {
         successToast('Changed committed successfully');
-        await this.props.getNamespaceFromRegistry(this.props.match.params.prefix);
+        await this.props.getNamespaceFromRegistry(this.props.params.prefix);
         await this.props.getResourcesFromRegistry(this.props.namespaceList[0]);
         this.setState({editNamespace: false, namespaceFieldsChanged: new Set()});
       } else {
@@ -172,7 +173,7 @@ class NamespaceDetailsPage extends React.Component {
 
       if (result.status === 200) {
         successToast('Namespace deactivation successful');
-        await this.props.getNamespaceFromRegistry(this.props.match.params.prefix);
+        await this.props.getNamespaceFromRegistry(this.props.params.prefix);
         await this.props.getResourcesFromRegistry(this.props.namespaceList[0]);
         this.setState({editNamespace: false, namespaceFieldsChanged: new Set()});
       } else {
@@ -198,7 +199,7 @@ class NamespaceDetailsPage extends React.Component {
 
       if (result.status === 200) {
         successToast('Namespace reactivation successful');
-        await this.props.getNamespaceFromRegistry(this.props.match.params.prefix);
+        await this.props.getNamespaceFromRegistry(this.props.params.prefix);
         await this.props.getResourcesFromRegistry(this.props.namespaceList[0]);
         this.setState({editNamespace: false, namespaceFieldsChanged: new Set()});
       } else {
@@ -538,5 +539,9 @@ const mapDispatchToProps = dispatch => ({
   reactivateNamespace: (id) => dispatch(reactivateNamespace(id))
 });
 
+const ConnectedNamespaceDetailsPage = connect (mapStateToProps, mapDispatchToProps)(NamespaceDetailsPage)
+export default function(props) {
+  const params = useParams();
 
-export default connect (mapStateToProps, mapDispatchToProps)(NamespaceDetailsPage);
+  return <ConnectedNamespaceDetailsPage {...props} params={params} />
+}

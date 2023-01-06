@@ -31,7 +31,6 @@ class ResourceRegistrationSessionAcceptForm extends React.Component {
   handleAccept = async () => {
     const { id, resourceRegistrationRequestAccept, setResourceRegistrationSessionAccept } = this.props;
     const { acceptanceReason } = this.state;
-    const navigate = useNavigate();
 
     const response = await resourceRegistrationRequestAccept(id, acceptanceReason || 'No acceptance reason specified.');
 
@@ -41,7 +40,7 @@ class ResourceRegistrationSessionAcceptForm extends React.Component {
       });
 
       setResourceRegistrationSessionAccept('', '');
-      navigate('/curation');
+      this.props.navigate('/curation');
     } else {
       await swalError.fire({
         title: 'Error',
@@ -120,5 +119,10 @@ const mapDispatchToProps = (dispatch) => ({
   setResourceRegistrationSessionAccept: (acceptanceReason) => dispatch(setRegistrationSessionAccept(acceptanceReason, undefined, 'resource'))
 });
 
-export default connect (mapStateToProps, mapDispatchToProps)(ResourceRegistrationSessionAcceptForm);
+const ConnectedResourceRegistrationSessionAcceptForm = connect (mapStateToProps, mapDispatchToProps)(ResourceRegistrationSessionAcceptForm);
+export default function(props) {
+  const navigate = useNavigate();
+
+  return <ConnectedResourceRegistrationSessionAcceptForm {...props} navigate={navigate} />
+}
 

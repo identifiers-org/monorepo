@@ -46,15 +46,15 @@ class Header extends React.Component {
   }
 
   componentDidMount() {
-      ebiFrameworkPopulateBlackBar();
-      ebiFrameworkActivateBlackBar();
-      ebiFrameworkExternalLinks();
-      ebiFrameworkManageGlobalSearch();
-      ebiFrameworkSearchNullError();
-      ebiFrameworkHideGlobalNav();
-      ebiFrameworkAssignImageByMetaTags();
-      ebiFrameworkInsertEMBLdropdown();
-    }
+    ebiFrameworkPopulateBlackBar();
+    ebiFrameworkActivateBlackBar();
+    ebiFrameworkExternalLinks();
+    ebiFrameworkManageGlobalSearch();
+    ebiFrameworkSearchNullError();
+    ebiFrameworkHideGlobalNav();
+    ebiFrameworkAssignImageByMetaTags();
+    ebiFrameworkInsertEMBLdropdown();
+  }
 
   handleClickSignIn = () => {
     const { auth, doSignIn } = this.props;
