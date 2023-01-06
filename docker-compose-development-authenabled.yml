@@ -2,7 +2,7 @@
 # Author: Manuel Bernal Llinares
 version: "3.5"
 services:
-    hqregistrypostgresql:
+    postgresql:
         image: postgres
         environment:
             - POSTGRES_DB=devdatabase
@@ -10,22 +10,8 @@ services:
             - POSTGRES_PASSWORD=devpassword
         ports:
             - "5430:5432"
-    hqmiridpostgresql:
-        image: postgres
-        environment:
-            - POSTGRES_DB=devdatabase
-            - POSTGRES_USER=devusername
-            - POSTGRES_PASSWORD=devpassword
-        ports:
-            - "5431:5432"
-    keycloakpostgresql:
-        image: postgres
-        environment:
-            - POSTGRES_DB=devdatabase
-            - POSTGRES_USER=devusername
-            - POSTGRES_PASSWORD=devpassword
-        ports:
-            - "5432:5432"
+        volumes:
+            - "registry:/var/lib/postgresql/data"
     redis:
         image: redis:4.0.8-alpine
         ports:
@@ -33,7 +19,7 @@ services:
     hqregistry:
         image: identifiersorg/cloud-hq-ws-registry
         environment:
-            - HQ_WS_REGISTRY_CONFIG_JDBC_URL=jdbc:postgresql://hqregistrypostgresql:5432/devdatabase
+            - HQ_WS_REGISTRY_CONFIG_JDBC_URL=jdbc:postgresql://postgresql:5432/devdatabase
             - HQ_WS_REGISTRY_CONFIG_RDBMS_USERNAME=devusername
             - HQ_WS_REGISTRY_CONFIG_RDBMS_PASSWORD=devpassword
             - HQ_WS_REGISTRY_CONFIG_BACKEND_SERVICE_MIRID_CONTROLLER_HOST=hqmiridcontroller
@@ -50,7 +36,7 @@ services:
         ports:
             - "8180:8180"
         depends_on:
-            - hqregistrypostgresql
+            - postgresql
             - hqmiridcontroller
             - localkeycloak
             - fakesmtp
@@ -58,7 +44,7 @@ services:
     hqmiridcontroller:
         image: identifiersorg/cloud-hq-ws-mirid-controller
         environment:
-            - HQ_WS_MIRID_CONTROLLER_CONFIG_JDBC_URL=jdbc:postgresql://hqmiridpostgresql:5432/devdatabase
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_JDBC_URL=jdbc:postgresql://postgresql:5432/devdatabase
             - HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_USERNAME=devusername
             - HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_PASSWORD:devpassword
             - HQ_WS_MIRID_CONTROLLER_CONFIG_REDIS_HOST=redis
@@ -72,7 +58,7 @@ services:
             - "8181:8181"
         depends_on:
             - redis
-            - hqmiridpostgresql
+            - postgresql
             - localkeycloak
         restart: on-failure
     localkeycloak:
@@ -83,7 +69,7 @@ services:
             - KEYCLOAK_USER=devadmin
             - KEYCLOAK_PASSWORD=devpassword
             - DB_VENDOR=postgres
-            - DB_ADDR=keycloakpostgresql
+            - DB_ADDR=postgresql
             - DB_DATABASE=devdatabase
             - DB_USER=devusername
             - DB_PASSWORD=devpassword
@@ -91,7 +77,7 @@ services:
         ports:
             - "8080:8080"
         depends_on:
-            - keycloakpostgresql
+            - postgresql
         healthcheck:
             test: curl -f http://localhost:8080/auth/
             start_period: 30s
@@ -104,3 +90,7 @@ services:
 networks:
     default:
         name: hqwebnet
+volumes:
+    registry:
+        name: idorg_registry
+        driver: local
