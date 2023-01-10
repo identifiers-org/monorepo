@@ -249,13 +249,17 @@ class NamespaceDetailsPage extends React.Component {
     } = this;
 
     const namespace = this.props.namespaceList[0];
-    let namespaceEffectivePrefix = ''
+    let namespaceEffectivePrefix = '';
     if (namespace) {
       namespaceEffectivePrefix = namespace.prefix;
-      if (namespace.namespaceEmbeddedInLui) {
+      if (namespace.namespaceEmbeddedInLui) { // This is necessary to enforce that the actual prefix matches the pattern
         const startPositionPrefix = (namespace.pattern[0] === '^' ? 1 : 0);
         namespaceEffectivePrefix = namespace.pattern.slice(startPositionPrefix, namespace.pattern.indexOf(":"));
-      }  
+
+        if (namespaceEffectivePrefix.toLowerCase() != namespace.prefix) { //if the effective prefix is still resolvable
+          namespaceEffectivePrefix = namespace.prefix;
+        }
+      }
     }
     const sampleUrl = namespace ? `${config.satelliteUrl}/${namespaceEffectivePrefix}:${namespace.sampleId}` : '';
 
