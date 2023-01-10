@@ -55,9 +55,7 @@ services:
 networks:
     default:
         name: hqwebnet
-
 volumes:
     registry:
         name: idorg_registry
-        driver: local
         external: true
