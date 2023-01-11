@@ -61,7 +61,7 @@ public class CompactIdParsingHelper {
             String[] splitBySlash = rawCompactIdentifier.split("/");
             if (splitBySlash[0].contains(":")) {
                 // ':' is NOT ALLOWED for namespaces, so the whole thing is a compact identifier
-                parsedCompactIdentifier.setNamespace(rawCompactIdentifier.split(":")[0]);
+                parsedCompactIdentifier.setNamespace(rawCompactIdentifier.split(":")[0].toLowerCase());
                 // Check if namespace is a special case where the LUI has the namespace embedded, before prefix and LUI can actually be taken apart
                 if (isNamespaceEmbeddedInLui(parsedCompactIdentifier.getNamespace())) {
                     parsedCompactIdentifier.setNamespaceEmbeddedInLui(true);
