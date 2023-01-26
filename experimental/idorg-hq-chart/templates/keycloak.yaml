@@ -1,0 +1,100 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+  labels:
+    tier: backend
+    component: keycloak
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      tier: backend
+      component: keycloak
+      {{- (include "common_labels" .) | indent 6 }}
+  template:
+    metadata:
+      labels:
+        tier: backend
+        component: keycloak
+        {{- (include "common_labels" .) | indent 8 }}
+    spec:
+      {{- (include "affinity_requirements" .) | indent 6 }}
+      containers:
+        - name: keycloak
+          image: {{ .Values.keycloak.image }}
+          resources:
+            requests:
+              memory: {{ .Values.keycloak.requests.memory }}
+              cpu: {{ .Values.keycloak.requests.cpu }}
+          env:
+            - name: KEYCLOAK_USER
+              valueFrom:
+                secretKeyRef:
+                  name: hq-keycloak-credentials-admin
+                  key: username
+            - name: KEYCLOAK_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: hq-keycloak-credentials-admin
+                  key: password
+            - name: DB_VENDOR
+              value: {{ .Values.keycloak.database.vendor | quote }}
+            - name: DB_ADDR
+              value: {{ .Values.keycloak.database.host | quote }}
+            - name: DB_DATABASE
+              value: {{ .Values.keycloak.database.dbname | quote }}
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: hq-keycloak-db-credentials
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: hq-keycloak-db-credentials
+                  key: password
+            - name: JGROUPS_DISCOVERY_PROTOCOL
+              value: "dns.DNS_PING"
+            - name: JGROUPS_DISCOVERY_PROPERTIES
+              value: "dns_query=keycloak.default.svc.cluster.local"
+            - name: PROXY_ADDRESS_FORWARDING
+              value: "true"
+          ports:
+            - containerPort: {{ .Values.keycloak.port }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak
+  labels:
+    tier: backend
+    component: keycloak
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.keycloak.port }}
+  selector:
+    tier: backend
+    component: keycloak
+    {{- (include "common_labels" .) | indent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeport-keycloak
+  labels:
+    tier: backend
+    component: keycloak
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.keycloak.port }}
+  selector:
+    tier: backend
+    component: keycloak
+    {{- (include "common_labels" .) | indent 4 }}
+  type: NodePort
+---

@@ -1,0 +1,20 @@
+apiVersion: v2
+name: idorg-hq
+description: Umbrella chart for the HQ deployment of identifiers.org. This is the centralized data source for the registry.
+type: application
+version: 0.1.1
+appVersion: "1.16.0"
+home: "http://registry.identifiers.org"
+sources:
+  - "https://github.com/identifiers-org"
+maintainers:
+  - name: "Renato Caminha Juaçaba Neto"
+    url: "https://www.ebi.ac.uk/people/person/renato-juacaba-neto/"
+  - name: "Henning Hermjakob"
+    url: "https://www.ebi.ac.uk/about/people/henning-hermjakob"
+icon: https://github.com/identifiers-org/identifiers-org.github.io/raw/master/static/identifiers_logo.png
+keywords:
+  - PID
+  - FAIR
+  - Resolver
+  - Registry

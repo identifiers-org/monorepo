@@ -1,0 +1,24 @@
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: hq-postgresql
+  labels:
+    tier: backend
+    {{- (include "common_labels" .) | indent 4 }}
+subsets:
+  - addresses:
+      - ip: {{ .Values.postgres.ip }}
+    ports:
+      - port: {{ .Values.postgres.port }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hq-postgresql
+  labels:
+    tier: backend
+    component: hq-postgresql
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.postgres.port }}

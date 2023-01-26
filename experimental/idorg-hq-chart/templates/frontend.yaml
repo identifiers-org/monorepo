@@ -1,0 +1,71 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-hq
+  labels:
+    tier: frontend
+    component: web-hq
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  selector:
+    matchLabels:
+      tier: frontend
+      component: web-hq
+      {{- (include "common_labels" .) | indent 6 }}
+  replicas: {{ .Values.frontend.replicas }}
+  template:
+    metadata:
+      labels:
+        tier: "frontend"
+        component: "web-hq"
+        {{- (include "common_labels" .) | indent 8 }}
+    spec:
+      {{- (include "affinity_requirements" .) | indent 6 }}
+      containers:
+        - name: hq-registry-web
+          image: {{ .Values.frontend.image }}
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: {{ .Values.frontend.requests.memory }}
+              cpu: {{ .Values.frontend.requests.cpu }}
+          env:
+            - name: ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_API_REGISTRY_URL
+              value: {{ .Values.registry.api_uri | quote }}
+            - name: ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_AUTH_URL
+              value: {{ .Values.keycloak.base_uri | quote }}
+            - name: ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_AUTH_REDIRECT_URI
+              value: {{ .Values.registry.base_uri | quote }}
+          ports:
+            - containerPort: {{ .Values.frontend.port }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.frontend.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.frontend.port }}
+            initialDelaySeconds: 90
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeport-web-hq
+  labels:
+    tier: frontend
+    {{- (include "common_labels" .) | indent 4 }}
+    component: web-hq
+spec:
+  ports:
+    - port: {{ .Values.frontend.port }}
+  selector:
+    tier: frontend
+    {{- (include "common_labels" .) | indent 4 }}
+    component: web-hq
+  type: NodePort
+---

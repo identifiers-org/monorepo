@@ -1,0 +1,190 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registry
+spec:
+  selector:
+    matchLabels:
+      tier: api
+      component: registry
+      {{- (include "common_labels" .) | indent 6 }}
+  replicas: {{ .Values.registry.replicas }}
+  template:
+    metadata:
+      labels:
+        tier: api
+        component: registry
+        {{- (include "common_labels" .) | indent 8 }}
+    spec:
+      {{- (include "affinity_requirements" .) | indent 6 }}
+      containers:
+        - name: cloud-hq-ws-registry
+          image: {{ .Values.registry.image }}
+          resources:
+            requests:
+              memory: {{ .Values.registry.requests.memory | quote }}
+              cpu: {{ .Values.registry.requests.cpu |quote }}
+          env:
+            - name: HQ_WS_REGISTRY_CONFIG_JDBC_URL
+              {{- with .Values.registry.database }}
+              value: {{ (printf "jdbc:%s://%s:%s/%s" .driver .host (toString .port) .dbname) | quote }}
+              {{- end }}
+            - name: HQ_WS_REGISTRY_CONFIG_RDBMS_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: hq-registry-database-credentials
+                  key: username
+            - name: HQ_WS_REGISTRY_CONFIG_RDBMS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: hq-registry-database-credentials
+                  key: password
+            - name: HQ_WS_REGISTRY_CONFIG_BACKEND_SERVICE_MIRID_CONTROLLER_HOST
+              value: "mirid-controller"
+            - name: HQ_WS_REGISTRY_CONFIG_BACKEND_SERVICE_MIRID_CONTROLLER_PORT
+              value: {{ .Values.mirid_controller.port | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_CORS_ORIGIN
+              value: {{ .Values.registry.cors_origins | quote }}
+            - name: HQ_WS_REGISTRY_JVM_MEMORY_MAX
+              value: {{ .Values.registry.requests.memory | lower | trimSuffix "i" | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUERURI
+              value: {{ .Values.keycloak.issuer_uri | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_ACCESS_TOKEN_URI
+              value: {{ .Values.keycloak.access_token_uri | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTID
+              valueFrom:
+                secretKeyRef:
+                  name: hq-registry-keycloak-credentials
+                  key: clientid
+            - name: HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTSECRET
+              valueFrom:
+                secretKeyRef:
+                  name: hq-registry-keycloak-credentials
+                  key: clientsecret
+            - name: HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI
+              value: {{ .Values.keycloak.issuer_uri |quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_APPLICATION_ACTIVE_PROFILE
+              value: "authenabled"
+            # E-mail Server configuration
+            - name: HQ_WS_REGISTRY_CONFIG_EMAIL_HOST
+              value: {{ .Values.mailer.host | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_EMAIL_PORT
+              value: {{ .Values.mailer.port | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_EMAIL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: hq-registry-smtp-credentials
+                  key: username
+            - name: HQ_WS_REGISTRY_CONFIG_EMAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: hq-registry-smtp-credentials
+                  key: password
+            - name: HQ_WS_REGISTRY_CONFIG_EMAIL_TRANSPORT_PROTOCOL
+              value: {{ .Values.mailer.protocol | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_EMAIL_BOOLEAN_SMTP_AUTH
+              value: {{ .Values.mailer.smtp_auth | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_EMAIL_BOOLEAN_START_TLS
+              value: {{ .Values.mailer.start_tls | quote }}
+            # E-mail Notifiers configuration - Common
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_FROM
+              value: {{ .Values.mailer.notifications.from }}
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REPLY_TO
+              value: {{ .Values.mailer.notifications.reply_to }}
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_EMAIL_CURATION
+              value: {{ .Values.mailer.notifications.curators | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_EMAIL_SUPPORT
+              value: {{ .Values.mailer.notifications.main | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_PLACEHOLDER_DONOTUSE
+              value: "PLACEHOLDER_do_not_use_this"
+            # E-mail Notifiers configuration - CURATOR - Prefix Registration Request START
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_CURATOR_PREFIXREG_START_TO
+              value: {{ .Values.mailer.notifications.main | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_CURATOR_PREFIXREG_START_CC
+              value: {{ .Values.mailer.notifications.curators | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_CURATOR_PREFIXREG_START_CCO
+              value: "PLACEHOLDER_do_not_use_this"
+            # E-mail Notifiers configuration - REQUESTER - Prefix Registration Request START
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_START_CC
+              value: {{ .Values.mailer.notifications.curators | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_START_CCO
+              value: "PLACEHOLDER_do_not_use_this"
+            # E-mail Notifiers configuration - REQUESTER - Prefix Registration Request ACCEPTANCE
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_ACCEPTANCE_CC
+              value: {{ .Values.mailer.notifications.curators | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_ACCEPTANCE_CCO
+              value: "PLACEHOLDER_do_not_use_this"
+            # E-mail Notifiers configuration - REQUESTER - Prefix Registration Request REJECTION
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_REJECTION_CC
+              value: {{ .Values.mailer.notifications.curators | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_REJECTION_CCO
+              value: "PLACEHOLDER_do_not_use_this"
+            # E-mail Notifiers configuration - CURATOR - Resource Registration Request START
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_CURATOR_RESOURCEREG_START_TO
+              value: {{ .Values.mailer.notifications.main | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_CURATOR_RESOURCEREG_START_CC
+              value: {{ .Values.mailer.notifications.curators | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_CURATOR_RESOURCEREG_START_CCO
+              value: "PLACEHOLDER_do_not_use_this"
+            # E-mail Notifiers configuration - REQUESTER - Resource Registration Request START
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_START_CC
+              value: {{ .Values.mailer.notifications.curators | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_START_CCO
+              value: "PLACEHOLDER_do_not_use_this"
+            # E-mail Notifiers configuration - REQUESTER - Resource Registration Request ACCEPTANCE
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_ACCEPTANCE_CC
+              value: {{ .Values.mailer.notifications.curators | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_ACCEPTANCE_CCO
+              value: "PLACEHOLDER_do_not_use_this"
+            # E-mail Notifiers configuration - REQUESTER - Resource Registration Request REJECTION
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_REJECTION_CC
+              value: {{ .Values.mailer.notifications.curators | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_REJECTION_CCO
+              value: "PLACEHOLDER_do_not_use_this"
+          ports:
+            - containerPort: {{ .Values.registry.port }}
+          readinessProbe:
+            httpGet:
+              path: /healthApi/readiness_check
+              port: {{ .Values.registry.port }}
+            initialDelaySeconds: 3
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthApi/liveness_check
+              port: {{ .Values.registry.port }}
+            initialDelaySeconds: 90
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registry
+  labels:
+    tier: api
+    component: registry
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.registry.port }}
+  selector:
+    tier: api
+    component: registry
+    {{- (include "common_labels" .) | indent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeport-registry
+  labels:
+    tier: api
+    component: registry
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.registry.port }}
+  selector:
+    tier: api
+    component: registry
+    {{- (include "common_labels" .) | indent 4 }}
+  type: NodePort

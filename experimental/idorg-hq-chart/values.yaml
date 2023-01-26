@@ -1,0 +1,120 @@
+
+app: idorg
+deployment: hq
+environment: staging
+
+ingress: #This assumes google cloud ingress
+  static_ip_name: idorg-hq
+  allow_http: false
+  pre_shared_cert: 'cert-iorg-hq-production-web,cert-iorg-hq-production-auth,cert-iorg-hq-production-api-registry,cert-iorg-hq-production-api-mirid,idorg-test-echo'
+
+postgres:
+  ip: ~
+  port: 5432
+  credentials:
+    registry:
+      user: ~
+      password: ~
+    mirid_controller:
+      user: ~
+      password: ~
+    keycloak:
+      user: ~
+      password: ~
+
+mailer:
+  host: "smtp.eu.mailgun.org"
+  port: "587"
+  protocol: "smtp"
+  smtp_auth: "true"
+  start_tls: "true"
+  notifications:
+    from: "curator@identifiers.org"
+    reply_to: "identifiers-org@ebi.ac.uk"
+    main: "identifiers-org@ebi.ac.uk"
+    curators: "identifiers-org-curators@ebi.ac.uk"
+  credentials:
+    login: ~
+    password: ~
+
+keycloak:
+  image: "jboss/keycloak:6.0.1"
+  requests:
+    cpu: 300m
+    memory: 1024Mi
+  database:
+    vendor: "postgres"
+    host: "hq-postgresql"
+    dbname: "dbhqkeycloak"
+    port: 5432
+  port: 8080
+  base_uri: "https://auth.identifiers.org"
+  issuer_uri: "https://auth.identifiers.org/auth/realms/idorg"
+  access_token_uri: "https://auth.identifiers.org/auth/realms/idorg/protocol/openid-connect/token"
+  credentials:
+    registry:
+      clientid: ~
+      clientsecret: ~
+    mirid_controller:
+      clientid: ~
+      clientsecret: ~
+    admin:
+      username: ~
+      password: ~
+
+
+registry:
+  image: "identifiersorg/cloud-hq-ws-registry:1.8.4"
+  replicas: 2
+  requests:
+    cpu: 100m
+    memory: 420Mi
+  database:
+    driver: "postgresql"
+    host: "hq-postgresql"
+    dbname: "dbhqregistry"
+    port: 5432
+  port: 8180
+  cors_origins: "http://cloud.identifiers.org,https://cloud.identifiers.org,http://identifiers.org,https://identifiers.org,https://registry.identifiers.org,http://labs.identifiers.org,https://labs.identifiers.org,https://www.ebi.ac.uk/biostudies/submissions,http://ves-hx-f2.ebi.ac.uk:8120"
+  api_uri: "https://registry.api.identifiers.org"
+  base_uri: "https://registry.identifiers.org"
+
+frontend:
+  image: "identifiersorg/cloud-hq-web-frontend:1.6.5"
+  replicas: 3
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  port: 80
+
+redis:
+  image: redis:4.0.8-alpine
+  requests:
+    cpu: 300m
+    memory: 512Mi
+  port: 6379
+
+mirid_controller:
+  image: "identifiersorg/cloud-hq-ws-mirid-controller:1.0.5"
+  replicas: 1
+  port: 8181
+  requests:
+    memory: 420Mi
+    cpu: 100m
+  database:
+    driver: "postgresql"
+    host: "hq-postgresql"
+    dbname: "dbhqmiridcontroller"
+    port: 5432
+
+echo_headers:
+  image: "brndnmtthws/nginx-echo-headers"
+  replicas: 1
+  port: 8080
+  requests:
+    memory: "64Mi"
+    cpu: "50m"
+
+nodeAffinityRequirements:
+  - label: iorg-node-reliability
+    value: stable
