@@ -23,8 +23,8 @@ spec:
           image: {{ .Values.mirid_controller.image }}
           resources:
             requests:
-              memory: {{ .Values.redis.requests.memory }}
-              cpu: {{ .Values.redis.requests.cpu }}
+              memory: {{ .Values.mirid_controller.requests.memory }}
+              cpu: {{ .Values.mirid_controller.requests.cpu }}
           env:
             - name: HQ_WS_MIRID_CONTROLLER_JVM_MEMORY_MAX
               value: {{ .Values.redis.requests.memory | lower | trimSuffix "i" | quote }}
@@ -80,6 +80,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":false}'
   name: mirid-controller
   labels:
     tier: api
@@ -96,6 +98,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":false}'
   name: nodeport-mirid-controller
   labels:
     tier: api

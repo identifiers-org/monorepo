@@ -22,8 +22,8 @@ spec:
           image: {{ .Values.registry.image }}
           resources:
             requests:
-              memory: {{ .Values.registry.requests.memory | quote }}
-              cpu: {{ .Values.registry.requests.cpu |quote }}
+              memory: {{ .Values.registry.requests.memory }}
+              cpu: {{ .Values.registry.requests.cpu }}
           env:
             - name: HQ_WS_REGISTRY_CONFIG_JDBC_URL
               {{- with .Values.registry.database }}
@@ -159,6 +159,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":false}'
   name: registry
   labels:
     tier: api
@@ -175,6 +177,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":false}'
   name: nodeport-registry
   labels:
     tier: api

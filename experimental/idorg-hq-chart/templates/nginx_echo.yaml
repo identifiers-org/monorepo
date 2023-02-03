@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-echo-headers
-  label:
+  labels:
     tier: api
     component: nginx-echo-headers
     {{- (include "common_labels" .) | indent 4 }}
@@ -27,7 +27,7 @@ spec:
           image: {{ .Values.echo_headers.image }}
           resources:
             requests:
-              cpu: {{ .Values.echo_headers.requests.cpus }}
+              cpu: {{ .Values.echo_headers.requests.cpu }}
               memory: {{ .Values.echo_headers.requests.memory }}
           ports:
             - containerPort: {{ .Values.echo_headers.port }}
@@ -35,6 +35,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":false}'
   name: nodeport-nginx-echo-headers
   labels:
     tier: api
