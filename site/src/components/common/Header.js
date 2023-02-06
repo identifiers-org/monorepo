@@ -7,6 +7,7 @@ const identifiersLogo = new URL('../../assets/identifiers_logo.png', import.meta
 import Sticky from './Sticky';
 import EBINavBar from './EBINavBar';
 import EBINavItem from './EBINavItem';
+import EBINavDropDown from './EBINavDropDown'
 
 // This code was written for v5 and code adjusts v6 to have the same behavious as v5
 // https://reactrouter.com/en/main/components/nav-link
@@ -93,17 +94,37 @@ class Header extends React.Component {
                         </a>
                       </EBINavItem>
 
-                      <EBINavItem className="nav-item">
-                        <a href={`${config.registryUrl}/prefixregistrationrequest`} className="nav-link nav-link-dark">
-                          <i className="icon icon-common icon-hand-point-up" /> Request prefix
-                        </a>
-                      </EBINavItem>
+                      <EBINavDropDown
+                        caption={<span><i className="icon icon-common icon-hand-point-up mr-1" />Make a request</span>}
+                      >
+                        <EBINavItem className="nav-item">
+                          <NavLink to="/prefixregistrationrequest" className="nav-link" activeClassName="active">
+                            <i className="icon icon-common icon-leaf mr-1" />Request prefix
+                          </NavLink>
+                        </EBINavItem>
+                        <EBINavItem className="nav-item">
+                          <NavLink to="/resourceregistrationrequest" className="nav-link" activeClassName="active">
+                            <i className="icon icon-common icon-cube mr-1" />Request resource
+                          </NavLink>
+                        </EBINavItem>
+                      </EBINavDropDown>
 
                       <EBINavItem className="nav-item">
                         <a href={config.documentationUrl} className="nav-link nav-link-dark">
                           <i className="icon icon-common icon-documentation" /> Documentation
                         </a>
                       </EBINavItem>
+
+                      {
+                        // If not logged in.
+                        config.enableAuthFeatures && !auth.authenticated && (
+                          <EBINavItem className="nav-item">
+                            <a href="#!" onClick={handleClickSignIn}>
+                              <i className="icon icon-common icon-icon-sign-in-alt mr-1" />Sign in
+                            </a>
+                          </EBINavItem>
+                        )
+                      }
 
                       <EBINavItem className="nav-item float-right">
                         <a href={config.feedbackUrl} target="_blank" className="nav-link nav-link-dark">
