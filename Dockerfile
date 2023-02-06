@@ -1,6 +1,6 @@
 # HQ Web frontend container definition
 FROM nginx
-LABEL maintainer="Manuel Bernal Llinares <mbdebian@gmail.com>"
+LABEL maintainer="Renato Juacaba Neto <rjuacaba@gmail.com>"
 
 # Default Environment
 ENV SITEMAP_BUILDER_CONFIG_PATH_FILE_SITEMAP=/home/site/sitemap.txt
@@ -31,7 +31,7 @@ EXPOSE 80
 WORKDIR /home/app
 
 # Getting rid of /bin/sh
-RUN cp /bin/bash /bin/sh
+# RUN cp /bin/bash /bin/sh
 
 # Launch container
 CMD ./startup.sh
