@@ -25,7 +25,7 @@ export const config = {
 
   satelliteUrl: 'https://identifiers.org',
   feedbackUrl: 'https://github.com/identifiers-org/identifiers-org.github.io/issues/new',
-  documentationUrl: 'http://docs.identifiers.org',
+  documentationUrl: 'https://docs.identifiers.org',
 
   oldIdentifiersUrl: 'https://ebi.identifiers.org',
 
