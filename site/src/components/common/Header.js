@@ -164,7 +164,7 @@ class Header extends React.Component {
                         config.enableAuthFeatures && !auth.authenticated && (
                           <EBINavItem className="nav-item">
                             <a href="#!" onClick={handleClickSignIn}>
-                              <i className="icon icon-common icon-icon-sign-in-alt mr-1" />Sign in
+                              <i className="icon icon-common icon-sign-in-alt mr-1" />Sign in
                             </a>
                           </EBINavItem>
                         )
