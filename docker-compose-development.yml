@@ -2,7 +2,7 @@
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 version: "3.5"
 services:
-    hqregistrypostgresql:
+    postgresql:
         image: postgres
         environment:
             - POSTGRES_DB=devdatabase
@@ -12,20 +12,12 @@ services:
             - "5430:5432"
         networks:
             - satwebspanet
-    hqmiridpostgresql:
-        image: postgres
-        environment:
-            - POSTGRES_DB=devdatabase
-            - POSTGRES_USER=devusername
-            - POSTGRES_PASSWORD=devpassword
-        ports:
-            - "5431:5432"
-        networks:
-            - satwebspanet
+        volumes:
+            - "registry:/var/lib/postgresql/data"
     hqregistry:
         image: identifiersorg/cloud-hq-ws-registry
         environment:
-            - HQ_WS_REGISTRY_CONFIG_JDBC_URL=jdbc:postgresql://hqregistrypostgresql:5432/devdatabase
+            - HQ_WS_REGISTRY_CONFIG_JDBC_URL=jdbc:postgresql://postgresql:5432/devdatabase
             - HQ_WS_REGISTRY_CONFIG_RDBMS_USERNAME=devusername
             - HQ_WS_REGISTRY_CONFIG_RDBMS_PASSWORD=devpassword
             - HQ_WS_REGISTRY_CONFIG_BACKEND_SERVICE_MIRID_CONTROLLER_HOST=hqmiridcontroller
@@ -36,12 +28,12 @@ services:
         networks:
             - satwebspanet
         depends_on:
-            - hqregistrypostgresql
+            - postgresql
             - hqmiridcontroller
     hqmiridcontroller:
         image: identifiersorg/cloud-hq-ws-mirid-controller
         environment:
-            - HQ_WS_MIRID_CONTROLLER_CONFIG_JDBC_URL=jdbc:postgresql://hqmiridpostgresql:5432/devdatabase
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_JDBC_URL=jdbc:postgresql://postgresql:5432/devdatabase
             - HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_USERNAME=devusername
             - HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_PASSWORD:devpassword
             - HQ_WS_MIRID_CONTROLLER_CONFIG_REDIS_HOST=redis
@@ -52,7 +44,7 @@ services:
             - satwebspanet
         depends_on:
             - redis
-            - hqmiridpostgresql
+            - postgresql
     hqwebspa:
         image: identifiersorg/cloud-hq-web-frontend
         environment:
@@ -108,17 +100,6 @@ services:
             - "6379:6379"
         networks:
             - satwebspanet
-    satspa:
-        image: identifiersorg/cloud-satellite-web-spa:latest
-        ports:
-            - "9090:9090"
-        networks:
-            - satwebspanet
-        depends_on:
-            - link-checker
-            - recommender
-            - resolver
-            - hqwebspa
 networks:
     satwebspanet:
         name: satwebspanet
@@ -127,3 +108,7 @@ networks:
             driver: default
             config:
                 - subnet: 192.168.252.0/24
+volumes:
+    registry:
+        name: idorg_registry
+        external: true
