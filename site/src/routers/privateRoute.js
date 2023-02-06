@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Navigate } from 'react-router-dom';
 
 
 const PrivateRoute = ({ auth, component, requiredRoles, ...rest }) => {
@@ -15,7 +15,7 @@ const PrivateRoute = ({ auth, component, requiredRoles, ...rest }) => {
   }
 
   // Unauthenticated route: redirect to home.
-  return <Route {...rest} component={props => <Redirect to={{pathname: '/'}} />} />;
+  return <Route {...rest} component={props => <Navigate to={{pathname: '/'}} />} />;
 }
 
 
