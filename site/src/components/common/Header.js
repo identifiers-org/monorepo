@@ -98,14 +98,14 @@ class Header extends React.Component {
                         caption={<span><i className="icon icon-common icon-hand-point-up mr-1" />Make a request</span>}
                       >
                         <EBINavItem className="nav-item">
-                          <NavLink to="/prefixregistrationrequest" className="nav-link" activeClassName="active">
+                          <a href={`${config.registryUrl}/registryprefixregistrationrequest`} className="nav-link nav-link-dark">
                             <i className="icon icon-common icon-leaf mr-1" />Request prefix
-                          </NavLink>
+                          </a>
                         </EBINavItem>
                         <EBINavItem className="nav-item">
-                          <NavLink to="/resourceregistrationrequest" className="nav-link" activeClassName="active">
+                          <a href={`${config.registryUrl}/resourceregistrationrequest`} className="nav-link nav-link-dark">
                             <i className="icon icon-common icon-cube mr-1" />Request resource
-                          </NavLink>
+                          </a>
                         </EBINavItem>
                       </EBINavDropDown>
 
@@ -114,17 +114,6 @@ class Header extends React.Component {
                           <i className="icon icon-common icon-documentation" /> Documentation
                         </a>
                       </EBINavItem>
-
-                      {
-                        // If not logged in.
-                        config.enableAuthFeatures && !auth.authenticated && (
-                          <EBINavItem className="nav-item">
-                            <a href="#!" onClick={handleClickSignIn}>
-                              <i className="icon icon-common icon-icon-sign-in-alt mr-1" />Sign in
-                            </a>
-                          </EBINavItem>
-                        )
-                      }
 
                       <EBINavItem className="nav-item float-right">
                         <a href={config.feedbackUrl} target="_blank" className="nav-link nav-link-dark">

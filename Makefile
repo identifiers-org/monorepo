@@ -14,15 +14,15 @@ network_docker_name = satwebspanet
 # Default target
 all: deploy
 
-release: deploy set_next_development_version
-	@echo "<===|DEVOPS|===> [RELEASE] New Software Release, and next development version prepared"
-	@git add pom.xml
-	@git commit -am "Next project development version prepared"
-	@git push
-
-set_next_development_version:
-	@echo "<===|DEVOPS|===> [SYNC] Setting the new development version, current ${tag_version}"
-	@mvn versions:set -DnewVersion=$(shell ./increment_version.sh -p ${tag_version})-SNAPSHOT
+#release: deploy set_next_development_version
+#	@echo "<===|DEVOPS|===> [RELEASE] New Software Release, and next development version prepared"
+#	@git add pom.xml
+#	@git commit -am "Next project development version prepared"
+#	@git push
+#
+#set_next_development_version:
+#	@echo "<===|DEVOPS|===> [SYNC] Setting the new development version, current ${tag_version}"
+#	@mvn versions:set -DnewVersion=$(shell ./increment_version.sh -p ${tag_version})-SNAPSHOT
 
 sync_project_version:
 	@echo "<===|DEVOPS|===> [SYNC] Synchronizing project version to version '${tag_version}'"
@@ -95,4 +95,4 @@ clean:
 	@rm -rf ${dev_site_root_folder}/node_modules
 	@rm -f npm_install	development_env_backend_up development_env_backend_down development_env_up development_env_down
 
-.PHONY: all clean app_structure container_production_build development_env_up development_env_down container_production_push dev_container_build deploy release sync_project_version set_next_development_version force_npm_install
+.PHONY: all clean app_structure container_production_build development_env_up development_env_down container_production_push dev_container_build deploy sync_project_version set_next_development_version force_npm_install

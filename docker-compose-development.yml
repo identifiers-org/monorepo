@@ -3,6 +3,7 @@
 version: "3.5"
 services:
     postgresql:
+        container_name: postgres
         image: postgres
         environment:
             - POSTGRES_DB=devdatabase
@@ -15,6 +16,7 @@ services:
         volumes:
             - "registry:/var/lib/postgresql/data"
     hqregistry:
+        container_name: registry
         image: identifiersorg/cloud-hq-ws-registry
         environment:
             - HQ_WS_REGISTRY_CONFIG_JDBC_URL=jdbc:postgresql://postgresql:5432/devdatabase
@@ -31,6 +33,7 @@ services:
             - postgresql
             - hqmiridcontroller
     hqmiridcontroller:
+        container_name: mirid
         image: identifiersorg/cloud-hq-ws-mirid-controller
         environment:
             - HQ_WS_MIRID_CONTROLLER_CONFIG_JDBC_URL=jdbc:postgresql://postgresql:5432/devdatabase
@@ -46,7 +49,8 @@ services:
             - redis
             - postgresql
     hqwebspa:
-        image: identifiersorg/cloud-hq-web-frontend
+        container_name: hq-frontend
+        image: identifiersorg/cloud-hq-web-frontend:latest
         environment:
             - ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_API_REGISTRY_URL=http://localhost:8180
         ports:
@@ -54,6 +58,7 @@ services:
         networks:
             - satwebspanet
     resolver:
+        container_name: resolver
         image: identifiersorg/cloud-ws-resolver
         environment:
             - WS_RESOLVER_CONFIG_REDIS_HOST=redis
@@ -72,6 +77,7 @@ services:
             - recommender
             - hqregistry
     recommender:
+        container_name: recommender
         image: identifiersorg/cloud-ws-resource-recommender
         environment:
             - WS_RESOURCE_RECOMMENDER_JVM_MEMORY_MAX=1024m
@@ -83,6 +89,7 @@ services:
         depends_on:
             - link-checker
     link-checker:
+        container_name: link-checker
         image: identifiersorg/cloud-ws-link-checker
         environment:
             - WS_LINK_CHECKER_CONFIG_REDIS_HOST=redis
@@ -95,11 +102,24 @@ services:
         depends_on:
             - redis
     redis:
+        container_name: redis
         image: redis:4.0.8-alpine
         ports:
             - "6379:6379"
         networks:
             - satwebspanet
+    satspa:
+        container_name: devops_spa
+        image: identifiersorg/cloud-satellite-web-spa
+        ports:
+            - "9090:9090"
+        networks:
+            - satwebspanet
+        depends_on:
+            - link-checker
+            - recommender
+            - resolver
+            - hqwebspa
 networks:
     satwebspanet:
         name: satwebspanet
