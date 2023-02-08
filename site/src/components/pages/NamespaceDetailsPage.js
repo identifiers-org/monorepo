@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { useParams } from 'react-router-dom'
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 // Actions.
 import { getNamespaceFromRegistry, getResourcesFromRegistry } from '../../actions/NamespaceList';
@@ -44,6 +45,9 @@ class NamespaceDetailsPage extends React.Component {
 
 
   async componentDidMount() {
+    const { trackPageView } = this.props.matomo
+    trackPageView();
+
     const {
       getNamespaceFromRegistry,
       getResourcesFromRegistry,
@@ -546,6 +550,6 @@ const mapDispatchToProps = dispatch => ({
 const ConnectedNamespaceDetailsPage = connect (mapStateToProps, mapDispatchToProps)(NamespaceDetailsPage)
 export default function(props) {
   const params = useParams();
-
-  return <ConnectedNamespaceDetailsPage {...props} params={params} />
+  const matomo = useMatomo();
+  return <ConnectedNamespaceDetailsPage {...props} matomo={matomo} params={params} />
 }

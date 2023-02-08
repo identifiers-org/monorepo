@@ -5,6 +5,7 @@ import { faDatabase } from '@fortawesome/free-solid-svg-icons';
 import NamespaceList from '../BrowseRegistryPage/NamespaceList';
 import PageTitle from '../common/PageTitle';
 
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 class BrowseRegistryPage extends React.Component {
   constructor (props) {
@@ -15,6 +16,11 @@ class BrowseRegistryPage extends React.Component {
     this.state = {
       query: params.get('query') || ''
     };
+  }
+
+  componentDidMount() {
+    const { trackPageView } = this.props.matomo
+    trackPageView();
   }
 
   render() {
@@ -37,5 +43,7 @@ class BrowseRegistryPage extends React.Component {
   }
 }
 
-
-export default BrowseRegistryPage;
+export default (props) => {
+  const matomo = useMatomo();
+  return <BrowseRegistryPage {...props} matomo={matomo} />
+}

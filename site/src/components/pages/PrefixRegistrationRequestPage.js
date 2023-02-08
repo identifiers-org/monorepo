@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 import Swal from 'sweetalert2';
 
@@ -55,6 +56,10 @@ class PrefixRegistrationRequestPage extends React.Component  {
     this.initForm();
   }
 
+  componentDidMount() {
+    const { trackPageView } = this.props.matomo
+    trackPageView();
+  }
 
   //
   // Form init method. Configures validation status of fields.
@@ -960,6 +965,6 @@ const mapDispatchToProps = (dispatch) => ({
 const ConnectedPrefixRegistrationRequestPage = connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationRequestPage)
 export default function(props) {
   const navigate = useNavigate();
-
-  return <ConnectedPrefixRegistrationRequestPage {...props} navigate={navigate} />;
+  const matomo = useMatomo();
+  return <ConnectedPrefixRegistrationRequestPage {...props} navigate={navigate} matomo={matomo}/>;
 }

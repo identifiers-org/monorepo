@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 // Actions.
 import {
@@ -59,6 +60,10 @@ class ResourceRegistrationRequestPage extends React.Component  {
     }
   }
 
+  componentDidMount() {
+    const { trackPageView } = this.props.matomo
+    trackPageView();
+  }
 
   //
   // Form update method.
@@ -880,6 +885,7 @@ const mapDispatchToProps = (dispatch) => ({
 const ConnectedResourceRegistrationRequestPage = connect (mapStateToProps, mapDispatchToProps)(ResourceRegistrationRequestPage);
 export default function(props) {
   const navigate = useNavigate();
+  const matomo = useMatomo();
 
-  return <ConnectedResourceRegistrationRequestPage {...props} navigate={navigate} />
+  return <ConnectedResourceRegistrationRequestPage {...props} navigate={navigate} matomo={matomo}/>
 }

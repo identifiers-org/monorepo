@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 // Actions.
 import { getPrefixRegistrationSessionFromRegistry } from '../../actions/CurationDashboardPage/PrefixRegistrationSession';
@@ -32,8 +33,10 @@ class ManagePrefixRegistrationRequestPage extends React.Component {
   }
 
   componentDidMount() {
-    const { id } = this.props.params;
+    const { trackPageView } = this.props.matomo
+    trackPageView();
 
+    const { id } = this.props.params;
     this.updatePrefixRegistrationSession(id);
   }
 
@@ -204,6 +207,6 @@ const mapDispatchToProps = (dispatch) => ({
 const ConnectedManagePrefixRegistrationRequestPage = connect (mapStateToProps, mapDispatchToProps)(ManagePrefixRegistrationRequestPage)
 export default function(props) {
   const params = useParams();
-
-  return <ConnectedManagePrefixRegistrationRequestPage {...props} params={params} />
+  const matomo = useMatomo();
+  return <ConnectedManagePrefixRegistrationRequestPage {...props} matomo={matomo} params={params} />
 }

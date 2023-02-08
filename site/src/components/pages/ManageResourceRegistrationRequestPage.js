@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 // Actions.
 import { getResourceRegistrationSessionFromRegistry } from '../../actions/CurationDashboardPage/ResourceRegistrationSession';
@@ -32,8 +33,10 @@ class ManageResourceRegistrationRequestPage extends React.Component {
   }
 
   componentDidMount() {
-    const { id } = this.props.params;
+    const { trackPageView } = this.props.matomo
+    trackPageView();
 
+    const { id } = this.props.params;
     this.updateResourceRegistrationSession(id);
   }
 
@@ -204,6 +207,7 @@ const mapDispatchToProps = (dispatch) => ({
 const ConnectedManageResourceRegistrationRequestPage = connect (mapStateToProps, mapDispatchToProps)(ManageResourceRegistrationRequestPage);
 export default function(props) {
   const params = useParams();
+  const matomo = useMatomo();
 
-  return <ConnectedManageResourceRegistrationRequestPage {...props} params={params} />
+  return <ConnectedManageResourceRegistrationRequestPage {...props} params={params} matomo={matomo} />
 }

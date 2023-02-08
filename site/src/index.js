@@ -23,11 +23,28 @@ import { appendSchemaOrg } from './utils/schemaOrg';
 import './styles/styles.scss';
 import { renewToken } from './utils/auth';
 
-
+import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react';
 
 
 // ==================== APP Initialization ====================
 (async () => {
+  const instance = createInstance({
+    urlBase: 'https://matomo.identifiers.org/',
+    siteId: 1,
+    disabled: false, // optional, false by default. Makes all tracking calls no-ops if set to true.
+    heartBeat: { // optional, enabled by default
+      active: true, // optional, default value: true
+      seconds: 10 // optional, default value: `15
+    },
+    linkTracking: true, // optional, default value: true
+    configurations: { // optional, default value: {}
+      // any valid matomo configuration, all below are optional
+      disableCookies: true,
+      setSecureCookie: true,
+      setRequestMethod: 'POST'
+    }
+  })
+
   // Get locations.
   store.dispatch(getLocationListFromRegistry());
   // Get institutions.
@@ -61,7 +78,9 @@ import { renewToken } from './utils/auth';
   const root = createRoot(container);
   root.render(
     <Provider store={store}>
-      <AppRouter />
+      <MatomoProvider value={instance}>
+        <AppRouter />
+      </MatomoProvider>,
     </Provider>
   );
 })()

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 // Components.
 import Search from '../HomePage/Search';
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 // Utils.
 import { isIpadScreen, isSmallScreen } from '../../utils/responsive';
@@ -16,6 +17,12 @@ class HomePage extends React.Component {
     this.state = {
       query: params.get('query') || ''
     };
+  }
+
+  componentDidMount () {
+    const { trackPageView } = this.props.matomo
+
+    trackPageView()
   }
 
   handleClickPrefixRegistrationRequestForm = () => { this.props.navigate('/prefixregistrationrequest') };
@@ -100,6 +107,7 @@ const mapStateToProps = (state) => ({
 const ConnectedHomepage = connect (mapStateToProps)(HomePage)
 export default function(props) {
   const navigate = useNavigate();
+  const matomo = useMatomo();
 
-  return <ConnectedHomepage {...props} navigate={navigate}/>
+  return <ConnectedHomepage {...props} matomo={matomo} navigate={navigate}/>
 }
