@@ -7,10 +7,17 @@ import Search from '../HomePage/Search';
 // Utils.
 import { isSmallScreen, isIpadScreen } from '../../utils/responsive';
 
+import { useMatomo } from '@datapunt/matomo-tracker-react';
+
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    const { trackPageView } = this.props.matomo;
+    trackPageView();
   }
 
   render() {
@@ -64,4 +71,8 @@ const mapStateToProps = (state) => ({
   config: state.config
 });
 
-export default connect(mapStateToProps)(HomePage);
+const ConnectedHomePage = connect(mapStateToProps)(HomePage)
+export default (props) => {
+  const matomo = useMatomo();
+  return <ConnectedHomePage  {...props} matomo={matomo} />
+};

@@ -13,21 +13,28 @@ export const getResolvedResources = (query) => {
 
     try {
       response = await fetch(requestUrl);
-      data = await response.json();
+      if (response.ok) {
+        data = await response.json();
+      } else {
+        data = []
+      }
     }
     catch (err) {
       console.error('Error fetching namespaces: ', err);
     }
 
     // Sort resources by their score.
-    data = data.payload.resolvedResources.sort((a, b) => b.recommendation.recommendationIndex - a.recommendation.recommendationIndex);
+    if (data.hasOwnProperty('payload')) {
+      data = data.payload.resolvedResources.sort((a, b) => b.recommendation.recommendationIndex - a.recommendation.recommendationIndex);
 
-    // Add compact identifier to every resource.
-    data.forEach(resolvedResource => {
-      resolvedResource['compactIdentifier'] = `${config.resolverApi}/${resolvedResource.providerCode}/${query}`
-    });
-
-    dispatch(setResolvedResources(data));
+      // Add compact identifier to every resource.
+      data.forEach(resolvedResource => {
+        resolvedResource['compactIdentifier'] = `${config.resolverApi}/${resolvedResource.providerCode}/${query}`
+      });
+      dispatch(setResolvedResources(data));
+    } else {
+      dispatch(setResolvedResources([]));
+    }
 
     return response;
   };

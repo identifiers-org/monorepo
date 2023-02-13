@@ -13,6 +13,9 @@ import ResourceList from '../ResolverPage/ResourceList';
 import { swalToast } from '../../utils/swalDialogs';
 import { querySplit } from '../../utils/identifiers';
 
+import { useLocation } from 'react-router-dom';
+
+import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 class ResolvePage extends React.Component {
   constructor(props) {
@@ -31,6 +34,8 @@ class ResolvePage extends React.Component {
       props: { getResolvedResources, getSchemaOrgMetadataByPrefixFromRegistry, schemaOrgMetadata },
       state: { query }
     } = this;
+    const { trackPageView } = this.props.matomo;
+    trackPageView();
 
     // Load and update schema.org metadata.
     const { prefix } = querySplit(query);
@@ -44,7 +49,6 @@ class ResolvePage extends React.Component {
 
   async componentWillUnmount() {
     const { getSchemaOrgMetadataFromRegistry } = this.props;
-
     getSchemaOrgMetadataFromRegistry();
   }
 
@@ -132,4 +136,10 @@ const mapDispatchToProps = dispatch => ({
   getSchemaOrgMetadataByPrefixFromRegistry: (namespaceId) => dispatch(getSchemaOrgMetadataByPrefixFromRegistry(namespaceId))
 });
 
-export default connect (mapStateToProps, mapDispatchToProps)(ResolvePage);
+const ConnectedResolvePage = connect (mapStateToProps, mapDispatchToProps)(ResolvePage);
+export default (props) => {
+  const matomo = useMatomo();
+  const location = useLocation();
+
+  return <ConnectedResolvePage {...props} location={location} matomo={matomo} />
+};

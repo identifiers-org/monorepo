@@ -13,6 +13,9 @@ import store from './store/store';
 // Utils.
 import { querySplit } from './utils/identifiers';
 
+import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react';
+
+
 //import '../node_modules/EBI-Icon-fonts/fonts.css';
 //import '../node_modules/ebi-framework/css/ebi-lite.css';
 //import '../node_modules/ebi-framework/js/script.js';
@@ -21,6 +24,23 @@ import { querySplit } from './utils/identifiers';
 
 // ==================== APP Initialization ====================
 (async () => {
+  const instance = createInstance({
+    urlBase: 'https://matomo.identifiers.org/',
+    siteId: 1,
+    disabled: false, // optional, false by default. Makes all tracking calls no-ops if set to true.
+    heartBeat: { // optional, enabled by default
+      active: true, // optional, default value: true
+      seconds: 30 // optional, default value: `15
+    },
+    linkTracking: true, // optional, default value: true
+    configurations: { // optional, default value: {}
+      // any valid matomo configuration, all below are optional
+      disableCookies: true,
+      setSecureCookie: location.protocol.includes('https'), // Only available in https
+      setRequestMethod: 'GET'
+    }
+  })
+
   // Get initial data.
   // Configuration from devops endpoint, which will be residing in the same url as the app.
   const configUrlPort = process.env.NODE_ENV === 'development' ? 9090 : window.location.port;
@@ -49,7 +69,9 @@ import { querySplit } from './utils/identifiers';
   const reactRoot = createRoot(rootElement)
   reactRoot.render(
     <Provider store={store}>
-      <AppRouter />
+      <MatomoProvider value={instance}>
+        <AppRouter />
+      </MatomoProvider>
     </Provider>
   );
 

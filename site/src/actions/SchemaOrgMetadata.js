@@ -13,7 +13,10 @@ export const getSchemaOrgMetadataFromRegistry = (namespaceId) => {
     let requestUrl = !namespaceId ? `${config.registryApi}/${config.schemaOrgPlatformEndpoint}` : `${config.registryApi}/${config.schemaOrgNamespaceEndpoint}/${namespaceId}`;
 
     const response = await fetch(requestUrl);
-    const json = await response.json();
+    let json = {};
+    if (response.ok) {
+      json = await response.json();
+    }
 
     dispatch(setSchemaOrgMetadata(json));
   };
@@ -26,7 +29,9 @@ export const getSchemaOrgMetadataByPrefixFromRegistry = (prefix) => {
     let requestUrl = `${config.registryApi}/${config.schemaOrgNamespacePrefixEndpoint}/${prefix}`;
 
     const response = await fetch(requestUrl);
-    const json = await response.json();
+    let json = {};
+    if (response.ok)
+      json = response.json();
 
     dispatch(setSchemaOrgMetadata(json));
   };
