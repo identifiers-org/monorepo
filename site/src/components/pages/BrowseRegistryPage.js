@@ -19,7 +19,7 @@ class BrowseRegistryPage extends React.Component {
   }
 
   componentDidMount() {
-    const { trackPageView } = this.props.matomo
+    const { trackPageView } = this.props.matomo;
     trackPageView();
   }
 
