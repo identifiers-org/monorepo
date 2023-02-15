@@ -46,7 +46,7 @@ services:
 networks:
     default:
         name: idorg-dev-hq-registry
-
 volumes:
     registry:
-        driver: local
+        name: idorg_registry
+        external: true
