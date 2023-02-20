@@ -24,7 +24,7 @@ public class ApplicationConfigurationCors implements WebMvcConfigurer {
 
     @PostConstruct
     private void postConstruct() {
-        log.info(String.format("[CONFIG] CORS, domains '%s", corsOrigins));
+        log.info(String.format("[CONFIG] CORS, domains '%s'", corsOrigins));
     }
 
     @Override

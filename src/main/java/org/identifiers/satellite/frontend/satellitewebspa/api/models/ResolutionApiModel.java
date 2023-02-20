@@ -26,20 +26,11 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class ResolutionApiModel {
-    @Value("${org.identifiers.satellite.frontend.satellitewebspa.config.ws.resolver.host}")
-    private String resolverHost;
+//    // TODO specifying HTTP or HTTPs is not supported by the libapi yet
+//    @Value("${org.identifiers.satellite.frontend.satellitewebspa.config.ws.resolver.schema}")
+//    private String resolverSchema;
 
-    @Value("${org.identifiers.satellite.frontend.satellitewebspa.config.ws.resolver.port}")
-    private String resolverPort;
-
-    // TODO specifying HTTP or HTTPs is not supported by the libapi yet
-    @Value("${org.identifiers.satellite.frontend.satellitewebspa.config.ws.resolver.schema}")
-    private String resolverSchema;
-
-    public ResponseEntity<?> resolveRawCompactIdentifier(String rawCompactIdentifier) {
-        ServiceResponseResolve responseResolve =
-                ApiServicesFactory.getResolverService(resolverHost, resolverPort)
-                        .requestResolutionRawRequest(rawCompactIdentifier);
+    public ResponseEntity<?> resolveRawCompactIdentifier(ServiceResponseResolve responseResolve) {
         if (responseResolve.getHttpStatus().is2xxSuccessful()) {
             // If the namespace is deprecated, we perform the resolution as always, because all its resources should be
             // deprecated, thus, redirecting to any of them will report the situation to the user
@@ -74,12 +65,11 @@ public class ResolutionApiModel {
                 }
                 return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
             } catch (URISyntaxException e) {
-                String errorMessage = String.format("Compact Identifiers '%s' resolved to provider with internal ID " +
+                String errorMessage = String.format("Compact Identifiers resolved to provider with internal ID " +
                                 "'%d', " +
                                 "description '%s', " +
                                 "institution '%s', " +
                                 "with an INVALID RESOLVED URL '%s'",
-                        rawCompactIdentifier,
                         responseResolve.getPayload().getResolvedResources().get(0).getId(),
                         responseResolve.getPayload().getResolvedResources().get(0).getDescription(),
                         responseResolve.getPayload().getResolvedResources().get(0).getInstitution(),
