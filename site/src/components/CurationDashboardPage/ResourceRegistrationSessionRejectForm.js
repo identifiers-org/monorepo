@@ -26,9 +26,12 @@ class ResourceRegistrationSessionRejectForm extends React.Component {
 
 
   handleReject = async () => {
-    const { id, resourceRegistrationRequestReject, setResourceRegistrationSessionReject } = this.props;
+    const {
+      id, resourceRegistrationRequestReject,
+      setResourceRegistrationSessionReject, navigate
+    } = this.props;
+
     const { rejectionReason } = this.state;
-    const navigate = useNavigate();
     const response = await resourceRegistrationRequestReject(id, rejectionReason || 'No rejection reason specified.');
 
     if (response.status === 200) {
@@ -117,5 +120,11 @@ const mapDispatchToProps = (dispatch) => ({
   setResourceRegistrationSessionReject: (rejectionReason) => dispatch(setRegistrationSessionReject(rejectionReason, undefined, 'resource'))
 });
 
-export default connect (mapStateToProps, mapDispatchToProps)(ResourceRegistrationSessionRejectForm);
+const ConnectedResourceRegistrationSessionRejectForm = connect (mapStateToProps, mapDispatchToProps)(ResourceRegistrationSessionRejectForm)
+
+export default (props) => {
+  const navigate = useNavigate();
+
+  return <ConnectedResourceRegistrationSessionRejectForm {...props} navigate={navigate} />
+};
 
