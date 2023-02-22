@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
+import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
 import org.identifiers.cloud.hq.ws.registry.api.data.services.NamespaceApiService;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ResolverDatasetPayload;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseGetResolverDataset;
@@ -24,6 +25,7 @@ public class ResolutionApiModel {
     public ServiceResponseGetResolverDataset getResolverDataset() {
         // Default response
         ServiceResponseGetResolverDataset response = new ServiceResponseGetResolverDataset();
+        response.setApiVersion(ApiCentral.apiVersion);
         response.setHttpStatus(HttpStatus.OK);
         response.setPayload(new ResolverDatasetPayload());
         try {

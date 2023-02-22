@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
+import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.RegistryExporterException;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.RegistryExporterFactory;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseSemanticExportRequest;
@@ -25,6 +26,7 @@ public class SemanticApiModel {
     public ServiceResponseSemanticExportRequest getRegistryOntology() {
         // Default response
         ServiceResponseSemanticExportRequest response = new ServiceResponseSemanticExportRequest();
+        response.setApiVersion(ApiCentral.apiVersion);
         response.setHttpStatus(HttpStatus.OK);
         // No default payload this time
         try {
