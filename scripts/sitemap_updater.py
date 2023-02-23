@@ -8,6 +8,7 @@ import json
 import time
 import logging
 import requests
+import sys
 from shutil import copyfile
 from requests.exceptions import HTTPError
 
@@ -16,7 +17,7 @@ from requests.exceptions import HTTPError
 # Configure Logging
 logFormatter = logging.Formatter("[SITEMAP_BUILDER]%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
 rootLogger = logging.getLogger()
-consoleHandler = logging.StreamHandler()
+consoleHandler = logging.StreamHandler(sys.stdout)
 consoleHandler.setFormatter(logFormatter)
 rootLogger.addHandler(consoleHandler)
 rootLogger.setLevel(logging.DEBUG)
