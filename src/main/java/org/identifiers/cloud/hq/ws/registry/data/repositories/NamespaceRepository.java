@@ -31,6 +31,10 @@ public interface NamespaceRepository extends JpaRepository<Namespace, Long> {
 
     Page<Namespace> findByPrefixStartsWith(String prefixStart, Pageable pageable);
 
+    @Query(nativeQuery = true,
+            value = "SELECT * FROM #{#entityName} t WHERE t.prefix SIMILAR TO '[0-9]%'")
+    Page<Namespace> findByPrefixStartsWithNumbers(Pageable pageable);
+
     @RestResource(exported = false)
     List<Namespace> findByPrefixContaining(String content);
 
