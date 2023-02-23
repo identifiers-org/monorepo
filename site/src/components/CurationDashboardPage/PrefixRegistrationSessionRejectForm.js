@@ -25,8 +25,10 @@ class PrefixRegistrationSessionRejectForm extends React.Component {
 
 
   handleReject = async () => {
-    const { id, prefixRegistrationRequestReject, setPrefixRegistrationSessionReject } = this.props;
-    let navigate = useNavigate();
+    const {
+      id, prefixRegistrationRequestReject,
+      setPrefixRegistrationSessionReject, navigate
+    } = this.props;
     const { rejectionReason } = this.state;
 
     const response = await prefixRegistrationRequestReject(id, rejectionReason || 'No rejection reason specified.');
@@ -117,5 +119,10 @@ const mapDispatchToProps = (dispatch) => ({
   setPrefixRegistrationSessionReject: (rejectionReason) => dispatch(setRegistrationSessionReject(rejectionReason, undefined, 'prefix'))
 });
 
-export default connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationSessionRejectForm);
+const ConnectedPrefixRegistrationSessionRejectForm = connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationSessionRejectForm)
+export default (props) => {
+  const navigate = useNavigate();
+
+  return <ConnectedPrefixRegistrationSessionRejectForm {...props} navigate={navigate} />
+};
 
