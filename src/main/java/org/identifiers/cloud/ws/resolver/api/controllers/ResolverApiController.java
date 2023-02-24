@@ -1,6 +1,8 @@
 package org.identifiers.cloud.ws.resolver.api.controllers;
 
+import org.identifiers.cloud.ws.resolver.services.AsyncMatomoCidResolutionService;
 import org.identifiers.cloud.ws.resolver.api.models.ResolverApiModel;
+import org.identifiers.cloud.ws.resolver.api.responses.ResponseResolvePayload;
 import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +50,9 @@ public class ResolverApiController {
     @Autowired
     private ResolverApiModel model;
 
+    @Autowired
+    private AsyncMatomoCidResolutionService matomoModel;
+
     // Compact Identifier and provider code helper
     @Deprecated
     private ProviderCompactIdTuple extractProviderAndCompactIdentifier(String resolutionRequest) {
@@ -85,8 +90,12 @@ public class ResolverApiController {
         final String path =
                 request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE).toString();
         logger.info("Resolution request, PATH '{}'", path);
+
         //ProviderCompactIdTuple providerAndCompactIdentifier = extractProviderAndCompactIdentifier(path.replaceFirst("/", ""));
-        ServiceResponse result = model.resolveRawCompactId(path.replaceFirst("/", ""));
+        ServiceResponse<ResponseResolvePayload> result = model.resolveRawCompactId(path.replaceFirst("/", ""));
+
+        matomoModel.asyncHandleCidResolution(request, result);
+
         /*if (providerAndCompactIdentifier.getProvider() != null) {
             result = model.resolveCompactId(providerAndCompactIdentifier.getCompactIdentifier(),
                     providerAndCompactIdentifier.getProvider());
