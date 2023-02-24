@@ -47,9 +47,27 @@ services:
             - "8084:8084"
         depends_on:
             - redis
-networks:
-    default:
-        name: idorg-dev-satellite-resolver
+#    resolver: # When debugging docker image
+#        image: identifiersorg/cloud-ws-resolver:latest
+#        environment:
+#            - WS_RESOLVER_CONFIG_REDIS_HOST=redis
+#            - WS_RESOLVER_CONFIG_REDIS_PORT=6379
+#            - WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_HOST=recommender
+#            - WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_PORT=8083
+#            - WS_RESOLVER_CONFIG_REGISTRY_RESOLUTION_DATASET_ENDPOINT=http://hqregistry:8180/resolutionApi/getResolverDataset
+#            - WS_RESOLVER_CONFIG_APPLICATION_CORS_ORIGINS=*
+#            - WS_RESOLVER_JVM_MEMORY_MAX=360m
+#            - MATOMO_ENABLED=false
+#            - JVM_OPTIONS=-Dlogging.level.org.springframework=DEBUG -Dlogging.level.com.baeldung=DEBUG -Dlogging.level.org.identifiers=DEBUG -Dlogging.level.org.matomo=DEBUG -D.logging.level.org.springframework.data.redis=INFO
+#        ports:
+#            - "8080:8080"
+#        depends_on:
+#            - redis
+#            - hqregistry
+#            - recommender
+#networks:
+#    default:
+#        name: idorg-dev-satellite-resolver
 volumes:
     registry:
         name: idorg_registry
