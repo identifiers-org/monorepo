@@ -18,6 +18,8 @@ export const getNamespacesFromRegistry = (params) => {
     if (params.content !== '') {
       requestUrl = new URL(`${config.registryApi}/restApi/namespaces/search/findByPrefixContaining`);
       requestUrl.searchParams.append('content', params.content);
+    } else if (params.prefixStart === '#') {
+      requestUrl = new URL(`${config.registryApi}/restApi/namespaces/search/findByPrefixStartsWithNumbers`);
     } else if (params.prefixStart !== '') {
       // TODO: What to do with '#' prefixstart?
       requestUrl = new URL(`${config.registryApi}/restApi/namespaces/search/findByPrefixStartsWith`);
@@ -40,8 +42,12 @@ export const getNamespacesFromRegistry = (params) => {
       console.error('Error fetching namespaces: ', err);
     }
 
-    dispatch(setNamespaceList(data._embedded.namespaces));
-    dispatch(setNamespaceListParams({...params, ...data.page}));
+    if (data) {
+      dispatch(setNamespaceList(data._embedded.namespaces));
+      dispatch(setNamespaceListParams({...params, ...data.page}));
+    } else {
+      console.error("Null response from endpoint");
+    }
 
     return data;
   };
