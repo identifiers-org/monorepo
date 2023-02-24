@@ -28,10 +28,15 @@ import java.util.concurrent.BlockingDeque;
  */
 @Component
 public class PeriodicCheckRequesterResolutionBaseData extends Thread {
-    // TODO - Refactor this out to application properties
-    private static final int WAIT_TIME_MAX_BEFORE_NEXT_REQUEST_SECONDS = 86400;     // 24 hours
-    private static final int WAIT_TIME_MIN_BEFORE_NEXT_REQUEST_SECONDS = 43200;     // 12 hours
-    private static final int WAIT_TIME_ERROR_BEFORE_NEXT_REQUEST_SECONDS = 3600;    // 1 hour
+    @Value("${org.identifiers.cloud.ws.linkchecker.daemon.periodiclinkcheckrequester.waittime.max}")
+    private int waitTimeMaxBeforeNextRequestSeconds;
+
+    @Value("${org.identifiers.cloud.ws.linkchecker.daemon.periodiclinkcheckrequester.waittime.min}")
+    private int waitTimeMinBeforeNextRequestSeconds;
+
+    @Value("${org.identifiers.cloud.ws.linkchecker.daemon.periodiclinkcheckrequester.waittime.error}")
+    private int waitTimeErrorBeforeNextRequestSeconds;
+
     private static final Logger logger = LoggerFactory.getLogger(PeriodicCheckRequesterResolutionBaseData.class);
 
     private boolean shutdown = false;
@@ -78,9 +83,10 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
         Random random = new Random(System.currentTimeMillis());
         while (!isShutdown() && enabled) {
             // Next random number of seconds to wait before the next iteration
-            int waitTimeSeconds = WAIT_TIME_MIN_BEFORE_NEXT_REQUEST_SECONDS +
-                    random.nextInt(WAIT_TIME_MAX_BEFORE_NEXT_REQUEST_SECONDS
-                            - WAIT_TIME_MIN_BEFORE_NEXT_REQUEST_SECONDS);
+            logger.debug("Taking wait time from {} to {}", waitTimeMinBeforeNextRequestSeconds, waitTimeMaxBeforeNextRequestSeconds);
+            int waitTimeSeconds = waitTimeMinBeforeNextRequestSeconds +
+                    random.nextInt(waitTimeMaxBeforeNextRequestSeconds
+                            - waitTimeMinBeforeNextRequestSeconds);
             // Get Resolution client and insight data on resolution samples, as they also contain the provider home URL,
             // we'll only need one request.
             ServiceResponseResolve insightResponse = ApiServicesFactory
@@ -114,7 +120,7 @@ public class PeriodicCheckRequesterResolutionBaseData extends Thread {
                         insightResponse.getHttpStatus().value(),
                         insightResponse.getErrorMessage());
                 // Adjust the time to wait before checking the insight api again
-                waitTimeSeconds = random.nextInt(WAIT_TIME_ERROR_BEFORE_NEXT_REQUEST_SECONDS);
+                waitTimeSeconds = random.nextInt(waitTimeErrorBeforeNextRequestSeconds);
             }
             // Wait before the next wave of link check requests
             try {
