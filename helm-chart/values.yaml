@@ -41,7 +41,7 @@ keycloak:
 
 
 registry:
-  image: "identifiersorg/cloud-hq-ws-registry:1.8.5"
+  image: "identifiersorg/cloud-hq-ws-registry:1.9.0"
   replicas: 2
   requests:
     cpu: 100m
@@ -57,7 +57,7 @@ registry:
   base_uri: "https://registry.identifiers.org"
 
 frontend:
-  image: "identifiersorg/cloud-hq-web-frontend:1.6.6"
+  image: "identifiersorg/cloud-hq-web-frontend:1.6.7"
   replicas: 3
   requests:
     cpu: 50m
