@@ -76,9 +76,8 @@ public class ResolverApiModel {
             return response;
         }
         // Default error response
-        String errorMessage = String.format("INVALID resolution request for '%s', due to '%s'", rawCompactId, resolutionServiceResult.getErrorMessage());
         response.setHttpStatus(HttpStatus.BAD_REQUEST);
-        response.setErrorMessage(errorMessage);
+        response.setErrorMessage(resolutionServiceResult.getErrorMessage());
         return response;
     }
 }
