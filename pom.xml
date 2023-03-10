@@ -5,7 +5,7 @@
 
     <groupId>org.identifiers.cloud.hq.ws</groupId>
     <artifactId>registry</artifactId>
-    <version>1.8.5</version>
+    <version>1.9.0</version>
     <packaging>jar</packaging>
 
     <name>registry</name>
