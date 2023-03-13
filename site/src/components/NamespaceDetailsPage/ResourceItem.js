@@ -87,8 +87,7 @@ class ResourceItem extends React.Component {
 
 
   handleClickAddInstitution = () => {
-    const navigate = useNavigate();
-    navigate('/curation/#curation-institution');
+    this.props.navigate('/curation/#curation-institution');
   };
 
 
@@ -515,6 +514,9 @@ const mapDispatchToProps = dispatch => ({
   reactivateResource: (id, newResource) => dispatch(reactivateResource(id, newResource))
 });
 
+const ConnectedResourceItem = connect(mapStateToProps, mapDispatchToProps)(ResourceItem);
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(ResourceItem);
+export default (props) => {
+  const navigate = useNavigate();
+  return <ConnectedResourceItem {...props} navigate={navigate} />
+};
