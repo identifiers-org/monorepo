@@ -67,22 +67,29 @@ export const getNamespaceFromRegistry = (prefix) => {
       console.error('Error fetching namespace', err);
     }
 
-    let statisticsUrl = new URL(`${config.registryApi}/statistics/namespace/${prefix}`);
-    try {
-      response = await fetch(statisticsUrl);
-      if (response.ok) {
-        const stats = await response.json();
-        data['stats'] = stats.payload
-      }
-    } catch (err) {
-      console.error("Error fetching namespace statistics", err)
-    }
-
     dispatch(setNamespaceList([data]));
-
     return data;
   };
 };
+
+export const getStatisticsFromRegistry = (namespace) => {
+  return async (dispatch) => {
+    let stats = {};
+    const statisticsUrl = new URL(`${config.registryApi}/statistics/namespace/${namespace.prefix}`);
+    try {
+      const response = await fetch(statisticsUrl);
+      if (response.ok) {
+        stats = await response.json();
+        stats = stats.payload;
+      }
+    } catch (err) {
+      console.error("Error fetching namespace statistics", err)
+    } finally {
+      dispatch(setStatistics(namespace.prefix, stats));
+    }
+    return stats;
+  }
+}
 
 
 // Get resources from registry. Will dispatch setResources.
@@ -118,6 +125,13 @@ export const getResourcesFromRegistry = (namespace) => {
   };
 };
 
+export const setStatistics = (prefix, stats) => {
+  return {
+    type: 'SET_STATISTICS',
+    prefix,
+    stats
+  };
+};
 
 // Redux store update for namespace list.
 export const setNamespaceList = (namespaceList) => {

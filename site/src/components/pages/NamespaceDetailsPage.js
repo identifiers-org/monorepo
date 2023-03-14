@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 // Actions.
-import { getNamespaceFromRegistry, getResourcesFromRegistry } from '../../actions/NamespaceList';
+import { getNamespaceFromRegistry, getResourcesFromRegistry, getStatisticsFromRegistry} from '../../actions/NamespaceList';
 import {
   setNamespacePatch,
   setNamespacePatchField,
@@ -27,6 +27,7 @@ import { config } from '../../config/Config';
 // Utils.
 import { swalConfirmation, failureToast, successToast, infoToast } from '../../utils/swalDialogs';
 import validators from '../../utils/validators';
+import Spinner from "../common/Spinner";
 
 
 class NamespaceDetailsPage extends React.Component {
@@ -52,6 +53,7 @@ class NamespaceDetailsPage extends React.Component {
       getNamespaceFromRegistry,
       getResourcesFromRegistry,
       getSchemaOrgMetadataFromRegistry,
+      getStatisticsFromRegistry,
       params: { prefix },
       schemaOrgMetadata,
       setNamespacePatch
@@ -59,6 +61,7 @@ class NamespaceDetailsPage extends React.Component {
 
     await getNamespaceFromRegistry(prefix);
     await getResourcesFromRegistry(this.props.namespaceList[0]);
+    await getStatisticsFromRegistry(this.props.namespaceList[0]);
 
     // Prepares model for namespace patching.
     const {resources, _links, ...newNamespace} = this.props.namespaceList[0];
@@ -499,14 +502,13 @@ class NamespaceDetailsPage extends React.Component {
         </div>
 
         {/* Page first loads without statistics */}
-        { namespace.stats ? <>
-          <div className="row">
-            <div className="col">
-              <h2><i className="icon icon-common icon-search-document" /> Usage for last month </h2>
-            </div>
+        <div className="row">
+          <div className="col">
+            <h2><i className="icon icon-common icon-search-document" /> Usage for last month </h2>
           </div>
-
-          <div className="row mb-3">
+        </div>
+        { (namespace.stats === undefined) ? <Spinner noText noCenter /> : <>
+            <div className="row mb-3">
             <div className="col overflow-y-scroll">
               <table className="table table-sm table-striped table-borderless">
                 <tbody>
@@ -522,7 +524,7 @@ class NamespaceDetailsPage extends React.Component {
               </table>
             </div>
           </div>
-        </> : '' }
+        </>}
 
         <div className="row">
           <div className="col">
@@ -534,7 +536,7 @@ class NamespaceDetailsPage extends React.Component {
           !namespace.resources && (
             <div className="row">
               <div className="col">
-                <p>No resources.</p>
+                { namespace.resources === undefined ? <Spinner noText noCenter /> : <p>No resources.</p> }
               </div>
             </div>
           ) || (
@@ -581,6 +583,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
   getNamespaceFromRegistry: (prefix) => dispatch(getNamespaceFromRegistry(prefix)),
   getResourcesFromRegistry: (namespace) => dispatch(getResourcesFromRegistry(namespace)),
+  getStatisticsFromRegistry: (namespace) => dispatch(getStatisticsFromRegistry(namespace)),
   getSchemaOrgMetadataFromRegistry: (namespaceId) => dispatch(getSchemaOrgMetadataFromRegistry(namespaceId)),
   setNamespacePatch: (id, namespace) => dispatch(setNamespacePatch(id, namespace)),
   setNamespacePatchField: (field, value) => dispatch(setNamespacePatchField(field, value)),
