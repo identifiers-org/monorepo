@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.api.responses;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
@@ -55,5 +56,18 @@ public class ServiceResponse<T> implements Serializable {
     public ServiceResponse setPayload(T payload) {
         this.payload = payload;
         return this;
+    }
+
+    public static <I> ServiceResponse<I> getBaseResponse(I payload) {
+        ServiceResponse<I> defaultResponse = new ServiceResponse<>();
+        defaultResponse.setApiVersion(ApiCentral.apiVersion);
+        defaultResponse.setPayload(payload);
+        return defaultResponse;
+    }
+
+    public static ServiceResponse getBaseResponse() {
+        ServiceResponse defaultResponse = new ServiceResponse<>();
+        defaultResponse.setApiVersion(ApiCentral.apiVersion);
+        return defaultResponse;
     }
 }

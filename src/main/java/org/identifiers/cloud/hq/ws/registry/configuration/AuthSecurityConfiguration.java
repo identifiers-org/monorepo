@@ -268,6 +268,8 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers("/schemaOrgApi/**").permitAll()
                 // Development Auth API
                     .antMatchers("/devAuthApi/**").permitAll()
+                // Development Auth API
+                    .antMatchers("/statistics/**").permitAll()
                 // Registry Insight API
                     .antMatchers(HttpMethod.GET, "/registryInsightApi/getAllNamespacePrefixes").permitAll()
                 // FAIR API
