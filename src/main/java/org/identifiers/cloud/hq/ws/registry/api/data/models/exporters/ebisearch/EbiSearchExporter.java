@@ -53,7 +53,7 @@ public class EbiSearchExporter implements RegistryExporter {
         List<Field> fields = getFieldsOfNamespace(namespace);
         newEntry.setFields(fields);
         
-        List<Ref> references = getCrossRefsOfNamespace(namespace);
+        List<Ref> references = Collections.emptyList();
         newEntry.setCross_references(references);
         
         return newEntry;
@@ -90,16 +90,5 @@ public class EbiSearchExporter implements RegistryExporter {
         fields.add(new Field("landing_page", genLandingPageUrl(namespace)));
 
         return fields;
-    }
-
-    private List<Ref> getCrossRefsOfNamespace(Namespace namespace) {
-        String dbname = namespace.getPrefix().toUpperCase();
-        if (dbname.contains(".")) {
-            dbname = dbname.substring(0, dbname.indexOf('.'));
-        }
-
-        return Collections.singletonList(
-            new Ref(namespace.getSampleId(), dbname)
-        );
     }
 }

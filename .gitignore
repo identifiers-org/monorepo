@@ -44,3 +44,4 @@ __pycache__/
 *.py[cod]
 notebooks/.ipynb_checkpoints
 
+/pom.xml.versionsBackup
