@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RestResource;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,4 +43,7 @@ public interface NamespaceRepository extends JpaRepository<Namespace, Long> {
 
     Namespace findByMirId(String mirId);
 
+    @Query("SELECT n FROM Namespace n WHERE n.modified > :date")
+    @RestResource(exported = false)
+    List<Namespace> findNamespacesModifiedSince(Date date);
 }
