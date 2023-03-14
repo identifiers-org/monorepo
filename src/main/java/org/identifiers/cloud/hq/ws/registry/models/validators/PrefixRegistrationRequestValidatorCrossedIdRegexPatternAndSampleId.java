@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Project: registry
@@ -48,7 +49,12 @@ public class PrefixRegistrationRequestValidatorCrossedIdRegexPatternAndSampleId 
         }
         // Cross-validation
         logger.debug("Validating regex pattern '{}' against '{}'", request.getIdRegexPattern(), request.getSampleId());
-        Pattern pattern = Pattern.compile(request.getIdRegexPattern());
+        Pattern pattern;
+        try {
+            pattern = Pattern.compile(request.getIdRegexPattern());
+        } catch (PatternSyntaxException ex) {
+            throw new PrefixRegistrationRequestValidatorException(String.format("This regex is invalid: %s", ex.getMessage()));
+        }
         Matcher matcher = pattern.matcher(request.getSampleId());
         if (!matcher.matches()) {
             throw new PrefixRegistrationRequestValidatorException(String.format("This regex does not match the Sample Id", request.getSampleId(), request.getIdRegexPattern()));
