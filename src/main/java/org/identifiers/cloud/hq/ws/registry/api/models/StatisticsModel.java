@@ -37,7 +37,7 @@ public class StatisticsModel {
                 .queryParam("method", "VisitsSummary.get")
                 .queryParam("idSite", "1")
                 .queryParam("period", "month")
-                .queryParam("date", "today")
+                .queryParam("date", "lastMonth")
                 .queryParam("format", "json")
                 .queryParam("token_auth", matomoTokenAuth)
                 .queryParam("segment", String.format("dimension6==%s", prefix))
@@ -46,7 +46,7 @@ public class StatisticsModel {
         return matomoRequestUrl;
     }
 
-    @Retryable(value = RestClientException.class, maxAttempts = 2, backoff = @Backoff(delay = 100))
+    @Retryable(value = RestClientException.class, maxAttempts = 3, backoff = @Backoff(delay = 200))
     public NamespaceStatistics getMatomoStatisticsFor(String prefix) {
         String matomoRequestUrl = getMatomoRequestUrl(prefix);
         return restTemplate.getForObject(matomoRequestUrl, NamespaceStatistics.class);
