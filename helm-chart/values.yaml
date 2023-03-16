@@ -41,7 +41,7 @@ keycloak:
 
 
 registry:
-  image: "identifiersorg/cloud-hq-ws-registry:1.9.0"
+  image: "identifiersorg/cloud-hq-ws-registry:1.10.1"
   replicas: 2
   requests:
     cpu: 100m
@@ -57,7 +57,7 @@ registry:
   base_uri: "https://registry.identifiers.org"
 
 frontend:
-  image: "identifiersorg/cloud-hq-web-frontend:1.6.7"
+  image: "identifiersorg/cloud-hq-web-frontend:1.7.0"
   replicas: 3
   requests:
     cpu: 50m
@@ -97,3 +97,8 @@ nodeAffinityRequirements:
     value: stable
   - label: idorg-deployment
     value: hq
+
+matomo:
+  enabled: true
+  base_url: "https://matomo.identifiers.org" #This should be without /matomo.php
+  auth_token: ~

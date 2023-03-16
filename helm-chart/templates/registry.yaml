@@ -141,6 +141,12 @@ spec:
               value: {{ .Values.mailer.notifications.curators | quote }}
             - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_REJECTION_CCO
               value: "PLACEHOLDER_do_not_use_this"
+            - name: MATOMO_AUTH_TOKEN
+              value: {{ .Values.matomo.auth_token | quote }}
+            - name: MATOMO_ENABLED
+              value: {{ .Values.matomo.enabled | quote }}
+            - name: MATOMO_BASE_URL
+              value: {{ .Values.matomo.base_url | default "" | quote }}
           ports:
             - containerPort: {{ .Values.registry.port }}
           readinessProbe:
