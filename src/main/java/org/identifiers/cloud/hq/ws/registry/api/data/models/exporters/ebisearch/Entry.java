@@ -14,8 +14,6 @@ import java.util.List;
 @EqualsAndHashCode
 @Accessors(chain = true)
 public class Entry {
-    String id;
-    String description;
     List<Ref> cross_references;
     List<Field> fields;
 }

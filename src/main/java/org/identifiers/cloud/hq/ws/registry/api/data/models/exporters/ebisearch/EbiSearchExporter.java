@@ -46,9 +46,7 @@ public class EbiSearchExporter implements RegistryExporter {
     }
 
     private Entry getEntryFromNamespace(Namespace namespace) {
-        Entry newEntry = new Entry()
-                .setId(namespace.getPrefix())
-                .setDescription(namespace.getDescription());
+        Entry newEntry = new Entry();
         
         List<Field> fields = getFieldsOfNamespace(namespace);
         newEntry.setFields(fields);
@@ -63,7 +61,7 @@ public class EbiSearchExporter implements RegistryExporter {
     private String format(Date date) {
         return df.format(date);
     }
-    private String format(boolean bool) {
+    private String format(Object bool) {
         return String.valueOf(bool);
     }
 
