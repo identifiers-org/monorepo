@@ -1,0 +1,63 @@
+# Remember to apply pre-deploy.yaml
+
+commonLabels:
+  app: idorg
+  component: matomo
+
+matomoWebsiteHost: "matomo.identifiers.org"
+matomoWebsiteName: "Identifiers.org"
+
+matomoUsername: idorg
+matomoPassword: changethis
+matomoEmail: identifiers-org@ebi.ac.uk
+
+image:
+  tag: 4.13.3-debian-11-r5
+
+smtpHost: smtp.eu.mailgun.org
+smtpPort: 587
+smtpUser: ~
+smtpProtocol: tls
+smtpExistingSecret: idorg-matomo-secrets
+
+allowEmptyPassword: false
+
+containerSecurityContext:
+  runAsNonRoot: false
+  runAsUser: 0
+
+matomoSkipInstall: true
+
+resources:
+  requests:
+    cpu: 400m
+    memory: 1G
+
+mariadb:
+  enabled: false
+
+service: # Avoid google cloud NEG connectivity issues
+  annotations:
+    cloud.google.com/neg: '{"ingress":false}'
+
+externalDatabase:
+  host: matomomysql
+  port: 3306
+  user: ~
+  database: ~
+  existingSecret: idorg-matomo-secrets
+
+nodeSelector:
+  idorg-deployment: matomo
+
+ingress:
+  enabled: true
+  pathType: ImplementationSpecific # Necessary for gce
+  hostname: matomo.identifiers.org
+  path: "/*"
+  annotations:
+    kubernetes.io/ingress.class: "gce" #Google cloud ingress
+    kubernetes.io/ingress.global-static-ip-name: idorg-matomo
+    kubernetes.io/ingress.allow-http: "true"
+    networking.gke.io/managed-certificates: idorg-matomo-managed-cert
+    networking.gke.io/v1beta1.FrontendConfig: "matomo-redirect-config"

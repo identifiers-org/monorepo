@@ -1,0 +1,81 @@
+--- ### Necessary for google cloud to redirect to https
+apiVersion: networking.gke.io/v1beta1
+kind: FrontendConfig
+metadata:
+  name: matomo-redirect-config
+spec:
+  redirectToHttps:
+    enabled: true
+
+
+
+
+--- ### Please update with the smtp and DB passwords
+apiVersion: v1
+kind: Secret
+metadata:
+  name: idorg-matomo-secrets
+  labels:
+    app: idorg
+    component: matomo
+  namespace: matomo
+type: Opaque
+data:
+  smtp-password: ~
+  db-password: ~
+
+
+
+
+
+--- ### MySQL definitions. Please update the IP and port of the external server.
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: matomomysql
+  labels:
+    tier: backend
+    app: idorg
+    component: matomo
+subsets:
+  - addresses:
+      - ip: ~
+    ports:
+      - port: 3306
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":false}'
+  name: matomomysql
+  labels:
+    tier: backend
+    app: idorg
+    component: matomo
+spec:
+  ports:
+    - port: 3306
+
+
+
+
+
+---
+# Google cloud managed certificate
+# Beware it takes up to 24hs to make it active
+
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: idorg-matomo-managed-cert
+spec:
+  domains:
+    - matomo.identifiers.org
+
+
+
+
+
+
+---
