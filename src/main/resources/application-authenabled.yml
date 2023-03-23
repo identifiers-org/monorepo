@@ -1,4 +1,9 @@
 # This file contains properties to be used when AAA is enabled, this configuration contains both resource server and client information
+management:
+  endpoint:
+    health:
+      show-details: when_authorized
+
 spring:
   security:
     oauth2:

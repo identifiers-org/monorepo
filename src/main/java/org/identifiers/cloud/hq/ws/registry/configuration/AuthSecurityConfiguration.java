@@ -50,6 +50,9 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Value("${spring.security.oauth2.client.registration.keycloak.grantType}")
     private String grantType;
 
+    @Value("${org.identifiers.cloud.hq.ws.registry.requiredrole}")
+    private String actuatorRequiredRole;
+
     @PostConstruct
     private void postConstruct() {
         log.info("[CONFIG] (AAA) ENABLED");
@@ -277,6 +280,10 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.POST, "/fairapi/coverage/**").permitAll()
                     .antMatchers(HttpMethod.POST, "/fairapi/interoperability/**").permitAll()
                     .antMatchers(HttpMethod.GET, "/fairapi/health/**").permitAll()
+                // Actuators
+                    .antMatchers(HttpMethod.GET, "/actuator/health/**").permitAll()
+                    .antMatchers("/actuator").access(String.format("isAuthenticated() and principal.claims['realm_access']['roles'].contains('%s')", actuatorRequiredRole))
+                    .antMatchers("/actuator/loggers/**").access(String.format("isAuthenticated() and principal.claims['realm_access']['roles'].contains('%s')", actuatorRequiredRole))
                 .anyRequest().denyAll()
                 .and()
                 .csrf()
@@ -286,6 +293,7 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .ignoringAntMatchers("/resourceManagementApi/validate*")
                     .ignoringAntMatchers("/rorIdApi/**")
                     .ignoringAntMatchers("/fairapi/**")
+                    .ignoringAntMatchers("/actuator/**")
                 .and()
                 .cors()
                 .and()

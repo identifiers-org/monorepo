@@ -29,7 +29,7 @@
             <name>Manuel Bernal-Llinares</name>
             <email>mbdebian@gmail.com</email>
             <organization>EMBL-European Bioinformatics Institute</organization>
-            <organizationUrl>http://ebi.ac.uk/</organizationUrl>
+            <organizationUrl>https://ebi.ac.uk/</organizationUrl>
             <timezone>Europe/London</timezone>
             <roles>
                 <role>architect</role>
@@ -64,6 +64,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -123,13 +127,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
-
     </dependencies>
 
     <build>
