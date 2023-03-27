@@ -72,6 +72,7 @@ public class EbiSearchExporter implements RegistryExporter {
     private List<Field> getFieldsOfNamespace(Namespace namespace) {
         List<Field> fields = new LinkedList<>();
 
+        fields.add(new Field("id", format(namespace.getId())));
         fields.add(new Field("name", namespace.getName()));
         fields.add(new Field("description", namespace.getDescription()));
         fields.add(new Field("prefix", namespace.getPrefix()));
