@@ -41,7 +41,7 @@ keycloak:
 
 
 registry:
-  image: "identifiersorg/cloud-hq-ws-registry:1.10.2"
+  image: "identifiersorg/cloud-hq-ws-registry:1.10.4"
   replicas: 2
   requests:
     cpu: 100m
