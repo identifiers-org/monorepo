@@ -98,7 +98,7 @@ class Header extends React.Component {
                         caption={<span><i className="icon icon-common icon-hand-point-up mr-1" />Make a request</span>}
                       >
                         <EBINavItem className="nav-item">
-                          <a href={`${config.registryUrl}/registryprefixregistrationrequest`} className="nav-link nav-link-dark">
+                          <a href={`${config.registryUrl}/prefixregistrationrequest`} className="nav-link nav-link-dark">
                             <i className="icon icon-common icon-leaf mr-1" />Request prefix
                           </a>
                         </EBINavItem>
