@@ -36,6 +36,7 @@ public class WebPageCheckerDefault implements WebPageChecker {
         // Detect Dead endpoint by accessing it and making sure we get an HTTP 200 OK, in the future, more complex
         // checkers can be externalized, and pack as dead URL Endpoint detection strategies
         String newUrl = null;
+        log.debug("Validating {}", url);
         HttpStatus status;
         try {
             // TODO - Add a re-try policy for when we try to connect the URL
@@ -52,15 +53,23 @@ public class WebPageCheckerDefault implements WebPageChecker {
             }
             connection.disconnect();
         } catch (IOException e) {
+            log.error(String.format("Checking '%s' caused an error", url), e);
             throw new WebPageCheckerException(String.format("Checking '%s' caused an error: '%s'", url, e.getMessage()));
         }
+
+        log.debug("Response code: {} / newUrl: {}", status, newUrl);
 
         // If redirection is a simple protocol change
         if (status.is3xxRedirection() && newUrl != null) {
             if (newUrl.toLowerCase().startsWith("https") &&
                     url.toLowerCase().startsWith("http") &&
                     newUrl.substring(5).equals(url.substring(4))) {
-                throw new WebPageCheckerException("It seems that a https proxy is in place. Use https instead of http.");
+                throw new WebPageCheckerException("It seems that a https rewrite is in place. Use https instead of http.");
+            } else {
+                throw new WebPageCheckerException(
+                        String.format("An URL rewrite is in place. The new URL is %s. You should rewrite your URL pattern.",
+                                newUrl)
+                );
             }
         }
         if (!status.is2xxSuccessful()) {
