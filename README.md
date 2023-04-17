@@ -64,3 +64,4 @@ If you do upgrade or redeploy, you will likely need to redo some "after deployme
   - You don't need to do the force_ssl option if the cluster already does the ssl change on the frontend as the yaml files for this are setup.
   - If there are files missing in the misc folder, you can just download the matomo src from their website and cherry pick the files you need. This is completely optional.
 - You will need to blacklist the IPs from the cluster network otherwise you will have duplicated resolution entries (from web frontend and from resolver api). You can do this by adding the CIDR ranges from the Google cloud default network on the general blacklist on the matomo web interface.
+- If you have issues with the persistent file system permissions have a look at [this](https://forum.matomo.org/t/correct-file-permissions/25359) forum post.
