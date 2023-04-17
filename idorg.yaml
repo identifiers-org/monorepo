@@ -12,7 +12,7 @@ matomoPassword: changethis
 matomoEmail: identifiers-org@ebi.ac.uk
 
 image:
-  tag: 4.13.3-debian-11-r5
+  tag: 4
 
 smtpHost: smtp.eu.mailgun.org
 smtpPort: 587
@@ -28,10 +28,13 @@ containerSecurityContext:
 
 matomoSkipInstall: true
 
+updateStrategy:
+  type: Recreate
+
 resources:
   requests:
-    cpu: 400m
-    memory: 1G
+    cpu: 300m
+    memory: 600M
 
 mariadb:
   enabled: false
@@ -48,7 +51,7 @@ externalDatabase:
   existingSecret: idorg-matomo-secrets
 
 nodeSelector:
-  idorg-deployment: matomo
+  idorg-deployment: hq
 
 ingress:
   enabled: true
