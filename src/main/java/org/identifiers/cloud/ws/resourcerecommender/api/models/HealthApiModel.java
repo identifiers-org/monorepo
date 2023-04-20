@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resourcerecommender.api.models;
 
+import org.identifiers.cloud.ws.resourcerecommender.api.controllers.HealthApiController;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -12,8 +14,11 @@ import java.util.UUID;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  * Health Check API Controller model.
+ * @deprecated in favor of health actuator endpoint
  */
 @Component
+@Deprecated()
+@ConditionalOnBean(HealthApiController.class)
 public class HealthApiModel {
     private static String runningSessionId = UUID.randomUUID().toString();
 

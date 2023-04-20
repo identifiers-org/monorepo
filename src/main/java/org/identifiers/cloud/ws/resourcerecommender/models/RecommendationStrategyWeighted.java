@@ -3,7 +3,8 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.ws.resourcerecommender.api.data.models.ResolvedResource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -18,7 +19,8 @@ import java.util.stream.Collectors;
  * ---
  */
 @Component
-@Profile("recommendationStrategyWeighted")
+@Qualifier("recommendationStrategyWeighted")
+@Primary
 @Slf4j
 public class RecommendationStrategyWeighted implements RecommendationStrategy {
     @Autowired

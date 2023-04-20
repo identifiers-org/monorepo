@@ -10,7 +10,7 @@
 
 	<name>resource-recommender</name>
 	<description>Resource Recommendation Web Service for Identifiers.org platform</description>
-	<url>http://identifiers.org</url>
+	<url>https://identifiers.org</url>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -34,11 +34,23 @@
 
 	<developers>
 		<developer>
+			<id>renatocjn</id>
+			<name>Renato Caminha Juaçaba Neto</name>
+			<email>rjuacaba@ebi.ac.uk</email>
+			<organization>EMBL-European Bioinformatics Institute</organization>
+			<organizationUrl>https://ebi.ac.uk/</organizationUrl>
+			<timezone>Europe/London</timezone>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+		</developer>
+		<developer>
 			<id>mbernal</id>
 			<name>Manuel Bernal-Llinares</name>
 			<email>mbdebian@gmail.com</email>
 			<organization>EMBL-European Bioinformatics Institute</organization>
-			<organizationUrl>http://ebi.ac.uk/</organizationUrl>
+			<organizationUrl>https://ebi.ac.uk/</organizationUrl>
 			<timezone>Europe/London</timezone>
 			<roles>
 				<role>architect</role>
@@ -71,6 +83,16 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.identifiers.cloud</groupId>
 			<artifactId>libapi</artifactId>
 			<version>2.3.0</version>
@@ -78,7 +100,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.24</version>
+			<version>1.18.26</version>
 		</dependency>
 
 		<dependency>
@@ -86,7 +108,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>

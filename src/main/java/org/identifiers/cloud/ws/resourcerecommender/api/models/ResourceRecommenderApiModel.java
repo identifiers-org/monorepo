@@ -29,7 +29,7 @@ import java.util.List;
 @Component
 @Scope("prototype")
 public class ResourceRecommenderApiModel {
-    private static Logger logger = LoggerFactory.getLogger(ResourceRecommenderApiModel.class);
+    final static Logger logger = LoggerFactory.getLogger(ResourceRecommenderApiModel.class);
 
     @Autowired
     private RecommendationStrategy recommendationStrategy;
@@ -54,8 +54,7 @@ public class ResourceRecommenderApiModel {
     }
 
     public ServiceResponseRecommend getRecommendations(ServiceRequestRecommend request) {
-        // NOTE - I know, I should not use try-catch as an if-else block, but in this case, this logic is sooo simple...
-        // TODO - This is where we check the API version?
+        // NOTE - I know, I should not use try-catch as an if-else block, but in this case, this logic is so simple...
         // TODO - check payload as well?
         ServiceResponseRecommend response = new ServiceResponseRecommend();
         response.setApiVersion(ApiCentral.apiVersion);

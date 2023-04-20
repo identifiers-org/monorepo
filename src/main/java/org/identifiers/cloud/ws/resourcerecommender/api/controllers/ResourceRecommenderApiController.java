@@ -27,7 +27,6 @@ public class ResourceRecommenderApiController {
     public ResponseEntity<?> getRecommendations(@RequestBody ServiceRequestRecommend request) {
         // The model associated with the controller should handle any possible exception that could happen while running
         // the business logic, thus, the controller should handle only exceptions within the domain of the controller.
-        // TODO - This is where we check the API version?
         ServiceResponseRecommend response = model.getRecommendations(request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }

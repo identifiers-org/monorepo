@@ -33,13 +33,10 @@ deploy: clean container_production_push
 development_env_up:
 	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing development environment UP"
 	@docker-compose -f $(docker_compose_development_file) up -d
-	@# TODO Clean this way of referencing the target name in future iterations
-	@rm -f development_env_down
 
 development_env_down:
 	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing development environment DOWN"
 	@docker-compose -f $(docker_compose_development_file) down
-	@# TODO Clean this way of referencing the target name in future iterations
 
 development_run_tests: development_env_up
 	@echo "<===|DEVOPS|===> [TESTS] Running Unit Tests"

@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.resourcerecommender.api.controllers;
 
 import org.identifiers.cloud.ws.resourcerecommender.api.models.HealthApiModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,9 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
  * ---
  *
  * This controller offers the endpoints that provide health checks for the service, e.g. liveness and health check
+ * @deprecated in favor of health actuator endpoint
  */
 @RestController
 @RequestMapping("healthApi")
+@Deprecated
+@ConditionalOnProperty(name = "management.endpoint.health.enabled",
+        matchIfMissing=true, havingValue = "false")
 public class HealthApiController {
     @Autowired
     private HealthApiModel model;
