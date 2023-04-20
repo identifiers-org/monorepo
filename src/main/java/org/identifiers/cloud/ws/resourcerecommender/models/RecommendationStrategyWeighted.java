@@ -26,7 +26,7 @@ public class RecommendationStrategyWeighted implements RecommendationStrategy {
 
     // Helper method to compute a resource recommendation score for a given resolved resource
     private int getResourceRecommendationScore(ResolvedResource resolvedResource) {
-        int score = 0;
+        int score = RECOMMENDATION_SCORE_MIN;
         if (!resolvedResource.isDeprecatedResource() && !resolvedResource.isDeprecatedNamespace()) {
             score = scoringFunctionProvider.getFunctionComponents().stream()
                     .mapToInt(weightedScore ->

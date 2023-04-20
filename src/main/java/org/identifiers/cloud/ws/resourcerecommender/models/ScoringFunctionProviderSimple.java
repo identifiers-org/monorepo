@@ -3,6 +3,7 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,20 +17,23 @@ import java.util.List;
  */
 @Component
 public class ScoringFunctionProviderSimple implements ScoringFunctionProvider {
-    private List<WeightedScore> weightedScores = new ArrayList<>();
+    private List<WeightedScore> weightedScores;
     @Value("${org.identifiers.cloud.ws.resourcerecommender.backend.service.linkchecker.host}")
     private String serviceLinkCheckerHost;
     @Value("${org.identifiers.cloud.ws.resourcerecommender.backend.service.linkchecker.port}")
     private String serviceLinkCheckerPort;
 
+    @PostConstruct
+    public void init() {
+        weightedScores = new ArrayList<>(3);
+        weightedScores.add(new WeightedScore(55, new ScoreProviderOfficiality()));
+        weightedScores.add(new WeightedScore(40,
+                new ScoreProviderOnReliability(serviceLinkCheckerHost, serviceLinkCheckerPort)));
+        weightedScores.add(new WeightedScore(5, new ScoreProviderEbi()));
+    }
+
     @Override
     public synchronized List<WeightedScore> getFunctionComponents() throws ScoringFunctionProviderException {
-        if (weightedScores.isEmpty()) {
-            // TODO - This can be improved in the future, and the weights dynamically set through environment variables
-            weightedScores.add(new WeightedScore(60, new ScoreProviderOfficiality()));
-            weightedScores.add(new WeightedScore(40,
-                    new ScoreProviderOnReliability(serviceLinkCheckerHost, serviceLinkCheckerPort)));
-        }
         return weightedScores;
     }
 }

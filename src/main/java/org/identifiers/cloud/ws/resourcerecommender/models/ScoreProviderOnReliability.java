@@ -42,6 +42,7 @@ public class ScoreProviderOnReliability implements ScoreProvider {
                     resolvedResource.getCompactIdentifierResolvedUrl(),
                     response.getErrorMessage());
         }
+        logger.debug("ID {} reliability score: {}", resolvedResource.getId(), response.getPayload().getScore());
         return response.getPayload().getScore();
     }
 

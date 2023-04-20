@@ -29,3 +29,4 @@ mvnw*
 
 # Mac OS files
 **.DS_Store
+/pom.xml.versionsBackup
