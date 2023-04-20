@@ -29,6 +29,9 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Value("${spring.security.oauth2.client.registration.keycloak.client-id}")
     private String clientId;
 
+    @Value("${org.identifiers.cloud.ws.miridcontroller.endpoint.requiredrole}")
+    private String actuatorRequiredRole;
+
     @PostConstruct
     private void postConstruct() {
         log.info("[CONFIG] (AAA) ENABLED");
@@ -49,8 +52,13 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers("/mirIdApi/keepAlive/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('idKeepingAlive'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
                     .antMatchers("/mirIdApi/loadId/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('idLoader'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
                     .antMatchers("/mirIdApi/returnId/**").access(String.format("isAuthenticated() and (principal?.claims.get('%s') != null) and (principal?.claims['%s'].get('%s') != null) and (principal?.claims['%s']['%s']['roles'].contains('idReturner'))", JWT_SCOPE_RESOURCE_ACCESS, JWT_SCOPE_RESOURCE_ACCESS, clientId, JWT_SCOPE_RESOURCE_ACCESS, clientId))
+                    .antMatchers("/actuator/loggers/**").access(String.format("isAuthenticated() and principal?.claims['realm_access']['roles'].contains('%s')", actuatorRequiredRole))
+                    .antMatchers("/actuator").access(String.format("isAuthenticated() and principal?.claims['realm_access']['roles'].contains('%s')", actuatorRequiredRole))
+                    .antMatchers(HttpMethod.GET, "/actuator/health/**").permitAll()
                     .anyRequest().denyAll()
                 .and()
-                .oauth2ResourceServer().jwt();
+                    .csrf().ignoringAntMatchers("/actuator/loggers/**")
+                .and()
+                    .oauth2ResourceServer().jwt();
     }
 }

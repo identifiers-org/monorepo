@@ -2,6 +2,7 @@ package org.identifiers.cloud.hq.ws.miridcontroller.api.controllers;
 
 import org.identifiers.cloud.hq.ws.miridcontroller.api.models.HealthApiModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("healthApi")
+@Deprecated
+@ConditionalOnProperty(name = "management.endpoint.health.enabled",
+        matchIfMissing=true, havingValue = "false")
 public class HealthApiController {
     // TODO
     @Autowired

@@ -1,5 +1,7 @@
 package org.identifiers.cloud.hq.ws.miridcontroller.api.models;
 
+import org.identifiers.cloud.hq.ws.miridcontroller.api.controllers.HealthApiController;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -15,6 +17,8 @@ import java.util.UUID;
  * Health Check API Controller model.
  */
 @Component
+@Deprecated
+@ConditionalOnBean(HealthApiController.class)
 public class HealthApiModel {
     private static String runningSessionId = UUID.randomUUID().toString();
 
