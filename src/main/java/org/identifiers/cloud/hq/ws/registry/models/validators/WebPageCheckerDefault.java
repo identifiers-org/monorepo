@@ -64,17 +64,15 @@ public class WebPageCheckerDefault implements WebPageChecker {
             if (newUrl.toLowerCase().startsWith("https") &&
                     url.toLowerCase().startsWith("http") &&
                     newUrl.substring(5).equals(url.substring(4))) {
-                throw new WebPageCheckerException("It seems that a https rewrite is in place. Use https instead of http.");
-            } else {
                 throw new WebPageCheckerException(
-                        String.format("An URL rewrite is in place. The new URL is %s. You should rewrite your URL pattern.",
-                                newUrl)
-                );
+                        "It seems that a https rewrite is in place. " +
+                        "Use https instead of http.");
             }
         }
-        if (!status.is2xxSuccessful()) {
+        if (!status.is2xxSuccessful() && !status.is3xxRedirection()) {
             throw new WebPageCheckerException(
-                    String.format("'%s' returned status code %d, it must return 200", url, status.value()));
+                    String.format("'%s' returned invalid status code status code %d, " +
+                            "should be a successful (2xx) or redirect (3xx) code", url, status.value()));
         }
         return true;
     }
