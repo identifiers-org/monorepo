@@ -80,4 +80,12 @@ public class ServiceRequestRegisterPrefixPayload implements Serializable {
 
     // Flag whether this namespace has LUIs with namespace embedded, which is a special case, as they're allowed to omit their namespace when hitting the resolver.
     private boolean namespaceEmbeddedInLui = false;
+
+    ////// Protected resource string
+    private boolean protectedUrls;
+    private boolean renderProtectedLanding;
+    private String authHelpUrl;
+    private String authHelpDescription;
+
+
 }

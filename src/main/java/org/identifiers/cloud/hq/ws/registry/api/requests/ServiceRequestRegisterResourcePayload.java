@@ -67,4 +67,10 @@ public class ServiceRequestRegisterResourcePayload implements Serializable {
 
     private String additionalInformation;
     private Requester requester;
+
+    ////// Protected resource string
+    private boolean protectedUrls;
+    private boolean renderProtectedLanding;
+    private String authHelpUrl;
+    private String authHelpDescription;
 }

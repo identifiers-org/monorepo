@@ -161,6 +161,19 @@ public class ResourceManagementApiController {
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
+    @PostMapping(value = "/validateAuthHelpDescription")
+    public ResponseEntity<?> validateAuthHelpDescription(@RequestBody ServiceRequestRegisterResourceValidate request) {
+        ServiceResponseRegisterResourceValidate response = model.validateAuthHelpDescription(request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
+    }
+
+    @PostMapping(value = "/validateAuthHelpUrl")
+    public ResponseEntity<?> validateAuthHelpUrl(@RequestBody ServiceRequestRegisterResourceValidate request) {
+        ServiceResponseRegisterResourceValidate response = model.validateAuthHelpUrl(request);
+        return new ResponseEntity<>(response, response.getHttpStatus());
+    }
+
+
     // --- Resource Lifecycle Management
     @GetMapping(value = "/deactivateResource/{resourceId}")
     public ResponseEntity<?> deactivateResource(@PathVariable long resourceId) {

@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -104,4 +106,16 @@ public class ResourceRegistrationRequest {
     @CreatedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date created;
+
+
+    private boolean protectedUrls;
+
+    private boolean renderProtectedLanding;
+
+    @URL(regexp = "^(http|https).*$")
+    private String authHelpUrl;
+
+    @Column(length = 2000)
+    @Length(min = 50)
+    private String authHelpDescription;
 }

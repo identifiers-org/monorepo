@@ -73,6 +73,14 @@ public class ResourceRegistrationRequestValidatorStrategyFullValidation implemen
     @Qualifier("ResourceRegistrationRequestValidatorRequester")
     private ResourceRegistrationRequestValidator requesterValidator;
 
+    @Autowired
+    @Qualifier("ResourceRegistrationRequestValidatorAuthHelpDescription")
+    private ResourceRegistrationRequestValidator authHelpDescriptionValidator;
+
+    @Autowired
+    @Qualifier("ResourceRegistrationRequestValidatorAuthHelpUrl")
+    private ResourceRegistrationRequestValidator authHelpUrlValidator;
+
     @Override
     public List<ResourceRegistrationRequestValidator> getValidationChain() {
         return Arrays.asList(
@@ -89,7 +97,9 @@ public class ResourceRegistrationRequestValidatorStrategyFullValidation implemen
                 providerUrlPatternValidator,
                 crossedSampleIdProviderUrlPatternValidator,
                 additionalInformationValidator,
-                requesterValidator
+                requesterValidator,
+                authHelpDescriptionValidator,
+                authHelpUrlValidator
         );
     }
 }

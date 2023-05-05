@@ -12,6 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Project: registry
@@ -102,4 +103,7 @@ public class Namespace {
 
     @ManyToOne
     private Person contactPerson;
+
+    @OneToMany(mappedBy = "namespace")
+    private List<Resource> resources;
 }

@@ -140,7 +140,6 @@ public class PrefixRegistrationRequestApiModel {
 
     public ServiceResponseRegisterPrefixSessionEvent amendPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
         ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
-        // TODO Actor unknnown right now, until we get Spring Security
         String actor = authHelper.getCurrentUsername();
         // Locate the prefix registration request session
         PrefixRegistrationSession prefixRegistrationSession = getPrefixRegistrationSession("AMEND", sessionId, request, response);
@@ -158,7 +157,6 @@ public class PrefixRegistrationRequestApiModel {
 
     public ServiceResponseRegisterPrefixSessionEvent commentPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
         ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
-        // TODO Actor unknnown right now, until we get Spring Security
         String actor = authHelper.getCurrentUsername();
         // Locate the prefix registration request session
         PrefixRegistrationSession prefixRegistrationSession = getPrefixRegistrationSession("COMMENT", sessionId, request, response);
@@ -170,10 +168,8 @@ public class PrefixRegistrationRequestApiModel {
         return response;
     }
 
-    // TODO - Reject prefix registration request
     public ServiceResponseRegisterPrefixSessionEvent rejectPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
         ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
-        // TODO Actor unknnown right now, until we get Spring Security
         String actor = authHelper.getCurrentUsername();
         // Locate the prefix registration request session
         PrefixRegistrationSession prefixRegistrationSession = getPrefixRegistrationSession("REJECT", sessionId, request, response);
@@ -184,10 +180,8 @@ public class PrefixRegistrationRequestApiModel {
         return response;
     }
 
-    // TODO - Accept prefix registration request
     public ServiceResponseRegisterPrefixSessionEvent acceptPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
         ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
-        // TODO Actor unknnown right now, until we get Spring Security
         String actor = authHelper.getCurrentUsername();
         // Locate the prefix registration request session
         PrefixRegistrationSession prefixRegistrationSession = getPrefixRegistrationSession("ACCEPT", sessionId, request, response);

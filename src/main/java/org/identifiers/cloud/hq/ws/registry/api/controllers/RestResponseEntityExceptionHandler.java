@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,6 +24,15 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         // Date for easier finding related entries in log files
         Calendar cal = Calendar.getInstance();
         return sdf.format(cal.getTime());
+    }
+
+    @ExceptionHandler(value = { ResourceNotFoundException.class })
+    protected ResponseEntity<Object> handleResourceNotFound (ResourceNotFoundException ex, WebRequest request) {
+        ServiceResponse responseBody = new ServiceResponse()
+                .setApiVersion(ApiCentral.apiVersion)
+                .setErrorMessage(ex.getMessage());
+        return handleExceptionInternal(ex, responseBody, new HttpHeaders(),
+                HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler(value = { RuntimeException.class })

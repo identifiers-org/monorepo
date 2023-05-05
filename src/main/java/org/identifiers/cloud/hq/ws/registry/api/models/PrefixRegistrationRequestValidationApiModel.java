@@ -102,6 +102,14 @@ public class PrefixRegistrationRequestValidationApiModel {
     @Qualifier("PrefixRegistrationRequestValidatorRequesterEmail")
     private PrefixRegistrationRequestValidator requesterEmailValidator;
 
+    @Autowired
+    @Qualifier("PrefixRegistrationRequestValidatorAuthHelpDescription")
+    private PrefixRegistrationRequestValidator authHelpDescriptionValidator;
+
+    @Autowired
+    @Qualifier("PrefixRegistrationRequestValidatorAuthHelpUrl")
+    private PrefixRegistrationRequestValidator authHelpUrlValidator;
+
     // -- Helpers --
 
     /**
@@ -215,5 +223,13 @@ public class PrefixRegistrationRequestValidationApiModel {
 
     public ServiceResponseRegisterPrefixValidateRequest validateRequesterEmail(ServiceRequestRegisterPrefixValidate request) {
         return doValidation(request, requesterEmailValidator);
+    }
+
+    public ServiceResponseRegisterPrefixValidateRequest validateAuthHelpDescription(ServiceRequestRegisterPrefixValidate request) {
+        return doValidation(request, authHelpDescriptionValidator);
+    }
+
+    public ServiceResponseRegisterPrefixValidateRequest validateAuthHelpUrl(ServiceRequestRegisterPrefixValidate request) {
+        return doValidation(request, authHelpUrlValidator);
     }
 }

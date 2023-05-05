@@ -50,7 +50,11 @@ public class ApiAndDataModelsHelper {
                 .setAdditionalInformation(additionalInformation)
                 .setNamespaceEmbeddedInLui(sourceModel.isNamespaceEmbeddedInLui())
                 .setRequesterName(sourceModel.getRequester().getName())
-                .setRequesterEmail(sourceModel.getRequester().getEmail());
+                .setRequesterEmail(sourceModel.getRequester().getEmail())
+                .setProtectedUrls(sourceModel.isProtectedUrls())
+                .setRenderProtectedLanding(sourceModel.isRenderProtectedLanding())
+                .setAuthHelpDescription(sourceModel.getAuthHelpDescription())
+                .setAuthHelpUrl(sourceModel.getAuthHelpUrl());
     }
 
     // NOTE - I don't totally like to have two models with the same name, as it makes the coding more prone to
@@ -87,7 +91,11 @@ public class ApiAndDataModelsHelper {
                 .setInstitution(getInstitutionFrom(resource.getInstitution()))
                 .setLocation(getLocationFrom(resource.getLocation()))
                 .setDeprecated(resource.isDeprecated())
-                .setDeprecationDate(resource.getDeprecationDate());
+                .setDeprecationDate(resource.getDeprecationDate())
+                .setProtectedUrls(resource.isProtectedUrls())
+                .setRenderProtectedLanding(resource.isRenderProtectedLanding())
+                .setAuthHelpDescription(resource.getAuthHelpDescription())
+                .setAuthHelpUrl(resource.getAuthHelpUrl());
     }
 
     public static Namespace getNamespaceFrom(org.identifiers.cloud.hq.ws.registry.data.models.Namespace namespace) {
@@ -124,7 +132,11 @@ public class ApiAndDataModelsHelper {
                 .setProviderName(payload.getProviderName())
                 .setProviderUrlPattern(payload.getProviderUrlPattern())
                 .setRequesterEmail(payload.getRequester().getEmail())
-                .setRequesterName(payload.getRequester().getName());
+                .setRequesterName(payload.getRequester().getName())
+                .setProtectedUrls(payload.isProtectedUrls())
+                .setRenderProtectedLanding(payload.isRenderProtectedLanding())
+                .setAuthHelpDescription(payload.getAuthHelpDescription())
+                .setAuthHelpUrl(payload.getAuthHelpUrl());
     }
 
     // Get a Prefix Registration Request Payload from a Resource Registration Request Payload
@@ -144,6 +156,10 @@ public class ApiAndDataModelsHelper {
                 .setProviderLocation(payload.getProviderLocation())
                 .setProviderName(payload.getProviderName())
                 .setProviderUrlPattern(payload.getProviderUrlPattern())
-                .setRequestedPrefix(payload.getNamespacePrefix());
+                .setRequestedPrefix(payload.getNamespacePrefix())
+                .setProtectedUrls(payload.isProtectedUrls())
+                .setRenderProtectedLanding(payload.isRenderProtectedLanding())
+                .setAuthHelpDescription(payload.getAuthHelpDescription())
+                .setAuthHelpUrl(payload.getAuthHelpUrl());
     }
 }

@@ -106,6 +106,14 @@ public class ResourceManagementApiModel {
     @Qualifier("ResourceRegistrationRequestValidatorRequesterEmail")
     private ResourceRegistrationRequestValidator requesterEmailValidator;
 
+    @Autowired
+    @Qualifier("ResourceRegistrationRequestValidatorAuthHelpDescription")
+    private ResourceRegistrationRequestValidator authHelpDescriptionValidator;
+
+    @Autowired
+    @Qualifier("ResourceRegistrationRequestValidatorAuthHelpUrl")
+    private ResourceRegistrationRequestValidator authHelpUrlValidator;
+
     // Resource Registration Request validation strategy
     @Autowired
     private ResourceRegistrationRequestValidatorStrategy validatorStrategy;
@@ -378,6 +386,14 @@ public class ResourceManagementApiModel {
 
     public ServiceResponseRegisterResourceValidate validateNamespacePrefix(ServiceRequestRegisterResourceValidate request) {
         return doValidation(request, namespacePrefixValidator);
+    }
+
+    public ServiceResponseRegisterResourceValidate validateAuthHelpDescription(ServiceRequestRegisterResourceValidate request) {
+        return doValidation(request, authHelpDescriptionValidator);
+    }
+
+    public ServiceResponseRegisterResourceValidate validateAuthHelpUrl(ServiceRequestRegisterResourceValidate request) {
+        return doValidation(request, authHelpUrlValidator);
     }
 
     // TODO --- Resource Lifecycle Management API

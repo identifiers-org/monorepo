@@ -1,11 +1,10 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -96,4 +95,18 @@ public class Resource {
 
     @ManyToOne
     private Person contactPerson;
+
+
+
+    ////// Protected resource string
+    private boolean protectedUrls;
+
+    private boolean renderProtectedLanding;
+
+    @URL(regexp = "^(http|https).*$")
+    private String authHelpUrl;
+
+    @Column(length = 2000)
+    @Length(min = 50)
+    private String authHelpDescription;
 }

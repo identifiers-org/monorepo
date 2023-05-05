@@ -92,6 +92,14 @@ public class PrefixRegistrationRequestValidatorStrategyFullValidation implements
     @Qualifier("prefixRegistrationRequestValidatorRequester")
     private PrefixRegistrationRequestValidator requesterValidator;
 
+    @Autowired
+    @Qualifier("PrefixRegistrationRequestValidatorAuthHelpDescription")
+    private PrefixRegistrationRequestValidator authHelpDescriptionValidator;
+
+    @Autowired
+    @Qualifier("PrefixRegistrationRequestValidatorAuthHelpUrl")
+    private PrefixRegistrationRequestValidator authHelpUrlValidator;
+
     @Override
     public List<PrefixRegistrationRequestValidator> getValidationChain() {
         return Arrays.asList(
@@ -112,7 +120,9 @@ public class PrefixRegistrationRequestValidatorStrategyFullValidation implements
                 crossedIdRegexPatternAndSampleIdValidator,
                 referencesValidator,
                 additionalInformationValidator,
-                requesterValidator
+                requesterValidator,
+                authHelpDescriptionValidator,
+                authHelpUrlValidator
         );
     }
 }

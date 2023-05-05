@@ -51,7 +51,11 @@ public class DataModelConversionHelper {
                 .setOfficial(true)
                 .setProviderCode(prefixRegistrationRequest.getProviderCode())
                 .setSampleId(prefixRegistrationRequest.getSampleId())
-                .setResourceHomeUrl(prefixRegistrationRequest.getProviderHomeUrl());
+                .setResourceHomeUrl(prefixRegistrationRequest.getProviderHomeUrl())
+                .setAuthHelpDescription(prefixRegistrationRequest.getAuthHelpDescription())
+                .setAuthHelpUrl(prefixRegistrationRequest.getAuthHelpUrl())
+                .setProtectedUrls(prefixRegistrationRequest.isProtectedUrls())
+                .setRenderProtectedLanding(prefixRegistrationRequest.isRenderProtectedLanding());
         return resource;
     }
 
@@ -81,7 +85,11 @@ public class DataModelConversionHelper {
                 .setDescription(resourceRegistrationRequest.getProviderDescription())
                 .setProviderCode(resourceRegistrationRequest.getProviderCode())
                 .setSampleId(resourceRegistrationRequest.getSampleId())
-                .setResourceHomeUrl(resourceRegistrationRequest.getProviderHomeUrl());
+                .setResourceHomeUrl(resourceRegistrationRequest.getProviderHomeUrl())
+                .setAuthHelpDescription(resourceRegistrationRequest.getAuthHelpDescription())
+                .setAuthHelpUrl(resourceRegistrationRequest.getAuthHelpUrl())
+                .setProtectedUrls(resourceRegistrationRequest.isProtectedUrls())
+                .setRenderProtectedLanding(resourceRegistrationRequest.isRenderProtectedLanding());
         return resource;
     }
 }
