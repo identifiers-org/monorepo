@@ -12,7 +12,8 @@ matomoPassword: changethis
 matomoEmail: identifiers-org@ebi.ac.uk
 
 image:
-  tag: 4
+  tag: "4.14.2-debian-11-r10"
+  debug: true
 
 smtpHost: smtp.eu.mailgun.org
 smtpPort: 587
@@ -22,9 +23,12 @@ smtpExistingSecret: idorg-matomo-secrets
 
 allowEmptyPassword: false
 
-containerSecurityContext:
-  runAsNonRoot: false
-  runAsUser: 0
+volumePermissions:
+  enabled: true
+
+# containerSecurityContext:
+#   runAsNonRoot: false
+#   runAsUser: 0
 
 matomoSkipInstall: true
 
