@@ -147,17 +147,19 @@ spec:
               value: {{ .Values.matomo.enabled | quote }}
             - name: MATOMO_BASE_URL
               value: {{ .Values.matomo.base_url | default "" | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_BACKEND_REQUIRED_ROLE
+              value: {{ .Values.actuator_auth.role }}
           ports:
             - containerPort: {{ .Values.registry.port }}
           readinessProbe:
             httpGet:
-              path: /healthApi/readiness_check
+              path: /actuator/health
               port: {{ .Values.registry.port }}
             initialDelaySeconds: 3
             periodSeconds: 10
           livenessProbe:
             httpGet:
-              path: /healthApi/liveness_check
+              path: /actuator/health
               port: {{ .Values.registry.port }}
             initialDelaySeconds: 90
             periodSeconds: 10

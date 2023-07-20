@@ -8,6 +8,9 @@ ingress: #This assumes google cloud ingress
   static_ip_name: idorg-hq
   pre_shared_cert: 'cert-iorg-hq-production-web,cert-iorg-hq-production-auth,cert-iorg-hq-production-api-registry,cert-iorg-hq-production-api-mirid,idorg-test-echo'
 
+actuator_auth:
+  role: ~
+
 postgres:
   ip: ~
   port: 5432
@@ -41,7 +44,7 @@ keycloak:
 
 
 registry:
-  image: "identifiersorg/cloud-hq-ws-registry:1.10.4"
+  image: "identifiersorg/cloud-hq-ws-registry:1.11.0"
   replicas: 2
   requests:
     cpu: 100m
@@ -52,12 +55,12 @@ registry:
     dbname: "dbhqregistry"
     port: 5432
   port: 8180
-  cors_origins: "https://cloud.identifiers.org,https://cloud.identifiers.org,http://identifiers.org,https://identifiers.org,https://registry.identifiers.org,http://labs.identifiers.org,https://labs.identifiers.org,https://www.ebi.ac.uk/biostudies/submissions,http://ves-hx-f2.ebi.ac.uk:8120"
+  cors_origins: "*"
   api_uri: "https://registry.api.identifiers.org"
   base_uri: "https://registry.identifiers.org"
 
 frontend:
-  image: "identifiersorg/cloud-hq-web-frontend:1.7.0"
+  image: "identifiersorg/cloud-hq-web-frontend:1.8.0"
   replicas: 3
   requests:
     cpu: 50m
