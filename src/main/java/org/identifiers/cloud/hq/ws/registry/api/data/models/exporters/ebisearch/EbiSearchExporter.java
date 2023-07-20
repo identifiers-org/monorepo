@@ -10,7 +10,6 @@ import org.identifiers.cloud.hq.ws.registry.models.schemaorg.DataCatalog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;

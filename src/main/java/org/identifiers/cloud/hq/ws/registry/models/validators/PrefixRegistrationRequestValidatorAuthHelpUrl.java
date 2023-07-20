@@ -1,11 +1,13 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators;
 
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
+
 import org.identifiers.cloud.hq.ws.registry.models.helpers.ResourceAccessHelper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+
 
 /**
  * Project: registry

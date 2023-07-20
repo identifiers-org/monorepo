@@ -57,6 +57,10 @@ container_production_build: app_structure
 	@echo "<===|DEVOPS|===> [BUILD] Production container $(container_name):$(tag_version)"
 	@docker build -t $(container_name):$(tag_version) -t $(container_name):latest .
 
+container_dev_build: app_structure
+	@echo "<===|DEVOPS|===> [BUILD] Production container $(container_name):$(tag_version)"
+	@docker build -t $(container_name):dev -t $(container_name):latest .
+
 container_production_push: container_production_build
 	@echo "<===|DEVOPS|===> [PUBLISH]> Production container $(container_name):$(tag_version)"
 	@docker push $(container_name):$(tag_version)

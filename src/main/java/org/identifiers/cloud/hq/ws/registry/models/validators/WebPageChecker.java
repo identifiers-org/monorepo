@@ -1,12 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators;
 
-import lombok.SneakyThrows;
-import org.apache.commons.validator.routines.UrlValidator;
-import org.springframework.http.HttpStatus;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 /**

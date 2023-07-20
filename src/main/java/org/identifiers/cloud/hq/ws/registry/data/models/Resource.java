@@ -97,10 +97,6 @@ public class Resource {
     private Person contactPerson;
 
 
-
-    ////// Protected resource string
-    private boolean protectedUrls;
-
     private boolean renderProtectedLanding;
 
     @URL(regexp = "^(http|https).*$")
