@@ -31,7 +31,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .logout().disable()
                 .formLogin().disable()
-                .anonymous().disable()
                 .oauth2ResourceServer().jwt();
     }
 }
