@@ -17,6 +17,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Random;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.TimeUnit;
@@ -64,11 +66,14 @@ public class LinkChecker extends Thread {
         LinkCheckerReport linkCheckerReport;
         try {
             logger.info("Attending link check request for URL '{}'", linkCheckRequest.getUrl());
-            linkCheckerReport = linkCheckingStrategy.check(linkCheckRequest.getUrl());
-        } catch (LinkCheckerException e) {
-            logger.error("Could not attend link checking request for URL '{}', reason '{}'", linkCheckRequest.getUrl()
-                    , e.getMessage());
-            return null;
+            URL linkCheckRequestUrl = new URL(linkCheckRequest.getUrl());
+            linkCheckerReport = linkCheckingStrategy.check(linkCheckRequestUrl, linkCheckRequest.shouldAccept401or403());
+        } catch (LinkCheckerException | MalformedURLException e) {
+            logger.warn("Could not attend link checking request for URL '{}'", linkCheckRequest.getUrl());
+            logger.debug("Exception thrown", e);
+            linkCheckerReport = new LinkCheckerReport();
+            linkCheckerReport.setUrl(linkCheckRequest.getUrl());
+            linkCheckerReport.setUrlAssessmentOk(false);
         }
         // Log the results
         logger.info("Link Check result for URL '{}', HTTP Status '{}', assessment '{}'",
@@ -146,13 +151,13 @@ public class LinkChecker extends Thread {
                 }
                 // Check URL
                 LinkCheckResult linkCheckResult = attendLinkCheckRequest(linkCheckRequest);
-                if (linkCheckResult != null) {
+                if (linkCheckResult != null) { // TODO FIX - Sometimes a null result here is a result of a check IO error, possibly an offline resource
                     persist(linkCheckResult);
                     announce(linkCheckResult);
                 }
             } catch (RuntimeException e) {
                 // Prevent the thread from crashing on any possible error
-                logger.error("An error has been stopped for preventing the thread from crashing, '{}'", e.getMessage());
+                logger.error("An error has been stopped for preventing the thread from crashing", e);
                 randomWait();
             }
         }
