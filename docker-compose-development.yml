@@ -16,6 +16,7 @@ services:
             - WS_LINK_CHECKER_CONFIG_REDIS_HOST=redis
             - WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST=resolver
             - WS_LINK_CHECKER_CONFIG_DAEMON_PERIODIC_LINK_CHECK_REQUESTER_ENABLED=false
+            - SPRING_PROFILES_ACTIVE=authdisabled
         ports:
             - "8084:8084"
         depends_on:
@@ -29,7 +30,7 @@ services:
             - WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_HOST=host.docker.internal
             - WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_PORT=8083
             - WS_RESOLVER_JVM_MEMORY_MAX=1024m
-            - WS_RESOLVER_CONFIG_APPLICATION_ACTIVE_PROFILE=development
+            - WS_RESOLVER_CONFIG_APPLICATION_ACTIVE_PROFILE=authdisabled
             - WS_RESOLVER_CONFIG_REGISTRY_RESOLUTION_DATASET_ENDPOINT=https://registry.api.identifiers.org/resolutionApi/getResolverDataset
         ports:
             - "8080:8080"
