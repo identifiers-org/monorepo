@@ -96,6 +96,7 @@ public class Resource {
     @ManyToOne
     private Person contactPerson;
 
+    private boolean protectedUrls;
 
     private boolean renderProtectedLanding;
 
