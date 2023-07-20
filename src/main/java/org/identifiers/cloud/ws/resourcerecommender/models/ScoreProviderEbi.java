@@ -4,8 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.ws.resourcerecommender.api.data.models.ResolvedResource;
 import org.springframework.util.PatternMatchUtils;
 
-import java.util.regex.Pattern;
-
 /**
  * Project: resource-recommender
  * Package: org.identifiers.cloud.ws.resourcerecommender.models

@@ -36,12 +36,13 @@ public class RecommendationStrategyWeighted implements RecommendationStrategy {
                                     * weightedScore.getScoreProvider().getScoreForResource(resolvedResource))
                     .sum() / 100;
         }
-        log.info(String.format("Computed recommendation score within namespace '%s', for resolved resource ID '%s', MIR ID '%s', URL '%s' is '%d'",
+        log.info("Computed recommendation score within namespace '{}', for resolved resource ID '{}', MIR ID '{}', URL '{}'{} is '{}'",
                 resolvedResource.getNamespacePrefix(),
                 resolvedResource.getId(),
                 resolvedResource.getMirId(),
                 resolvedResource.getCompactIdentifierResolvedUrl(),
-                score));
+                resolvedResource.isProtectedUrls() ? "(Protected)" : "",
+                score);
         return score;
     }
 

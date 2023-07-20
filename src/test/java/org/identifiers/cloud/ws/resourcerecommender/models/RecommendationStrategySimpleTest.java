@@ -7,6 +7,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Collections;
@@ -28,6 +29,7 @@ import static org.hamcrest.Matchers.is;
 // TODO - These unit tests are no longer valid with the new recommendation strategies
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ActiveProfiles("authdisabled")
 @Ignore
 public class RecommendationStrategySimpleTest {
     private static List<ResolvedResource> officialResolvedResources;

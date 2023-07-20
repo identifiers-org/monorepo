@@ -31,15 +31,20 @@ public class ScoreProviderOnReliability implements ScoreProvider {
     public int getScoreForResource(ResolvedResource resolvedResource) {
         ServiceResponseScoringRequest response = ApiServicesFactory
                 .getLinkCheckerService(linkCheckerServiceHost, linkCheckerServicePort)
-                .getScoreForResolvedId(resolvedResource.getId(), resolvedResource.getCompactIdentifierResolvedUrl());
+                .getScoreForResolvedId(
+                        resolvedResource.getId(),
+                        resolvedResource.getCompactIdentifierResolvedUrl(),
+                        resolvedResource.isProtectedUrls());
         if (response.getHttpStatus() != HttpStatus.OK) {
             // Just report the error an keep going with the default scoring
             logger.error("FAILED Reliability score for " +
                             "resource ID '{}', " +
                             "URL '{}', " +
+                            "ProtectedUrls? '{}', " +
                             "reason '{}'",
                     resolvedResource.getId(),
                     resolvedResource.getCompactIdentifierResolvedUrl(),
+                    resolvedResource.isProtectedUrls(),
                     response.getErrorMessage());
         }
         logger.debug("ID {} reliability score: {}", resolvedResource.getId(), response.getPayload().getScore());
@@ -48,7 +53,7 @@ public class ScoreProviderOnReliability implements ScoreProvider {
 
     @Override
     public int getScoreForProvider(ResolvedResource resolvedResource) {
-        // TODO - Right now this is not going to be used, and there may not be anough information in a resolved resource
+        // TODO - Right now this is not going to be used, and there may not be enough information in a resolved resource
         // TODO - for addressing providers
         int defaultScoring = ((MAX_SCORE + MIN_SCORE) / 2);
         logger.warn("NOT IMPLEMENTED, reliability scoring for provider based on resolved " +

@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.resourcerecommender.configurations;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -9,7 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 @EnableWebSecurity
-public class LoggersSecurityConfiguration extends WebSecurityConfigurerAdapter {
+@Profile("authenabled")
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Value("${org.identifiers.cloud.ws.resourcerecommender.requiredrole}")
     String requiredRole; // Assumed that user gets role directly
 
