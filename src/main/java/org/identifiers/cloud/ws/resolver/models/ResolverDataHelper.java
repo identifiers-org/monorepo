@@ -101,6 +101,7 @@ public class ResolverDataHelper {
                         .map(resource -> getResolvedResourceFrom(resource)
                                 .setDeprecatedNamespace(parsedCompactIdentifier.isDeprecatedNamespace())
                                 .setNamespaceDeprecationDate(parsedCompactIdentifier.getNamespaceDeprecationDate())
+                                .setRenderDeprecatedLanding(parsedCompactIdentifier.isRenderDeprecatedLanding() | resource.isRenderProtectedLanding())
                                 .setNamespacePrefix(parsedCompactIdentifier.getNamespace())
                                 .setCompactIdentifierResolvedUrl(resolveUrlForLocalId(resource.getUrlPattern(),
                                         (parsedCompactIdentifier.isNamespaceEmbeddedInLui() ? compactIdParsingHelper.trimOutEmbeddedNamespacePrefixFromLui(parsedCompactIdentifier.getLocalId()) : parsedCompactIdentifier.getLocalId())))

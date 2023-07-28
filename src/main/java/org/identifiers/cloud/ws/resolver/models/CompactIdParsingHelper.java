@@ -50,9 +50,11 @@ public class CompactIdParsingHelper {
     public ParsedCompactIdentifier parseCompactIdRequest(String rawCompactIdentifier) {
         ParsedCompactIdentifier parsedCompactIdentifier = new ParsedCompactIdentifier().setRawRequest(rawCompactIdentifier);
         // Check if we got just a namespace
-        if (namespaceRespository.findByPrefix(rawCompactIdentifier.toLowerCase()) != null) {
+        Namespace namespace = namespaceRespository.findByPrefix(rawCompactIdentifier.toLowerCase());
+        if (namespace != null) {
             // It's just a namespace, the whole thing
-            parsedCompactIdentifier.setNamespace(rawCompactIdentifier.toLowerCase());
+            parsedCompactIdentifier.setNamespace(namespace.getPrefix());
+            parsedCompactIdentifier.setRenderDeprecatedLanding(namespace.isRenderDeprecatedLanding());
             return parsedCompactIdentifier;
         }
         // Look for the first '/'
@@ -137,6 +139,7 @@ public class CompactIdParsingHelper {
             Namespace foundNamespace = namespaceRespository.findByPrefix(parsedCompactIdentifier.getNamespace());
             if ((foundNamespace != null) && (foundNamespace.isDeprecated())) {
                 parsedCompactIdentifier.setDeprecatedNamespace(true);
+                parsedCompactIdentifier.setRenderDeprecatedLanding(foundNamespace.isRenderDeprecatedLanding());
                 parsedCompactIdentifier.setNamespaceDeprecationDate(foundNamespace.getDeprecationDate());
             }
         }
