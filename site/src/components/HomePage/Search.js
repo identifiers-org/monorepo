@@ -176,9 +176,8 @@ class Search extends React.Component {
       // props: { history },
       state: { query }
     } = this;
-    const navigate = useNavigate();
     if (this.handleEvaluateSearch()) {
-      navigate(`resolve?query=${query}`);
+      this.props.navigate(`resolve?query=${query}`);
     }
   }
 
@@ -279,4 +278,7 @@ const mapDispatchToProps = dispatch => ({
   setConfig: (config) => dispatch(setConfig(config))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default connect(mapStateToProps, mapDispatchToProps)(props => {
+  const navigate = useNavigate();
+  return <Search {...props} navigate={navigate} />
+});
