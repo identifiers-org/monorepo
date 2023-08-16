@@ -60,7 +60,7 @@ registry:
   base_uri: "https://registry.identifiers.org"
 
 frontend:
-  image: "identifiersorg/cloud-hq-web-frontend:1.8.0"
+  image: "identifiersorg/cloud-hq-web-frontend:1.8.1"
   replicas: 3
   requests:
     cpu: 50m
