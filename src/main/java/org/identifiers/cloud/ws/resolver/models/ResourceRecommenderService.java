@@ -37,7 +37,9 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
     @Override
     public List<ResourceRecommendation> getRecommendations(List<org.identifiers.cloud.ws.resolver.models.ResolvedResource> resources) throws ResourceRecommenderStrategyException {
         // Whatever happens, the client library will always return a default empty answer that is valid
-        if (resources.size() == 1) {
+        if (resources.isEmpty()) {
+            return Collections.emptyList();
+        } else if (resources.size() == 1) {
             return resources.stream().map(this::getResolverLibapiResolverResource).map(resolvedResource ->
                     new ResourceRecommendation()
                             .setRecommendationExplanation("Only resource available for this CID")
