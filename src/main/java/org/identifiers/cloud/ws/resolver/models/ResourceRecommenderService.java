@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,32 +37,44 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
     @Override
     public List<ResourceRecommendation> getRecommendations(List<org.identifiers.cloud.ws.resolver.models.ResolvedResource> resources) throws ResourceRecommenderStrategyException {
         // Whatever happens, the client library will always return a default empty answer that is valid
-        return ApiServicesFactory
-                .getResourceRecommenderService(resourceRecommenderServiceHost, resourceRecommenderServicePort)
-                .requestRecommendations(resources.parallelStream()
-                        .map(resolvedResource ->
-                                new ResolvedResource()
-                                        .setOfficial(resolvedResource.isOfficial())
-                                        .setCompactIdentifierResolvedUrl(resolvedResource.getCompactIdentifierResolvedUrl())
-                                        .setId(Long.toString(resolvedResource.getId()))
-                                        .setResourceHomeUrl(resolvedResource.getResourceHomeUrl())
-                                        .setDeprecatedNamespace(resolvedResource.isDeprecatedNamespace())
-                                        .setNamespaceDeprecationDate(resolvedResource.getNamespaceDeprecationDate())
-                                        .setDeprecatedResource(resolvedResource.isDeprecatedResource())
-                                        .setResourceDeprecationDate(resolvedResource.getResourceDeprecationDate())
-                                        .setMirId(resolvedResource.getMirId())
-                                        .setNamespacePrefix(resolvedResource.getNamespacePrefix())
-                                        .setProtectedUrls(resolvedResource.isProtectedUrls())
-                                        .setAuthHelpUrl(resolvedResource.getAuthHelpUrl())
-                                        .setAuthHelpDescription(resolvedResource.getAuthHelpDescription())
-                                        .setRenderProtectedLanding(resolvedResource.isRenderProtectedLanding())
-                                        .setLocation(
-                                                new Location()
-                                                        .setCountryName(resolvedResource.getLocation().getCountryName())
-                                                        .setCountryCode(resolvedResource.getLocation().getCountryCode())))
-                        .collect(Collectors.toList()))
-                .getPayload()
-                .getResourceRecommendations();
+        if (resources.isEmpty()) {
+            return Collections.emptyList();
+        } else if (resources.size() == 1) {
+            return resources.stream().map(this::getResolverLibapiResolverResource).map(resolvedResource ->
+                    new ResourceRecommendation()
+                            .setRecommendationExplanation("Only resource available for this CID")
+                            .setRecommendationIndex(100)
+                            .setId(resolvedResource.getId())
+            ).collect(Collectors.toList());
+        } else {
+            return ApiServicesFactory
+                    .getResourceRecommenderService(resourceRecommenderServiceHost, resourceRecommenderServicePort)
+                    .requestRecommendations(resources.parallelStream()
+                            .map(this::getResolverLibapiResolverResource)
+                            .collect(Collectors.toList()))
+                    .getPayload()
+                    .getResourceRecommendations();
+        }
+    }
 
+    ResolvedResource getResolverLibapiResolverResource(org.identifiers.cloud.ws.resolver.models.ResolvedResource resolvedResource) {
+        return new ResolvedResource()
+                .setOfficial(resolvedResource.isOfficial())
+                .setCompactIdentifierResolvedUrl(resolvedResource.getCompactIdentifierResolvedUrl())
+                .setId(Long.toString(resolvedResource.getId()))
+                .setResourceHomeUrl(resolvedResource.getResourceHomeUrl())
+                .setDeprecatedNamespace(resolvedResource.isDeprecatedNamespace())
+                .setNamespaceDeprecationDate(resolvedResource.getNamespaceDeprecationDate())
+                .setDeprecatedResource(resolvedResource.isDeprecatedResource())
+                .setResourceDeprecationDate(resolvedResource.getResourceDeprecationDate())
+                .setMirId(resolvedResource.getMirId())
+                .setNamespacePrefix(resolvedResource.getNamespacePrefix())
+                .setProtectedUrls(resolvedResource.isProtectedUrls())
+                .setAuthHelpUrl(resolvedResource.getAuthHelpUrl())
+                .setAuthHelpDescription(resolvedResource.getAuthHelpDescription())
+                .setRenderProtectedLanding(resolvedResource.isRenderProtectedLanding())
+                .setLocation(new Location()
+                        .setCountryName(resolvedResource.getLocation().getCountryName())
+                        .setCountryCode(resolvedResource.getLocation().getCountryCode()));
     }
 }
