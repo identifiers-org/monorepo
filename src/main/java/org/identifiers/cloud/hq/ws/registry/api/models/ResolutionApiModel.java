@@ -7,6 +7,8 @@ import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseGetReso
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 
 /**
  * Project: registry
@@ -22,6 +24,7 @@ public class ResolutionApiModel {
     private NamespaceApiService namespaceApiService;
 
     // Model API
+    @Transactional(readOnly = true)
     public ServiceResponseGetResolverDataset getResolverDataset() {
         // Default response
         ServiceResponseGetResolverDataset response = new ServiceResponseGetResolverDataset();
