@@ -149,6 +149,8 @@ spec:
               value: {{ .Values.matomo.base_url | default "" | quote }}
             - name: HQ_WS_REGISTRY_CONFIG_BACKEND_REQUIRED_ROLE
               value: {{ .Values.actuator_auth.role }}
+            - name: SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE
+              value: "35"
           ports:
             - containerPort: {{ .Values.registry.port }}
           readinessProbe:
