@@ -34,5 +34,6 @@ public class ParsedCompactIdentifier implements Serializable {
     private boolean namespaceEmbeddedInLui = false;
     // Deprecation Information
     private boolean deprecatedNamespace = false;
+    private boolean renderDeprecatedLanding = false;
     private Date namespaceDeprecationDate;
 }

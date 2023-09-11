@@ -60,4 +60,5 @@ public class Namespace implements Serializable {
     // Deprecation / deactivation
     private boolean deprecated;
     private Date deprecationDate;
+    private boolean renderDeprecatedLanding = false;
 }
