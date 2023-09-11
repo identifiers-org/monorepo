@@ -92,6 +92,7 @@ public class ApiAndDataModelsHelper {
                 .setLocation(getLocationFrom(resource.getLocation()))
                 .setDeprecated(resource.isDeprecated())
                 .setDeprecationDate(resource.getDeprecationDate())
+                .setRenderDeprecatedLanding(resource.isRenderDeprecatedLanding())
                 .setProtectedUrls(resource.isProtectedUrls())
                 .setRenderProtectedLanding(resource.isRenderProtectedLanding())
                 .setAuthHelpDescription(resource.getAuthHelpDescription())
@@ -111,7 +112,8 @@ public class ApiAndDataModelsHelper {
                 .setSampleId(namespace.getSampleId())
                 .setNamespaceEmbeddedInLui(namespace.isNamespaceEmbeddedInLui())
                 .setDeprecated(namespace.isDeprecated())
-                .setDeprecationDate(namespace.getDeprecationDate());
+                .setDeprecationDate(namespace.getDeprecationDate())
+                .setRenderDeprecatedLanding(namespace.isRenderDeprecatedLanding());
     }
 
     // Get a Resource Registration Request from the request payload

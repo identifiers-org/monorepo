@@ -11,6 +11,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Past;
 import java.util.Date;
 import java.util.List;
 
@@ -77,8 +79,27 @@ public class Namespace {
     private boolean deprecated = false;
 
     // Information on when this namespace was deprecated
+    @Past
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Date deprecationDate;
+    private Date deprecationDate; // Date we marked as deprecated
+    @Past
+    private Date deprecationOfflineDate; // Approximation of when date was made unavailable
+
+    private boolean renderDeprecatedLanding = false;
+    private String deprecationStatement;
+    private String infoOnPostmortemAccess;
+
+    @OneToOne
+    private Namespace successor; // Namespace that should be used in case of deprecation
+
+    @AssertTrue(message = "Deprecation information is not allowed for not deprecated namespaces")
+    public boolean deprecatedValuesOnlyIfDeprecated() {
+        boolean hasAnyDeprecationValue = deprecationDate != null || deprecationOfflineDate != null ||
+                                         deprecationStatement != null || infoOnPostmortemAccess != null ||
+                                         successor != null;
+        return deprecated || !hasAnyDeprecationValue;
+    }
+
 
     // A namespace level sample ID
     @Column(nullable = false)

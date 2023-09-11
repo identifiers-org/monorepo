@@ -45,10 +45,14 @@ public class Resource implements Serializable {
     private boolean deprecated;
     // Information on when this resource was deprecated
     private Date deprecationDate;
+    private Date deprecationOfflineDate; // Approximation of when date was made unavailable
+    private boolean renderDeprecatedLanding;
+    private String deprecationStatement;
 
     private boolean protectedUrls;
     private boolean renderProtectedLanding;
     private String authHelpUrl;
     private String authHelpDescription;
+
 
 }

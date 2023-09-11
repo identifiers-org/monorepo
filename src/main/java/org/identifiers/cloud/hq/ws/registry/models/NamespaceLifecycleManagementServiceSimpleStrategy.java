@@ -98,6 +98,12 @@ public class NamespaceLifecycleManagementServiceSimpleStrategy implements Namesp
                 // way cross checks from resource lifecycle management didn't make sense, they don't make sense either
                 // in the other direction
                 namespace.setDeprecated(false);
+                namespace.setRenderDeprecatedLanding(false);
+                namespace.setSuccessor(null);
+                namespace.setDeprecationDate(null);
+                namespace.setDeprecationOfflineDate(null);
+                namespace.setDeprecationStatement(null);
+                namespace.setInfoOnPostmortemAccess(null);
                 // By keeping the previous deprecation date, we have information on when was the last time the namespace was deactivated
                 String message = String.format("Namespace with ID '%d', MIR ID '%s' SUCCESSFULLY RE-ACTIVATED", namespace.getId(), namespace.getMirId());
                 report.setAdditionalInformation(message);

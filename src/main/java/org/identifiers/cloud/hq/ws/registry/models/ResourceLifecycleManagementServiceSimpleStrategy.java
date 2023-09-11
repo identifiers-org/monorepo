@@ -124,8 +124,11 @@ public class ResourceLifecycleManagementServiceSimpleStrategy implements Resourc
                 // TODO Reactivate the resource
                 resource.setUrlPattern(operationContext.getResourceReactivationUrlPattern());
                 resource.setDeprecated(false);
+                resource.setRenderProtectedLanding(false);
+                resource.setDeprecationDate(null);
+                resource.setDeprecationStatement(null);
                 // By keeping previous deprecation date, we have information on when was the last time the resource was deactivated
-                String message = String.format("Resource with ID '%d', MIR ID '%s' SUCCESSFULY RE-ACTIVATED, its new URL pattern is '%s'", resource.getId(), resource.getMirId(), resource.getUrlPattern());
+                String message = String.format("Resource with ID '%d', MIR ID '%s' SUCCESSFULLY RE-ACTIVATED, its new URL pattern is '%s'", resource.getId(), resource.getMirId(), resource.getUrlPattern());
                 report.setAdditionalInformation(message);
                 log.info(message);
             }

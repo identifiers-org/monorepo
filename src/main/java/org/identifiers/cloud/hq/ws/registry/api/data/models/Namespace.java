@@ -52,4 +52,9 @@ public class Namespace implements Serializable {
     private boolean deprecated;
     // Information on when this namespace was deprecated
     private Date deprecationDate;
+    private Date deprecationOfflineDate; // Approximation of when date was made unavailable
+    private boolean renderDeprecatedLanding;
+    private String deprecationStatement;
+    private String infoOnPostmortemAccess;
+    private Namespace successor; // Namespace that should be used in case of deprecation
 }
