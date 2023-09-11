@@ -139,8 +139,8 @@ public class CompactIdParsingHelper {
             Namespace foundNamespace = namespaceRespository.findByPrefix(parsedCompactIdentifier.getNamespace());
             if ((foundNamespace != null) && (foundNamespace.isDeprecated())) {
                 parsedCompactIdentifier.setDeprecatedNamespace(true);
-                parsedCompactIdentifier.setRenderDeprecatedLanding(foundNamespace.isRenderDeprecatedLanding());
                 parsedCompactIdentifier.setNamespaceDeprecationDate(foundNamespace.getDeprecationDate());
+                parsedCompactIdentifier.setRenderDeprecatedLanding(foundNamespace.isRenderDeprecatedLanding());
             }
         }
         ObjectMapper objectMapper = new ObjectMapper();
