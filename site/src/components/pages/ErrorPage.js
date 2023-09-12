@@ -8,6 +8,9 @@ const ErrorPage = ({defaultMessage}) => {
   // const { trackPageView } = useMatomo()
   // trackPageView(); // Will result in duplicated measurements if Spring renders this in failed resolution.
 
+  const error = useRouteError()
+  if (error) console.error(error)
+
   let title = Cookies.get('title');
   if (title === undefined) {
     title = "An error has happened";

@@ -16,7 +16,7 @@ services:
         volumes:
             - "registry:/var/lib/postgresql/data"
     hqregistry:
-        container_name: registry
+        container_name: hqregistry
         image: identifiersorg/cloud-hq-ws-registry
         environment:
             - HQ_WS_REGISTRY_CONFIG_JDBC_URL=jdbc:postgresql://postgresql:5432/devdatabase
@@ -33,7 +33,7 @@ services:
             - postgresql
             - hqmiridcontroller
     hqmiridcontroller:
-        container_name: mirid
+        container_name: hqmiridcontroller
         image: identifiersorg/cloud-hq-ws-mirid-controller
         environment:
             - HQ_WS_MIRID_CONTROLLER_CONFIG_JDBC_URL=jdbc:postgresql://postgresql:5432/devdatabase
