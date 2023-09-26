@@ -59,7 +59,6 @@ export const patchNamespace = (id, newNamespace) => {
       console.error("Failed namespace patch")
       return response;
     }
-    console.error("Not failed namespace patch")
 
     if (successor !== undefined) {
       requestUrl = `${config.registryApi}/restApi/namespaces/search/findByPrefix?prefix=${successor}`;
@@ -77,7 +76,6 @@ export const patchNamespace = (id, newNamespace) => {
         console.error("Failed namespace GET by prefix")
         return response;
       }
-      console.error("Not failed namespace GET by prefix")
 
       const jsonResponse = await response.json();
       successor = jsonResponse["_links"].self.href;
@@ -94,6 +92,8 @@ export const patchNamespace = (id, newNamespace) => {
         body: successor
       };
       return await fetch(requestUrl, init);
+    } else {
+      return response;
     }
   };
 };
