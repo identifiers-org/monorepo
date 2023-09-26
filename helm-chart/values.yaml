@@ -60,10 +60,10 @@ registry:
   base_uri: "https://registry.identifiers.org"
 
 frontend:
-  image: "identifiersorg/cloud-hq-web-frontend:1.8.2"
+  image: "identifiersorg/cloud-hq-web-frontend:1.9.1"
   replicas: 3
   requests:
-    cpu: 50m
+    cpu: 10m
     memory: 64Mi
   port: 80
 
@@ -92,8 +92,8 @@ echo_headers:
   replicas: 1
   port: 8080
   requests:
-    memory: 64Mi
-    cpu: 50m
+    memory: 10Mi
+    cpu: 5m
 
 nodeAffinityRequirements:
   - label: idorg-node-reliability
