@@ -4,11 +4,20 @@ import {connect} from "react-redux";
 import Spinner from "../common/Spinner";
 
 import RegistrationRequestField from "./RegistrationRequestField";
-import {handleInstitutionIsProviderChange, handleRorAutocomplete, PrefixAutoCompleter} from "./RequestFormsUtils";
+import {
+  cleanRequestValues,
+  handleInstitutionIsProviderChange,
+  handleRorAutocomplete,
+  PrefixAutoCompleter
+} from "./RequestFormsUtils";
 import {LoadFormButton, SaveFormButton} from "./LocalStorageFormikButtons";
 import {config} from "../../config/Config";
 
 export const submitResourceRequest = (values) => {
+  // Fixing values object
+  // TODO - This would be better done by yup on the schema definition but it doesn't seem to work with formik
+  values = cleanRequestValues(values)
+
   const requestBody = {
     apiVersion: "1.0",
     payload: {

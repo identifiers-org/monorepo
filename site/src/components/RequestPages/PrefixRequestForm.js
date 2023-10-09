@@ -4,12 +4,16 @@ import {Form} from "formik";
 
 import RegistrationRequestField from "./RegistrationRequestField";
 import {LoadFormButton, SaveFormButton} from "./LocalStorageFormikButtons";
-import {handleInstitutionIsProviderChange, handleRorAutocomplete} from "./RequestFormsUtils"
+import { cleanRequestValues, handleInstitutionIsProviderChange, handleRorAutocomplete } from "./RequestFormsUtils"
 
 import Spinner from "../common/Spinner";
 import {config} from "../../config/Config";
 
 export const submitPrefixRequest = (values) => {
+  // Fixing values object
+  // TODO - This would be better done by yup on the schema definition but it doesn't seem to work with formik
+  values = cleanRequestValues(values)
+
   const requestBody = {
     apiVersion: "1.0",
     payload: {
@@ -30,7 +34,7 @@ export const submitPrefixRequest = (values) => {
 
   // Make request and update the store.
   const requestUrl = `${config.registryApi}/${config.prefixRequestEndpoint}`;
-  return fetch(requestUrl, fetch_options)
+  return fetch(requestUrl, fetch_options);
 }
 
 const PrefixRequestForm = (props) => {

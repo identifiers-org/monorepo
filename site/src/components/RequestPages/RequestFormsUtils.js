@@ -7,6 +7,21 @@ import {swalError} from "../../utils/swalDialogs";
 import {getNamespacesFromRegistry} from "../../actions/NamespaceList";
 
 
+export const cleanRequestValues = (values) => {
+  for (let prop in values) {
+    if (prop !== "supportingReferences" && Object.hasOwn(values, prop) && values[prop] === "") {
+      values[prop] = null;
+    }
+  }
+  if (values.protectedUrls === false) {
+    values.authHelpUrl = null;
+    values.authHelpDescription = null;
+  }
+  return values;
+}
+
+
+
 
 
 

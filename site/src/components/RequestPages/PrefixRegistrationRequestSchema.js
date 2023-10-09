@@ -76,7 +76,7 @@ const PrefixRegistrationRequestSchema = object({
     .matches(/^http/, "Must be a http(s) URL")
     .validatePrefixRequestWithRegistryEndpoint(),
   providerCode: string().label("Provider code")
-    .notRequired().trim().validatePrefixRequestWithRegistryEndpoint(),
+    .required().trim().validatePrefixRequestWithRegistryEndpoint(),
   providerLocation: string().label("Provider location")
     .required().trim().validatePrefixRequestWithRegistryEndpoint(),
   providerUrlPattern: string().label("Provider URL pattern")

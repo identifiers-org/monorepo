@@ -58,7 +58,7 @@ const ResourceRegistrationRequestSchema = object({
     .matches(/^http/, "Must be a http(s) URL")
     .validateResourceRequestWithRegistryEndpoint(),
   providerCode: string().label("Provider code")
-    .notRequired().trim().validateResourceRequestWithRegistryEndpoint(),
+    .required().trim().validateResourceRequestWithRegistryEndpoint(),
   providerLocation: string().label("Provider location")
     .required().trim().validateResourceRequestWithRegistryEndpoint(),
   providerUrlPattern: string().label("Provider URL pattern")
