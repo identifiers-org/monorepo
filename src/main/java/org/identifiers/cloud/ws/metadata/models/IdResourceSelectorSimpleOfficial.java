@@ -14,8 +14,9 @@ import java.util.stream.Collectors;
  * Timestamp: 2018-02-12 11:21
  * ---
  */
-@Component
-@Profile("disabled")
+//@Component
+//@Profile("disabled")
+@Deprecated
 public class IdResourceSelectorSimpleOfficial implements IdResourceSelector {
     @Override
     public ResolvedResource selectResource(List<ResolvedResource> resources) throws IdResourceSelectorException {

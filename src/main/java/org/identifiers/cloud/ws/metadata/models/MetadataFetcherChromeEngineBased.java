@@ -16,7 +16,9 @@ import javax.annotation.PreDestroy;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -35,7 +37,7 @@ public class MetadataFetcherChromeEngineBased implements MetadataFetcher {
     private String pathChromedriver;
 
     private ChromeDriverService chromeDriverService;
-    private ChromeOptions chromeOptions =
+    private final ChromeOptions chromeOptions =
             new ChromeOptions()
                     .setHeadless(true)
                     .addArguments("--disable-gpu",
@@ -67,15 +69,15 @@ public class MetadataFetcherChromeEngineBased implements MetadataFetcher {
     @Override
     public Object fetchMetadataFor(String url) throws MetadataFetcherException {
         logger.info("Connecting to google chrome driver");
-        WebDriver driver = new RemoteWebDriver(chromeDriverService.getUrl(), chromeOptions);
-        List<Object> metadataObjects = new ArrayList<>();
+        RemoteWebDriver driver = new RemoteWebDriver(chromeDriverService.getUrl(), chromeOptions);
+        List<Object> metadataObjects = Collections.emptyList();
         try {
             logger.info("Using Google Chrome driver to get URL '{}' content", url);
-            driver.get(url);
-            //logger.info("Google Chrome driver for URL '{}', content\n{}", url, driver.getPageSource());
+            driver.get(url); // FIXME: Not sure if this waits for all elements to load
+
             String jsonLdXpathQuery = "//script[@type='application/ld+json']";
-            List<WebElement> jsonLdWebElements = ((RemoteWebDriver) driver).findElementsByXPath(jsonLdXpathQuery);
-            //logger.info("For URL '{}', #{} JSON-LD formatted elements found!", url, jsonLdWebElements.size());
+            List<WebElement> jsonLdWebElements = driver.findElementsByXPath(jsonLdXpathQuery);
+
             ObjectMapper mapper = new ObjectMapper();
             metadataObjects = jsonLdWebElements.stream().map(webElement -> {
                 try {
@@ -84,7 +86,7 @@ public class MetadataFetcherChromeEngineBased implements MetadataFetcher {
                     logger.error("MALFORMED METADATA for URL '{}', metadata '{}'", url, webElement.getAttribute("innerText"));
                 }
                 return null;
-            }).filter(item -> item != null).collect(Collectors.toList());
+            }).filter(Objects::nonNull).collect(Collectors.toList());
             logger.info("For URL '{}', #{} metadata entries recovered, out of #{} metadata entries",
                     url, metadataObjects.size(), jsonLdWebElements.size());
         } finally {

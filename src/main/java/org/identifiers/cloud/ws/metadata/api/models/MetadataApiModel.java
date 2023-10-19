@@ -44,8 +44,7 @@ public class MetadataApiModel {
         this.metadataExtractionStrategy = metadataExtractionStrategy;
     }
 
-    private ServiceResponseFetchMetadata createDefaultResponseFetchMetadata(HttpStatus httpStatus, String
-            errorMessage) {
+    private ServiceResponseFetchMetadata createDefaultResponseFetchMetadata(HttpStatus httpStatus, String errorMessage) {
         ServiceResponseFetchMetadata response = new ServiceResponseFetchMetadata();
         response.setApiVersion(ApiCentral.apiVersion)
                 .setHttpStatus(httpStatus)
@@ -54,8 +53,7 @@ public class MetadataApiModel {
         return response;
     }
 
-    private ServiceResponseFetchMetadataForUrl createDefaultResponseFetchMetadataForUrl(HttpStatus httpStatus, String
-            errorMessage) {
+    private ServiceResponseFetchMetadataForUrl createDefaultResponseFetchMetadataForUrl(HttpStatus httpStatus, String errorMessage) {
         ServiceResponseFetchMetadataForUrl response = new ServiceResponseFetchMetadataForUrl();
         response.setApiVersion(ApiCentral.apiVersion)
                 .setHttpStatus(httpStatus)
@@ -72,8 +70,7 @@ public class MetadataApiModel {
         try {
             resources = idResolver.resolve(compactId);
         } catch (IdResolverException e) {
-            response.setErrorMessage(String.format("FAILED to fetch metadata for Compact ID '%s', " +
-                            "because '%s'",
+            response.setErrorMessage(String.format("FAILED to fetch metadata for Compact ID '%s', because '%s'",
                     compactId,
                     e.getMessage()));
             // TODO I need to refine the error reporting here to correctly flag errors as client or server side

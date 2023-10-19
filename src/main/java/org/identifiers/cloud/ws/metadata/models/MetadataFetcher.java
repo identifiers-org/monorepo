@@ -8,7 +8,5 @@ package org.identifiers.cloud.ws.metadata.models;
  * ---
  */
 public interface MetadataFetcher {
-
-    // TODO - Create an implementation based on a Chromium web driver
     Object fetchMetadataFor(String url) throws MetadataFetcherException;
 }

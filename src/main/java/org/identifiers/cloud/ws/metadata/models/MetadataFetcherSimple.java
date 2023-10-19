@@ -22,9 +22,10 @@ import java.util.stream.Collectors;
  * Timestamp: 2018-02-09 16:31
  * ---
  */
-@Component
-@Scope("prototype")
-@Profile("disabled")
+//@Component
+//@Scope("prototype")
+//@Profile("disabled")
+@Deprecated
 public class MetadataFetcherSimple implements MetadataFetcher {
     // TODO - Is it worth updating this one to use the new error codes in the exception?
     private static Logger logger = LoggerFactory.getLogger(MetadataFetcherSimple.class);

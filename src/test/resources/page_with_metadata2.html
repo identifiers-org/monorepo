@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html xmlns="//www.w3.org/1999/xhtml" xml:lang="en-gb" lang="en-gb" dir="ltr"><head>
+	
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="pathway,reactions,graph,bioinformatics">
+	<meta name="robots" content="index, follow">
+	<meta name="description" content="Reactome is pathway database which provides intuitive bioinformatics tools for the visualisation, interpretation and analysis of pathway knowledge.">
+	<meta name="generator" content="Joomla! - Open Source Content Management">
+	<title>Reactome | Signaling by EGFR</title>
+	<link href="https://reactome.org/templates/favourite/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+	<link href="page_with_metadata2_files/content.css" rel="stylesheet" type="text/css">
+	<link href="page_with_metadata2_files/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="page_with_metadata2_files/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+	<link href="page_with_metadata2_files/favth-bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="page_with_metadata2_files/favsocial.css" rel="stylesheet" type="text/css">
+	<link href="page_with_metadata2_files/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+</style>
+	<script type="application/json" class="joomla-script-options new">{"csrf.token":"f10282e90e1770fa3c928f28b406bc6b","system.paths":{"root":"","base":""}}</script>
+	<script src="page_with_metadata2_files/jquery.min.js" type="text/javascript"></script>
+	<script src="page_with_metadata2_files/jquery-noconflict.js" type="text/javascript"></script>
+	<script src="page_with_metadata2_files/jquery-migrate.min.js" type="text/javascript"></script>
+	<script src="page_with_metadata2_files/caption.js" type="text/javascript"></script>
+	<script src="page_with_metadata2_files/core.js" type="text/javascript"></script>
+	<script src="page_with_metadata2_files/bootstrap.min.js" type="text/javascript"></script>
+	<script src="page_with_metadata2_files/favth-bootstrap.js" type="text/javascript"></script>
+	<script src="page_with_metadata2_files/clipboard.min.js" type="text/javascript"></script>
+	<script src="page_with_metadata2_files/citation-query.js" type="text/javascript"></script>
+	<script src="page_with_metadata2_files/jquery.autocomplete.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+jQuery(window).on('load',  function() {
+				new JCaption('img.caption');
+			});
+	</script>
+
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- STYLESHEETS -->
+    <!-- Custom: type is not needed, remove it -->
+    <!-- icons -->
+  	<link rel="stylesheet" href="page_with_metadata2_files/font-awesome.min.css">
+    <!-- admin -->
+    <link rel="stylesheet" href="page_with_metadata2_files/admin.css">
+    <!-- cms -->
+    <link rel="stylesheet" href="page_with_metadata2_files/cms.css">
+    <!-- theme -->
+    <link rel="stylesheet" href="page_with_metadata2_files/theme.css">
+    <!-- style -->
+    <link rel="stylesheet" href="page_with_metadata2_files/style.css">
+    <!-- styles -->
+    <link rel="stylesheet" href="page_with_metadata2_files/style2.css">
+    <!-- Custom: Our custom css -->
+    <link rel="stylesheet" href="page_with_metadata2_files/custom.css">
+    <!-- Custom: Stylying the autocomplete div-->
+    <link rel="stylesheet" href="page_with_metadata2_files/autocomplete.css">
+    <!-- Custom: rglyph fonts -->
+    <link rel="stylesheet" href="page_with_metadata2_files/rglyph.css">
+
+ 
+    <!-- custom: icon for phone app -->
+    <link rel="apple-touch-icon" sizes="128x128" href="https://reactome.org/templates/favourite/images/logo/icon.png">
+  
+  <!-- PARAMETERS -->
+  
+<!-- Custom: remove type -->
+<style>
+
+  @media (min-width: 1200px) {
+    .favth-container,
+    #fav-headerwrap.fav-fixed .favth-container-block {
+      width: 1190px;
+    }
+  }
+  .favnav ul.nav > li > a,
+  .favnav ul.nav > li > .nav-header,
+  .favnav ul.nav ul.nav-child a,
+  .favnav ul.nav ul.nav-child .nav-header,
+  ul.menufavth-horizontal li a,
+  ul.menufavth-horizontal li .nav-header {
+    text-transform: uppercase;
+  }
+  .favnav ul.nav > li > a,
+  .favnav ul.nav > li > .nav-header,
+  .favnav ul.nav ul.nav-child a,
+  .favnav ul.nav ul.nav-child .nav-header,
+  ul.menufavth-horizontal li a,
+  ul.menufavth-horizontal li .nav-header {
+    font-family: 'Open Sans', sans-serif;
+  }
+  .favnav ul.nav > li > a,
+  .favnav ul.nav > li > .nav-header,
+  .favnav ul.nav ul.nav-child a,
+  .favnav ul.nav ul.nav-child .nav-header,
+  ul.menufavth-horizontal li a,
+  ul.menufavth-horizontal li .nav-header {
+    font-weight: 400;
+  }
+  .favnav ul.nav > li > a,
+  .favnav ul.nav > li > .nav-header,
+  .favnav ul.nav ul.nav-child a,
+  .favnav ul.nav ul.nav-child .nav-header,
+  ul.menufavth-horizontal li a,
+  ul.menufavth-horizontal li .nav-header {
+    font-style: normal;
+  }
+  .fav-container h3:first-of-type,
+  .fav-container .page-header h2,
+  .fav-container h2.item-title,
+  .fav-container .hikashop_product_page h1 {
+    text-align: left;
+  }
+  .fav-container h3:first-of-type,
+  .fav-container .page-header h2,
+  .fav-container h2.item-title,
+  .fav-container .hikashop_product_page h1 {
+    text-transform: uppercase;
+  }
+  .fav-container h1,
+  .fav-container h2,
+  .fav-container h3,
+  .fav-container h4,
+  .fav-container h5,
+  .fav-container h6,
+  .fav-container legend {
+    font-family: 'Open Sans', sans-serif;
+  }
+  .fav-container h1,
+  .fav-container h2,
+  .fav-container h3,
+  .fav-container h4,
+  .fav-container h5,
+  .fav-container h6,
+  .fav-container legend {
+    font-weight: 300;
+  }
+  .fav-container h1,
+  .fav-container h2,
+  .fav-container h3,
+  .fav-container h4,
+  .fav-container h5,
+  .fav-container h6,
+  .fav-container legend {
+    font-style: normal;
+  }
+  #fav-offlinewrap {
+    background-repeat: no-repeat; background-attachment: fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;;
+  }
+  body {
+    background-repeat: repeat; background-attachment: initial; -webkit-background-size: auto; -moz-background-size: auto; -o-background-size: auto; background-size: auto;;
+  }
+  #fav-noticewrap.fav-module-block-color {
+    background-color: #FCF8E3;
+  }
+  #fav-noticewrap p {
+    color: #8A6D3B;
+  }
+  #fav-topbarwrap.fav-module-block-clear {
+    background-repeat: repeat; background-attachment: initial; -webkit-background-size: auto; -moz-background-size: auto; -o-background-size: auto; background-size: auto;;
+  }
+  #fav-topbarwrap.fav-module-block-color {
+    background-color: #F2DEDE;
+  }
+  #fav-topbarwrap p {
+    color: #A94442;
+  }
+  #fav-slidewrap.fav-module-block-clear {
+    background-repeat: repeat; background-attachment: initial; -webkit-background-size: auto; -moz-background-size: auto; -o-background-size: auto; background-size: auto;;
+  }
+  #fav-slidewrap.fav-module-block-color {
+    background-color: #F0F0F0;
+  }
+  #fav-introwrap.fav-module-block-clear {
+    background-repeat: no-repeat; background-attachment: fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;;
+  }
+  #fav-breadcrumbswrap.fav-module-block-clear {
+    background-repeat: repeat; background-attachment: initial; -webkit-background-size: auto; -moz-background-size: auto; -o-background-size: auto; background-size: auto;;
+  }
+  #fav-leadwrap.fav-module-block-clear {
+    background-repeat: repeat; background-attachment: initial; -webkit-background-size: auto; -moz-background-size: auto; -o-background-size: auto; background-size: auto;;
+  }
+  #fav-promowrap.fav-module-block-clear {
+    background-repeat: repeat; background-attachment: initial; -webkit-background-size: auto; -moz-background-size: auto; -o-background-size: auto; background-size: auto;;
+  }
+  #fav-primewrap.fav-module-block-clear {
+    background-repeat: no-repeat; background-attachment: fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;;
+  }
+  #fav-primewrap.fav-module-block-color {
+    background-color: #FFFFFF;
+  }
+  #fav-showcasewrap.fav-module-block-clear {
+    background-repeat: repeat; background-attachment: initial; -webkit-background-size: auto; -moz-background-size: auto; -o-background-size: auto; background-size: auto;;
+  }
+  #fav-showcasewrap.fav-module-block-color {
+    background-color: #111111;
+  }
+  #fav-featurewrap.fav-module-block-clear {
+    background-repeat: repeat; background-attachment: initial; -webkit-background-size: auto; -moz-background-size: auto; -o-background-size: auto; background-size: auto;;
+  }
+  #fav-focuswrap.fav-module-block-clear {
+    background-repeat: repeat; background-attachment: initial; -webkit-background-size: auto; -moz-background-size: auto; -o-background-size: auto; background-size: auto;;
+  }
+  #fav-portfoliowrap.fav-module-block-clear {
+    background-repeat: repeat; background-attachment: initial; -webkit-background-size: auto; -moz-background-size: auto; -o-background-size: auto; background-size: auto;;
+  }
+  #fav-screenwrap.fav-module-block-clear {
+    background-repeat: no-repeat; background-attachment: fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;;
+  }
+  #fav-screenwrap.fav-module-block-color {
+    background-color: #F0F0F0;
+  }
+  #fav-screenwrap h3:first-of-type {
+    color: #444444;
+  }
+  #fav-topwrap.fav-module-block-clear {
+    background-repeat: repeat; background-attachment: initial; -webkit-background-size: auto; -moz-background-size: auto; -o-background-size: auto; background-size: auto;;
+  }
+  #fav-topwrap h3:first-of-type {
+    color: #444444;
+  }
+  #fav-maintopwrap.fav-module-block-clear {
+    background-repeat: repeat; background-attachment: initial; -webkit-background-size: auto; -moz-background-size: auto; -o-background-size: auto; background-size: auto;;
+  }
+  #fav-mainbottomwrap.fav-module-block-clear {
+    background-repeat: repeat; background-attachment: initial; -webkit-background-size: auto; -moz-background-size: auto; -o-background-size: auto; background-size: auto;;
+  }
+  #fav-bottomwrap.fav-module-block-clear {
+    background-repeat: repeat; background-attachment: initial; -webkit-background-size: auto; -moz-background-size: auto; -o-background-size: auto; background-size: auto;;
+  }
+  #fav-notewrap.fav-module-block-clear {
+    background-repeat: repeat; background-attachment: initial; -webkit-background-size: auto; -moz-background-size: auto; -o-background-size: auto; background-size: auto;;
+  }
+  #fav-basewrap.fav-module-block-clear {
+    background-repeat: no-repeat; background-attachment: fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;;
+  }
+  #fav-blockwrap.fav-module-block-clear {
+    background-repeat: repeat; background-attachment: initial; -webkit-background-size: auto; -moz-background-size: auto; -o-background-size: auto; background-size: auto;;
+  }
+  #fav-userwrap.fav-module-block-clear {
+    background-repeat: repeat; background-attachment: initial; -webkit-background-size: auto; -moz-background-size: auto; -o-background-size: auto; background-size: auto;;
+  }
+  #fav-userwrap.fav-module-block-color {
+    background-color: #F0F0F0;
+  }
+  #fav-footerwrap.fav-module-block-clear {
+    background-repeat: repeat; background-attachment: initial; -webkit-background-size: auto; -moz-background-size: auto; -o-background-size: auto; background-size: auto;;
+  }
+  #fav-footerwrap.fav-module-block-color {
+    background-color: #58C3E5;
+  }
+  #fav-footerwrap p {
+    color: #FFFFFF;
+  }
+  #fav-footerwrap a {
+    color: #FFFFFF;
+  }
+  .fav-container a.text-logo,
+  .fav-container a.text-logo:hover,
+  .fav-container a.text-logo:focus {
+    color: #58C3E5;
+  }
+  .fav-container a.text-logo {
+    font-size: 42px;
+  }
+  .fav-container a.text-logo,
+  #fav-logo h1 {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+  .fav-container a.text-logo,
+  #fav-logo h1 {
+    font-weight: 700;
+  }
+  .fav-container a.text-logo,
+  #fav-logo h1 {
+    font-style: normal;
+  }
+  .fav-container a.text-logo {
+    margin: 6px 0 0 0;
+  }
+  .slogan {
+    line-height: 14px;
+  }
+  .retina-logo {
+    height: 52px;
+  }
+  .retina-logo {
+    width: 188px;
+  }
+  .retina-logo {
+    padding: 0px;
+  }
+  .retina-logo {
+    margin: 0px;
+  }
+  @media (max-width: 480px) {
+    p {
+      font-size: 12px;
+    }
+  }
+
+</style>
+
+     
+
+  <!-- FAVTH SCRIPTS -->
+  <script src="page_with_metadata2_files/favth-scripts.js"></script>
+
+  <!-- Google Webmaster Tools -->
+  <meta name="google-site-verification" content="RTiL6uaaS_DH5XmjYzK76jixDNHfH2KicYr2jT2y1Cw">
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "url": "https://reactome.org/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://reactome.org/content/query?q={term}",
+      "query-input": "required name=term"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Organization",
+    "url": "https://reactome.org",
+    "logo": "https://reactome.org/templates/favourite/images/logo/logo.png",
+    "email": "help@reactome.org"
+  }
+  </script>
+<link rel="stylesheet" href="page_with_metadata2_files/main.css" type="text/css">
+<link rel="stylesheet" href="page_with_metadata2_files/icon-lib.css" type="text/css">
+
+
+    <script type="application/ld+json">
+        {"name":"Signaling by EGFR","description":"The epidermal growth factor receptor (EGFR) is one member of the ERBB family of transmembrane glycoprotein tyrosine receptor kinases (RTK). Binding of EGFR to its ligands induces conformational change that unmasks the dimerization interface in the extracellular domain of EGFR, leading to receptor homo- or heterodimerization at the cell surface. Dimerization of the extracellular regions of EGFR triggers additional conformational change of the cytoplasmic EGFR regions, enabling the kinase domains of two EGFR molecules to achieve the catalytically active conformation. Ligand activated EGFR dimers trans-autophosphorylate on tyrosine residues in the cytoplasmic tail of the receptor. Phosphorylated tyrosines serve as binding sites for the recruitment of signal transducers and activators of intracellular substrates, which then stimulate intracellular signal transduction cascades that are involved in regulating cellular proliferation, differentiation, and survival. Recruitment of complexes containing GRB2 and SOS1 to phosphorylated EGFR dimers either directly, through phosphotyrosine residues that serve as GRB2 docking sites, or indirectly, through SHC1 recruitment, promotes GDP to GTP exchange on RAS, resulting in the activation of RAF/MAP kinase cascade. Binding of complexes of GRB2 and GAB1 to phosphorylated EGFR dimers leads to formation of the active PI3K complex, conversion of PIP2 into PIP3, and activation of AKT signaling. Phospholipase C-gamma1 (PLCG1) can also be recruited directly, through EGFR phosphotyrosine residues that serve as PLCG1 docking sites, which leads to PLCG1 phosphorylation by EGFR and activation of DAG and IP3 signaling. EGFR signaling is downregulated by the action of ubiquitin ligase CBL. CBL binds directly to the phosphorylated EGFR dimer through the phosphotyrosine Y1069 (i.e. Y1045 in the mature protein) in the C-tail of EGFR, and after CBL is phosphorylated by EGFR, it becomes active and ubiquitinates phosphorylated EGFR dimers, targeting them for degradation. For a recent review of EGFR signaling, please refer to Avraham and Yarden, 2011. ","url":"https://reactome.org/PathwayBrowser/#/R-HSA-177929","sameAs":null,"version":"86","keywords":["Pathway"],"creator":[{"givenName":null,"familyName":"Castagnoli","affiliation":[],"url":"http://europepmc.org/authors/null","@type":"Person"},{"givenName":"Bijay","familyName":"Jassal","affiliation":[{"name":"Ontario Institute for Cancer Research","@type":"Organization"}],"url":"http://europepmc.org/authors/0000-0002-5039-5405","@type":"Person"}],"includedInDataCatalog":{"name":"Reactome","url":"https://reactome.org","@type":"DataCatalog"},"distribution":[{"contentUrl":"https://reactome.org/ContentService/exporter/sbml/177929.xml","fileFormat":"SBML","encodingFormat":"UTF-8","@type":"DataDownload"},{"contentUrl":"https://reactome.org/ReactomeRESTfulAPI/RESTfulWS/sbgnExporter/177929","fileFormat":"SBGN","encodingFormat":"UTF-8","@type":"DataDownload"},{"contentUrl":"https://reactome.org/ReactomeRESTfulAPI/RESTfulWS/biopaxExporter/Level2/177929","fileFormat":"BIOPAX2","encodingFormat":"UTF-8","@type":"DataDownload"},{"contentUrl":"https://reactome.org/ReactomeRESTfulAPI/RESTfulWS/biopaxExporter/Level3/177929","fileFormat":"BIOPAX3","encodingFormat":"UTF-8","@type":"DataDownload"},{"contentUrl":"https://reactome.org/cgi-bin/pdfexporter?DB=gk_current&ID=177929","fileFormat":"PDF","encodingFormat":"UTF-8","@type":"DataDownload"},{"contentUrl":"https://reactome.org/cgi-bin/rtfexporter?DB=gk_current&ID=177929","fileFormat":"DOCX","encodingFormat":"UTF-8","@type":"DataDownload"},{"contentUrl":"https://reactome.org/cgi-bin/protegeexporter?DB=gk_current&ID=177929","fileFormat":"OWL","encodingFormat":"UTF-8","@type":"DataDownload"}],"citation":["http://www.ncbi.nlm.nih.gov/pubmed/15142631","http://www.ncbi.nlm.nih.gov/pubmed/10404636","http://www.ncbi.nlm.nih.gov/pubmed/10459005","http://www.ncbi.nlm.nih.gov/pubmed/12297041"],"license":"https://creativecommons.org/licenses/by/4.0/","@context":"http://schema.org/","@type":"DataSet"}
+    </script>
+
+
+
+</head>
+
+<!-- Custom: added ontouchstart="" -->
+<body ontouchstart="" data-new-gr-c-s-check-loaded="8.907.0" data-gr-ext-installed="">
+
+  <div id="fav-containerwrap" class="favth-clearfix">
+    <div class="fav-transparent">
+
+  	  <!-- NAVBAR -->
+      <div id="fav-navbarwrap" class="favth-visible-xs">
+    		<div class="favth-navbar favth-navbar-default">
+          <div id="fav-navbar" class="favth-container">
+
+    				<div class="favth-navbar-header">
+              <div id="fav-logomobile" class="favth-clearfix">
+                                  <h1>
+                    <a class="default-logo" href="https://reactome.org/">
+                      <img src="page_with_metadata2_files/logo.png" style="border:0;" alt="Reactome Pathway Database">
+                    </a>
+                  </h1>
+                                                                                              </div>
+
+              
+              <div id="fav-navbar-btn" class="favth-clearfix">
+                <button type="button" class="favth-navbar-toggle favth-collapsed" data-toggle="favth-collapse" data-target=".favth-collapse" aria-expanded="false">
+
+                  <span class="favth-sr-only">Toggle navigation</span>
+                  <span class="favth-icon-bar"></span>
+                  <span class="favth-icon-bar"></span>
+                  <span class="favth-icon-bar"></span>
+                </button>
+              </div>
+            </div>
+
+  					<div class="favth-collapse favth-navbar-collapse">
+  						  							<div id="fav-navbar-collapse">
+                    								<div class="moduletable"><ul class="nav menu mod-list">
+<li class="item-234 deeper parent"><span class="nav-header fa-info-circle">About</span>
+<ul class="nav-child unstyled small" style="display: none;"><li class="item-235"><a href="https://reactome.org/what-is-reactome">What is Reactome ?</a></li><li class="item-236"><a href="https://reactome.org/about/news">News</a></li><li class="item-237"><a href="https://reactome.org/about/team">Team</a></li><li class="item-251"><a href="https://reactome.org/sab">Scientific Advisory Board</a></li><li class="item-362"><a href="https://reactome.org/about/editorial-calendar">Editorial Calendar</a></li><li class="item-722"><a href="https://reactome.org/about/release-calendar">Release Calendar</a></li><li class="item-360"><a href="https://reactome.org/about/statistics">Statistics</a></li><li class="item-397"><a href="https://reactome.org/about/logo">Our Logo</a></li><li class="item-253"><a href="https://reactome.org/license">License Agreement</a></li><li class="item-588"><a href="https://reactome.org/about/privacy-notice">Privacy Notice</a></li><li class="item-254"><a href="https://reactome.org/about/disclaimer">Disclaimer</a></li></ul></li><li class="item-356 deeper parent"><span class="nav-header fa-pencil-square-o">Content</span>
+<ul class="nav-child unstyled small" style="display: none;"><li class="item-358"><a href="https://reactome.org/content/toc">Table of Contents</a></li><li class="item-359"><a href="https://reactome.org/content/doi">DOIs</a></li><li class="item-357"><a href="https://reactome.org/content/schema">Data Schema</a></li><li class="item-693"><a href="https://reactome.org/content/reactome-research-spotlight">Reactome Research Spotlight</a></li><li class="item-361"><a href="https://reactome.org/orcid">ORCID Integration Project</a></li><li class="item-572"><a href="https://reactome.org/covid-19">COVID-19 Disease Pathways</a></li></ul></li><li class="item-152 deeper parent"><a href="https://reactome.org/documentation" class="fa-graduation-cap">Docs</a><ul class="nav-child unstyled small" style="display: none;"><li class="item-303 deeper parent"><a href="https://reactome.org/userguide">Userguide</a><ul class="nav-child unstyled small" style="display: none;"><li class="item-378"><a href="https://reactome.org/userguide/pathway-browser">Pathway Browser</a></li><li class="item-380"><a href="https://reactome.org/userguide/searching">How do I search ?</a></li><li class="item-379"><a href="https://reactome.org/userguide/details-panel">Details Panel</a></li><li class="item-381 deeper parent"><a href="https://reactome.org/userguide/analysis">Analysis Tools</a><ul class="nav-child unstyled small" style="display: none;"><li class="item-579"><a href="https://reactome.org/userguide/analysis#analysis">Analysis Data</a></li><li class="item-560"><a href="https://reactome.org/userguide/analysis/gsa">Analysis Gene Expression</a></li><li class="item-580"><a href="https://reactome.org/userguide/analysis#species">Species Comparison</a></li><li class="item-581"><a href="https://reactome.org/userguide/analysis#tissue">Tissue Distribution</a></li></ul></li><li class="item-382"><a href="https://reactome.org/userguide/diseases">Diseases</a></li><li class="item-715"><a href="https://reactome.org/userguide/review-status">Review Status of Reactome Events </a></li><li class="item-479"><a href="https://reactome.org/userguide/reactome-fiviz">ReactomeFIViz</a></li></ul></li><li class="item-268 deeper parent"><a href="https://reactome.org/dev">Developer's Zone</a><ul class="nav-child unstyled small" style="display: none;"><li class="item-290"><a href="https://reactome.org/dev/graph-database">Graph Database</a></li><li class="item-292"><a href="https://reactome.org/dev/analysis">Analysis Service </a></li><li class="item-293"><a href="https://reactome.org/dev/content-service">Content Service</a></li><li class="item-294"><a href="https://reactome.org/dev/pathways-overview">Pathways Overview</a></li><li class="item-295"><a href="https://reactome.org/dev/diagram">Pathway Diagrams</a></li></ul></li><li class="item-302 deeper parent"><a href="https://reactome.org/icon-info">Icon Info</a><ul class="nav-child unstyled small" style="display: none;"><li class="item-471"><a href="https://reactome.org/icon-info/ehld-specs-guideline">EHLD Specs &amp; Guidelines</a></li><li class="item-472"><a href="https://reactome.org/icon-info/icons-guidelines">Icon Library Guidelines</a></li></ul></li><li class="item-269"><a href="https://reactome.org/documentation/data-model">Data Model</a></li><li class="item-270"><a href="https://reactome.org/documentation/inferred-events">Computationally inferred events</a></li><li class="item-721"><a href="https://reactome.org/documentation/faq">FAQ</a></li><li class="item-271"><a href="https://reactome.org/linking-to-us">Linking to Us</a></li><li class="item-272"><a href="https://reactome.org/cite">Citing us</a></li></ul></li><li class="item-238 deeper parent"><span class="nav-header fa-cogs">Tools</span>
+<ul class="nav-child unstyled small" style="display: none;"><li class="item-239"><a href="https://reactome.org/PathwayBrowser">Pathway Browser</a></li><li class="item-240"><a href="https://reactome.org/PathwayBrowser/#TOOL=AT">Analyse gene list</a></li><li class="item-561"><a href="https://reactome.org/PathwayBrowser/#TOOL=AT">Analyse gene expression</a></li><li class="item-245"><a href="https://reactome.org/PathwayBrowser/#TOOL=AT">Species Comparison</a></li><li class="item-582"><a href="https://reactome.org/PathwayBrowser/#TOOL=AT">Tissue Distribution</a></li><li class="item-248"><a href="https://reactome.org/AnalysisService">Analysis Service</a></li><li class="item-249"><a href="https://reactome.org/ContentService">Content Service</a></li><li class="item-246"><a href="https://reactome.org/tools/reactome-fiviz">ReactomeFIViz</a></li><li class="item-557 deeper parent"><span class="nav-header overlays">Overlays</span>
+<ul class="nav-child unstyled small" style="display: none;"><li class="item-499 deeper parent"><span class="nav-header disgenet">DisGeNET</span>
+<ul class="nav-child unstyled small" style="display: none;"><li class="item-559"><a href="https://reactome.org/overlays/disgenet">Web</a></li><li class="item-558"><a href="https://reactome.org/overlays/disgenet/api">API</a></li></ul></li></ul></li><li class="item-247"><a href="https://reactome.org/content/advanced">Advanced Data Search</a></li><li class="item-301"><a href="https://reactome.org/tools/site-search">Site Search</a></li></ul></li><li class="item-241 deeper parent"><span class="nav-header fa-users">Community</span>
+<ul class="nav-child unstyled small" style="display: none;"><li class="item-266"><a href="https://reactome.org/icon-lib" title="Community library of icons that are used in the Reactome Enhanced High Level Diagrams (EHLD). We would like to develop the EHLD library further as a community resource. If you use library elements, and design similar elements that are still missing, we would be very happy to incorporate them into the library, naming you as the author" class="icons-library-mi">Icon Library</a></li><li class="item-259"><a href="https://reactome.org/community/outreach">Outreach</a></li><li class="item-260"><a href="https://reactome.org/community/events">Events</a></li><li class="item-261"><a href="https://reactome.org/community/training">Training</a></li><li class="item-262"><a href="https://reactome.org/community/publications">Publications</a></li><li class="item-263"><a href="https://reactome.org/community/partners">Partners</a></li><li class="item-264"><a href="https://reactome.org/community/citation-list">Papers Citing Us</a></li><li class="item-265"><a href="https://reactome.org/community/resources">Resources Guide</a></li><li class="item-493"><a href="https://reactome.org/community/collaboration">Collaboration</a></li></ul></li><li class="item-242"><a href="https://reactome.org/download-data" class="fa-download">Download</a></li></ul>
+</div>
+  							</div>
+  						  					</div>
+
+    			</div>
+    	  </div>
+      </div>
+
+  		<div id="fav-container" class="fav-container">
+
+  			<!-- NOTICE -->
+            <!-- Custom: do not show notice in production $app->get('show_notice_mod') != 0) -->
+  			
+        <!-- TOPBAR -->
+        
+        <!-- HEADER -->
+        <div id="fav-headerwrap">
+          <div class="favth-container">
+            <div class="favth-row">
+
+                <div id="fav-header" class="favth-clearfix">
+
+                  <div id="fav-logo" class="favth-col-lg-3 favth-col-md-3 favth-col-sm-12 favth-hidden-xs">
+                                          <h1>
+                        <a class="default-logo" href="https://reactome.org/">
+                          <img src="page_with_metadata2_files/logo.png" style="border:0;" alt="Reactome Pathway Database">
+                        </a>
+                      </h1>
+                                                                                                                      </div>
+
+                                  <div id="fav-nav" class="favth-col-lg-9 favth-col-md-9 favth-col-sm-12 favth-hidden-xs">
+                    <div class="favnav">
+                      <div class="favth-clearfix">
+                        <div class="moduletable"><ul class="nav menu mod-list">
+<li class="item-234 deeper parent"><span class="nav-header fa-info-circle">About</span>
+<ul class="nav-child unstyled small"><li class="item-235"><a href="https://reactome.org/what-is-reactome">What is Reactome ?</a></li><li class="item-236"><a href="https://reactome.org/about/news">News</a></li><li class="item-237"><a href="https://reactome.org/about/team">Team</a></li><li class="item-251"><a href="https://reactome.org/sab">Scientific Advisory Board</a></li><li class="item-362"><a href="https://reactome.org/about/editorial-calendar">Editorial Calendar</a></li><li class="item-722"><a href="https://reactome.org/about/release-calendar">Release Calendar</a></li><li class="item-360"><a href="https://reactome.org/about/statistics">Statistics</a></li><li class="item-397"><a href="https://reactome.org/about/logo">Our Logo</a></li><li class="item-253"><a href="https://reactome.org/license">License Agreement</a></li><li class="item-588"><a href="https://reactome.org/about/privacy-notice">Privacy Notice</a></li><li class="item-254"><a href="https://reactome.org/about/disclaimer">Disclaimer</a></li></ul></li><li class="item-356 deeper parent"><span class="nav-header fa-pencil-square-o">Content</span>
+<ul class="nav-child unstyled small"><li class="item-358"><a href="https://reactome.org/content/toc">Table of Contents</a></li><li class="item-359"><a href="https://reactome.org/content/doi">DOIs</a></li><li class="item-357"><a href="https://reactome.org/content/schema">Data Schema</a></li><li class="item-693"><a href="https://reactome.org/content/reactome-research-spotlight">Reactome Research Spotlight</a></li><li class="item-361"><a href="https://reactome.org/orcid">ORCID Integration Project</a></li><li class="item-572"><a href="https://reactome.org/covid-19">COVID-19 Disease Pathways</a></li></ul></li><li class="item-152 deeper parent"><a href="https://reactome.org/documentation" class="fa-graduation-cap">Docs</a><ul class="nav-child unstyled small"><li class="item-303 deeper parent"><a href="https://reactome.org/userguide">Userguide</a><ul class="nav-child unstyled small"><li class="item-378"><a href="https://reactome.org/userguide/pathway-browser">Pathway Browser</a></li><li class="item-380"><a href="https://reactome.org/userguide/searching">How do I search ?</a></li><li class="item-379"><a href="https://reactome.org/userguide/details-panel">Details Panel</a></li><li class="item-381 deeper parent"><a href="https://reactome.org/userguide/analysis">Analysis Tools</a><ul class="nav-child unstyled small"><li class="item-579"><a href="https://reactome.org/userguide/analysis#analysis">Analysis Data</a></li><li class="item-560"><a href="https://reactome.org/userguide/analysis/gsa">Analysis Gene Expression</a></li><li class="item-580"><a href="https://reactome.org/userguide/analysis#species">Species Comparison</a></li><li class="item-581"><a href="https://reactome.org/userguide/analysis#tissue">Tissue Distribution</a></li></ul></li><li class="item-382"><a href="https://reactome.org/userguide/diseases">Diseases</a></li><li class="item-715"><a href="https://reactome.org/userguide/review-status">Review Status of Reactome Events </a></li><li class="item-479"><a href="https://reactome.org/userguide/reactome-fiviz">ReactomeFIViz</a></li></ul></li><li class="item-268 deeper parent"><a href="https://reactome.org/dev">Developer's Zone</a><ul class="nav-child unstyled small"><li class="item-290"><a href="https://reactome.org/dev/graph-database">Graph Database</a></li><li class="item-292"><a href="https://reactome.org/dev/analysis">Analysis Service </a></li><li class="item-293"><a href="https://reactome.org/dev/content-service">Content Service</a></li><li class="item-294"><a href="https://reactome.org/dev/pathways-overview">Pathways Overview</a></li><li class="item-295"><a href="https://reactome.org/dev/diagram">Pathway Diagrams</a></li></ul></li><li class="item-302 deeper parent"><a href="https://reactome.org/icon-info">Icon Info</a><ul class="nav-child unstyled small"><li class="item-471"><a href="https://reactome.org/icon-info/ehld-specs-guideline">EHLD Specs &amp; Guidelines</a></li><li class="item-472"><a href="https://reactome.org/icon-info/icons-guidelines">Icon Library Guidelines</a></li></ul></li><li class="item-269"><a href="https://reactome.org/documentation/data-model">Data Model</a></li><li class="item-270"><a href="https://reactome.org/documentation/inferred-events">Computationally inferred events</a></li><li class="item-721"><a href="https://reactome.org/documentation/faq">FAQ</a></li><li class="item-271"><a href="https://reactome.org/linking-to-us">Linking to Us</a></li><li class="item-272"><a href="https://reactome.org/cite">Citing us</a></li></ul></li><li class="item-238 deeper parent"><span class="nav-header fa-cogs">Tools</span>
+<ul class="nav-child unstyled small"><li class="item-239"><a href="https://reactome.org/PathwayBrowser">Pathway Browser</a></li><li class="item-240"><a href="https://reactome.org/PathwayBrowser/#TOOL=AT">Analyse gene list</a></li><li class="item-561"><a href="https://reactome.org/PathwayBrowser/#TOOL=AT">Analyse gene expression</a></li><li class="item-245"><a href="https://reactome.org/PathwayBrowser/#TOOL=AT">Species Comparison</a></li><li class="item-582"><a href="https://reactome.org/PathwayBrowser/#TOOL=AT">Tissue Distribution</a></li><li class="item-248"><a href="https://reactome.org/AnalysisService">Analysis Service</a></li><li class="item-249"><a href="https://reactome.org/ContentService">Content Service</a></li><li class="item-246"><a href="https://reactome.org/tools/reactome-fiviz">ReactomeFIViz</a></li><li class="item-557 deeper parent"><span class="nav-header overlays">Overlays</span>
+<ul class="nav-child unstyled small"><li class="item-499 deeper parent"><span class="nav-header disgenet">DisGeNET</span>
+<ul class="nav-child unstyled small"><li class="item-559"><a href="https://reactome.org/overlays/disgenet">Web</a></li><li class="item-558"><a href="https://reactome.org/overlays/disgenet/api">API</a></li></ul></li></ul></li><li class="item-247"><a href="https://reactome.org/content/advanced">Advanced Data Search</a></li><li class="item-301"><a href="https://reactome.org/tools/site-search">Site Search</a></li></ul></li><li class="item-241 deeper parent"><span class="nav-header fa-users">Community</span>
+<ul class="nav-child unstyled small"><li class="item-266"><a href="https://reactome.org/icon-lib" title="Community library of icons that are used in the Reactome Enhanced High Level Diagrams (EHLD). We would like to develop the EHLD library further as a community resource. If you use library elements, and design similar elements that are still missing, we would be very happy to incorporate them into the library, naming you as the author" class="icons-library-mi">Icon Library</a></li><li class="item-259"><a href="https://reactome.org/community/outreach">Outreach</a></li><li class="item-260"><a href="https://reactome.org/community/events">Events</a></li><li class="item-261"><a href="https://reactome.org/community/training">Training</a></li><li class="item-262"><a href="https://reactome.org/community/publications">Publications</a></li><li class="item-263"><a href="https://reactome.org/community/partners">Partners</a></li><li class="item-264"><a href="https://reactome.org/community/citation-list">Papers Citing Us</a></li><li class="item-265"><a href="https://reactome.org/community/resources">Resources Guide</a></li><li class="item-493"><a href="https://reactome.org/community/collaboration">Collaboration</a></li></ul></li><li class="item-242"><a href="https://reactome.org/download-data" class="fa-download">Download</a></li></ul>
+</div>
+                      </div>
+                    </div>
+                  </div>
+                
+                </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDE -->
+                  <div id="fav-slidewrap" class="fav-module-block-light">
+            <div class="fav-transparent">
+              <div class="favth-container">
+                <div class="favth-row">
+
+                  <div id="fav-slide" class=" favth-clearfix">
+                    <div class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+                      <div class="moduletable text-center alt-search">
+
+<div class="custom text-center alt-search">
+	
+
+
+
+
+<div class="search">
+    <form action="/content/query" method="get" class="clean-form form-inline" id="search_form">
+        <label for="local-searchbox" class="element-invisible">Search ...</label>
+        <input id="local-searchbox" type="search" class="inputbox search-query alt-searchbox" name="q" placeholder="e.g. O95631, NTN1, signaling by EGFR, glucose, GO:0043293" maxlength="200" autocomplete="off">
+        
+            
+            
+                <input type="hidden" name="species" value="Homo sapiens">
+                <input type="hidden" name="species" value="Entries without species">
+            
+        
+        
+        
+        
+        <input type="hidden" name="cluster" value="true">
+        <button class="button btn btn-primary btn-info">Go!</button>
+        
+    </form>
+</div></div>
+</div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        
+  			<!-- INTRO -->
+        
+        
+        <!-- LEAD -->
+        
+          <div id="fav-leadwrap" class="fav-module-block-light">
+            <div class="fav-transparent">
+              <div class="favth-container">
+                <div class="favth-row">
+
+                  <div id="fav-lead" class=" favth-clearfix">
+
+                                          
+                          <div id="fav-lead1" class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+
+                            <div class="moduletable">
+
+<div class="custom">
+	
+    <div class="favth-col-xs-12">
+        
+
+
+
+
+
+<link rel="stylesheet" href="page_with_metadata2_files/score.css" type="text/css">
+
+
+
+<h3 class="details-title">
+    
+        
+        
+            
+                <i class="sprite sprite-Pathway" title="Pathway"></i>
+            
+        
+    
+
+    
+        
+    
+    Signaling by EGFR
+    
+        
+        
+            
+        
+        
+            
+        
+    
+</h3>
+
+
+
+
+
+
+    
+    
+        
+    
+
+
+<div class="extended-header favth-clearfix">
+    <div class="favth-col-xs-12">
+        
+            <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12">
+                <span>Stable Identifier</span>
+            </div>
+            <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
+                <span>R-HSA-177929</span>
+            </div>
+        
+
+        
+            
+        
+
+        
+            <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12">
+                <span>Type</span>
+            </div>
+            <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
+            
+                <span title="A collection of related Events. These events can be ReactionLikeEvents or Pathways">Pathway
+                    
+                        
+                        
+                    
+                </span>
+            </div>
+        
+
+        
+            
+                <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12">
+                    <span>Species</span>
+                </div>
+                <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
+                    <span>Homo sapiens</span>
+                </div>
+            
+            
+            
+
+            
+                <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12">
+                    <span>Synonyms</span>
+                </div>
+                <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
+                    
+                        
+                    
+                        Epidermal Growth Factor Receptor (EGFR) signaling
+                    
+                </div>
+            
+
+            
+
+            
+
+            
+            
+        
+
+        
+            
+                <div class="details-label favth-col-lg-2 favth-col-md-3 favth-col-sm-3 favth-col-xs-12" style="margin-top: 8px">
+                    <span>ReviewStatus</span>
+                </div>
+                <div class="details-field favth-col-lg-10 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
+                    
+                    
+                        
+                            
+                        
+                        
+                        
+                        
+                        
+                    
+                    <div class="c100 p100 small">
+                        <span><a href="https://reactome.org/userguide/review-status" target="_blank" title="Read more details">5/5</a></span>
+                        <div class="slice">
+                            <div class="bar"></div>
+                            <div class="fill"></div>
+                        </div>
+                    </div>
+                </div>
+            
+        
+    </div>
+    
+</div>
+
+
+
+        
+            
+
+
+<div class="clearfix">
+    <fieldset class="fieldset-details">
+        <legend>Locations in the PathwayBrowser
+            
+
+            
+
+        </legend>
+
+        
+            
+                <div class="favth-col-xs-12 favth-text-right">
+                    <a id="pwb_toggle" class="expand-all">Expand All</a>
+                </div>
+            
+        
+
+        
+
+        <div class="favth-col-xs-12">
+            
+                
+                    
+                    
+                        
+                        <div id="tpla_R-HSA-162582" class="tplSpe_Homo_sapiens" style="">
+                            <span class="plus tree-root" title="click here to expand or collapse the tree">
+                                <i class="fa fa-plus-square-o" title="click here to expand or collapse the tree" style="vertical-align: middle"></i>
+                                <i class="sprite-resize sprite sprite-Pathway" style="vertical-align: middle"></i>
+                                
+                                Signal Transduction (Homo sapiens)
+                            </span>
+                            <div class="tree-lpwb" style="">
+                                <ul class="tree">
+                                    
+                                    <li> 
+
+
+
+<ul class="tree">
+    
+        <li>
+            
+                <span style="font-size:13px"><i class="sprite-resize sprite sprite-Pathway" title="Pathway"></i></span>
+                
+                    
+                    
+                        <span class="tree-grayedout-item">Signaling by Receptor Tyrosine Kinases (Homo sapiens)</span>
+                    
+                
+
+            
+            
+            
+
+
+
+<ul class="tree">
+    
+        <li>
+            
+                <span style="font-size:13px"><i class="sprite-resize sprite sprite-Pathway" title="Pathway"></i></span>
+                
+                    
+                        <a href="https://reactome.org/PathwayBrowser/#/R-HSA-177929" class="tree-highlighted-item" title="Show Details">Signaling by EGFR (Homo sapiens)</a>
+                    
+                    
+                
+
+            
+            
+            
+
+
+
+<ul class="tree">
+    
+</ul>
+
+        </li>
+    
+</ul>
+
+        </li>
+    
+</ul>
+</li>
+                                </ul>
+                            </div>
+                        </div>
+                    
+                
+            
+        </div>
+    </fieldset>
+</div>
+        
+
+        
+            <fieldset class="fieldset-details">
+                <legend>General</legend>
+                
+
+                    <div class="favth-col-xs-12 favth-hidden-xs">
+                        <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-6 favth-col-xs-6">
+                            <div class="favth-col-xs-12 padding0">
+                                <div class="">
+                                    <i class="fa fa-file-code-o" style="color: #2F9EC2"></i>
+                                    <a href="https://reactome.org/ContentService/exporter/event/R-HSA-177929.sbml" download="R-HSA-177929.sbml" title="Export diagram to SBML">SBML</a>&nbsp;|&nbsp;
+                                    <div class="biopax-dropdown">
+                                        <a style="cursor: pointer">BioPAX</a>
+                                        <div class="biopax-version-tooltip">
+                                            <a href="https://reactome.org/ReactomeRESTfulAPI/RESTfulWS/biopaxExporter/Level2/177929" download="R-HSA-177929_level2.owl">Level 2</a>
+                                            <a href="https://reactome.org/ReactomeRESTfulAPI/RESTfulWS/biopaxExporter/Level3/177929" download="R-HSA-177929_level3.owl">Level 3</a>
+                                        </div>
+                                    </div>
+                                    
+                                        &nbsp;|&nbsp;
+                                        <a href="https://reactome.org/ContentService/exporter/document/event/R-HSA-177929.pdf" download="R-HSA-177929.pdf" title="Export diagram to PDF">PDF</a>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                            
+                            <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-6 favth-col-xs-6 padding0">
+                                <div class="favth-col-xs-12 padding0">
+                                    <div class="pull-right">
+                                        <i class="fa fa-download" style="color: #2F9EC2"></i>
+                                        <a href="https://reactome.org/ContentService/exporter/diagram/R-HSA-177929.svg" download="R-HSA-177929.svg">SVG</a>&nbsp;|&nbsp;
+                                        <div class="png-dropdown">
+                                        <a style="cursor: pointer">PNG</a>
+                                            <div class="png-resolution-tooltip">
+                                                <a href="https://reactome.org/ContentService/exporter/diagram/R-HSA-177929.png?quality=2" download="R-HSA-177929.png">Low</a><br>
+                                                <a href="https://reactome.org/ContentService/exporter/diagram/R-HSA-177929.png?quality=5" download="R-HSA-177929.png">Medium</a><br>
+                                                <a href="https://reactome.org/ContentService/exporter/diagram/R-HSA-177929.png?quality=7" download="R-HSA-177929.png">High</a>
+                                            </div>
+                                        </div>
+                                        
+                                            &nbsp;|&nbsp;<a href="https://reactome.org/ContentService/exporter/diagram/R-HSA-177929.pptx">PPTX</a>
+                                            &nbsp;|&nbsp;<a href="https://reactome.org/ContentService/exporter/event/R-HSA-177929.sbgn">SBGN</a>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        
+                    </div>
+
+                    
+                        <div>
+                            <div class="favth-col-xs-12 padding0 text-center">
+                                
+                                    
+                                    
+                                        <div class="text-center margin0 top" style="min-height: 300px;">
+                                            <a href="https://reactome.org/PathwayBrowser/#/R-HSA-177929">
+                                                <img src="page_with_metadata2_files/R-HSA-177929.svg" alt="Signaling by EGFR" title="Open 'Signaling by EGFR' in the Pathway Browser" class="diagram-rxn-preview">
+                                            </a>
+                                        </div>
+                                        <div class="text-center margin0 bottom">
+                                            <span style="font-size: smaller">
+                                                Click the image above or <a href="https://reactome.org/PathwayBrowser/#/R-HSA-177929">here</a> to open this pathway in the Pathway Browser
+                                                
+                                            </span>
+                                        </div>
+                                    
+                                
+                            </div>
+                        </div>
+                    
+                
+                
+                    <div class="details-summation">The epidermal growth 
+factor receptor (EGFR) is one member of the ERBB family of transmembrane
+ glycoprotein tyrosine receptor kinases (RTK). Binding of EGFR to its 
+ligands induces conformational change that unmasks the dimerization 
+interface in the extracellular domain of EGFR, leading to receptor homo-
+ or heterodimerization at the cell surface. Dimerization of the 
+extracellular regions of EGFR triggers additional conformational change 
+of the cytoplasmic EGFR regions, enabling the kinase domains of two EGFR
+ molecules to achieve the catalytically active conformation. Ligand 
+activated EGFR dimers trans-autophosphorylate on tyrosine residues in 
+the cytoplasmic tail of the receptor. Phosphorylated tyrosines serve as 
+binding sites for the recruitment of signal transducers and activators 
+of intracellular substrates, which then stimulate intracellular signal 
+transduction cascades that are involved in regulating cellular 
+proliferation, differentiation, and survival. Recruitment of complexes 
+containing<span class="moreellipses">... </span><span class="morecontent"><span>
+ GRB2 and SOS1 to phosphorylated EGFR dimers either directly, through 
+phosphotyrosine residues that serve as GRB2 docking sites, or 
+indirectly, through SHC1 recruitment, promotes GDP to GTP exchange on 
+RAS, resulting in the activation of RAF/MAP kinase cascade. Binding of 
+complexes of GRB2 and GAB1 to phosphorylated EGFR dimers leads to 
+formation of the active PI3K complex, conversion of PIP2 into PIP3, and 
+activation of AKT signaling. Phospholipase C-gamma1 (PLCG1) can also be 
+recruited directly, through EGFR phosphotyrosine residues that serve as 
+PLCG1 docking sites, which leads to PLCG1 phosphorylation by EGFR and 
+activation of DAG and IP3 signaling. EGFR signaling is downregulated by 
+the action of ubiquitin ligase CBL. CBL binds directly to the 
+phosphorylated EGFR dimer through the phosphotyrosine Y1069 (i.e. Y1045 
+in the mature protein) in the C-tail of EGFR, and after CBL is 
+phosphorylated by EGFR, it becomes active and ubiquitinates 
+phosphorylated EGFR dimers, targeting them for degradation. For a recent
+ review of EGFR signaling, please refer to Avraham and Yarden, 2011.</span><a href="javascript:void(0);" class="morelink">Read more</a></span></div>
+                
+            </fieldset>
+        
+
+        
+            
+
+
+<div class="clearfix">
+    <fieldset class="fieldset-details">
+        <legend>Literature References</legend>
+        <div id="r-responsive-table" class="details-wrap">
+            <table class="reactome">
+                <thead>
+                <tr>
+                    <th scope="col" class="favth-col-md-2">PubMed ID</th>
+                    <th scope="col" class="favth-col-md-7">Title</th>
+                    <th scope="col" class="favth-col-md-2">Journal</th>
+                    <th scope="col" class="favth-col-md-1">Year</th>
+                </tr>
+                </thead>
+                <tbody>
+                    
+                        <tr>
+                            
+                            
+                                <td data-label="PubMed ID" class="favth-col-md-2">15142631</td>
+                                <td data-label="Title" class="favth-col-md-7">
+                                    <a href="http://www.ncbi.nlm.nih.gov/pubmed/15142631" class="" target="_blank" title="show Pubmed"> Review of epidermal growth factor receptor biology</a>
+                                    
+                                        <p style="font-style: italic; font-size: small; margin: 0; padding-left: 5px;">
+                                            
+                                                <span style="text-decoration-style: dotted;">Herbst, RS</span>
+                                            
+                                        </p>
+                                    
+                                </td>
+                                <td data-label="Journal" class="favth-col-md-2">Int J Radiat Oncol Biol Phys</td>
+                                <td data-label="Year" class="favth-col-md-1">2004</td>
+                            
+                            
+                            
+                        </tr>
+                    
+                        <tr>
+                            
+                            
+                                <td data-label="PubMed ID" class="favth-col-md-2">10404636</td>
+                                <td data-label="Title" class="favth-col-md-7">
+                                    <a href="http://www.ncbi.nlm.nih.gov/pubmed/10404636" class="" target="_blank" title="show Pubmed"> EGF receptor</a>
+                                    
+                                        <p style="font-style: italic; font-size: small; margin: 0; padding-left: 5px;">
+                                            
+                                                <span style="text-decoration-style: dotted;">Wells, A</span>
+                                            
+                                        </p>
+                                    
+                                </td>
+                                <td data-label="Journal" class="favth-col-md-2">Int J Biochem Cell Biol</td>
+                                <td data-label="Year" class="favth-col-md-1">1999</td>
+                            
+                            
+                            
+                        </tr>
+                    
+                        <tr>
+                            
+                            
+                                <td data-label="PubMed ID" class="favth-col-md-2">10459005</td>
+                                <td data-label="Title" class="favth-col-md-7">
+                                    <a href="http://www.ncbi.nlm.nih.gov/pubmed/10459005" class="" target="_blank" title="show Pubmed"> Employment of the epidermal growth factor receptor in growth factor-independent signaling pathways</a>
+                                    
+                                        <p style="font-style: italic; font-size: small; margin: 0; padding-left: 5px;">
+                                            
+                                                <span style="text-decoration-style: dotted;">Carpenter, G</span>
+                                            
+                                        </p>
+                                    
+                                </td>
+                                <td data-label="Journal" class="favth-col-md-2">J Cell Biol</td>
+                                <td data-label="Year" class="favth-col-md-1">1999</td>
+                            
+                            
+                            
+                        </tr>
+                    
+                        <tr>
+                            
+                            
+                                <td data-label="PubMed ID" class="favth-col-md-2">12297041</td>
+                                <td data-label="Title" class="favth-col-md-7">
+                                    <a href="http://www.ncbi.nlm.nih.gov/pubmed/12297041" class="" target="_blank" title="show Pubmed"> Ligand-induced, receptor-mediated dimerization and activation of EGF receptor</a>
+                                    
+                                        <p style="font-style: italic; font-size: small; margin: 0; padding-left: 5px;">
+                                            
+                                                <span style="text-decoration-style: dotted;">Schlessinger, J</span>
+                                            
+                                        </p>
+                                    
+                                </td>
+                                <td data-label="Journal" class="favth-col-md-2">Cell</td>
+                                <td data-label="Year" class="favth-col-md-1">2002</td>
+                            
+                            
+                            
+                        </tr>
+                    
+                 </tbody>
+            </table>
+        </div>
+    </fieldset>
+</div>
+        
+
+        
+
+        
+            
+
+
+
+    
+    
+        
+    
+
+
+<fieldset class="fieldset-details">
+    <legend>Participants</legend>
+    
+        
+
+            <div class="fieldset-pair-container">
+                <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                    Events
+                </div>
+                <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                    <div>
+                        <ul class="list">
+                            
+                                <li>
+                                    <i class="sprite sprite-resize sprite-Reaction sprite-position" title="Reaction"></i>   <a href="https://reactome.org/content/detail/R-HSA-177946" style="vertical-align: middle" title="Show R-HSA-177946">Pro-EGF is cleaved to form mature EGF <span>(Homo sapiens)</span></a>
+                                </li>
+                            
+                                <li>
+                                    <i class="sprite sprite-resize sprite-Reaction sprite-position" title="Reaction"></i>   <a href="https://reactome.org/content/detail/R-HSA-9674531" style="vertical-align: middle" title="Show R-HSA-9674531">AAMP binds EGFR <span>(Homo sapiens)</span></a>
+                                </li>
+                            
+                                <li>
+                                    <i class="sprite sprite-resize sprite-Reaction sprite-position" title="Reaction"></i>   <a href="https://reactome.org/content/detail/R-HSA-177942" style="vertical-align: middle" title="Show R-HSA-177942">EGFR binds EGF ligand <span>(Homo sapiens)</span></a>
+                                </li>
+                            
+                                <li>
+                                    <i class="sprite sprite-resize sprite-Reaction sprite-position" title="Reaction"></i>   <a href="https://reactome.org/content/detail/R-HSA-177922" style="vertical-align: middle" title="Show R-HSA-177922">EGFR dimerization <span>(Homo sapiens)</span></a>
+                                </li>
+                            
+                                <li>
+                                    <i class="sprite sprite-resize sprite-Reaction sprite-position" title="Reaction"></i>   <a href="https://reactome.org/content/detail/R-HSA-177934" style="vertical-align: middle" title="Show R-HSA-177934">EGFR autophosphorylation <span>(Homo sapiens)</span></a>
+                                </li>
+                            
+                                <li>
+                                    <i class="sprite sprite-resize sprite-Reaction sprite-position" title="Reaction"></i>   <a href="https://reactome.org/content/detail/R-HSA-177937" style="vertical-align: middle" title="Show R-HSA-177937">Phosphorylation of EGFR by SRC kinase <span>(Homo sapiens)</span></a>
+                                </li>
+                            
+                                <li>
+                                    <i class="sprite sprite-resize sprite-Pathway sprite-position" title="Pathway"></i>   <a href="https://reactome.org/content/detail/R-HSA-212718" style="vertical-align: middle" title="Show R-HSA-212718">EGFR interacts with phospholipase C-gamma <span>(Homo sapiens)</span></a>
+                                </li>
+                            
+                                <li>
+                                    <i class="sprite sprite-resize sprite-Pathway sprite-position" title="Pathway"></i>   <a href="https://reactome.org/content/detail/R-HSA-179812" style="vertical-align: middle" title="Show R-HSA-179812">GRB2 events in EGFR signaling <span>(Homo sapiens)</span></a>
+                                </li>
+                            
+                                <li>
+                                    <i class="sprite sprite-resize sprite-Pathway sprite-position" title="Pathway"></i>   <a href="https://reactome.org/content/detail/R-HSA-180336" style="vertical-align: middle" title="Show R-HSA-180336">SHC1 events in EGFR signaling <span>(Homo sapiens)</span></a>
+                                </li>
+                            
+                                <li>
+                                    <i class="sprite sprite-resize sprite-Pathway sprite-position" title="Pathway"></i>   <a href="https://reactome.org/content/detail/R-HSA-180292" style="vertical-align: middle" title="Show R-HSA-180292">GAB1 signalosome <span>(Homo sapiens)</span></a>
+                                </li>
+                            
+                                <li>
+                                    <i class="sprite sprite-resize sprite-Pathway sprite-position" title="Pathway"></i>   <a href="https://reactome.org/content/detail/R-HSA-182971" style="vertical-align: middle" title="Show R-HSA-182971">EGFR downregulation <span>(Homo sapiens)</span></a>
+                                </li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        
+    
+
+    
+
+</fieldset>
+
+
+
+
+
+
+    
+        
+        
+            
+        
+    
+
+    
+    <fieldset class="fieldset-details">
+        <legend>Participates</legend>
+        
+            <div class="fieldset-pair-container">
+                <div class="favth-clearfix">
+                    <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                        as an event of
+                    </div>
+                    <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                        <div>
+                            <ul class="list">
+                                
+                                    <li>
+                                        <i class="sprite sprite-resize sprite-Pathway sprite-position" title="Pathway"></i>
+                                        
+                                            <a href="https://reactome.org/content/detail/R-HSA-9006934" title="Show Details">Signaling by Receptor Tyrosine Kinases
+                                                 (Homo sapiens)
+                                                
+                                            </a>
+                                        
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+    </fieldset>
+
+
+
+
+    <fieldset class="fieldset-details">
+        <legend>Event Information</legend>
+        <div class="fieldset-pair-container">
+            
+                <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">
+                    Go Biological Process
+                </div>
+                <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                    <span><a href="https://www.ebi.ac.uk/QuickGO/term/GO:0007173" class="" title="go to GO">epidermal growth factor receptor signaling pathway (0007173)</a></span>
+                </div>
+            
+            
+        </div>
+    </fieldset>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <fieldset class="fieldset-details">
+        <legend>Orthologous Events</legend>
+        <div class="wrap overflow">
+            
+                
+                    <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
+                        <a href="https://reactome.org/content/detail/R-BTA-177929" title="Signaling by EGFR (Bos taurus)">Signaling by EGFR
+                            (Bos taurus)</a>
+                    </div>
+                
+                    <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
+                        <a href="https://reactome.org/content/detail/R-CEL-177929" title="Signaling by EGFR (Caenorhabditis elegans)">Signaling by EGFR
+                            (Caenorhabditis elegans)</a>
+                    </div>
+                
+                    <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
+                        <a href="https://reactome.org/content/detail/R-CFA-177929" title="Signaling by EGFR (Canis familiaris)">Signaling by EGFR
+                            (Canis familiaris)</a>
+                    </div>
+                
+                    <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
+                        <a href="https://reactome.org/content/detail/R-DRE-177929" title="Signaling by EGFR (Danio rerio)">Signaling by EGFR
+                            (Danio rerio)</a>
+                    </div>
+                
+                    <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
+                        <a href="https://reactome.org/content/detail/R-DME-177929" title="Signaling by EGFR (Drosophila melanogaster)">Signaling by EGFR
+                            (Drosophila melanogaster)</a>
+                    </div>
+                
+                    <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
+                        <a href="https://reactome.org/content/detail/R-GGA-177929" title="Signaling by EGFR (Gallus gallus)">Signaling by EGFR
+                            (Gallus gallus)</a>
+                    </div>
+                
+                    <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
+                        <a href="https://reactome.org/content/detail/R-MMU-177929" title="Signaling by EGFR (Mus musculus)">Signaling by EGFR
+                            (Mus musculus)</a>
+                    </div>
+                
+                    <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
+                        <a href="https://reactome.org/content/detail/R-RNO-177929" title="Signaling by EGFR (Rattus norvegicus)">Signaling by EGFR
+                            (Rattus norvegicus)</a>
+                    </div>
+                
+                    <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
+                        <a href="https://reactome.org/content/detail/R-SSC-177929" title="Signaling by EGFR (Sus scrofa)">Signaling by EGFR
+                            (Sus scrofa)</a>
+                    </div>
+                
+                    <div class="favth-col-lg-6 favth-col-md-6 favth-col-sm-12 favth-col-xs-12 text-overflow">
+                        <a href="https://reactome.org/content/detail/R-XTR-177929" title="Signaling by EGFR (Xenopus tropicalis)">Signaling by EGFR
+                            (Xenopus tropicalis)</a>
+                    </div>
+                
+            
+        </div>
+    </fieldset>
+
+        
+
+        
+
+
+
+
+    
+        
+        
+            
+        
+    
+
+    
+
+    
+        <div class="favth-clearfix">
+            <fieldset class="fieldset-details">
+                <legend>Cross References</legend>
+                
+                    <div class="fieldset-pair-container">
+                        <div class="favth-clearfix">
+                            <div class="favth-col-lg-2 favth-col-md-2 favth-col-sm-3 favth-col-xs-12 details-label">BioModels Database</div>
+                            <div class="favth-col-lg-10 favth-col-md-10 favth-col-sm-9 favth-col-xs-12 details-field">
+                                <div>
+                                    
+                                        <a href="https://www.ebi.ac.uk/biomodels/BIOMD0000000466" target="_blank" title="show BioModels Database:BIOMD0000000466">BIOMD0000000466</a>, 
+                                    
+                                        <a href="https://www.ebi.ac.uk/biomodels/BIOMD0000000255" target="_blank" title="show BioModels Database:BIOMD0000000255">BIOMD0000000255</a>, 
+                                    
+                                        <a href="https://www.ebi.ac.uk/biomodels/BIOMD0000000594" target="_blank" title="show BioModels Database:BIOMD0000000594">BIOMD0000000594</a>, 
+                                    
+                                        <a href="https://www.ebi.ac.uk/biomodels/BIOMD0000000223" target="_blank" title="show BioModels Database:BIOMD0000000223">BIOMD0000000223</a>, 
+                                    
+                                        <a href="https://www.ebi.ac.uk/biomodels/BIOMD0000000468" target="_blank" title="show BioModels Database:BIOMD0000000468">BIOMD0000000468</a>, 
+                                    
+                                        <a href="https://www.ebi.ac.uk/biomodels/BIOMD0000000175" target="_blank" title="show BioModels Database:BIOMD0000000175">BIOMD0000000175</a>, 
+                                    
+                                        <a href="https://www.ebi.ac.uk/biomodels/BIOMD0000000399" target="_blank" title="show BioModels Database:BIOMD0000000399">BIOMD0000000399</a>, 
+                                    
+                                        <a href="https://www.ebi.ac.uk/biomodels/BIOMD0000000477" target="_blank" title="show BioModels Database:BIOMD0000000477">BIOMD0000000477</a>, 
+                                    
+                                        <a href="https://www.ebi.ac.uk/biomodels/BIOMD0000000595" target="_blank" title="show BioModels Database:BIOMD0000000595">BIOMD0000000595</a>, 
+                                    
+                                        <a href="https://www.ebi.ac.uk/biomodels/BIOMD0000000019" target="_blank" title="show BioModels Database:BIOMD0000000019">BIOMD0000000019</a>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+            </fieldset>
+        </div>
+    
+
+
+
+
+    
+        <fieldset class="fieldset-details">
+            <legend>Authored</legend>
+            <div class="wrap overflow">
+                
+                    
+                    
+                        <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-6 favth-col-xs-12 text-overflow">
+                            
+                                
+                                
+                                    <a href="https://reactome.org/content/detail/person/188409" class="" title="Castagnoli, L">Castagnoli, L &nbsp;(2008-02-28)</a>
+                                
+                            
+                        </div>
+                    
+                        <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-6 favth-col-xs-12 text-overflow">
+                            
+                                
+                                    <a href="https://reactome.org/content/detail/person/0000-0002-5039-5405" class="" title="Jassal, B">Jassal, B &nbsp;(2008-02-28)</a>
+                                
+                                
+                            
+                        </div>
+                    
+                
+            </div>
+        </fieldset>
+    
+
+    
+        <fieldset class="fieldset-details">
+            <legend>Reviewed</legend>
+            <div class="wrap overflow">
+                
+                    
+                    
+                        <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-6 favth-col-xs-12 text-overflow">
+                            
+                                
+                                
+                                    <a href="https://reactome.org/content/detail/person/74370" class="" title="Heldin, CH">Heldin, CH &nbsp;(2008-02-28)</a>
+                                
+                            
+                        </div>
+                    
+                        <div class="favth-col-lg-3 favth-col-md-3 favth-col-sm-6 favth-col-xs-12 text-overflow">
+                            
+                                
+                                
+                                    <a href="https://reactome.org/content/detail/person/193361" class="" title="Muthuswamy, S">Muthuswamy, S &nbsp;(2008-02-28)</a>
+                                
+                            
+                        </div>
+                    
+                
+            </div>
+        </fieldset>
+    
+
+    
+        <fieldset class="fieldset-details">
+            <legend>Created</legend>
+            
+            <div class="wrap overflow">
+                
+                    <div class="favth-col-xs-12 text-overflow">
+                        
+                            
+                                <a href="https://reactome.org/content/detail/person/0000-0002-5039-5405" class="" title="Jassal, B">Jassal, B &nbsp;(2006-04-11)</a>
+                            
+                            
+                        
+                    </div>
+                
+            </div>
+        </fieldset>
+    
+
+
+        
+
+        
+        
+    </div>
+</div>
+</div>
+
+                          </div>
+
+                                                                        
+                                                                        
+                                                                        
+                                    
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        
+            <!-- Custom: Icon Library -->
+		    
+            <!-- Custom: Sync to Production -->
+		    
+  			<!-- PROMO -->
+        
+        <!-- PRIME -->
+        
+  			<!-- SHOWCASE -->
+        
+        <!-- FEATURE -->
+        
+        <!-- FOCUS -->
+        
+        <!-- PORTFOLIO -->
+        
+        <!-- SCREEN -->
+        
+  			<!-- TOP -->
+        
+  			<!-- MAINTOP -->
+  			
+  			<!-- MAIN -->
+        <div id="fav-mainwrap">
+          <div class="favth-container">
+            <div class="favth-row">
+
+  						<div id="fav-main" class="favth-clearfix">
+
+  							  								<div id="fav-maincontent" class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+  									<div id="system-message-container">
+	</div>
+
+  									<div class="blog-featured" itemscope="" itemtype="//schema.org/Blog">
+
+
+
+</div>
+  								</div>
+  							
+  						</div>
+
+            </div>
+  				</div>
+  			</div>
+
+  			<!-- MAINBOTTOM -->
+        
+  			<!-- BOTTOM -->
+        
+        <!-- NOTE -->
+        
+        <!-- BASE -->
+        
+        <!-- BLOCK -->
+        
+        <!-- USER -->
+        
+        <!-- MAP -->
+        
+  			<!-- FOOTER -->
+        
+          <div id="fav-footerwrap" class="fav-module-block-color">
+            <div class="fav-transparent">
+              <div class="favth-container">
+                <div class="favth-row">
+
+                  <div id="fav-footer" class=" favth-clearfix">
+
+                                          
+                          <div id="fav-footer1" class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+
+                            <div class="moduletable favth-visible-md favth-visible-lg favth-visible-sm"><ul class="nav menu footer-menu mod-list">
+<li class="item-234 deeper parent"><span class="nav-header fa-info-circle">About</span>
+<ul class="nav-child unstyled small"><li class="item-235"><a href="https://reactome.org/what-is-reactome">What is Reactome ?</a></li><li class="item-236"><a href="https://reactome.org/about/news">News</a></li><li class="item-237"><a href="https://reactome.org/about/team">Team</a></li><li class="item-251"><a href="https://reactome.org/sab">Scientific Advisory Board</a></li><li class="item-362"><a href="https://reactome.org/about/editorial-calendar">Editorial Calendar</a></li><li class="item-722"><a href="https://reactome.org/about/release-calendar">Release Calendar</a></li><li class="item-360"><a href="https://reactome.org/about/statistics">Statistics</a></li><li class="item-397"><a href="https://reactome.org/about/logo">Our Logo</a></li><li class="item-253"><a href="https://reactome.org/license">License Agreement</a></li><li class="item-588"><a href="https://reactome.org/about/privacy-notice">Privacy Notice</a></li><li class="item-254"><a href="https://reactome.org/about/disclaimer">Disclaimer</a></li></ul></li><li class="item-356 deeper parent"><span class="nav-header fa-pencil-square-o">Content</span>
+<ul class="nav-child unstyled small"><li class="item-358"><a href="https://reactome.org/content/toc">Table of Contents</a></li><li class="item-359"><a href="https://reactome.org/content/doi">DOIs</a></li><li class="item-357"><a href="https://reactome.org/content/schema">Data Schema</a></li><li class="item-693"><a href="https://reactome.org/content/reactome-research-spotlight">Reactome Research Spotlight</a></li><li class="item-361"><a href="https://reactome.org/orcid">ORCID Integration Project</a></li><li class="item-572"><a href="https://reactome.org/covid-19">COVID-19 Disease Pathways</a></li></ul></li><li class="item-152 deeper parent"><a href="https://reactome.org/documentation" class="fa-graduation-cap">Docs</a><ul class="nav-child unstyled small"><li class="item-303 parent"><a href="https://reactome.org/userguide">Userguide</a></li><li class="item-268 parent"><a href="https://reactome.org/dev">Developer's Zone</a></li><li class="item-302 parent"><a href="https://reactome.org/icon-info">Icon Info</a></li><li class="item-269"><a href="https://reactome.org/documentation/data-model">Data Model</a></li><li class="item-270"><a href="https://reactome.org/documentation/inferred-events">Computationally inferred events</a></li><li class="item-721"><a href="https://reactome.org/documentation/faq">FAQ</a></li><li class="item-271"><a href="https://reactome.org/linking-to-us">Linking to Us</a></li><li class="item-272"><a href="https://reactome.org/cite">Citing us</a></li></ul></li><li class="item-238 deeper parent"><span class="nav-header fa-cogs">Tools</span>
+<ul class="nav-child unstyled small"><li class="item-239"><a href="https://reactome.org/PathwayBrowser">Pathway Browser</a></li><li class="item-240"><a href="https://reactome.org/PathwayBrowser/#TOOL=AT">Analyse gene list</a></li><li class="item-561"><a href="https://reactome.org/PathwayBrowser/#TOOL=AT">Analyse gene expression</a></li><li class="item-245"><a href="https://reactome.org/PathwayBrowser/#TOOL=AT">Species Comparison</a></li><li class="item-582"><a href="https://reactome.org/PathwayBrowser/#TOOL=AT">Tissue Distribution</a></li><li class="item-248"><a href="https://reactome.org/AnalysisService">Analysis Service</a></li><li class="item-249"><a href="https://reactome.org/ContentService">Content Service</a></li><li class="item-246"><a href="https://reactome.org/tools/reactome-fiviz">ReactomeFIViz</a></li><li class="item-557 parent"><span class="nav-header overlays">Overlays</span>
+</li><li class="item-247"><a href="https://reactome.org/content/advanced">Advanced Data Search</a></li><li class="item-301"><a href="https://reactome.org/tools/site-search">Site Search</a></li></ul></li><li class="item-241 deeper parent"><span class="nav-header fa-users">Community</span>
+<ul class="nav-child unstyled small"><li class="item-266"><a href="https://reactome.org/icon-lib" title="Community library of icons that are used in the Reactome Enhanced High Level Diagrams (EHLD). We would like to develop the EHLD library further as a community resource. If you use library elements, and design similar elements that are still missing, we would be very happy to incorporate them into the library, naming you as the author" class="icons-library-mi">Icon Library</a></li><li class="item-259"><a href="https://reactome.org/community/outreach">Outreach</a></li><li class="item-260"><a href="https://reactome.org/community/events">Events</a></li><li class="item-261"><a href="https://reactome.org/community/training">Training</a></li><li class="item-262"><a href="https://reactome.org/community/publications">Publications</a></li><li class="item-263"><a href="https://reactome.org/community/partners">Partners</a></li><li class="item-264"><a href="https://reactome.org/community/citation-list">Papers Citing Us</a></li><li class="item-265"><a href="https://reactome.org/community/resources">Resources Guide</a></li><li class="item-493"><a href="https://reactome.org/community/collaboration">Collaboration</a></li></ul></li><li class="item-242"><a href="https://reactome.org/download-data" class="fa-download">Download</a></li></ul>
+</div>
+
+                          </div>
+
+                                                                        
+                                                                        
+                                                                        
+                                    
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        
+  			<!-- COPYRIGHT -->
+  			
+          <div id="fav-copyrightwrap">
+            <div class="favth-container">
+              <div class="favth-row">
+
+                  
+                  
+                    <div id="fav-copyright" class=" favth-clearfix">
+
+                                              <div id="fav-showcopyright" class="favth-col-lg-3 favth-col-md-3 favth-col-sm-3 favth-col-xs-12">
+                            <p>© 2023                                <!-- Custom: // -->
+                              <a href="https://reactome.org/" target="_blank">
+                                Reactome                              </a>
+
+                            </p>
+
+                        </div>
+                      
+                                                <div id="fav-copyright1" class="favth-col-lg-9 favth-col-md-9 favth-col-sm-9 favth-col-xs-12">
+
+                            <div class="moduletablepull-center favstyle">
+<div id="favsocial-12176" class="clearfix" style="width:100%;">
+
+  <ul id="favsocial-list" class="favsocial-center">
+
+    
+      <li id="favsocial-icon1">
+        <a href="https://twitter.com/intent/user?screen_name=reactome" target="_blank" style="background-color: #AAAAAA;
+                padding: 0.2em;
+                -webkit-border-radius: 4px;
+                -moz-border-radius: 4px;
+                border-radius: 4px">
+
+          <span class="favsocial">
+            <i class="fa fa-twitter" style="color: #FFFFFF;
+                    font-size: 18px;">
+            </i>
+          </span>
+
+        </a>
+      </li>
+
+    
+      <li id="favsocial-icon2">
+        <a href="https://www.facebook.com/reactome" target="_blank" style="background-color: #AAAAAA;
+                padding: 0.2em;
+                -webkit-border-radius: 4px;
+                -moz-border-radius: 4px;
+                border-radius: 4px">
+
+          <span class="favsocial">
+            <i class="fa fa-facebook" style="color: #FFFFFF;
+                    font-size: 18px;">
+            </i>
+          </span>
+
+        </a>
+      </li>
+
+    
+      <li id="favsocial-icon3">
+        <a href="https://www.youtube.com/channel/UCXKPDGH34lyyMAjPUXubykw/videos" target="_blank" style="background-color: #AAAAAA;
+                padding: 0.2em;
+                -webkit-border-radius: 4px;
+                -moz-border-radius: 4px;
+                border-radius: 4px">
+
+          <span class="favsocial">
+            <i class="fa fa-youtube" style="color: #FFFFFF;
+                    font-size: 18px;">
+            </i>
+          </span>
+
+        </a>
+      </li>
+
+    
+  </ul>
+
+</div>
+</div>
+
+                          </div>
+                      
+                      
+                    </div>
+                  
+              </div>
+            </div>
+          </div>
+
+        
+  			<!-- DEBUG -->
+        
+
+                    
+          <a class="citation-button-large favth-visible-md favth-visible-lg" onclick="getCitation();">
+            <span>Cite Us!</span>
+              <img src="page_with_metadata2_files/citation.png">
+          </a> 
+
+          <button type="button" class="favth-btn favth-visible-xs favth-visible-sm" style="width: 100%; padding: 10px; padding-bottom: 10px;" onclick="getCitation();">Cite Us!</button>
+
+          <!-- Modal -->
+          <div id="citationModal" class="modal fade" role="dialog" style="display:none;">
+            <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header favth-col-xs-12">
+                  <div class="favth-col-xs-7 padding0">
+                    <h4 class="modal-title" style="font-weight:bold"> Cite Us!</h4>
+                  </div>
+                  <div class="favth-col-xs-5" style="margin-top:20px; margin-bottom:10px; text-align:right; padding:0">
+                    <a id="clipboardButton" data-clipboard-target="#citationText" title="Copy"><i class="fa fa-clipboard"></i></a> 
+                    <a id="mailButton" onclick="sendMail()" title="Email"><i class="fa fa-envelope"></i></a>
+                  </div>
+                </div>
+                <div class="modal-body"> 
+                <div id="citationWarning" class="alert alert-warning" style="display:none;">
+                  <strong>Warning!</strong> Unable to extract citation. Please try again later.
+                </div>
+                  <div id="citationText" style="white-space:pre-line"></div>
+                  <hr id="breakLine">
+                  <form id="exportCitationForm">
+                    <h5 style="font-weight:bold">Download As:</h5>
+                    <div class="radio-button">
+                      <input type="radio" class="radio" id="exportCitationAsBibTeX" name="exportOption" value="bib" onclick="enableExportCitationButton()">
+                      <label for="exportCitationAsBibTeX">BibTeX</label>
+
+                      <input type="radio" class="radio" id="exportCitationAsRIS" name="exportOption" value="ris" onclick="enableExportCitationButton()">
+                      <label for="exportCitationAsRIS">RIS</label>
+
+                      <input type="radio" class="radio" id="exportCitationAsText" name="exportOption" value="txt" onclick="enableExportCitationButton()">
+                      <label for="exportCitationAsText">Text</label>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="modal-footer">
+                  <button id="exportCitationButton" type="button" class="favth-btn favth-btn-small" disabled="disabled" onclick="exportCitation();">Download</button>
+                  <button type="button" class="favth-btn favth-btn-small" data-dismiss="modal">Close</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        
+
+  			<!-- BACKTOP -->
+        <div id="fav-backtopwrap">
+    			<div class="favth-container">
+    				<div class="favth-row">
+     					    						<div id="fav-backtop" class="favth-col-lg-12 favth-col-md-12 favth-col-sm-12 favth-col-xs-12">
+    							<a href="#" class="btn backtop" title="Back to Top" style="display: none;">
+                    <i class="fa fa-angle-up"></i>
+    							</a>
+    						</div>
+    					    				</div>
+    			</div>
+        </div>
+
+  		</div><!-- /fav-container -->
+
+    </div><!-- /fav-overlay -->
+  </div><!-- /fav-containerwrap -->
+
+  <!-- Custom: Auto complete -->
+  <script src="page_with_metadata2_files/search-ac.js"></script>
+
+<script type="text/javascript" src="page_with_metadata2_files/data-content.js"></script>
+
+
+<div class="autocomplete-suggestions" style="position: absolute; display: none; max-height: 300px; z-index: 9999;"></div></body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>

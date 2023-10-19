@@ -62,29 +62,27 @@ public class MetadataCollector extends Thread {
     }
 
     // Helpers
-    private MetadataExtractionResult attendMetadataExtractionRequest(MetadataExtractionRequest request) {
+    public MetadataExtractionResult attendMetadataExtractionRequest(MetadataExtractionRequest request) {
         logger.info("Attending metadata extraction request for Access URL '{}', resolution path '{}'", request
                 .getAccessUrl(), request.getResolutionPath());
         return metadataExtractionResultBuilder.attendMetadataExtractionRequest(metadataFetcher, request);
     }
 
-    private MetadataExtractionResult persist(MetadataExtractionResult result) {
+    private void persist(MetadataExtractionResult result) {
         try {
             metadataExtractionResultService.save(result);
         } catch (MetadataExtractionResultServiceException e) {
-            logger.error(String.format("FAILED to persist metadata extraction result due to '%s'", e.getMessage()));
+            logger.error("FAILED to persist metadata extraction result due to '{}'", e.getMessage());
         }
-        return result;
     }
 
-    private MetadataExtractionResult announce(MetadataExtractionResult result) {
+    private void announce(MetadataExtractionResult result) {
         try {
             metadataExtractionResultPublisher.publish(result);
         } catch (PublisherException e) {
-            logger.error("FAILED to announce metadata extraction result for Access URL '%s' due to '%s'", result
+            logger.error("FAILED to announce metadata extraction result for Access URL '{}' due to '{}'", result
                     .getAccessUrl(), e.getMessage());
         }
-        return result;
     }
 
     private void randomWait() {

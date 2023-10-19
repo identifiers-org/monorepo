@@ -3,7 +3,11 @@ package org.identifiers.cloud.ws.metadata.models;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
@@ -25,7 +29,7 @@ public class MetadataFetcherTest {
 
     // TODO - Fix this unit test or kill it
     @Autowired
-    private MetadataFetcher metadataFetcher;
+    MetadataFetcher metadataFetcher;
 
     @Test
     public void testValidMetadata() {
@@ -39,8 +43,9 @@ public class MetadataFetcherTest {
     }
 
     private List<String> getUrlsWithValidMetadata() {
-        return Arrays.asList("https://reactome.org/content/detail/R-HSA-177929",
-                "https://www.omicsdi.org/dataset/arrayexpress-repository/E-GEOD-37196"
-        );
+        // TODO: Make port number dynamic after updating java to 17 and dependencies
+        return Arrays.asList(
+                "http://localhost:8082/page_with_metadata.html",
+                "http://localhost:8082/page_with_metadata2.html");
     }
 }
