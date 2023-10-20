@@ -5,7 +5,9 @@ import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -18,7 +20,14 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.support.collections.DefaultRedisList;
 import org.springframework.data.redis.support.collections.RedisList;
+import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.web.client.ResponseErrorHandler;
+import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.concurrent.BlockingDeque;
 
 /**
@@ -117,5 +126,29 @@ public class ApplicationConfig {
     @Bean
     public ChannelTopic channelTopicFlushHistoryTrackingData() {
         return new ChannelTopic(channelKeyFlushHistoryTrackingData);
+    }
+
+    @Bean
+    @Qualifier("linkCheckerRestTemplate")
+    public RestTemplate linkCheckerRestTemplate() {
+        RestTemplate restTemplate = new RestTemplate();
+        SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory() {
+            @Override
+            protected void prepareConnection(HttpURLConnection connection, String httpMethod) throws IOException {
+                super.prepareConnection(connection, httpMethod);
+                connection.setInstanceFollowRedirects(true);
+                connection.setUseCaches(false);
+                connection.setConnectTimeout(3000);
+                connection.setReadTimeout(12000);
+            }
+        };
+        restTemplate.setRequestFactory(requestFactory);
+        restTemplate.setErrorHandler(new ResponseErrorHandler() { // We should ignore errors
+            @Override
+            public boolean hasError(ClientHttpResponse clientHttpResponse) { return false; }
+            @Override
+            public void handleError(ClientHttpResponse clientHttpResponse) {}
+        });
+        return restTemplate;
     }
 }

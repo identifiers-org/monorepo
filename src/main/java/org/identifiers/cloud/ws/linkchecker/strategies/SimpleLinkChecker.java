@@ -2,15 +2,16 @@ package org.identifiers.cloud.ws.linkchecker.strategies;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.ProtocolException;
-import java.net.URL;
+import java.net.*;
 import java.sql.Timestamp;
+import java.time.Instant;
 
 /**
  * Project: link-checker
@@ -26,40 +27,22 @@ import java.sql.Timestamp;
 @Scope("prototype")
 public class SimpleLinkChecker implements LinkChecker {
     private static final Logger logger = LoggerFactory.getLogger(SimpleLinkChecker.class);
-    private static final int CONNECTION_TIMEOUT_SECONDS = 3;
-    private static final int READ_TIMEOUT_SECONDS = 12;
+
+    @Autowired
+    @Qualifier("linkCheckerRestTemplate")
+    RestTemplate restTemplate;
 
     @Override
     public LinkCheckerReport check(URL checkingUrl, boolean accept401or403) {
         LinkCheckerReport report = new LinkCheckerReport()
                 .setUrl(checkingUrl.toString())
                 .setTimestamp(new Timestamp(System.currentTimeMillis()));
-        HttpURLConnection connection = null;
-        try {
-            connection = (HttpURLConnection) checkingUrl.openConnection();
-        } catch (IOException | ClassCastException e) {
-            throw new SimpleLinkCheckerException(e.getMessage());
-        }
-        try {
-            connection.setRequestMethod("GET");
-        } catch (ProtocolException e) {
-            throw new SimpleLinkCheckerException(e.getMessage());
-        }
-        connection.setConnectTimeout(CONNECTION_TIMEOUT_SECONDS * 1000);
-        connection.setUseCaches(false);
-        connection.setInstanceFollowRedirects(false);
-        connection.setReadTimeout(READ_TIMEOUT_SECONDS * 1000);
-        connection.setInstanceFollowRedirects(true);
-        try {
-            report.setHttpStatus(connection.getResponseCode());
-        } catch (IOException e) {
-            throw new SimpleLinkCheckerException(String.format("IO Exception when checking '%s', reason '%s'", checkingUrl, e.getMessage()));
-        } finally {
-            connection.disconnect();
-        }
-        // We accept HTTP OK, although this is the place where the NLP based prototype from Paris Biohackathon should
-        // improve the link checker accuracy
-        HttpStatus responseStatus = HttpStatus.valueOf(report.getHttpStatus());
+
+        ResponseEntity<Object> response = restTemplate.exchange(checkingUrl.toString(),
+                HttpMethod.HEAD, null, Object.class);
+        report.setHttpStatus(response.getStatusCodeValue());
+
+        HttpStatus responseStatus = response.getStatusCode();
         if (responseStatus.is2xxSuccessful()) {
             report.setUrlAssessmentOk(true);
             logger.info("[HTTP {}] ACCEPTED AS OK For URL {}",
