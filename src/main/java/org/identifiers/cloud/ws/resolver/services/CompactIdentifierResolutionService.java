@@ -37,7 +37,6 @@ public class CompactIdentifierResolutionService implements ResolutionService {
 
     // Helpers
     private CompactIdentifierVerification verifyCompactIdentifier(String namespace, String localId) {
-        // TODO
         CompactIdentifierVerification verification = new CompactIdentifierVerification();
         Namespace registryNamespace = resolverDataFetcher.findNamespaceByPrefix(namespace);
         if (registryNamespace == null) {

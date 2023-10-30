@@ -4,10 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.libapi.models.resourcerecommender.Location;
 import org.identifiers.cloud.libapi.models.resourcerecommender.ResolvedResource;
 import org.identifiers.cloud.libapi.models.resourcerecommender.ResourceRecommendation;
-import org.identifiers.cloud.libapi.services.ApiServicesFactory;
+import org.identifiers.cloud.libapi.services.ResourceRecommenderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -25,14 +25,12 @@ import java.util.stream.Collectors;
 @Component
 @Scope("prototype")
 @Slf4j
-public class ResourceRecommenderService implements ResourceRecommenderStrategy {
+public class ResourceRecommenderWsStrategy implements ResourceRecommenderStrategy {
 
-    private static final Logger logger = LoggerFactory.getLogger(ResourceRecommenderService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResourceRecommenderWsStrategy.class);
 
-    @Value("${org.identifiers.cloud.ws.resolver.service.recommender.host}")
-    private String resourceRecommenderServiceHost;
-    @Value("${org.identifiers.cloud.ws.resolver.service.recommender.port}")
-    private String resourceRecommenderServicePort;
+    @Autowired
+    ResourceRecommenderService resourceRecommenderService;
 
     @Override
     public List<ResourceRecommendation> getRecommendations(List<org.identifiers.cloud.ws.resolver.models.ResolvedResource> resources) throws ResourceRecommenderStrategyException {
@@ -47,8 +45,7 @@ public class ResourceRecommenderService implements ResourceRecommenderStrategy {
                             .setId(resolvedResource.getId())
             ).collect(Collectors.toList());
         } else {
-            return ApiServicesFactory
-                    .getResourceRecommenderService(resourceRecommenderServiceHost, resourceRecommenderServicePort)
+            return resourceRecommenderService
                     .requestRecommendations(resources.parallelStream()
                             .map(this::getResolverLibapiResolverResource)
                             .collect(Collectors.toList()))

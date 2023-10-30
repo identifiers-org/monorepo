@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.resolver.configuration;
 
 import lombok.extern.slf4j.Slf4j;
+import org.identifiers.cloud.libapi.services.ApiServicesFactory;
 import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcer;
 import org.identifiers.cloud.ws.resolver.daemons.models.ResolverDataSourcerFromWs;
 import org.identifiers.cloud.ws.resolver.models.ResolverDataFetcher;
@@ -15,6 +16,8 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
+import org.springframework.web.client.RestTemplate;
+import org.identifiers.cloud.libapi.services.ResourceRecommenderService;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -63,5 +66,21 @@ public class ApplicationConfig {
     public ResolutionService resolutionService() {
         log.info("[CONFIG] Resolution Strategy - Resolve First");
         return new ResolveFirstResolutionStrategy();
+    }
+
+    @Bean
+    public RestTemplate getRestTempalte() {
+        return new RestTemplate();
+    }
+
+    @Bean
+    public ResourceRecommenderService getResourceRecommenderService(
+            @Value("${org.identifiers.cloud.ws.resolver.service.recommender.host}")
+            String resourceRecommenderServiceHost,
+            @Value("${org.identifiers.cloud.ws.resolver.service.recommender.port}")
+            String resourceRecommenderServicePort
+    ) {
+        return ApiServicesFactory.getResourceRecommenderService
+                (resourceRecommenderServiceHost, resourceRecommenderServicePort);
     }
 }

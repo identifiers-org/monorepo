@@ -3,11 +3,13 @@ package org.identifiers.cloud.ws.resolver.daemons.models;
 import org.identifiers.cloud.ws.resolver.data.models.Namespace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import java.util.List;
  * Timestamp: 2018-01-29 10:16
  * ---
  */
+@Component
 @EnableRetry
 public class ResolverDataSourcerFromWs implements ResolverDataSourcer {
     public static final int WS_REQUEST_RETRY_MAX_ATTEMPTS = 12;
@@ -30,6 +33,10 @@ public class ResolverDataSourcerFromWs implements ResolverDataSourcer {
     // Re-try pattern, externalize this later if needed
     // TODO refactor this to do it in a more modern way
     private static final RetryTemplate retryTemplate;
+
+    @Autowired
+    RestTemplate restTemplate;
+
     static {
         SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy();
         retryPolicy.setMaxAttempts(WS_REQUEST_RETRY_MAX_ATTEMPTS);
@@ -51,10 +58,10 @@ public class ResolverDataSourcerFromWs implements ResolverDataSourcer {
         logger.info("Try to get Resolver data dump from '{}'", resolverDataDumpWsEndpoint);
         // Run it with multiple tries
         try {
-            result = retryTemplate.execute(retryContext -> {
-                RestTemplate restTemplate = new RestTemplate();
-                return restTemplate.getForObject(resolverDataDumpWsEndpoint, HqServiceResponseGetResolverDataset.class).getPayload().getNamespaces();
-            });
+            result = retryTemplate.execute(retryContext -> restTemplate
+                    .getForObject(resolverDataDumpWsEndpoint, HqServiceResponseGetResolverDataset.class)
+                    .getPayload().getNamespaces()
+            );
         } catch (RuntimeException e) {
             // NOTE - Yes, according to best practices, I should not be catching such a top level exception, but here it
             // makes sense

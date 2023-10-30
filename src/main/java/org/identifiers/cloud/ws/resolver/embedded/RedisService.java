@@ -3,8 +3,6 @@ package org.identifiers.cloud.ws.resolver.embedded;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
 import redis.embedded.RedisServer;
 
 import javax.annotation.PostConstruct;
@@ -18,8 +16,9 @@ import java.io.IOException;
  * Timestamp: 2018-01-17 11:28
  * ---
  */
-@Component
-@Profile("disabled")
+//@Component
+//@Profile("disabled")
+@Deprecated
 public class RedisService {
     private Logger logger = LoggerFactory.getLogger(RedisService.class);
 
