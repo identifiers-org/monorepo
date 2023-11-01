@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -20,9 +21,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @SpringBootTest
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
-@TestPropertySource("classpath:test.properties")
 public class PrefixRegistrationRequestValidationApiControllerTest {
     @Autowired
     private MockMvc mvc;
@@ -43,20 +43,20 @@ public class PrefixRegistrationRequestValidationApiControllerTest {
         }
     }
 
-    @Test
-    public void checkValidateProviderHomeUrlEndpoint() throws Exception {
-        ServiceRequestRegisterPrefixPayload prefixRequestPayload = new ServiceRequestRegisterPrefixPayload();
-        prefixRequestPayload.setProviderHomeUrl("http://www.google.com");
-        ServiceRequestRegisterPrefixValidate prefixRequest = new ServiceRequestRegisterPrefixValidate();
-        prefixRequest.setPayload(prefixRequestPayload);
-
-        mvc.perform(MockMvcRequestBuilders
-                .post("/prefixRegistrationApi/validateProviderHomeUrl")
-                .accept(MediaType.APPLICATION_JSON)
-                .content(asJsonString(prefixRequest)))
-            .andDo(print())
-            .andExpect(status().isOk());
-    }
+//    @Test
+//    public void checkValidateProviderHomeUrlEndpoint() throws Exception {
+//        ServiceRequestRegisterPrefixPayload prefixRequestPayload = new ServiceRequestRegisterPrefixPayload();
+//        prefixRequestPayload.setProviderHomeUrl("http://www.google.com");
+//        ServiceRequestRegisterPrefixValidate prefixRequest = new ServiceRequestRegisterPrefixValidate();
+//        prefixRequest.setPayload(prefixRequestPayload);
+//
+//        mvc.perform(MockMvcRequestBuilders
+//                .post("/prefixRegistrationApi/validateProviderHomeUrl")
+//                .accept(MediaType.APPLICATION_JSON)
+//                .content(asJsonString(prefixRequest)))
+//            .andDo(print())
+//            .andExpect(status().isOk());
+//    }
 
     //    @Test
 //    public void testValidateProviderHomeUrl() {

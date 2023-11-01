@@ -21,7 +21,7 @@ public class PrefixRegistrationRequestValidatorProviderLocation implements Prefi
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
         // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
-        if (request.getProviderLocation() == null) {
+        if (request.getProviderLocation() == null || request.getProviderLocation().trim().isEmpty()) {
             throw new PrefixRegistrationRequestValidatorException("Provider Location MUST BE PRESENT, and follow ISO 3166/MA Alpha-2 Country Codes format");
         }
         // TODO - Actually validate the provided location using ISO 3166/MA Alpha-2 Country Codes

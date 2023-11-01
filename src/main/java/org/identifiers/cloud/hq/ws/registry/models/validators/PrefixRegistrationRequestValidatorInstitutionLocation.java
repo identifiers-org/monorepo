@@ -20,7 +20,8 @@ import org.springframework.stereotype.Component;
 public class PrefixRegistrationRequestValidatorInstitutionLocation implements PrefixRegistrationRequestValidator {
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
-        if (request.getInstitutionLocation() == null) {
+        String location = request.getInstitutionLocation();
+        if (location == null || location.trim().isEmpty()) {
             // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
             throw new PrefixRegistrationRequestValidatorException("Institution Location information is REQUIRED, but it's MISSING");
         }

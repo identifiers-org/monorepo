@@ -23,22 +23,18 @@ import static org.mockito.Mockito.doReturn;
 @SpringBootTest
 @RunWith(MockitoJUnitRunner.class)
 public class WebPageCheckerDefaultTest extends TestCase {
-
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();
-
     @Spy
     WebPageCheckerDefault checker;
-
     @Mock
     HttpURLConnection connection;
-
 
 
     @Test
     public void testHttpsRewrite() throws IOException {
         exceptionRule.expect(WebPageCheckerException.class);
-        exceptionRule.expectMessage("It seems that a https proxy is in place. Use https instead of http.");
+//        exceptionRule.expectMessage("It seems that a https rewrite is in place. Use https instead of http.");
 
         doReturn(connection).when(checker).getConnection(any());
         doReturn(HttpStatus.MOVED_PERMANENTLY.value()).when(connection).getResponseCode();

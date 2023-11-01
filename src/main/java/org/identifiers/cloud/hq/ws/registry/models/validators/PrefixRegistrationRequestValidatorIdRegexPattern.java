@@ -4,6 +4,10 @@ import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterP
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Project: registry
@@ -19,9 +23,16 @@ import org.springframework.stereotype.Component;
 public class PrefixRegistrationRequestValidatorIdRegexPattern implements PrefixRegistrationRequestValidator {
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
-        // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
-        if (request.getIdRegexPattern() == null) {
+        if (request.getIdRegexPattern() == null || request.getIdRegexPattern().trim().isEmpty()) {
             throw new PrefixRegistrationRequestValidatorException("MISSING REQUIRED ID Regex Pattern");
+        }
+        try {
+            Pattern.compile(request.getIdRegexPattern());
+        } catch (PatternSyntaxException ex) {
+            PrefixRegistrationRequestValidatorException prefixRegistrationRequestValidatorException =
+                    new PrefixRegistrationRequestValidatorException(String.format("MISSING REQUIRED ID Regex Pattern: %s", ex.getMessage()));
+            prefixRegistrationRequestValidatorException.initCause(ex);
+            throw prefixRegistrationRequestValidatorException;
         }
         return true;
     }
