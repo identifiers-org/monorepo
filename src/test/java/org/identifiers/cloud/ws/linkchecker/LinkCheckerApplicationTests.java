@@ -7,7 +7,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { EmbeddedRedditTestConfiguration.class })
+@SpringBootTest(classes = { TestRedisServer.class })
 @ActiveProfiles("authdisabled")
 public class LinkCheckerApplicationTests {
 

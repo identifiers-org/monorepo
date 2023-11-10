@@ -75,9 +75,9 @@
         </dependency>
 
         <dependency>
-            <groupId>it.ozimov</groupId>
-            <artifactId>embedded-redis</artifactId>
-            <version>0.7.2</version>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>1.17.6</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
