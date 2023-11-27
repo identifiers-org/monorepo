@@ -27,9 +27,10 @@ import java.util.stream.IntStream;
  * Timestamp: 2018-02-12 14:31
  * ---
  */
-@Component
-@Scope("prototype")
-@Profile("disabled")
+//@Component
+//@Scope("prototype")
+//@Profile("disabled")
+@Deprecated
 public class MetadataFetcherWithJavascript implements MetadataFetcher {
     private Logger logger = LoggerFactory.getLogger(MetadataFetcherWithJavascript.class);
 
