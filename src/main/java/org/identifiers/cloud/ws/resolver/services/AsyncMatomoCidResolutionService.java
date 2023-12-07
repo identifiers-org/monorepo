@@ -6,8 +6,9 @@ import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponse;
 import org.identifiers.cloud.ws.resolver.models.ParsedCompactIdentifier;
 import org.identifiers.cloud.ws.resolver.models.ResolvedResource;
 import org.matomo.java.tracking.MatomoRequest;
-import org.matomo.java.tracking.MatomoRequestBuilder;
+import org.matomo.java.tracking.MatomoRequest.MatomoRequestBuilder;
 import org.matomo.java.tracking.MatomoTracker;
+import org.matomo.java.tracking.parameters.AcceptLanguage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
@@ -64,7 +65,8 @@ public class AsyncMatomoCidResolutionService {
 
     @Async("matomoThreadPoolTaskExecutor")
     public void doHandleCidResolution(MatomoRequestImportantInfo info) {
-        MatomoRequestBuilder mreq = MatomoRequest.builder().siteId(1);
+        MatomoRequestBuilder mreq = MatomoRequest.request();
+        mreq.siteId(1);
 
         mreq.actionUrl(info.url);
 //        mreq.trackBotRequests(true);
@@ -103,7 +105,7 @@ public class AsyncMatomoCidResolutionService {
             log.debug("No auth token => no ip collection");
         }
         mreq.headerUserAgent(info.ua);
-        mreq.headerAcceptLanguage(info.lang);
+        mreq.headerAcceptLanguage(AcceptLanguage.fromHeader(info.lang));
         mreq.referrerUrl(info.refe);
     }
 
@@ -117,18 +119,18 @@ public class AsyncMatomoCidResolutionService {
             mreq.outlinkUrl(maxResolvedResource.getCompactIdentifierResolvedUrl());
         }
 
-        Map<String, Object> customData = new HashMap<>();
+        Map<Long, Object> customData = new HashMap<>();
         if (info.parsed_cid != null) {
-            customData.put("dimension6", info.parsed_cid.getNamespace() == null ? "" : info.parsed_cid.getNamespace());
-            customData.put("dimension7", info.parsed_cid.getProviderCode() == null ? "" : info.parsed_cid.getProviderCode());
+            customData.put(6L, info.parsed_cid.getNamespace() == null ? "" : info.parsed_cid.getNamespace());
+            customData.put(7L, info.parsed_cid.getProviderCode() == null ? "" : info.parsed_cid.getProviderCode());
         }
-        customData.put("dimension8", info.resolvedResources.size());
+        customData.put(8L, info.resolvedResources.size());
         if (maxResolvedResource != null) {
-            customData.put("dimension9", maxResolvedResource.getInstitution().getName());
-            customData.put("dimension10", maxResolvedResource.isOfficial());
-//            customData.put("dimention6", maxResolvedResource.isDeprecatedResource()); // Need to find how to add this
+            customData.put(9L, maxResolvedResource.getInstitution().getName());
+            customData.put(10L, maxResolvedResource.isOfficial());
+//            customData.put(6L, maxResolvedResource.isDeprecatedResource()); // Need to find how to add this
         }
-        mreq.customTrackingParameters(customData);
+        mreq.dimensions(customData);
     }
 }
 
