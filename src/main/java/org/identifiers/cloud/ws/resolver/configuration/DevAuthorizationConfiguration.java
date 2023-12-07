@@ -18,6 +18,7 @@ public class DevAuthorizationConfiguration extends WebSecurityConfigurerAdapter 
             .and().anonymous()
             .and()
                 .csrf().disable()
+                .oauth2ResourceServer().disable()
                 .logout().disable()
                 .formLogin().disable();
     }

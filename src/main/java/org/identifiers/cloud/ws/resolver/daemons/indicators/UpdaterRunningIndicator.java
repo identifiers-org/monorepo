@@ -14,10 +14,11 @@ public class UpdaterRunningIndicator implements HealthIndicator {
     ResolverDataUpdater resolverDataUpdater;
 
     /*
-    * Renato:
+    * FIXME:
     * For now this just checks if the thread is running,
     * it would also be good to check if the update was successful and change the readiness state of the instance.
     * But I couldn't make it work, so I will leave it at that until a future version upgrade of the java or spring.
+    * ~ Renato
     */
 
     @Override

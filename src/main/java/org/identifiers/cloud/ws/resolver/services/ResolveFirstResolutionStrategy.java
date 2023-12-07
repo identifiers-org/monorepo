@@ -3,6 +3,7 @@ package org.identifiers.cloud.ws.resolver.services;
 import org.identifiers.cloud.ws.resolver.models.ParsedCompactIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.List;
  */
 @Component
 @Qualifier("ResolveFirstResolutionStrategy")
+@Primary
 public class ResolveFirstResolutionStrategy implements ResolutionService {
     @Autowired
     private MultiResolverBuilder builder;

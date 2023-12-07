@@ -79,7 +79,7 @@ public class RegistryNamespaceResolver implements ResolutionService {
             log.info(String.format("Resolution request '%s' DID RESOLVED as a namespace request", parsedCompactIdentifier.getRawRequest()));
         } else {
             String errorMessage = String.format("Resolution request '%s' is NOT A NAMESPACE", parsedCompactIdentifier.getRawRequest());
-            log.error(errorMessage);
+            log.info(errorMessage);
             result.setErrorMessage(errorMessage);
         }
         return result;
