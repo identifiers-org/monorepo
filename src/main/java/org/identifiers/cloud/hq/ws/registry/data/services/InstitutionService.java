@@ -37,14 +37,27 @@ public class InstitutionService {
      */
     @Transactional
     public Institution registerInstitution(Institution institution) throws InstitutionServiceException {
-        Institution registeredInstitution = repository.findByName(institution.getName());
-        if (registeredInstitution == null) {
-            // TODO - Run validations, probably through Repository Event listeners
+        Institution registeredInstitution = null;
+
+        // If rorid given, find existing institution by rorid
+        if (institution.getRorId() != null && institution.getRorId().trim().length() > 0) {
+            registeredInstitution = repository.findByRorId(institution.getRorId());
+        }
+
+        if (registeredInstitution == null) { // If not found, try to find by name;
+            registeredInstitution = repository.findByName(institution.getName().trim());
+        }
+
+        if (registeredInstitution == null) { // if still not found, just create a new one.
             institution.setLocation(locationService.registerLocation(institution.getLocation()));
             registeredInstitution = repository.save(institution);
             log.info(String.format("Registered Institution with ID '%d', name '%s'",
                     registeredInstitution.getId(), registeredInstitution.getName()));
+        } else {
+            log.info(String.format("Associating to existing institution with ID '%d', name '%s'",
+                    registeredInstitution.getId(), registeredInstitution.getName()));
         }
+
         return registeredInstitution;
     }
 }
