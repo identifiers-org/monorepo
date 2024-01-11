@@ -60,7 +60,7 @@ registry:
   base_uri: "https://registry.identifiers.org"
 
 frontend:
-  image: "identifiersorg/cloud-hq-web-frontend:1.9.1"
+  image: "identifiersorg/cloud-hq-web-frontend:1.9.2"
   replicas: 3
   requests:
     cpu: 10m
@@ -75,7 +75,7 @@ redis:
   port: 6379
 
 mirid_controller:
-  image: "identifiersorg/cloud-hq-ws-mirid-controller:1.0.5"
+  image: "identifiersorg/cloud-hq-ws-mirid-controller:2.0.1"
   replicas: 1
   port: 8181
   requests:
