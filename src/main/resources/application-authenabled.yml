@@ -1,4 +1,12 @@
 # This file contains properties to be used when AAA is enabled
+org:
+  identifiers:
+    cloud:
+      ws:
+        miridcontroller:
+          endpoint:
+            requiredrole: ${HQ_WS_MIRID_CONTROLLER_CONFIG_ENDPOINT_REQUIRED_ROLE:chad}
+
 spring:
   security:
     user:
@@ -10,8 +18,8 @@ spring:
             issuer-uri: ${HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUERURI:http://localkeycloak:8080/auth/realms/scratchpad/}
         registration:
           keycloak:
-            client-id: ${HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTID:hq-mirid-controller}
-            client-secret: ${HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTSECRET:29d9150c-14b4-46b5-a7fb-e634101cb020}
+            client-id: ${HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTID:}
+            client-secret: ${HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTSECRET:}
       resourceserver:
         jwt:
           issuer-uri: ${HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI:http://localkeycloak:8080/auth/realms/scratchpad}

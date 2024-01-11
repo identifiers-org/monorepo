@@ -30,5 +30,5 @@ public interface MirIdDeactivationLogEntryRepository extends JpaRepository<MirId
     @RestResource(exported = false)
     List<MirIdDeactivationLogEntry> findAll();
     Page<MirIdDeactivationLogEntry> findAll(Pageable pageable);
-    List<MirIdDeactivationLogEntry> findAllByMirId(Pageable pageable);
+//    List<MirIdDeactivationLogEntry> findAllByMirId(Pageable pageable);
 }
