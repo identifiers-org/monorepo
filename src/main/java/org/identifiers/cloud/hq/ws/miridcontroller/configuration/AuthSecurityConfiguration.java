@@ -50,7 +50,7 @@ public class AuthSecurityConfiguration {
                     .requestMatchers("/mirIdApi/returnId/**").hasAuthority("idReturner")
                     .requestMatchers("/actuator/loggers/**").hasAuthority(actuatorRequiredRole)
                     .requestMatchers("/actuator").hasAuthority(actuatorRequiredRole)
-                    .requestMatchers(HttpMethod.GET, "/actuator/health/**").permitAll())
+                    .requestMatchers(HttpMethod.GET, "/actuator/health").permitAll())
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/actuator/loggers/**"))
                 .oauth2ResourceServer(oauth -> oauth.jwt(withDefaults()));
         return http.build();

@@ -9,7 +9,7 @@
     </parent>
     <groupId>org.identifiers.cloud.hq.ws</groupId>
     <artifactId>mirid-controller</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
     <name>mirid-controller</name>
     <description>MIR ID Controller, for centralisation of MIR ID lifecycle</description>
 
@@ -93,4 +93,13 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
