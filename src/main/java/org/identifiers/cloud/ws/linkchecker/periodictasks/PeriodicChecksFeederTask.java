@@ -97,8 +97,6 @@ public class PeriodicChecksFeederTask implements Runnable{
     }
 
     long getRandomWaitTimeSeconds() {
-        return random.longs(waitTimeMinBeforeNextRequest.getSeconds(),
-                            waitTimeMinBeforeNextRequest.getSeconds())
-                .findFirst().getAsLong();
+        return random.nextLong(waitTimeMinBeforeNextRequest.getSeconds());
     }
 }
