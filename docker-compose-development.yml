@@ -11,16 +11,15 @@ services:
             - WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_HOST=recommender
             - WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_PORT=8083
             - WS_RESOLVER_JVM_MEMORY_MAX=1024m
-            - WS_RESOLVER_CONFIG_APPLICATION_ACTIVE_PROFILE=development
+            - WS_RESOLVER_CONFIG_APPLICATION_ACTIVE_PROFILE=authdisabled
             - WS_RESOLVER_CONFIG_REGISTRY_RESOLUTION_DATASET_ENDPOINT=https://registry.api.identifiers.org/resolutionApi/getResolverDataset
-            - WS_RESOLVER_CONFIG_BACKEND_SERVICE_JWT_ISSUERURI=https://auth.identifiers.org/auth/realms/idorg
         ports:
             - "8080:8080"
         depends_on:
             - redis
             - recommender
     redis:
-        image: redis:4.0.8-alpine
+        image: redis:7.2-alpine
         ports:
             - "6379:6379"
     recommender:
@@ -28,6 +27,7 @@ services:
         environment:
             - WS_RESOURCE_RECOMMENDER_JVM_MEMORY_MAX=1024m
             - WS_RESOURCE_RECOMMENDER_CONFIG_BACKEND_SERVICE_LINK_CHECKER_HOST=host.docker.internal
+            - spring.profiles.active=authdisabled
         ports:
             - "8083:8083"
 networks:
