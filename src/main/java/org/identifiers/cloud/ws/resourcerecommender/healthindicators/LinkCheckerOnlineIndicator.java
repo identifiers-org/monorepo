@@ -45,11 +45,15 @@ public class LinkCheckerOnlineIndicator implements HealthIndicator {
     }
 
     private boolean isExternalApiRunning() {
+        HttpURLConnection con = null;
         try {
-            HttpURLConnection con = (HttpURLConnection) serviceLinkCheckerHealthCheckUrl.openConnection();
+            con = (HttpURLConnection) serviceLinkCheckerHealthCheckUrl.openConnection();
+            con.setRequestMethod("HEAD");
             return HttpStatus.valueOf(con.getResponseCode()).is2xxSuccessful();
         } catch (Exception e) {
             log.error("Error on checking link checker readiness", e);
+        } finally {
+            if (con != null) con.disconnect();
         }
         return false;
     }

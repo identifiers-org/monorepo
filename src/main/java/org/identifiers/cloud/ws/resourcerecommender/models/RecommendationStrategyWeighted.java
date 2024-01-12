@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -48,11 +50,18 @@ public class RecommendationStrategyWeighted implements RecommendationStrategy {
 
     @Override
     public List<ResourceRecommendation> getRecommendations(List<ResolvedResource> resolvedResources) {
+        Function<ResolvedResource, Integer> scorer;
+        if (resolvedResources.size() > 1) {
+            scorer = this::getResourceRecommendationScore;
+        } else {
+            scorer = r -> 100; // Simply score maximum when only one resource is available
+        }
+
         return resolvedResources.parallelStream().map(resolvedResource -> new ResourceRecommendation()
                         .setCompactIdentifierResolvedUrl(resolvedResource.getCompactIdentifierResolvedUrl())
                         .setId(resolvedResource.getId())
                         .setRecommendationExplanation("Function based recommendation")
-                        .setRecommendationIndex(getResourceRecommendationScore(resolvedResource)))
+                        .setRecommendationIndex(scorer.apply(resolvedResource)))
                 .collect(Collectors.toList());
     }
 }
