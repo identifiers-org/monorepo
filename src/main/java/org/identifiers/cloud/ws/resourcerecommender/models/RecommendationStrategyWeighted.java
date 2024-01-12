@@ -25,8 +25,11 @@ import java.util.stream.Collectors;
 @Primary
 @Slf4j
 public class RecommendationStrategyWeighted implements RecommendationStrategy {
-    @Autowired
-    private ScoringFunctionProvider scoringFunctionProvider;
+    private final ScoringFunctionProvider scoringFunctionProvider;
+
+    public RecommendationStrategyWeighted(ScoringFunctionProvider scoringFunctionProvider) {
+        this.scoringFunctionProvider = scoringFunctionProvider;
+    }
 
     // Helper method to compute a resource recommendation score for a given resolved resource
     private int getResourceRecommendationScore(ResolvedResource resolvedResource) {

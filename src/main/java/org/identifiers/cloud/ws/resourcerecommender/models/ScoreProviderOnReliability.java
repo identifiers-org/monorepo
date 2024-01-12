@@ -1,13 +1,12 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
 import org.identifiers.cloud.libapi.models.linkchecker.responses.ServiceResponseScoringRequest;
-import org.identifiers.cloud.libapi.services.LinkCheckerService;
+import org.identifiers.cloud.libapi.services.ApiServicesFactory;
 import org.identifiers.cloud.ws.resourcerecommender.api.data.models.ResolvedResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 
 /**
  * Project: resource-recommender
@@ -19,16 +18,20 @@ import org.springframework.stereotype.Component;
  * <p>
  * This score provider is based on reliability scoring information provided by the link checker service.
  */
-@Component
 public class ScoreProviderOnReliability implements ScoreProvider {
     private static final Logger logger = LoggerFactory.getLogger(ScoreProviderOnReliability.class);
 
-    @Autowired
-    LinkCheckerService linkCheckerService;
+    private final String linkCheckerServiceHost;
+    private final String linkCheckerServicePort;
+    public ScoreProviderOnReliability(String linkCheckerServiceHost, String linkCheckerServicePort) {
+        this.linkCheckerServiceHost = linkCheckerServiceHost;
+        this.linkCheckerServicePort = linkCheckerServicePort;
+    }
 
     @Override
     public int getScoreForResource(ResolvedResource resolvedResource) {
-        ServiceResponseScoringRequest response = linkCheckerService
+        ServiceResponseScoringRequest response = ApiServicesFactory
+                .getLinkCheckerService(linkCheckerServiceHost, linkCheckerServicePort)
                 .getScoreForResolvedId(
                         resolvedResource.getId(),
                         resolvedResource.getCompactIdentifierResolvedUrl(),

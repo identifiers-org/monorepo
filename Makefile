@@ -48,7 +48,7 @@ app_structure:
 	@mvn package -DskipTests
 	@mkdir -p target/app/log
 	@mkdir -p target/app/tmp
-	@cp target/resource-recommender-$(shell mvn help:evaluate -Dexpression=project.version | grep -v '^\[').jar target/app/service.jar
+	@cp target/resource-recommender-$(shell mvn -q help:evaluate -Dexpression=project.version -DforceStdout).jar target/app/service.jar
 
 container_production_build: app_structure
 	@echo "<===|DEVOPS|===> [BUILD] Production container $(container_name):$(tag_version)"

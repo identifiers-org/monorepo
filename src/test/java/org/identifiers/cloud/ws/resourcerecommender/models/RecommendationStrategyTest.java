@@ -5,15 +5,11 @@ import org.identifiers.cloud.libapi.models.linkchecker.responses.ServiceResponse
 import org.identifiers.cloud.libapi.models.linkchecker.responses.ServiceResponseScoringRequestPayload;
 import org.identifiers.cloud.libapi.services.LinkCheckerService;
 import org.identifiers.cloud.ws.resourcerecommender.api.data.models.ResolvedResource;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -25,8 +21,7 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -39,10 +34,8 @@ import static org.mockito.Mockito.when;
  * ---
  */
 // TODO - These unit tests are no longer valid with the new recommendation strategies
-@RunWith(SpringRunner.class)
 @SpringBootTest
-@ActiveProfiles("authdisabled")
-public class RecommendationStrategyTest {
+class RecommendationStrategyTest {
     static List<ResolvedResource> officialResolvedResources;
     static List<ResolvedResource> unOfficialResolvedResources;
     static ResolvedResource ebiResource;
@@ -53,7 +46,7 @@ public class RecommendationStrategyTest {
     @MockBean
     LinkCheckerService linkCheckerService;
 
-    @Before
+    @BeforeEach
     public void prepareResolvedResources() {
         unOfficialResolvedResources = new CopyOnWriteArrayList<>();
         officialResolvedResources = new CopyOnWriteArrayList<>();
@@ -91,7 +84,7 @@ public class RecommendationStrategyTest {
     }
 
     @Test
-    public void testMixOfficialAndUnofficial() {
+    void testMixOfficialAndUnofficial() {
         List<ResolvedResource> dataset = Stream.concat(
                 unOfficialResolvedResources.stream(),
                 officialResolvedResources.stream()).collect(Collectors.toList());
@@ -106,12 +99,12 @@ public class RecommendationStrategyTest {
                 .filter(RecommendationStrategyTest::isUnofficial)
                 .map(ResourceRecommendation::getRecommendationIndex)
                 .min(Comparator.naturalOrder()).get();
-        assertTrue("All official resources are rated larger than unofficial ones",
-                minOfficialRecommendation > maxUnofficialRecommendation);
+        assertTrue(minOfficialRecommendation > maxUnofficialRecommendation,
+                "All official resources are rated larger than unofficial ones");
     }
 
     @Test
-    public void testEbiResourceWithLargerIndexThanNonEbi() {
+    void testEbiResourceWithLargerIndexThanNonEbi() {
         List<ResolvedResource> resources = Lists.newArrayList(officialResolvedResources);
         resources.add(ebiResource);
         Collections.shuffle(resources);
@@ -125,35 +118,36 @@ public class RecommendationStrategyTest {
                 .mapToInt(ResourceRecommendation::getRecommendationIndex)
                 .max().getAsInt();
 
-        assertTrue("EBI resources take preference when other parameters are equivalent",
-                maxOtherRecommendations < ebiRecommendation);
+        assertTrue(maxOtherRecommendations < ebiRecommendation,
+                "EBI resources take preference when other parameters are equivalent");
     }
 
     @Test
-    public void testSingleUnofficialResolvedResource() {
+    void testSingleUnofficialResolvedResource() {
         List<ResolvedResource> unOfficial = Lists.newArrayList(unOfficialResolvedResources);
         Collections.shuffle(unOfficial);
         List<ResourceRecommendation> recommendations = recommendationStrategy.getRecommendations(unOfficial.subList(0, 1));
-        assertTrue("When there is only one resource, this resource scores max.",
-                (recommendations.size() == 1) && (recommendations.get(0).getRecommendationIndex() == 100));
+        assertTrue((recommendations.size() == 1) && (recommendations.get(0).getRecommendationIndex() == 100),
+                "When there is only one resource, this resource scores max.");
     }
 
     @Test
-    public void testSingleOfficialResolvedResource() {
+    void testSingleOfficialResolvedResource() {
         List<ResolvedResource> official = Lists.newArrayList(officialResolvedResources);
         Collections.shuffle(official);
         List<ResourceRecommendation> recommendations = recommendationStrategy.getRecommendations(official.subList(0, 1));
-        assertTrue("When there is only one resource, this resource scores max.",
-                (recommendations.size() == 1) && (recommendations.get(0).getRecommendationIndex() == 100));
+        assertTrue((recommendations.size() == 1) && (recommendations.get(0).getRecommendationIndex() == 100),
+                "When there is only one resource, this resource scores max.");
     }
 
     @Test
-    public void testAllUnofficialResolvedResources() {
+    void testAllUnofficialResolvedResources() {
         List<ResolvedResource> unOfficial = Lists.newArrayList(unOfficialResolvedResources);
         Collections.shuffle(unOfficial);
         List<ResolvedResource> dataset = unOfficial.subList(0, unOfficial.size() / 2);
         List<ResourceRecommendation> recommendations = recommendationStrategy.getRecommendations(dataset);
-        assertEquals("When all resources are unofficial, all of them go back", recommendations.size(), dataset.size());
+        assertEquals(recommendations.size(), dataset.size(),
+                "When all resources are unofficial, all of them go back");
     }
 
 }

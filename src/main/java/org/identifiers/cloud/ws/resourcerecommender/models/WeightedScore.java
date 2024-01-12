@@ -15,8 +15,8 @@ public class WeightedScore {
     public static final int MAX_SCORE = 100;
     public static final int MIN_SCORE = 0;
 
-    private int weight;
-    private ScoreProvider scoreProvider;
+    private final int weight;
+    private final ScoreProvider scoreProvider;
 
     public WeightedScore(int weight, ScoreProvider scoreProvider) throws WeightedScoreException {
         if ((weight > MAX_SCORE) || (weight < MIN_SCORE)) {

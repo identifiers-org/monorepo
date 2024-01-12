@@ -1,19 +1,18 @@
 # This Docker file defines a production container for the Resource Recommender Web Service
-FROM identifiersorg/linux-java8
-LABEL maintainer="Manuel Bernal Llinares <mbdebian@gmail.com>"
+FROM amazoncorretto:17-alpine
+LABEL maintainer="Renato Caminha Juacaba Neto <rjuacaba@ebi.ac.uk>"
 
 # Environment - defaults
 ENV WS_RESOURCE_RECOMMENDER_JVM_MEMORY_MAX 768m
-ENV WS_RESOURCE_RECOMMENDER_CONFIG_BACKEND_SERVICE_LINK_CHECKER_HOST link-checker
 
 # Prepare the application folder
-RUN mkdir -p /home/app
+RUN mkdir -p /app
 
 # Add the application structure
-ADD target/app/. /home/app
+ADD target/app/. /app
 
 # Launch information
 EXPOSE 8083
-WORKDIR /home/app
+WORKDIR /app
 #CMD ["java", "-Xmx1024m", "-jar", "service.jar"]
 CMD java -Xmx${WS_RESOURCE_RECOMMENDER_JVM_MEMORY_MAX} -jar service.jar

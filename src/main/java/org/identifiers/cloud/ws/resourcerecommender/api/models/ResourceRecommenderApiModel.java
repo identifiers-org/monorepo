@@ -31,8 +31,11 @@ import java.util.List;
 public class ResourceRecommenderApiModel {
     final static Logger logger = LoggerFactory.getLogger(ResourceRecommenderApiModel.class);
 
-    @Autowired
-    private RecommendationStrategy recommendationStrategy;
+    private final RecommendationStrategy recommendationStrategy;
+
+    public ResourceRecommenderApiModel(RecommendationStrategy recommendationStrategy) {
+        this.recommendationStrategy = recommendationStrategy;
+    }
 
     private List<ResourceRecommendation> evaluateRecommendations(List<ResolvedResource> resolvedResources) {
         try {

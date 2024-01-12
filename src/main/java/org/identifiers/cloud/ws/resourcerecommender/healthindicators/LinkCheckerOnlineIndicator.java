@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.web.util.UriComponentsBuilder;
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
