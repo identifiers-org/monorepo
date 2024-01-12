@@ -41,7 +41,7 @@ public class MetadataExtractionResultFactory {
     // Initialize parameters parameters from service configuration
     @PostConstruct
     private void init() {
-        logger.info("Setting metadata extraction results TTL to '{}s' and '{}s' for results with and without content",
+        logger.info("Setting metadata extraction results TTL to '{}s' for results with metadata and '{}s' for results without content",
                 configTtlResultWithMetadata, configTtlResultWithoutMetadata);
         ttlResultWithMetadata = configTtlResultWithMetadata.getSeconds();
         ttlResultWithoutMetadata = configTtlResultWithoutMetadata.getSeconds();
