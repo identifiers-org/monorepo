@@ -31,7 +31,7 @@ public class LinkCheckerOnlineIndicator implements HealthIndicator {
         serviceLinkCheckerHealthCheckUrl = UriComponentsBuilder.newInstance()
                 .scheme("http").host(serviceLinkCheckerHost).port(serviceLinkCheckerPort)
                 .path(healthCheckPath).build().toUri().toURL();
-        log.debug("Link checker health url: {}", serviceLinkCheckerHealthCheckUrl);
+        log.info("Link checker health url: {}", serviceLinkCheckerHealthCheckUrl);
     }
 
     @Override
