@@ -48,7 +48,7 @@ public class LinkCheckerOnlineIndicator implements HealthIndicator {
         HttpURLConnection con = null;
         try {
             con = (HttpURLConnection) serviceLinkCheckerHealthCheckUrl.openConnection();
-            con.setRequestMethod("HEAD");
+            con.setRequestMethod("GET");
             return HttpStatus.valueOf(con.getResponseCode()).is2xxSuccessful();
         } catch (Exception e) {
             log.error("Error on checking link checker readiness", e);
