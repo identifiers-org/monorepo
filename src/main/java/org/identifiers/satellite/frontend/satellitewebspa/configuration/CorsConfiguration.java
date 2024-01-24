@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 /**
  * Project: satellite-webspa
@@ -18,7 +18,7 @@ import javax.annotation.PostConstruct;
  */
 @Configuration
 @Slf4j
-public class ApplicationConfigurationCors implements WebMvcConfigurer {
+public class CorsConfiguration implements WebMvcConfigurer {
     @Value("${org.identifiers.satellite.frontend.satellitewebspa.config.cors.origin}")
     private String corsOrigins;
 

@@ -21,7 +21,7 @@ class Footer extends React.Component {
       <>
         <div className="row footer-section align-items-center mb-2 mx-5 bg-light py-2">
           <div className="col col-xl-1">
-            <img src={elixirKiteMark} />
+            <img src={elixirKiteMark} alt="Elixir mark"/>
           </div>
           <div className="col col-xl-11">
             <span>This service</span> is part of the ELIXIR infrastructure

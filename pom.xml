@@ -5,8 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.6.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>3.1.5</version>
     </parent>
     <groupId>org.identifiers.satellite.frontend</groupId>
     <artifactId>satellite-webspa</artifactId>
@@ -15,7 +14,10 @@
     <description>Identifiers.org Satellite Resolution Services Web SPA</description>
 
     <properties>
-        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -32,14 +34,12 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
-            <version>1.18.24</version>
         </dependency>
 
         <dependency>
             <groupId>org.identifiers.cloud</groupId>
             <artifactId>libapi</artifactId>
-            <version>2.6.0</version>
+            <version>3.0.0</version>
         </dependency>
 
         <dependency>
@@ -51,7 +51,7 @@
         <dependency>
             <groupId>org.piwik.java.tracking</groupId>
             <artifactId>matomo-java-tracker</artifactId>
-            <version>3.0.3</version>
+            <version>3.2.0</version>
         </dependency>
     </dependencies>
 

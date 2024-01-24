@@ -3,7 +3,7 @@ export const config = {
   resolverApi: 'https://resolver.api.identifiers.org',
 
   // Hardcoded Url used to build the links shown in the resolver page.
-  resolverHardcodedUrl: '//identifiers.org',
+  resolverHardcodedUrl: 'http://identifiers.org',
 
   // Registry API Url used to fetch namespaces for the suggestions box.
   registryApi: 'https://registry.api.identifiers.org',

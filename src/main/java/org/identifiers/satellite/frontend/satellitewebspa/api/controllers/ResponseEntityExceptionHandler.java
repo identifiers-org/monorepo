@@ -3,33 +3,32 @@ package org.identifiers.satellite.frontend.satellitewebspa.api.controllers;
 import org.identifiers.satellite.frontend.satellitewebspa.api.exceptions.FailedResolutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @ControllerAdvice
 public class ResponseEntityExceptionHandler extends org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler {
-    private static final Logger logger = LoggerFactory.getLogger(ResponseEntityExceptionHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(ResponseEntityExceptionHandler.class);
 
     @ExceptionHandler(value = { Exception.class })
-    protected ModelAndView handleConflict(Exception ex, HttpServletResponse response) throws Exception {
-        // Last hope for logging of unforeseen errors
-        // Also a way to make all responses to be of type ServiceResponse
-        logger.error("Unforeseen exception", ex);
-//        return new RedirectView(newPath);
-        response.addCookie(new Cookie("message", URLEncoder.encode(ex.getMessage())));
-        return new ModelAndView("/index.html", HttpStatus.INTERNAL_SERVER_ERROR);
+    protected ModelAndView handleConflict(Exception ex, HttpServletResponse response) {
+        log.error("Unforeseen exception", ex);
+        response.addCookie(new Cookie("message", URLEncoder.encode(ex.getMessage(), UTF_8)));
+        return new ModelAndView("/index.html", INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(value = { FailedResolutionException.class })
-    protected ModelAndView FailedResolution(FailedResolutionException ex, HttpServletResponse response) throws UnsupportedEncodingException {//, HttpServletRequest request) {
+    protected ModelAndView failedResolution(FailedResolutionException ex, HttpServletResponse response) {
         // Last hope for logging of unforeseen errors
         // Also a way to make all responses to be of type ServiceResponse
 //        String newPath = UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString())
@@ -37,10 +36,11 @@ public class ResponseEntityExceptionHandler extends org.springframework.web.serv
 //                .build().toString();
 //        logger.debug("redirecting to: {}", newPath);
 //        return new RedirectView(newPath);
-        String encodedMessage = URLEncoder.encode(ex.getMessage(), StandardCharsets.UTF_8.toString());
+        log.debug("failedResolutionException", ex);
+        String encodedMessage = URLEncoder.encode(ex.getMessage(), UTF_8);
         String cookieVal = String.format("message=%s; SameSite=None", encodedMessage);
         response.addHeader("Set-Cookie", cookieVal);
         response.addHeader("Set-Cookie", "title=Resolution+failed; SameSite=None");
-        return new ModelAndView("/index.html", HttpStatus.NOT_FOUND);
+        return new ModelAndView("/index.html", NOT_FOUND);
     }
 }

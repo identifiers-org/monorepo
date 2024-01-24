@@ -22,7 +22,7 @@ public class DevOpsApiModel {
     @Autowired
     private SpaConfiguration spaConfiguration;
 
-    public ResponseEntity<?> getSpaConfiguration() {
-        return new ResponseEntity<SpaConfiguration>(spaConfiguration, HttpStatus.OK);
+    public ResponseEntity<SpaConfiguration> getSpaConfiguration() {
+        return new ResponseEntity<>(spaConfiguration, HttpStatus.OK);
     }
 }
