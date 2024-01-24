@@ -15,6 +15,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -36,7 +37,10 @@ public class SecurityConfiguration {
     ) throws Exception {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/actuator").hasAuthority(requiredRole)
+                .requestMatchers("/actuator/loggers").hasAuthority(requiredRole)
                 .requestMatchers("/actuator/loggers/**").hasAuthority(requiredRole)
+                .requestMatchers(HttpMethod.GET, "/actuator/health").permitAll()
+                .requestMatchers(HttpMethod.GET, "/actuator/health/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/**").permitAll())
             .cors(withDefaults())
             .anonymous(withDefaults())
@@ -74,6 +78,7 @@ public class SecurityConfiguration {
             @Value("${org.identifiers.cloud.ws.resolver.cors.origin}") String corsOrigins
     ) {
         var allowedCors = List.of(corsOrigins.split(","));
+        log.debug("Allowed origins: {}", allowedCors);
 
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(allowedCors);
@@ -90,6 +95,7 @@ public class SecurityConfiguration {
     @Profile("!authenabled")
     public SecurityFilterChain filterChainDev(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
+                .cors(withDefaults())
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable);

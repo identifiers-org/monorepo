@@ -1,6 +1,6 @@
 # This Docker file defines a production container for the Resolver Web Service
-FROM identifiersorg/linux-java8
-LABEL maintainer="Manuel Bernal Llinares <mbdebian@gmail.com>"
+FROM amazoncorretto:17-alpine
+LABEL maintainer="Renato Caminha Juacaba Neto <rjuacaba@ebi.ac.uk>"
 
 # Environment - defaults
 ENV WS_RESOLVER_JVM_MEMORY_MAX 1024m

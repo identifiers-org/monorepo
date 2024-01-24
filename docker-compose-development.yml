@@ -11,7 +11,7 @@ services:
         ports:
             - "5430:5432"
         volumes:
-            - "registry:/var/lib/postgresql/data"
+            - "../db/registry/:/docker-entrypoint-initdb.d/"
     hqregistry:
         image: identifiersorg/cloud-hq-ws-registry
         environment:
@@ -68,10 +68,6 @@ services:
 #            - redis
 #            - hqregistry
 #            - recommender
-#networks:
-#    default:
-#        name: idorg-dev-satellite-resolver
-volumes:
-    registry:
-        name: idorg_registry
-        external: true
+networks:
+    default:
+        name: idorg-dev-satellite-resolver
