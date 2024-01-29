@@ -41,6 +41,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/actuator/loggers/**").hasAuthority(requiredRole)
                 .requestMatchers(HttpMethod.GET, "/actuator/health").permitAll()
                 .requestMatchers(HttpMethod.GET, "/actuator/health/**").permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/**").permitAll())
             .cors(withDefaults())
             .anonymous(withDefaults())
