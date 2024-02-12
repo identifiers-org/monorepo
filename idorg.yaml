@@ -4,6 +4,10 @@ commonLabels:
   app: idorg
   component: matomo
 
+extraEnvVars:
+- name: PHP_MEMORY_LIMIT
+  value: "512M"
+
 matomoWebsiteHost: "matomo.identifiers.org"
 matomoWebsiteName: "Identifiers.org"
 
@@ -37,8 +41,8 @@ updateStrategy:
 
 resources:
   requests:
-    cpu: 300m
-    memory: 600M
+    cpu: 200m
+    memory: 512M
 
 mariadb:
   enabled: false
