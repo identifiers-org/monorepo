@@ -1,6 +1,6 @@
 # This Docker file defines a production container for the Satellite WEB SPA
-FROM identifiersorg/linux-java8
-LABEL maintainer="Manuel Bernal Llinares <mbdebian@gmail.com>"
+FROM amazoncorretto:17-alpine
+LABEL maintainer="Renato Caminha Juacaba Neto <rjuacaba@ebi.ac.uk>"
 
 # Environment - defaults
 ENV WEB_SATELLITE_WS_JVM_MEMORY_MAX 512m
