@@ -24,7 +24,7 @@ export const getResolvedResources = (query) => {
     }
 
     // Sort resources by their score.
-    if (data.hasOwnProperty('payload')) {
+    if (data && data.hasOwnProperty('payload')) {
       data = data.payload.resolvedResources.sort((a, b) => b.recommendation.recommendationIndex - a.recommendation.recommendationIndex);
 
       // Add compact identifier to every resource.

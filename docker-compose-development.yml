@@ -3,18 +3,18 @@
 version: "3.5"
 services:
     postgresql:
-        container_name: postgres
+        container_name: reg-postgres-spa
         image: postgres
         environment:
             - POSTGRES_DB=devdatabase
             - POSTGRES_USER=devusername
             - POSTGRES_PASSWORD=devpassword
         ports:
-            - "5430:5432"
+            - "5431:5432"
         networks:
             - satwebspanet
         volumes:
-            - "registry:/var/lib/postgresql/data"
+            - "../db/registry:/docker-entrypoint-initdb.d"
     hqregistry:
         container_name: hqregistry
         image: identifiersorg/cloud-hq-ws-registry
@@ -32,11 +32,24 @@ services:
         depends_on:
             - postgresql
             - hqmiridcontroller
+    miridpostgresql:
+        container_name: postgres
+        image: postgres
+        environment:
+            - POSTGRES_DB=devdatabase
+            - POSTGRES_USER=devusername
+            - POSTGRES_PASSWORD=devpassword
+        ports:
+            - "5432:5432"
+        networks:
+            - satwebspanet
+        volumes:
+            - "../db/mirid-controller:/docker-entrypoint-initdb.d"
     hqmiridcontroller:
         container_name: hqmiridcontroller
         image: identifiersorg/cloud-hq-ws-mirid-controller
         environment:
-            - HQ_WS_MIRID_CONTROLLER_CONFIG_JDBC_URL=jdbc:postgresql://postgresql:5432/devdatabase
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_JDBC_URL=jdbc:postgresql://miridpostgresql:5432/devdatabase
             - HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_USERNAME=devusername
             - HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_PASSWORD:devpassword
             - HQ_WS_MIRID_CONTROLLER_CONFIG_REDIS_HOST=redis
@@ -47,16 +60,7 @@ services:
             - satwebspanet
         depends_on:
             - redis
-            - postgresql
-#    hqwebspa:
-#        container_name: hq-frontend
-#        image: identifiersorg/cloud-hq-web-frontend:latest
-#        environment:
-#            - ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_API_REGISTRY_URL=http://localhost:8180
-#        ports:
-#            - "9092:80"
-#        networks:
-#            - satwebspanet
+            - miridpostgresql
     resolver:
         container_name: resolver
         image: identifiersorg/cloud-ws-resolver
@@ -66,8 +70,9 @@ services:
             - WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_HOST=recommender
             - WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_PORT=8083
             - WS_RESOLVER_CONFIG_REGISTRY_RESOLUTION_DATASET_ENDPOINT=http://hqregistry:8180/resolutionApi/getResolverDataset
-            - WS_RESOLVER_CONFIG_APPLICATION_ACTIVE_PROFILE=authdisabled
             - WS_RESOLVER_JVM_MEMORY_MAX=1024m
+            - WS_RESOLVER_CONFIG_APPLICATION_CORS_ORIGINS=*
+            - MATOMO_ENABLED=false
         ports:
             - "8080:8080"
         networks:

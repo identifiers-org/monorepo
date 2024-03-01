@@ -1,6 +1,6 @@
 package org.identifiers.satellite.frontend.satellitewebspa.services;
 
-import lombok.Data;
+import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.libapi.models.resolver.ResponseResolvePayload;
 import org.identifiers.cloud.libapi.models.ServiceResponse;
@@ -10,13 +10,10 @@ import org.matomo.java.tracking.MatomoRequest;
 import org.matomo.java.tracking.MatomoRequest.MatomoRequestBuilder;
 import org.matomo.java.tracking.MatomoTracker;
 import org.matomo.java.tracking.parameters.AcceptLanguage;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Slf4j
@@ -28,30 +25,32 @@ public class AsyncMatomoCidResolutionService {
     @Value("${org.identifiers.matomo.enabled}")
     public boolean isEnabled;
 
-    @Autowired
-    MatomoTracker idorgMatomoTracker;
+    final MatomoTracker idorgMatomoTracker;
+    public AsyncMatomoCidResolutionService(MatomoTracker idorgMatomoTracker) {
+        this.idorgMatomoTracker = idorgMatomoTracker;
+    }
 
-    @Data
-    private class MatomoRequestImportantInfo {
-        public String url, xforwarded_for, remote_addr, ua, lang, refe;
-        public List<ResolvedResource> resolvedResources;
-        public ParsedCompactIdentifier parsed_cid;
-        public boolean wasResolutionSuccessfull;
+    private record MatomoRequestImportantInfo (
+        String url, String xforwarded_for, String remote_addr,
+        String ua, String lang, String refe,
+        List<ResolvedResource> resolvedResources,
+        ParsedCompactIdentifier parsed_cid,
+        boolean wasResolutionSuccessfull
+    ) {}
 
-        MatomoRequestImportantInfo(final HttpServletRequest request, final ServiceResponse<ResponseResolvePayload> result) {
-            url = request.getRequestURL().toString().replaceFirst("/resolutionApi/", "");
-            xforwarded_for = request.getHeader("X-FORWARDED-FOR");
-            remote_addr = request.getRemoteAddr();
-            ua = request.getHeader("user-agent");
-            lang = request.getHeader("Accept-Language");
-            refe = request.getHeader("Referer");
-
-            ResponseResolvePayload resolveResult = result.getPayload();
-            parsed_cid = resolveResult.getParsedCompactIdentifier();
-            resolvedResources = resolveResult.getResolvedResources();
-
-            wasResolutionSuccessfull = result.getHttpStatus().is2xxSuccessful();
-        }
+    static MatomoRequestImportantInfo matomoInfoOf(final HttpServletRequest request, final ServiceResponse<ResponseResolvePayload> result) {
+        ResponseResolvePayload resolveResult = result.getPayload();
+        return new MatomoRequestImportantInfo(
+                request.getRequestURL().toString().replaceFirst("/resolutionApi/", ""),
+                request.getHeader("X-FORWARDED-FOR"),
+                request.getRemoteAddr(),
+                request.getHeader("user-agent"),
+                request.getHeader("Accept-Language"),
+                request.getHeader("Referer"),
+                resolveResult.getResolvedResources(),
+                resolveResult.getParsedCompactIdentifier(),
+                result.getHttpStatus().is2xxSuccessful()
+        );
     }
 
     public void asyncHandleCidResolution(final HttpServletRequest request, final ServiceResponse<ResponseResolvePayload> result) {
@@ -61,19 +60,17 @@ public class AsyncMatomoCidResolutionService {
                 request.getHeader("DNT").contains("1")) {
             log.debug("Skipping matomo notification - DoNotTrack");
         } else {
-            doHandleCidResolution(new MatomoRequestImportantInfo(request, result));
+            doHandleCidResolution(matomoInfoOf(request, result));
         }
     }
 
-    @Async("matomoThreadPoolTaskExecutor")
-    private void doHandleCidResolution(MatomoRequestImportantInfo info) {
+    void doHandleCidResolution(MatomoRequestImportantInfo info) {
         log.debug("Info: {}", info);
         MatomoRequestBuilder mreq = MatomoRequest.request();
         mreq.siteId(1);
 
         mreq.actionUrl(info.url);
-//        mreq.trackBotRequests(true);
-
+        mreq.trackBotRequests(true);
         List<MatomoRequest> requests = new ArrayList<>(2);
 
         setHttpHeadersOnRequest(info, mreq);
@@ -92,7 +89,7 @@ public class AsyncMatomoCidResolutionService {
     }
 
     private void setHttpHeadersOnRequest(final MatomoRequestImportantInfo info, MatomoRequestBuilder mreq) {
-        if (authToken != null && !authToken.isEmpty()) {
+        if (StringUtils.isNotBlank(authToken) && authToken.length() == 32) {
             mreq.authToken(authToken);
             String remoteIP = info.xforwarded_for;
             if (remoteIP == null || remoteIP.isEmpty()) {
@@ -100,7 +97,7 @@ public class AsyncMatomoCidResolutionService {
             } else { // Make sure to only take client Ip from forwarded for header and discard proxies
                 int firstCommaIdx = remoteIP.indexOf(",");
                 if (firstCommaIdx != -1) {
-                    remoteIP = StringUtils.trimWhitespace(remoteIP.substring(0, firstCommaIdx));
+                    remoteIP = remoteIP.substring(0, firstCommaIdx);
                 }
             }
             mreq.visitorIp(remoteIP);
@@ -112,8 +109,8 @@ public class AsyncMatomoCidResolutionService {
         mreq.referrerUrl(info.refe);
     }
 
-    Comparator<ResolvedResource> resolvedResourceComparator = (o1, o2) ->
-        o1.getRecommendation().getRecommendationIndex() - o2.getRecommendation().getRecommendationIndex();
+    Comparator<ResolvedResource> resolvedResourceComparator =
+            Comparator.comparingInt(o -> o.getRecommendation().getRecommendationIndex());
 
     private void setResolutionResultOnRequest(MatomoRequestImportantInfo info, MatomoRequestBuilder mreq) {
         ResolvedResource maxResolvedResource = info.resolvedResources.stream()
@@ -131,7 +128,6 @@ public class AsyncMatomoCidResolutionService {
         if (maxResolvedResource != null) {
             customData.put(9L, maxResolvedResource.getInstitution().getName());
             customData.put(10L, maxResolvedResource.isOfficial());
-//            customData.put(6L, maxResolvedResource.isDeprecatedResource()); // Need to find how to add this
         }
         mreq.dimensions(customData);
     }

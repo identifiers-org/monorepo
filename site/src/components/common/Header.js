@@ -65,7 +65,7 @@ class Header extends React.Component {
               <div className="masthead-inner row expanded">
                 <div className="columns medium-12" id="local-title">
                   <div className="d-flex ml-3 mb-2">
-                    <img src={identifiersLogo} />
+                    <img src={identifiersLogo} alt="identifiers logo"/>
                     <div className="logo-text">
                       <h1>Identifiers.org</h1>
                       <p className="logo-subtitle">Resolution service</p>
