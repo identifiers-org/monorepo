@@ -1,61 +1,58 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators;
 
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.function.Function;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@RunWith(JUnit4.class)
-public class PrefixRegistrationRequestValidatorProviderUrlPatternTest {
+class PrefixRegistrationRequestValidatorProviderUrlPatternTest {
     PrefixRegistrationRequestValidatorProviderUrlPattern validator =
             new PrefixRegistrationRequestValidatorProviderUrlPattern();
-
-    @Rule
-    public ExpectedException exceptionRule = ExpectedException.none();
 
     Function<String, ServiceRequestRegisterPrefixPayload> fnc =
             (p) -> new ServiceRequestRegisterPrefixPayload().setProviderUrlPattern(p);
 
     @Test
-    public void testNullProviderUrlPattern() {
-        exceptionRule.expect(PrefixRegistrationRequestValidatorException.class);
-        validator.validate(fnc.apply(null));
+    void testNullProviderUrlPattern() {
+        assertThrows(PrefixRegistrationRequestValidatorException.class, () -> {
+            validator.validate(fnc.apply(null));
+        });
     }
 
     @Test
-    public void testBlankProviderUrlPattern() {
-        exceptionRule.expect(PrefixRegistrationRequestValidatorException.class);
-        validator.validate(fnc.apply(""));
+    void testBlankProviderUrlPattern() {
+        assertThrows(PrefixRegistrationRequestValidatorException.class, () -> {
+            validator.validate(fnc.apply(""));
+        });
     }
 
     @Test
-    public void testNotUrlProviderUrlPattern() {
-        exceptionRule.expect(PrefixRegistrationRequestValidatorException.class);
-        validator.validate(fnc.apply("Not a URL"));
+    void testNotUrlProviderUrlPattern() {
+        assertThrows(PrefixRegistrationRequestValidatorException.class, () -> {
+            validator.validate(fnc.apply("Not a URL"));
+        });
     }
 
     @Test
-    public void testNotHttpProviderUrlPattern() {
-        exceptionRule.expect(PrefixRegistrationRequestValidatorException.class);
-        validator.validate(fnc.apply("file://filename"));
+    void testNotHttpProviderUrlPattern() {
+        assertThrows(PrefixRegistrationRequestValidatorException.class, () -> {
+            validator.validate(fnc.apply("file://filename"));
+        });
     }
 
     @Test
-    public void testProviderUrlPatternWithoutPlaceholder() {
-        exceptionRule.expect(PrefixRegistrationRequestValidatorException.class);
-        validator.validate(fnc.apply("https://ebi.ac.uk"));
+    void testProviderUrlPatternWithoutPlaceholder() {
+        assertThrows(PrefixRegistrationRequestValidatorException.class, () -> {
+            validator.validate(fnc.apply("https://ebi.ac.uk"));
+        });
     }
 
     @Test
-    public void testValidProviderUrlPattern() {
+    void testValidProviderUrlPattern() {
         assertTrue(validator.validate(fnc.apply("https://ebi.ac.uk/{$id}")));
     }
 }

@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 @Qualifier("prefixRegistrationRequestValidatorReferences")
 public class PrefixRegistrationRequestValidatorReferences implements PrefixRegistrationRequestValidator {
-    private static Logger logger = LoggerFactory.getLogger(PrefixRegistrationRequestValidatorReferences.class);
+    private static final Logger logger = LoggerFactory.getLogger(PrefixRegistrationRequestValidatorReferences.class);
 
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {

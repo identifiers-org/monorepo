@@ -3,7 +3,6 @@ package org.identifiers.cloud.hq.ws.registry.api.models;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.NamespaceStatistics;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
@@ -21,11 +20,12 @@ public class StatisticsModel {
     @Value("${org.identifiers.matomo.authToken}")
     String matomoTokenAuth;
 
-    @Autowired
-    RestTemplate restTemplate;
-
-    @Autowired
-    NamespaceRepository namespaceRepository;
+    final NamespaceRepository namespaceRepository;
+    final RestTemplate restTemplate;
+    public StatisticsModel(NamespaceRepository namespaceRepository) {
+        this.namespaceRepository = namespaceRepository;
+        restTemplate = new RestTemplate();
+    }
 
     public boolean doesNamespaceExists(String prefix) {
         return namespaceRepository.findByPrefix(prefix) != null;
@@ -46,7 +46,7 @@ public class StatisticsModel {
         return matomoRequestUrl;
     }
 
-    @Retryable(value = RestClientException.class, maxAttempts = 3, backoff = @Backoff(delay = 200))
+    @Retryable(retryFor = RestClientException.class, backoff = @Backoff(maxDelay = 200))
     public NamespaceStatistics getMatomoStatisticsFor(String prefix) {
         String matomoRequestUrl = getMatomoRequestUrl(prefix);
         return restTemplate.getForObject(matomoRequestUrl, NamespaceStatistics.class);

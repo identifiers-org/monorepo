@@ -19,19 +19,14 @@ import org.springframework.stereotype.Component;
 public class AuthHelper {
     // Helpers
     private boolean isAuthenticated() {
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof String) {
-            if (SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")) {
-                return false;
-            }
-        }
-        return true;
+        var principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return !(principal instanceof String) || !principal.equals("anonymousUser");
     }
     
     public String getCurrentUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (isAuthenticated()) {
-            if (authentication.getPrincipal() instanceof Jwt) {
-                Jwt jwtToken = (Jwt) authentication.getPrincipal();
+            if (authentication.getPrincipal() instanceof Jwt jwtToken) {
                 return jwtToken.getClaims().getOrDefault("preferred_username", "UNKNOWN").toString();
             }
             return "UNKNOWN";

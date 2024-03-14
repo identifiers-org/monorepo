@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators;
 
+import org.apache.commons.lang3.StringUtils;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourcePayload;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -21,7 +22,7 @@ public class ResourceRegistrationRequestValidatorAuthHelpUrl implements Resource
     @Override
     public boolean validate(ServiceRequestRegisterResourcePayload request) throws ResourceRegistrationRequestValidatorException {
         if (request.isProtectedUrls()) {
-            if (request.getAuthHelpUrl() == null || request.getAuthHelpUrl().trim().length() == 0) {
+            if (StringUtils.isBlank(request.getAuthHelpUrl())) {
                 throw new ResourceRegistrationRequestValidatorException("MISSING required Provider URL Pattern");
             }
             if (!request.getAuthHelpUrl().toLowerCase().startsWith("http")) {

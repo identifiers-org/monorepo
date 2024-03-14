@@ -19,7 +19,7 @@ import java.io.Serializable;
 public class JsonLdDocumentBuilder implements ExportOntologyDocumentBuilder {
     private static final Logger logger = LoggerFactory.getLogger(JsonLdDocumentBuilder.class);
 
-    private JsonLdDocument document = new JsonLdDocument();
+    private final JsonLdDocument document = new JsonLdDocument();
 
     @Override
     public void buildContext(String namespace, String reference) throws ExportOntologyDocumentBuilderException {

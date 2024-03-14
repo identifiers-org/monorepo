@@ -4,7 +4,6 @@ import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationSess
 import org.slf4j.Logger;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Project: registry
@@ -30,7 +29,7 @@ public interface ResourceRegistrationSessionCompositeSequenceAction extends Reso
             List<ResourceRegistrationSessionActionReport> actionErrorReports = buildActionSequence().parallelStream()
                     .map(action -> action.performAction(session))
                     .filter(ResourceRegistrationSessionActionReport::isError)
-                    .collect(Collectors.toList());
+                    .toList();
             // Set own action report consistent with reports from subactions
             if (!actionErrorReports.isEmpty()) {
                 report.setErrorMessage(String.format("%s, some actions COMPLETED WITH ERRORS", messagePrefix));
@@ -41,7 +40,7 @@ public interface ResourceRegistrationSessionCompositeSequenceAction extends Reso
             // Log error reports
             actionErrorReports.parallelStream().forEach(actionErrorReport -> getLogger().error(actionErrorReport.getErrorMessage()));
         } catch (RuntimeException e) {
-            // Some of the actions may not be capturing exceptions, let's go up to runtime top level
+            // Some actions may not be capturing exceptions, let's go up to runtime top level
             throw new ResourceRegistrationSessionActionException(String.format("%s, the following error occurred: %s", messagePrefix, e.getMessage()));
         }
         return report;

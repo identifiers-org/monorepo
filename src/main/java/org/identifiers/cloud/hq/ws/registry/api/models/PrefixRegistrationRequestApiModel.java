@@ -95,7 +95,7 @@ public class PrefixRegistrationRequestApiModel {
 
     private PrefixRegistrationSession getPrefixRegistrationSession(String eventName, long sessionId, ServiceRequestRegisterPrefixSessionEvent request, ServiceResponseRegisterPrefixSessionEvent response) {
         Optional<PrefixRegistrationSession> prefixRegistrationSession = prefixRegistrationSessionRepository.findById(sessionId);
-        if (!prefixRegistrationSession.isPresent()) {
+        if (prefixRegistrationSession.isEmpty()) {
             response.setHttpStatus(HttpStatus.BAD_REQUEST);
             response.setErrorMessage(String.format("INVALID Prefix Registration %s Request, session with ID '%d' IS NOT VALID", eventName, sessionId));
             log.error(String.format("INVALID %s request on NON-EXISTING prefix registration session, with ID '%d'", eventName, sessionId));

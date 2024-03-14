@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.NamespaceStatistics;
 import org.identifiers.cloud.hq.ws.registry.api.models.StatisticsModel;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +27,11 @@ public class StatisticsController {
     @Value("${org.identifiers.matomo.enabled}")
     boolean matomoIsEnabled;
 
-    @Autowired
-    StatisticsModel model;
+    final StatisticsModel model;
+
+    public StatisticsController(StatisticsModel model) {
+        this.model = model;
+    }
 
     @GetMapping("/namespace/{prefix}")
     public ResponseEntity<ServiceResponse<NamespaceStatistics>> getNamespaceStatistic(@PathVariable String prefix) {
@@ -42,16 +44,17 @@ public class StatisticsController {
             return ResponseEntity.notFound().build();
         }
 
+        ServiceResponse<NamespaceStatistics> response;
         try {
             NamespaceStatistics stats = model.getMatomoStatisticsFor(prefix);
             log.debug("Found statistics for {}: {}", prefix, stats);
-            ServiceResponse<NamespaceStatistics> response = ServiceResponse.getBaseResponse(stats);
+            response = ServiceResponse.getBaseResponse(stats);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (RestClientException e) {
-            ServiceResponse response = ServiceResponse.getBaseResponse();
             log.error("Error on matomo get", e);
+            response = ServiceResponse.getBaseResponse();
             response.setErrorMessage(e.getMessage());
-            return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

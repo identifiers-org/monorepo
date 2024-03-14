@@ -1,22 +1,17 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators;
 
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@RunWith(JUnit4.class)
-public class PrefixRegistrationRequestValidatorProviderLocationTest {
+class PrefixRegistrationRequestValidatorProviderLocationTest {
     // This is very unnecessary but it's fun.
     final static List<String> codes = Arrays.asList(
             "AF","AX","AL","DZ","AS","AD","AO","AI","AQ","AG","AR","AM","AW","AU","AT",
@@ -41,27 +36,26 @@ public class PrefixRegistrationRequestValidatorProviderLocationTest {
     PrefixRegistrationRequestValidatorProviderLocation validator =
             new PrefixRegistrationRequestValidatorProviderLocation();
 
-    @Rule
-    public ExpectedException exceptionRule = ExpectedException.none();
-
     Function<String, ServiceRequestRegisterPrefixPayload> fnc =
             (p) -> new ServiceRequestRegisterPrefixPayload()
                     .setProviderLocation(p);
 
     @Test
-    public void validateNullProviderLocation() {
-        exceptionRule.expect(PrefixRegistrationRequestValidatorException.class);
-        validator.validate(fnc.apply(null));
+    void validateNullProviderLocation() {
+        assertThrows(PrefixRegistrationRequestValidatorException.class,
+                () -> validator.validate(fnc.apply(null))
+        );
     }
 
     @Test
-    public void validateBlankProviderLocation() {
-        exceptionRule.expect(PrefixRegistrationRequestValidatorException.class);
-        validator.validate(fnc.apply(""));
+    void validateBlankProviderLocation() {
+        assertThrows(PrefixRegistrationRequestValidatorException.class,
+                () -> validator.validate(fnc.apply(""))
+        );
     }
 
     @Test
-    public void validateValidProviderLocations() {
+    void validateValidProviderLocations() {
         for (String code : codes)
             assertTrue(validator.validate(fnc.apply(code)));
     }

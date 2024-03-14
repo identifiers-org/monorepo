@@ -4,7 +4,6 @@ import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSessio
 import org.slf4j.Logger;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Project: registry
@@ -37,7 +36,7 @@ public interface PrefixRegistrationSessionCompositeSequenceAction extends Prefix
             List<PrefixRegistrationSessionActionReport> actionReports = buildActionSequence().parallelStream()
                     .map(action -> action.performAction(session))
                     .filter(PrefixRegistrationSessionActionReport::isError)
-                    .collect(Collectors.toList());
+                    .toList();
             // Set own report to error if any of the subactions completed with error
             if (!actionReports.isEmpty()) {
                 report.setErrorMessage(String.format("%s, some actions COMPLETED WITH ERRORS", messagePrefix));
@@ -47,9 +46,9 @@ public interface PrefixRegistrationSessionCompositeSequenceAction extends Prefix
             }
             // Report errors from subactions
             actionReports.parallelStream()
-                    .forEach(actionReport -> {
-                        getLogger().error(actionReport.getErrorMessage());
-                    });
+                    .forEach(actionReport ->
+                            getLogger().error(actionReport.getErrorMessage())
+                    );
         } catch (RuntimeException e) {
             // Some of them may not be capturing exceptions, let's go up to runtime top level
             throw new PrefixRegistrationSessionActionException(String.format("%s, the following error occurred: %s", messagePrefix, e.getMessage()));

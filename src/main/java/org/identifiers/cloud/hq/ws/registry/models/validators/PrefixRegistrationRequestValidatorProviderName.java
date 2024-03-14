@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators;
 
+import org.apache.commons.lang3.StringUtils;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -30,7 +31,7 @@ public class PrefixRegistrationRequestValidatorProviderName implements PrefixReg
         // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
         if (request.getProviderName() == null) {
             throw new PrefixRegistrationRequestValidatorException("The name of the resource (provider name) is MISSING");
-        } else if (request.getProviderName().length() == 0) {
+        } else if (StringUtils.isBlank(request.getProviderName())) {
             throw new PrefixRegistrationRequestValidatorException("Provider name cannot be empty");
         }
         return true;

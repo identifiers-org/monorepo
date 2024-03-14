@@ -28,7 +28,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler(value = { ResourceNotFoundException.class })
     protected ResponseEntity<Object> handleResourceNotFound (ResourceNotFoundException ex, WebRequest request) {
-        ServiceResponse responseBody = new ServiceResponse()
+        ServiceResponse<Object> responseBody = ServiceResponse.getBaseResponse()
                 .setApiVersion(ApiCentral.apiVersion)
                 .setErrorMessage(ex.getMessage());
         return handleExceptionInternal(ex, responseBody, new HttpHeaders(),
@@ -40,7 +40,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         // Last hope for logging of unforeseen errors
         // Also a way to make all responses to be of type ServiceResponse
         log.error("Unforeseen exception", ex);
-        ServiceResponse responseBody = new ServiceResponse()
+        ServiceResponse<Object> responseBody = ServiceResponse.getBaseResponse()
                 .setApiVersion(ApiCentral.apiVersion)
                 .setErrorMessage(String.format("Unforeseen exception at %s: %s", now(), ex.getMessage()));
         return handleExceptionInternal(ex, responseBody, new HttpHeaders(),

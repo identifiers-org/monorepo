@@ -6,7 +6,7 @@ import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepositor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import java.util.Date;
 import java.util.Optional;
 
@@ -65,8 +65,8 @@ public class NamespaceLifecycleManagementServiceSimpleStrategy implements Namesp
                report.setSuccess(false);
                log.error(errorMessage);
             } else {
-                // Should we do any cross check on whether there are active resources on the namespace or not? The same
-                // way cross checks from resource lifecycle management didn't make sense, they don't make sense either
+                // Should we do any cross-check on whether there are active resources on the namespace or not? The same
+                // way cross-checks from resource lifecycle management didn't make sense, they don't make sense either
                 // in the other direction
                 namespace.setDeprecated(true);
                 namespace.setDeprecationDate(new Date(System.currentTimeMillis()));
@@ -94,8 +94,8 @@ public class NamespaceLifecycleManagementServiceSimpleStrategy implements Namesp
                 report.setSuccess(false);
                 log.error(errorMessage);
             } else {
-                // Should we do any cross check on whether there are active resources on the namespace or not? The same
-                // way cross checks from resource lifecycle management didn't make sense, they don't make sense either
+                // Should we do any cross-check on whether there are active resources on the namespace or not? The same
+                // way cross-checks from resource lifecycle management didn't make sense, they don't make sense either
                 // in the other direction
                 namespace.setDeprecated(false);
                 namespace.setRenderDeprecatedLanding(false);

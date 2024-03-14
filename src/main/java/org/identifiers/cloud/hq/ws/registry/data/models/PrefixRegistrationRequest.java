@@ -3,13 +3,12 @@ package org.identifiers.cloud.hq.ws.registry.data.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.URL;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Project: registry
@@ -21,10 +20,10 @@ import java.util.Date;
  *
  * This model represents a prefix registration request from the point of view of its persisted representation.
  */
-@Data
+@Getter @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 @Accessors(chain = true)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -135,10 +134,21 @@ public class PrefixRegistrationRequest {
 
     private boolean renderProtectedLanding;
 
-    @URL(regexp = "^(http|https).*$")
     private String authHelpUrl;
 
     @Column(length = 2000)
-    @Length(min = 50)
     private String authHelpDescription;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PrefixRegistrationRequest that = (PrefixRegistrationRequest) o;
+        return id == that.id && namespaceEmbeddedInLui == that.namespaceEmbeddedInLui && protectedUrls == that.protectedUrls && renderProtectedLanding == that.renderProtectedLanding && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(providerHomeUrl, that.providerHomeUrl) && Objects.equals(providerName, that.providerName) && Objects.equals(providerDescription, that.providerDescription) && Objects.equals(providerLocation, that.providerLocation) && Objects.equals(providerCode, that.providerCode) && Objects.equals(institutionName, that.institutionName) && Objects.equals(institutionDescription, that.institutionDescription) && Objects.equals(institutionHomeUrl, that.institutionHomeUrl) && Objects.equals(institutionLocation, that.institutionLocation) && Objects.equals(institutionRorId, that.institutionRorId) && Objects.equals(requestedPrefix, that.requestedPrefix) && Objects.equals(providerUrlPattern, that.providerUrlPattern) && Objects.equals(sampleId, that.sampleId) && Objects.equals(idRegexPattern, that.idRegexPattern) && Objects.equals(supportingReferences, that.supportingReferences) && Objects.equals(additionalInformation, that.additionalInformation) && Objects.equals(requesterName, that.requesterName) && Objects.equals(requesterEmail, that.requesterEmail) && Objects.equals(created, that.created) && Objects.equals(authHelpUrl, that.authHelpUrl) && Objects.equals(authHelpDescription, that.authHelpDescription);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, providerHomeUrl, providerName, providerDescription, providerLocation, providerCode, institutionName, institutionDescription, institutionHomeUrl, institutionLocation, institutionRorId, requestedPrefix, providerUrlPattern, sampleId, idRegexPattern, supportingReferences, additionalInformation, requesterName, requesterEmail, namespaceEmbeddedInLui, created, protectedUrls, renderProtectedLanding, authHelpUrl, authHelpDescription);
+    }
 }

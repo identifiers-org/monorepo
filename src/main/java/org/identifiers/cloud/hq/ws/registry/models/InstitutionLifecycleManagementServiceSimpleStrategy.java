@@ -8,7 +8,7 @@ import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRepository
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,7 +48,12 @@ public class InstitutionLifecycleManagementServiceSimpleStrategy implements Inst
             } else {
                 report.setResources(linkedResources);
                 report.setSuccess(false);
-                String errorMessage = String.format("Institution with ID '%d', name '%s', IS IN USE by resources with IDs [%s], AND CANNOT BE DELETED by '%s', additional information '%s'", institution.get().getId(), institution.get().getName(), String.join(",", linkedResources.stream().map(resource -> Long.toString(resource.getId())).collect(Collectors.toList())), actor, additionalInformation);
+                String errorMessage = String.format(
+                        "Institution with ID '%d', name '%s', IS IN USE by resources with IDs [%s], AND CANNOT BE DELETED by '%s', additional information '%s'",
+                        institution.get().getId(), institution.get().getName(),
+                        linkedResources.stream().map(resource -> Long.toString(resource.getId()))
+                                .collect(Collectors.joining(",")),
+                        actor, additionalInformation);
                 report.setErrorMessage(errorMessage);
                 log.error(errorMessage);
             }

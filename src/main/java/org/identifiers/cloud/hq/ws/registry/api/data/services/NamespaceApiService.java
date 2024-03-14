@@ -35,7 +35,7 @@ public class NamespaceApiService {
         return namespaceRepository.findAll().parallelStream().map(namespace -> {
             // Locate the resources within the namespace
             // NOTE - There must be another way of doing this model mappings
-            List<Resource> resources = resources = resourceRepository.findAllByNamespaceId(namespace.getId()).parallelStream()
+            List<Resource> resources = resourceRepository.findAllByNamespaceId(namespace.getId()).parallelStream()
                     .map(ApiAndDataModelsHelper::getResourceFrom).collect(Collectors.toList());
             return ApiAndDataModelsHelper.getNamespaceFrom(namespace)
                     .setResources(resources);

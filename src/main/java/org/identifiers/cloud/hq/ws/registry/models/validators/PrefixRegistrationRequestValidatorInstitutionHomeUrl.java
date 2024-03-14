@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators;
 
+import org.apache.commons.lang3.StringUtils;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Component;
 @Qualifier("PrefixRegistrationRequestValidatorInstitutionHomeUrl")
 public class PrefixRegistrationRequestValidatorInstitutionHomeUrl implements PrefixRegistrationRequestValidator {
 
-    private WebPageChecker webPageChecker = WebPageCheckerFactory.getWebPageChecker();
+    private final WebPageChecker webPageChecker = WebPageCheckerFactory.getWebPageChecker();
 
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
@@ -27,10 +28,10 @@ public class PrefixRegistrationRequestValidatorInstitutionHomeUrl implements Pre
         // Home Page URL for the resource is required
         if (request.getInstitutionHomeUrl() == null) {
             throw new PrefixRegistrationRequestValidatorException("MISSING URL for a Institution");
-        } else if (request.getInstitutionHomeUrl().length() == 0) {
+        } else if (StringUtils.isBlank(request.getInstitutionHomeUrl())) {
             throw new PrefixRegistrationRequestValidatorException("Home URL cannot be empty");
         }
-        boolean valid = true;
+        boolean valid;
         try {
             valid = webPageChecker.checkWebPageUrl(request.getInstitutionHomeUrl());
         } catch (WebPageCheckerException e) {

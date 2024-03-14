@@ -1,16 +1,14 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Project: registry
@@ -23,10 +21,11 @@ import java.util.Date;
  * This model represents a resource registration session, it groups together the different stages in the process of
  * approving or rejecting a resource registration request, and the evolution of its content.
  */
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 @Accessors(chain = true)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -48,4 +47,17 @@ public class ResourceRegistrationSession {
     @CreatedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date created;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ResourceRegistrationSession that = (ResourceRegistrationSession) o;
+        return id == that.id && closed == that.closed && Objects.equals(resourceRegistrationRequest, that.resourceRegistrationRequest) && Objects.equals(created, that.created);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, closed, resourceRegistrationRequest, created);
+    }
 }

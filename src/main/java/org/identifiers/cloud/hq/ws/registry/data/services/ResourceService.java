@@ -11,7 +11,7 @@ import org.identifiers.cloud.hq.ws.registry.models.MirIdServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 /**
  * Project: registry
@@ -82,8 +82,7 @@ public class ResourceService {
         // will trigger a rollback in the database, as this method is transactional
         namespaceService.registerProvider(resource.getNamespace(), resource);
         // Register the resource
-        Resource registeredResource = repository.save(resource);
-        return registeredResource;
+        return repository.save(resource);
     }
 
     @Transactional
@@ -98,7 +97,7 @@ public class ResourceService {
         try {
             log.info(String.format("RESOURCE REGISTRATION REQUEST - ACCEPT\n'%s'", objectMapper.writeValueAsString(resource)));
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            log.error("Error parsing resource to json during appendResourceToNamespace", e);
         }
         if (resource.getMirId() == null) {
             // Request a MIR ID

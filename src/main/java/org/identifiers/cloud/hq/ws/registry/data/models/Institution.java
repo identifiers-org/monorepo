@@ -1,17 +1,15 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Project: registry
@@ -23,10 +21,10 @@ import java.util.Date;
  *
  * This document models an Institution than potentially owns resources (providers) in the registry.
  */
-@Data
+@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
+@ToString
 @Accessors(chain = true)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -61,4 +59,17 @@ public class Institution {
     // ROR IDs, long URL just in case...
     @Column(length = 2000, unique = true)
     private String rorId;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Institution that = (Institution) o;
+        return id == that.id && Objects.equals(name, that.name) && Objects.equals(homeUrl, that.homeUrl) && Objects.equals(description, that.description) && Objects.equals(created, that.created) && Objects.equals(modified, that.modified) && Objects.equals(location, that.location) && Objects.equals(rorId, that.rorId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, homeUrl, description, created, modified, location, rorId);
+    }
 }

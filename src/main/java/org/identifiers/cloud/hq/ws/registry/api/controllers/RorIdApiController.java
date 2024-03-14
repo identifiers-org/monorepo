@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  *
- * This Controller handles requests for working with ROR IDs (https://ror.org), in an interoperable way
+ * This Controller handles requests for working with ROR IDs (<a href="https://ror.org">https://ror.org</a>), in an interoperable way
  */
 @RestController
 @RequestMapping("rorIdApi")

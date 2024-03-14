@@ -1,20 +1,18 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.Past;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.Past;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Project: registry
@@ -26,10 +24,10 @@ import java.util.List;
  *
  * This entity models a Prefix (or namespace) in the registry
  */
-@Data
+@Getter @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 @Accessors(chain = true)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -37,6 +35,19 @@ import java.util.List;
                     @Index(name = "idx_name", columnList = "name"),
                     @Index(name = "idx_prefix", columnList = "prefix", unique = true)})
 public class Namespace {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Namespace namespace = (Namespace) o;
+        return id == namespace.id && deprecated == namespace.deprecated && renderDeprecatedLanding == namespace.renderDeprecatedLanding && namespaceEmbeddedInLui == namespace.namespaceEmbeddedInLui && Objects.equals(prefix, namespace.prefix) && Objects.equals(mirId, namespace.mirId) && Objects.equals(name, namespace.name) && Objects.equals(pattern, namespace.pattern) && Objects.equals(description, namespace.description) && Objects.equals(created, namespace.created) && Objects.equals(modified, namespace.modified) && Objects.equals(deprecationDate, namespace.deprecationDate) && Objects.equals(deprecationOfflineDate, namespace.deprecationOfflineDate) && Objects.equals(deprecationStatement, namespace.deprecationStatement) && Objects.equals(infoOnPostmortemAccess, namespace.infoOnPostmortemAccess) && Objects.equals(successor, namespace.successor) && Objects.equals(sampleId, namespace.sampleId) && Objects.equals(contactPerson, namespace.contactPerson) && Objects.equals(resources, namespace.resources);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, prefix, mirId, name, pattern, description, created, modified, deprecated, deprecationDate, deprecationOfflineDate, renderDeprecatedLanding, deprecationStatement, infoOnPostmortemAccess, successor, sampleId, namespaceEmbeddedInLui, contactPerson, resources);
+    }
+
     // Main internal ID for this namespace
     @Id
     @GeneratedValue
@@ -126,5 +137,6 @@ public class Namespace {
     private Person contactPerson;
 
     @OneToMany(mappedBy = "namespace")
+    @ToString.Exclude
     private List<Resource> resources;
 }

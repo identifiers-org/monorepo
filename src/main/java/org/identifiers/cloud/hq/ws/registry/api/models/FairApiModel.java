@@ -36,9 +36,9 @@ public class FairApiModel {
     /**
      * Check whether the given LUI (Locally Unique Identifier) is supported, i.e. corresponds to an existing minted ID.
      * In the case of identifiers.org registry, we would be talking about MIR IDs, so this method will tell the
-     * requester whether the given ID has been minted and it's in use.
+     * requester whether the given ID has been minted, and it's in use.
      * @param payload That contains the MIR ID to check (LUI)
-     * @return different HTTP Status codes according to the FAIR API specification at https://fairapi.org
+     * @return different HTTP Status codes according to the FAIR API specification at <a href="https://fairapi.org">fairapi.org</a>
      */
     public FairApiCoverageResponse checkForLui(FairApiCoveragePayload payload) {
         FairApiCoverageResponse response = new FairApiCoverageResponse();

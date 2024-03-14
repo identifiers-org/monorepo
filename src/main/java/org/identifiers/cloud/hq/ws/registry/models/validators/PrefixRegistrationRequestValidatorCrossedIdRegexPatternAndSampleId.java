@@ -25,7 +25,7 @@ import java.util.regex.PatternSyntaxException;
 @Scope("prototype")
 @Qualifier("PrefixRegistrationRequestValidatorCrossedIdRegexPatternAndSampleId")
 public class PrefixRegistrationRequestValidatorCrossedIdRegexPatternAndSampleId implements PrefixRegistrationRequestValidator {
-    private static Logger logger = LoggerFactory.getLogger(PrefixRegistrationRequestValidatorCrossedIdRegexPatternAndSampleId.class);
+    private static final Logger logger = LoggerFactory.getLogger(PrefixRegistrationRequestValidatorCrossedIdRegexPatternAndSampleId.class);
 
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
@@ -57,7 +57,7 @@ public class PrefixRegistrationRequestValidatorCrossedIdRegexPatternAndSampleId 
         }
         Matcher matcher = pattern.matcher(request.getSampleId());
         if (!matcher.matches()) {
-            throw new PrefixRegistrationRequestValidatorException(String.format("This regex does not match the Sample Id", request.getSampleId(), request.getIdRegexPattern()));
+            throw new PrefixRegistrationRequestValidatorException(String.format("The regex \"%s\" does not match the Sample Id \"%s\"", request.getIdRegexPattern(), request.getSampleId()));
         }
         return true;
     }

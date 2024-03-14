@@ -19,6 +19,6 @@ public interface WebPageChecker {
 
     boolean checkForOkUrlEndpoint(String url) throws WebPageCheckerException;
 
-    public boolean checkForValidUrl(String url);
+    boolean checkForValidUrl(String url);
 
 }

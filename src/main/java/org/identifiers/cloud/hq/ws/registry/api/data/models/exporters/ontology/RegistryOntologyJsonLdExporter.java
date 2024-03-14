@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public class RegistryOntologyJsonLdExporter implements RegistryExporter {
     public static final String URL_ONTOLOGY_IDENTIFIERS_ORG = "http://identifiers.org/idoo/";
-    private ExportOntologyDocumentBuilder documentBuilder = null;
+    private final ExportOntologyDocumentBuilder documentBuilder;
 
     private void addContext() {
         documentBuilder.buildContext("dc", "http://purl.org/dc/terms/");
@@ -159,17 +159,12 @@ public class RegistryOntologyJsonLdExporter implements RegistryExporter {
     private void addNamespaces(List<Namespace> namespaces) {
         // DISCLAIMER NOTE - My eyes are BLEEDING by looking at this disaster, but let's get this done for the
         // biohackathon and we can polish it later
-        namespaces.stream().forEach(namespace -> {
+        namespaces.forEach(namespace -> {
             Map<String, Object> entry = new HashMap<>();
             entry.put("@id", String.format("http://identifiers.org/%s", namespace.getPrefix()));
             entry.put("@type", String.format("%sDataCollection", URL_ONTOLOGY_IDENTIFIERS_ORG));
             entry.put("rdfs:comment", namespace.getDescription());
             entry.put("rdfs:label", namespace.getName());
-            /*entry.put("foaf:homepage", namespace.getResources().stream().map(resource -> {
-                Map<String, String> foafEntry = new HashMap<>();
-                foafEntry.put("@id", resource.getResourceUrl().trim());
-                return foafEntry;
-            }).collect(Collectors.toList()));*/
             documentBuilder.build((Serializable) entry);
         });
     }

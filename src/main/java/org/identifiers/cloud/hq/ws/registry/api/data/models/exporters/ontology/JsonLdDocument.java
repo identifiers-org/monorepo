@@ -21,7 +21,7 @@ public class JsonLdDocument extends ExportedDocument implements Serializable {
     @JsonProperty(value = "@context")
     private Map<String, String> contexts = new HashMap<>();
     @JsonProperty(value = "@graph")
-    private List<Serializable> graphEntries = new ArrayList<>();
+    private final List<Serializable> graphEntries = new ArrayList<>();
 
     public String addContext(String key, String value) {
         return getContexts().put(key, value);

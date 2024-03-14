@@ -1,12 +1,13 @@
 package org.identifiers.cloud.hq.ws.registry.data.services;
 
+import org.apache.commons.lang3.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.data.models.Institution;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.InstitutionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 /**
  * Project: registry
@@ -40,7 +41,7 @@ public class InstitutionService {
         Institution registeredInstitution = null;
 
         // If rorid given, find existing institution by rorid
-        if (institution.getRorId() != null && institution.getRorId().trim().length() > 0) {
+        if (StringUtils.isNotBlank(institution.getRorId())) {
             registeredInstitution = repository.findByRorId(institution.getRorId());
         }
 

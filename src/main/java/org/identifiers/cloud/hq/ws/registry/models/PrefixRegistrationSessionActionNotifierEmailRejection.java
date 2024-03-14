@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Project: registry
@@ -36,9 +36,6 @@ public class PrefixRegistrationSessionActionNotifierEmailRejection implements Pr
     private String emailSender;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.replyto}")
     private String emailReplyTo;
-    // TODO Prefilled with the default value, in case it is missing, although it doesn't make sense
-    //@Value("${org.identifiers.cloud.hq.ws.registry.notifiers.requester.prefixreg.rejection.to}")
-    //private String emailTo;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.requester.prefixreg.rejection.cc}")
     private String emailCc;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.requester.prefixreg.rejection.cco}")
@@ -82,7 +79,7 @@ public class PrefixRegistrationSessionActionNotifierEmailRejection implements Pr
 
     private String parseEmailBody(PrefixRegistrationSession session) throws PrefixRegistrationSessionActionException {
         try {
-            String bodyTemplate = IOUtils.toString(resourceLoader.getResource(emailBodyFileResource).getInputStream(), Charset.forName("UTF-8"));
+            String bodyTemplate = IOUtils.toString(resourceLoader.getResource(emailBodyFileResource).getInputStream(), StandardCharsets.UTF_8);
             // TODO The placeholder substitution process can be externalized to a loop over map (placeholder, value)
             return bodyTemplate
                     .replace(placeholderPrefix, session.getPrefixRegistrationRequest().getRequestedPrefix())

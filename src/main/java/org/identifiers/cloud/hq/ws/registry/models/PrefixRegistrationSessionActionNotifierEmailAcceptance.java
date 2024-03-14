@@ -3,7 +3,6 @@ package org.identifiers.cloud.hq.ws.registry.models;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.mail.SimpleMailMessage;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Project: registry
@@ -36,9 +35,6 @@ public class PrefixRegistrationSessionActionNotifierEmailAcceptance implements P
     private String emailSender;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.replyto}")
     private String emailReplyTo;
-    // TODO Prefilled with the default value, in case it is missing
-    //@Value("${org.identifiers.cloud.hq.ws.registry.notifiers.requester.prefixreg.acceptance.to}")
-    //private String emailTo;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.requester.prefixreg.acceptance.cc}")
     private String emailCc;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.requester.prefixreg.acceptance.cco}")
@@ -61,10 +57,12 @@ public class PrefixRegistrationSessionActionNotifierEmailAcceptance implements P
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.donotuse}")
     private String placeholderDoNotUse;
 
-    @Autowired
-    private JavaMailSender javaMailSender;
-    @Autowired
-    private ResourceLoader resourceLoader;
+    final JavaMailSender javaMailSender;
+    private final ResourceLoader resourceLoader;
+    public PrefixRegistrationSessionActionNotifierEmailAcceptance(JavaMailSender javaMailSender, ResourceLoader resourceLoader) {
+        this.javaMailSender = javaMailSender;
+        this.resourceLoader = resourceLoader;
+    }
 
     // Helpers
     private String parseEmailSubject(PrefixRegistrationSession session) {
@@ -73,7 +71,7 @@ public class PrefixRegistrationSessionActionNotifierEmailAcceptance implements P
 
     private String parseEmailBody(PrefixRegistrationSession session) throws PrefixRegistrationSessionActionException {
         try {
-            String bodyTemplate = IOUtils.toString(resourceLoader.getResource(emailBodyFileResource).getInputStream(), Charset.forName("UTF-8"));
+            String bodyTemplate = IOUtils.toString(resourceLoader.getResource(emailBodyFileResource).getInputStream(), StandardCharsets.UTF_8);
             return bodyTemplate
                     .replace(placeholderPrefix, session.getPrefixRegistrationRequest().getRequestedPrefix())
                     .replace(placeholderPrefixName, session.getPrefixRegistrationRequest().getName())

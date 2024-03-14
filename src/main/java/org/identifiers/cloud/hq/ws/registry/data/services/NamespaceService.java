@@ -10,7 +10,7 @@ import org.identifiers.cloud.hq.ws.registry.models.MirIdServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -44,7 +44,7 @@ public class NamespaceService {
     // END - Services
 
     /**
-     * This methods registers the given namespace, taking care on whether its contact person needs to be registered as
+     * This method registers the given namespace, taking care on whether its contact person needs to be registered as
      * well or it already exists, and also the MIR ID for the about to be registered namespace.
      * @param namespace to be registered
      * @return the registered namespace

@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators;
 
+import org.apache.commons.lang3.StringUtils;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
 import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
@@ -7,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.regex.Matcher;
@@ -23,10 +23,10 @@ import java.util.regex.Pattern;
  */
 // We don't need qualifier here?
 @Component
-@Scope("prototype")
+//@Scope("prototype")
 @Qualifier("PrefixRegistrationRequestValidatorRequestedPrefix")
 public class PrefixRegistrationRequestValidatorRequestedPrefix implements PrefixRegistrationRequestValidator {
-    private static Logger logger = LoggerFactory.getLogger(PrefixRegistrationRequestValidatorRequestedPrefix.class);
+    private static final Logger logger = LoggerFactory.getLogger(PrefixRegistrationRequestValidatorRequestedPrefix.class);
 
     @Autowired
     private NamespaceRepository namespaceRepository;
@@ -37,7 +37,7 @@ public class PrefixRegistrationRequestValidatorRequestedPrefix implements Prefix
             logger.error("Invalid request for validating Requested Prefix, WITHOUT specifying a prefix");
             // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
             throw new PrefixRegistrationRequestValidatorException("MISSING Preferred Prefix");
-        } else if (request.getRequestedPrefix().length() == 0) {
+        } else if (StringUtils.isBlank(request.getRequestedPrefix())) {
             logger.error("Invalid request for validating Requested Prefix, empty prefix");
             // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
             throw new PrefixRegistrationRequestValidatorException("Requested prefix cannot be empty");
@@ -54,8 +54,8 @@ public class PrefixRegistrationRequestValidatorRequestedPrefix implements Prefix
             }
         }
 
-        String errorMessage = "--- no error message has been set ---";
-        String shortErrorMessage = "--- no short error message has been set ---";
+        String errorMessage;
+        String shortErrorMessage;
         try {
             Namespace foundNamespace = namespaceRepository.findByPrefix(request.getRequestedPrefix());
             if (foundNamespace != null) {

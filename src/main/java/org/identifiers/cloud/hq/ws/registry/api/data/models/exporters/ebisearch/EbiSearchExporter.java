@@ -15,7 +15,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -27,15 +26,15 @@ public class EbiSearchExporter implements RegistryExporter {
     public ExportedDocument export(List<Namespace> namespaces) throws RegistryExporterException {
         try {
             Database exportDatabase = new Database();
-            DataCatalog idorg_metadata = (DataCatalog) schemaOrgMetadataProvider.getForPlatform();
+            DataCatalog idorgMetadata = (DataCatalog) schemaOrgMetadataProvider.getForPlatform();
 
-            exportDatabase.setName(idorg_metadata.getName())
-                    .setDescription(idorg_metadata.getDescription())
+            exportDatabase.setName(idorgMetadata.getName())
+                    .setDescription(idorgMetadata.getDescription())
                     .setEntry_count(namespaces.size());
 
             List<Entry> entries = namespaces.stream()
                     .map(this::getEntryFromNamespace)
-                    .collect(Collectors.toList());
+                    .toList();
             exportDatabase.setEntries(entries);
             return exportDatabase;
         } catch (RuntimeException ex) {
@@ -56,7 +55,7 @@ public class EbiSearchExporter implements RegistryExporter {
         return newEntry;
     }
 
-    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     private String format(Date date) {
         return df.format(date);
     }

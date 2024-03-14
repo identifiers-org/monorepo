@@ -32,8 +32,8 @@ public class ResourceRegistrationRequestValidatorNamespacePrefix implements Reso
             throw new ResourceRegistrationRequestValidatorException("MISSING Namespace Prefix");
         }
         // TODO - Check the namespace prefix corresponds to a valid active namespace
-        String errorMessage = "--- no error message has been set ---";
-        String shortErrorMessage = "--- no short error message has been set ---";
+        String errorMessage;
+        String shortErrorMessage;
         try {
             Namespace foundNamespace = namespaceRepository.findByPrefix(request.getNamespacePrefix());
             if (foundNamespace != null) {

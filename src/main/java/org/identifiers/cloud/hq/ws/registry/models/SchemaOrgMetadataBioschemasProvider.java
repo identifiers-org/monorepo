@@ -6,10 +6,7 @@ import org.identifiers.cloud.hq.ws.registry.models.schemaorg.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Project: registry
@@ -68,7 +65,7 @@ public class SchemaOrgMetadataBioschemasProvider implements SchemaOrgMetadataPro
         dataCatalog.setDescription("The Identifiers.org registry contains registered namespace and provider prefixes with associated access URIs for a large number of high quality data collections. These prefixes are used in web resolution of compact identifiers of the form PREFIX:ACCESSION commonly used to specify bioinformatics and other data resources.");
         dataCatalog.setUrl("https://identifiers.org/");
         dataCatalog.setKeywords("registry,life sciences,compact identifier");
-        dataCatalog.setAlternateName(Arrays.asList("Identifiers.org Central Registry"));
+        dataCatalog.setAlternateName(Collections.singletonList("Identifiers.org Central Registry"));
         return dataCatalog;
     }
 
@@ -100,7 +97,7 @@ public class SchemaOrgMetadataBioschemasProvider implements SchemaOrgMetadataPro
     @Override
     public SchemaOrgNode getForNamespace(long namespaceId) throws SchemaOrgMetadataProviderException {
         Optional<Namespace> namespace = namespaceRepository.findById(namespaceId);
-        if (!namespace.isPresent()) {
+        if (namespace.isEmpty()) {
             String errorMessage = String.format("Schema.org metadata for namespace with ID '%d' COULD NOT BE PROVIDED, the namespace DOES NOT exist", namespaceId);
             throw new SchemaOrgMetadataProviderException(errorMessage);
         }

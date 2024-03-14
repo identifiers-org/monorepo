@@ -1,16 +1,14 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Project: registry
@@ -22,10 +20,11 @@ import java.util.Date;
  *
  * This is the base class that represents the events that are part of a resource registration request session.
  */
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 @Accessors(chain = true)
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -60,4 +59,17 @@ public class ResourceRegistrationSessionEvent {
     @CreatedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date created;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ResourceRegistrationSessionEvent that = (ResourceRegistrationSessionEvent) o;
+        return id == that.id && Objects.equals(eventName, that.eventName) && Objects.equals(actor, that.actor) && Objects.equals(additionalInformation, that.additionalInformation) && Objects.equals(resourceRegistrationSession, that.resourceRegistrationSession) && Objects.equals(resourceRegistrationRequest, that.resourceRegistrationRequest) && Objects.equals(created, that.created);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, eventName, actor, additionalInformation, resourceRegistrationSession, resourceRegistrationRequest, created);
+    }
 }

@@ -9,10 +9,11 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.Past;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.Past;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Project: registry
@@ -24,13 +25,12 @@ import java.util.Date;
  *
  * This is a data model for a Resource (Provider) in the registry.
  */
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
+@Getter @Setter
+@ToString
 @Accessors(chain = true)
-@Entity
-@EntityListeners(AuditingEntityListener.class)
+@Entity @EntityListeners(AuditingEntityListener.class)
 @Table(indexes = {@Index(name = "idx_mir_id", columnList = "mirId", unique = true),
         @Index(name = "idx_official", columnList = "official")})
 public class Resource {
@@ -38,7 +38,6 @@ public class Resource {
     @GeneratedValue
     private long id;
 
-    // TODO updates to this field should not be allowed via the REST repository (https://github.com/identifiers-org/cloud-hq-ws-registry/issues/45)
     @Column(nullable = false, unique = true, updatable = false)
     private String mirId;
 
@@ -125,4 +124,17 @@ public class Resource {
     @Column(length = 2000)
     @Length(min = 50)
     private String authHelpDescription;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Resource resource = (Resource) o;
+        return id == resource.id && official == resource.official && deprecated == resource.deprecated && renderDeprecatedLanding == resource.renderDeprecatedLanding && protectedUrls == resource.protectedUrls && renderProtectedLanding == resource.renderProtectedLanding && Objects.equals(mirId, resource.mirId) && Objects.equals(urlPattern, resource.urlPattern) && Objects.equals(name, resource.name) && Objects.equals(description, resource.description) && Objects.equals(providerCode, resource.providerCode) && Objects.equals(sampleId, resource.sampleId) && Objects.equals(resourceHomeUrl, resource.resourceHomeUrl) && Objects.equals(created, resource.created) && Objects.equals(modified, resource.modified) && Objects.equals(deprecationDate, resource.deprecationDate) && Objects.equals(deprecationOfflineDate, resource.deprecationOfflineDate) && Objects.equals(deprecationStatement, resource.deprecationStatement) && Objects.equals(institution, resource.institution) && Objects.equals(location, resource.location) && Objects.equals(namespace, resource.namespace) && Objects.equals(contactPerson, resource.contactPerson) && Objects.equals(authHelpUrl, resource.authHelpUrl) && Objects.equals(authHelpDescription, resource.authHelpDescription);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, mirId, urlPattern, name, description, official, providerCode, sampleId, resourceHomeUrl, created, modified, deprecated, deprecationDate, deprecationOfflineDate, renderDeprecatedLanding, deprecationStatement, institution, location, namespace, contactPerson, protectedUrls, renderProtectedLanding, authHelpUrl, authHelpDescription);
+    }
 }

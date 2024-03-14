@@ -1,10 +1,10 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import javax.persistence.Entity;
+import jakarta.persistence.Entity;
 
 /**
  * Project: registry
@@ -14,8 +14,8 @@ import javax.persistence.Entity;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 @Accessors(chain = true)
 @Entity
 public class ResourceRegistrationSessionEventStart extends ResourceRegistrationSessionEvent {

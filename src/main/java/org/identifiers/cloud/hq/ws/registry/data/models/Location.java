@@ -1,16 +1,14 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Project: registry
@@ -22,10 +20,10 @@ import java.util.Date;
  *
  * This data model holds just enough information about a location, used in the registry
  */
-@Data
+@Getter @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 @Accessors(chain = true)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -48,4 +46,17 @@ public class Location {
     @CreatedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date created;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Location location = (Location) o;
+        return Objects.equals(countryCode, location.countryCode) && Objects.equals(countryName, location.countryName) && Objects.equals(created, location.created);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(countryCode, countryName, created);
+    }
 }

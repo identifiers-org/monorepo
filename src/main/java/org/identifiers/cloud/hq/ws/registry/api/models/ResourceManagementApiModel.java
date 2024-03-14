@@ -202,7 +202,7 @@ public class ResourceManagementApiModel {
 
     private ResourceRegistrationSession getResourceRegistrationSession(String eventName, long sessionId, ServiceRequestRegisterResourceSessionEvent request, ServiceResponseRegisterResourceSessionEvent response) {
         Optional<ResourceRegistrationSession> resourceRegistrationSession = resourceRegistrationSessionRepository.findById(sessionId);
-        if (!resourceRegistrationSession.isPresent()) {
+        if (resourceRegistrationSession.isEmpty()) {
             response.setHttpStatus(HttpStatus.BAD_REQUEST);
             String errorMessage = String.format("INVALID Resource Registration '%s' request, session with ID '%d' IS NOT VALID", eventName, sessionId);
             response.setErrorMessage(errorMessage);

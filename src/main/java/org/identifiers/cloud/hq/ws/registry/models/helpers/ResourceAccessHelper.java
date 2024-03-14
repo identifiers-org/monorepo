@@ -1,6 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.models.helpers;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * Project: registry

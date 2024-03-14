@@ -37,7 +37,7 @@ public class NamespaceHelper {
      * Given a namespace and a LUI, get the corresponding compact identifier
      * @param namespace a namespace
      * @param lui a LUI within the context of the namespace
-     * @return the correponding compact identifier, or null if the any of them is not valid
+     * @return the correponding compact identifier, or null if any of them is not valid
      */
     public static String getCompactIdentifier(Namespace namespace, String lui) {
         if (!validateLui(namespace, lui)) {

@@ -1,6 +1,6 @@
 # This Docker file defines a production container for the Registry API Service at HQ
-FROM identifiersorg/linux-java8
-LABEL maintainer="Manuel Bernal Llinares <mbdebian@gmail.com>"
+FROM amazoncorretto:17-alpine
+LABEL maintainer="Renato Caminha Juacaba neto <rjuacaba@ebi.ac.uk>"
 
 # Environment - defaults
 ENV HQ_WS_REGISTRY_JVM_MEMORY_MAX 1024m

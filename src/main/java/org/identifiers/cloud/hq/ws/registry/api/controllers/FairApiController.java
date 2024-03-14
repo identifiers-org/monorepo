@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * ---
  * <p>
  * FAIR API Controller, according to the documentation and specification at
- * https://fairapi.org
+ * <a href="https://fairapi.org">fairapi.org</a>
  */
 @RestController
 @RequestMapping("fairapi")

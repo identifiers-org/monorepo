@@ -23,7 +23,7 @@ public class ApiAndDataModelsHelper {
     public static PrefixRegistrationRequest getPrefixRegistrationRequest(ServiceRequestRegisterPrefixPayload sourceModel) {
         String references = "";
         if (sourceModel.getSupportingReferences() != null) {
-            references = "".join(",", sourceModel.getSupportingReferences());
+            references = String.join(",", sourceModel.getSupportingReferences());
         }
         String additionalInformation = "--- No additional information provided ---";
         if (sourceModel.getAdditionalInformation() != null) {

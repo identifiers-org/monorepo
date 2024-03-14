@@ -1,17 +1,15 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Project: registry
@@ -23,10 +21,10 @@ import java.util.Date;
  *
  * This model represents a person's contact details (minimum)
  */
-@Data
+@Getter @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 @Accessors(chain = true)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -51,4 +49,17 @@ public class Person {
     @LastModifiedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date modified;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return id == person.id && Objects.equals(email, person.email) && Objects.equals(fullName, person.fullName) && Objects.equals(created, person.created) && Objects.equals(modified, person.modified);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email, fullName, created, modified);
+    }
 }

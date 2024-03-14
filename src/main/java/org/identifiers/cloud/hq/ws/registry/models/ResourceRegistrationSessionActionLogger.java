@@ -33,7 +33,7 @@ public class ResourceRegistrationSessionActionLogger implements ResourceRegistra
         // Default report
         ResourceRegistrationSessionActionReport report = new ResourceRegistrationSessionActionReport();
         String logMessagePrefix = String.format("Resource Registration Session with ID '%d', for resource name '%s' - ", session.getId(), session.getResourceRegistrationRequest().getProviderName());
-        String message = "";
+        String message;
         if (resourceRegistrationSessionEventRejectRepository.findByResourceRegistrationSessionId(session.getId()) != null) {
             message = String.format("%s has been CLOSED as REJECTED", logMessagePrefix);
             report.setAdditionalInformation(message);

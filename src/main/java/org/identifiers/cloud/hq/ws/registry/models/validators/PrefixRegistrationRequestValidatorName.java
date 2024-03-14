@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators;
 
+import org.apache.commons.lang3.StringUtils;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -24,7 +25,7 @@ public class PrefixRegistrationRequestValidatorName implements PrefixRegistratio
         if (request.getName() == null) {
             // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
             throw new PrefixRegistrationRequestValidatorException("'Name' attribute must be provided");
-        } else if (request.getName().length() == 0) {
+        } else if (StringUtils.isBlank(request.getName())) {
             // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
             throw new PrefixRegistrationRequestValidatorException("Name cannot be empty");
         }

@@ -1,12 +1,11 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators;
 
+import org.apache.commons.lang3.StringUtils;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
 
-import org.identifiers.cloud.hq.ws.registry.models.helpers.ResourceAccessHelper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 
 /**
@@ -25,7 +24,7 @@ public class PrefixRegistrationRequestValidatorAuthHelpUrl implements PrefixRegi
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
         if (request.isProtectedUrls()) {
-            if (request.getAuthHelpUrl() == null || request.getAuthHelpUrl().trim().length() == 0) {
+            if (StringUtils.isBlank(request.getAuthHelpUrl())) {
                 throw new PrefixRegistrationRequestValidatorException("MISSING required authentication info URL");
             }
             if (!request.getAuthHelpUrl().toLowerCase().startsWith("http")) {

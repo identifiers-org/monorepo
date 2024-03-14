@@ -4,7 +4,6 @@ import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterP
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;

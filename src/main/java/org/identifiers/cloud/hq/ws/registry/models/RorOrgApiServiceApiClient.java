@@ -73,14 +73,10 @@ public class RorOrgApiServiceApiClient implements RorOrgApiService {
         try {
             //ResponseEntity<Organization> response = getRestTemplate().getForEntity(new URI(queryUrl), Organization.class);
             ResponseEntity<Organization> response = getRestTemplate().exchange(new URI(queryUrl), HttpMethod.GET, null, Organization.class);
-            log.info(String.format("Fetching Organization Information for ROR ID '%s', query URL '%s', response code '%d'", rorId, queryUrl, response.getStatusCodeValue()));
+            log.info(String.format("Fetching Organization Information for ROR ID '%s', query URL '%s', response code '%d'", rorId, queryUrl, response.getStatusCode().value()));
             if (response.getStatusCode().is2xxSuccessful()) {
                 ObjectMapper objectMapper = new ObjectMapper();
                 log.info(String.format("For ROR ID '%s', response body '%s'", rorId, objectMapper.writeValueAsString(response.getBody())));
-                // TODO
-//                if (response.getBody().getIsni() != null) {
-//                    log.info(String.format("ROR ID '%s', has #%d ISNIs, '%s'", rorId, response.getBody().getIsni().getAll().size(), String.join(",", response.getBody().getIsni().getAll())));
-//                }
                 if (!response.hasBody()) {
                     String errorMessage = String.format("Organization information fetch for ROR ID '%s' came back with EMTPY RESPONSE BODY", rorId);
                     log.error(errorMessage);
@@ -89,7 +85,7 @@ public class RorOrgApiServiceApiClient implements RorOrgApiService {
                 return response.getBody();
             }
             // There was an error
-            String errorMessage = String.format("Organization information fetch for ROR ID '%s' came back with HTTP STATUS '%d'", rorId, response.getStatusCodeValue());
+            String errorMessage = String.format("Organization information fetch for ROR ID '%s' came back with HTTP STATUS '%d'", rorId, response.getStatusCode().value());
             log.error(errorMessage);
             throw new RorOrgApiServiceException(errorMessage);
         } catch (RorOrgApiServiceException e) {
