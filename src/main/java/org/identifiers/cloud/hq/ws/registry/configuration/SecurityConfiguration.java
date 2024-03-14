@@ -95,7 +95,7 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.PATCH, "/restApi/locations/**").hasAuthority("restApiLocationPatch")
                     .requestMatchers(HttpMethod.DELETE, "/restApi/locations/**").denyAll()
                 // REST Repository - Namespaces
-                    .requestMatchers(HttpMethod.GET, "/restApi/namespaces/**/contactPerson/**").hasAuthority("restApiPersonGet")
+                    .requestMatchers(HttpMethod.GET, "/restApi/namespaces/*/contactPerson/**").hasAuthority("restApiPersonGet")
                     .requestMatchers(HttpMethod.GET, "/restApi/namespaces/**").permitAll()
                     .requestMatchers(HttpMethod.HEAD, "/restApi/namespaces/**").permitAll()
                     .requestMatchers(HttpMethod.POST, "/restApi/namespaces/**").hasAuthority("restApiNamespacePost")
@@ -111,7 +111,7 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.PATCH, "/restApi/namespaceSynonyms/**").hasAuthority("restApiNamespaceSynonymPatch")
                     .requestMatchers(HttpMethod.DELETE, "/restApi/namespaceSynonyms/**").denyAll()
                 // REST Repository - Resources
-                    .requestMatchers(HttpMethod.GET, "/restApi/resources/**/contactPerson/**").hasAuthority("restApiPersonGet")
+                    .requestMatchers(HttpMethod.GET, "/restApi/resources/*/contactPerson/**").hasAuthority("restApiPersonGet")
                     .requestMatchers(HttpMethod.GET, "/restApi/resources/**").permitAll()
                     .requestMatchers(HttpMethod.HEAD, "/restApi/resources/**").permitAll()
                     .requestMatchers(HttpMethod.POST, "/restApi/resources/**").hasAuthority("restApiResourcePost")
