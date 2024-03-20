@@ -4,7 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.Resource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.retry.annotation.Backoff;
@@ -43,7 +43,7 @@ public class ResourceRegistrationSessionActionNotifierEmailCuratorStart implemen
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.curator.resourcereg.start.subject}")
     private String emailSubject;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.curator.resourcereg.start.body.filename}")
-    private String emailBodyFileResource;
+    private Resource emailBodyFileResource;
     // Placeholders
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.prefix}")
     private String placeholderPrefix;
@@ -60,8 +60,6 @@ public class ResourceRegistrationSessionActionNotifierEmailCuratorStart implemen
 
     @Autowired
     private JavaMailSender javaMailSender;
-    @Autowired
-    private ResourceLoader resourceLoader;
 
     private String parseEmailSubject(ResourceRegistrationSession session) {
         return emailSubject.replace(placeholderPrefix, session.getResourceRegistrationRequest().getNamespacePrefix());
@@ -69,7 +67,7 @@ public class ResourceRegistrationSessionActionNotifierEmailCuratorStart implemen
 
     private String parseEmailBody(ResourceRegistrationSession session) throws PrefixRegistrationSessionActionException {
         try {
-            String bodyTemplate = IOUtils.toString(resourceLoader.getResource(emailBodyFileResource).getInputStream(), StandardCharsets.UTF_8);
+            String bodyTemplate = IOUtils.toString(emailBodyFileResource.getInputStream(), StandardCharsets.UTF_8);
             return bodyTemplate
                     .replace(placeholderPrefix, session.getResourceRegistrationRequest().getNamespacePrefix())
                     .replace(placeholderResourceName, session.getResourceRegistrationRequest().getProviderName())

@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.Resource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.retry.annotation.Backoff;
@@ -42,7 +42,7 @@ public class PrefixRegistrationSessionActionNotifierEmailAcceptance implements P
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.requester.prefixreg.acceptance.subject}")
     private String emailSubject;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.requester.prefixreg.acceptance.body.filename}")
-    private String emailBodyFileResource;
+    private Resource emailBodyFileResource;
     // Placeholders
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.prefix}")
     private String placeholderPrefix;
@@ -58,10 +58,8 @@ public class PrefixRegistrationSessionActionNotifierEmailAcceptance implements P
     private String placeholderDoNotUse;
 
     final JavaMailSender javaMailSender;
-    private final ResourceLoader resourceLoader;
-    public PrefixRegistrationSessionActionNotifierEmailAcceptance(JavaMailSender javaMailSender, ResourceLoader resourceLoader) {
+    public PrefixRegistrationSessionActionNotifierEmailAcceptance(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
-        this.resourceLoader = resourceLoader;
     }
 
     // Helpers
@@ -71,7 +69,7 @@ public class PrefixRegistrationSessionActionNotifierEmailAcceptance implements P
 
     private String parseEmailBody(PrefixRegistrationSession session) throws PrefixRegistrationSessionActionException {
         try {
-            String bodyTemplate = IOUtils.toString(resourceLoader.getResource(emailBodyFileResource).getInputStream(), StandardCharsets.UTF_8);
+            String bodyTemplate = IOUtils.toString(emailBodyFileResource.getInputStream(), StandardCharsets.UTF_8);
             return bodyTemplate
                     .replace(placeholderPrefix, session.getPrefixRegistrationRequest().getRequestedPrefix())
                     .replace(placeholderPrefixName, session.getPrefixRegistrationRequest().getName())

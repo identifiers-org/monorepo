@@ -4,7 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.Resource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.retry.annotation.Backoff;
@@ -41,7 +41,7 @@ public class ResourceRegistrationSessionActionNotifierEmailRejection implements 
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.requester.resourcereg.rejection.subject}")
     private String emailSubject;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.requester.resourcereg.rejection.body.filename}")
-    private String emailBodyFileResource;
+    private Resource emailBodyFileResource;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.email.curation}")
     private String emailAddressCuration;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.email.support}")
@@ -64,8 +64,6 @@ public class ResourceRegistrationSessionActionNotifierEmailRejection implements 
 
     @Autowired
     private JavaMailSender javaMailSender;
-    @Autowired
-    private ResourceLoader resourceLoader;
 
     private String parseEmailSubject(ResourceRegistrationSession session) {
         return emailSubject.replace(placeholderPrefix, session.getResourceRegistrationRequest().getNamespacePrefix());
@@ -73,7 +71,7 @@ public class ResourceRegistrationSessionActionNotifierEmailRejection implements 
 
     private String parseEmailBody(ResourceRegistrationSession session) throws PrefixRegistrationSessionActionException {
         try {
-            String bodyTemplate = IOUtils.toString(resourceLoader.getResource(emailBodyFileResource).getInputStream(), StandardCharsets.UTF_8);
+            String bodyTemplate = IOUtils.toString(emailBodyFileResource.getInputStream(), StandardCharsets.UTF_8);
             // TODO The placeholder substitution process can be externalized to a loop over map (placeholder, value)
             return bodyTemplate
                     .replace(placeholderPrefix, session.getResourceRegistrationRequest().getNamespacePrefix())

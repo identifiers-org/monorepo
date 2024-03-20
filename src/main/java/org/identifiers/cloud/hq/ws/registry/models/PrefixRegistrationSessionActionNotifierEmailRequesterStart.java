@@ -4,7 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.Resource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.retry.annotation.Backoff;
@@ -41,7 +41,7 @@ public class PrefixRegistrationSessionActionNotifierEmailRequesterStart implemen
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.requester.prefixreg.start.subject}")
     private String emailSubject;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.requester.prefixreg.start.body.filename}")
-    private String emailBodyFileResource;
+    private Resource emailBodyFileResource;
     // Placeholders
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.prefix}")
     private String placeholderPrefix;
@@ -59,8 +59,6 @@ public class PrefixRegistrationSessionActionNotifierEmailRequesterStart implemen
 
     @Autowired
     private JavaMailSender javaMailSender;
-    @Autowired
-    private ResourceLoader resourceLoader;
 
     // Helpers
     private String parseEmailSubject(PrefixRegistrationSession session) {
@@ -69,7 +67,7 @@ public class PrefixRegistrationSessionActionNotifierEmailRequesterStart implemen
 
     private String parseEmailBody(PrefixRegistrationSession session) throws PrefixRegistrationSessionActionException {
         try {
-            String bodyTemplate = IOUtils.toString(resourceLoader.getResource(emailBodyFileResource).getInputStream(), StandardCharsets.UTF_8);
+            String bodyTemplate = IOUtils.toString(emailBodyFileResource.getInputStream(), StandardCharsets.UTF_8);
             return bodyTemplate
                     .replace(placeholderPrefix, session.getPrefixRegistrationRequest().getRequestedPrefix())
                     .replace(placeholderPrefixName, session.getPrefixRegistrationRequest().getName())
