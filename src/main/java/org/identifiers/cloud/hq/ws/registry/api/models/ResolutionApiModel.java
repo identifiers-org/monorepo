@@ -24,7 +24,6 @@ public class ResolutionApiModel {
     private NamespaceApiService namespaceApiService;
 
     // Model API
-    @Transactional(readOnly = true)
     public ServiceResponseGetResolverDataset getResolverDataset() {
         // Default response
         ServiceResponseGetResolverDataset response = new ServiceResponseGetResolverDataset();

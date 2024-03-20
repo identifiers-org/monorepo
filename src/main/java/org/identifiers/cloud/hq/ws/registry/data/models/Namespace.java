@@ -133,7 +133,7 @@ public class Namespace {
     @Column(nullable = false)
     private boolean namespaceEmbeddedInLui = false;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Person contactPerson;
 
     @OneToMany(mappedBy = "namespace")

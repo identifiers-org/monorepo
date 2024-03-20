@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.data.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -109,7 +110,12 @@ public class Resource {
     @ManyToOne(optional = false)
     private Namespace namespace;
 
-    @ManyToOne
+    @JsonIgnore
+    @Column(name = "namespace_id", insertable = false, updatable = false)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Long namespaceId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private Person contactPerson;
 
     @Column(nullable = false)
