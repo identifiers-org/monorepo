@@ -76,8 +76,6 @@ public class Resource {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date modified;
 
-    // This field flags whether the resource has been deprecated or not
-    // TODO this definition should be updated for namespaces as well...
     @Column(nullable = false, columnDefinition = "boolean not null default false")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private boolean deprecated = false;
@@ -102,12 +100,15 @@ public class Resource {
     }
 
     @ManyToOne(optional = false)
+    @ToString.Exclude
     private Institution institution;
 
     @ManyToOne(optional = false)
+    @ToString.Exclude
     private Location location;
 
     @ManyToOne(optional = false)
+    @ToString.Exclude
     private Namespace namespace;
 
     @JsonIgnore
@@ -116,6 +117,7 @@ public class Resource {
     private Long namespaceId;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Person contactPerson;
 
     @Column(nullable = false)

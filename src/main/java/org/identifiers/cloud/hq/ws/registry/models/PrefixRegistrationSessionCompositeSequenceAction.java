@@ -51,7 +51,7 @@ public interface PrefixRegistrationSessionCompositeSequenceAction extends Prefix
                     );
         } catch (RuntimeException e) {
             // Some of them may not be capturing exceptions, let's go up to runtime top level
-            throw new PrefixRegistrationSessionActionException(String.format("%s, the following error occurred: %s", messagePrefix, e.getMessage()));
+            throw new PrefixRegistrationSessionActionException(String.format("%s, the following error occurred: %s", messagePrefix, e.getMessage()), e);
         }
         return report;
     }

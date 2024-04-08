@@ -12,4 +12,7 @@ public class PrefixRegistrationSessionActionException extends RuntimeException {
     public PrefixRegistrationSessionActionException(String message) {
         super(message);
     }
+    public PrefixRegistrationSessionActionException(String message, Throwable e) {
+        super(message, e);
+    }
 }

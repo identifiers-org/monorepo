@@ -12,4 +12,7 @@ public class SchemaOrgMetadataProviderException extends RuntimeException {
     public SchemaOrgMetadataProviderException(String message) {
         super(message);
     }
+    public SchemaOrgMetadataProviderException(String message, Throwable e) {
+        super(message, e);
+    }
 }

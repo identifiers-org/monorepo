@@ -72,7 +72,7 @@ public class Organization implements Serializable {
                 try {
                     isni = objectMapper.readValue(objectMapper.writeValueAsString(externalIds.get(KEY_EXTERNAL_ID_ISNI)), OrganizationIsniInformation.class);
                 } catch (IOException e) {
-                    log.error(String.format("Could NOT build ISNI from existing information in Organization with ROR ID '%s', due to '%s'", id, e.getMessage()));
+                    log.error(String.format("Could NOT build ISNI from existing information in Organization with ROR ID '%s', due to '%s'", id, e.getMessage()), e);
                 }
             }
         }
@@ -88,7 +88,7 @@ public class Organization implements Serializable {
                     orgRef =
                             objectMapper.readValue(objectMapper.writeValueAsString(externalIds.get(KEY_EXTERNAL_ID_ORGREF)), OrganizationOrgRefInformation.class);
                 } catch (IOException e) {
-                    log.error(String.format("Could NOT build OrgRef from existing information in Organization with ROR ID '%s', due to '%s'", id, e.getMessage()));
+                    log.error(String.format("Could NOT build OrgRef from existing information in Organization with ROR ID '%s', due to '%s'", id, e.getMessage()), e);
                 }
             }
         }
@@ -104,7 +104,7 @@ public class Organization implements Serializable {
                     wikidata =
                             objectMapper.readValue(objectMapper.writeValueAsString(externalIds.get(KEY_EXTERNAL_ID_WIKIDATA)), OrganizationWikidataInformation.class);
                 } catch (IOException e) {
-                    log.error(String.format("Could NOT build Wikidata from existing information in Organization with ROR ID '%s', due to '%s'", id, e.getMessage()));
+                    log.error(String.format("Could NOT build Wikidata from existing information in Organization with ROR ID '%s', due to '%s'", id, e.getMessage()), e);
                 }
             }
         }
@@ -119,7 +119,7 @@ public class Organization implements Serializable {
                 try {
                     grid = objectMapper.readValue(objectMapper.writeValueAsString(externalIds.get(KEY_EXTERNAL_ID_GRID)), OrganizationGridIdInfo.class);
                 } catch (IOException e) {
-                    log.error(String.format("Could NOT build GRID from existing information in Organization with ROR ID '%s', due to '%s'", id, e.getMessage()));
+                    log.error(String.format("Could NOT build GRID from existing information in Organization with ROR ID '%s', due to '%s'", id, e.getMessage()), e);
                 }
             }
         }

@@ -12,4 +12,7 @@ public class ResourceRegistrationSessionActionException extends RuntimeException
     public ResourceRegistrationSessionActionException(String message) {
         super(message);
     }
+    public ResourceRegistrationSessionActionException(String message, Throwable e) {
+        super(message, e);
+    }
 }

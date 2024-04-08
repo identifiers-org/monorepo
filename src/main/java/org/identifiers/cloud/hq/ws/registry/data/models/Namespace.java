@@ -101,6 +101,7 @@ public class Namespace {
     private String infoOnPostmortemAccess;
 
     @OneToOne
+    @ToString.Exclude
     private Namespace successor; // Namespace that should be used in case of deprecation
 
     @AssertTrue(message = "Deprecation information is not allowed for not deprecated namespaces")
@@ -134,6 +135,7 @@ public class Namespace {
     private boolean namespaceEmbeddedInLui = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Person contactPerson;
 
     @OneToMany(mappedBy = "namespace")

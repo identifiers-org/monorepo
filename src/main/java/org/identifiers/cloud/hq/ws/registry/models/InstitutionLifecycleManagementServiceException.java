@@ -12,4 +12,7 @@ public class InstitutionLifecycleManagementServiceException extends RuntimeExcep
     public InstitutionLifecycleManagementServiceException(String message) {
         super(message);
     }
+    public InstitutionLifecycleManagementServiceException(String message, Throwable e) {
+        super(message, e);
+    }
 }

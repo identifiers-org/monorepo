@@ -57,7 +57,7 @@ public class RorOrgApiServiceApiClient implements RorOrgApiService {
         } catch (RuntimeException e) {
             String errorMessage = String.format("FAILED encode ROR ID '%s'", rorId);
             log.error(errorMessage);
-            throw new RorOrgApiServiceException(errorMessage);
+            throw new RorOrgApiServiceException(errorMessage, e);
         }
     }
 
@@ -93,7 +93,7 @@ public class RorOrgApiServiceApiClient implements RorOrgApiService {
         } catch (Exception e) {
             String errorMessage = String.format("Organization information fetch for ROR ID '%s' FAILED due to the following error, '%s'", rorId, e.getMessage());
             log.error(errorMessage);
-            throw new RorOrgApiServiceException(errorMessage);
+            throw new RorOrgApiServiceException(errorMessage, e);
         }
     }
 }

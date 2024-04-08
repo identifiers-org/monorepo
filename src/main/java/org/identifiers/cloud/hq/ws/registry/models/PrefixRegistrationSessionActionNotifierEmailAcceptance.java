@@ -76,9 +76,9 @@ public class PrefixRegistrationSessionActionNotifierEmailAcceptance implements P
                     .replace(placeholderPrefixDescription, session.getPrefixRegistrationRequest().getDescription())
                     .replace(placeholderRequesterName, session.getPrefixRegistrationRequest().getRequesterName());
         } catch (FileNotFoundException e) {
-            throw new PrefixRegistrationSessionActionException(String.format("COULD NOT LOAD prefix request notification e-mail body template for requester at '%s', due to the following error '%s'", emailBodyFileResource, e.getMessage()));
+            throw new PrefixRegistrationSessionActionException(String.format("COULD NOT LOAD prefix request notification e-mail body template for requester at '%s', due to the following error '%s'", emailBodyFileResource, e.getMessage()), e);
         } catch (IOException e) {
-            throw new PrefixRegistrationSessionActionException(String.format("COULD NOT READ prefix request notification e-mail body template for requester at '%s' due to the following error '%s'", emailBodyFileResource, e.getMessage()));
+            throw new PrefixRegistrationSessionActionException(String.format("COULD NOT READ prefix request notification e-mail body template for requester at '%s' due to the following error '%s'", emailBodyFileResource, e.getMessage()), e);
         }
     }
 

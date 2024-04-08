@@ -77,9 +77,9 @@ public class PrefixRegistrationSessionActionNotifierEmailCuratorStart implements
                     .replace(placeholderRequesterName, session.getPrefixRegistrationRequest().getRequesterName())
                     .replace(placeholderSessionId, Long.toString(session.getId()));
         } catch (FileNotFoundException e) {
-            throw new PrefixRegistrationSessionActionException(String.format("COULD NOT LOAD prefix request notification e-mail body template for curator at '%s', due to the following error '%s'", emailBodyFileResource, e.getMessage()));
+            throw new PrefixRegistrationSessionActionException(String.format("COULD NOT LOAD prefix request notification e-mail body template for curator at '%s', due to the following error '%s'", emailBodyFileResource, e.getMessage()), e);
         } catch (IOException e) {
-            throw new PrefixRegistrationSessionActionException(String.format("COULD NOT READ prefix request notification e-mail body template for curator at '%s' due to the following error '%s'", emailBodyFileResource, e.getMessage()));
+            throw new PrefixRegistrationSessionActionException(String.format("COULD NOT READ prefix request notification e-mail body template for curator at '%s' due to the following error '%s'", emailBodyFileResource, e.getMessage()), e);
         }
     }
 

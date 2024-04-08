@@ -12,4 +12,7 @@ public class RorOrgApiServiceException extends RuntimeException {
     public RorOrgApiServiceException(String message) {
         super(message);
     }
+    public RorOrgApiServiceException(String message, Throwable e) {
+        super(message, e);
+    }
 }

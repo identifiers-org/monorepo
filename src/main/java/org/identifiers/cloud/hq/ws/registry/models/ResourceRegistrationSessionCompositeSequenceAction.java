@@ -41,7 +41,7 @@ public interface ResourceRegistrationSessionCompositeSequenceAction extends Reso
             actionErrorReports.parallelStream().forEach(actionErrorReport -> getLogger().error(actionErrorReport.getErrorMessage()));
         } catch (RuntimeException e) {
             // Some actions may not be capturing exceptions, let's go up to runtime top level
-            throw new ResourceRegistrationSessionActionException(String.format("%s, the following error occurred: %s", messagePrefix, e.getMessage()));
+            throw new ResourceRegistrationSessionActionException(String.format("%s, the following error occurred: %s", messagePrefix, e.getMessage()), e);
         }
         return report;
     }

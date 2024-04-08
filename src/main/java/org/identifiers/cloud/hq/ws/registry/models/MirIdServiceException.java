@@ -12,4 +12,7 @@ public class MirIdServiceException extends RuntimeException {
     public MirIdServiceException(String message) {
         super(message);
     }
+    public MirIdServiceException(String message, Throwable e) {
+        super(message, e);
+    }
 }

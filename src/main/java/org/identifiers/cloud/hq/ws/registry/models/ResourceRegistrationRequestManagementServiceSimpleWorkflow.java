@@ -94,7 +94,7 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
             throw new ResourceRegistrationRequestManagementServiceException(
                     String.format("While starting a resource registration session for resource registration request " +
                                     "on '%s' provider, the following error occurred: '%s'",
-                            request.getProviderName(), e.getMessage()));
+                            request.getProviderName(), e.getMessage()), e);
         }
     }
 
@@ -125,7 +125,7 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
         } catch (RuntimeException e) {
             throw new ResourceRegistrationRequestManagementServiceException(
                     String.format("While amending a resource registration request with provider name '%s', " +
-                            "the following error occurred: '%s'", amendedRequest.getProviderName(), e.getMessage()));
+                            "the following error occurred: '%s'", amendedRequest.getProviderName(), e.getMessage()), e);
         }
     }
 
@@ -154,7 +154,7 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
                                     "the following error occurred: '%s'",
                             comment,
                             resourceRegistrationSession.getResourceRegistrationRequest().getProviderName(),
-                            e.getMessage()));
+                            e.getMessage()), e);
         }
     }
 
@@ -188,7 +188,7 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
                                     "the following error occurred: '%s'",
                             rejectionReason,
                             resourceRegistrationSession.getResourceRegistrationRequest().getProviderName(),
-                            e.getMessage()));
+                            e.getMessage()), e);
         }
     }
 
@@ -222,7 +222,7 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
                         String.format("Resource registration request ACCEPTANCE COULD NOT BE COMPLETED for resource name '%s' within namespace prefix '%s' due to the following error '%s'",
                                 resourceRegistrationSession.getResourceRegistrationRequest().getProviderName(),
                                 resourceRegistrationSession.getResourceRegistrationRequest().getNamespacePrefix(),
-                                e.getMessage())
+                                e.getMessage()), e
                 );
             }
             // Acceptance action
@@ -235,7 +235,7 @@ public class ResourceRegistrationRequestManagementServiceSimpleWorkflow implemen
                                     "the following error occurred: '%s'",
                             acceptanceReason,
                             resourceRegistrationSession.getResourceRegistrationRequest().getProviderName(),
-                            e.getMessage()));
+                            e.getMessage()), e);
         }
     }
 }

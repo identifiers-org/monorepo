@@ -12,4 +12,7 @@ public class ResourceRegistrationRequestManagementServiceException extends Runti
     public ResourceRegistrationRequestManagementServiceException(String message) {
         super(message);
     }
+    public ResourceRegistrationRequestManagementServiceException(String message, Throwable e) {
+        super(message, e);
+    }
 }

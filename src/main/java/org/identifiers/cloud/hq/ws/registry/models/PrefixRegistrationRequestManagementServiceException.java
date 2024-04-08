@@ -12,4 +12,7 @@ public class PrefixRegistrationRequestManagementServiceException extends Runtime
     public PrefixRegistrationRequestManagementServiceException(String message) {
         super(message);
     }
+    public PrefixRegistrationRequestManagementServiceException(String message, Throwable e) {
+        super(message, e);
+    }
 }

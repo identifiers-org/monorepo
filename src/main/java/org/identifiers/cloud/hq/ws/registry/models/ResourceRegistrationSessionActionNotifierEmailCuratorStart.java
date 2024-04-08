@@ -75,9 +75,9 @@ public class ResourceRegistrationSessionActionNotifierEmailCuratorStart implemen
                     .replace(placeholderRequesterName, session.getResourceRegistrationRequest().getRequesterName())
                     .replace(placeholderSessionId, Long.toString(session.getId()));
         } catch (FileNotFoundException e) {
-            throw new PrefixRegistrationSessionActionException(String.format("COULD NOT LOAD notification e-mail body template at '%s', due to the following error '%s'", emailBodyFileResource, e.getMessage()));
+            throw new PrefixRegistrationSessionActionException(String.format("COULD NOT LOAD notification e-mail body template at '%s', due to the following error '%s'", emailBodyFileResource, e.getMessage()), e);
         } catch (IOException e) {
-            throw new PrefixRegistrationSessionActionException(String.format("COULD NOT READ notification e-mail body template at '%s' due to the following error '%s'", emailBodyFileResource, e.getMessage()));
+            throw new PrefixRegistrationSessionActionException(String.format("COULD NOT READ notification e-mail body template at '%s' due to the following error '%s'", emailBodyFileResource, e.getMessage()), e);
         }
     }
 

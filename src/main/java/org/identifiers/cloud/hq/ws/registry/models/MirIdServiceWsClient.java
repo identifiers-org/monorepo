@@ -67,7 +67,7 @@ public class MirIdServiceWsClient implements MirIdService {
             }
             mirId = response.getBody().toString();
         } catch (RestClientException | NullPointerException e) {
-            throw new MirIdServiceException(e.getMessage());
+            throw new MirIdServiceException(e.getMessage(), e);
         }
         log.info(String.format("MIR ID MINTING, newly minted ID '%s'", mirId));
         return mirId;
@@ -90,7 +90,7 @@ public class MirIdServiceWsClient implements MirIdService {
             status = connection.getResponseCode();
             // I'm not interested on the content back from the MIR ID controller, just the HTTP Status
         } catch (RuntimeException | IOException e) {
-            throw new MirIdServiceException(String.format("MIR ID '%s' keepAlive FAILED, status code '%d'", mirId, status));
+            throw new MirIdServiceException(String.format("MIR ID '%s' keepAlive FAILED, status code '%d'", mirId, status), e);
         } finally {
             if (connection != null) {
                 connection.disconnect();

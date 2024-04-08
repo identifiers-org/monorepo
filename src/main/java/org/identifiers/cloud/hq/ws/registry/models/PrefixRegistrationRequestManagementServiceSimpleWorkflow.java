@@ -91,10 +91,12 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
             // Return the event
             return prefixRegistrationSessionEventStartRepository.save(sessionEventStart);
         } catch (RuntimeException e) {
-            throw new PrefixRegistrationRequestManagementServiceException(
+            var ex = new PrefixRegistrationRequestManagementServiceException(
                     String.format("While starting a prefix registration session for prefix registration request " +
                             "on '%s' prefix, the following error occurred: '%s'",
-                            request.getRequestedPrefix(), e.getMessage()));
+                            request.getRequestedPrefix(), e.getMessage()), e);
+            ex.initCause(e);
+            throw ex;
         }
     }
 
@@ -126,7 +128,7 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
         } catch (RuntimeException e) {
             throw new PrefixRegistrationRequestManagementServiceException(
                     String.format("While amending a prefix registration request with amendment prefix '%s', " +
-                            "the following error occurred: '%s'", amendedRequest.getRequestedPrefix(), e.getMessage()));
+                            "the following error occurred: '%s'", amendedRequest.getRequestedPrefix(), e.getMessage()), e);
         }
     }
 
@@ -157,7 +159,7 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
                             "the following error occurred: '%s'",
                             comment,
                             prefixRegistrationSession.getPrefixRegistrationRequest().getRequestedPrefix(),
-                            e.getMessage()));
+                            e.getMessage()), e);
         }
     }
 
@@ -193,7 +195,7 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
                                     "the following error occurred: '%s'",
                             rejectionReason,
                             prefixRegistrationSession.getPrefixRegistrationRequest().getRequestedPrefix(),
-                            e.getMessage()));
+                            e.getMessage()), e);
         }
     }
 
@@ -229,7 +231,7 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
                                 "for prefix '%s' " +
                                 "due to the following error '%s'",
                                 prefixRegistrationSession.getPrefixRegistrationRequest().getRequestedPrefix(),
-                                e.getMessage()));
+                                e.getMessage()), e);
             }
             // Acceptance action
             actionAcceptance.performAction(prefixRegistrationSession);
@@ -241,7 +243,7 @@ public class PrefixRegistrationRequestManagementServiceSimpleWorkflow implements
                                     "the following error occurred: '%s'",
                             acceptanceReason,
                             prefixRegistrationSession.getPrefixRegistrationRequest().getRequestedPrefix(),
-                            e.getMessage()));
+                            e.getMessage()), e);
         }
     }
 }

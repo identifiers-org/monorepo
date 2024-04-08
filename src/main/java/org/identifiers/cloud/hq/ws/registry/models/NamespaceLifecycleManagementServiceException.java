@@ -12,4 +12,7 @@ public class NamespaceLifecycleManagementServiceException extends RuntimeExcepti
     public NamespaceLifecycleManagementServiceException(String message) {
         super(message);
     }
+    public NamespaceLifecycleManagementServiceException(String message, Throwable e) {
+        super(message, e);
+    }
 }

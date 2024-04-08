@@ -12,4 +12,7 @@ public class ResourceLifecycleManagementServiceException extends RuntimeExceptio
     public ResourceLifecycleManagementServiceException(String message) {
         super(message);
     }
+    public ResourceLifecycleManagementServiceException(String message, Throwable e) {
+        super(message, e);
+    }
 }
