@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.resolver.configuration;
 
+import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.libapi.services.ApiServicesFactory;
 import org.identifiers.cloud.ws.resolver.periodictasks.models.ResolverDataSourcer;
@@ -22,6 +23,8 @@ import org.springframework.web.client.RestTemplate;
 import org.identifiers.cloud.libapi.services.ResourceRecommenderService;
 
 import java.net.URI;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -86,11 +89,24 @@ public class ApplicationConfig {
 
     @Bean
     public MatomoTracker getMatomoTracker(
-        @Value("${org.identifiers.matomo.baseUrl}") URI matomoBaseUrl
+        @Value("${org.identifiers.matomo.baseUrl}") URI matomoBaseUrl,
+        @Value("${org.identifiers.matomo.authToken:}") String authToken,
+        @Value("${org.identifiers.matomo.enabled}") boolean enabled
     ) {
-        TrackerConfiguration configuration = TrackerConfiguration.builder()
+        var confBuilder = TrackerConfiguration.builder()
                 .apiEndpoint(matomoBaseUrl)
-                .build();
-        return new MatomoTracker(configuration);
+                .enabled(enabled);
+        if (StringUtils.isNotBlank(authToken) && authToken.length() == 32) {
+            confBuilder = confBuilder.defaultAuthToken(authToken);
+        }
+        return new MatomoTracker(confBuilder.build());
+    }
+
+    @Bean(destroyMethod = "shutdown")
+    public ExecutorService matomoTrackerExecutor(
+            @Value("${org.identifiers.matomo.thread-pool-size}")
+            int poolSize
+    ) {
+        return Executors.newFixedThreadPool(poolSize);
     }
 }

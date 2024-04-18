@@ -1,5 +1,7 @@
 package org.identifiers.cloud.ws.resolver.services;
 
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.ws.resolver.api.responses.ResponseResolvePayload;
 import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponse;
@@ -14,22 +16,23 @@ import org.springframework.stereotype.Component;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class MatomoTrackingService {
     @Value("${org.identifiers.matomo.authToken}")
     String authToken;
 
     @Value("${org.identifiers.matomo.enabled}")
-    public boolean isEnabled;
+    boolean isEnabled;
 
-    final MatomoTracker idorgMatomoTracker;
-    public MatomoTrackingService(MatomoTracker idorgMatomoTracker) {
-        this.idorgMatomoTracker = idorgMatomoTracker;
-    }
+    @NonNull final ExecutorService matomoTrackerExecutor;
+    @NonNull final MatomoTracker idorgMatomoTracker;
 
-    private record MatomoTrackingInfo(
+    record MatomoTrackingInfo(
         String url, String xforwardedFor, String remoteAddr,
         String ua, String lang, String refe,
         List<ResolvedResource> resolvedResources,
@@ -53,18 +56,19 @@ public class MatomoTrackingService {
             result.getHttpStatus().is2xxSuccessful());
     }
 
-    public void handleCidResolution(final HttpServletRequest request, final ServiceResponse<ResponseResolvePayload> result) {
+    public CompletableFuture<Void> handleCidResolution(final HttpServletRequest request, final ServiceResponse<ResponseResolvePayload> result) {
         if (!isEnabled) {
             log.debug("Matomo is disabled");
         } else if (request.getHeader("DNT") != null &&
                 request.getHeader("DNT").contains("1")) {
             log.debug("Skipping matomo notification - DoNotTrack");
         } else {
-            doHandleCidResolution(getMatomoInfoFrom(request, result));
+            return doHandleCidResolution(getMatomoInfoFrom(request, result));
         }
+        return CompletableFuture.completedFuture(null);
     }
 
-    public void doHandleCidResolution(MatomoTrackingInfo info) {
+    public CompletableFuture<Void> doHandleCidResolution(MatomoTrackingInfo info) {
         MatomoRequestBuilder mreq = MatomoRequest.request();
         mreq.siteId(1);
 
@@ -84,7 +88,9 @@ public class MatomoTrackingService {
             requests.add(1, mreq.build());
         }
 
-        idorgMatomoTracker.sendBulkRequestAsync(requests);
+        return CompletableFuture.runAsync(
+                () -> idorgMatomoTracker.sendBulkRequest(requests),
+                matomoTrackerExecutor);
     }
 
     private void setHttpHeadersOnRequest(final MatomoTrackingInfo info, MatomoRequestBuilder mreq) {
@@ -127,7 +133,6 @@ public class MatomoTrackingService {
         if (maxResolvedResource != null) {
             customData.put(9L, maxResolvedResource.getInstitution().getName());
             customData.put(10L, maxResolvedResource.isOfficial());
-//            customData.put(6L, maxResolvedResource.isDeprecatedResource()); // Need to find how to add this
         }
         mreq.dimensions(customData);
     }
