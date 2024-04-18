@@ -8,9 +8,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.net.URI;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Configuration
 public class MatomoTrackerConfiguration {
+    @Bean(destroyMethod = "shutdown")
+    public ExecutorService matomoTrackerExecutor(
+            @Value("${org.identifiers.matomo.thread-pool-size}")
+            int poolSize
+    ) {
+        return Executors.newFixedThreadPool(poolSize);
+    }
+
     @Bean
     public MatomoTracker getMatomoTracker(
             @Value("${org.identifiers.matomo.baseUrl}") URI matomoBaseUrl,
@@ -19,7 +29,6 @@ public class MatomoTrackerConfiguration {
     ) {
         var confBuilder = TrackerConfiguration.builder()
                 .apiEndpoint(matomoBaseUrl)
-                .threadPoolSize(30)
                 .enabled(enabled);
         if (StringUtils.isNotBlank(authToken) && authToken.length() == 32) {
             confBuilder = confBuilder.defaultAuthToken(authToken);

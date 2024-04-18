@@ -1,6 +1,8 @@
 package org.identifiers.satellite.frontend.satellitewebspa.services;
 
 import io.micrometer.common.util.StringUtils;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.libapi.models.resolver.ResponseResolvePayload;
 import org.identifiers.cloud.libapi.models.ServiceResponse;
@@ -15,22 +17,22 @@ import org.springframework.stereotype.Component;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class AsyncMatomoCidResolutionService {
     @Value("${org.identifiers.matomo.authToken}")
     String authToken;
-
     @Value("${org.identifiers.matomo.enabled}")
-    public boolean isEnabled;
+    boolean isEnabled;
 
-    final MatomoTracker idorgMatomoTracker;
-    public AsyncMatomoCidResolutionService(MatomoTracker idorgMatomoTracker) {
-        this.idorgMatomoTracker = idorgMatomoTracker;
-    }
+    @NonNull final ExecutorService matomoTrackerExecutor;
+    @NonNull final MatomoTracker idorgMatomoTracker;
 
-    private record MatomoRequestImportantInfo (
+    record MatomoTrackingInfo(
         String url, String xforwarded_for, String remote_addr,
         String ua, String lang, String refe,
         List<ResolvedResource> resolvedResources,
@@ -38,10 +40,10 @@ public class AsyncMatomoCidResolutionService {
         boolean wasResolutionSuccessfull
     ) {}
 
-    static MatomoRequestImportantInfo matomoInfoOf(final HttpServletRequest request, final ServiceResponse<ResponseResolvePayload> result) {
+    static MatomoTrackingInfo matomoInfoOf(final HttpServletRequest request, final ServiceResponse<ResponseResolvePayload> result) {
         ResponseResolvePayload resolveResult = result.getPayload();
-        return new MatomoRequestImportantInfo(
-                request.getRequestURL().toString().replaceFirst("/resolutionApi/", ""),
+        return new MatomoTrackingInfo(
+                request.getRequestURL().toString().replaceFirst("/resolutionApi", ""),
                 request.getHeader("X-FORWARDED-FOR"),
                 request.getRemoteAddr(),
                 request.getHeader("user-agent"),
@@ -53,18 +55,19 @@ public class AsyncMatomoCidResolutionService {
         );
     }
 
-    public void asyncHandleCidResolution(final HttpServletRequest request, final ServiceResponse<ResponseResolvePayload> result) {
+    public CompletableFuture<Void> asyncHandleCidResolution(final HttpServletRequest request, final ServiceResponse<ResponseResolvePayload> result) {
         if (!isEnabled) {
             log.debug("Matomo is disabled");
         } else if (request.getHeader("DNT") != null &&
                 request.getHeader("DNT").contains("1")) {
             log.debug("Skipping matomo notification - DoNotTrack");
         } else {
-            doHandleCidResolution(matomoInfoOf(request, result));
+            return doHandleCidResolution(matomoInfoOf(request, result));
         }
+        return CompletableFuture.completedFuture(null);
     }
 
-    void doHandleCidResolution(MatomoRequestImportantInfo info) {
+    CompletableFuture<Void> doHandleCidResolution(MatomoTrackingInfo info) {
         log.debug("Info: {}", info);
         MatomoRequestBuilder mreq = MatomoRequest.request();
         mreq.siteId(1);
@@ -85,10 +88,12 @@ public class AsyncMatomoCidResolutionService {
             requests.add(1, mreq.build());
         }
 
-        idorgMatomoTracker.sendBulkRequestAsync(requests);
+        return CompletableFuture.runAsync(
+                () -> idorgMatomoTracker.sendBulkRequest(requests),
+                matomoTrackerExecutor);
     }
 
-    private void setHttpHeadersOnRequest(final MatomoRequestImportantInfo info, MatomoRequestBuilder mreq) {
+    private void setHttpHeadersOnRequest(final MatomoTrackingInfo info, MatomoRequestBuilder mreq) {
         if (StringUtils.isNotBlank(authToken) && authToken.length() == 32) {
             mreq.authToken(authToken);
             String remoteIP = info.xforwarded_for;
@@ -112,7 +117,7 @@ public class AsyncMatomoCidResolutionService {
     Comparator<ResolvedResource> resolvedResourceComparator =
             Comparator.comparingInt(o -> o.getRecommendation().getRecommendationIndex());
 
-    private void setResolutionResultOnRequest(MatomoRequestImportantInfo info, MatomoRequestBuilder mreq) {
+    private void setResolutionResultOnRequest(MatomoTrackingInfo info, MatomoRequestBuilder mreq) {
         ResolvedResource maxResolvedResource = info.resolvedResources.stream()
                 .max(resolvedResourceComparator).orElse(null);
         if (maxResolvedResource != null) {
