@@ -2,6 +2,7 @@ package org.identifiers.cloud.hq.ws.registry.configuration;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -11,13 +12,19 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.client.*;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.time.Duration;
 import java.util.*;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -66,7 +73,7 @@ public class SecurityConfiguration {
                     }
                 }
             }
-
+            log.debug("Authorities {}", authorities);
             return authorities;
         });
         return converter;
@@ -297,6 +304,59 @@ public class SecurityConfiguration {
     }
 
     @Bean
+    @Profile("authenabled")
+    OAuth2AuthorizedClientManager authorizedClientManager(
+            OAuth2AuthorizedClientRepository oAuth2AuthorizedClientRepository,
+            ClientRegistrationRepository clientRegistrationRepository
+    ) {
+        var authorizedClientProvider = OAuth2AuthorizedClientProviderBuilder.builder()
+                .clientCredentials()
+                .build();
+
+        var authorizedClientManager = new DefaultOAuth2AuthorizedClientManager(
+                clientRegistrationRepository, oAuth2AuthorizedClientRepository);
+        authorizedClientManager.setAuthorizedClientProvider(authorizedClientProvider);
+        return authorizedClientManager;
+    }
+
+    @Bean
+    @Profile("authenabled")
+    public RestTemplate miridRestTemplate(
+            RestTemplateBuilder restTemplateBuilder,
+            OAuth2AuthorizedClientManager authorizedClientManager,
+            ClientRegistrationRepository clientRegistrationRepository
+    ) {
+        var clientRegistration = clientRegistrationRepository.findByRegistrationId("keycloak");
+        var interceptor = new OAuthClientCredentialsRestTemplateInterceptor(authorizedClientManager, clientRegistration);
+        return restTemplateBuilder
+                .interceptors(interceptor)
+                .setReadTimeout(Duration.ofSeconds(5))
+                .setConnectTimeout(Duration.ofSeconds(1))
+                .build();
+    }
+
+
+
+    @Bean
+    @Profile("!authenabled")
+    public SecurityFilterChain filterChainDev(HttpSecurity http) throws Exception {
+        log.info("[CONFIG] NO AUTH configuration loaded");
+        http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
+                .cors(withDefaults())
+                .formLogin(AbstractHttpConfigurer::disable)
+                .logout(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable);
+
+        return http.build();
+    }
+
+    @Bean("miridRestTemplate")
+    @Profile("!authenabled")
+    public RestTemplate miridRestTemplateDev(RestTemplateBuilder restTemplateBuilder) {
+        return restTemplateBuilder.build();
+    }
+
+    @Bean
     CorsConfigurationSource corsConfigurationSource(
             @Value("${org.identifiers.cloud.hq.ws.registry.cors.origin}") String corsOrigins
     ) {
@@ -312,18 +372,5 @@ public class SecurityConfiguration {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
-    }
-
-    @Bean
-    @Profile("!authenabled")
-    public SecurityFilterChain filterChainDev(HttpSecurity http) throws Exception {
-        log.info("[CONFIG] NO AUTH configuration loaded");
-        http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
-                .cors(withDefaults())
-                .formLogin(AbstractHttpConfigurer::disable)
-                .logout(AbstractHttpConfigurer::disable)
-                .csrf(AbstractHttpConfigurer::disable);
-
-        return http.build();
     }
 }

@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.retry.annotation.EnableRetry;
-import org.springframework.web.client.RestTemplate;
 
 /**
  * Project: registry
@@ -23,12 +22,6 @@ import org.springframework.web.client.RestTemplate;
 @EnableJpaAuditing
 @EnableRetry
 public class ApplicationConfiguration {
-    @Bean
-    public RestTemplate getRestTemplate() {
-        // To enable testing
-        return new RestTemplate();
-    }
-
     @Bean
     public JavaMailSender getJavaMailSender(
             @Value("${spring.mail.host}") String host,

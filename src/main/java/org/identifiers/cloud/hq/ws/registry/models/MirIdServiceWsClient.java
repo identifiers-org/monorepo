@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -28,6 +29,7 @@ import java.time.Duration;
 @Component
 @Slf4j
 public class MirIdServiceWsClient implements MirIdService {
+    private static final String propPrefix = "org.identifiers.cloud.hq.ws.registry.backend.service.miridcontroller";
     private final RestTemplate restTemplate;
 
     private final Duration wsRequestConnectTimeout;
@@ -35,7 +37,7 @@ public class MirIdServiceWsClient implements MirIdService {
     private final String wsMirIdControllerHost;
     private final String wsMirIdControllerPort;
 
-    public MirIdServiceWsClient(RestTemplate restTemplate,
+    public MirIdServiceWsClient(@Qualifier("miridRestTemplate") RestTemplate restTemplate,
                                 @Value("${org.identifiers.cloud.hq.ws.registry.backend.service.miridcontroller.request.connect_timeout}")
                                 Duration wsRequestConnectTimeout,
                                 @Value("${org.identifiers.cloud.hq.ws.registry.backend.service.miridcontroller.request.read_timeout}")
