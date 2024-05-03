@@ -83,7 +83,8 @@ public class SecurityConfiguration {
     @Profile("authenabled")
     public SecurityFilterChain filterChain(HttpSecurity http,
                @Value("${org.identifiers.cloud.hq.ws.registry.requiredrole}")
-               String actuatorRequiredRole) throws Exception {
+               String actuatorRequiredRole,
+               CorsConfigurationSource corsConfigurationSource) throws Exception {
         log.info("[CONFIG] (AAA) ENABLED");
         http.authorizeHttpRequests(auth -> auth
                     .requestMatchers("/healthApi/**").permitAll()
@@ -298,7 +299,7 @@ public class SecurityConfiguration {
                                 "/rorIdApi/**",
                                 "/fairapi/**",
                                 "/actuator/**"))
-                .cors(withDefaults())
+                .cors(corst -> corst.configurationSource(corsConfigurationSource))
                 .oauth2ResourceServer(oauth -> oauth.jwt(withDefaults()));
         return http.build();
     }
@@ -339,10 +340,12 @@ public class SecurityConfiguration {
 
     @Bean
     @Profile("!authenabled")
-    public SecurityFilterChain filterChainDev(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChainDev(
+            HttpSecurity http,
+            CorsConfigurationSource corsConfigurationSource) throws Exception {
         log.info("[CONFIG] NO AUTH configuration loaded");
         http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
-                .cors(withDefaults())
+                .cors(corst -> corst.configurationSource(corsConfigurationSource))
                 .formLogin(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable);

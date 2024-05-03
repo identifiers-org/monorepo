@@ -47,6 +47,7 @@ public class ApplicationConfiguration {
         props.put("mail.smtp.starttls.enable", tlsEnabled);
         props.put("mail.smtp.starttls.required", tlsRequired);
         props.put("mail.debug", debug);
+        mailSender.setJavaMailProperties(props);
 
         return mailSender;
     }

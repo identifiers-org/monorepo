@@ -1,0 +1,32 @@
+{
+  "apiVersion": "1.0",
+  "payload": {
+    "name": "Test Namespace",
+    "description": "This is a test namespace. This is a test namespace. This is a test namespace. This is a test namespace.",
+    "additionalInformation": "",
+    "supportingReferences": ["Trust me"],
+    "requestedPrefix": "testprefix",
+    "sampleId": "204",
+    "idRegexPattern": "^[0-9]+$",
+    "institutionName": "This is a nice institution",
+    "institutionDescription": "Trust me really, this is a nice institution. Trust me really, this is a nice institution Trust me really, this is a nice institution",
+    "institutionHomeUrl": "https://http.cat/200",
+    "institutionLocation": "GB",
+    "institutionRorId": "",
+    "providerName": "Lovely provider",
+    "providerDescription": "Truly a lovely provider, they even made cakes. Truly a lovely provider, they even made cakes. Truly a lovely provider, they even made cakes.",
+    "providerHomeUrl": "https://http.cat/202",
+    "providerCode": "baker",
+    "providerLocation": "GB",
+    "providerUrlPattern": "https://http.cat/{$id}",
+    "protectedUrls": false,
+    "authHelpUrl": "",
+    "authHelpDescription": "",
+    "requester": {
+      "email": "rjuacaba+idorg@ebi.ac.uk",
+      "name": "Renato Neto"
+    },
+    "requesterEmail": "rjuacaba+idorg@ebi.ac.uk",
+    "requesterName": "Renato Neto"
+  }
+}

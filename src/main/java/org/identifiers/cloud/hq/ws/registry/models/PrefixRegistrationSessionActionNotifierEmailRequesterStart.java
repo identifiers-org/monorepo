@@ -1,10 +1,12 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.retry.annotation.Backoff;
@@ -23,6 +25,7 @@ import java.nio.charset.StandardCharsets;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
+@Slf4j
 @Component
 public class PrefixRegistrationSessionActionNotifierEmailRequesterStart implements PrefixRegistrationSessionAction {
     private static final int MAIL_REQUEST_RETRY_MAX_ATTEMPTS = 12;
@@ -96,7 +99,13 @@ public class PrefixRegistrationSessionActionNotifierEmailRequesterStart implemen
         if (!emailBcc.equals(placeholderDoNotUse)) emailMessage.setBcc(emailBcc.split(","));
         emailMessage.setSubject(parseEmailSubject(session));
         emailMessage.setText(parseEmailBody(session));
-        javaMailSender.send(emailMessage);
+        try {
+            // This is to prevent emails from affecting requests
+            //  We want requests to go through even if email fails
+            javaMailSender.send(emailMessage);
+        } catch (MailException ex) {
+            log.error("Failed to send email on prefix request start", ex);
+        }
         // TODO It would be nice to set something on the report
         return report;
     }
