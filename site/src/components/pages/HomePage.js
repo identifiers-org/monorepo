@@ -21,7 +21,6 @@ class HomePage extends React.Component {
 
   componentDidMount () {
     const { trackPageView } = this.props.matomo
-
     trackPageView()
   }
 
@@ -51,49 +50,58 @@ class HomePage extends React.Component {
 
     const boxPadding = isSmallScreen() || isIpadScreen() ? 'p-3' : 'p-5';
     const searchBarPadding = isSmallScreen() ? 'p-1' : 'px-5';
-    const topSpacer = isSmallScreen() ? '' : 'spacer-8';
+    // const topSpacer = isSmallScreen() ? '' : 'spacer-8';
 
     return (
-      <div className={`row border ${topSpacer}`}>
-        <div className={`col col-12 col-xl-6 ${boxPadding}`}>
-          <h1 className="text-primary mb-4">Identifiers.org Central Registry</h1>
-          <div className="d-flex">
-            <p className="mb-0 text-justify text-muted">
-              The <span className="text-dark">Identifiers.org</span> Central Registry service provides a centralized
-              directory of Compact Identifiers. This website allows performing searches on the registry by using the
-              search bar on the right side or the <a
-                href="#!"
-                className="text-primary"
-                onClick={handleClickRegistryBrowser}
-              >
-                Registry Browser
-              </a>. Resource maintainers can also find the <a
-                href="#!"
-                className="text-primary"
-                onClick={handleClickPrefixRegistrationRequestForm}
-              >
-                Prefix Registration Request form
-              </a> to request a prefix in Identifiers.org for their databases or services.
-            </p>
+      <>
+        <div className="notifications-js row margin-top-medium w-100">
+          <div className="callout warning w-100">Do data resources managed by EMBL-EBI and our collaborators make a
+            difference to your work? <br/> Please take 10 minutes to fill in our annual user survey, and help us make the case
+            for why sustaining open data resources is critical for life sciences research. <br/> Survey link: <a
+              href="https://www.surveymonkey.com/r/HJKYKTT?channel=identifiersorg">https://www.surveymonkey.com/r/HJKYKTT?channel=identifiersorg</a>
           </div>
         </div>
+        <div className={`row border`}>
+          <div className={`col col-12 col-xl-6 ${boxPadding}`}>
+            <h1 className="text-primary mb-4">Identifiers.org Central Registry</h1>
+            <div className="d-flex">
+              <p className="mb-0 text-justify text-muted">
+                The <span className="text-dark">Identifiers.org</span> Central Registry service provides a centralized
+                directory of Compact Identifiers. This website allows performing searches on the registry by using the
+                search bar on the right side or the <a
+                  href="#!"
+                  className="text-primary"
+                  onClick={handleClickRegistryBrowser}
+                >
+                  Registry Browser
+                </a>. Resource maintainers can also find the <a
+                  href="#!"
+                  className="text-primary"
+                  onClick={handleClickPrefixRegistrationRequestForm}
+                >
+                  Prefix Registration Request form
+                </a> to request a prefix in Identifiers.org for their databases or services.
+              </p>
+            </div>
+          </div>
 
-        <div className="col col-12 col-xl-6 bg-light">
-          <h4 className={`mt-3 ${boxPadding}`}><i className="icon icon-common icon-search mr-2" />Search the registry</h4>
-          <div className={`row justify-content-center mt-2 ${searchBarPadding}`}>
-            <div className="col col-lg-7 col-xl-12">
-              <Search
-                query={query}
-                button={true}
-                buttonCaption={<span><i className="icon icon-common icon-search mr-1" /> Search</span>}
-                placeholderCaption="Enter a namespace to search the registry"
-                handleSearchAction={handleSearchAction}
-                handleSuggestionAction={handleSuggestionAction}
-              />
+          <div className="col col-12 col-xl-6 bg-light">
+            <h4 className={`mt-3 ${boxPadding}`}><i className="icon icon-common icon-search mr-2" />Search the registry</h4>
+            <div className={`row justify-content-center mt-2 ${searchBarPadding}`}>
+              <div className="col col-lg-7 col-xl-12">
+                <Search
+                  query={query}
+                  button={true}
+                  buttonCaption={<span><i className="icon icon-common icon-search mr-1" /> Search</span>}
+                  placeholderCaption="Enter a namespace to search the registry"
+                  handleSearchAction={handleSearchAction}
+                  handleSuggestionAction={handleSuggestionAction}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }
