@@ -28,7 +28,7 @@ mailer:
     curators: "identifiers-org-curators@ebi.ac.uk"
 
 keycloak:
-  image: "jboss/keycloak:6.0.1"
+  image: "identifiersorg/keycloak:6.0.1"
   requests:
     cpu: 300m
     memory: 1024Mi
@@ -44,7 +44,7 @@ keycloak:
 
 
 registry:
-  image: "identifiersorg/cloud-hq-ws-registry:1.12.0"
+  image: "identifiersorg/cloud-hq-ws-registry:2.0.11"
   replicas: 2
   requests:
     cpu: 100m
@@ -60,7 +60,7 @@ registry:
   base_uri: "https://registry.identifiers.org"
 
 frontend:
-  image: "identifiersorg/cloud-hq-web-frontend:1.9.2"
+  image: "identifiersorg/cloud-hq-web-frontend:1.9.5"
   replicas: 3
   requests:
     cpu: 10m
