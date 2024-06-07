@@ -518,7 +518,7 @@ class NamespaceDetailsPage extends React.Component {
                         </ReversibleField>
                       </RoleConditional>
                     ) : (
-                      namespace.infoOnPostmortemAccess ? namespace.deprecationStatement : "Not available"
+                      namespace.infoOnPostmortemAccess ? namespace.infoOnPostmortemAccess : "Not available"
                     )}
                   </td>
                 </tr>
