@@ -11,7 +11,7 @@ services:
         ports:
             - "5430:5432"
         volumes:
-            - "registry:/var/lib/postgresql/data"
+            - "../db/registry:/docker-entrypoint-initdb.d"
     redis:
         image: redis:4.0.8-alpine
         ports:
@@ -55,7 +55,3 @@ services:
 networks:
     default:
         name: hqwebnet
-volumes:
-    registry:
-        name: idorg_registry
-        external: true
