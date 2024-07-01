@@ -90,6 +90,10 @@ public class NamespaceService {
         return repository.findByPrefix(namespacePrefix);
     }
 
+    public boolean checkIfNamespaceExistsByPrefix(String prefix) {
+        return repository.existsNamespaceByPrefix(prefix);
+    }
+
     @Transactional
     public Namespace registerProvider(Namespace namespace, Resource resource) throws NamespaceServiceException {
         // Check the provider code is unique within the namespace

@@ -2,6 +2,7 @@ package org.identifiers.cloud.hq.ws.registry.models.validators;
 
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.function.Function;
@@ -11,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class PrefixRegistrationRequestValidatorProviderCodeTest {
-    PrefixRegistrationRequestValidatorProviderCode validator =
-            new PrefixRegistrationRequestValidatorProviderCode();
+    @Autowired
+    PrefixRegistrationRequestValidatorProviderCode validator;
 
     Function<String, ServiceRequestRegisterPrefixPayload> fnc =
             (p) -> new ServiceRequestRegisterPrefixPayload().setProviderCode(p);

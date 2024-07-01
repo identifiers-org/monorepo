@@ -22,6 +22,8 @@ public interface NamespaceRepository extends JpaRepository<Namespace, Long> {
     // TODO
     Namespace findByPrefix(String prefix);
 
+    boolean existsNamespaceByPrefix(String prefix);
+
     // NOTE I just wanted to experiment with native queries, in order to optimize some operations
     @Query(value = "SELECT t.prefix FROM #{#entityName} t", nativeQuery = true)
     @RestResource(exported = false)
