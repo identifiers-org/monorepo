@@ -132,7 +132,7 @@ const validators = {
 
   providerCode: async (providerCode, registrationRequest, registrationRequestType) => {
     const url = `${config.registryApi}/${validationEndpoint[registrationRequestType]}/validateProviderCode`;
-    return validateThroughAPI(url, {providerCode});
+    return validateThroughAPI(url, {providerCode, namespacePrefix: registrationRequest.namespacePrefix});
   },
 
   providerUrlPattern: async (providerUrlPattern, registrationRequest, registrationRequestType) => {
