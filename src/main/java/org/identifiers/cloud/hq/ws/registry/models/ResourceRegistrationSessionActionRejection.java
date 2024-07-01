@@ -1,8 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -20,15 +20,14 @@ import java.util.List;
  * Composite action to perform within the context of a resource registration session that has just been closed by
  * rejecting the request
  */
-@Component
 @Slf4j
+@Component
+@RequiredArgsConstructor
 @Qualifier("ResourceRegistrationSessionActionRejection")
 public class ResourceRegistrationSessionActionRejection implements ResourceRegistrationSessionCompositeSequenceAction {
     // Related actions
-    @Autowired
-    private ResourceRegistrationSessionActionLogger actionLogger;
-    @Autowired
-    private ResourceRegistrationSessionActionNotifierEmailRejection actionNotifierEmailRejection;
+    private final ResourceRegistrationSessionActionLogger actionLogger;
+    private final ResourceRegistrationSessionActionEmailNotifier resourceRejectionEmailNotificationAction;
 
     @Override
     public Logger getLogger() {
@@ -45,7 +44,7 @@ public class ResourceRegistrationSessionActionRejection implements ResourceRegis
     public List<ResourceRegistrationSessionAction> buildActionSequence() {
         return Arrays.asList(
                 actionLogger,
-                actionNotifierEmailRejection
+                resourceRejectionEmailNotificationAction
         );
     }
 

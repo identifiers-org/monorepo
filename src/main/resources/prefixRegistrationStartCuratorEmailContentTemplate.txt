@@ -7,8 +7,11 @@ Prefix Description:
 PLACEHOLDER_004_PREFIX_DESCRIPTION
 
 Requester Name: 'PLACEHOLDER_002_REQUESTER_NAME'
+Requester Email: 'PLACEHOLDER_009_REQUESTER_EMAIL'
 
 A corresponding Prefix Registration Session with ID 'PLACEHOLDER_005_SESSION_ID' has been created.
+
+Curation link: https://registry.identifiers.org/curation/prefixRegistration/PLACEHOLDER_005_SESSION_ID
 
 Kind Regards,
 Identifiers.org Central Registry

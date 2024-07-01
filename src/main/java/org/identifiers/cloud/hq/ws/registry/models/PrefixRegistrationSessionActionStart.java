@@ -1,8 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -19,15 +19,12 @@ import java.util.List;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 @Qualifier("PrefixRegistrationSessionActionStart")
 public class PrefixRegistrationSessionActionStart implements PrefixRegistrationSessionCompositeSequenceAction {
-    @Autowired
-    private PrefixRegistrationSessionActionLogger actionLogger;
-    @Autowired
-    private PrefixRegistrationSessionActionNotifierEmailCuratorStart notifierEmailCuratorStart;
-    @Autowired
-    private PrefixRegistrationSessionActionNotifierEmailRequesterStart notifierEmailRequesterStart;
-    // TODO Wire in the notifier for the requester
+    private final PrefixRegistrationSessionActionLogger actionLogger;
+    private final PrefixRegistrationSessionActionEmailNotifier prefixCuratorStartEmailNotificationAction;
+    private final PrefixRegistrationSessionActionEmailNotifier prefixRequesterStartEmailNotificationAction;
 
     @Override
     public Logger getLogger() {
@@ -43,8 +40,8 @@ public class PrefixRegistrationSessionActionStart implements PrefixRegistrationS
     public List<PrefixRegistrationSessionAction> buildActionSequence() {
         return Arrays.asList(
                 actionLogger,
-                notifierEmailCuratorStart,
-                notifierEmailRequesterStart
+                prefixCuratorStartEmailNotificationAction,
+                prefixRequesterStartEmailNotificationAction
         );
     }
 }

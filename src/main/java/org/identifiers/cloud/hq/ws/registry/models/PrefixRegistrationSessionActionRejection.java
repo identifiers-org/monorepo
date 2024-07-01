@@ -1,8 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -17,14 +17,13 @@ import java.util.List;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-@Component
 @Slf4j
+@Component
+@RequiredArgsConstructor
 @Qualifier("PrefixRegistrationSessionActionRejection")
 public class PrefixRegistrationSessionActionRejection implements PrefixRegistrationSessionCompositeSequenceAction {
-    @Autowired
-    private PrefixRegistrationSessionActionLogger actionLogger;
-    @Autowired
-    private PrefixRegistrationSessionActionNotifierEmailRejection actionNotifierEmailRejection;
+    private final PrefixRegistrationSessionActionLogger actionLogger;
+    private final PrefixRegistrationSessionActionEmailNotifier prefixRejectionEmailNotificationAction;
 
     @Override
     public Logger getLogger() {
@@ -37,12 +36,9 @@ public class PrefixRegistrationSessionActionRejection implements PrefixRegistrat
     }
 
     public List<PrefixRegistrationSessionAction> buildActionSequence() {
-        // TODO
-        // TODO - Right now we just log the closing of the prefix registration session, but in the future there will be
-        //  notifications and other actions triggered by a rejected prefix registration request
         return Arrays.asList(
                 actionLogger,
-                actionNotifierEmailRejection
+                prefixRejectionEmailNotificationAction
         );
     }
 
