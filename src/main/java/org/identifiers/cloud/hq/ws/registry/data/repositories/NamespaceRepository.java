@@ -24,10 +24,9 @@ public interface NamespaceRepository extends JpaRepository<Namespace, Long> {
 
     boolean existsNamespaceByPrefix(String prefix);
 
-    // NOTE I just wanted to experiment with native queries, in order to optimize some operations
-    @Query(value = "SELECT t.prefix FROM #{#entityName} t", nativeQuery = true)
+    @Query(value = "SELECT t.prefix FROM #{#entityName} t")
     @RestResource(exported = false)
-    List<Object[]> findAllPrefixes();
+    List<String> findAllPrefixes();
 
     @RestResource(exported = false)
     List<Namespace> findByPrefixStartsWith(String prefixStart);
@@ -35,7 +34,7 @@ public interface NamespaceRepository extends JpaRepository<Namespace, Long> {
     Page<Namespace> findByPrefixStartsWith(String prefixStart, Pageable pageable);
 
     @Query(nativeQuery = true,
-            value = "SELECT * FROM #{#entityName} t WHERE t.prefix SIMILAR TO '[0-9]%'")
+            value = "SELECT * FROM namespace t WHERE t.prefix SIMILAR TO '[0-9]%'")
     Page<Namespace> findByPrefixStartsWithNumbers(Pageable pageable);
 
     @RestResource(exported = false)
