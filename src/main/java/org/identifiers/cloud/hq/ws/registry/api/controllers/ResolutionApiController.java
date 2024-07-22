@@ -1,12 +1,10 @@
 package org.identifiers.cloud.hq.ws.registry.api.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.identifiers.cloud.hq.ws.registry.api.models.ResolutionApiModel;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseGetResolverDataset;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Project: registry
@@ -18,13 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("resolutionApi")
+@RequiredArgsConstructor
 public class ResolutionApiController {
-    @Autowired
-    private ResolutionApiModel model;
+    private final ResolutionApiModel model;
 
-    @RequestMapping(value = "/getResolverDataset", method = RequestMethod.GET)
-    public ResponseEntity<?> getResolverDataset() {
-        ServiceResponseGetResolverDataset response = model.getResolverDataset();
+    @GetMapping(value = "/getResolverDataset")
+    public ResponseEntity<?> getResolverDataset(
+            @RequestParam(defaultValue = "false")
+            boolean rewriteForEmbeddedPrefixes
+    ) {
+        ServiceResponseGetResolverDataset response = model.getResolverDataset(rewriteForEmbeddedPrefixes);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 }
