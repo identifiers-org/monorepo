@@ -2,13 +2,14 @@ package org.identifiers.cloud.hq.ws.registry.data.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRepository;
 import org.identifiers.cloud.hq.ws.registry.models.MirIdService;
 import org.identifiers.cloud.hq.ws.registry.models.MirIdServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -25,22 +26,20 @@ import jakarta.transaction.Transactional;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class ResourceService {
+    @Value("${org.identifiers.cloud.hq.ws.registry.validation.urlpattern.similaritythreshold}")
+    private double similarityThreashold;
+
     // Repository
-    @Autowired
-    private ResourceRepository repository;
+    private final ResourceRepository repository;
 
     // Services
-    @Autowired
-    private PersonService personService;
-    @Autowired
-    private LocationService locationService;
-    @Autowired
-    private InstitutionService institutionService;
-    @Autowired
-    private NamespaceService namespaceService;
-    @Autowired
-    private MirIdService mirIdService;
+    private final PersonService personService;
+    private final LocationService locationService;
+    private final InstitutionService institutionService;
+    private final NamespaceService namespaceService;
+    private final MirIdService mirIdService;
 
     /**
      * Register a resource if not registered
@@ -139,5 +138,9 @@ public class ResourceService {
         log.info(String.format("For resource with name '%s', within namespace '%s', REGISTERED with ID '%d'", resource.getName(), resource.getNamespace(), registeredResource.getId()));
         return registeredResource;
 
+    }
+
+    public Resource findSimilarByUrlPattern(String providerUrlPattern) {
+        return repository.findSimilarByUrlPattern(providerUrlPattern, similarityThreashold);
     }
 }

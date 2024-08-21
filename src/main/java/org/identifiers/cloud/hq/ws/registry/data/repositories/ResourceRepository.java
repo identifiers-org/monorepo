@@ -4,6 +4,7 @@ import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RestResource;
 
 import java.util.List;
@@ -29,4 +30,10 @@ public interface ResourceRepository extends JpaRepository<Resource, Long> {
     Page<Resource> findByProviderCode(String providerCode, Pageable pageable);
 
     Resource findByMirId(String mirId);
+
+    @Query(nativeQuery = true,
+            value = "SELECT * FROM resource " +
+                    "WHERE SIMILARITY(url_pattern, ?1) > ?2 " +
+                    "LIMIT 1")
+    Resource findSimilarByUrlPattern(String providerUrlPattern, double similarityThreshold);
 }

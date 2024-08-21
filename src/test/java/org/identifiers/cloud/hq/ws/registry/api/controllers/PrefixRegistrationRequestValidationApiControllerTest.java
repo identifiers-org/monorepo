@@ -4,6 +4,7 @@ import com.icegreen.greenmail.junit5.GreenMailExtension;
 import com.icegreen.greenmail.util.ServerSetupTest;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.PrefixRegistrationRequestRepository;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.PrefixRegistrationSessionRepository;
+import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -11,12 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -24,6 +29,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 class PrefixRegistrationRequestValidationApiControllerTest {
+    @SpyBean
+    ResourceRepository repository;
     @Autowired
     private MockMvc mvc;
     @Autowired
@@ -42,6 +49,11 @@ class PrefixRegistrationRequestValidationApiControllerTest {
                          @Value("${spring.mail.password}")
                          String password) {
         mailServer.setUser(username, password);
+    }
+
+    @BeforeEach
+    void interceptSimilarityFunction() {
+        doReturn(null).when(repository).findSimilarByUrlPattern(anyString(), anyDouble());
     }
 
     @Test

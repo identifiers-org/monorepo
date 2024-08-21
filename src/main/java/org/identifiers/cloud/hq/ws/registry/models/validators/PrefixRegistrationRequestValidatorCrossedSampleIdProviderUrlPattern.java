@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators;
 
+import lombok.RequiredArgsConstructor;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
 import org.identifiers.cloud.hq.ws.registry.models.helpers.ResourceAccessHelper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,15 +21,18 @@ import java.util.List;
 // TODO I don't think it needs to be of "prototype" scope
 @Component
 @Scope("prototype")
+@RequiredArgsConstructor
 @Qualifier("PrefixRegistrationRequestValidatorCrossedSampleIdProviderUrlPattern")
 public class PrefixRegistrationRequestValidatorCrossedSampleIdProviderUrlPattern implements PrefixRegistrationRequestValidator {
+    final PrefixRegistrationRequestValidatorProviderUrlPattern urlPatternValidator;
+
     @Override
     public boolean validate(ServiceRequestRegisterPrefixPayload request) throws PrefixRegistrationRequestValidatorException {
         // TODO In future iterations, use a different mechanism for reporting back why this is not valid, and leave exceptions for non-recoverable conditions
         List<String> errors = new ArrayList<>();
         // Check resource access rule
         try {
-            new PrefixRegistrationRequestValidatorProviderUrlPattern().validate(request);
+            urlPatternValidator.validate(request);
         } catch (PrefixRegistrationRequestValidatorException e) {
             errors.add(e.getMessage());
         }

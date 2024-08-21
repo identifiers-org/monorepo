@@ -18,7 +18,9 @@ public class PrefixRegistrationSessionActionEmailNotifier
             <PrefixRegistrationSession, PrefixRegistrationSessionActionReport>
         implements PrefixRegistrationSessionAction {
 
-    public PrefixRegistrationSessionActionEmailNotifier(Actions actionToNotify, CommonEmailProperties emailCommons, JavaMailSender javaMailSender, Environment env, ResourceLoader resourceLoader) {
+    public PrefixRegistrationSessionActionEmailNotifier(Actions actionToNotify, CommonEmailProperties emailCommons,
+                                                        JavaMailSender javaMailSender, Environment env,
+                                                        ResourceLoader resourceLoader) {
         super(actionToNotify, emailCommons, javaMailSender, env, resourceLoader);
     }
 
