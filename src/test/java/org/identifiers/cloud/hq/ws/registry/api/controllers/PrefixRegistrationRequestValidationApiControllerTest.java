@@ -57,11 +57,6 @@ class PrefixRegistrationRequestValidationApiControllerTest {
     }
 
     @Test
-    void contextLoads() {
-
-    }
-
-    @Test
     void controllerLoads() {
         assertNotNull(mvc);
     }

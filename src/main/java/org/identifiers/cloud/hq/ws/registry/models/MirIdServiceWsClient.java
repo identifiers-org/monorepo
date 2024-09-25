@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.models;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -58,16 +59,20 @@ public class MirIdServiceWsClient implements MirIdService {
     @Override
     public String mintId() throws MirIdServiceException {
         log.info("Requesting MIR ID MINTING");
-        String mirId;
+        String mirId = null;
         try {
-            ResponseEntity<?> response = doGetRequest(getWsMirIdMintingUrl());
+            ResponseEntity<String> response = doGetRequest(getWsMirIdMintingUrl());
             if (response.getStatusCode() != HttpStatus.OK) {
                 throw new MirIdServiceException(String.format("MIR ID minting FAILED, status code '%s'", response.getStatusCode()));
             }
             if (!response.hasBody()) {
                 throw new MirIdServiceException(String.format("MIR ID minting FAILED, NO BODY IN THE RESPONSE, response -> '%s'", response));
             }
-            mirId = response.getBody().toString();
+            if (StringUtils.isNotBlank(response.getBody())) {
+                mirId = response.getBody();
+            } else {
+                throw new MirIdServiceException("BLANK RESPONSE from MIR ID service while minting!");
+            }
         } catch (RestClientException | NullPointerException e) {
             throw new MirIdServiceException(e.getMessage(), e);
         }
@@ -129,7 +134,7 @@ public class MirIdServiceWsClient implements MirIdService {
         return String.format("%s/mintId", getMirIdServiceBaseUrl());
     }
 
-    private ResponseEntity<?> doGetRequest(String url) {
+    private ResponseEntity<String> doGetRequest(String url) {
         return restTemplate.getForEntity(url, String.class);
     }
     // END - Helpers

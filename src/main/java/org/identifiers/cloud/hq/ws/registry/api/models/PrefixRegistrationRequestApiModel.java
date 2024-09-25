@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefix;
@@ -14,12 +15,14 @@ import org.identifiers.cloud.hq.ws.registry.data.repositories.PrefixRegistration
 import org.identifiers.cloud.hq.ws.registry.models.PrefixRegistrationRequestManagementService;
 import org.identifiers.cloud.hq.ws.registry.api.data.helpers.ApiAndDataModelsHelper;
 import org.identifiers.cloud.hq.ws.registry.models.helpers.AuthHelper;
-import org.identifiers.cloud.hq.ws.registry.models.validators.PrefixRegistrationRequestValidatorStrategy;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.identifiers.cloud.hq.ws.registry.models.validators.RegistrationValidationChain;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 
 /**
  * Project: registry
@@ -29,26 +32,14 @@ import java.util.Optional;
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
  * ---
  */
-@Component
 @Slf4j
+@Component
+@RequiredArgsConstructor
 public class PrefixRegistrationRequestApiModel {
-    // TODO
-
-    // Prefix registration request validator
-    @Autowired
-    private PrefixRegistrationRequestValidatorStrategy validatorStrategy;
-
-    // Prefix Registration Request Management Service
-    @Autowired
-    private PrefixRegistrationRequestManagementService prefixRegistrationRequestManagementService;
-
-    // Auth Helper
-    @Autowired
-    private AuthHelper authHelper;
-
-    // Repositories
-    @Autowired
-    private PrefixRegistrationSessionRepository prefixRegistrationSessionRepository;
+    private final PrefixRegistrationRequestManagementService prefixRegistrationRequestManagementService;
+    private final AuthHelper authHelper;
+    private final PrefixRegistrationSessionRepository prefixRegistrationSessionRepository;
+    private final Map<String, RegistrationValidationChain> registrationValidationChains;
 
     // Helpers
     private ServiceResponseRegisterPrefix createRegisterPrefixDefaultResponse() {
@@ -93,7 +84,9 @@ public class PrefixRegistrationRequestApiModel {
         return "No acceptance reason provided";
     }
 
-    private PrefixRegistrationSession getPrefixRegistrationSession(String eventName, long sessionId, ServiceRequestRegisterPrefixSessionEvent request, ServiceResponseRegisterPrefixSessionEvent response) {
+    private PrefixRegistrationSession getPrefixRegistrationSession(String eventName, long sessionId,
+                                                                   ServiceRequestRegisterPrefixSessionEvent request,
+                                                                   ServiceResponseRegisterPrefixSessionEvent response) {
         Optional<PrefixRegistrationSession> prefixRegistrationSession = prefixRegistrationSessionRepository.findById(sessionId);
         if (prefixRegistrationSession.isEmpty()) {
             response.setHttpStatus(HttpStatus.BAD_REQUEST);
@@ -107,45 +100,48 @@ public class PrefixRegistrationRequestApiModel {
 
     // --- API ---
     public ServiceResponseRegisterPrefix registerPrefix(ServiceRequestRegisterPrefix request) {
-        // Create default response
         ServiceResponseRegisterPrefix response = createRegisterPrefixDefaultResponse();
-        boolean isValid = false;
-        // Determine who is the actor of this
-        String actor = authHelper.getCurrentUsername();
-        // Possible additional information
-        String additionalInformation = "Source, Open API for prefix registration request submission";
-        // Run request validation
-        try {
-            isValid = validatorStrategy.validate(request.getPayload());
-        } catch (RuntimeException e) {
-            response.setHttpStatus(HttpStatus.BAD_REQUEST);
-            response.setErrorMessage(String.format("INVALID Prefix registration request due to '%s'", e.getMessage()));
-            String requestedPrefix = "--- NO PREFIX SPECIFIED ---";
-            if ((request.getPayload() != null) && (request.getPayload().getRequestedPrefix() != null)) {
-                requestedPrefix = request.getPayload().getRequestedPrefix();
-            }
-            log.error(String.format("INVALID Prefix registration request for prefix '%s', due to '%s'", requestedPrefix, e.getMessage()));
-        }
-        if (isValid) {
+
+        var errorList = registrationValidationChains.values().stream()
+                .map(chain -> chain.validate(request.getPayload()))
+                .filter(Optional::isPresent).toList();
+
+        if (errorList.isEmpty()) {
             // Translate data model
             PrefixRegistrationRequest prefixRegistrationRequest =
                     ApiAndDataModelsHelper.getPrefixRegistrationRequest(request.getPayload());
-            // Delegate on the Prefix Registration Request Management Service
-            prefixRegistrationRequestManagementService.startRequest(prefixRegistrationRequest,
-                    actor,
-                    additionalInformation);
+
+            String actor = authHelper.getCurrentUsername();
+            String additionalInformation = "Source, Open API for prefix registration request submission";
+            prefixRegistrationRequestManagementService.startRequest(
+                    prefixRegistrationRequest, actor, additionalInformation);
+        } else {
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+
+            var joinedMessages = errorList.stream().map(Optional::get).collect(Collectors.joining("\n"));
+            response.setErrorMessage(String.format("INVALID Prefix registration request due to '%s'", joinedMessages));
+
+            String requestedPrefix = "--- NO PREFIX SPECIFIED ---";
+            if (request.getPayload() != null && request.getPayload().getRequestedPrefix() != null) {
+                requestedPrefix = request.getPayload().getRequestedPrefix();
+            }
+
+            log.error(String.format("INVALID Prefix registration request for prefix '%s', due to '%s'", requestedPrefix, joinedMessages));
         }
         return response;
     }
 
-    public ServiceResponseRegisterPrefixSessionEvent amendPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
+    public ServiceResponseRegisterPrefixSessionEvent amendPrefixRegistrationRequest(
+            long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
         ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
         String actor = authHelper.getCurrentUsername();
         // Locate the prefix registration request session
-        PrefixRegistrationSession prefixRegistrationSession = getPrefixRegistrationSession("AMEND", sessionId, request, response);
+        PrefixRegistrationSession prefixRegistrationSession =
+                getPrefixRegistrationSession("AMEND", sessionId, request, response);
         if (response.getHttpStatus() == HttpStatus.OK) {
             // Transform the model
-            PrefixRegistrationRequest prefixRegistrationRequest = ApiAndDataModelsHelper.getPrefixRegistrationRequest(request.getPayload().getPrefixRegistrationRequest());
+            PrefixRegistrationRequest prefixRegistrationRequest =
+                    ApiAndDataModelsHelper.getPrefixRegistrationRequest(request.getPayload().getPrefixRegistrationRequest());
             // Delegate on the Prefix Registration Request Management Service
             prefixRegistrationRequestManagementService.amendRequest(prefixRegistrationSession,
                     prefixRegistrationRequest,
@@ -155,20 +151,25 @@ public class PrefixRegistrationRequestApiModel {
         return response;
     }
 
-    public ServiceResponseRegisterPrefixSessionEvent commentPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
+    public ServiceResponseRegisterPrefixSessionEvent commentPrefixRegistrationRequest(
+            long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
         ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
         String actor = authHelper.getCurrentUsername();
         // Locate the prefix registration request session
-        PrefixRegistrationSession prefixRegistrationSession = getPrefixRegistrationSession("COMMENT", sessionId, request, response);
+        PrefixRegistrationSession prefixRegistrationSession =
+                getPrefixRegistrationSession("COMMENT", sessionId, request, response);
         if (response.getHttpStatus() == HttpStatus.OK) {
             // We located the session
             // Delegate on the prefix registration request management service
-            prefixRegistrationRequestManagementService.commentRequest(prefixRegistrationSession, getCommentFrom(request), actor, getAdditionalInformationFrom(request));
+            prefixRegistrationRequestManagementService.commentRequest(
+                    prefixRegistrationSession, getCommentFrom(request),
+                    actor, getAdditionalInformationFrom(request));
         }
         return response;
     }
 
-    public ServiceResponseRegisterPrefixSessionEvent rejectPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
+    public ServiceResponseRegisterPrefixSessionEvent rejectPrefixRegistrationRequest(
+            long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
         ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
         String actor = authHelper.getCurrentUsername();
         // Locate the prefix registration request session
@@ -180,7 +181,8 @@ public class PrefixRegistrationRequestApiModel {
         return response;
     }
 
-    public ServiceResponseRegisterPrefixSessionEvent acceptPrefixRegistrationRequest(long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
+    public ServiceResponseRegisterPrefixSessionEvent acceptPrefixRegistrationRequest(
+            long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
         ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
         String actor = authHelper.getCurrentUsername();
         // Locate the prefix registration request session

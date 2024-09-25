@@ -1,16 +1,17 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
+import lombok.RequiredArgsConstructor;
 import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixValidate;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponse;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixPayload;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixValidateRequest;
-import org.identifiers.cloud.hq.ws.registry.models.validators.PrefixRegistrationRequestValidator;
-import org.identifiers.cloud.hq.ws.registry.models.validators.PrefixRegistrationRequestValidatorException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.identifiers.cloud.hq.ws.registry.models.validators.RegistrationValidationChain;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * Project: registry
@@ -21,97 +22,11 @@ import org.springframework.stereotype.Component;
  * ---
  */
 @Component
+@RequiredArgsConstructor
 public class PrefixRegistrationRequestValidationApiModel {
-    @Autowired
-    @Qualifier("PrefixRegistrationRequestValidatorRequestedPrefix")
-    private PrefixRegistrationRequestValidator prefixValidator;
-
-    @Autowired
-    @Qualifier("prefixRegistrationRequestValidatorName")
-    private PrefixRegistrationRequestValidator nameValidator;
-
-    @Autowired
-    @Qualifier("prefixRegistrationRequestValidatorDescription")
-    private PrefixRegistrationRequestValidator descriptionValidator;
-
-    @Autowired
-    @Qualifier("prefixRegistrationRequestValidatorProviderHomeUrl")
-    private PrefixRegistrationRequestValidator providerHomeUrlValidator;
-
-    @Autowired
-    @Qualifier("prefixRegistrationRequestValidatorProviderName")
-    private PrefixRegistrationRequestValidator providerNameValidator;
-
-    @Autowired
-    @Qualifier("PrefixRegistrationRequestValidatorProviderDescription")
-    private PrefixRegistrationRequestValidator providerDescriptionValidator;
-
-    @Autowired
-    @Qualifier("PrefixRegistrationRequestValidatorProviderLocation")
-    private PrefixRegistrationRequestValidator providerLocationValidator;
-
-    @Autowired
-    @Qualifier("PrefixRegistrationRequestValidatorProviderCode")
-    private PrefixRegistrationRequestValidator providerCodeValidator;
-
-    @Autowired
-    @Qualifier("PrefixRegistrationRequestValidatorInstitutionName")
-    private PrefixRegistrationRequestValidator institutionNameValidator;
-
-    @Autowired
-    @Qualifier("PrefixRegistrationRequestValidatorInstitutionHomeUrl")
-    private PrefixRegistrationRequestValidator institutionHomeUrlValidator;
-
-    @Autowired
-    @Qualifier("PrefixRegistrationRequestValidatorInstitutionDescription")
-    private PrefixRegistrationRequestValidator institutionDescriptionValidator;
-
-    @Autowired
-    @Qualifier("PrefixRegistrationRequestValidatorInstitutionLocation")
-    private PrefixRegistrationRequestValidator institutionLocationValidator;
-
-    @Autowired
-    @Qualifier("prefixRegistrationRequestValidatorProviderUrlPattern")
-    private PrefixRegistrationRequestValidator providerUrlPatternValidator;
-
-    @Autowired
-    @Qualifier("prefixRegistrationRequestValidatorCrossedSampleIdProviderUrlPattern")
-    private PrefixRegistrationRequestValidator crossedSampleIdProviderUrlPatternValidator;
-
-    @Autowired
-    @Qualifier("prefixRegistrationRequestValidatorCrossedIdRegexPatternAndSampleId")
-    private PrefixRegistrationRequestValidator crossedIdRegexPatternAndSampleIdValidator;
-
-    @Autowired
-    @Qualifier("prefixRegistrationRequestValidatorReferences")
-    private PrefixRegistrationRequestValidator referencesValidator;
-
-    @Autowired
-    @Qualifier("prefixRegistrationRequestValidatorAdditionalInformation")
-    private PrefixRegistrationRequestValidator additionalInformationValidator;
-
-    @Autowired
-    @Qualifier("prefixRegistrationRequestValidatorRequester")
-    private PrefixRegistrationRequestValidator requesterValidator;
-
-    @Autowired
-    @Qualifier("PrefixRegistrationRequestValidatorRequesterName")
-    private PrefixRegistrationRequestValidator requesterNameValidator;
-
-    @Autowired
-    @Qualifier("PrefixRegistrationRequestValidatorRequesterEmail")
-    private PrefixRegistrationRequestValidator requesterEmailValidator;
-
-    @Autowired
-    @Qualifier("PrefixRegistrationRequestValidatorAuthHelpDescription")
-    private PrefixRegistrationRequestValidator authHelpDescriptionValidator;
-
-    @Autowired
-    @Qualifier("PrefixRegistrationRequestValidatorAuthHelpUrl")
-    private PrefixRegistrationRequestValidator authHelpUrlValidator;
+    final Map<String, RegistrationValidationChain> registrationValidationChains;
 
     // -- Helpers --
-
     /**
      * Initialize a response with the default values and the given payload.
      * @param response response to initialize
@@ -125,111 +40,115 @@ public class PrefixRegistrationRequestValidationApiModel {
     }
 
     private ServiceResponseRegisterPrefixValidateRequest doValidation(ServiceRequestRegisterPrefixValidate request,
-                                                                      PrefixRegistrationRequestValidator validator) {
-        // TODO - Check API version information?
+                                                                      String fieldName) {
         ServiceResponseRegisterPrefixValidateRequest response = new ServiceResponseRegisterPrefixValidateRequest();
         initDefaultResponse(response, new ServiceResponseRegisterPrefixPayload());
         // Validate the request
-        boolean isValidRequest = false;
-        try {
-            isValidRequest = validator.validate(request.getPayload());
-        } catch (PrefixRegistrationRequestValidatorException e) {
-            response.setErrorMessage(e.getMessage());
+        RegistrationValidationChain validationChain = registrationValidationChains.get(fieldName);
+        Optional<String> error = validationChain.validate(request.getPayload());
+        if (error.isPresent()) {
+            response.setErrorMessage(error.get());
             response.setHttpStatus(HttpStatus.BAD_REQUEST);
             response.getPayload().setComment("VALIDATION FAILED");
-        }
-        if (isValidRequest) {
+        } else {
             response.getPayload().setComment("VALIDATION OK");
         }
         return response;
     }
 
+
+
     // -- API --
     public ServiceResponseRegisterPrefixValidateRequest validateName(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, nameValidator);
+        return doValidation(request, "namespaceName");
     }
 
     public ServiceResponseRegisterPrefixValidateRequest validateDescription(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, descriptionValidator);
+        return doValidation(request, "namespaceDescription");
     }
 
     public ServiceResponseRegisterPrefixValidateRequest validateProviderHomeUrl(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, providerHomeUrlValidator);
+        return doValidation(request, "providerHomeUrl");
     }
 
     public ServiceResponseRegisterPrefixValidateRequest validateProviderName(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, providerNameValidator);
+        return doValidation(request, "providerName");
     }
 
     public ServiceResponseRegisterPrefixValidateRequest validateProviderDescription(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, providerDescriptionValidator);
+        return doValidation(request, "providerDescription");
     }
 
     public ServiceResponseRegisterPrefixValidateRequest validateProviderLocation(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, providerLocationValidator);
+        return doValidation(request, "providerLocation");
     }
 
     public ServiceResponseRegisterPrefixValidateRequest validateProviderCode(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, providerCodeValidator);
+        return doValidation(request, "providerCode");
     }
 
     public ServiceResponseRegisterPrefixValidateRequest validateInstitutionName(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, institutionNameValidator);
+        return doValidation(request, "institutionName");
     }
 
     public ServiceResponseRegisterPrefixValidateRequest validateInstitutionDescription(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, institutionDescriptionValidator);
+        return doValidation(request, "institutionDescription");
     }
 
     public ServiceResponseRegisterPrefixValidateRequest validateInstitutionLocation(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, institutionLocationValidator);
+        return doValidation(request, "institutionLocation");
     }
 
     public ServiceResponseRegisterPrefixValidateRequest validateRequestedPrefix(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, prefixValidator);
+        return doValidation(request, "prefix");
     }
 
     public ServiceResponseRegisterPrefixValidateRequest validateProviderUrlPattern(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, providerUrlPatternValidator);
+        return doValidation(request, "providerUrlPattern");
     }
 
     public ServiceResponseRegisterPrefixValidateRequest validateSampleId(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, crossedSampleIdProviderUrlPatternValidator);
+        return doValidation(request, "sampleId");
     }
 
     public ServiceResponseRegisterPrefixValidateRequest validateIdRegexPattern(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, crossedIdRegexPatternAndSampleIdValidator);
+        return doValidation(request, "idRegexPattern");
     }
 
     public ServiceResponseRegisterPrefixValidateRequest validateReferences(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, referencesValidator);
+        return doValidation(request, "supportingReferences");
     }
 
     public ServiceResponseRegisterPrefixValidateRequest validateAdditionalInformation(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, additionalInformationValidator);
+        return doValidation(request, "additionalInformation");
     }
 
     public ServiceResponseRegisterPrefixValidateRequest validateRequester(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, requesterValidator);
+        var ret = doValidation(request, "requesterName");
+        if (HttpStatus.BAD_REQUEST.equals(ret.getHttpStatus())) {
+            return ret;
+        } else {
+            return doValidation(request, "requesterEmail");
+        }
     }
 
     public ServiceResponseRegisterPrefixValidateRequest validateInstitutionHomeUrl(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, institutionHomeUrlValidator);
+        return doValidation(request, "institutionHomeUrl");
     }
 
     public ServiceResponseRegisterPrefixValidateRequest validateRequesterName(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, requesterNameValidator);
+        return doValidation(request, "requesterName");
     }
 
     public ServiceResponseRegisterPrefixValidateRequest validateRequesterEmail(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, requesterEmailValidator);
+        return doValidation(request, "requesterEmail");
     }
 
     public ServiceResponseRegisterPrefixValidateRequest validateAuthHelpDescription(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, authHelpDescriptionValidator);
+        return doValidation(request, "authHelpDescription");
     }
 
     public ServiceResponseRegisterPrefixValidateRequest validateAuthHelpUrl(ServiceRequestRegisterPrefixValidate request) {
-        return doValidation(request, authHelpUrlValidator);
+        return doValidation(request, "authHelpUrl");
     }
 }

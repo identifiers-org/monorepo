@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
 import org.identifiers.cloud.hq.ws.registry.api.data.helpers.ApiAndDataModelsHelper;
@@ -16,16 +17,15 @@ import org.identifiers.cloud.hq.ws.registry.models.ResourceLifecycleManagementCo
 import org.identifiers.cloud.hq.ws.registry.models.ResourceLifecycleManagementService;
 import org.identifiers.cloud.hq.ws.registry.models.ResourceRegistrationRequestManagementService;
 import org.identifiers.cloud.hq.ws.registry.models.helpers.AuthHelper;
-import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceLifecycleManagementOperationReport;
-import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidator;
-import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidatorException;
-import org.identifiers.cloud.hq.ws.registry.models.validators.ResourceRegistrationRequestValidatorStrategy;
+import org.identifiers.cloud.hq.ws.registry.models.validators.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Project: registry
@@ -39,100 +39,19 @@ import java.util.Optional;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class ResourceManagementApiModel {
-
-    // --- Validators ---
-    @Autowired
-    @Qualifier("ResourceRegistrationRequestValidatorNamespacePrefix")
-    private ResourceRegistrationRequestValidator namespacePrefixValidator;
-
-    @Autowired
-    @Qualifier("ResourceRegistrationRequestValidatorProviderHomeUrl")
-    private ResourceRegistrationRequestValidator providerHomeUrlValidator;
-
-    @Autowired
-    @Qualifier("ResourceRegistrationRequestValidatorProviderName")
-    private ResourceRegistrationRequestValidator providerNameValidator;
-
-    @Autowired
-    @Qualifier("ResourceRegistrationRequestValidatorProviderDescription")
-    private ResourceRegistrationRequestValidator providerDescriptionValidator;
-
-    @Autowired
-    @Qualifier("ResourceRegistrationRequestValidatorProviderLocation")
-    private ResourceRegistrationRequestValidator providerLocationValidator;
-
-    @Autowired
-    @Qualifier("ResourceRegistrationRequestValidatorProviderCode")
-    private ResourceRegistrationRequestValidator providerCodeValidator;
-
-    @Autowired
-    @Qualifier("ResourceRegistrationRequestValidatorInstitutionName")
-    private ResourceRegistrationRequestValidator institutionNameValidator;
-
-    @Autowired
-    @Qualifier("ResourceRegistrationRequestValidatorInstitutionHomeUrl")
-    private ResourceRegistrationRequestValidator institutionHomeUrlValidator;
-
-    @Autowired
-    @Qualifier("ResourceRegistrationRequestValidatorInstitutionDescription")
-    private ResourceRegistrationRequestValidator institutionDescriptionValidator;
-
-    @Autowired
-    @Qualifier("ResourceRegistrationRequestValidatorInstitutionLocation")
-    private ResourceRegistrationRequestValidator institutionLocationValidator;
-
-    @Autowired
-    @Qualifier("ResourceRegistrationRequestValidatorProviderUrlPattern")
-    private ResourceRegistrationRequestValidator providerUrlPatternValidator;
-
-    @Autowired
-    @Qualifier("ResourceRegistrationRequestValidatorCrossedSampleIdProviderUrlPattern")
-    private ResourceRegistrationRequestValidator crossedSampleIdProviderUrlPatternValidator;
-
-    @Autowired
-    @Qualifier("ResourceRegistrationRequestValidatorAdditionalInformation")
-    private ResourceRegistrationRequestValidator additionalInformationValidator;
-
-    @Autowired
-    @Qualifier("ResourceRegistrationRequestValidatorRequester")
-    private ResourceRegistrationRequestValidator requesterValidator;
-
-    @Autowired
-    @Qualifier("ResourceRegistrationRequestValidatorRequesterName")
-    private ResourceRegistrationRequestValidator requesterNameValidator;
-
-    @Autowired
-    @Qualifier("ResourceRegistrationRequestValidatorRequesterEmail")
-    private ResourceRegistrationRequestValidator requesterEmailValidator;
-
-    @Autowired
-    @Qualifier("ResourceRegistrationRequestValidatorAuthHelpDescription")
-    private ResourceRegistrationRequestValidator authHelpDescriptionValidator;
-
-    @Autowired
-    @Qualifier("ResourceRegistrationRequestValidatorAuthHelpUrl")
-    private ResourceRegistrationRequestValidator authHelpUrlValidator;
-
-    // Resource Registration Request validation strategy
-    @Autowired
-    private ResourceRegistrationRequestValidatorStrategy validatorStrategy;
+    final Map<String, RegistrationValidationChain> registrationValidationChains;
 
     // Auth Helper
-    @Autowired
-    private AuthHelper authHelper;
+    private final AuthHelper authHelper;
 
     // Repositories
-    @Autowired
-    private ResourceRegistrationRequestRepository resourceRegistrationRequestRepository;
-    @Autowired
-    private ResourceRegistrationSessionRepository resourceRegistrationSessionRepository;
+    private final ResourceRegistrationSessionRepository resourceRegistrationSessionRepository;
 
     // Services
-    @Autowired
-    private ResourceRegistrationRequestManagementService resourceRegistrationRequestManagementService;
-    @Autowired
-    private ResourceLifecycleManagementService resourceLifecycleManagementService;
+    private final ResourceRegistrationRequestManagementService resourceRegistrationRequestManagementService;
+    private final ResourceLifecycleManagementService resourceLifecycleManagementService;
 
     // --- Helpers ---
     /**
@@ -200,7 +119,9 @@ public class ResourceManagementApiModel {
         return "No acceptance reason provided";
     }
 
-    private ResourceRegistrationSession getResourceRegistrationSession(String eventName, long sessionId, ServiceRequestRegisterResourceSessionEvent request, ServiceResponseRegisterResourceSessionEvent response) {
+    private ResourceRegistrationSession getResourceRegistrationSession(String eventName, long sessionId,
+                                                                       ServiceRequestRegisterResourceSessionEvent request,
+                                                                       ServiceResponseRegisterResourceSessionEvent response) {
         Optional<ResourceRegistrationSession> resourceRegistrationSession = resourceRegistrationSessionRepository.findById(sessionId);
         if (resourceRegistrationSession.isEmpty()) {
             response.setHttpStatus(HttpStatus.BAD_REQUEST);
@@ -212,60 +133,41 @@ public class ResourceManagementApiModel {
         return resourceRegistrationSession.get();
     }
 
-    private ServiceResponseRegisterResourceValidate doValidation(ServiceRequestRegisterResourceValidate request,
-                                                                 ResourceRegistrationRequestValidator validator) {
-        // TODO - Check API version information?
-        ServiceResponseRegisterResourceValidate response = new ServiceResponseRegisterResourceValidate();
-        initDefaultResponse(response, new ServiceResponseRegisterResourceValidatePayload());
-        // Validate the request
-        boolean isValidRequest = false;
-        try {
-            isValidRequest = validator.validate(request.getPayload());
-        } catch (ResourceRegistrationRequestValidatorException e) {
-            response.setErrorMessage(e.getMessage());
-            response.setHttpStatus(HttpStatus.BAD_REQUEST);
-            response.getPayload().setComment("VALIDATION FAILED");
-        }
-        if (isValidRequest) {
-            response.getPayload().setComment("VALIDATION OK");
-        }
-        return response;
-    }
-
     // --- API ---
     // Resource Registration API
     public ServiceResponseRegisterResource registerResource(ServiceRequestRegisterResource request) {
-        // Create default response
         ServiceResponseRegisterResource response = createRegisterResourceDefaultResponse();
-        boolean isValid = false;
-        // Actor
-        String actor = authHelper.getCurrentUsername();
-        // Additional information
-        String additionalInformation = "Open API for resource registration request submission";
-        // Run request validation
-        try {
-            isValid = validatorStrategy.validate(request.getPayload());
-        } catch (RuntimeException e) {
-            response.setHttpStatus(HttpStatus.BAD_REQUEST);
-            String resourceName = "--- Resource Name NOT SPECIFIED ---";
-            if ((request.getPayload() != null) && (request.getPayload().getProviderName() != null)) {
-                resourceName = request.getPayload().getProviderName();
-            }
-            String errorMessage = String.format("INVALID Resource registration request for resource name '%s', due to '%s'", resourceName, e.getMessage());
-            response.setErrorMessage(errorMessage);
-            log.error(errorMessage);
-        }
-        if (isValid) {
+
+        var errors = this.registrationValidationChains.values().stream()
+                .map(chain -> chain.validate(request.getPayload()))
+                .filter(Optional::isPresent).toList();
+        if (errors.isEmpty()) {
             // Translate the data model
             ResourceRegistrationRequest resourceRegistrationRequest =
                     ApiAndDataModelsHelper.getResourceRegistrationRequestFrom(request.getPayload());
-            // Delegate on resource registration request management service
-            resourceRegistrationRequestManagementService.startRequest(resourceRegistrationRequest, actor, additionalInformation);
+
+            String additionalInformation = "Open API for resource registration request submission";
+            String actor = authHelper.getCurrentUsername();
+            resourceRegistrationRequestManagementService
+                    .startRequest(resourceRegistrationRequest, actor, additionalInformation);
+        } else {
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            String resourceName = "--- Resource Name NOT SPECIFIED ---";
+            if (request.getPayload() != null && request.getPayload().getProviderName() != null) {
+                resourceName = request.getPayload().getProviderName();
+            }
+            String joinedErrors = errors.stream().map(Optional::get).collect(Collectors.joining("\n"));
+            String errorMessage = String.format(
+                    "INVALID Resource registration request for resource name '%s', due to '%s'",
+                    resourceName, joinedErrors);
+            response.setErrorMessage(errorMessage);
+            log.error(errorMessage);
         }
         return response;
     }
 
-    public ServiceResponseRegisterResourceSessionEvent amendResourceRegistrationRequest(long sessionId, ServiceRequestRegisterResourceSessionEvent request) {
+    public ServiceResponseRegisterResourceSessionEvent amendResourceRegistrationRequest(
+            long sessionId, ServiceRequestRegisterResourceSessionEvent request) {
         // Default response
         ServiceResponseRegisterResourceSessionEvent response = createRegisterResourceSessionEventDefaultResponse();
         // TODO We need to get the actor from Spring Security
@@ -323,77 +225,100 @@ public class ResourceManagementApiModel {
         return response;
     }
 
+    private ServiceResponseRegisterResourceValidate doValidation(ServiceRequestRegisterResourceValidate request,
+                                                                 String valueName) {
+        ServiceResponseRegisterResourceValidate response = new ServiceResponseRegisterResourceValidate();
+        initDefaultResponse(response, new ServiceResponseRegisterResourceValidatePayload());
+        // Validate the request
+
+        var payload = request.getPayload();
+        Optional<String> error = registrationValidationChains.get(valueName).validate(payload);
+        if (error.isPresent()){
+            response.setErrorMessage(error.get());
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            response.getPayload().setComment("VALIDATION FAILED");
+        } else {
+            response.getPayload().setComment("VALIDATION OK");
+        }
+        return response;
+    }
+
     // Validation API
     public ServiceResponseRegisterResourceValidate validateProviderHomeUrl(ServiceRequestRegisterResourceValidate request) {
-        return doValidation(request, providerHomeUrlValidator);
+        return doValidation(request, "providerHomeUrl");
     }
 
     public ServiceResponseRegisterResourceValidate validateProviderName(ServiceRequestRegisterResourceValidate request) {
-        return doValidation(request, providerNameValidator);
+        return doValidation(request, "providerName");
     }
 
     public ServiceResponseRegisterResourceValidate validateProviderDescription(ServiceRequestRegisterResourceValidate request) {
-        return doValidation(request, providerDescriptionValidator);
+        return doValidation(request, "providerDescription");
     }
 
     public ServiceResponseRegisterResourceValidate validateProviderLocation(ServiceRequestRegisterResourceValidate request) {
-        return doValidation(request, providerLocationValidator);
+        return doValidation(request, "providerLocation");
     }
 
     public ServiceResponseRegisterResourceValidate validateProviderCode(ServiceRequestRegisterResourceValidate request) {
-        return doValidation(request, providerCodeValidator);
+        return doValidation(request, "providerCode");
     }
 
     public ServiceResponseRegisterResourceValidate validateInstitutionName(ServiceRequestRegisterResourceValidate request) {
-        return doValidation(request, institutionNameValidator);
+        return doValidation(request, "institutionName");
     }
 
     public ServiceResponseRegisterResourceValidate validateInstitutionHomeUrl(ServiceRequestRegisterResourceValidate request) {
-        return doValidation(request, institutionHomeUrlValidator);
+        return doValidation(request, "institutionHomeUrl");
     }
 
     public ServiceResponseRegisterResourceValidate validateInstitutionDescription(ServiceRequestRegisterResourceValidate request) {
-        return doValidation(request, institutionDescriptionValidator);
+        return doValidation(request, "institutionDescription");
     }
 
     public ServiceResponseRegisterResourceValidate validateInstitutionLocation(ServiceRequestRegisterResourceValidate request) {
-        return doValidation(request, institutionLocationValidator);
+        return doValidation(request, "institutionLocation");
     }
 
     public ServiceResponseRegisterResourceValidate validateProviderUrlPattern(ServiceRequestRegisterResourceValidate request) {
-        return doValidation(request, providerUrlPatternValidator);
+        return doValidation(request, "providerUrlPattern");
     }
 
     public ServiceResponseRegisterResourceValidate validateSampleId(ServiceRequestRegisterResourceValidate request) {
-        return doValidation(request, crossedSampleIdProviderUrlPatternValidator);
+        return doValidation(request, "sampleId");
     }
 
     public ServiceResponseRegisterResourceValidate validateAdditionalInformation(ServiceRequestRegisterResourceValidate request) {
-        return doValidation(request, additionalInformationValidator);
+        return doValidation(request, "additionalInformation");
     }
 
     public ServiceResponseRegisterResourceValidate validateRequester(ServiceRequestRegisterResourceValidate request) {
-        return doValidation(request, requesterValidator);
+        var ret = doValidation(request, "requesterName");
+        if (HttpStatus.BAD_REQUEST.equals(ret.getHttpStatus())) {
+            return ret;
+        } else {
+            return doValidation(request, "requesterEmail");
+        }
     }
 
     public ServiceResponseRegisterResourceValidate validateRequesterName(ServiceRequestRegisterResourceValidate request) {
-        return doValidation(request, requesterNameValidator);
+        return doValidation(request, "requesterName");
     }
 
     public ServiceResponseRegisterResourceValidate validateRequesterEmail(ServiceRequestRegisterResourceValidate request) {
-        return doValidation(request, requesterEmailValidator);
+        return doValidation(request, "requesterEmail");
     }
 
     public ServiceResponseRegisterResourceValidate validateNamespacePrefix(ServiceRequestRegisterResourceValidate request) {
-        return doValidation(request, namespacePrefixValidator);
+        return doValidation(request, "prefix");
     }
 
     public ServiceResponseRegisterResourceValidate validateAuthHelpDescription(ServiceRequestRegisterResourceValidate request) {
-        return doValidation(request, authHelpDescriptionValidator);
+        return doValidation(request, "authHelpDescription");
     }
 
     public ServiceResponseRegisterResourceValidate validateAuthHelpUrl(ServiceRequestRegisterResourceValidate request) {
-        return doValidation(request, authHelpUrlValidator);
+        return doValidation(request, "authHelpUrl");
     }
 
     // TODO --- Resource Lifecycle Management API
