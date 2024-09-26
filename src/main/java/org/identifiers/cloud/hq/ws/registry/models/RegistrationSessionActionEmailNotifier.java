@@ -12,12 +12,15 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 @Slf4j
 public abstract class RegistrationSessionActionEmailNotifier <S, R> {
     protected static final int MAIL_REQUEST_RETRY_MAX_ATTEMPTS = 12;
     protected static final int MAIL_REQUEST_RETRY_BACK_OFF_PERIOD = 1500; // 1.5 seconds
 
     protected final CommonEmailProperties emailCommons;
+    protected final String emailTo;
     protected final String emailCc;
     protected final String emailBcc;
     protected final String emailSubject;
@@ -45,8 +48,9 @@ public abstract class RegistrationSessionActionEmailNotifier <S, R> {
         String mailInfoPropPrefix = String.format("%s.%s.%s.%s.", basePropPrefix,
                 actionToNotify.target, getRequestTypePropPrefix(), actionToNotify.action);
 
-        emailCc = env.getRequiredProperty(mailInfoPropPrefix + "cc");
-        emailBcc = env.getRequiredProperty(mailInfoPropPrefix + "cco");
+        emailTo = env.getProperty(mailInfoPropPrefix + "to");
+        emailCc = env.getProperty(mailInfoPropPrefix + "cc");
+        emailBcc = env.getProperty(mailInfoPropPrefix + "cco");
         emailSubject = env.getRequiredProperty(mailInfoPropPrefix + "subject");
         String resourceLocation = env.getRequiredProperty(mailInfoPropPrefix + "body.filename");
         emailBodyFileResource = resourceLoader.getResource(resourceLocation);
@@ -88,16 +92,20 @@ public abstract class RegistrationSessionActionEmailNotifier <S, R> {
         return report;
     }
 
-    private SimpleMailMessage getBaseEmailMessage(S session) {
-        String requesterEmail = getRequesterEmailFromSession(session);
+    SimpleMailMessage getBaseEmailMessage(S session) {
         SimpleMailMessage emailMessage = new SimpleMailMessage();
 
         emailMessage.setFrom(emailCommons.getEmailSender());
         emailMessage.setReplyTo(emailCommons.getEmailReplyTo());
-        emailMessage.setTo(requesterEmail);
-        if (!emailCc.equals(emailCommons.getPlaceholderDoNotUse()))
+        if (isNotBlank(emailTo)) {
+            emailMessage.setTo(emailTo.split(","));
+        } else {
+            String requesterEmail = getRequesterEmailFromSession(session);
+            emailMessage.setTo(requesterEmail);
+        }
+        if (isNotBlank(emailCc))
             emailMessage.setCc(emailCc.split(","));
-        if (!emailBcc.equals(emailCommons.getPlaceholderDoNotUse()))
+        if (isNotBlank(emailBcc))
             emailMessage.setBcc(emailBcc.split(","));
         return emailMessage;
     }

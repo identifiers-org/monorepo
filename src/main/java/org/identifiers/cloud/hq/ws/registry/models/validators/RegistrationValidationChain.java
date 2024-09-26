@@ -77,9 +77,14 @@ public class RegistrationValidationChain {
             return Optional.empty();
         }
 
-        if (!validatorChain.isEmpty()) { // Empty chain should accept all requests
-            Objects.requireNonNull(prefixValueGetter, attributeLabel +
-                    " validator chain is not configured to be used for namespaces");
+        if (validatorChain.isEmpty()) {
+            // Empty chain should accept all requests
+            return Optional.empty();
+        }
+
+        if (prefixValueGetter == null) {
+            // Null getter means that the validator does not apply to prefixes
+            return Optional.empty();
         }
 
         for (var validator : validatorChain) {
@@ -103,10 +108,16 @@ public class RegistrationValidationChain {
             return Optional.empty();
         }
 
-        if (!validatorChain.isEmpty()) { // Empty chain should accept all requests
-            Objects.requireNonNull(resourceValueGetter, attributeLabel +
-                    " validator chain is not configured to be used for resources");
+        if (validatorChain.isEmpty()) {
+            // Empty chain should accept all requests
+            return Optional.empty();
         }
+
+        if (resourceValueGetter == null) {
+            // Null getter means that the validator does not apply to resources
+            return Optional.empty();
+        }
+
 
         for (var validator : validatorChain) {
             var error = validator.validate(request, resourceValueGetter, attributeLabel);

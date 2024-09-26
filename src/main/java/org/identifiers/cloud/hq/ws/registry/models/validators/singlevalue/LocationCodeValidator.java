@@ -1,6 +1,5 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators.singlevalue;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.identifiers.cloud.hq.ws.registry.models.validators.SingleValueValidator;
 
 import java.util.Arrays;

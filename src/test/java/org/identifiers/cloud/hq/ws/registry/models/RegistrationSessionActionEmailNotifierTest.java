@@ -5,12 +5,14 @@ import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationReques
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
 import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationRequest;
 import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationSession;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,16 +25,15 @@ class RegistrationSessionActionEmailNotifierTest {
     public static final String NAME = "The provider!";
 
     @Autowired
-    List<PrefixRegistrationSessionActionEmailNotifier> prefixNotifiers;
+    Map<String, PrefixRegistrationSessionActionEmailNotifier> prefixNotifiers;
     @Autowired
-    List<ResourceRegistrationSessionActionEmailNotifier> resourceNotifiers;
-
+    Map<String, ResourceRegistrationSessionActionEmailNotifier> resourceNotifiers;
 
     @Test
     void bodiesAreCorrectForResourceNotifiers() {
         var session = getResourceRegistrationSession();
 
-        resourceNotifiers.forEach(notifier -> {
+        resourceNotifiers.values().forEach(notifier -> {
             var body = notifier.parseEmailBody(session);
             assertNoPlaceholderLeft(body);
             assertBodyContainsData(body);
@@ -43,7 +44,7 @@ class RegistrationSessionActionEmailNotifierTest {
     void bodiesAreCorrectForNamespaceNotifiers() {
         var session = getPrefixRegistrationSession();
 
-        prefixNotifiers.forEach(notifier -> {
+        prefixNotifiers.values().forEach(notifier -> {
             var body = notifier.parseEmailBody(session);
             assertNoPlaceholderLeft(body);
             assertBodyContainsData(body);
@@ -55,7 +56,7 @@ class RegistrationSessionActionEmailNotifierTest {
     void subjectsAreCorrectForPrefixNotifiers() {
         var session = getPrefixRegistrationSession();
 
-        prefixNotifiers.forEach(notifier -> {
+        prefixNotifiers.values().forEach(notifier -> {
             var subject = notifier.parseEmailSubject(session);
             assertNoPlaceholderLeft(subject);
             assertSubjectContainsData(subject);
@@ -66,11 +67,37 @@ class RegistrationSessionActionEmailNotifierTest {
     void subjectsAreCorrectForResourceNotifiers() {
         var session = getResourceRegistrationSession();
 
-        resourceNotifiers.forEach(notifier -> {
+        resourceNotifiers.values().forEach(notifier -> {
             var subject = notifier.parseEmailSubject(session);
             assertNoPlaceholderLeft(subject);
             assertSubjectContainsData(subject);
         });
+    }
+
+    @Test
+    void contentOfRequesterStartPrefixEmailDoesntContainCurationLink() {
+        var session = getPrefixRegistrationSession();
+
+        var notifier = prefixNotifiers.get("prefixRequesterStartEmailNotificationAction");
+        assertNotNull(notifier);
+
+        var message = notifier.getBaseEmailMessage(session);
+        assertNotNull(message.getTo());
+        assertEquals(1, message.getTo().length);
+        assertEquals(session.getPrefixRegistrationRequest().getRequesterEmail(), message.getTo()[0]);
+    }
+
+    @Test
+    void contentOfCuratorStartPrefixEmailDoesntContainCurationLink() {
+        var session = getPrefixRegistrationSession();
+
+        var notifier = prefixNotifiers.get("prefixCuratorStartEmailNotificationAction");
+        assertNotNull(notifier);
+
+        var message = notifier.getBaseEmailMessage(session);
+        assertNotNull(message.getTo());
+        assertEquals(1, message.getTo().length);
+        assertEquals("identifiers.org@gmail.com", message.getTo()[0]);
     }
 
 

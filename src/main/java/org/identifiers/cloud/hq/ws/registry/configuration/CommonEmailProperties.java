@@ -13,6 +13,10 @@ public class CommonEmailProperties {
     private String emailReplyTo;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.email.support}")
     private String emailAddressSupport;
+    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.email.curation}")
+    private String emailAddressCuration;
+
+
 
     // Placeholders
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.prefix}")
@@ -27,8 +31,6 @@ public class CommonEmailProperties {
     private String placeholderPrefixDescription;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.sessionid}")
     private String placeholderSessionId;
-    @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.donotuse}")
-    private String placeholderDoNotUse;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.resource.name}")
     private String placeholderResourceName;
     @Value("${org.identifiers.cloud.hq.ws.registry.notifiers.placeholder.resource.description}")

@@ -4,12 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.NamespaceStatistics;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.time.Duration;
 
 @Component
 @Slf4j
@@ -22,9 +25,9 @@ public class StatisticsModel {
 
     final NamespaceRepository namespaceRepository;
     final RestTemplate restTemplate;
-    public StatisticsModel(NamespaceRepository namespaceRepository) {
+    public StatisticsModel(NamespaceRepository namespaceRepository, RestTemplateBuilder restTemplateBuilder) {
         this.namespaceRepository = namespaceRepository;
-        restTemplate = new RestTemplate();
+        restTemplate = restTemplateBuilder.setReadTimeout(Duration.ofMinutes(2)).build();
     }
 
     public boolean doesNamespaceExists(String prefix) {
@@ -46,7 +49,7 @@ public class StatisticsModel {
         return matomoRequestUrl;
     }
 
-    @Retryable(retryFor = RestClientException.class, backoff = @Backoff(maxDelay = 200))
+    @Retryable(retryFor = RestClientException.class, maxAttempts = 5, backoff = @Backoff(maxDelay = 200))
     public NamespaceStatistics getMatomoStatisticsFor(String prefix) {
         String matomoRequestUrl = getMatomoRequestUrl(prefix);
         return restTemplate.getForObject(matomoRequestUrl, NamespaceStatistics.class);

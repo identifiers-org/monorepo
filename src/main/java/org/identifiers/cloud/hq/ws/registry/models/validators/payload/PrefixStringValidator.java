@@ -1,7 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators.payload;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourcePayload;
 import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
@@ -14,8 +13,8 @@ import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 public class PrefixStringValidator extends RegistrationPayloadValidator {
-    final Predicate<String> validPrefixPredicate = Pattern.compile("^[a-z0-9_.]+$")
-                                                          .asPredicate();
+    static final Predicate<String> VALID_PREFIX_PREDICATE = Pattern.compile("^[a-z0-9_.]+$")
+                                                                   .asPredicate();
     final NamespaceService namespaceService;
 
 
@@ -35,7 +34,7 @@ public class PrefixStringValidator extends RegistrationPayloadValidator {
     @Override
     public Optional<String> validate(ServiceRequestRegisterPrefixPayload request, String valueLabel) {
         String prefix = request.getRequestedPrefix();
-        if (!validPrefixPredicate.test(prefix)) {
+        if (!VALID_PREFIX_PREDICATE.test(prefix)) {
             return Optional.of("Requested prefix can only contain lowercase characters, numbers, underscores and dots");
         }
 

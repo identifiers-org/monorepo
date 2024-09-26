@@ -7,6 +7,7 @@ import org.identifiers.cloud.hq.ws.registry.configuration.ValidatorsConfiguratio
 import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationSessionRepository;
 import org.identifiers.cloud.hq.ws.registry.data.services.NamespaceService;
+import org.identifiers.cloud.hq.ws.registry.data.services.ResourceService;
 import org.identifiers.cloud.hq.ws.registry.models.ResourceLifecycleManagementService;
 import org.identifiers.cloud.hq.ws.registry.models.ResourceRegistrationRequestManagementService;
 import org.identifiers.cloud.hq.ws.registry.models.helpers.AuthHelper;
@@ -44,6 +45,7 @@ import static org.springframework.http.HttpStatus.OK;
 })
 class ResourceManagementApiModelTest {
     @MockBean NamespaceService namespaceService;
+    @MockBean ResourceService resourceService;
     @MockBean AuthHelper authHelper;
     @MockBean ResourceRegistrationSessionRepository resourceRegistrationSessionRepository;
     @MockBean ResourceRegistrationRequestManagementService resourceRegistrationRequestManagementService;
@@ -57,17 +59,23 @@ class ResourceManagementApiModelTest {
         @Bean @Primary
         public RestTemplateBuilder builder() {
             RestTemplateBuilder builder = mock();
+            doReturn(builder).when(builder).setReadTimeout(any());
+            doReturn(builder).when(builder).setConnectTimeout(any());
+            doReturn(builder).when(builder).errorHandler(any());
+
             RestTemplate restTemplate = mock();
             var responseEntity = new ResponseEntity<Void>(OK);
             var badResponseEntity = new ResponseEntity<Void>(BAD_REQUEST);
 
-            doReturn(responseEntity)
-                    .when(restTemplate)
+            doReturn(responseEntity).when(restTemplate)
                     .exchange(contains("valid.com"), eq(GET), eq(null), eq(Void.class));
+            doReturn(responseEntity).when(restTemplate)
+                    .getForEntity(contains("valid.com"), eq(Void.class));
 
-            doReturn(badResponseEntity)
-                    .when(restTemplate)
+            doReturn(badResponseEntity).when(restTemplate)
                     .exchange(contains("invalid.com"), eq(GET), eq(null), eq(Void.class));
+            doReturn(badResponseEntity).when(restTemplate)
+                    .getForEntity(contains("invalid.com"), eq(Void.class));
 
             doReturn(restTemplate).when(builder).build();
 
@@ -133,6 +141,9 @@ class ResourceManagementApiModelTest {
 
     @Test
     void validateProviderUrlPattern() {
+        doReturn(null).when(resourceService)
+                .findSimilarByUrlPattern(anyString());
+
         var payload = new ServiceRequestRegisterResourcePayload();
         var request = new ServiceRequestRegisterResourceValidate();
         request.setPayload(payload);

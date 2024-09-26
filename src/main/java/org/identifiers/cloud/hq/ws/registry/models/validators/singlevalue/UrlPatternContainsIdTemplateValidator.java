@@ -1,6 +1,5 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators.singlevalue;
 
-import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.models.validators.SingleValueValidator;
 
 import java.util.Optional;

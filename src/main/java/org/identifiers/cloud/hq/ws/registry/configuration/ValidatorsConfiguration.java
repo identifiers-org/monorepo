@@ -1,34 +1,44 @@
 package org.identifiers.cloud.hq.ws.registry.configuration;
 
+import lombok.NonNull;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
 import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourcePayload;
 import org.identifiers.cloud.hq.ws.registry.data.services.NamespaceService;
+import org.identifiers.cloud.hq.ws.registry.data.services.ResourceService;
 import org.identifiers.cloud.hq.ws.registry.models.validators.*;
-import org.identifiers.cloud.hq.ws.registry.models.validators.payload.PrefixStringValidator;
-import org.identifiers.cloud.hq.ws.registry.models.validators.payload.ProviderCodeValueValidator;
-import org.identifiers.cloud.hq.ws.registry.models.validators.payload.SampleIdMatchesPatternValidator;
-import org.identifiers.cloud.hq.ws.registry.models.validators.payload.SampleUrlRequestValidator;
+import org.identifiers.cloud.hq.ws.registry.models.validators.payload.*;
 import org.identifiers.cloud.hq.ws.registry.models.validators.singlevalue.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
+import java.time.Duration;
 import java.util.Map;
 
 @Configuration
 public class ValidatorsConfiguration {
     final int minDescriptionLength;
     final NamespaceService namespaceService;
-    final RestTemplate restTemplate;
+    final ResourceService resourceService;
+    final RestTemplate urlValidatorRestTemplate;
     public ValidatorsConfiguration(@Value("${org.identifiers.cloud.hq.ws.registry.validation.mindescriptionlength}")
                                    int minDescriptionLength,
                                    RestTemplateBuilder restTemplateBuilder,
-                                   NamespaceService namespaceService) {
+                                   NamespaceService namespaceService,
+                                   ResourceService resourceService) {
         this.minDescriptionLength = minDescriptionLength;
         this.namespaceService = namespaceService;
-        this.restTemplate = restTemplateBuilder.build();
+        this.urlValidatorRestTemplate = restTemplateBuilder
+                .errorHandler(new NoopErrorHandler())
+                .setConnectTimeout(Duration.ofMinutes(2))
+                .setReadTimeout(Duration.ofMinutes(2))
+                .build();
+        this.resourceService = resourceService;
     }
 
 
@@ -61,13 +71,13 @@ public class ValidatorsConfiguration {
     }
 
     @Bean
-    public UrlValidator urlStringValidator() {
-        return new UrlValidator(restTemplate);
+    public UrlValidator urlValidator() {
+        return new UrlValidator(urlValidatorRestTemplate);
     }
 
     @Bean
     public RegistrationPayloadValidator sampleUrlRequestValidator() {
-        return new SampleUrlRequestValidator(urlStringValidator());
+        return new SampleUrlRequestValidator(urlValidator());
     }
 
     @Bean
@@ -90,6 +100,10 @@ public class ValidatorsConfiguration {
         return new UrlPatternContainsIdTemplateValidator();
     }
 
+    @Bean
+    public RegistrationPayloadValidator similarUrlTemplateValidator() {
+        return new SimilarUrlPatternValidator(resourceService);
+    }
 
 
 
@@ -117,7 +131,7 @@ public class ValidatorsConfiguration {
                 getLabelFor("providerHomeUrl"),
                 ServiceRequestRegisterPrefixPayload::getProviderHomeUrl,
                 ServiceRequestRegisterResourcePayload::getProviderHomeUrl,
-                isNotBlankValidator(), urlStringValidator());
+                isNotBlankValidator(), urlValidator());
     }
 
     @Bean("providerName")
@@ -171,7 +185,7 @@ public class ValidatorsConfiguration {
                 getLabelFor("institutionHomeUrl"),
                 ServiceRequestRegisterPrefixPayload::getInstitutionHomeUrl,
                 ServiceRequestRegisterResourcePayload::getInstitutionHomeUrl,
-                isNotBlankValidator(), urlStringValidator());
+                isNotBlankValidator(), urlValidator());
     }
 
     @Bean("institutionDescription")
@@ -207,7 +221,8 @@ public class ValidatorsConfiguration {
                 getLabelFor("providerUrlPattern"),
                 ServiceRequestRegisterPrefixPayload::getProviderUrlPattern,
                 ServiceRequestRegisterResourcePayload::getProviderUrlPattern,
-                isNotBlankValidator(), urlPatternContainsIdTemplateValidator(), sampleUrlRequestValidator());
+                isNotBlankValidator(), urlPatternContainsIdTemplateValidator(),
+                similarUrlTemplateValidator(), sampleUrlRequestValidator());
     }
 
     @Bean("sampleId")
@@ -265,7 +280,7 @@ public class ValidatorsConfiguration {
                 ServiceRequestRegisterPrefixPayload::isProtectedUrls,
                 ServiceRequestRegisterResourcePayload::getAuthHelpUrl,
                 ServiceRequestRegisterResourcePayload::isProtectedUrls,
-                isNotBlankValidator(), urlStringValidator());
+                isNotBlankValidator(), urlValidator());
     }
 
     @Bean("authHelpDescription")
@@ -337,5 +352,17 @@ public class ValidatorsConfiguration {
     );
     private static String getLabelFor(String attribute) {
         return translations.getOrDefault(attribute, attribute);
+    }
+
+    private static class NoopErrorHandler implements ResponseErrorHandler {
+        @Override
+        public boolean hasError(@NonNull ClientHttpResponse response) throws IOException {
+            return false;
+        }
+
+        @Override
+        public void handleError(@NonNull ClientHttpResponse response) throws IOException {
+            // Error handling done on validator
+        }
     }
 }

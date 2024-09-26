@@ -18,28 +18,28 @@ public class SampleUrlRequestValidator extends RegistrationPayloadValidator {
     final UrlValidator urlStringValidator;
 
     @Override
-    public Optional<String> validate(ServiceRequestRegisterResourcePayload request, String valueLabel) {
-        String urlPattern = request.getProviderUrlPattern();
-        String sampleId = request.getSampleId();
+    public Optional<String> validate(ServiceRequestRegisterResourcePayload resourceRequest, String valueLabel) {
+        String urlPattern = resourceRequest.getProviderUrlPattern();
+        String sampleId = resourceRequest.getSampleId();
         if (StringUtils.isAnyBlank(urlPattern, sampleId)) {
             log.debug("Accepting because one of required values is blank");
             return Optional.empty();
         }
 
         String url = getResourceUrlFor(urlPattern, sampleId);
-        return this.urlStringValidator.validate(url, valueLabel);
+        return this.urlStringValidator.validate(url, valueLabel, resourceRequest.isProtectedUrls());
     }
 
     @Override
-    public Optional<String> validate(ServiceRequestRegisterPrefixPayload request, String valueLabel) {
-        String urlPattern = request.getProviderUrlPattern();
-        String sampleId = request.getSampleId();
+    public Optional<String> validate(ServiceRequestRegisterPrefixPayload prefixRequest, String valueLabel) {
+        String urlPattern = prefixRequest.getProviderUrlPattern();
+        String sampleId = prefixRequest.getSampleId();
         if (StringUtils.isAnyBlank(urlPattern, sampleId)) {
             log.debug("Accepting because one of required values is blank");
             return Optional.empty();
         }
 
         String url = getResourceUrlFor(urlPattern, sampleId);
-        return this.urlStringValidator.validate(url, valueLabel);
+        return this.urlStringValidator.validate(url, valueLabel, prefixRequest.isProtectedUrls());
     }
 }

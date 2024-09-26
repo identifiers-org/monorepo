@@ -51,7 +51,11 @@ public class StatisticsController {
             response = ServiceResponse.getBaseResponse(stats);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (RestClientException e) {
-            log.error("Error on matomo get", e);
+            if (log.isDebugEnabled()) {
+                log.error("Error on matomo get", e);
+            } else {
+                log.error("Error on matomo get {}", e.getMessage());
+            }
             response = ServiceResponse.getBaseResponse();
             response.setErrorMessage(e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
