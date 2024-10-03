@@ -62,23 +62,19 @@ development_authenabled_env_down: development_authenabled_env_backend_down
 
 development_env_backend_up: tmp
 	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing backend UP"
-	@docker-compose -f $(docker_compose_development_file) up -d
-	@# TODO Clean this way of referencing the target name in future iterations
+	@docker compose -f $(docker_compose_development_file) up -d
 
 development_env_backend_down:
 	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing backend DOWN"
-	@docker-compose -f $(docker_compose_development_file) down
-	@# TODO Clean this way of referencing the target name in future iterations
+	@docker compose -f $(docker_compose_development_file) down
 
 development_authenabled_env_backend_up: tmp
 	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing backend UP"
-	@docker-compose -f $(docker_compose_development_authenabled_file) up -d
-	@# TODO Clean this way of referencing the target name in future iterations
+	@docker compose -f $(docker_compose_development_authenabled_file) up -d
 
 development_authenabled_env_backend_down:
 	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing backend DOWN"
-	@docker-compose -f $(docker_compose_development_authenabled_file) down
-	@# TODO Clean this way of referencing the target name in future iterations
+	@docker compose -f $(docker_compose_development_authenabled_file) down
 
 development_run_tests: development_env_up
 	@echo "<===|DEVOPS|===> [TESTS] Running Unit Tests"

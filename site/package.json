@@ -1,11 +1,11 @@
 {
   "name": "identifiers-org-cloud-hq-web-frontend",
   "browserslist": "> 0.5%, last 2 versions, not dead",
-  "version": "1.11.0",
+  "version": "1.12.0",
   "description": "Identifiers.org HQ web frontend written in js",
   "scripts": {
-    "start": "NODE_ENV=development parcel serve src/index.html --port 8182",
-    "build": "NODE_ENV=production parcel build src/index.html --dist-dir dist",
+    "start": "rm -Rf .parcel-cache; PARCEL_WORKERS=0 NODE_ENV=development parcel serve src/index.html --port 8182",
+    "build": "rm -Rf .parcel-cache; PARCEL_WORKERS=0 NODE_ENV=production parcel build src/index.html --dist-dir dist",
     "precommit": "lint-staged",
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d dist",
@@ -44,7 +44,7 @@
   "devDependencies": {
     "@babel/core": "^7.7.2",
     "@babel/plugin-proposal-class-properties": "^7.7.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
+    "@babel/plugin-transform-object-rest-spread": "^7.24.0",
     "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.7.1",
     "@babel/preset-react": "^7.7.0",
