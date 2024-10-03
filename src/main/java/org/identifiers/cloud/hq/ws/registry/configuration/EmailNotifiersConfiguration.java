@@ -15,9 +15,11 @@ import static org.identifiers.cloud.hq.ws.registry.models.RegistrationSessionAct
 @Configuration
 @RequiredArgsConstructor
 public class EmailNotifiersConfiguration {
+    // Ignore Intellij error on JavaMailSender, it is defined in one of spring boot's auto configurations
+    //  Seems to be a bug with how intellij loads properties and bean conditionals
     @NonNull final JavaMailSender javaMailSender;
-    @NonNull final Environment env;
     @NonNull final ResourceLoader resourceLoader;
+    @NonNull final Environment env;
 
     @Bean
     PrefixRegistrationSessionActionEmailNotifier prefixRequesterStartEmailNotificationAction(CommonEmailProperties commons) {

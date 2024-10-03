@@ -89,6 +89,8 @@ public class Resource {
 
     @Column(nullable = false)
     private boolean renderDeprecatedLanding = false;
+
+    @Column(nullable = true, length = 2000)
     private String deprecationStatement;
 
     @AssertTrue(message = "Deprecation information is not allowed for not deprecated resources")

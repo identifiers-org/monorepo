@@ -21,35 +21,4 @@ import org.springframework.retry.annotation.EnableRetry;
 @Configuration
 @EnableJpaAuditing
 @EnableRetry
-public class ApplicationConfiguration {
-    @Bean
-    public JavaMailSender getJavaMailSender(
-            @Value("${spring.mail.host}") String host,
-            @Value("${spring.mail.port}") int port,
-            @Value("${spring.mail.username}") String username,
-            @Value("${spring.mail.password}") String password,
-            @Value("${spring.mail.protocol}") String protocol,
-            @Value("${spring.mail.properties.mail.smtp.auth") String auth,
-            @Value("${spring.mail.properties.mail.smtp.starttls.enable") String tlsEnabled,
-            @Value("${spring.mail.properties.mail.smtp.starttls.required") String tlsRequired,
-            @Value("${spring.mail.properties.mail.debug") String debug
-    ) {
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost(host);
-        mailSender.setPort(port);
-
-        mailSender.setUsername(username);
-        mailSender.setPassword(password);
-
-        Properties props = mailSender.getJavaMailProperties();
-        props.put("mail.transport.protocol", protocol);
-        props.put("mail.smtp.auth", auth);
-        props.put("mail.smtp.starttls.enable", tlsEnabled);
-        props.put("mail.smtp.starttls.required", tlsRequired);
-        props.put("mail.debug", debug);
-        mailSender.setJavaMailProperties(props);
-
-        return mailSender;
-    }
-
-}
+public class ApplicationConfiguration {}

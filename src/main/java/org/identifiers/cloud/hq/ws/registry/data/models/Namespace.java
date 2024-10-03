@@ -97,7 +97,11 @@ public class Namespace {
     private Date deprecationOfflineDate; // Approximation of when date was made unavailable
 
     private boolean renderDeprecatedLanding = false;
+
+    @Column(nullable = true, length = 2000)
     private String deprecationStatement;
+
+    @Column(nullable = true, length = 2000)
     private String infoOnPostmortemAccess;
 
     @OneToOne
