@@ -282,6 +282,7 @@ public class SecurityConfiguration {
                 // Registry Insight API
                     .requestMatchers(HttpMethod.GET, "/registryInsightApi/getAllNamespacePrefixes").permitAll()
                     .requestMatchers(HttpMethod.GET, "/registryInsightApi/getEbiSearchDataset").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/registryInsightApi/getResourcesWithLowAvailability").permitAll()
                 // FAIR API
                     .requestMatchers(HttpMethod.POST, "/fairapi/coverage/**").permitAll()
                     .requestMatchers(HttpMethod.POST, "/fairapi/interoperability/**").permitAll()
