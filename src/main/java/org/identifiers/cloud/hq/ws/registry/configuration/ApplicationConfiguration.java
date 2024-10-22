@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.retry.annotation.EnableRetry;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * Project: registry
@@ -21,4 +22,5 @@ import org.springframework.retry.annotation.EnableRetry;
 @Configuration
 @EnableJpaAuditing
 @EnableRetry
+@EnableScheduling
 public class ApplicationConfiguration {}
