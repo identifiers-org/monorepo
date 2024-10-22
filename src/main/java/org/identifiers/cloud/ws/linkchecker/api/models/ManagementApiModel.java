@@ -24,7 +24,6 @@ import org.springframework.stereotype.Component;
 public class ManagementApiModel {
     private static final Logger logger = LoggerFactory.getLogger(ManagementApiModel.class);
 
-    @Autowired
     private HistoryTrackingService historyTrackingService;
 
     public ServiceResponseManagementRequest flushLinkCheckingHistory() {
@@ -42,5 +41,10 @@ public class ManagementApiModel {
             response.getPayload().setMessage("An error occurred while trying to flush link checking historical data, but DON'T PANIC, we'll get back on track");
         }
         return response;
+    }
+
+    @Autowired
+    public void setHistoryTrackingService(HistoryTrackingService historyTrackingService) {
+        this.historyTrackingService = historyTrackingService;
     }
 }
