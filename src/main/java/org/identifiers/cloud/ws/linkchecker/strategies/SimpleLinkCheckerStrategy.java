@@ -3,6 +3,7 @@ package org.identifiers.cloud.ws.linkchecker.strategies;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
@@ -12,8 +13,9 @@ import java.net.*;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
+
+import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
 
 /**
  * Project: link-checker
@@ -30,10 +32,14 @@ import java.sql.Timestamp;
 public class SimpleLinkCheckerStrategy implements LinkCheckerStrategy {
     private static final Logger logger = LoggerFactory.getLogger(SimpleLinkCheckerStrategy.class);
 
-
+    private final String userAgentStr;
     final HttpClient linkCheckerHttpClient;
-    SimpleLinkCheckerStrategy(@Autowired HttpClient linkCheckerHttpClient) {
+    SimpleLinkCheckerStrategy(@Autowired HttpClient linkCheckerHttpClient,
+                              @Value("${app.version}") String appVersion,
+                              @Value("${java.version}") String javaVersion,
+                              @Value("${app.homepage}") String appHomepage) {
         this.linkCheckerHttpClient = linkCheckerHttpClient;
+        this.userAgentStr = String.format("Java-http-client/%s +%s LinkChecker/%s", javaVersion, appHomepage, appVersion);
     }
 
     @Override
@@ -44,15 +50,21 @@ public class SimpleLinkCheckerStrategy implements LinkCheckerStrategy {
 
         HttpResponse<?> response;
         try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .method("HEAD", HttpRequest.BodyPublishers.noBody())
-                    .uri(checkingUrl.toURI()).build();
+            HttpRequest request = HttpRequest.newBuilder().GET()
+                    .uri(checkingUrl.toURI())
+                    .header("Accept", TEXT_HTML_VALUE)
+                    .header("User-Agent", userAgentStr)
+                    .version(HttpClient.Version.HTTP_1_1)
+                    .build();
             response = linkCheckerHttpClient.send(request, HttpResponse.BodyHandlers.discarding());
-        } catch (IOException | URISyntaxException |InterruptedException e) {
+        } catch (IOException | URISyntaxException | InterruptedException e) {
             report.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             report.setUrlAssessmentOk(false);
-            logger.info("[HTTP NaN] Exception when checking {}", report.getUrl());
-            logger.info("             message {}", e.getMessage());
+            if (logger.isDebugEnabled()) {
+                logger.info("[HTTP NaN] Exception when checking {}", report.getUrl(), e);
+            } else {
+                logger.info("[HTTP NaN] Exception when checking {}: {}", report.getUrl(), e.getMessage());
+            }
             if (e instanceof InterruptedException) Thread.currentThread().interrupt();
             return report;
         }

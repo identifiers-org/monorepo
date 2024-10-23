@@ -2,7 +2,6 @@ package org.identifiers.cloud.ws.linkchecker.api.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.identifiers.cloud.ws.linkchecker.api.models.LinkScoringApiModel;
-import org.identifiers.cloud.ws.linkchecker.services.HistoryTrackingServiceException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

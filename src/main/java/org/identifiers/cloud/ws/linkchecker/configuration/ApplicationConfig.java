@@ -1,6 +1,8 @@
 package org.identifiers.cloud.ws.linkchecker.configuration;
 
 import lombok.extern.slf4j.Slf4j;
+import nl.altindag.ssl.SSLFactory;
+import nl.altindag.ssl.util.CertificateUtils;
 import org.identifiers.cloud.libapi.services.ApiServicesFactory;
 import org.identifiers.cloud.libapi.services.ResolverService;
 import org.identifiers.cloud.ws.linkchecker.data.models.FlushHistoryTrackingDataMessage;
@@ -18,6 +20,7 @@ import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.support.collections.DefaultRedisList;
+import org.springframework.util.StringUtils;
 
 import java.net.http.HttpClient;
 import java.time.Duration;
@@ -129,12 +132,22 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public HttpClient linkCheckerHttpClient() {
+    public HttpClient linkCheckerHttpClient(@Value("${org.identifiers.cloud.ws.linkchecker.daemon.websiteswithtrustedcerts}")
+                                            String websitesWithTrustedCerts){
+        var sslFactoryBuilder = SSLFactory.builder().withDefaultTrustMaterial();
+        if (StringUtils.hasText(websitesWithTrustedCerts)) {
+            var urlCertificates = CertificateUtils.getCertificatesFromExternalSources(websitesWithTrustedCerts.split(","));
+            urlCertificates.values().forEach(sslFactoryBuilder::withTrustMaterial);
+        }
+
+        var sslFactory = sslFactoryBuilder.build();
         return HttpClient.newBuilder()
+                .sslContext(sslFactory.getSslContext())
+                .sslParameters(sslFactory.getSslParameters())
                 .followRedirects(HttpClient.Redirect.ALWAYS)
                 .connectTimeout(Duration.of(12, SECONDS))
                 .executor(Executors.newCachedThreadPool())
-                .version(HttpClient.Version.HTTP_2)
+                .version(HttpClient.Version.HTTP_1_1)
                 .build();
     }
 

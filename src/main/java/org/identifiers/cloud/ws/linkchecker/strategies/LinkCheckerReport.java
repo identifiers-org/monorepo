@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.strategies;
 
+import com.google.common.base.MoreObjects;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -28,4 +29,14 @@ public class LinkCheckerReport implements Serializable {
     // Checking strategy URL status evaluation. This is an assessment of the checked URL, on whether it is considered to
     // lead to a non-error resource, and it is calculated by the link checking strategy used.
     private boolean urlAssessmentOk = false;
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("url", url)
+                .add("timestamp", timestamp)
+                .add("httpStatus", httpStatus)
+                .add("urlAssessmentOk", urlAssessmentOk)
+                .toString();
+    }
 }

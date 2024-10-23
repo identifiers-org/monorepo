@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.net.MalformedURLException;
@@ -34,6 +35,7 @@ import java.util.concurrent.TimeUnit;
  * This daemon pulls link checking requests from a queue, runs them through a link checker, and lodges in the results.
  */
 @Component
+@ConditionalOnProperty(value = "org.identifiers.cloud.ws.linkchecker.daemon.periodiclinkcheckingtask.enabled")
 public class LinkCheckingTask implements Runnable{
     static final Logger logger = LoggerFactory.getLogger(LinkCheckingTask.class);
     static final Random random = new Random(System.currentTimeMillis());

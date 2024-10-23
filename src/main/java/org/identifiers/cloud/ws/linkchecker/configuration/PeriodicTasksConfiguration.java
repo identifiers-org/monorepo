@@ -13,18 +13,18 @@ import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
 import java.time.Instant;
 import java.util.Optional;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Configuration
 @EnableScheduling
 public class PeriodicTasksConfiguration implements SchedulingConfigurer {
-    final Logger periodicFeederTaskLogger = LoggerFactory.getLogger(PeriodicChecksFeederTask.class);
+    final Logger logger = LoggerFactory.getLogger(PeriodicTasksConfiguration.class);
 
     final LinkCheckingTask linkCheckingTask;
     final PeriodicChecksFeederTask periodicChecksFeederTask;
-    public PeriodicTasksConfiguration(@Autowired LinkCheckingTask linkCheckingTask,
+    public PeriodicTasksConfiguration(@Autowired(required = false)
+                                      LinkCheckingTask linkCheckingTask,
                                       @Autowired(required = false)
                                       PeriodicChecksFeederTask periodicFeederTask) {
         this.linkCheckingTask = linkCheckingTask;
@@ -40,11 +40,16 @@ public class PeriodicTasksConfiguration implements SchedulingConfigurer {
 
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
-        taskRegistrar.addTriggerTask(linkCheckingTask,
-                triggerContext -> Optional
-                        .ofNullable(triggerContext.lastActualExecution())
-                        .orElse(Instant.now())
-                        .plusSeconds(linkCheckingTask.getNextRandomWait()));
+        if (linkCheckingTask != null) {
+            taskRegistrar.addTriggerTask(linkCheckingTask,
+                    triggerContext -> Optional
+                            .ofNullable(triggerContext.lastActualExecution())
+                            .orElse(Instant.now())
+                            .plusSeconds(linkCheckingTask.getNextRandomWait()));
+        } else {
+            logger.warn(
+                    "--- [DISABLED] Periodic Link Checking ---");
+        }
 
         if (periodicChecksFeederTask != null) {
             taskRegistrar.addTriggerTask(periodicChecksFeederTask,
@@ -53,7 +58,7 @@ public class PeriodicTasksConfiguration implements SchedulingConfigurer {
                             .orElse(Instant.now())
                             .plusSeconds(periodicChecksFeederTask.getNextWaitTimeSeconds()));
         } else {
-            periodicFeederTaskLogger.warn(
+            logger.warn(
               "--- [DISABLED] Periodic Link Check Requester on Resolution Base Data ---");
         }
     }
