@@ -86,8 +86,8 @@ public class ResourceLifecycleManagementServiceSimpleStrategy implements Resourc
                 // Deprecate the resource
                 resource.setDeprecated(true);
                 resource.setDeprecationDate(new Date(System.currentTimeMillis()));
-                String newUrlPattern = deprecationUrlTemplate.replace(deprecationPlaceholderMirId, resource.getMirId()).replace(deprecationPlaceholderLuiPattern, patternLui);
-                resource.setUrlPattern(newUrlPattern);
+//                String newUrlPattern = deprecationUrlTemplate.replace(deprecationPlaceholderMirId, resource.getMirId()).replace(deprecationPlaceholderLuiPattern, patternLui);
+//                resource.setUrlPattern(newUrlPattern);
                 String message = String.format("Resource with ID '%d', MIR ID '%s' SUCCESSFULY DEPRECATED, its new URL pattern is '%s'", resource.getId(), resource.getMirId(), resource.getUrlPattern());
                 report.setAdditionalInformation(message);
                 log.info(message);
