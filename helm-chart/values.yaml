@@ -28,6 +28,8 @@ mailer:
     curators: "identifiers-org-curators@ebi.ac.uk"
 
 keycloak:
+  component: keycloak
+  tier: backend
   image: "identifiersorg/keycloak:6.0.1"
   requests:
     cpu: 300m
@@ -44,7 +46,9 @@ keycloak:
 
 
 registry:
-  image: "identifiersorg/cloud-hq-ws-registry:2.0.11"
+  component: registry
+  tier: api
+  image: "identifiersorg/cloud-hq-ws-registry:2.3.1"
   replicas: 2
   requests:
     cpu: 100m
@@ -58,9 +62,12 @@ registry:
   cors_origins: "*"
   api_uri: "https://registry.api.identifiers.org"
   base_uri: "https://registry.identifiers.org"
+  url_pattern_similarity_threshold: 0.90
 
 frontend:
-  image: "identifiersorg/cloud-hq-web-frontend:1.9.5"
+  component: web-hq
+  tier: frontend
+  image: "identifiersorg/cloud-hq-web-frontend:1.13.0"
   replicas: 3
   requests:
     cpu: 10m
@@ -68,6 +75,8 @@ frontend:
   port: 80
 
 redis:
+  component: redis
+  tier: backend
   image: redis:4.0.8-alpine
   requests:
     cpu: 300m
@@ -75,6 +84,8 @@ redis:
   port: 6379
 
 mirid_controller:
+  component: mirid-controller
+  tier: api
   image: "identifiersorg/cloud-hq-ws-mirid-controller:2.0.1"
   replicas: 1
   port: 8181
@@ -88,6 +99,8 @@ mirid_controller:
     port: 5432
 
 echo_headers:
+  component: nginx-echo-headers
+  tier: api
   image: "brndnmtthws/nginx-echo-headers"
   replicas: 1
   port: 8080
@@ -104,4 +117,3 @@ nodeAffinityRequirements:
 matomo:
   enabled: true
   base_url: "https://matomo.identifiers.org" #This should be without /matomo.php
-  auth_token: ~

@@ -1,22 +1,55 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: registry
+  name: {{ .Values.registry.component }}
 spec:
   selector:
     matchLabels:
-      tier: api
-      component: registry
+      tier: {{ .Values.registry.tier }}
+      component: {{ .Values.registry.component }}
       {{- (include "common_labels" .) | indent 6 }}
   replicas: {{ .Values.registry.replicas }}
   template:
     metadata:
       labels:
-        tier: api
-        component: registry
+        tier: {{ .Values.registry.tier }}
+        component: {{ .Values.registry.component }}
         {{- (include "common_labels" .) | indent 8 }}
     spec:
-      {{- (include "affinity_requirements" .) | indent 6 }}
+      affinity:
+        {{- (include "node_affinity_requirements" .) | indent 8 }}
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 50
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    {{- (include "common_label_match_expressions" .) | indent 20 }}
+                    - key: tier
+                      operator: In
+                      values:
+                        - {{ .Values.mirid_controller.tier }}
+                    - key: component
+                      operator: In
+                      values:
+                        - {{ .Values.mirid_controller.component }}
+                topologyKey: "kubernetes.io/hostname"
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    {{- (include "common_label_match_expressions" .) | indent 20 }}
+                    - key: tier
+                      operator: In
+                      values:
+                        - {{ .Values.registry.tier }}
+                    - key: component
+                      operator: In
+                      values:
+                        - {{ .Values.registry.component }}
+                topologyKey: "kubernetes.io/hostname"
       containers:
         - name: cloud-hq-ws-registry
           image: {{ .Values.registry.image }}
@@ -86,6 +119,8 @@ spec:
               value: {{ .Values.mailer.smtp_auth | quote }}
             - name: HQ_WS_REGISTRY_CONFIG_EMAIL_BOOLEAN_START_TLS
               value: {{ .Values.mailer.start_tls | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_EMAIL_BOOLEAN_DEBUG
+              value: "false"
             # E-mail Notifiers configuration - Common
             - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_FROM
               value: {{ .Values.mailer.notifications.from }}
@@ -95,60 +130,47 @@ spec:
               value: {{ .Values.mailer.notifications.curators | quote }}
             - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_EMAIL_SUPPORT
               value: {{ .Values.mailer.notifications.main | quote }}
-            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_PLACEHOLDER_DONOTUSE
-              value: "PLACEHOLDER_do_not_use_this"
             # E-mail Notifiers configuration - CURATOR - Prefix Registration Request START
             - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_CURATOR_PREFIXREG_START_TO
               value: {{ .Values.mailer.notifications.main | quote }}
             - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_CURATOR_PREFIXREG_START_CC
               value: {{ .Values.mailer.notifications.curators | quote }}
-            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_CURATOR_PREFIXREG_START_CCO
-              value: "PLACEHOLDER_do_not_use_this"
             # E-mail Notifiers configuration - REQUESTER - Prefix Registration Request START
             - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_START_CC
-              value: {{ .Values.mailer.notifications.curators | quote }}
-            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_START_CCO
-              value: "PLACEHOLDER_do_not_use_this"
+              value: ""
             # E-mail Notifiers configuration - REQUESTER - Prefix Registration Request ACCEPTANCE
             - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_ACCEPTANCE_CC
               value: {{ .Values.mailer.notifications.curators | quote }}
-            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_ACCEPTANCE_CCO
-              value: "PLACEHOLDER_do_not_use_this"
             # E-mail Notifiers configuration - REQUESTER - Prefix Registration Request REJECTION
             - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_REJECTION_CC
               value: {{ .Values.mailer.notifications.curators | quote }}
-            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_REJECTION_CCO
-              value: "PLACEHOLDER_do_not_use_this"
             # E-mail Notifiers configuration - CURATOR - Resource Registration Request START
             - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_CURATOR_RESOURCEREG_START_TO
               value: {{ .Values.mailer.notifications.main | quote }}
             - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_CURATOR_RESOURCEREG_START_CC
               value: {{ .Values.mailer.notifications.curators | quote }}
-            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_CURATOR_RESOURCEREG_START_CCO
-              value: "PLACEHOLDER_do_not_use_this"
             # E-mail Notifiers configuration - REQUESTER - Resource Registration Request START
             - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_START_CC
-              value: {{ .Values.mailer.notifications.curators | quote }}
-            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_START_CCO
-              value: "PLACEHOLDER_do_not_use_this"
+              value: ""
             # E-mail Notifiers configuration - REQUESTER - Resource Registration Request ACCEPTANCE
             - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_ACCEPTANCE_CC
               value: {{ .Values.mailer.notifications.curators | quote }}
-            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_ACCEPTANCE_CCO
-              value: "PLACEHOLDER_do_not_use_this"
             # E-mail Notifiers configuration - REQUESTER - Resource Registration Request REJECTION
             - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_REJECTION_CC
               value: {{ .Values.mailer.notifications.curators | quote }}
-            - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_REJECTION_CCO
-              value: "PLACEHOLDER_do_not_use_this"
             - name: MATOMO_AUTH_TOKEN
-              value: {{ .Values.matomo.auth_token | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: matomo-credentials
+                  key: auth_token
             - name: MATOMO_ENABLED
               value: {{ .Values.matomo.enabled | quote }}
             - name: MATOMO_BASE_URL
               value: {{ .Values.matomo.base_url | default "" | quote }}
             - name: HQ_WS_REGISTRY_CONFIG_BACKEND_REQUIRED_ROLE
               value: {{ .Values.actuator_auth.role | quote }}
+            - name: HQ_WS_REGISTRY_CONFIG_URL_PATTERN_SIMILARITY_THRESHOLD
+              value: {{ .Values.registry.url_pattern_similarity_threshold | quote }}
             {{- range $key, $val := .Values.registry.env }}
             - name: {{ $key }}
               value: {{ $val | quote }}
@@ -179,17 +201,17 @@ kind: Service
 metadata:
   annotations:
     cloud.google.com/neg: '{"ingress":false}'
-  name: registry
+  name: {{ .Values.registry.component }}
   labels:
-    tier: api
-    component: registry
+    tier: {{ .Values.registry.tier }}
+    component: {{ .Values.registry.component }}
     {{- (include "common_labels" .) | indent 4 }}
 spec:
   ports:
     - port: {{ .Values.registry.port }}
   selector:
-    tier: api
-    component: registry
+    tier: {{ .Values.registry.tier }}
+    component: {{ .Values.registry.component }}
     {{- (include "common_labels" .) | indent 4 }}
 ---
 apiVersion: v1
@@ -197,16 +219,16 @@ kind: Service
 metadata:
   annotations:
     cloud.google.com/neg: '{"ingress":false}'
-  name: nodeport-registry
+  name: nodeport-{{ .Values.registry.component }}
   labels:
-    tier: api
-    component: registry
+    tier: {{ .Values.registry.tier }}
+    component: {{ .Values.registry.component }}
     {{- (include "common_labels" .) | indent 4 }}
 spec:
   ports:
     - port: {{ .Values.registry.port }}
   selector:
-    tier: api
-    component: registry
+    tier: {{ .Values.registry.tier }}
+    component: {{ .Values.registry.component }}
     {{- (include "common_labels" .) | indent 4 }}
   type: NodePort

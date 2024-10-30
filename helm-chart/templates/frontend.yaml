@@ -2,26 +2,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: web-hq
+  name: {{ .Values.frontend.component }}
   labels:
-    tier: frontend
-    component: web-hq
+    tier: {{ .Values.frontend.tier }}
+    component: {{ .Values.frontend.component }}
     {{- (include "common_labels" .) | indent 4 }}
 spec:
   selector:
     matchLabels:
-      tier: frontend
-      component: web-hq
+      tier: {{ .Values.frontend.tier }}
+      component: {{ .Values.frontend.component }}
       {{- (include "common_labels" .) | indent 6 }}
   replicas: {{ .Values.frontend.replicas }}
   template:
     metadata:
       labels:
-        tier: "frontend"
-        component: "web-hq"
+        tier: {{ .Values.frontend.tier }}
+        component: {{ .Values.frontend.component }}
         {{- (include "common_labels" .) | indent 8 }}
     spec:
-      {{- (include "affinity_requirements" .) | indent 6 }}
+      affinity:
+        {{- (include "node_affinity_requirements" .) | indent 8 }}
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    {{- (include "common_label_match_expressions" .) | indent 20 }}
+                    - key: tier
+                      operator: In
+                      values:
+                        - {{ .Values.frontend.tier }}
+                    - key: component
+                      operator: In
+                      values:
+                        - {{ .Values.frontend.component }}
+                topologyKey: "kubernetes.io/hostname"
       containers:
         - name: hq-registry-web
           image: {{ .Values.frontend.image }}
@@ -57,17 +74,17 @@ kind: Service
 metadata:
   annotations:
     cloud.google.com/neg: '{"ingress":false}'
-  name: nodeport-web-hq
+  name: nodeport-{{ .Values.frontend.component }}
   labels:
-    tier: frontend
+    tier: {{ .Values.frontend.tier }}
+    component: {{ .Values.frontend.component }}
     {{- (include "common_labels" .) | indent 4 }}
-    component: web-hq
 spec:
   ports:
     - port: {{ .Values.frontend.port }}
   selector:
-    tier: frontend
+    tier: {{ .Values.frontend.tier }}
+    component: {{ .Values.frontend.component }}
     {{- (include "common_labels" .) | indent 4 }}
-    component: web-hq
   type: NodePort
 ---

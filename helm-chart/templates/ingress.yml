@@ -29,7 +29,7 @@ spec:
         paths:
         - backend:
             service:
-              name: nodeport-registry
+              name: nodeport-{{ .Values.registry.component }}
               port:
                 number: {{ .Values.registry.port }}
           pathType: ImplementationSpecific
@@ -39,7 +39,7 @@ spec:
         paths:
         - backend:
             service:
-              name: nodeport-mirid-controller
+              name: nodeport-{{ .Values.mirid_controller.component }}
               port:
                 number: {{ .Values.mirid_controller.port }}
           pathType: ImplementationSpecific
@@ -49,7 +49,7 @@ spec:
         paths:
         - backend:
             service:
-              name: nodeport-web-hq
+              name: nodeport-{{ .Values.frontend.component }}
               port:
                 number: {{ .Values.frontend.port }}
           pathType: ImplementationSpecific
@@ -59,7 +59,7 @@ spec:
         paths:
         - backend:
             service:
-              name: nodeport-keycloak
+              name: nodeport-{{ .Values.keycloak.component }}
               port:
                 number: {{ .Values.keycloak.port }}
           pathType: ImplementationSpecific
