@@ -8,6 +8,9 @@ import org.identifiers.cloud.libapi.services.ResolverService;
 import org.identifiers.cloud.ws.linkchecker.data.models.FlushHistoryTrackingDataMessage;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
+import org.identifiers.cloud.ws.linkchecker.strategies.LinkCheckerStrategy;
+import org.identifiers.cloud.ws.linkchecker.strategies.MultiUserAgentLinkCheckerStrategy;
+import org.identifiers.cloud.ws.linkchecker.strategies.SimpleLinkCheckerStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -132,11 +135,17 @@ public class ApplicationConfig {
     }
 
     @Bean
+    public ResolverService serviceResponseResolve() {
+        return ApiServicesFactory.getResolverService(wsResolverHost, wsResolverPort);
+    }
+
+    @Bean
     public HttpClient linkCheckerHttpClient(@Value("${org.identifiers.cloud.ws.linkchecker.daemon.websiteswithtrustedcerts}")
                                             String websitesWithTrustedCerts){
         var sslFactoryBuilder = SSLFactory.builder().withDefaultTrustMaterial();
         if (StringUtils.hasText(websitesWithTrustedCerts)) {
-            var urlCertificates = CertificateUtils.getCertificatesFromExternalSources(websitesWithTrustedCerts.split(","));
+            var websiteList = websitesWithTrustedCerts.split(",");
+            var urlCertificates = CertificateUtils.getCertificatesFromExternalSources(websiteList);
             urlCertificates.values().forEach(sslFactoryBuilder::withTrustMaterial);
         }
 
@@ -152,7 +161,15 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public ResolverService serviceResponseResolve() {
-        return ApiServicesFactory.getResolverService(wsResolverHost, wsResolverPort);
+    LinkCheckerStrategy linkCheckerStrategy(
+            @Value("${org.identifiers.cloud.ws.linkchecker.daemon.periodiclinkcheckingtask.strategy}")
+            String strategyToUse, HttpClient linkCheckerHttpClient,
+            @Value("${app.version}") String appVersion,
+            @Value("${java.version}") String javaVersion,
+            @Value("${app.homepage}") String appHomepage
+    ) {
+        return strategyToUse.equalsIgnoreCase("simple") ?
+                new SimpleLinkCheckerStrategy(linkCheckerHttpClient, appVersion, javaVersion, appHomepage) :
+                new MultiUserAgentLinkCheckerStrategy(linkCheckerHttpClient, appVersion, javaVersion, appHomepage);
     }
 }

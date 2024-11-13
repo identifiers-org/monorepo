@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.periodictasks;
 
+import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
 import org.identifiers.cloud.libapi.models.resolver.ServiceResponseResolve;
 import org.identifiers.cloud.libapi.services.ResolverService;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
@@ -68,18 +69,18 @@ public class PeriodicChecksFeederTask implements Runnable{
             logger.info("Queuing link check requests for #{} entries from the Resolution insight API",
                     insightResponse.getPayload().getResolvedResources().size());
             insightResponse.getPayload().getResolvedResources()
-                    .parallelStream().forEach(resolvedResource -> {
-
-                linkCheckRequestQueue.add(new LinkCheckRequest()
-                        .setUrl(resolvedResource.getCompactIdentifierResolvedUrl())
-                        .setResourceId(Long.toString(resolvedResource.getId()))
-                        .setAccept401or403(resolvedResource.isProtectedUrls()));
-
-                linkCheckRequestQueue.add(new LinkCheckRequest()
-                        .setUrl(resolvedResource.getResourceHomeUrl())
-                        .setProviderId(Long.toString(resolvedResource.getId()))
-                        .setAccept401or403(false));
-            });
+                    .parallelStream()
+                    .filter(PeriodicChecksFeederTask::isNotDeprecated)
+                    .forEach(resolvedResource -> {
+                        linkCheckRequestQueue.add(new LinkCheckRequest()
+                                .setUrl(resolvedResource.getCompactIdentifierResolvedUrl())
+                                .setResourceId(Long.toString(resolvedResource.getId()))
+                                .setAccept401or403(resolvedResource.isProtectedUrls()));
+                        linkCheckRequestQueue.add(new LinkCheckRequest()
+                                .setUrl(resolvedResource.getResourceHomeUrl())
+                                .setProviderId(Long.toString(resolvedResource.getId()))
+                                .setAccept401or403(false));
+                    });
         } else {
             logger.error("Got HTTP Status '{}' from Resolution Service Insight API, reason '{}', " +
                             "SKIPPING this link checking request iteration",
@@ -88,7 +89,6 @@ public class PeriodicChecksFeederTask implements Runnable{
             // Adjust the time to wait before checking the insight api again
             waitTimeSeconds = getErrorWaitTimeSeconds();
         }
-        logger.info("Waiting {}s before we check again for resolution insight data", waitTimeSeconds);
     }
 
     long getErrorWaitTimeSeconds() {
@@ -97,5 +97,9 @@ public class PeriodicChecksFeederTask implements Runnable{
 
     long getRandomWaitTimeSeconds() {
         return random.nextLong(waitTimeMinBeforeNextRequest.getSeconds());
+    }
+
+    private static boolean isNotDeprecated(ResolvedResource resource) {
+        return !resource.isDeprecatedNamespace() && !resource.isDeprecatedResource();
     }
 }

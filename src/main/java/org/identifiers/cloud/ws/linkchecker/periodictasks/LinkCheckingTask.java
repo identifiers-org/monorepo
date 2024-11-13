@@ -63,9 +63,7 @@ public class LinkCheckingTask implements Runnable{
 
 
     public long getNextRandomWait() {
-        long waitTimeSeconds = random.nextLong(waitTimeLimit.getSeconds());
-        logger.info("Random wait {}s", waitTimeSeconds);
-        return waitTimeSeconds;
+        return random.nextLong(waitTimeLimit.getSeconds());
     }
 
     @Override

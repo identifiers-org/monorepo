@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.TriggerContext;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
@@ -19,7 +20,8 @@ import java.util.concurrent.Executors;
 @Configuration
 @EnableScheduling
 public class PeriodicTasksConfiguration implements SchedulingConfigurer {
-    final Logger logger = LoggerFactory.getLogger(PeriodicTasksConfiguration.class);
+    final Logger feederTaskLogger = LoggerFactory.getLogger(PeriodicChecksFeederTask.class);
+    final Logger checkingTaskLogger = LoggerFactory.getLogger(LinkCheckingTask.class);
 
     final LinkCheckingTask linkCheckingTask;
     final PeriodicChecksFeederTask periodicChecksFeederTask;
@@ -40,26 +42,36 @@ public class PeriodicTasksConfiguration implements SchedulingConfigurer {
 
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+        final Logger configLogger = LoggerFactory.getLogger(PeriodicTasksConfiguration.class);
         if (linkCheckingTask != null) {
-            taskRegistrar.addTriggerTask(linkCheckingTask,
-                    triggerContext -> Optional
-                            .ofNullable(triggerContext.lastActualExecution())
-                            .orElse(Instant.now())
-                            .plusSeconds(linkCheckingTask.getNextRandomWait()));
+            taskRegistrar.addTriggerTask(linkCheckingTask, this::getNextRunForLinkCheckingTask);
         } else {
-            logger.warn(
-                    "--- [DISABLED] Periodic Link Checking ---");
+            configLogger.warn("--- [DISABLED] Periodic Link Checking ---");
         }
 
         if (periodicChecksFeederTask != null) {
-            taskRegistrar.addTriggerTask(periodicChecksFeederTask,
-                    triggerContext -> Optional
-                            .ofNullable(triggerContext.lastActualExecution())
-                            .orElse(Instant.now())
-                            .plusSeconds(periodicChecksFeederTask.getNextWaitTimeSeconds()));
+            taskRegistrar.addTriggerTask(periodicChecksFeederTask, this::getNextRunForCheckFeederTask);
         } else {
-            logger.warn(
-              "--- [DISABLED] Periodic Link Check Requester on Resolution Base Data ---");
+            configLogger.warn("--- [DISABLED] Periodic check request feeder ---");
         }
+    }
+
+
+    private Instant getNextRunForLinkCheckingTask(TriggerContext triggerContext) {
+        var waitSeconds = linkCheckingTask.getNextRandomWait();
+        var nextRun = Optional.ofNullable(triggerContext.lastCompletion())
+                              .orElse(Instant.now())
+                              .plusSeconds(waitSeconds);
+        checkingTaskLogger.info("Next run of link checker after {}s, at {}", waitSeconds, nextRun);
+        return nextRun;
+    }
+
+    private Instant getNextRunForCheckFeederTask(TriggerContext triggerContext) {
+        var waitSeconds = periodicChecksFeederTask.getNextWaitTimeSeconds();
+        var nextRun = Optional.ofNullable(triggerContext.lastCompletion())
+                              .orElse(Instant.now())
+                              .plusSeconds(waitSeconds);
+        feederTaskLogger.info("Next run of feeder task after {}s, at {}", waitSeconds, nextRun);
+        return nextRun;
     }
 }
