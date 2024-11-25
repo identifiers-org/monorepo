@@ -35,16 +35,16 @@ class DebugIssuesWithLinkCheckerStrategyTest {
     LinkCheckerStrategy linkCheckerStrategy;
 
     static final List<String> UNPROTECTED_URLS = List.of(
-            "ftp://ftp.embl-heidelberg.de/pub/databases/protein_extras/hssp/102l.hssp.bz2",
-            "ftp://ftp.cmbi.ru.nl/pub/molbio/data/hssp/102l.hssp.bz2"
+//            "ftp://ftp.embl-heidelberg.de/pub/databases/protein_extras/hssp/102l.hssp.bz2",
+//            "ftp://ftp.cmbi.ru.nl/pub/molbio/data/hssp/102l.hssp.bz2"
 //            "https://getentry.ddbj.nig.ac.jp/getentry?database=ddbj&accession_number=X58356",
 //            "http://www.ddbj.nig.ac.jp/"
 //            "https://www.uniprot.org/",
 //            "http://purl.uniprot.org/uniprot/P0DP23",
-//            "https://omim.org/",
-//            "https://omim.org/entry/603903",
-//            "http://mirror.omim.org/",
-//            "http://mirror.omim.org/entry/603903",
+            "https://omim.org/",
+            "https://omim.org/entry/603903",
+            "http://mirror.omim.org/",
+            "http://mirror.omim.org/entry/603903"
 //            "http://www.proteopedia.org/",
 //            "http://proteopedia.org/wiki/index.php/2gc4",
 //            "https://pdbj.org/",

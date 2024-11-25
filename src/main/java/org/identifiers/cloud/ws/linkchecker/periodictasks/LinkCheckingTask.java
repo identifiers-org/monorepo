@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.periodictasks;
 
+import jakarta.annotation.PostConstruct;
 import org.identifiers.cloud.ws.linkchecker.channels.PublisherException;
 import org.identifiers.cloud.ws.linkchecker.channels.linkcheckresults.LinkCheckResultsPublisher;
 import org.identifiers.cloud.ws.linkchecker.data.LinkCheckModelsHelper;
@@ -15,7 +16,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -41,6 +44,8 @@ public class LinkCheckingTask implements Runnable{
     static final Random random = new Random(System.currentTimeMillis());
 
 
+    @Value("${org.identifiers.cloud.ws.linkchecker.daemon.linkchecker.waittime.min}")
+    Duration minWaitTime;
     @Value("${org.identifiers.cloud.ws.linkchecker.daemon.linkchecker.waittime.max}")
     Duration waitTimeLimit;
     @Value("${org.identifiers.cloud.ws.linkchecker.daemon.linkchecker.waittime.polltimeout}")
@@ -61,9 +66,15 @@ public class LinkCheckingTask implements Runnable{
         this.linkCheckResultsPublisher = linkCheckResultsPublisher;
     }
 
+    @PostConstruct
+    void checkDurationParameters() {
+        logger.info("Checking wait time between {} and {}. {}", minWaitTime, waitTimeLimit, minWaitTime.compareTo(waitTimeLimit));
+        Assert.state(minWaitTime.compareTo(waitTimeLimit) < 0,
+                "Invalid link checking configuration: Min wait time between checking task must be less than limit");
+    }
 
     public long getNextRandomWait() {
-        return random.nextLong(waitTimeLimit.getSeconds());
+        return random.nextLong(minWaitTime.getSeconds(), waitTimeLimit.getSeconds()+1);
     }
 
     @Override
@@ -82,11 +93,18 @@ public class LinkCheckingTask implements Runnable{
                     persist(linkCheckResult);
                     announce(linkCheckResult);
                 } else {
-                    logger.info("Failed to attend link check");
+                    logger.warn("Failed to attend link check");
                 }
                 linkCheckRequest = nextLinkCheckRequest();
             }
-        } catch (RuntimeException e) {
+        } catch (RedisConnectionFailureException ex) {
+            String msg = "Failed to connect to redis for next check request";
+            if (logger.isDebugEnabled()) {
+                logger.error(msg, ex);
+            } else {
+                logger.error("{}: {}", msg, ex.getMessage());
+            }
+        } catch (Exception e) {
             logger.error("An error has been stopped for preventing the task from crashing", e);
         }
         logger.debug("--- [END] Link Checker Task ---");
@@ -98,6 +116,7 @@ public class LinkCheckingTask implements Runnable{
             return linkCheckRequestQueue.pollFirst(waitTimePoolLinkCheckRequestQueue.getSeconds(), TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             logger.warn("The Link Check Request Queue is unresponsive, operation timed out, {}", e.getMessage());
+            Thread.currentThread().interrupt();
         }
         return null;
     }

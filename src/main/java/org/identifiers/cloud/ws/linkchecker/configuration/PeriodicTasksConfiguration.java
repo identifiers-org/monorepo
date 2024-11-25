@@ -10,12 +10,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TriggerContext;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
 import java.time.Instant;
 import java.util.Optional;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @Configuration
 @EnableScheduling
@@ -35,13 +34,15 @@ public class PeriodicTasksConfiguration implements SchedulingConfigurer {
 
 
     @Bean(destroyMethod="shutdown")
-    public ExecutorService taskExecutor() {
-        return Executors.newScheduledThreadPool(2);
+    public ThreadPoolTaskScheduler taskScheduler() {
+        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+        scheduler.setPoolSize(2);
+        return scheduler;
     }
-
 
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+        taskRegistrar.setTaskScheduler(taskScheduler());
         final Logger configLogger = LoggerFactory.getLogger(PeriodicTasksConfiguration.class);
         if (linkCheckingTask != null) {
             taskRegistrar.addTriggerTask(linkCheckingTask, this::getNextRunForLinkCheckingTask);
@@ -57,7 +58,7 @@ public class PeriodicTasksConfiguration implements SchedulingConfigurer {
     }
 
 
-    private Instant getNextRunForLinkCheckingTask(TriggerContext triggerContext) {
+    public Instant getNextRunForLinkCheckingTask(TriggerContext triggerContext) {
         var waitSeconds = linkCheckingTask.getNextRandomWait();
         var nextRun = Optional.ofNullable(triggerContext.lastCompletion())
                               .orElse(Instant.now())
@@ -66,7 +67,7 @@ public class PeriodicTasksConfiguration implements SchedulingConfigurer {
         return nextRun;
     }
 
-    private Instant getNextRunForCheckFeederTask(TriggerContext triggerContext) {
+    public Instant getNextRunForCheckFeederTask(TriggerContext triggerContext) {
         var waitSeconds = periodicChecksFeederTask.getNextWaitTimeSeconds();
         var nextRun = Optional.ofNullable(triggerContext.lastCompletion())
                               .orElse(Instant.now())
