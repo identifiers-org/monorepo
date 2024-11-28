@@ -29,7 +29,7 @@ public class PeriodicTasksConfiguration implements SchedulingConfigurer {
         taskRegistrar.setScheduler(taskExecutor);
         taskRegistrar.addTriggerTask(resolverDataUpdater,
                 triggerContext -> Optional
-                        .ofNullable(triggerContext.lastActualExecution())
+                        .ofNullable(triggerContext.lastCompletion())
                         .orElse(Instant.now())
                         .plusSeconds(resolverDataUpdater.getNextWait()));
     }
