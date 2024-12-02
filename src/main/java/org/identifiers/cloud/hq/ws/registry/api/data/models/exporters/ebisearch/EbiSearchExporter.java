@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ebisearch;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ExportedDocument;
 import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.RegistryExporter;
@@ -7,7 +8,6 @@ import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.RegistryEx
 import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.models.SchemaOrgMetadataProvider;
 import org.identifiers.cloud.hq.ws.registry.models.schemaorg.DataCatalog;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
@@ -16,11 +16,11 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-@Component
 @Slf4j
+@Component
+@RequiredArgsConstructor
 public class EbiSearchExporter implements RegistryExporter {
-    @Autowired
-    SchemaOrgMetadataProvider schemaOrgMetadataProvider;
+    final SchemaOrgMetadataProvider schemaOrgMetadataProvider;
 
     @Override
     public ExportedDocument export(List<Namespace> namespaces) throws RegistryExporterException {
@@ -46,7 +46,7 @@ public class EbiSearchExporter implements RegistryExporter {
     private Entry getEntryFromNamespace(Namespace namespace) {
         Entry newEntry = new Entry();
         
-        List<Field> fields = getFieldsOfNamespace(namespace);
+        List<Field> fields = getFieldsOf(namespace);
         newEntry.setFields(fields);
         
         List<Ref> references = Collections.emptyList();
@@ -67,7 +67,7 @@ public class EbiSearchExporter implements RegistryExporter {
         return String.format("https://identifiers.org/%s", namespace.getPrefix());
     }
 
-    private List<Field> getFieldsOfNamespace(Namespace namespace) {
+    private List<Field> getFieldsOf(Namespace namespace) {
         List<Field> fields = new LinkedList<>();
 
         fields.add(new Field("id", format(namespace.getId())));
@@ -75,6 +75,7 @@ public class EbiSearchExporter implements RegistryExporter {
         fields.add(new Field("description", namespace.getDescription()));
         fields.add(new Field("prefix", namespace.getPrefix()));
         fields.add(new Field("mir_id", namespace.getMirId()));
+        fields.add(new Field("lui_pattern", namespace.getPattern()));
 
         fields.add(new Field("creation_date", format(namespace.getCreated())));
         fields.add(new Field("modification_date", format(namespace.getModified())));
@@ -85,6 +86,14 @@ public class EbiSearchExporter implements RegistryExporter {
         }
 
         fields.add(new Field("landing_page", genLandingPageUrl(namespace)));
+
+        for (var resource : namespace.getResources()) {
+            fields.add(new Field("resource_name", resource.getName()));
+            fields.add(new Field("mir_id", resource.getMirId()));
+            fields.add(new Field("institution_name", resource.getInstitution().getName()));
+            fields.add(new Field("description", resource.getDescription()));
+            fields.add(new Field("description", resource.getInstitution().getDescription()));
+        }
 
         return fields;
     }

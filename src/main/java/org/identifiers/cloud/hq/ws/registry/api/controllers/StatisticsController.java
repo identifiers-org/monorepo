@@ -5,7 +5,6 @@ import org.identifiers.cloud.hq.ws.registry.api.data.models.NamespaceStatistics;
 import org.identifiers.cloud.hq.ws.registry.api.models.StatisticsModel;
 import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponse;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,7 +48,7 @@ public class StatisticsController {
             NamespaceStatistics stats = model.getMatomoStatisticsFor(prefix);
             log.debug("Found statistics for {}: {}", prefix, stats);
             response = ServiceResponse.getBaseResponse(stats);
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return ResponseEntity.ok().body(response);
         } catch (RestClientException e) {
             if (log.isDebugEnabled()) {
                 log.error("Error on matomo get", e);
@@ -58,7 +57,7 @@ public class StatisticsController {
             }
             response = ServiceResponse.getBaseResponse();
             response.setErrorMessage(e.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.internalServerError().body(response);
         }
     }
 }

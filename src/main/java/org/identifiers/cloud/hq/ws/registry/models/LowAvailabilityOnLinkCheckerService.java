@@ -20,7 +20,7 @@ import static org.springframework.http.HttpMethod.GET;
  */
 @Slf4j
 @Service
-@ConditionalOnProperty(value = "org.identifiers.cloud.hq.ws.registry.services.link-checker.host")
+@ConditionalOnProperty(value = "org.identifiers.cloud.hq.ws.registry.services.link-checker.enabled", havingValue = "true")
 public class LowAvailabilityOnLinkCheckerService {
     private final RestTemplate restTemplate;
 
