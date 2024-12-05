@@ -5,6 +5,7 @@ import CurationInstitutionList from '../CurationDashboardPage/CurationInstitutio
 import PageTitle from '../common/PageTitle';
 import PrefixRegistrationSessionList from '../CurationDashboardPage/PrefixRegistrationSessionList';
 import ResourceRegistrationSessionList from '../CurationDashboardPage/ResourceRegistrationSessionList';
+import CurationWarningList from '../CurationDashboardPage/CurationWarningList'
 
 import { useMatomo } from '@jonkoops/matomo-tracker-react';
 
@@ -38,6 +39,18 @@ const CurationDashboardPage = () => {
       <div className="row mb-5">
         <div className="col">
           <ResourceRegistrationSessionList />
+        </div>
+      </div>
+
+      <PageTitle
+        icon="icon-exclamation-triangle"
+        title="Curation warnings"
+        description="This is a list of warnings that require curator attention. Read their description and act as needed."
+      />
+
+      <div className="row mb-5">
+        <div className="col">
+          <CurationWarningList />
         </div>
       </div>
 

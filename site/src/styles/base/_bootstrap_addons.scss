@@ -131,3 +131,23 @@
 .bg-gray {
   background: #eaeaea;
 }
+
+div.list-as-two-column-table {
+  display: grid;
+  grid-auto-columns: max-content 1fr;
+  grid-template-areas: "a a";
+  .t-row {
+    display: contents;
+    & > :nth-child(1) {
+      padding-left: .5rem;
+    }
+    & > :nth-child(2) {
+      padding-left: 1.5rem;
+      padding-right: .5rem;
+    }
+  }
+  &.striped .t-row:nth-child(2n+1) > *,
+  &:not(.striped) .t-row:hover > * {
+    background-color: #0000000d;
+  }
+}
