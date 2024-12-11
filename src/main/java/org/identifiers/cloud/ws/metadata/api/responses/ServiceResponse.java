@@ -1,6 +1,10 @@
 package org.identifiers.cloud.ws.metadata.api.responses;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+import org.identifiers.cloud.ws.metadata.api.ApiCentral;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
@@ -12,47 +16,22 @@ import java.io.Serializable;
  * Timestamp: 2018-03-06 11:32
  * ---
  */
+@Getter @Setter @Accessors(chain = true)
 @JsonIgnoreProperties(ignoreUnknown = true, value = {"httpStatus"})
-public class ServiceResponse<T> implements Serializable {
-    private String apiVersion;
+public class ServiceResponse<T extends Serializable> implements Serializable {
+    private String apiVersion = ApiCentral.apiVersion;
     private String errorMessage;
     private HttpStatus httpStatus = HttpStatus.OK;
-    // payload
     private T payload;
 
-    public String getApiVersion() {
-        return apiVersion;
+    public static <T extends Serializable> ServiceResponse<T> of(T payload) {
+        return new ServiceResponse<T>().setPayload(payload);
     }
 
-    public ServiceResponse setApiVersion(String apiVersion) {
-        this.apiVersion = apiVersion;
-        return this;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public ServiceResponse setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-        return this;
-    }
-
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
-
-    public ServiceResponse setHttpStatus(HttpStatus httpStatus) {
-        this.httpStatus = httpStatus;
-        return this;
-    }
-
-    public T getPayload() {
-        return payload;
-    }
-
-    public ServiceResponse setPayload(T payload) {
-        this.payload = payload;
-        return this;
+    public static <T extends Serializable> ServiceResponse<T>
+                ofError(HttpStatus status, String message) {
+        return new ServiceResponse<T>()
+                .setErrorMessage(message)
+                .setHttpStatus(status);
     }
 }
