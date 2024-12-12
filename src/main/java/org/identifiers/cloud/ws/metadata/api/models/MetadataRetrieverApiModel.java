@@ -20,6 +20,7 @@ public class MetadataRetrieverApiModel {
 
     public List<String> getListOfEnabledRetrieverEndpoints(HttpServletRequest request,
                                                             ParsedCompactIdentifier parsedCurie) {
+
         return retrivers.stream()
                 .filter(r -> r.isEnabled(parsedCurie))
                 .map(r -> getUrlForRetriever(r, request, parsedCurie))
