@@ -76,6 +76,7 @@ public class EbiSearchExporter implements RegistryExporter {
         fields.add(new Field("prefix", namespace.getPrefix()));
         fields.add(new Field("mir_id", namespace.getMirId()));
         fields.add(new Field("lui_pattern", namespace.getPattern()));
+        fields.add(new Field("sample_id", namespace.getSampleId()));
 
         fields.add(new Field("creation_date", format(namespace.getCreated())));
         fields.add(new Field("modification_date", format(namespace.getModified())));
@@ -88,13 +89,13 @@ public class EbiSearchExporter implements RegistryExporter {
         fields.add(new Field("landing_page", genLandingPageUrl(namespace)));
 
         for (var resource : namespace.getResources()) {
-            fields.add(new Field("resource_name", resource.getName()));
             fields.add(new Field("mir_id", resource.getMirId()));
+            fields.add(new Field("resource_name", resource.getName()));
+            fields.add(new Field("resource_description", resource.getDescription()));
             fields.add(new Field("institution_name", resource.getInstitution().getName()));
-            fields.add(new Field("description", resource.getDescription()));
-            fields.add(new Field("description", resource.getInstitution().getDescription()));
+            fields.add(new Field("institution_description", resource.getInstitution().getDescription()));
         }
 
-        return fields;
+        return fields.stream().filter(f -> !f.getValue().equals("CURATOR_REVIEW")).toList();
     }
 }
