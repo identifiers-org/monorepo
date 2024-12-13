@@ -1,4 +1,5 @@
 # Remember to apply pre-deploy.yaml
+replicaCount: 2
 
 commonLabels:
   app: idorg
@@ -6,7 +7,7 @@ commonLabels:
 
 extraEnvVars:
 - name: PHP_MEMORY_LIMIT
-  value: "512M"
+  value: "4G"
 
 matomoWebsiteHost: "matomo.identifiers.org"
 matomoWebsiteName: "Identifiers.org"
@@ -41,8 +42,12 @@ updateStrategy:
 
 resources:
   requests:
-    cpu: 200m
-    memory: 512M
+    cpu: 100m
+    memory: 750Mi
+  limits: 
+    cpu: 900m
+    memory: 2G
+  
 
 mariadb:
   enabled: false
@@ -58,8 +63,26 @@ externalDatabase:
   database: ~
   existingSecret: idorg-matomo-secrets
 
+livenessProbe:
+  enabled: true
+  path: /
+  initialDelaySeconds: 600
+  periodSeconds: 20
+  timeoutSeconds: 15
+  failureThreshold: 5
+  successThreshold: 1
+
+readinessProbe:
+  enabled: true
+  path: /
+  initialDelaySeconds: 30
+  periodSeconds: 20
+  timeoutSeconds: 10
+  failureThreshold: 5
+  successThreshold: 1
+
 nodeSelector:
-  idorg-deployment: hq
+  idorg-deployment: matomo
 
 ingress:
   enabled: true
