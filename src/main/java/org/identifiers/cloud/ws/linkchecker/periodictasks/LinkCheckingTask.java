@@ -1,6 +1,8 @@
 package org.identifiers.cloud.ws.linkchecker.periodictasks;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.identifiers.cloud.ws.linkchecker.channels.PublisherException;
 import org.identifiers.cloud.ws.linkchecker.channels.linkcheckresults.LinkCheckResultsPublisher;
 import org.identifiers.cloud.ws.linkchecker.data.LinkCheckModelsHelper;
@@ -13,7 +15,6 @@ import org.identifiers.cloud.ws.linkchecker.strategies.LinkCheckerReport;
 import org.identifiers.cloud.ws.linkchecker.strategies.LinkCheckerStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.redis.RedisConnectionFailureException;
@@ -24,8 +25,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 import java.util.Random;
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
+
+import static java.util.concurrent.TimeUnit.MINUTES;
 
 /**
  * Project: link-checker
@@ -38,12 +40,15 @@ import java.util.concurrent.TimeUnit;
  * This daemon pulls link checking requests from a queue, runs them through a link checker, and lodges in the results.
  */
 @Component
+@RequiredArgsConstructor
 @ConditionalOnProperty(value = "org.identifiers.cloud.ws.linkchecker.daemon.periodiclinkcheckingtask.enabled")
 public class LinkCheckingTask implements Runnable{
     static final Logger logger = LoggerFactory.getLogger(LinkCheckingTask.class);
     static final Random random = new Random(System.currentTimeMillis());
 
 
+    @Value("${org.identifiers.cloud.ws.linkchecker.daemon.linkchecker.nthreads}")
+    int numberOfThreads;
     @Value("${org.identifiers.cloud.ws.linkchecker.daemon.linkchecker.waittime.min}")
     Duration minWaitTime;
     @Value("${org.identifiers.cloud.ws.linkchecker.daemon.linkchecker.waittime.max}")
@@ -56,21 +61,18 @@ public class LinkCheckingTask implements Runnable{
     final BlockingDeque<LinkCheckRequest> linkCheckRequestQueue;
     final LinkCheckResultsService linkCheckResultsService;
     final LinkCheckResultsPublisher linkCheckResultsPublisher;
-    public LinkCheckingTask(@Autowired BlockingDeque<LinkCheckRequest> linkCheckRequestQueue,
-                            @Autowired LinkCheckerStrategy linkCheckingStrategy,
-                            @Autowired LinkCheckResultsService linkCheckResultsService,
-                            @Autowired LinkCheckResultsPublisher linkCheckResultsPublisher) {
-        this.linkCheckRequestQueue = linkCheckRequestQueue;
-        this.linkCheckingStrategy = linkCheckingStrategy;
-        this.linkCheckResultsService = linkCheckResultsService;
-        this.linkCheckResultsPublisher = linkCheckResultsPublisher;
-    }
+    private boolean isRunning;
 
     @PostConstruct
     void checkDurationParameters() {
         logger.info("Checking wait time between {} and {}. {}", minWaitTime, waitTimeLimit, minWaitTime.compareTo(waitTimeLimit));
         Assert.state(minWaitTime.compareTo(waitTimeLimit) < 0,
                 "Invalid link checking configuration: Min wait time between checking task must be less than limit");
+
+        logger.info("Using executor with {} threads", numberOfThreads);
+        Assert.state(numberOfThreads > 0, "Number of threads must be a positive number");
+
+
     }
 
     public long getNextRandomWait() {
@@ -79,23 +81,40 @@ public class LinkCheckingTask implements Runnable{
 
     @Override
     public void run() {
+        synchronized (this) {
+            if (isRunning) {
+                logger.info("Link checking task already running!");
+                return;
+            }
+            isRunning = true;
+        }
+
+        final var threadFactory = new ThreadFactoryBuilder()
+                .setUncaughtExceptionHandler(this::handleException)
+                .setNameFormat("link-chk-pool-%d")
+                .build();
+        final var executor = Executors.newFixedThreadPool(numberOfThreads, threadFactory);
+        final var semaphore = new Semaphore(numberOfThreads);
+
         logger.debug("--- [START] Link Checker Task ---");
         try {
-            // Pop element, if any, from the link checking request queue
             logger.info("Polling link check request queue");
-            LinkCheckRequest linkCheckRequest = nextLinkCheckRequest();
-            if (linkCheckRequest == null) {
-                logger.info("No URL check request found");
-            }
-            while (linkCheckRequest != null) {
-                LinkCheckResult linkCheckResult = attendLinkCheckRequest(linkCheckRequest);
-                if (linkCheckResult != null) { // FIXME: Sometimes a null result here is a result of a check IO error, possibly an offline resource
-                    persist(linkCheckResult);
-                    announce(linkCheckResult);
-                } else {
-                    logger.warn("Failed to attend link check");
+            while (true) {
+                LinkCheckRequest linkCheckRequest = nextLinkCheckRequest();
+                if (linkCheckRequest == null) {
+                    logger.info("No URL check request found");
+                    break;
                 }
-                linkCheckRequest = nextLinkCheckRequest();
+                semaphore.acquire();
+                var future = CompletableFuture.supplyAsync(
+                        () -> attendLinkCheckRequest(linkCheckRequest), executor);
+                semaphore.release();
+                future.thenAccept(this::attendLinkCheckResult);
+            }
+            executor.shutdown();
+            if (!executor.awaitTermination(30, MINUTES)) {
+                logger.error("Executor threads still running!");
+                executor.shutdownNow();
             }
         } catch (RedisConnectionFailureException ex) {
             String msg = "Failed to connect to redis for next check request";
@@ -105,11 +124,23 @@ public class LinkCheckingTask implements Runnable{
                 logger.error("{}: {}", msg, ex.getMessage());
             }
         } catch (Exception e) {
-            logger.error("An error has been stopped for preventing the task from crashing", e);
+            logger.error("An error has when acquiring next link check request", e);
+            if (e instanceof InterruptedException)
+                Thread.currentThread().interrupt();
+        }
+
+        synchronized (this) {
+            isRunning = false;
         }
         logger.debug("--- [END] Link Checker Task ---");
     }
 
+    private void handleException(Thread t, Throwable e) {
+        if (logger.isDebugEnabled())
+            logger.error("Unhandled exception in thread {}", t.getName(), e);
+        else
+            logger.error("Unhandled exception in thread {}: {}", t.getName(), e.getMessage());
+    }
 
     private LinkCheckRequest nextLinkCheckRequest() {
         try {
@@ -122,7 +153,6 @@ public class LinkCheckingTask implements Runnable{
     }
 
     private LinkCheckResult attendLinkCheckRequest(LinkCheckRequest linkCheckRequest) {
-        // Check URL
         LinkCheckerReport linkCheckerReport;
         try {
             logger.info("Attending link check request for URL '{}'", linkCheckRequest.getUrl());
@@ -141,6 +171,15 @@ public class LinkCheckingTask implements Runnable{
                 linkCheckerReport.getHttpStatus(),
                 linkCheckerReport.isUrlAssessmentOk() ? "OK" : "NOT OK");
         return LinkCheckModelsHelper.getResultFromReport(linkCheckerReport, linkCheckRequest);
+    }
+
+    private void attendLinkCheckResult(LinkCheckResult linkCheckResult) {
+        if (linkCheckResult != null) {
+            persist(linkCheckResult);
+            announce(linkCheckResult);
+        } else {
+            logger.warn("Failed to attend link check");
+        }
     }
 
     void persist(LinkCheckResult linkCheckResult) {

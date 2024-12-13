@@ -38,7 +38,7 @@ public class SimpleLinkCheckerStrategy extends LinkCheckerStrategy {
                 .version(HttpClient.Version.HTTP_1_1)
                 .build();
 
-        this.fillInReportForRequest(request, report, accept401or403);
+        this.performRequestAndFillReport(request, report, accept401or403);
         return report;
     }
 }

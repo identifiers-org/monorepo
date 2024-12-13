@@ -32,9 +32,15 @@ public abstract class LinkCheckerStrategy {
 
     public abstract LinkCheckerReport check(URL url, boolean accept401or403) throws LinkCheckerException;
 
-    protected void fillInReportForRequest(HttpRequest request,
-                                          LinkCheckerReport report,
-                                          boolean accept401or403) {
+    /**
+     * @param request to be performed
+     * @param report report to be filled with outcome from request
+     * @param accept401or403 whether to accept 401 and 403 as OK
+     * @return whether an exception was thrown while performing the request
+     */
+    protected boolean performRequestAndFillReport(HttpRequest request,
+                                                  LinkCheckerReport report,
+                                                  boolean accept401or403) {
         HttpResponse<?> response = null;
         try {
             response = linkCheckerHttpClient.send(request, HttpResponse.BodyHandlers.discarding());
@@ -43,7 +49,7 @@ public abstract class LinkCheckerStrategy {
             report.setHttpStatus(HttpStatus.NOT_FOUND.value());
             report.setUrlAssessmentOk(false);
             log.info("[HTTP NaN] Failed to open connection to {}", report.getUrl());
-            return;
+            return true;
         } catch (IOException | InterruptedException e) {
             report.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             report.setUrlAssessmentOk(false);
@@ -53,7 +59,7 @@ public abstract class LinkCheckerStrategy {
                 log.info("[HTTP NaN] Exception when checking {}: {}", report.getUrl(), e.getMessage());
             }
             if (e instanceof InterruptedException) Thread.currentThread().interrupt();
-            return;
+            return true;
         }
 
         report.setHttpStatus(response.statusCode());
@@ -78,5 +84,6 @@ public abstract class LinkCheckerStrategy {
             log.info("[HTTP {}] NOT ACCEPTED AS OK For URL {}",
                     report.getHttpStatus(), report.getUrl());
         }
+        return false;
     }
 }

@@ -46,8 +46,8 @@ public class MultiUserAgentLinkCheckerStrategy extends LinkCheckerStrategy {
                     .header("User-Agent", userAgent)
                     .version(HttpClient.Version.HTTP_1_1)
                     .build();
-            this.fillInReportForRequest(request, report, accept401or403);
-            if (report.isUrlAssessmentOk()) {
+            boolean wasCriticalError = this.performRequestAndFillReport(request, report, accept401or403);
+            if (report.isUrlAssessmentOk() || wasCriticalError) {
                 return report;
             }
         }
