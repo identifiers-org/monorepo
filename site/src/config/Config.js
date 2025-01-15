@@ -38,6 +38,9 @@ export const config = {
 
   // Schema.org metadata endpoints.
   schemaOrgPlatformEndpoint: 'schemaOrgApi/getMetadataForPlatform',
-  schemaOrgNamespaceEndpoint: 'schemaOrgApi/getMetadataForNamespace',
-  schemaOrgNamespacePrefixEndpoint: 'schemaOrgApi/getMetadataForNamespacePrefix'
+  schemaOrgNamespacePrefixEndpoint: 'schemaOrgApi/getMetadataForNamespacePrefix',
+
+  ebiSearchDomainEndpoint: 'https://www.ebi.ac.uk/ebisearch/ws/rest/identifiers_registry',
+  ebiSearchResponseSize: 100,
+  ebiSearchRescoreWhenSingleIdDetected: true,
 };
