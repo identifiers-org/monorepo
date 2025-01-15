@@ -69,7 +69,7 @@ class SearchHelper extends React.Component {
                   return (
                     <small className="text-block mr-1 mt-2 mb-3">
                       You are expected to type a compact identifier in this box in the format {'[prefix]:[id]'}. <br/>
-                      If you don't know which prefix to use for an data object:
+                      If you don't know which prefix to use for a data object:
                       <ul>
                         <li>Describe its repository or its data type, then click on a suggestion that looks right.</li>
                         <li>Avoid describing data objects. We don't index individual objects.</li>
