@@ -1,15 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
-
-// Actions.
-import { getNamespacesFromRegistry } from '../../actions/NamespaceList';
-
-// Components.
 import NamespaceItem from './NamespaceItem';
 import Paginator from '../common/Paginator';
-
-// Config.
-import { config } from '../../config/Config';
+import EbiSearchService from "../common/EbiSearchService";
+import PropTypes from "prop-types";
+import { useSearchParams } from 'react-router-dom';
+import Spinner from "../common/Spinner";
 
 
 class NamespaceList extends React.Component {
@@ -17,77 +12,95 @@ class NamespaceList extends React.Component {
     super(props);
 
     this.state = {
+      query: props.query,
       debounceSearch: undefined,
+      namespaceList: [],
+      loading: false,
       namespaceListParams: {
-        ...this.props.namespaceListParams,
-        content: this.props.query,
-        size: 20
+        page: 0, size: 20,
+        totalPages: 0,
+        totalElements: 0
       }
     };
+
+    this.debounceRef = React.createRef();
+    this.searchBarRef = React.createRef();
   };
 
-  updateNamespaceList = async () => {
-    await this.props.getNamespacesFromRegistry(this.state.namespaceListParams);
-    this.setState({namespaceListParams: this.props.namespaceListParams});
+  updateNamespaceList = async (querySuffix = '') => {
+    const { page, size } = this.state.namespaceListParams;
+    const query = this.searchBarRef.current.value || '*:*';
+
+    this.setState({
+      loading: true
+    });
+
+    EbiSearchService.queryEbiSearchForRelevantNamespacesWithHitCount(
+        query + querySuffix,{
+          fields: 'name,prefix,description',
+          start: page*size, size
+        }
+    ).then(([hitCount, namespaces]) => {
+      this.setState({
+        namespaceList: namespaces,
+        namespaceListParams: {
+          page, size,
+          totalPages: Math.ceil(hitCount/size),
+          totalElements: hitCount
+        }
+      });
+    }).finally(() => {
+      this.setState({loading: false})
+    });
   };
 
   componentDidMount() {
+    this.searchBarRef.current.value = this.props.query;
     this.updateNamespaceList();
-  };
+  }
 
-
-  handleNavigate = (where) => {
+  handlePageChange = (page) => {
     const { namespaceListParams } = this.state;
 
-    if (namespaceListParams.number === where) return;
+    if (namespaceListParams.page === page) return;
 
     this.setState({
       namespaceListParams: {
         ...namespaceListParams,
-        number: where
+        page: page
       }
     }, () => this.updateNamespaceList());
   };
 
   handleAlphabeticSearch = e => {
     const { namespaceListParams } = this.state;
+    const firstLetter = e.target.innerText.toLowerCase();
 
     this.setState({
       namespaceListParams: {
         ...namespaceListParams,
-        content: '',
-        number: 0,
-        prefixStart: e.target.innerText.toLowerCase()
+        page: 0,
       }
     }, () => {
-      this.updateNamespaceList();
+      this.updateNamespaceList(`AND prefix:${firstLetter}*`);
     });
   };
 
-  handleSearch = e => {
-    const { namespaceListParams } = this.state;
-
-    clearTimeout(this.state.debounceSearch);
-
-    this.setState({
-      debounceSearch: setTimeout(() => { this.updateNamespaceList(); }, config.DEBOUNCE_DELAY),
-      namespaceListParams: {
-        ...namespaceListParams,
-        prefixStart: '',
-        content: e.currentTarget.value,
-        number: 0
-      }
-    });
+  handleSearchChange = e => {
+    clearTimeout(this.debounceRef.current);
+    this.debounceRef.current = setTimeout(() => {
+      this.props.setSearchParams({query: e.target.value});
+      this.updateNamespaceList();
+    }, 500);
   };
 
   handleSetSize = e => {
     const { namespaceListParams } = this.state;
-
     this.setState({
       namespaceListParams: {
         ...namespaceListParams,
         size: parseInt(e.target.value),
-        number: 0
+        page: 0
       }
     }, () => this.updateNamespaceList());
   };
@@ -95,45 +108,58 @@ class NamespaceList extends React.Component {
 
   render() {
     const {
-      handleNavigate,
-      handleAlphabeticSearch,
-      handleSearch,
-      handleSetSize,
-      state: {
-        namespaceListParams: {prefixStart, content, number, size, totalElements, totalPages}
+      namespaceList,
+      namespaceListParams: {
+        page, size,
+        totalElements, totalPages
       },
-      props: {namespaceList}
-    } = this;
+      loading
+    } = this.state;
 
-    const alphabetSearch = '#ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    const prefixStart = null;
+
+    // const alphabetSearch = Object.freeze('#ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''));
     const isSmallScreen = window.matchMedia("(max-width: 768px)").matches;
 
 
     return (
       <>
+        {/*<div className="row"> <!-- Disabled after EBI search integration --> */}
+        {/*  /!* ALPHABETIC PAGINATOR *!/*/}
+        {/*  <div className="col col-12 col-xl-8 mt-2 overflow-y-scroll p-1">*/}
+        {/*    <div className="paginator">*/}
+        {/*      <ul className="pagination pagination-sm m-0">*/}
+        {/*        {*/}
+        {/*          alphabetSearch.map(letter =>*/}
+        {/*            <li*/}
+        {/*              key={`alphabet-${letter}`}*/}
+        {/*              className={`page-item ${letter.toLowerCase() === prefixStart ? 'active' : ''}`}*/}
+        {/*            >*/}
+        {/*              <button*/}
+        {/*                type='button'*/}
+        {/*                className={`page-link ${letter.toLowerCase() === prefixStart ? 'active' : ''}`}*/}
+        {/*                onClick={this.handleAlphabeticSearch}*/}
+        {/*              >*/}
+        {/*                {letter}*/}
+        {/*              </button>*/}
+        {/*            </li>*/}
+        {/*          )*/}
+        {/*        }*/}
+        {/*      </ul>*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
         <div className="row">
-
-          {/* ALPHABETIC PAGINATOR */}
-          <div className="col col-12 col-xl-8 mt-2 overflow-y-scroll p-1">
-            <div className="paginator">
-              <ul className="pagination pagination-sm m-0">
-                {
-                  alphabetSearch.map(letter =>
-                    <li
-                      key={`alphabet-${letter}`}
-                      className={`page-item ${letter.toLowerCase() === prefixStart ? 'active' : ''}`}
-                    >
-                      <a
-                        className={`page-link ${letter.toLowerCase() === prefixStart ? 'active' : ''}`}
-                        href="#!"
-                        onClick={handleAlphabeticSearch}
-                      >
-                        {letter}
-                      </a>
-                    </li>
-                  )
-                }
-              </ul>
+          <div className="col col-12 col-xl-8 mt-2 overflow-y-scroll p-1 d-none d-md-block">
+            <div>
+              <Paginator
+                navigate={this.handlePageChange}
+                number={page}
+                setSize={this.handleSetSize}
+                size={size}
+                totalPages={totalPages}
+                totalElements={totalElements}
+              />
             </div>
           </div>
 
@@ -141,32 +167,35 @@ class NamespaceList extends React.Component {
           <div className="col col-12 col-xl-4 mt-2 p-1">
             <div className="input-group input-group-sm mb-3">
               <div className="input-group-prepend">
-                <span className="input-group-text" id="registry-search">Search</span>
+                <span className="input-group-text"
+                      id="registry-search"
+                      title="powered by EBI Search">
+                  Search
+                </span>
               </div>
               <input
-                type="text"
-                className="form-control"
-                placeholder="Input a search query"
-                aria-label="Search"
-                aria-describedby="registry-search"
-                onChange={handleSearch}
-                value={content}
+                  type="text"
+                  className="form-control"
+                  placeholder="Input a search query"
+                  role='searchbox'
+                  aria-label="Search"
+                  aria-describedby="registry-search"
+                  onChange={this.handleSearchChange}
+                  value={undefined}
+                  ref={this.searchBarRef}
               />
             </div>
           </div>
         </div>
 
-        {/* NAMESPACE LIST */}
-        <div>
-          {
-            namespaceList.length === 0 ? (
-              <p className="text-center my-5">No items</p>
-            ) : (
+        { loading ? <Spinner /> : (
+          <div>
+            { namespaceList.length === 0 ? <p className="text-center my-5">No items</p> :
               <div className="card mb-3 overflow-y-scroll">
                 <table className="table table-sm table-striped table-hover table-borderless table-fixed">
                   <thead className="thead-light thead-rounded">
                     <tr>
-                      <th className={`${isSmallScreen ? 'small-wide' : 'med'}`}>
+                      <th className={`${isSmallScreen ? 'small-wide' : 'wide'}`}>
                         <i className="icon icon-common icon-list" /> Name
                       </th>
                       <th className={`${isSmallScreen ? 'small-narrow' : 'med'} text-center`}>
@@ -177,44 +206,30 @@ class NamespaceList extends React.Component {
                           <i className="icon icon-common icon-info" /> Description
                         </th>
                       )}
-
                     </tr>
-                    </thead>
-                    <tbody>
+                  </thead>
+                  <tbody>
                     {
                       // Page data.
-                      namespaceList
-                        .sort((a, b) => {
-                          const { content } = this.state.namespaceListParams;
-                          if (a.prefix.startsWith(content) && !b.prefix.startsWith(content)) {
-                            return -1;
-                          }
-
-                          if (!a.prefix.startsWith(content) && b.prefix.startsWith(content)) {
-                            return 1;
-                          }
-
-                          return a.prefix - b.prefix;
-                        })
-                        .map(namespace => <NamespaceItem key={`namespace-${namespace.prefix}`} {...namespace} />
+                      namespaceList.map(namespace =>
+                          <NamespaceItem key={`namespace-${namespace.prefix}`} {...namespace} />
                       )
                     }
                   </tbody>
                 </table>
               </div>
-            )
-          }
-        </div>
-
+            }
+          </div>
+        )}
         {/* FOOTER */}
-        <footer>
+        <footer className='d-block d-sm-none'>
           <Paginator
-            navigate={handleNavigate}
-            number={number}
-            setSize={handleSetSize}
-            size={size}
-            totalPages={totalPages}
-            totalElements={totalElements}
+              navigate={this.handlePageChange}
+              number={page}
+              setSize={this.handleSetSize}
+              size={size}
+              totalPages={totalPages}
+              totalElements={totalElements}
           />
         </footer>
       </>
@@ -223,16 +238,10 @@ class NamespaceList extends React.Component {
 }
 
 
-// Mapping
-const mapStateToProps = (state) => {
-  return {
-    namespaceList: state.registryBrowser.namespaceList,
-    namespaceListParams: state.registryBrowser.namespaceListParams
-  }
-};
-
-const mapDispatchToProps = dispatch => ({
-  getNamespacesFromRegistry: (params) => dispatch(getNamespacesFromRegistry(params))
-});
-
-export default connect (mapStateToProps, mapDispatchToProps)(NamespaceList);
+NamespaceList.propTypes = {
+  setSearchParams: PropTypes.func.isRequired,
+  query: PropTypes.string.isRequired,
+}
+export default (props) => (
+  <NamespaceList {...props} setSearchParams={useSearchParams()[1]} />
+)
