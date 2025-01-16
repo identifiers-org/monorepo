@@ -4,18 +4,14 @@ import org.eclipse.rdf4j.query.resultio.QueryResultIO;
 import org.identifiers.cloud.libapi.models.resolver.ParsedCompactIdentifier;
 import org.identifiers.cloud.ws.metadata.retrivers.SparqlBasedMetadataRetriever;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static org.eclipse.rdf4j.query.resultio.TupleQueryResultFormat.JSON;
 
@@ -31,6 +27,11 @@ public class TogoIdMetadataRetriever extends SparqlBasedMetadataRetriever {
         super(sparqlEndpoint);
         this.namespaceBlacklist = Set.of(namespaceBlacklist);
         this.relatedTogoIdQueryFile = resourceLoader.getResource("classpath:togoIdRelatedIdentifiers.sparql");
+    }
+
+    @Override
+    public String getId() {
+        return "togoid";
     }
 
     @Override
@@ -76,5 +77,10 @@ public class TogoIdMetadataRetriever extends SparqlBasedMetadataRetriever {
         });
 
         return result;
+    }
+
+    @Override
+    public List<MediaType> getRawMediaType() {
+        return MediaType.parseMediaTypes(JSON.getMIMETypes());
     }
 }
