@@ -1,0 +1,6 @@
+{
+  "uniprot": {
+    "domain_name": "uniprot",
+    "fields": "id,descRecName,descSubName,organism_scientific_name,acc,status"
+  }
+}
