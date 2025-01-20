@@ -158,20 +158,28 @@ class SearchSuggestions extends React.Component {
     const quoteSplitQuery = query.split('"');
     let elements;
     if (quoteSplitQuery.length < 3) {
-      elements = query.split(/\s+/)
+      // No quotes
+      elements = query.split(/\s+/);
     } else {
-      elements = []
+      // With quotes. Try to preserve quoted terms.
+      elements = [];
       for (let idx in quoteSplitQuery) {
         let val = quoteSplitQuery[idx];
         if (idx % 2 === 1) {
           // quoted parts
-          elements.push('"' + val + '"')
+          elements.push('"' + val + '"');
         } else {
           // unquoted parts
-          elements.push(...val.split(/\s+/))
+          elements.push(...val.split(/\s+/));
         }
       }
     }
+    // On single search term without quotes, add a prefix search for auto-completion
+    const peek = elements[0];
+    if (elements.length === 1 && peek.length > 2 && !(peek.startsWith("\"") && peek.endsWith("\""))) {
+      elements.push (`prefix:${peek}*^3`);
+    }
+    // Remove blanks and join with OR operator among search terms
     return elements.map(s => s?.trim()).filter(Boolean).join(" OR ");
   }
 
@@ -226,10 +234,6 @@ class SearchSuggestions extends React.Component {
         <button type='button' onClick={closeSuggestions} className='closeBttn' title='Close suggestion box'>
           <i className="icon icon-common icon-close"></i>
         </button>
-        <div className="hints-box">
-          <SearchHelper setSearchState={setSearchState} query={query}
-                      namespaceList={namespaceList} loading={loading}/>
-        </div>
         {
           // Render search suggestion list if it contains elements.
           namespaceList.length > 0 && (
@@ -300,6 +304,10 @@ class SearchSuggestions extends React.Component {
             </div>
           )
         }
+        <div className="hints-box">
+          <SearchHelper setSearchState={setSearchState} query={query}
+                      namespaceList={namespaceList} loading={loading}/>
+        </div>
       </div>
     );
   }

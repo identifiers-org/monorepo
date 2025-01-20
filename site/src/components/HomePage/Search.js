@@ -57,6 +57,7 @@ class Search extends React.Component {
     switch (e.key) {
       case 'Enter': {
         e.preventDefault();
+        e.stopPropagation()
         if (this.suggestionListRef.current?.hasSelection()) {
           this.suggestionListRef.current?.clickSelection();
         }
@@ -68,24 +69,28 @@ class Search extends React.Component {
 
       case 'ArrowUp': {
         e.preventDefault();
+        e.stopPropagation()
         this.suggestionListRef.current?.upSelection()
         break;
       }
 
       case 'ArrowDown': {
         e.preventDefault();
+        e.stopPropagation()
         this.suggestionListRef.current?.downSelection();
         break;
       }
 
       case 'PageDown': {
         e.preventDefault();
+        e.stopPropagation()
         this.suggestionListRef.current?.downSelection(5);
         break;
       }
 
       case 'PageUp': {
         e.preventDefault();
+        e.stopPropagation()
         this.suggestionListRef.current?.upSelection(5);
         break;
       }
@@ -183,7 +188,7 @@ class Search extends React.Component {
 
 Search.propTypes = {
   onButtonClick: PropTypes.func.isRequired,
-  buttonCaption: PropTypes.string.isRequired,
+  buttonCaption: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
   placeholderCaption: PropTypes.string.isRequired
 }
 export default props => {

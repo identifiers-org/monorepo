@@ -68,14 +68,14 @@ class SearchHelper extends React.Component {
                 case SearchStates.NO_CURIE:
                   return (
                     <small className="text-block mr-1 mt-2 mb-3">
-                      You are expected to type a compact identifier in this box in the format {'[prefix]:[id]'}. <br/>
+                      Please type a compact identifier in this box in the format {'[prefix]:[id]'}. <br/>
                       If you don't know which prefix to use for a data object:
                       <ul>
-                        <li>Describe its repository or its data type, then click on a suggestion that looks right.</li>
-                        <li>Avoid describing data objects. We don't index individual objects.</li>
-                        <li>Short text works better. Not too short though.</li>
-                        <li>Adding the ID of an object will sort results using the registry's ID patterns.</li>
-                        <li>If you can't find a namespace you can use, use the feedback button above.</li>
+                        <li>Describe its repository or its data type, then click on a suggestion that looks right</li>
+                        <li>Avoid describing data objects. We don't index individual objects</li>
+                        <li>Short text works better</li>
+                        <li>Adding the ID of an object will sort results using the registry's ID patterns, aiming to show best matches first</li>
+                        <li>If you can't find a prefix you can use, use the feedback button above</li>
                       </ul>
                     </small>
                   );
@@ -88,7 +88,7 @@ class SearchHelper extends React.Component {
                         <span className="font-weight-bold">{queryParts.prefixEffectiveValue}</span>{' '}
                         does not exist in the registry.{' '}
                       </>}
-                      {namespaceList.length > 0 && <>Try one of the suggestions below.</>}
+                      {namespaceList.length > 0 && <>Try one of the suggestions above or try a different search.</>}
                     </small>
                   );
                 case SearchStates.PREFIX_ONLY:
@@ -124,26 +124,28 @@ class SearchHelper extends React.Component {
             <div className="table-responsive">
               <table className="table table-borderless">
                 <tbody>
-                  {queryParts?.resource ?
-                    (
-                      <tr>
-                        <td className="w-25 p-0 font-weight-light font-italic text-muted"><small>Resource:</small></td>
-                        <td className="p-0 text-block"><small>{queryParts.resource || 'default'}</small></td>
-                      </tr>
-                    ) : null
-                  }
-                  <tr>
-                    <td className="w-25 p-0 font-weight-light font-italic text-muted"><small>Prefix:</small></td>
-                    <td className="p-0 text-block"><small>{queryParts.prefix || 'empty'}</small></td>
-                  </tr>
-                  <tr>
-                    <td className="w-25 p-0 font-weight-light font-italic text-muted"><small>Local id:</small></td>
-                    <td className="p-0 text-block"><small>{queryParts.id || 'empty'}</small></td>
-                  </tr>
-                  { idorgURI &&
+                  {queryParts?.resource &&
                     <tr>
-                      <td className="w-25 p-0 font-weight-light font-italic text-muted"><small>URI:</small></td>
-                      <td className="p-0 text-block">
+                      <td className="w-25 p-0 font-weight-light font-italic text-muted"><small>Resource:</small></td>
+                      <td className="p-0 text-block"><small>{queryParts.resource || 'default'}</small></td>
+                    </tr>
+                  }
+                  { queryParts?.prefix &&
+                    <tr>
+                      <td className="w-25 p-0 font-weight-light font-italic text-muted"><small>Prefix:</small></td>
+                      <td className="p-0 text-block"><small>{queryParts.prefix || 'empty'}</small></td>
+                    </tr>
+                  }
+                  { queryParts?.id &&
+                    <tr>
+                      <td className="w-25 p-0 font-weight-light font-italic text-muted"><small>Local id:</small></td>
+                      <td className="p-0 text-block"><small>{queryParts.id || 'empty'}</small></td>
+                    </tr>
+                  }
+                  {idorgURI &&
+                      <tr>
+                        <td className="w-25 p-0 font-weight-light font-italic text-muted"><small>URI:</small></td>
+                        <td className="p-0 text-block">
                         <small>
                           <a href={idorgURI} target='_blank'>{idorgURI}</a>
                           <button className='text-muted ml-1' title='copy to clipboard'
