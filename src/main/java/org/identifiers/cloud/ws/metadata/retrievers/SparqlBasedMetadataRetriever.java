@@ -1,4 +1,4 @@
-package org.identifiers.cloud.ws.metadata.retrivers;
+package org.identifiers.cloud.ws.metadata.retrievers;
 
 import jakarta.annotation.Nullable;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
-public abstract class SparqlBasedMetadataRetriever implements MetadataRetriver {
+public abstract class SparqlBasedMetadataRetriever implements MetadataRetriever {
     final SPARQLRepository repository;
     protected SparqlBasedMetadataRetriever(String sparqlEndpoint) {
         this.repository = new SPARQLRepository(sparqlEndpoint);

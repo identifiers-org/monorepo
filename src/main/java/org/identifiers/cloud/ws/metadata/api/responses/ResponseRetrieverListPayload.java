@@ -5,7 +5,6 @@ import lombok.experimental.Accessors;
 import org.identifiers.cloud.libapi.models.resolver.ParsedCompactIdentifier;
 
 import java.io.Serializable;
-import java.net.URL;
 import java.util.List;
 
 /**

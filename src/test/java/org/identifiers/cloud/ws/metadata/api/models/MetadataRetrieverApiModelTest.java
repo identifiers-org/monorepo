@@ -23,7 +23,6 @@ import static org.hamcrest.core.IsNot.not;
 
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -37,7 +36,7 @@ class MetadataRetrieverApiModelTest {
     @MockBean
     ResolverService resolverService;
 
-    ParsedCompactIdentifier pci = new ParsedCompactIdentifier()
+    final ParsedCompactIdentifier pci = new ParsedCompactIdentifier()
             .setNamespace("uniprot")
             .setLocalId("P12345")
             .setRawRequest("uniprot:P12345");
@@ -59,7 +58,7 @@ class MetadataRetrieverApiModelTest {
     @Test
     void testListOfRetrievers() throws Exception {
         mockMvc.perform(get("/retrievers/"+pci.getRawRequest()))
-                .andDo(print())
+//                .andDo(print())
                 .andExpect(handler().methodName("getRetrieversFor"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath(
@@ -75,7 +74,7 @@ class MetadataRetrieverApiModelTest {
     @Test
     void testTogoIdParsedMetadata() throws Exception {
         mockMvc.perform(get("/retrievers/togoid/"+pci.getRawRequest()))
-                .andDo(print())
+//                .andDo(print())
                 .andExpect(handler().methodName("getRetrieverParsedMetadata"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(not(emptyString())));
@@ -84,7 +83,7 @@ class MetadataRetrieverApiModelTest {
     @Test
     void testTogoIdRawMetadata() throws Exception {
         mockMvc.perform(get("/retrievers/togoid/raw/"+pci.getRawRequest()))
-                .andDo(print())
+//                .andDo(print())
                 .andExpect(handler().methodName("getRetrieverRawMetadata"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(not(emptyString())));

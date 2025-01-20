@@ -1,0 +1,13 @@
+#file: noinspection SpellCheckingInspection
+# This mapping file contains the EBI Search parameters for each namespace.
+#
+# The "domain-fields" map has the values for the "fields" query parameter on EBI Search used for each domain ID
+#
+# The "namespace-mappings" maps from idorg namespace to EBI Search domain ID.
+# If a namespace is not here, it is not enabled for the EBI Search retriever.
+
+ebi-search-retriever:
+  domain-fields:
+    uniprot: id,descRecName,descSubName,organism_scientific_name,acc,status
+  namespace-mappings:
+    uniprot: uniprot

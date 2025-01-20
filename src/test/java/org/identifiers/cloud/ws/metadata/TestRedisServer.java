@@ -9,7 +9,7 @@ import jakarta.annotation.PreDestroy;
 @TestConfiguration
 @SuppressWarnings("resource")
 public class TestRedisServer {
-    static GenericContainer<?> redis;
+    static final GenericContainer<?> redis;
 
     static {
         DockerImageName img = DockerImageName.parse("redis");
@@ -19,6 +19,8 @@ public class TestRedisServer {
         redis.start();
         System.setProperty("spring.redis.host", redis.getHost());
         System.setProperty("spring.redis.port", redis.getMappedPort(6379).toString());
+        System.setProperty("spring.data.redis.host", redis.getHost());
+        System.setProperty("spring.data.redis.port", redis.getMappedPort(6379).toString());
     }
 
     @PreDestroy

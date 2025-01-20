@@ -1,8 +1,8 @@
-package org.identifiers.cloud.ws.metadata.retrivers.togoid;
+package org.identifiers.cloud.ws.metadata.retrievers.togoid;
 
 import org.eclipse.rdf4j.query.resultio.QueryResultIO;
 import org.identifiers.cloud.libapi.models.resolver.ParsedCompactIdentifier;
-import org.identifiers.cloud.ws.metadata.retrivers.SparqlBasedMetadataRetriever;
+import org.identifiers.cloud.ws.metadata.retrievers.SparqlBasedMetadataRetriever;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -47,7 +47,7 @@ public class TogoIdMetadataRetriever extends SparqlBasedMetadataRetriever {
      * @return SPARQL result as JSON string.
      */
     @Override
-    public Object getRawMetaData(ParsedCompactIdentifier compactIdentifier) {
+    public String getRawMetaData(ParsedCompactIdentifier compactIdentifier) {
         var byteArrayOutputStream = new ByteArrayOutputStream();
         var resultHandler = QueryResultIO.createTupleWriter(JSON, byteArrayOutputStream);
         this.runTupleQuery(relatedTogoIdQueryFile, resultHandler,

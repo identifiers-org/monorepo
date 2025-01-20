@@ -1,10 +1,9 @@
 package org.identifiers.cloud.ws.metadata.api.models;
 
-import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.identifiers.cloud.libapi.models.resolver.ParsedCompactIdentifier;
-import org.identifiers.cloud.ws.metadata.retrivers.MetadataRetriver;
+import org.identifiers.cloud.ws.metadata.retrievers.MetadataRetriever;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -15,34 +14,33 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class MetadataRetrieverApiModel {
-    final List<MetadataRetriver> retrivers;
-    private final List<MetadataRetriver> retrievers;
+    private final List<MetadataRetriever> retrievers;
 
     public List<String> getListOfEnabledRetrieverEndpoints(HttpServletRequest request,
                                                             ParsedCompactIdentifier parsedCurie) {
 
-        return retrivers.stream()
+        return retrievers.stream()
                 .filter(r -> r.isEnabled(parsedCurie))
                 .map(r -> getUrlForRetriever(r, request, parsedCurie))
                 .toList();
     }
 
-    public Optional<MetadataRetriver> getRetrieverFor(ParsedCompactIdentifier pci,
-                                                      String retrieverId) {
+    public Optional<MetadataRetriever> getRetrieverFor(ParsedCompactIdentifier pci,
+                                                       String retrieverId) {
         return retrievers.stream()
                 .filter(r -> retrieverId.equals(r.getId()))
                 .filter(r -> r.isEnabled(pci))
                 .findAny();
     }
 
-    private static String getUrlForRetriever(MetadataRetriver metadataRetriver,
-                                               HttpServletRequest request,
-                                               ParsedCompactIdentifier parsedCurie) {
+    private static String getUrlForRetriever(MetadataRetriever metadataRetriever,
+                                             HttpServletRequest request,
+                                             ParsedCompactIdentifier parsedCurie) {
         String scheme = request.getScheme();
         String host = request.getServerName();
         int port = request.getServerPort();
 
-        String retrieverId = metadataRetriver.getId();
+        String retrieverId = metadataRetriever.getId();
         String curie = parsedCurie.getRawRequest();
 
         var builder = UriComponentsBuilder
@@ -56,7 +54,7 @@ public class MetadataRetrieverApiModel {
         return builder.buildAndExpand(retrieverId, curie).toUriString();
     }
 
-    public Optional<MediaType> getMediatypeForResponse(MetadataRetriver retriever,
+    public Optional<MediaType> getMediatypeForResponse(MetadataRetriever retriever,
                                                        String acceptHeader) {
         var acceptedMediaTypes = MediaType.parseMediaTypes(acceptHeader);
         var rawMediaTypes = retriever.getRawMediaType();

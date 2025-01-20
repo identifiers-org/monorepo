@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 /**
  * @author Renato Caminha Juacaba Neto <rjuacaba@ebi.ac.uk>
@@ -80,7 +81,7 @@ public class MetadataRetrieverApiController {
     @GetMapping(value = "/{retrieverId}/raw/{curie:.+}")
     public ResponseEntity<?> getRetrieverRawMetadata(@PathVariable String retrieverId,
                                                      @PathVariable String curie,
-                                                     @RequestHeader String accept) {
+                                                     @RequestHeader(defaultValue = APPLICATION_JSON_VALUE) String accept) {
         var resolverResponse = resolverService.requestResolutionRawRequest(curie);
         if (resolverResponse.getHttpStatus().is2xxSuccessful()) {
             var pci = resolverResponse.getPayload().getParsedCompactIdentifier();

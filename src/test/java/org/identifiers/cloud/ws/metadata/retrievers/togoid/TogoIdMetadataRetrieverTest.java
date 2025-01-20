@@ -1,9 +1,10 @@
-package org.identifiers.cloud.ws.metadata.retrivers.togoid;
+package org.identifiers.cloud.ws.metadata.retrievers.togoid;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.identifiers.cloud.libapi.models.resolver.ParsedCompactIdentifier;
+import org.identifiers.cloud.ws.metadata.retrievers.MetadataRetriever;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.DefaultResourceLoader;
 
@@ -15,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TogoIdMetadataRetrieverTest {
     static final int QUERY_LIMIT = 10;
 
-    TogoIdMetadataRetriever retriever = new TogoIdMetadataRetriever(
+    final MetadataRetriever retriever = new TogoIdMetadataRetriever(
             "https://sparql.api.identifiers.org/sparql",
             new String[0],
             new DefaultResourceLoader()

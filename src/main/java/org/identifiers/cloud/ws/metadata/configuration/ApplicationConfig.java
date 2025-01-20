@@ -28,8 +28,8 @@ import java.util.concurrent.BlockingDeque;
 public class ApplicationConfig {
     @Bean
     public LettuceConnectionFactory redisConnectionFactory(
-            @Value("${spring.redis.host}") String redisHost,
-            @Value("${spring.redis.port}") int redisPort
+            @Value("${spring.data.redis.host}") String redisHost,
+            @Value("${spring.data.redis.port}") int redisPort
     ) {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(redisHost, redisPort);
         return new LettuceConnectionFactory(redisStandaloneConfiguration);
