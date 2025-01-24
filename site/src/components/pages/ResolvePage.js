@@ -8,13 +8,12 @@ import { getSchemaOrgMetadataFromRegistry, getSchemaOrgMetadataByPrefixFromRegis
 // Components.
 import Spinner from '../common/Spinner';
 import ResourceList from '../ResolverPage/ResourceList';
+import MetadataView from "../ResolverPage/MetadataView";
 
 // Utils.
 import { swalToast } from '../../utils/swalDialogs';
 import { querySplit } from '../../utils/identifiers';
-
 import { useLocation } from 'react-router-dom';
-
 import { useMatomo } from '@datapunt/matomo-tracker-react';
 
 class ResolvePage extends React.Component {
@@ -113,8 +112,10 @@ class ResolvePage extends React.Component {
                     </h4>
                   </div>
                 </div>
-
-                <ResourceList/>
+                <div className="row">
+                  <ResourceList/>
+                  <MetadataView curie={query}/>
+                </div>
               </>
             )
           }

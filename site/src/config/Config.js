@@ -7,6 +7,7 @@ export const config = {
 
   // Registry API Url used to fetch namespaces for the suggestions box.
   registryApi: 'https://registry.api.identifiers.org',
+  metadataRetrieverApiBaseUrl: 'https://metadata.api.identifiers.org/retrievers/',
 
   // This requires a working HQ architecture with a central registry.
   showSearchSuggestions: true,

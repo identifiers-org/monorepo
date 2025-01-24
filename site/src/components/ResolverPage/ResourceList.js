@@ -21,7 +21,7 @@ class ResourceList extends React.Component {
 
     return (
       resolvedResources.length === 0 ? (
-        <>
+        <div className="col-12 col-lg px-0 pr-md-2">
           <div className="row mb-5">
             <div className="col align-middle">
               <i className="icon icon-common icon-bomb size-200 mr-2 mt-4" />
@@ -38,14 +38,14 @@ class ResourceList extends React.Component {
               </a>
             </div>
           </div>
-        </>
+        </div>
       ) : (
-        <>
+        <div className="col-12 col-lg px-0 pr-md-2">
           <small className="text-muted">
             Found {resolvedResources.length} {resolvedResources.length === 1 ? 'entry' : 'entries'}.
           </small>
           {resolvedResources.map((rr, index) => <ResourceItem key={`rr-${index}`} data={rr} />)}
-        </>
+        </div>
       )
     );
   }

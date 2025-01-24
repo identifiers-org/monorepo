@@ -21,6 +21,8 @@ import { MatomoProvider, createInstance } from '@datapunt/matomo-tracker-react';
 
 //import './styles/styles.scss';
 
+import 'bootstrap/dist/js/bootstrap'
+
 // ==================== APP Initialization ====================
 (async () => {
   const instance = createInstance({
