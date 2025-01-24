@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
@@ -43,9 +45,9 @@ public class EBISearchRetriever implements MetadataRetriever {
    }
 
    @Override
-   public Map<String, String> getParsedMetaData(ParsedCompactIdentifier compactIdentifier) {
+   public MultiValueMap<String, String> getParsedMetaData(ParsedCompactIdentifier compactIdentifier) {
 
-      var result = new HashMap<String, String>();
+      var result = getBaseMap();
       String prefix = compactIdentifier.getNamespace();
       var domainId = config.getDomainId(prefix);
       var fields = config.getDomainFields(domainId);
@@ -53,11 +55,14 @@ public class EBISearchRetriever implements MetadataRetriever {
 
       var entries = searchResult.entries();
       if (entries != null && !entries.isEmpty()) {
+         // This assumes an entry query that is only returns up to one result
          var resultFields = entries.get(0).fields();
          if (resultFields != null) {
             for (var fieldMapEntry : resultFields.entrySet()) {
-               if (fieldMapEntry.getValue() != null && !fieldMapEntry.getValue().isEmpty()) {
-                  result.put(fieldMapEntry.getKey(), fieldMapEntry.getValue().get(0));
+               String fieldName = fieldMapEntry.getKey();
+               List<String> values = fieldMapEntry.getValue();
+               if (!CollectionUtils.isEmpty(values)) {
+                  result.addAll(fieldName, values);
                }
             }
          }

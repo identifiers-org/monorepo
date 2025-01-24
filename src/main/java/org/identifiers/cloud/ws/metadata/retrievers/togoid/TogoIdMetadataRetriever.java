@@ -8,6 +8,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
@@ -63,17 +64,20 @@ public class TogoIdMetadataRetriever extends SparqlBasedMetadataRetriever {
      * @return Map relatedUri -> RelationLabel
      */
     @Override
-    public Map<String, String> getParsedMetaData(ParsedCompactIdentifier compactIdentifier) {
-        var result = new HashMap<String, String>();
+    public MultiValueMap<String, String> getParsedMetaData(ParsedCompactIdentifier compactIdentifier) {
+        var result = getBaseMap();
         var queryResult = this.runTupleQuery(relatedTogoIdQueryFile,
                 "curie", compactIdentifier.getRawRequest());
-        if (queryResult == null) return Collections.emptyMap();
+        if (queryResult == null) return result;
 
+        var requiredBindings = List.of("label", "related");
         queryResult.forEach(bs -> {
-            String label = bs.getValue("label").stringValue();
-            String relatedUri = bs.getValue("related").stringValue();
+            if (bs.getBindingNames().containsAll(requiredBindings)) {
+                String label = bs.getValue("label").stringValue();
+                String relatedUri = bs.getValue("related").stringValue();
 
-            result.put(relatedUri, label);
+                result.add(label, relatedUri);
+            }
         });
 
         return result;

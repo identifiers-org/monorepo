@@ -6,6 +6,7 @@ LABEL maintainer="Renato Caminha Juacaba Neto <rjuacaba@ebi.ac.uk>"
 RUN mkdir -p /home/app
 
 # Prepare chrome driver - last tested version: 131.0.6778.108-r0
+#  Version is left unset because chromedriver likes to update a lot and apk's versioning is limited
 RUN apk add --no-cache --quiet chromium-chromedriver
 ENV WS_METADATA_CONFIG_BACKEND_SELENIUM_DRIVER_CHROME_PATH_BIN=/usr/bin/chromedriver
 

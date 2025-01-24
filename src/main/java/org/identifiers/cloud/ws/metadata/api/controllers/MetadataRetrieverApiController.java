@@ -18,8 +18,9 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 /**
  * @author Renato Caminha Juacaba Neto <rjuacaba@ebi.ac.uk>
- * Project: metadata
- * Package: org.identifiers.cloud.ws.metadata.controllers
+ * @apiNote The curie is always at the end of URLs to allow curies that have slash characters in them.
+ * For example: "uniprot/P12345" and "ark:/53355/cl010066723".
+ * This is not very REST compliant, but I couldn't make the curie in between the pattern work.
  */
 @Slf4j
 @RestController
@@ -30,7 +31,7 @@ public class MetadataRetrieverApiController {
     private final ResolverService resolverService;
 
 
-    @GetMapping(value = "/{curie:.*}")
+    @GetMapping(value = "/{curie:.*}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<ServiceResponse<ResponseRetrieverListPayload>>
                 getRetrieversFor(@PathVariable String curie,
                                  HttpServletRequest request) {
@@ -57,7 +58,7 @@ public class MetadataRetrieverApiController {
     }
 
 
-    @GetMapping(value = "/{retrieverId}/{curie:.+}")
+    @GetMapping(value = "/{retrieverId}/{curie:.+}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<?>
                 getRetrieverParsedMetadata(@PathVariable String retrieverId,
                                            @PathVariable String curie) {
@@ -66,9 +67,12 @@ public class MetadataRetrieverApiController {
             var pci = resolverResponse.getPayload().getParsedCompactIdentifier();
             var retriever = model.getRetrieverFor(pci, retrieverId);
             if (retriever.isPresent()) {
-                return ResponseEntity.ok().body(
-                        retriever.get().getParsedMetaData(pci)
-                );
+                var parsedMetadata = retriever.get().getParsedMetaData(pci);
+                if (parsedMetadata.size() > 1) { // is there any value besides retrieverId?
+                    return ResponseEntity.ok().body(parsedMetadata);
+                } else {
+                    return ResponseEntity.noContent().build();
+                }
             }
         }
         var body = ServiceResponse.ofError(
@@ -78,7 +82,7 @@ public class MetadataRetrieverApiController {
     }
 
 
-    @GetMapping(value = "/{retrieverId}/raw/{curie:.+}")
+    @GetMapping(value = "/{retrieverId}/raw/{curie:.+}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getRetrieverRawMetadata(@PathVariable String retrieverId,
                                                      @PathVariable String curie,
                                                      @RequestHeader(defaultValue = APPLICATION_JSON_VALUE) String accept) {
