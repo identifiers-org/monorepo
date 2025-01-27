@@ -1,0 +1,5 @@
+These are meant as a startup scripts for dev environments. One folder for the mirid controller and one for the registry databases.
+
+These can be loaded directly into a Postgres container by mounting the folder into the container's /docker-entrypoint-initdb.d folder.
+
+See registry's folder docker compose yaml for more details.
