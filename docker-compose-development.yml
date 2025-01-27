@@ -1,0 +1,141 @@
+# This docker-compose file defines the development environment
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+version: "3.5"
+services:
+    postgresql:
+        container_name: reg-postgres-spa
+        image: postgres
+        environment:
+            - POSTGRES_DB=devdatabase
+            - POSTGRES_USER=devusername
+            - POSTGRES_PASSWORD=devpassword
+        ports:
+            - "5431:5432"
+        networks:
+            - satwebspanet
+        volumes:
+            - "../db/registry:/docker-entrypoint-initdb.d"
+    hqregistry:
+        container_name: hqregistry
+        image: identifiersorg/cloud-hq-ws-registry
+        environment:
+            - HQ_WS_REGISTRY_CONFIG_JDBC_URL=jdbc:postgresql://postgresql:5432/devdatabase
+            - HQ_WS_REGISTRY_CONFIG_RDBMS_USERNAME=devusername
+            - HQ_WS_REGISTRY_CONFIG_RDBMS_PASSWORD=devpassword
+            - HQ_WS_REGISTRY_CONFIG_BACKEND_SERVICE_MIRID_CONTROLLER_HOST=hqmiridcontroller
+            - HQ_WS_REGISTRY_CONFIG_BACKEND_SERVICE_MIRID_CONTROLLER_PORT=8181
+            - HQ_WS_REGISTRY_CONFIG_APPLICATION_ACTIVE_PROFILE=authdisabled
+        ports:
+            - "8180:8180"
+        networks:
+            - satwebspanet
+        depends_on:
+            - postgresql
+            - hqmiridcontroller
+    miridpostgresql:
+        container_name: postgres
+        image: postgres
+        environment:
+            - POSTGRES_DB=devdatabase
+            - POSTGRES_USER=devusername
+            - POSTGRES_PASSWORD=devpassword
+        ports:
+            - "5432:5432"
+        networks:
+            - satwebspanet
+        volumes:
+            - "../db/mirid-controller:/docker-entrypoint-initdb.d"
+    hqmiridcontroller:
+        container_name: hqmiridcontroller
+        image: identifiersorg/cloud-hq-ws-mirid-controller
+        environment:
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_JDBC_URL=jdbc:postgresql://miridpostgresql:5432/devdatabase
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_USERNAME=devusername
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_PASSWORD:devpassword
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_REDIS_HOST=redis
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_APPLICATION_ACTIVE_PROFILE=authdisabled
+        ports:
+            - "8181:8181"
+        networks:
+            - satwebspanet
+        depends_on:
+            - redis
+            - miridpostgresql
+    resolver:
+        container_name: resolver
+        image: identifiersorg/cloud-ws-resolver
+        environment:
+            - WS_RESOLVER_CONFIG_REDIS_HOST=redis
+            - WS_RESOLVER_CONFIG_REDIS_PORT=6379
+            - WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_HOST=recommender
+            - WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_PORT=8083
+            - WS_RESOLVER_CONFIG_REGISTRY_RESOLUTION_DATASET_ENDPOINT=http://hqregistry:8180/resolutionApi/getResolverDataset
+            - WS_RESOLVER_JVM_MEMORY_MAX=1024m
+            - WS_RESOLVER_CONFIG_APPLICATION_CORS_ORIGINS=*
+            - MATOMO_ENABLED=false
+        ports:
+            - "8080:8080"
+        networks:
+            - satwebspanet
+        depends_on:
+            - redis
+            - recommender
+            - hqregistry
+    recommender:
+        container_name: recommender
+        image: identifiersorg/cloud-ws-resource-recommender
+        environment:
+            - WS_RESOURCE_RECOMMENDER_JVM_MEMORY_MAX=1024m
+            - WS_RESOURCE_RECOMMENDER_CONFIG_BACKEND_SERVICE_LINK_CHECKER_HOST=link-checker
+            - SPRING_PROFILES_ACTIVE=authdisabled
+        ports:
+            - "8083:8083"
+        networks:
+            - satwebspanet
+        depends_on:
+            - link-checker
+    link-checker:
+        container_name: link-checker
+        image: identifiersorg/cloud-ws-link-checker
+        environment:
+            - WS_LINK_CHECKER_CONFIG_REDIS_HOST=redis
+            - WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST=resolver
+            - WS_LINK_CHECKER_CONFIG_DAEMON_PERIODIC_LINK_CHECK_REQUESTER_ENABLED=false
+            - SPRING_PROFILES_ACTIVE=authdisabled
+        ports:
+            - "8084:8084"
+        networks:
+            - satwebspanet
+        depends_on:
+            - redis
+    redis:
+        container_name: redis
+        image: redis:4.0.8-alpine
+        ports:
+            - "6379:6379"
+        networks:
+            - satwebspanet
+#    satspa:
+#        container_name: devops_spa
+#        image: identifiersorg/cloud-satellite-web-spa
+#        ports:
+#            - "9090:9090"
+#        networks:
+#            - satwebspanet
+#        depends_on:
+#            - link-checker
+#            - recommender
+#            - resolver
+#            - hqwebspa
+networks:
+    satwebspanet:
+        name: satwebspanet
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 192.168.252.0/24
+volumes:
+    registry:
+        name: idorg_registry
+        external: true
