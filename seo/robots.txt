@@ -1,0 +1,1 @@
+Sitemap: https://registry.identifiers.org/sitemap.txt

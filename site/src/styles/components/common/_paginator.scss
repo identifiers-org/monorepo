@@ -1,0 +1,24 @@
+.paginator-link {
+  width: 48px;
+  text-align: center;
+}
+
+.custom-select {
+  text-align-last: center;
+  height: 39px !important;
+}
+
+.page-link {
+  padding: .5rem !important;
+  border: 1px solid $light !important;
+
+  &:visited {
+    border: 1px solid $light !important;
+  }
+}
+
+.pager {
+  margin-top: .5rem;
+  text-align: center;
+  display: block;
+}

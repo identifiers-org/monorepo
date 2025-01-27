@@ -1,0 +1,234 @@
+// Colors. Commented is bootstrap original.
+// $danger: #dc3545;
+// $dark: #343a40;
+// $info: #17a2b8;
+// $light: #f8f9fa;
+// $primary: #007bff;
+// $secondary: #6c757d;
+// $success: #28a745;
+// $warning: #f0ad4e;
+
+$danger: #c71c2d; //#dc3545
+$dark: #292929;
+$light: #eaeaea;
+$info: #96a291;
+$primary:#0086b4;
+$secondary: #e36109;
+$success: #5e801a;
+$warning: #e2ad00;
+
+$grey: #DEE2E6;
+
+$enable-rounded: false;
+$border-radius: 0;
+
+
+// Bigger container
+$container-max-widths: (
+        sm: 540px,
+        md: 720px,
+        lg: 960px,
+        xl: 1480px
+) !default;
+
+.row {
+  max-width: none !important;
+}
+
+.global-nav-expanded {
+  max-width: 80rem !important;
+  margin: auto;
+}
+
+
+// Input inset box shadow.
+input:not([type=radio]):not([type=checkbox]) {
+  box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
+  height: 39px !important;
+}
+
+textarea {
+  box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
+}
+
+// Fix ugly form focus color.
+.form-control:focus {
+  border-color: $primary !important;
+}
+
+
+body {
+  font-family: Helvetica, Arial, sans-serif !important;
+}
+
+html {
+  overflow-y: scroll;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a, a:hover, a:active {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: none !important;
+  border-bottom-color: transparent;
+}
+
+.no-highlight-visited {
+  color: inherit;
+}
+
+.clear-link, .clear-link:hover{
+  color: #212529;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.clear-button, .clear-button:hover .clear-button:focus {
+  color: #212529;
+  text-decoration: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: 0px auto !important;
+}
+
+.clear-textarea {
+  border: 0px none;
+  resize: none;
+  margin: 0;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+
+// Word breaking for urls and long words.
+.text-breakword {
+  display: block;
+  hyphens: auto;
+  line-height: 1.2em;
+  margin-right: -1em;
+  max-height: 3.6em;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  padding-right: 1em;
+  position: relative;
+  text-align: justify;
+  word-break: break-word;
+  word-wrap: break-word;
+}
+
+// Non-wrapping text that ends in ellipsis if too long.
+.text-ellipsis {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+// Min width for icon margins.
+.min-width-2 {
+  min-width: 2rem;
+  width: 2rem;
+}
+
+// Big icon size.
+.size-150 {
+  font-size: 150%;
+}
+
+.size-200 {
+  font-size: 200%;
+}
+
+.row {
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+}
+
+.col {
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+}
+
+.beta-banner {
+  margin-top: 3rem;
+}
+
+.beta-banner__content {
+  width: 85%;
+}
+
+.beta-banner__actions {
+  width: 15% !important;
+}
+
+.beta-banner__icon {
+  align-self: center;
+}
+
+.beta-banner__text {
+  text-align: left;
+}
+
+.beta-banner__content #swal2-content {
+  display: flex !important;
+}
+
+.spacer-8 {
+  margin-top: 8rem;
+}
+
+// Fixes for responsive tables.
+.overflow-y-scroll {
+  overflow-y: auto;
+}
+
+.table-fixed {
+  table-layout: fixed;
+}
+
+.narrow {
+  width: 6rem;
+}
+
+.small-narrow {
+  width: 33%;
+}
+
+.med {
+  width: 9rem;
+}
+
+.wide {
+  width: 20rem;
+}
+
+.small-wide {
+  width: 66%;
+}
+
+.order-1 {
+  order: 1;
+}
+
+.order-2 {
+  order: 2;
+}
+
+.lh-05 {
+  line-height: .5;
+}
+
+.h-2 {
+  height: 2rem;
+}
+
+.text-sm {
+  font-size: .75rem;
+}
