@@ -1,0 +1,13 @@
+# This file describes identifiers.org deployments
+aws:
+  resolver: resolver.api.identifiers.org
+  metadata: metadata.api.identifiers.org
+  registry: registry.api.identifiers.org
+gcloud:
+  resolver: resolver.api.identifiers.org
+  metadata: metadata.api.identifiers.org
+  registry: registry.api.identifiers.org
+azure:
+  resolver: resolver.api.identifiers.org
+  metadata: metadata.api.identifiers.org
+  registry: registry.api.identifiers.org

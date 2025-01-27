@@ -1,0 +1,113 @@
+# identifiers.org Satellite docker-compose based cloud deployment
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+version: "3.5"
+services:
+    # Dependencies from Satellite
+    link-checker:
+        # This configuration of the link checker does not depende on the resolver because it doesn't warm the link checking history up
+        image: identifiersorg/cloud-ws-link-checker
+        environment:
+            - WS_LINK_CHECKER_CONFIG_REDIS_HOST=redis
+            # On Redis standard port
+            - WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST=resolver
+            # On the resolver standard port
+            - WS_LINK_CHECKER_CONFIG_DAEMON_PERIODIC_LINK_CHECK_REQUESTER_ENABLED=false
+        ports:
+            - "8084:8084"
+        depends_on:
+            - redis
+    metadata:
+        image: identifiersorg/cloud-ws-metadata
+        environment:
+            - WS_METADATA_CONFIG_RESOLVER_HOST=resolver
+            - WS_METADATA_CONFIG_RESOLVER_PORT=8080
+            - WS_METADATA_CONFIG_REDIS_HOST=redis
+            # On Redis standard port
+        ports:
+            - "8082:8082"
+        depends_on:
+            - resolver
+    recommender:
+        image: identifiersorg/cloud-ws-resource-recommender
+        environment:
+            - WS_RESOURCE_RECOMMENDER_CONFIG_BACKEND_SERVICE_LINK_CHECKER_HOST=link-checker
+        ports:
+            - "8083:8083"
+        depends_on:
+            - link-checker
+    resolver:
+        image: identifiersorg/cloud-ws-resolver
+        environment:
+            - WS_RESOLVER_CONFIG_REDIS_HOST=redis
+            - WS_RESOLVER_CONFIG_REDIS_PORT=6379
+            - WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_HOST=recommender
+            - WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_PORT=8083
+            - WS_RESOLVER_CONFIG_APPLICATION_ACTIVE_PROFILE=development
+            - WS_RESOLVER_CONFIG_REGISTRY_RESOLUTION_DATASET_ENDPOINT=http://hqregistry:8180/resolutionApi/getResolverDataset
+            - WS_RESOLVER_CONFIG_BACKEND_SERVICE_JWT_ISSUERURI=https://auth.identifiers.org/auth/realms/idorg
+        ports:
+            - "8080:8080"
+        depends_on:
+            - redis
+            - recommender
+            - hqregistry
+    # Dependencies from HQ
+    hqregistry:
+        image: identifiersorg/cloud-hq-ws-registry
+        environment:
+            - HQ_WS_REGISTRY_CONFIG_JDBC_URL=jdbc:postgresql://hqpostgresql:5432/devdatabase
+            - HQ_WS_REGISTRY_CONFIG_RDBMS_USERNAME=devusername
+            - HQ_WS_REGISTRY_CONFIG_RDBMS_PASSWORD=devpassword
+            - HQ_WS_REGISTRY_CONFIG_BACKEND_SERVICE_MIRID_CONTROLLER_HOST=hqmiridcontroller
+            - HQ_WS_REGISTRY_CONFIG_BACKEND_SERVICE_MIRID_CONTROLLER_PORT=8181
+            - HQ_WS_REGISTRY_CONFIG_APPLICATION_ACTIVE_PROFILE=development,authdisabled
+            - HQ_WS_REGISTRY_CONFIG_EMAIL_HOST=fakesmtp
+            - HQ_WS_REGISTRY_CONFIG_EMAIL_PORT=25
+        ports:
+            - "8180:8180"
+        depends_on:
+            - hqpostgresql
+            - hqmiridcontroller
+            - fakesmtp
+    hqmiridcontroller:
+        image: identifiersorg/cloud-hq-ws-mirid-controller
+        environment:
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_JDBC_URL=jdbc:postgresql://hqpostgresql:5432/devdatabase
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_USERNAME=devusername
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_PASSWORD:devpassword
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_REDIS_HOST=redis
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_APPLICATION_ACTIVE_PROFILE=development,authdisabled
+        ports:
+            - "8181:8181"
+        depends_on:
+            - redis
+            - hqpostgresql
+    # Common dependencies
+    hqpostgresql:
+        image: postgres
+        environment:
+            - POSTGRES_DB=devdatabase
+            - POSTGRES_USER=devusername
+            - POSTGRES_PASSWORD=devpassword
+        ports:
+            - "5430:5432"
+            - "5431:5432"
+        volumes:
+            - "registry:/var/lib/postgresql/data"
+    redis:
+        image: redis:4.0.8-alpine
+        ports:
+            - "6379:6379"
+    fakesmtp:
+        image: digiplant/fake-smtp
+        ports:
+            - "1025:25"
+        volumes:
+            - ./tmp/fakesmtp:/var/mail
+networks:
+    default:
+        name: libapinet
+volumes:
+    registry:
+        name: idorg_registry
+        external: true
