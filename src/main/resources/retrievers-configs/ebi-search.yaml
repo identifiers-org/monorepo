@@ -1,0 +1,29 @@
+#file: noinspection SpellCheckingInspection
+# This mapping file contains the EBI Search parameters for each namespace.
+#
+# The "domain-fields" map has the values for the "fields" query parameter on EBI Search used for each domain ID
+#
+# The "namespace-mappings" maps from idorg namespace prefix to EBI Search domain ID.
+# If a namespace is not here, it is not enabled for the EBI Search retriever.
+#
+
+ebi-search-retriever:
+  domain-fields:
+    uniprot: id,descRecName,descSubName,organism_scientific_name,acc,status
+    nucleotideSequences: center_name,gene,gca_accession,function,species,standard_name,type,common_name,description,entry_type,database
+    europepmc: content_type,description,journal,name,pmcid,publication_date
+    ensembl: description,featuretype,genomic_unit,name,source,species,system_name
+    taxonomy: acronym,blast_name,common_name,description,genbank_common_name,name
+    interpro: name,description,type,creation_date
+    sra-sample: classification,collection_date,description,scientific_name
+  namespace-mappings:
+    uniprot: uniprot
+    insdc: nucleotideSequences
+    pubmed: europepmc
+    ensembl: ensembl
+    ncbigene: ensembl
+    taxonomy: taxonomy
+    goa: uniprot
+    fb: ensembl
+    interpro: interpro
+    biosample: sra-sample
