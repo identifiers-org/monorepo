@@ -1,0 +1,20 @@
+# HQ Registry API Service definition (External load balancer)
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+# TODO - Destroy this definition, for exposing service I'll use a combination of NodePort services with an Ingress resource
+apiVersion: v1
+kind: Service
+metadata:
+    name: ext-registry
+    labels:
+        environment: production
+        tier: api
+        app: registry
+spec:
+    ports:
+    - port: 80
+      targetPort: 8180
+    selector:
+        environment: production
+        tier: api
+        app: registry
+    type: LoadBalancer

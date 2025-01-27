@@ -1,0 +1,19 @@
+# HQ Registry API Service definition (load balancer)
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: v1
+kind: Service
+metadata:
+    name: np-registry
+    labels:
+        environment: production
+        tier: api
+        app: registry
+spec:
+    ports:
+    - port: 80
+      targetPort: 8180
+    selector:
+        environment: production
+        tier: api
+        app: registry
+    type: NodePort

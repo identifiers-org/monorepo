@@ -1,0 +1,108 @@
+# Deployment definition for the Central Registry Web
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+# TODO This is a placeholder definition, it will be refactor with the actual web
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: web-hq
+spec:
+    selector:
+        matchLabels:
+            environment: production
+            tier: frontend
+            app: web-hq
+            deployment: hq
+    replicas: 3
+    template:
+        metadata:
+            labels:
+                environment: production
+                tier: frontend
+                app: web-hq
+                deployment: hq
+        spec:
+            affinity:
+              nodeAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 5
+                    preference:
+                      matchExpressions:
+                        - key: iorg-node-reliability
+                          operator: In
+                          values:
+                            - stable
+              #podAffinity:
+                #preferredDuringSchedulingIgnoredDuringExecution:
+                #  - weight: 100
+                #    podAffinityTerm:
+                #      labelSelector:
+                #        matchExpressions:
+                #        - key: environment
+                #          operator: In
+                #          values:
+                #          - production
+                #        - key: tier
+                #          operator: In
+                #          values:
+                #          - api
+                #        - key: app
+                #          operator: In
+                #          values:
+                #          - registry
+                #        - key: deployment
+                #          operator: In
+                #          values:
+                #          - hq
+                #      topologyKey: "kubernetes.io/hostname"
+              podAntiAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 50
+                    podAffinityTerm:
+                      labelSelector:
+                        matchExpressions:
+                        - key: environment
+                          operator: In
+                          values:
+                          - production
+                        - key: tier
+                          operator: In
+                          values:
+                          - frontend
+                        - key: app
+                          operator: In
+                          values:
+                          - web-hq
+                        - key: deployment
+                          operator: In
+                          values:
+                          - hq
+                      topologyKey: "kubernetes.io/hostname"
+            containers:
+                - name: hq-registry-web
+                  image: identifiersorg/cloud-hq-web-frontend:1.6.5
+                  imagePullPolicy: Always
+                  resources:
+                      requests:
+                          memory: 64Mi
+                          cpu: 50m
+                  env:
+                  - name: ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_API_REGISTRY_URL
+                    value: "https://registry.api.identifiers.org"
+                  - name: ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_AUTH_URL
+                    value: "https://auth.identifiers.org"
+                  - name: ENVCONFIG_HQ_WEB_REGISTRY_CONFIG_AUTH_REDIRECT_URI
+                    value: "https://registry.identifiers.org"
+                  ports:
+                  - containerPort: 80
+                  readinessProbe:
+                      httpGet:
+                          path: /
+                          port: 80
+                      initialDelaySeconds: 5
+                      periodSeconds: 10
+                  livenessProbe:
+                      httpGet:
+                          path: /
+                          port: 80
+                      initialDelaySeconds: 90
+                      periodSeconds: 10

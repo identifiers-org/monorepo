@@ -1,0 +1,190 @@
+# HQ Registry API Service deployment definition
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: registry
+spec:
+    selector:
+        matchLabels:
+            environment: production
+            tier: api
+            app: registry
+            deployment: hq
+    replicas: 2
+    template:
+        metadata:
+            labels:
+                environment: production
+                tier: api
+                app: registry
+                deployment: hq
+        spec:
+            affinity:
+                nodeAffinity:
+                    requiredDuringSchedulingIgnoredDuringExecution:
+                        nodeSelectorTerms:
+                            - matchExpressions:
+                              - key: iorg-node-reliability
+                                operator: In
+                                values:
+                                - stable
+                podAntiAffinity:
+                  preferredDuringSchedulingIgnoredDuringExecution:
+                    - weight: 60
+                      podAffinityTerm:
+                        labelSelector:
+                          matchExpressions:
+                          - key: environment
+                            operator: In
+                            values:
+                            - production
+                          - key: tier
+                            operator: In
+                            values:
+                            - api
+                          - key: app
+                            operator: In
+                            values:
+                            - registry
+                          - key: deployment
+                            operator: In
+                            values:
+                            - hq
+                        topologyKey: "kubernetes.io/hostname"
+            containers:
+                - name: cloud-hq-ws-registry
+                  image: identifiersorg/cloud-hq-ws-registry:1.8.4
+                  resources:
+                      requests:
+                          memory: 420Mi
+                          cpu: 100m
+                  env:
+                  - name: HQ_WS_REGISTRY_CONFIG_JDBC_URL
+                    value: "jdbc:postgresql://hq-postgresql:5432/dbhqregistry"
+                  - name: HQ_WS_REGISTRY_CONFIG_RDBMS_USERNAME
+                    valueFrom:
+                        secretKeyRef:
+                            name: hq-registry-database-credentials
+                            key: username
+                  - name: HQ_WS_REGISTRY_CONFIG_RDBMS_PASSWORD
+                    valueFrom:
+                        secretKeyRef:
+                            name: hq-registry-database-credentials
+                            key: password
+                  - name: HQ_WS_REGISTRY_CONFIG_BACKEND_SERVICE_MIRID_CONTROLLER_HOST
+                    value: "mirid-controller"
+                  - name: HQ_WS_REGISTRY_CONFIG_BACKEND_SERVICE_MIRID_CONTROLLER_PORT
+                    value: "8181"
+                  - name: HQ_WS_REGISTRY_CONFIG_CORS_ORIGIN
+                    value: "http://cloud.identifiers.org,https://cloud.identifiers.org,http://identifiers.org,https://identifiers.org,https://registry.identifiers.org,http://labs.identifiers.org,https://labs.identifiers.org,https://www.ebi.ac.uk/biostudies/submissions,http://ves-hx-f2.ebi.ac.uk:8120"
+                  - name: HQ_WS_REGISTRY_JVM_MEMORY_MAX
+                    value: "420m"
+                  - name: HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUERURI
+                    value: "https://auth.identifiers.org/auth/realms/idorg"
+                  - name: HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_ACCESS_TOKEN_URI
+                    value: "https://auth.identifiers.org/auth/realms/idorg/protocol/openid-connect/token"
+                  - name: HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTID
+                    valueFrom:
+                        secretKeyRef:
+                            name: hq-registry-keycloak-credentials
+                            key: clientid
+                  - name: HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTSECRET
+                    valueFrom:
+                        secretKeyRef:
+                            name: hq-registry-keycloak-credentials
+                            key: clientsecret
+                  - name: HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI
+                    value: "https://auth.identifiers.org/auth/realms/idorg"
+                  - name: HQ_WS_REGISTRY_CONFIG_APPLICATION_ACTIVE_PROFILE
+                    value: "authenabled"
+                  # E-mail Server configuration
+                  - name: HQ_WS_REGISTRY_CONFIG_EMAIL_HOST
+                    value: "smtp.eu.mailgun.org"
+                  - name: HQ_WS_REGISTRY_CONFIG_EMAIL_PORT
+                    value: "587"
+                  - name: HQ_WS_REGISTRY_CONFIG_EMAIL_USERNAME
+                    valueFrom:
+                      secretKeyRef:
+                        name: hq-registry-smtp-credentials
+                        key: username
+                  - name: HQ_WS_REGISTRY_CONFIG_EMAIL_PASSWORD
+                    valueFrom:
+                      secretKeyRef:
+                        name: hq-registry-smtp-credentials
+                        key: password
+                  - name: HQ_WS_REGISTRY_CONFIG_EMAIL_TRANSPORT_PROTOCOL
+                    value: "smtp"
+                  - name: HQ_WS_REGISTRY_CONFIG_EMAIL_BOOLEAN_SMTP_AUTH
+                    value: "true"
+                  - name: HQ_WS_REGISTRY_CONFIG_EMAIL_BOOLEAN_START_TLS
+                    value: "true"
+                  # E-mail Notifiers configuration - Common
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_FROM
+                    value: "curator@identifiers.org"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REPLY_TO
+                    value: "identifiers-org@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_EMAIL_CURATION
+                    value: "identifiers-org-curators@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_EMAIL_SUPPORT
+                    value: "identifiers-org@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_PLACEHOLDER_DONOTUSE
+                    value: "PLACEHOLDER_do_not_use_this"
+                  # E-mail Notifiers configuration - CURATOR - Prefix Registration Request START
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_CURATOR_PREFIXREG_START_TO
+                    value: "identifiers-org@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_CURATOR_PREFIXREG_START_CC
+                    value: "identifiers-org-curators@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_CURATOR_PREFIXREG_START_CCO
+                    value: "PLACEHOLDER_do_not_use_this"
+                  # E-mail Notifiers configuration - REQUESTER - Prefix Registration Request START
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_START_CC
+                    value: "identifiers-org-curators@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_START_CCO
+                    value: "PLACEHOLDER_do_not_use_this"
+                  # E-mail Notifiers configuration - REQUESTER - Prefix Registration Request ACCEPTANCE
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_ACCEPTANCE_CC
+                    value: "identifiers-org-curators@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_ACCEPTANCE_CCO
+                    value: "PLACEHOLDER_do_not_use_this"
+                  # E-mail Notifiers configuration - REQUESTER - Prefix Registration Request REJECTION
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_REJECTION_CC
+                    value: "identifiers-org-curators@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_PREFIXREG_REJECTION_CCO
+                    value: "PLACEHOLDER_do_not_use_this"
+                  # E-mail Notifiers configuration - CURATOR - Resource Registration Request START
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_CURATOR_RESOURCEREG_START_TO
+                    value: "identifiers-org@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_CURATOR_RESOURCEREG_START_CC
+                    value: "identifiers-org-curators@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_CURATOR_RESOURCEREG_START_CCO
+                    value: "PLACEHOLDER_do_not_use_this"
+                  # E-mail Notifiers configuration - REQUESTER - Resource Registration Request START
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_START_CC
+                    value: "identifiers-org-curators@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_START_CCO
+                    value: "PLACEHOLDER_do_not_use_this"
+                  # E-mail Notifiers configuration - REQUESTER - Resource Registration Request ACCEPTANCE
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_ACCEPTANCE_CC
+                    value: "identifiers-org-curators@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_ACCEPTANCE_CCO
+                    value: "PLACEHOLDER_do_not_use_this"
+                  # E-mail Notifiers configuration - REQUESTER - Resource Registration Request REJECTION
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_REJECTION_CC
+                    value: "identifiers-org-curators@ebi.ac.uk"
+                  - name: HQ_WS_REGISTRY_CONFIG_NOTIFIERS_REQUESTER_RESOURCEREG_REJECTION_CCO
+                    value: "PLACEHOLDER_do_not_use_this"
+                  ports:
+                  - containerPort: 8180
+                  readinessProbe:
+                      httpGet:
+                          path: /healthApi/readiness_check
+                          port: 8180
+                      initialDelaySeconds: 3
+                      periodSeconds: 10
+                  livenessProbe:
+                      httpGet:
+                          path: /healthApi/liveness_check
+                          port: 8180
+                      initialDelaySeconds: 90
+                      periodSeconds: 10

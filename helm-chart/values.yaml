@@ -1,0 +1,119 @@
+
+app: idorg
+deployment: hq
+environment: staging
+
+ingress: #This assumes google cloud ingress
+  enabled: true
+  static_ip_name: idorg-hq
+  pre_shared_cert: 'cert-iorg-hq-production-web,cert-iorg-hq-production-auth,cert-iorg-hq-production-api-registry,cert-iorg-hq-production-api-mirid,idorg-test-echo'
+
+actuator_auth:
+  role: ~
+
+postgres:
+  ip: ~
+  port: 5432
+
+mailer:
+  host: "smtp.eu.mailgun.org"
+  port: "587"
+  protocol: "smtp"
+  smtp_auth: "true"
+  start_tls: "true"
+  notifications:
+    from: "curator@identifiers.org"
+    reply_to: "identifiers-org@ebi.ac.uk"
+    main: "identifiers-org@ebi.ac.uk"
+    curators: "identifiers-org-curators@ebi.ac.uk"
+
+keycloak:
+  component: keycloak
+  tier: backend
+  image: "identifiersorg/keycloak:6.0.1"
+  requests:
+    cpu: 300m
+    memory: 1024Mi
+  database:
+    vendor: "postgres"
+    host: "hq-postgresql"
+    dbname: "dbhqkeycloak"
+    port: 5432
+  port: 8080
+  base_uri: "https://auth.identifiers.org"
+  issuer_uri: "https://auth.identifiers.org/auth/realms/idorg"
+  access_token_uri: "https://auth.identifiers.org/auth/realms/idorg/protocol/openid-connect/token"
+
+
+registry:
+  component: registry
+  tier: api
+  image: "identifiersorg/cloud-hq-ws-registry:2.5.1"
+  replicas: 2
+  requests:
+    cpu: 100m
+    memory: 420Mi
+  database:
+    driver: "postgresql"
+    host: "hq-postgresql"
+    dbname: "dbhqregistry"
+    port: 5432
+  port: 8180
+  cors_origins: "*"
+  api_uri: "https://registry.api.identifiers.org"
+  base_uri: "https://registry.identifiers.org"
+  url_pattern_similarity_threshold: 0.90
+
+frontend:
+  component: web-hq
+  tier: frontend
+  image: "identifiersorg/cloud-hq-web-frontend:1.13.0"
+  replicas: 3
+  requests:
+    cpu: 10m
+    memory: 64Mi
+  port: 80
+
+redis:
+  component: redis
+  tier: backend
+  image: redis:4.0.8-alpine
+  requests:
+    cpu: 300m
+    memory: 512Mi
+  port: 6379
+
+mirid_controller:
+  component: mirid-controller
+  tier: api
+  image: "identifiersorg/cloud-hq-ws-mirid-controller:2.0.1"
+  replicas: 1
+  port: 8181
+  requests:
+    memory: 420Mi
+    cpu: 100m
+  database:
+    driver: "postgresql"
+    host: "hq-postgresql"
+    dbname: "dbhqmiridcontroller"
+    port: 5432
+
+echo_headers:
+  component: nginx-echo-headers
+  tier: api
+  image: "brndnmtthws/nginx-echo-headers"
+  replicas: 1
+  port: 8080
+  requests:
+    memory: 10Mi
+    cpu: 5m
+
+nodeAffinityRequirements:
+  - label: idorg-node-reliability
+    value: stable
+  - label: idorg-deployment
+    value: hq
+
+matomo:
+  enabled: true
+  base_url: "https://matomo.identifiers.org" #This should be without /matomo.php

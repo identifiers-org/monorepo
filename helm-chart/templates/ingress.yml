@@ -1,0 +1,77 @@
+{{- if .Values.ingress.enabled -}}
+---
+apiVersion: networking.gke.io/v1beta1
+kind: FrontendConfig
+metadata:
+  name: frontend-redirect-config
+spec:
+  redirectToHttps:
+    enabled: true
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.deployment }}-ingress
+  labels:
+    tier: api
+    {{- (include "common_labels" .) | indent 4 }}
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: {{ .Values.ingress.static_ip_name | quote}}
+    ingress.gcp.kubernetes.io/pre-shared-cert: {{ .Values.ingress.pre_shared_cert | quote }}
+    kubernetes.io/ingress.allow-http: "true"
+    networking.gke.io/v1beta1.FrontendConfig: "frontend-redirect-config"
+spec:
+  rules:
+    # Registry API rules
+    - host: registry.api.identifiers.org
+      http:
+        paths:
+        - backend:
+            service:
+              name: nodeport-{{ .Values.registry.component }}
+              port:
+                number: {{ .Values.registry.port }}
+          pathType: ImplementationSpecific
+    # MIR ID Controller API Service rules
+    - host: mirid.api.identifiers.org
+      http:
+        paths:
+        - backend:
+            service:
+              name: nodeport-{{ .Values.mirid_controller.component }}
+              port:
+                number: {{ .Values.mirid_controller.port }}
+          pathType: ImplementationSpecific
+    # Registry Web Frontend rules
+    - host: registry.identifiers.org
+      http:
+        paths:
+        - backend:
+            service:
+              name: nodeport-{{ .Values.frontend.component }}
+              port:
+                number: {{ .Values.frontend.port }}
+          pathType: ImplementationSpecific
+    # Accounts web
+    - host: auth.identifiers.org
+      http:
+        paths:
+        - backend:
+            service:
+              name: nodeport-{{ .Values.keycloak.component }}
+              port:
+                number: {{ .Values.keycloak.port }}
+          pathType: ImplementationSpecific
+    # Testing endpoint
+    - host: echo.identifiers.org
+      http:
+        paths:
+        - backend:
+            service:
+              name: nodeport-nginx-echo-headers
+              port:
+                number: {{ .Values.echo_headers.port }}
+          pathType: ImplementationSpecific
+---
+{{- end -}}

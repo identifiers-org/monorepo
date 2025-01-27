@@ -1,0 +1,40 @@
+# Deployment definition for an service that exposes the environment variables through an endpoint
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: env-vars-exposer
+spec:
+    selector:
+        matchLabels:
+            environment: development
+            tier: api
+            app: env-vars-exposer
+    replicas: 1
+    template:
+        metadata:
+            labels:
+                environment: development
+                tier: api
+                app: env-vars-exposer
+        spec:
+            containers:
+                - name: env-vars-exposer
+                  image: mbdebian/ws-env-expose:0.1.0
+                  resources:
+                      requests:
+                          memory: 640Mi
+                  ports:
+                  - containerPort: 8080
+                  readinessProbe:
+                      httpGet:
+                          path: /healthApi/readiness_check
+                          port: 8080
+                      initialDelaySeconds: 5
+                      periodSeconds: 10
+                  livenessProbe:
+                      httpGet:
+                          path: /healthApi/liveness_check
+                          port: 8080
+                      initialDelaySeconds: 5
+                      periodSeconds: 10

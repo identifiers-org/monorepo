@@ -1,0 +1,53 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.echo_headers.component }}
+  labels:
+    tier: {{ .Values.echo_headers.tier }}
+    component: {{ .Values.echo_headers.component }}
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  selector:
+    matchLabels:
+      tier: {{ .Values.echo_headers.tier }}
+      component: {{ .Values.echo_headers.component }}
+      {{- (include "common_labels" .) | indent 6 }}
+  replicas: {{ .Values.echo_headers.replicas }}
+  template:
+    metadata:
+      labels:
+        tier: {{ .Values.echo_headers.tier }}
+        component: {{ .Values.echo_headers.component }}
+        {{- (include "common_labels" .) | indent 8 }}
+    spec:
+      affinity:
+        {{- (include "node_affinity_requirements" .) | indent 8 }}
+      containers:
+        - name: {{ .Values.echo_headers.component }}
+          image: {{ .Values.echo_headers.image }}
+          resources:
+            requests:
+              cpu: {{ .Values.echo_headers.requests.cpu }}
+              memory: {{ .Values.echo_headers.requests.memory }}
+          ports:
+            - containerPort: {{ .Values.echo_headers.port }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":false}'
+  name: nodeport-{{ .Values.echo_headers.component }}
+  labels:
+    tier: {{ .Values.echo_headers.tier }}
+    component: {{ .Values.echo_headers.component }}
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.echo_headers.port }}
+  selector:
+    tier: {{ .Values.echo_headers.tier }}
+    component: {{ .Values.echo_headers.component }}
+    {{- (include "common_labels" .) | indent 4 }}
+  type: NodePort

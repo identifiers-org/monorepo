@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.redis.component }}
+spec:
+  selector:
+    matchLabels:
+      tier: {{ .Values.redis.tier }}
+      component: {{ .Values.redis.component }}
+      {{- (include "common_labels" .) | indent 6 }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        tier: {{ .Values.redis.tier }}
+        component: {{ .Values.redis.component }}
+        {{- (include "common_labels" .) | indent 8 }}
+    spec:
+      affinity:
+        {{- (include "node_affinity_requirements" .) | indent 8 }}
+      containers:
+        - name: {{ .Values.redis.component }}
+          image: {{ .Values.redis.image }}
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: {{ .Values.redis.requests.memory }}
+              cpu: {{ .Values.redis.requests.cpu }}
+          ports:
+            - containerPort: {{ .Values.redis.port }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":false}'
+  name: {{ .Values.redis.component }}
+  labels:
+    tier: {{ .Values.redis.tier }}
+    component: {{ .Values.redis.component }}
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.redis.port }}
+  selector:
+    tier: {{ .Values.redis.tier }}
+    component: {{ .Values.redis.component }}
+    {{- (include "common_labels" .) | indent 4 }}

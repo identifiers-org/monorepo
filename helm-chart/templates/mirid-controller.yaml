@@ -1,0 +1,134 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.mirid_controller.component }}
+spec:
+  selector:
+    matchLabels:
+      tier: {{ .Values.mirid_controller.tier }}
+      component: {{ .Values.mirid_controller.component }}
+      {{- (include "common_labels" .) | indent 6 }}
+  replicas: {{ .Values.mirid_controller.replicas }}
+  template:
+    metadata:
+      labels:
+        tier: {{ .Values.mirid_controller.tier }}
+        component: {{ .Values.mirid_controller.component }}
+        {{- (include "common_labels" .) | indent 8 }}
+    spec:
+      affinity:
+        {{- (include "node_affinity_requirements" .) | indent 8 }}
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    {{- (include "common_label_match_expressions" .) | indent 20 }}
+                    - key: tier
+                      operator: In
+                      values:
+                        - {{ .Values.mirid_controller.tier }}
+                    - key: component
+                      operator: In
+                      values:
+                        - {{ .Values.mirid_controller.component }}
+                topologyKey: "kubernetes.io/hostname"
+      containers:
+        - name: cloud-hq-ws-mirid-controller
+          image: {{ .Values.mirid_controller.image }}
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: {{ .Values.mirid_controller.requests.memory }}
+              cpu: {{ .Values.mirid_controller.requests.cpu }}
+          env:
+            - name: HQ_WS_MIRID_CONTROLLER_JVM_MEMORY_MAX
+              value: {{ .Values.redis.requests.memory | lower | trimSuffix "i" | quote }}
+            - name: HQ_WS_MIRID_CONTROLLER_CONFIG_APPLICATION_ACTIVE_PROFILE
+              value: "authenabled"
+            - name: HQ_WS_MIRID_CONTROLLER_CONFIG_JDBC_URL
+              {{- with .Values.mirid_controller.database }}
+              value: {{ (printf "jdbc:%s://%s:%s/%s" .driver .host (toString .port) .dbname) | quote -}}
+              {{- end }}
+            - name: HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: hq-mirid-controller-database-credentials
+                  key: username
+            - name: HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: hq-mirid-controller-database-credentials
+                  key: password
+            - name: HQ_WS_MIRID_CONTROLLER_CONFIG_REDIS_HOST
+              value: "redis"
+            - name: HQ_WS_MIRID_CONTROLLER_CONFIG_REDIS_PORT
+              value: {{ .Values.redis.port | quote }}
+            - name: HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUERURI
+              value: "https://auth.identifiers.org/auth/realms/idorg/"
+            - name: HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTID
+              valueFrom:
+                secretKeyRef:
+                  name: hq-mirid-controller-keycloak-credentials
+                  key: clientid
+            - name: HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTSECRET
+              valueFrom:
+                secretKeyRef:
+                  name: hq-mirid-controller-keycloak-credentials
+                  key: clientsecret
+            - name: HQ_WS_MIRID_CONTROLLER_CONFIG_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI
+              value: "https://auth.identifiers.org/auth/realms/idorg"
+          ports:
+            - containerPort: {{ .Values.mirid_controller.port }}
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: {{ .Values.mirid_controller.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: {{ .Values.mirid_controller.port }}
+            initialDelaySeconds: 90
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":false}'
+  name: {{ .Values.mirid_controller.component }}
+  labels:
+    tier: {{ .Values.mirid_controller.tier }}
+    component: {{ .Values.mirid_controller.component }}
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  ports:
+    - port: 8181
+  selector:
+    tier: {{ .Values.mirid_controller.tier }}
+    component: {{ .Values.mirid_controller.component }}
+    {{- (include "common_labels" .) | indent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":false}'
+  name: nodeport-{{ .Values.mirid_controller.component }}
+  labels:
+    tier: {{ .Values.mirid_controller.tier }}
+    component: {{ .Values.mirid_controller.component }}
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.mirid_controller.port }}
+  selector:
+    tier: {{ .Values.mirid_controller.tier }}
+    component: {{ .Values.mirid_controller.component }}
+    {{- (include "common_labels" .) | indent 4 }}
+  type: NodePort
+---
