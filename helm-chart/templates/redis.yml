@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  labels:
+    {{- (include "common_labels" .) | indent 4 }}
+    component: {{ .Values.redis.component }}
+    tier: {{ .Values.redis.tier }}
+spec:
+  selector:
+    matchLabels:
+      tier: {{ .Values.redis.tier }}
+      component: {{ .Values.redis.component }}
+      {{- (include "common_labels" .) | indent 6 }}
+  replicas: 1 #This cannot be more than 1 to prevent resolvers to use different datasets
+  template:
+    metadata:
+      labels:
+        tier: {{ .Values.redis.tier }}
+        component: {{ .Values.redis.component }}
+        {{- (include "common_labels" .) | indent 8 }}
+    spec:
+      affinity:
+        {{- (include "node_affinity_requirements" .) | indent 8 }}
+      containers:
+        - name: redis
+          image: {{ .Values.redis.image }}
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: {{ .Values.redis.requests.memory }}
+              cpu: {{ .Values.redis.requests.cpu }}
+          ports:
+            - containerPort: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":false}'
+  name: {{ .Values.redis.component }}
+  labels:
+    tier: {{ .Values.redis.tier }}
+    component: {{ .Values.redis.component }}
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  ports:
+    - port: 6379
+  selector:
+    tier: {{ .Values.redis.tier }}
+    component: {{ .Values.redis.component }}
+    {{- (include "common_labels" .) | indent 4 }}
+---

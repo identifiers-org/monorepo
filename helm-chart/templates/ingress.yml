@@ -1,0 +1,68 @@
+{{- if .Values.ingress.enabled -}}
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.deployment }}-ingress
+  labels:
+    tier: devops
+    {{- (include "common_labels" .) | indent 4 }}
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: {{ .Values.ingress.static_ip_name }}
+    ingress.gcp.kubernetes.io/pre-shared-cert: {{ .Values.ingress.pre_shared_cert }}
+    kubernetes.io/ingress.allow-http: {{ .Values.ingress.allow_http | quote }}
+spec:
+  rules:
+    # Resolver rules
+    - host: resolver.api.identifiers.org
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: nodeport-{{ .Values.resolver.component }}
+                port:
+                  number: {{ .Values.resolver.port }}
+    # Sparql rules
+    - host: sparql.api.identifiers.org
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: nodeport-{{ .Values.sparql.component }}
+                port:
+                  number: {{ .Values.sparql.port }}
+    # Metadata Service rules
+    - host: metadata.api.identifiers.org
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: nodeport-{{ .Values.metadata.component }}
+                port:
+                  number: {{ .Values.metadata.port }}
+    # Web Frontend rules
+    - host: cloud.identifiers.org
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: nodeport-{{ .Values.frontend.component }}
+                port:
+                  number: 80
+    - host: identifiers.org
+      http: &frontend-setup
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: nodeport-{{ .Values.frontend.component }}
+                port:
+                  number: 80
+    - host: www.identifiers.org
+      http: *frontend-setup
+{{- end -}}

@@ -1,0 +1,85 @@
+# This is the external Load Balancer that presents Identifiers.org satellite deployment to the internet
+#
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: platform-ingress
+spec:
+    rules:
+    # Resolver rules
+    - host: resolver.api.aws.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: resolver
+                  servicePort: 8080
+    - host: resolver.api.gcloud.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: resolver
+                  servicePort: 8080
+    - host: resolver.api.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: resolver
+                  servicePort: 8080
+    # Metadata Service rules
+    - host: metadata.api.aws.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: metadata
+                  servicePort: 8082
+    - host: metadata.api.gcloud.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: metadata
+                  servicePort: 8082
+    - host: metadata.api.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: metadata
+                  servicePort: 8082
+    # Registry Service rules
+    - host: registry.api.aws.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: registry
+                  servicePort: 8081
+    - host: registry.api.gcloud.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: registry
+                  servicePort: 8081
+    - host: registry.api.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: registry
+                  servicePort: 8081
+    # Web Frontend rules
+    - host: cloud.aws.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: web-frontend
+                  servicePort: 9090
+    - host: cloud.gcloud.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: web-frontend
+                  servicePort: 9090
+    - host: cloud.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: web-frontend
+                  servicePort: 9090

@@ -1,0 +1,117 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.metadata.component }}
+  labels:
+    {{- (include "common_labels" .) | indent 4 }}
+    component: {{ .Values.metadata.component }}
+    tier: {{ .Values.metadata.tier }}
+spec:
+  selector:
+    matchLabels:
+      tier: {{ .Values.metadata.tier }}
+      component: {{ .Values.metadata.component }}
+      {{- (include "common_labels" .) | indent 6 }}
+  replicas: {{ .Values.metadata.replicas }}
+  template:
+    metadata:
+      labels:
+        tier: {{ .Values.metadata.tier }}
+        component: {{ .Values.metadata.component }}
+        {{- (include "common_labels" .) | indent 8 }}
+    spec:
+      affinity:
+        {{- (include "node_affinity_requirements" .) | indent 8 }}
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    {{- (include "common_label_match_expressions" .) | indent 20}}
+                    - key: tier
+                      operator: In
+                      values:
+                        - {{ .Values.metadata.tier }}
+                    - key: component
+                      operator: In
+                      values:
+                        - {{ .Values.metadata.component }}
+                topologyKey: "kubernetes.io/hostname"
+      containers:
+        - name: cloud-ws-metadata
+          image: {{ .Values.metadata.image }}
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: {{ .Values.metadata.requests.memory }}
+              cpu: {{ .Values.metadata.requests.cpu }}
+          env:
+            - name: WS_METADATA_CONFIG_RESOLVER_HOST
+              value: "resolver"
+            - name: WS_METADATA_CONFIG_RESOLVER_PORT
+              value: {{ .Values.resolver.port | quote }}
+            - name: WS_METADATA_JVM_MEMORY_MAX
+              value: {{ .Values.metadata.requests.memory | lower | trimSuffix "i" | quote }}
+            - name: WS_METADATA_CONFIG_REDIS_HOST
+              value: "redis"
+            - name: WS_METADATA_CONFIG_BACKEND_REQUIRED_ROLE
+              value: {{ .Values.actuator_auth.role }}
+            - name: WS_METADATA_CONFIG_BACKEND_SERVICE_JWT_ISSUERURI
+              value: {{ .Values.actuator_auth.issuer_uri }}
+            - name: SPRING_PROFILES_ACTIVE
+              value: {{ .Values.active_profiles }}
+          ports:
+            - containerPort: {{ .Values.metadata.port }}
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: {{ .Values.metadata.port }}
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            timeoutSeconds: 25
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: {{ .Values.metadata.port }}
+            initialDelaySeconds: 20
+            periodSeconds: 30
+            timeoutSeconds: 25
+            failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":false}'
+  name: {{ .Values.metadata.component}}
+  labels:
+    tier: {{ .Values.metadata.tier }}
+    component: {{ .Values.metadata.component}}
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.metadata.port }}
+  selector:
+    tier: {{ .Values.metadata.tier }}
+    component: {{ .Values.metadata.component}}
+    {{- (include "common_labels" .) | indent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeport-{{ .Values.metadata.component}}
+  labels:
+    tier: {{ .Values.metadata.tier }}
+    component: {{ .Values.metadata.component}}
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.metadata.port }}
+  selector:
+    tier: {{ .Values.metadata.tier }}
+    component: {{ .Values.metadata.component}}
+    {{- (include "common_labels" .) | indent 4 }}
+  type: NodePort

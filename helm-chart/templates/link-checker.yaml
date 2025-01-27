@@ -1,0 +1,123 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.link_checker.component }}
+  labels:
+    {{- (include "common_labels" .) | indent 4 }}
+    component: {{ .Values.link_checker.component }}
+    tier: {{ .Values.link_checker.tier }}
+spec:
+  selector:
+    matchLabels:
+      tier: {{ .Values.link_checker.tier }}
+      component: {{ .Values.link_checker.component }}
+      {{- (include "common_labels" .) | indent 6 }}
+  replicas: {{ .Values.link_checker.replicas }}
+  template:
+    metadata:
+      labels:
+        tier: {{ .Values.link_checker.tier }}
+        component: {{ .Values.link_checker.component }}
+        {{- (include "common_labels" .) | indent 8 }}
+    spec:
+      affinity:
+        {{- (include "node_affinity_requirements" .) | indent 8 }}
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 70
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    {{- (include "common_label_match_expressions" .) | indent 20 }}
+                    - key: tier
+                      operator: In
+                      values:
+                        - {{ .Values.redis.tier }}
+                    - key: component
+                      operator: In
+                      values:
+                        - {{ .Values.redis.component }}
+                topologyKey: "kubernetes.io/hostname"
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    {{- (include "common_label_match_expressions" .) | indent 20}}
+                    - key: tier
+                      operator: In
+                      values:
+                        - {{ .Values.link_checker.tier }}
+                    - key: component
+                      operator: In
+                      values:
+                        - {{ .Values.link_checker.component }}
+                topologyKey: "kubernetes.io/hostname"
+      containers:
+        - name: cloud-ws-link-checker
+          image: {{ .Values.link_checker.image }}
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: {{ .Values.link_checker.requests.memory }}
+              cpu: {{ .Values.link_checker.requests.cpu }}
+            limits:
+              cpu: {{ .Values.link_checker.limits.cpu }}
+          env:
+            - name: WS_LINK_CHECKER_JVM_MEMORY_MAX
+              value: {{ .Values.link_checker.requests.memory | lower | trimSuffix "i" | quote }}
+            - name: WS_LINK_CHECKER_CONFIG_REDIS_HOST
+              value: "redis"
+            - name: WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST
+              value: "resolver"
+            # Keep link checking history for only 1.5 days
+            - name: WS_LINK_CHECKER_CONFIG_BACKEND_DATA_LINK_CHECK_RESULTS_TTL
+              value: "36h"
+            - name: WS_LINK_CHECKER_CONFIG_BACKEND_REQUIRED_ROLE
+              value: {{ .Values.actuator_auth.role }}
+            - name: WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_JWT_ISSUERURI
+              value: {{ .Values.actuator_auth.issuer_uri }}
+            - name: SPRING_PROFILES_ACTIVE
+              value: {{ .Values.active_profiles }}
+            {{- range $key, $val := .Values.link_checker.env }}
+            - name: {{ $key }}
+              value: {{ $val | quote }}
+            {{- end}}
+          ports:
+            - containerPort: {{ .Values.link_checker.port }}
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: {{ .Values.link_checker.port }}
+            initialDelaySeconds: 45
+            periodSeconds: 30
+            timeoutSeconds: 25
+            failureThreshold: 1
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: {{ .Values.link_checker.port }}
+            initialDelaySeconds: 90
+            periodSeconds: 30
+            timeoutSeconds: 25
+            failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":false}'
+  name: {{ .Values.link_checker.component }}
+  labels:
+    tier: {{ .Values.link_checker.tier }}
+    component: {{ .Values.link_checker.component }}
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.link_checker.port }}
+  selector:
+    tier: {{ .Values.link_checker.tier }}
+    component: {{ .Values.link_checker.component }}
+    {{- (include "common_labels" .) | indent 4 }}

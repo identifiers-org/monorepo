@@ -1,0 +1,113 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.resource_recommender.component }}
+  labels:
+    tier: {{ .Values.resource_recommender.tier }}
+    component: {{ .Values.resource_recommender.component }}
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  selector:
+    matchLabels:
+      tier: {{ .Values.resource_recommender.tier }}
+      component: {{ .Values.resource_recommender.component }}
+      {{- (include "common_labels" .) | indent 6 }}
+  replicas: {{ .Values.resource_recommender.replicas }}
+  template:
+    metadata:
+      labels:
+        tier: {{ .Values.resource_recommender.tier }}
+        component: {{ .Values.resource_recommender.component }}
+        {{- (include "common_labels" .) | indent 8}}
+    spec:
+      affinity:
+        {{- (include "node_affinity_requirements" .) | indent 8 }}
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 70
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    {{- (include "common_label_match_expressions" .) | indent 20 }}
+                    - key: tier
+                      operator: In
+                      values:
+                        - {{ .Values.link_checker.tier }}
+                    - key: component
+                      operator: In
+                      values:
+                        - {{ .Values.link_checker.component }}
+                topologyKey: "kubernetes.io/hostname"
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    {{- (include "common_label_match_expressions" .) | indent 20}}
+                    - key: tier
+                      operator: In
+                      values:
+                        - {{ .Values.resource_recommender.tier }}
+                    - key: component
+                      operator: In
+                      values:
+                        - {{ .Values.resource_recommender.component }}
+                topologyKey: "kubernetes.io/hostname"
+      containers:
+        - name: "cloud-ws-resource-recommender"
+          image: {{ .Values.resource_recommender.image }}
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: {{ .Values.resource_recommender.requests.memory }}
+              cpu: {{ .Values.resource_recommender.requests.cpu }}
+          env:
+            - name: WS_RESOURCE_RECOMMENDER_JVM_MEMORY_MAX
+              value: {{ .Values.resource_recommender.requests.memory | lower | trimSuffix "i" | quote }}
+            - name: WS_RESOURCE_RECOMMENDER_CONFIG_BACKEND_SERVICE_LINK_CHECKER_HOST
+              value: link-checker
+            - name: SPRING_PROFILES_ACTIVE
+              value: {{ .Values.active_profiles }}
+            - name: WS_RESOURCE_RECOMMENDER_CONFIG_REQUIRED_ROLE
+              value: {{ .Values.actuator_auth.role }}
+            - name: WS_RESOURCE_RECOMMENDER_CONFIG_BACKEND_SERVICE_JWT_ISSUERURI
+              value: {{ .Values.actuator_auth.issuer_uri }}
+          ports:
+            - containerPort: {{ .Values.resource_recommender.port }}
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: {{ .Values.resource_recommender.port }}
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            timeoutSeconds: 25
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: {{ .Values.resource_recommender.port }}
+            initialDelaySeconds: 45
+            periodSeconds: 30
+            timeoutSeconds: 25
+            failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":false}'
+  name: {{ .Values.resource_recommender.component }}
+  labels:
+    tier: {{ .Values.resource_recommender.tier }}
+    component: {{ .Values.resource_recommender.component }}
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.resource_recommender.port }}
+  selector:
+    tier: {{ .Values.resource_recommender.tier }}
+    component: {{ .Values.resource_recommender.component }}
+    {{- (include "common_labels" .) | indent 4 }}
+---
