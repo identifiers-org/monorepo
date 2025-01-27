@@ -1,0 +1,174 @@
+# OpenAPI Specification for Identifiers.org Resolution API Service
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+openapi: 3.0.0
+servers:
+  - url: 'http://resolver.api.identifiers.org'
+    description: Main endpoint for this service
+  - url: 'http://resolver.api.gcloud.identifiers.org'
+    description: Google Cloud API Service endpoint
+  - url: 'http://resolver.api.aws.identifiers.org'
+    description: AWS API Service endpoint
+info:
+  description: Identifiers.org Resolution API Service, for resolution of Compact Identfiiers (preix:id).
+    This web service is open source, released under MIT license at [https://github
+    .com/identifiers-org/cloud-ws-resolver](GitHub).
+    To find out more about Identifiers.org, please, visit our main website at [http://identifiers.org]
+    (http://identifiers.org)
+  version: "1.0"
+  title: Identifiers.org Compact ID Resolution Service
+  termsOfService: https://www.ebi.ac.uk/about/terms-of-use
+  contact:
+    name: Manuel Bernal Llinares
+    url: http://identifiers.org
+    email: mbdebian@gmail.com
+  license:
+    name: MIT
+    url: 'http://opensource.org/licenses/MIT'
+paths:
+  /{compactId}:
+    get:
+      tags:
+        - resolutionAPI
+      summary: Request Compact ID resolution
+      operationId: resolve_compact_id
+      parameters:
+        - in: path
+          name: compactId
+          required: true
+          schema:
+            type: string
+          description: Compact ID to resolve
+          example: taxonomy:9606
+      responses:
+        '200':
+          description: Successful Compact ID resolution
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseResolve'
+        '404':
+          description: The Compact ID could not be resolved, it was not found in the resolver registry
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseResolve'
+        '500':
+          description: The Compact ID could not be resolved due to an internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseResolve'
+  /{providerCode}/{compactId}:
+    get:
+      tags:
+        - resolutionAPI
+      summary: Request Compact ID resolution to the resource identified by the given 'provider code'
+      operationId: resolve_compact_id_for_provider
+      parameters:
+        - in: path
+          name: providerCode
+          required: true
+          schema:
+            type: string
+          description: Provider Code
+          example: ols
+        - in: path
+          name: compactId
+          required: true
+          schema:
+            type: string
+          description: Compact ID to resolve
+          example: taxonomy:9606
+      responses:
+        '200':
+          description: Successful Compact ID resolution
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseResolve'
+        '404':
+          description: The Compact ID could not be resolved, it was not found in the resolver registry
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseResolve'
+        '500':
+          description: The Compact ID could not be resolved due to an internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponseResolve'
+components:
+  schemas:
+    ServiceResponse:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+          description: Service API version context for this response
+        errorMessage:
+          type: string
+          description:
+            A series of possible error messages regarding the validation of the different request attributes, or
+            'null' if the are no errors to report
+        payload:
+          type: object
+    Recommendation:
+      type: object
+      properties:
+        recommendationIndex:
+          type: integer
+          description:
+            An integer within [0,100] where '0' represents 'not recommended at all' and '100' represents 'highest recommended'
+        recommendationExplanation:
+          type: string
+          description:
+            An explanation around the given recommendation index
+    ResolvedResource:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the resource within the context of the given Compact ID
+        resourcePrefix:
+          type: string
+          description: This represents this resource's 'provider code' within the context of the given Compact ID
+        accessUrl:
+          type: string
+          description:
+            Resolved URL for the given Compact ID and the current resource within the context of a Compact ID resolution
+        info:
+          type: string
+          description: Some information on this resource within the context of the resolution of the given Compact ID
+        institution:
+          type: string
+          description: Information on the institution behind the given resource
+        location:
+          type: string
+          description:
+            Location information for the given resource within the context of the current Compact ID resolution
+        official:
+          type: boolean
+          description: Whether the resource is flagged as official or not
+        resourceURL:
+          type: string
+          description:
+            URL to some description or informative landing page about the resource within the context of the current
+            Compact ID resolution
+        recommendation:
+          $ref: '#/components/schemas/Recommendation'
+    ResponseResolvePayload:
+      type: object
+      properties:
+        resolvedResources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResolvedResource'
+          description: A list of providers for the given Compact ID
+    ServiceResponseResolve:
+      allOf:
+        - $ref: '#/components/schemas/ServiceResponse'
+        - type: object
+          properties:
+            payload:
+              $ref: '#/components/schemas/ResponseResolvePayload'

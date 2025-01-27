@@ -1,0 +1,73 @@
+# Development environment for working with the Compact ID Resolution Service
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+version: "3.5"
+services:
+    postgresql:
+        image: postgres
+        environment:
+            - POSTGRES_DB=devdatabase
+            - POSTGRES_USER=devusername
+            - POSTGRES_PASSWORD=devpassword
+        ports:
+            - "5430:5432"
+        volumes:
+            - "../db/registry/:/docker-entrypoint-initdb.d/"
+    hqregistry:
+        image: identifiersorg/cloud-hq-ws-registry
+        environment:
+            - HQ_WS_REGISTRY_CONFIG_JDBC_URL=jdbc:postgresql://postgresql:5432/devdatabase
+            - HQ_WS_REGISTRY_CONFIG_RDBMS_USERNAME=devusername
+            - HQ_WS_REGISTRY_CONFIG_RDBMS_PASSWORD=devpassword
+            - HQ_WS_REGISTRY_CONFIG_APPLICATION_ACTIVE_PROFILE=authdisabled
+        ports:
+            - "8180:8180"
+        depends_on:
+            - postgresql
+    redis:
+        image: redis:4.0.8-alpine
+        ports:
+            - "6379:6379"
+    recommender:
+        image: identifiersorg/cloud-ws-resource-recommender
+        environment:
+            - WS_RESOURCE_RECOMMENDER_JVM_MEMORY_MAX=1024m
+            - WS_RESOURCE_RECOMMENDER_CONFIG_BACKEND_SERVICE_LINK_CHECKER_HOST=link-checker
+            - SPRING_PROFILES_ACTIVE=authdisabled
+        ports:
+            - "8083:8083"
+        depends_on:
+            - link-checker
+    link-checker:
+        image: identifiersorg/cloud-ws-link-checker
+        environment:
+            - WS_LINK_CHECKER_CONFIG_REDIS_HOST=redis
+            - WS_LINK_CHECKER_CONFIG_REDIS_PORT=6379
+            - WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST=localhost
+            - WS_LINK_CHECKER_CONFIG_DAEMON_PERIODIC_LINK_CHECK_REQUESTER_ENABLED=false
+            - WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_JWT_ISSUERURI=https://auth.identifiers.org/auth/realms/idorg
+            - SPRING_PROFILES_ACTIVE=authdisabled
+        ports:
+            - "8084:8084"
+        depends_on:
+            - redis
+#    resolver: # When debugging docker image
+#        image: identifiersorg/cloud-ws-resolver:latest
+#        environment:
+#            - WS_RESOLVER_CONFIG_REDIS_HOST=redis
+#            - WS_RESOLVER_CONFIG_REDIS_PORT=6379
+#            - WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_HOST=recommender
+#            - WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_PORT=8083
+#            - WS_RESOLVER_CONFIG_REGISTRY_RESOLUTION_DATASET_ENDPOINT=http://hqregistry:8180/resolutionApi/getResolverDataset
+#            - WS_RESOLVER_CONFIG_APPLICATION_CORS_ORIGINS=*
+#            - WS_RESOLVER_JVM_MEMORY_MAX=360m
+#            - MATOMO_ENABLED=false
+#            - JVM_OPTIONS=-Dlogging.level.org.springframework=DEBUG -Dlogging.level.com.baeldung=DEBUG -Dlogging.level.org.identifiers=DEBUG -Dlogging.level.org.matomo=DEBUG -D.logging.level.org.springframework.data.redis=INFO
+#        ports:
+#            - "8080:8080"
+#        depends_on:
+#            - redis
+#            - hqregistry
+#            - recommender
+networks:
+    default:
+        name: idorg-dev-satellite-resolver
