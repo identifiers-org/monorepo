@@ -1,0 +1,97 @@
+# Remember to apply pre-deploy.yaml
+replicaCount: 2
+
+commonLabels:
+  app: idorg
+  component: matomo
+
+extraEnvVars:
+- name: PHP_MEMORY_LIMIT
+  value: "4G"
+
+matomoWebsiteHost: "matomo.identifiers.org"
+matomoWebsiteName: "Identifiers.org"
+
+matomoUsername: idorg
+matomoPassword: changethis
+matomoEmail: identifiers-org@ebi.ac.uk
+
+image:
+  tag: "4.14.2-debian-11-r10"
+  debug: true
+
+smtpHost: smtp.eu.mailgun.org
+smtpPort: 587
+smtpUser: ~
+smtpProtocol: tls
+smtpExistingSecret: idorg-matomo-secrets
+
+allowEmptyPassword: false
+
+volumePermissions:
+  enabled: true
+
+# containerSecurityContext:
+#   runAsNonRoot: false
+#   runAsUser: 0
+
+matomoSkipInstall: true
+
+updateStrategy:
+  type: Recreate
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 750Mi
+  limits: 
+    cpu: 900m
+    memory: 2G
+  
+
+mariadb:
+  enabled: false
+
+service: # Avoid google cloud NEG connectivity issues
+  annotations:
+    cloud.google.com/neg: '{"ingress":false}'
+
+externalDatabase:
+  host: matomomysql
+  port: 3306
+  user: ~
+  database: ~
+  existingSecret: idorg-matomo-secrets
+
+livenessProbe:
+  enabled: true
+  path: /
+  initialDelaySeconds: 600
+  periodSeconds: 20
+  timeoutSeconds: 15
+  failureThreshold: 5
+  successThreshold: 1
+
+readinessProbe:
+  enabled: true
+  path: /
+  initialDelaySeconds: 30
+  periodSeconds: 20
+  timeoutSeconds: 10
+  failureThreshold: 5
+  successThreshold: 1
+
+nodeSelector:
+  idorg-deployment: matomo
+
+ingress:
+  enabled: true
+  pathType: ImplementationSpecific # Necessary for gce
+  hostname: matomo.identifiers.org
+  path: "/*"
+  annotations:
+    kubernetes.io/ingress.class: "gce" #Google cloud ingress
+    kubernetes.io/ingress.global-static-ip-name: idorg-matomo
+    kubernetes.io/ingress.allow-http: "true"
+    networking.gke.io/managed-certificates: idorg-matomo-managed-cert
+    networking.gke.io/v1beta1.FrontendConfig: "matomo-redirect-config"
