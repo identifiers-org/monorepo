@@ -1,0 +1,21 @@
+# Development environment HQ MIR ID Controller API Service
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+version: "3.5"
+services:
+  postgresql:
+    image: postgres
+    environment:
+      - POSTGRES_DB=devdatabase
+      - POSTGRES_USER=devusername
+      - POSTGRES_PASSWORD=devpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - '../db/mirid-controller:/docker-entrypoint-initdb.d'
+  redis:
+    image: redis:7.2-alpine
+    ports:
+        - "6379:6379"
+networks:
+  default:
+    name: idorg-dev-hq-mirid-controller
