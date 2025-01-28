@@ -10,12 +10,12 @@
 
     <name>resolver</name>
     <description>ID Resolver Web Service API</description>
-    <url>http://identifiers.org</url>
+    <url>https://resolver.api.identifiers.org</url>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.5</version>
+        <groupId>org.identifiers</groupId>
+        <artifactId>identifiers-webservices</artifactId>
+        <version>1.0-SNAPSHOT</version>
     </parent>
 
     <licenses>
@@ -120,7 +120,6 @@
         <dependency>
             <groupId>org.piwik.java.tracking</groupId>
             <artifactId>matomo-java-tracker</artifactId>
-            <version>3.2.0</version>
         </dependency>
 
         <dependency>
@@ -146,7 +145,6 @@
         <dependency>
             <groupId>org.wiremock</groupId>
             <artifactId>wiremock</artifactId>
-            <version>3.5.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
