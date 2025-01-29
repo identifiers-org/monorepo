@@ -22,4 +22,9 @@ public class ServiceResponse<T> implements Serializable {
         return new ServiceResponse<I>()
                     .setPayload(payload);
     }
+
+    public static <I> ServiceResponse<I> ofError(HttpStatus httpStatus, String errorMessage) {
+        return new ServiceResponse<I>().setErrorMessage(errorMessage)
+                                       .setHttpStatus(httpStatus);
+    }
 }

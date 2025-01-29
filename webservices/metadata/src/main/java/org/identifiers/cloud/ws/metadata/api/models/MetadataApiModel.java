@@ -2,14 +2,12 @@ package org.identifiers.cloud.ws.metadata.api.models;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
-import org.identifiers.cloud.ws.metadata.api.requests.ServiceRequestFetchMetadataForUrl;
-import org.identifiers.cloud.ws.metadata.api.responses.ResponseFetchMetadataForUrlPayload;
-import org.identifiers.cloud.ws.metadata.api.responses.ResponseFetchMetadataPayload;
-import org.identifiers.cloud.ws.metadata.api.responses.ServiceResponseFetchMetadata;
-import org.identifiers.cloud.ws.metadata.api.responses.ServiceResponseFetchMetadataForUrl;
+import org.identifiers.cloud.commons.messages.models.ResolvedResource;
+import org.identifiers.cloud.commons.messages.requests.ServiceRequest;
+import org.identifiers.cloud.commons.messages.requests.metadata.*;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.metadata.*;
 import org.identifiers.cloud.ws.metadata.data.models.MetadataExtractionResult;
-import org.identifiers.cloud.ws.metadata.api.ApiCentral;
 import org.identifiers.cloud.ws.metadata.models.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,27 +42,7 @@ public class MetadataApiModel {
         this.metadataExtractionStrategy = metadataExtractionStrategy;
     }
 
-    private ServiceResponseFetchMetadata createDefaultResponseFetchMetadata(HttpStatus httpStatus, String errorMessage) {
-        ServiceResponseFetchMetadata response = new ServiceResponseFetchMetadata();
-        response.setApiVersion(ApiCentral.apiVersion)
-                .setHttpStatus(httpStatus)
-                .setErrorMessage(errorMessage);
-        response.setPayload(new ResponseFetchMetadataPayload().setMetadata(""));
-        return response;
-    }
-
-    private ServiceResponseFetchMetadataForUrl createDefaultResponseFetchMetadataForUrl(HttpStatus httpStatus, String errorMessage) {
-        ServiceResponseFetchMetadataForUrl response = new ServiceResponseFetchMetadataForUrl();
-        response.setApiVersion(ApiCentral.apiVersion)
-                .setHttpStatus(httpStatus)
-                .setErrorMessage(errorMessage);
-        ResponseFetchMetadataForUrlPayload payload = new ResponseFetchMetadataForUrlPayload();
-        payload.setMetadata("");
-        response.setPayload(payload);
-        return response;
-    }
-
-    private List<ResolvedResource> resolveCompactId(String compactId, ServiceResponseFetchMetadata response) {
+    private List<ResolvedResource> resolveCompactId(String compactId, ServiceResponse<ResponseFetchMetadataPayload> response) {
         // Resolve the Compact ID
         List<ResolvedResource> resources = new ArrayList<>();
         try {
@@ -85,7 +63,7 @@ public class MetadataApiModel {
         return resources;
     }
 
-    private List<ResolvedResource> resolveCompactId(String selector, String compactId, ServiceResponseFetchMetadata
+    private List<ResolvedResource> resolveCompactId(String selector, String compactId, ServiceResponse<ResponseFetchMetadataPayload>
             response) {
         List<ResolvedResource> resources = new ArrayList<>();
         try {
@@ -107,7 +85,7 @@ public class MetadataApiModel {
         return resources;
     }
 
-    private List<ResolvedResource> resolveRawRequest(String rawRequest, ServiceResponseFetchMetadata response) {
+    private List<ResolvedResource> resolveRawRequest(String rawRequest, ServiceResponse<ResponseFetchMetadataPayload> response) {
         List<ResolvedResource> resources = new ArrayList<>();
         try {
             resources = idResolver.resolveRawRequest(rawRequest);
@@ -128,7 +106,7 @@ public class MetadataApiModel {
 
     private ResolvedResource selectResource(String compactIdOrRequest,
                                             List<ResolvedResource> resources,
-                                            ServiceResponseFetchMetadata response) {
+                                            ServiceResponse<ResponseFetchMetadataPayload> response) {
         ResolvedResource selectedResource;
         try {
             selectedResource = idResourceSelector.selectResource(resources);
@@ -153,7 +131,7 @@ public class MetadataApiModel {
         return selectedResource;
     }
 
-    private void extractMetadata(ResolvedResource resolvedResource, ServiceResponseFetchMetadata response, String selector, String compactIdOrRequest) {
+    private void extractMetadata(ResolvedResource resolvedResource, ServiceResponse<ResponseFetchMetadataPayload> response, String selector, String compactIdOrRequest) {
         // Extract the metadata
         try {
             response.getPayload().setMetadata(metadataFetcher.fetchMetadataFor(resolvedResource.getCompactIdentifierResolvedUrl()));
@@ -177,7 +155,7 @@ public class MetadataApiModel {
         }
     }
 
-    private void extractMetadata(List<ResolvedResource> resolvedResources, ServiceResponseFetchMetadata response, String rawRequest) {
+    private void extractMetadata(List<ResolvedResource> resolvedResources, ServiceResponse<ResponseFetchMetadataPayload> response, String rawRequest) {
         try {
             MetadataExtractionResult metadataExtractionResult =
                     metadataExtractionStrategy.extractMetadata(resolvedResources);
@@ -196,8 +174,8 @@ public class MetadataApiModel {
     }
 
     // --- API Methods ---
-    public ServiceResponseFetchMetadata getMetadataFor(String compactId) {
-        ServiceResponseFetchMetadata response = createDefaultResponseFetchMetadata(HttpStatus.OK, "");
+    public ServiceResponse<ResponseFetchMetadataPayload> getMetadataFor(String compactId) {
+        var response = new ServiceResponse<ResponseFetchMetadataPayload>();
         List<ResolvedResource> resources = resolveCompactId(compactId, response);
         if (response.getHttpStatus() == HttpStatus.OK) {
             // Select the provider
@@ -210,8 +188,8 @@ public class MetadataApiModel {
         return response;
     }
 
-    public ServiceResponseFetchMetadata getMetadataFor(String selector, String compactId) {
-        ServiceResponseFetchMetadata response = createDefaultResponseFetchMetadata(HttpStatus.OK, "");
+    public ServiceResponse<ResponseFetchMetadataPayload> getMetadataFor(String selector, String compactId) {
+        var response = new ServiceResponse<ResponseFetchMetadataPayload>();
         List<ResolvedResource> resolvedResources = resolveCompactId(selector, compactId, response);
         if (response.getHttpStatus() == HttpStatus.OK) {
             // Log a warning if there's more than one resource
@@ -231,8 +209,8 @@ public class MetadataApiModel {
         return response;
     }
 
-    public ServiceResponseFetchMetadata getMetadataForRawRequest(String rawRequest) {
-        ServiceResponseFetchMetadata response = createDefaultResponseFetchMetadata(HttpStatus.OK, "");
+    public ServiceResponse<ResponseFetchMetadataPayload> getMetadataForRawRequest(String rawRequest) {
+        var response = new ServiceResponse<ResponseFetchMetadataPayload>();
         logger.info("Getting metadata for RAW Request '{}'", rawRequest);
         List<ResolvedResource> resources = resolveRawRequest(rawRequest, response);
         if (response.getHttpStatus() == HttpStatus.OK) {
@@ -241,14 +219,13 @@ public class MetadataApiModel {
         return response;
     }
 
-    public ServiceResponseFetchMetadataForUrl getMetadataForUrl(ServiceRequestFetchMetadataForUrl request) {
+    public ServiceResponse<ResponseFetchMetadataPayload> getMetadataForUrl(ServiceRequest<RequestFetchMetadataForUrlPayload> request) {
         // TODO - Check API version?
         // TODO - This will need to be re-addressed, as it will still do in-line metadata extraction
         // TODO - Metadata collection for URLs is performed in-line, a different strategy could be useful in the future.
         String url = request.getPayload().getUrl();
         // Prepare default response
-        ServiceResponseFetchMetadataForUrl response =
-                createDefaultResponseFetchMetadataForUrl(HttpStatus.OK, "");
+        var response = ServiceResponse.of(new ResponseFetchMetadataPayload());
         // Extract the metadata
         try {
             response.getPayload().setMetadata(metadataFetcher.fetchMetadataFor(url));

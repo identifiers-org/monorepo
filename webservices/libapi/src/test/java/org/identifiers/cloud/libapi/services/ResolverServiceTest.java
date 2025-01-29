@@ -6,7 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.libapi.models.resolver.ServiceResponseResolve;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
-
+import org.identifiers.cloud.commons.messages.responses.resolver.ResponseResolvePayload;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -23,7 +24,7 @@ public class ResolverServiceTest {
     // current iteration of this library
     @Test
     public void requestCompactIdResolution() {
-        ServiceResponseResolve response = ApiServicesFactory
+        var response = ApiServicesFactory
                 .getResolverService("localhost", "8080")
                 .requestCompactIdResolution("CHEBI:36927");
         // Just for debugging purposes, serialized response into the logs
@@ -40,7 +41,7 @@ public class ResolverServiceTest {
 
     @Test
     public void requestCompactIdResolutionWithSelector() {
-        ServiceResponseResolve response = ApiServicesFactory
+        var response = ApiServicesFactory
                 .getResolverService("localhost", "8080")
                 .requestCompactIdResolution("CHEBI:36927", "ebi");
         // Just for debugging purposes, serialized response into the logs
@@ -57,7 +58,7 @@ public class ResolverServiceTest {
 
     @Test
     public void testResolutionWithRawRequest() {
-        ServiceResponseResolve response = ApiServicesFactory
+        ServiceResponse<ResponseResolvePayload> response = ApiServicesFactory
                 .getResolverService("localhost", "8080")
                 .requestResolutionRawRequest("ark:/57799/b97957");
         // Just for debugging purposes, serialized response into the logs
@@ -74,7 +75,7 @@ public class ResolverServiceTest {
 
     @Test
     public void getAllResourcesResolvedToTheirSampleIds() {
-        ServiceResponseResolve response = ApiServicesFactory
+        var response = ApiServicesFactory
                 .getResolverService("localhost", "8080")
                 .getAllSampleIdsResolved();
         // Just for debugging purposes, serialized response into the logs
@@ -91,7 +92,7 @@ public class ResolverServiceTest {
 
     @Test
     public void getAllResourcesHomeUrls() {
-        ServiceResponseResolve response = ApiServicesFactory
+        var response = ApiServicesFactory
                 .getResolverService("localhost", "8080")
                 .getAllHomeUrls();
         // Just for debugging purposes, serialized response into the logs

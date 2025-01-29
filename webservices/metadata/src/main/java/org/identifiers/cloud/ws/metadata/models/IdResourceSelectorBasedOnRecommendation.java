@@ -1,6 +1,6 @@
 package org.identifiers.cloud.ws.metadata.models;
 
-import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
+import org.identifiers.cloud.commons.messages.models.ResolvedResource;
 import org.springframework.stereotype.Component;
 
 import java.util.Comparator;

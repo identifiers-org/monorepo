@@ -1,15 +1,19 @@
 package org.identifiers.cloud.libapi.services;
 
 import org.identifiers.cloud.libapi.Configuration;
-import org.identifiers.cloud.libapi.models.resolver.ResponseResolvePayload;
+import org.identifiers.cloud.commons.messages.responses.resolver.ResponseResolvePayload;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
 import org.identifiers.cloud.libapi.models.resolver.ServiceResponseResolve;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 
 /**
@@ -37,38 +41,21 @@ public class ResolverService {
     }
 
     /**
-     * This helper method creates a default / baseline response for a resolution request, where the resolved resources
-     * are empty, the api version information is properly set, and the HTTP Status code and error message fields are
-     * customized to the given parameters.
-     * @param httpStatus HTTP Status to set in the default response object.
-     * @param errorMessage error message to set in the default response object.
-     * @return a customized default resolution request service response.
-     */
-    private ServiceResponseResolve createDefaultResponse(HttpStatus httpStatus, String errorMessage) {
-        ServiceResponseResolve response = new ServiceResponseResolve();
-        response
-                .setApiVersion(apiVersion)
-                .setHttpStatus(httpStatus)
-                .setErrorMessage(errorMessage);
-        response.setPayload(new ResponseResolvePayload().setResolvedResources(new ArrayList<>()));
-        return response;
-    }
-
-    /**
      * Helper method that submits a resolution HTTP GET request to the resolver service, and expects the corresponding
      * response.
      * @param serviceApiEndpoint service endpoint for the HTTP GET request.
      * @return resolution request response from the service or a guaranteed default response, where HTTP Status code and
      * error message contains information on what could have happened with the request.
      */
-    private ServiceResponseResolve doRequestResolution(String serviceApiEndpoint) {
-        ServiceResponseResolve response = createDefaultResponse(HttpStatus.OK, "");
+    private ServiceResponse<ResponseResolvePayload> doRequestResolution(String serviceApiEndpoint) {
+        var response = new ServiceResponse<ResponseResolvePayload>();
         try {
-            ResponseEntity<ServiceResponseResolve> requestResponse = retryTemplate.execute(retryContext -> {
+            var responseType = new ParameterizedTypeReference<ServiceResponse<ResponseResolvePayload>> () {};
+            var requestResponse = retryTemplate.execute(retryContext -> {
                 // Make the request
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.setErrorHandler(Configuration.responseErrorHandler());
-                return restTemplate.getForEntity(serviceApiEndpoint, ServiceResponseResolve.class);
+                return restTemplate.exchange(serviceApiEndpoint, HttpMethod.GET, null, responseType);
             });
             response = requestResponse.getBody();
             response.setHttpStatus(HttpStatus.valueOf(requestResponse.getStatusCode().value()));
@@ -87,7 +74,7 @@ public class ResolverService {
             String errorMessage = String.format("ERROR resolving Compact ID at '%s' " +
                     "because of '%s'", serviceApiEndpoint, e.getMessage());
             logger.error(errorMessage);
-            response = createDefaultResponse(HttpStatus.BAD_REQUEST, errorMessage);
+            response = ServiceResponse.ofError(HttpStatus.BAD_REQUEST, errorMessage);
         }
         return response;
     }
@@ -101,7 +88,7 @@ public class ResolverService {
      * empty list of resources / providers) where the HTTP Status code and error message fields contain infromation on
      * what could have happened to the request.
      */
-    public ServiceResponseResolve requestCompactIdResolution(String compactId) {
+    public ServiceResponse<ResponseResolvePayload> requestCompactIdResolution(String compactId) {
         String serviceApiEndpoint = String.format("%s/%s", serviceApiBaseline, compactId);
         return doRequestResolution(serviceApiEndpoint);
     }
@@ -115,7 +102,7 @@ public class ResolverService {
      * empty list of resources / providers) where the HTTP Status code and error message fields contain infromation on
      * what could have happened to the request.
      */
-    public ServiceResponseResolve requestCompactIdResolution(String compactId, String selector) {
+    public ServiceResponse<ResponseResolvePayload> requestCompactIdResolution(String compactId, String selector) {
         String serviceApiEndpoint = String.format("%s/%s/%s", serviceApiBaseline, selector, compactId);
         return doRequestResolution(serviceApiEndpoint);
     }
@@ -130,7 +117,7 @@ public class ResolverService {
      * empty list of resources / providers) where the HTTP Status code and error message fields contain information on
      * what could have happened to the request.
      */
-    public ServiceResponseResolve requestResolutionRawRequest(String rawRequest) {
+    public ServiceResponse<ResponseResolvePayload> requestResolutionRawRequest(String rawRequest) {
         String serviceApiEndpoint = String.format("%s/%s", serviceApiBaseline, rawRequest);
         return doRequestResolution(serviceApiEndpoint);
     }
@@ -141,7 +128,7 @@ public class ResolverService {
      * empty list of resources / providers) where the HTTP Status code and error message fields contain infromation on
      * what could have happened to the request.
      */
-    public ServiceResponseResolve getAllSampleIdsResolved() {
+    public ServiceResponse<ResponseResolvePayload> getAllSampleIdsResolved() {
         String serviceApiEndpoint = String.format("%s/%s", serviceApiBaseline, "insightApi/get_all_sample_ids_resolved");
         return doRequestResolution(serviceApiEndpoint);
     }
@@ -153,7 +140,7 @@ public class ResolverService {
      * empty list of resources / providers) where the HTTP Status code and error message fields contain infromation on
      * what could have happened to the request.
      */
-    public ServiceResponseResolve getAllHomeUrls() {
+    public ServiceResponse<ResponseResolvePayload> getAllHomeUrls() {
         String serviceApiEndpoint = String.format("%s/%s", serviceApiBaseline, "insightApi/get_all_home_urls");
         return doRequestResolution(serviceApiEndpoint);
     }

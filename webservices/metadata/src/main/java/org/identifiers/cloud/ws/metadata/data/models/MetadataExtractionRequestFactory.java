@@ -1,6 +1,6 @@
 package org.identifiers.cloud.ws.metadata.data.models;
 
-import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
+import org.identifiers.cloud.commons.messages.models.ResolvedResource;
 
 /**
  * Project: metadata

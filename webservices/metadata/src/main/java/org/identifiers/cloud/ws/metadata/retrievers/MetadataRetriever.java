@@ -1,6 +1,6 @@
 package org.identifiers.cloud.ws.metadata.retrievers;
 
-import org.identifiers.cloud.libapi.models.resolver.ParsedCompactIdentifier;
+import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
 import org.springframework.http.MediaType;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
