@@ -1,12 +1,10 @@
 package org.identifiers.cloud.ws.linkchecker.api.models;
 
 import lombok.RequiredArgsConstructor;
-import org.identifiers.cloud.ws.linkchecker.api.ApiCentral;
-import org.identifiers.cloud.ws.linkchecker.api.requests.ServiceRequestScoreProvider;
-import org.identifiers.cloud.ws.linkchecker.api.requests.ServiceRequestScoreResource;
-import org.identifiers.cloud.ws.linkchecker.api.requests.ServiceRequestScoring;
-import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseScoringRequest;
-import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseScoringRequestPayload;
+import org.identifiers.cloud.commons.messages.requests.ServiceRequest;
+import org.identifiers.cloud.commons.messages.requests.linkchecker.*;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.linkchecker.*;
 import org.identifiers.cloud.ws.linkchecker.models.ResourceTracker;
 import org.identifiers.cloud.ws.linkchecker.services.HistoryTrackingService;
 import org.slf4j.Logger;
@@ -43,13 +41,6 @@ public class LinkScoringApiModel {
     private static final Logger logger = LoggerFactory.getLogger(LinkScoringApiModel.class);
     private final HistoryTrackingService historyTrackingService;
 
-    private ServiceResponseScoringRequest getDefaultResponse() {
-        ServiceResponseScoringRequest response = new ServiceResponseScoringRequest();
-        response.setApiVersion(ApiCentral.apiVersion);
-        response.setPayload(new ServiceResponseScoringRequestPayload());
-        return response;
-    }
-
     /**
      * Getting a score for a provider (within the context of a particular namespace), is based on the 'uptime' history
      * of that provider, i.e. how many times the provider was up over the total number of times we have checked its
@@ -57,12 +48,13 @@ public class LinkScoringApiModel {
      * @param request the request that contains the reference to the provider being scored
      * @return a Service Response ready for the controller to send back to the client
      */
-    public ServiceResponseScoringRequest getScoreForProvider(ServiceRequestScoreProvider request) {
+    public ServiceResponse<ServiceResponseScoringRequestPayload>
+    getScoreForProvider(ServiceRequest<ScoringRequestWithIdPayload> request) {
         logger.info("Provider scoring request for ID '{}', URL '{}', accept401or403? '{}'",
                 request.getPayload().getId(),
                 request.getPayload().getUrl(),
                 request.getPayload().getAccept401or403() ? "Yes" : "No");
-        ServiceResponseScoringRequest response = getDefaultResponse();
+        var response = new ServiceResponse<ServiceResponseScoringRequestPayload>();
         try {
             var tracker = historyTrackingService.getTrackerForProvider(request.getPayload());
             var statsHistory = tracker.getHistoryStats(SIMPLE);
@@ -86,12 +78,13 @@ public class LinkScoringApiModel {
      * @param request the request that contains the reference to the resource being scored
      * @return a Service Response ready for the controller to send back to the client
      */
-    public ServiceResponseScoringRequest getScoreForResolvedId(ServiceRequestScoreResource request) {
+    public ServiceResponse<ServiceResponseScoringRequestPayload>
+    getScoreForResolvedId(ServiceRequest<ScoringRequestWithIdPayload> request) {
         logger.info("Resource scoring request for ID '{}', URL '{}', accept401or403? '{}'",
                 request.getPayload().getId(),
                 request.getPayload().getUrl(),
                 request.getPayload().getAccept401or403() ? "Yes" : "No");
-        ServiceResponseScoringRequest response = getDefaultResponse();
+        var response = new ServiceResponse<ServiceResponseScoringRequestPayload>();
         try {
             var tracker = historyTrackingService.getTrackerForResource(request.getPayload());
             var historyStats = tracker.getHistoryStats(SIMPLE);
@@ -116,13 +109,13 @@ public class LinkScoringApiModel {
      * @param request the request that contains the reference to the URL being scored
      * @return a Service Response reporting an HTTP BAD REQUEST reply to the client
      */
-    public ServiceResponseScoringRequest getScoreForUrl(ServiceRequestScoring request) {
+    public ServiceResponse<ServiceResponseScoringRequestPayload>
+    getScoreForUrl(ServiceRequest<ScoringRequestPayload> request) {
         // TODO - Maybe I'll remove this use case in the future
         logger.warn("URL scoring request for URL '{}' - NOT IMPLEMENTED", request.getPayload().getUrl());
-        ServiceResponseScoringRequest response = getDefaultResponse();
-        response.setHttpStatus(HttpStatus.BAD_REQUEST);
-        response.setErrorMessage("This functionality if not available yet.");
-        return response;
+        var response = new ServiceResponse<ServiceResponseScoringRequestPayload>();
+        return response.setHttpStatus(HttpStatus.BAD_REQUEST)
+                       .setErrorMessage("This functionality if not available yet.");
     }
 
     public Map<String, Float> getResourcesIdsWithAvailabilityLowerThan(int minAvailability) {

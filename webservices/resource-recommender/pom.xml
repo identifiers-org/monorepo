@@ -18,63 +18,6 @@
 		<version>0.1.0-SNAPSHOT</version>
 	</parent>
 
-	<licenses>
-		<license>
-			<name>The MIT License</name>
-			<url>https://opensource.org/licenses/MIT</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-
-	<organization>
-		<name>The European Bioinformatics Institute</name>
-		<url>https://ebi.ac.uk</url>
-	</organization>
-
-	<developers>
-		<developer>
-			<id>renatocjn</id>
-			<name>Renato Caminha Juaçaba Neto</name>
-			<email>rjuacaba@ebi.ac.uk</email>
-			<organization>EMBL-European Bioinformatics Institute</organization>
-			<organizationUrl>https://ebi.ac.uk/</organizationUrl>
-			<timezone>Europe/London</timezone>
-			<roles>
-				<role>architect</role>
-				<role>developer</role>
-			</roles>
-		</developer>
-		<developer>
-			<id>mbernal</id>
-			<name>Manuel Bernal-Llinares</name>
-			<email>mbdebian@gmail.com</email>
-			<organization>EMBL-European Bioinformatics Institute</organization>
-			<organizationUrl>https://ebi.ac.uk/</organizationUrl>
-			<timezone>Europe/London</timezone>
-			<roles>
-				<role>architect</role>
-				<role>developer</role>
-			</roles>
-		</developer>
-	</developers>
-
-	<scm>
-		<connection>scm:git:git://github.com/identifiers-org/cloud-ws-resource-recommender.git</connection>
-		<developerConnection>scm:git:ssh://github.com:identifiers-org/cloud-ws-resource-recommender.git</developerConnection>
-		<url>https://github.com/identifiers-org/cloud-ws-resource-recommender/tree/master</url>
-	</scm>
-
-	<issueManagement>
-		<system>GitHub</system>
-		<url>https://github.com/identifiers-org/cloud-ws-resource-recommender/issues</url>
-	</issueManagement>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<maven.compiler.source>17</maven.compiler.source>
-		<maven.compiler.target>17</maven.compiler.target>
-	</properties>
 
 	<dependencies>
 		<dependency>

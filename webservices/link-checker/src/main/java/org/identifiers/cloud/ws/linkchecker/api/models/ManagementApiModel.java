@@ -1,7 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.api.models;
 
-import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseManagementRequest;
-import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseManagementRequestPayload;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.linkchecker.ServiceResponseManagementRequestPayload;
 import org.identifiers.cloud.ws.linkchecker.services.HistoryTrackingService;
 import org.identifiers.cloud.ws.linkchecker.services.HistoryTrackingServiceException;
 import org.slf4j.Logger;
@@ -26,19 +26,18 @@ public class ManagementApiModel {
 
     private HistoryTrackingService historyTrackingService;
 
-    public ServiceResponseManagementRequest flushLinkCheckingHistory() {
+    public ServiceResponse<ServiceResponseManagementRequestPayload> flushLinkCheckingHistory() {
         logger.warn("FLUSH REQUEST for link checking historical data");
         // It is responsibility of the history tracking service used to flush the link checking history
         // change this when the code is completed
-        ServiceResponseManagementRequest response = new ServiceResponseManagementRequest();
-        response.setPayload(new ServiceResponseManagementRequestPayload()
-                .setMessage("This is a default response"));
+        var payload = new ServiceResponseManagementRequestPayload().setMessage("This is a default response");
+        var response = ServiceResponse.of(payload);
         try {
             historyTrackingService.deleteHistoryTrackingData();
         } catch (HistoryTrackingServiceException e) {
             logger.error("The following error occurred while trying to flush link checking historical data, '{}'", e.getMessage());
             response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-            response.getPayload().setMessage("An error occurred while trying to flush link checking historical data, but DON'T PANIC, we'll get back on track");
+            payload.setMessage("An error occurred while trying to flush link checking historical data, but DON'T PANIC, we'll get back on track");
         }
         return response;
     }

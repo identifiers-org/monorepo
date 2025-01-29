@@ -1,6 +1,6 @@
 package org.identifiers.cloud.ws.linkchecker.services;
 
-import org.identifiers.cloud.ws.linkchecker.api.requests.ScoringRequestWithIdPayload;
+import org.identifiers.cloud.commons.messages.requests.linkchecker.ScoringRequestWithIdPayload;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 import org.identifiers.cloud.ws.linkchecker.models.HistoryTracker;
 import org.identifiers.cloud.ws.linkchecker.models.ProviderTracker;

@@ -4,8 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.identifiers.cloud.ws.linkchecker.TestRedisServer;
 import org.identifiers.cloud.ws.linkchecker.api.models.LinkScoringApiModel;
 import org.identifiers.cloud.ws.linkchecker.api.models.ManagementApiModel;
-import org.identifiers.cloud.ws.linkchecker.api.requests.*;
-import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseScoringRequest;
+import org.identifiers.cloud.commons.messages.requests.ServiceRequest;
+import org.identifiers.cloud.commons.messages.requests.linkchecker.*;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.linkchecker.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Spy;
@@ -43,7 +45,7 @@ class SecurityConfigurationTest {
 
     @BeforeEach
     public void setupMock(@Autowired WebApplicationContext context) {
-        var response = new ServiceResponseScoringRequest();
+        var response = new ServiceResponse<ServiceResponseScoringRequestPayload>();
         doReturn(response).when(linkScoringApiModel).getScoreForResolvedId(any());
         doReturn(response).when(linkScoringApiModel).getScoreForProvider(any());
         doCallRealMethod().when(linkScoringApiModel).getScoreForUrl(any());
@@ -56,10 +58,9 @@ class SecurityConfigurationTest {
 
     @Test
     void testGetScoreForUrl() throws Exception {
-        ScoringRequestPayload payload = new ScoringRequestPayload();
+        var payload = new ScoringRequestPayload();
         payload.setUrl("google.com").setAccept401or403(false);
-        ServiceRequestScoring request = new ServiceRequestScoring();
-        request.setApiVersion("1.0").setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         mvc.perform(post("/getScoreForUrl")
                     .accept(MediaType.APPLICATION_JSON)
@@ -70,10 +71,9 @@ class SecurityConfigurationTest {
 
     @Test
     void testGetScoreForResolvedId() throws Exception {
-        ScoringRequestWithIdPayload payload = new ScoringRequestWithIdPayload().setId("1");
+        var payload = new ScoringRequestWithIdPayload().setId("1");
         payload.setUrl("google.com").setAccept401or403(false);
-        ServiceRequestScoreResource request = new ServiceRequestScoreResource();
-        request.setApiVersion("1.0").setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         mvc.perform(post("/getScoreForResolvedId")
                         .accept(MediaType.APPLICATION_JSON)
@@ -84,10 +84,9 @@ class SecurityConfigurationTest {
 
     @Test
     void testGetScoreForProvider() throws Exception {
-        ScoringRequestWithIdPayload payload = new ScoringRequestWithIdPayload().setId("1");
+        var payload = new ScoringRequestWithIdPayload().setId("1");
         payload.setUrl("google.com").setAccept401or403(false);
-        ServiceRequestScoreProvider request = new ServiceRequestScoreProvider();
-        request.setApiVersion("1.0").setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         mvc.perform(post("/getScoreForProvider")
                         .accept(MediaType.APPLICATION_JSON)

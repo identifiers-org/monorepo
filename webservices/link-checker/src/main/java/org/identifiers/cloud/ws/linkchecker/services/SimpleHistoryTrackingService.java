@@ -4,7 +4,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalNotification;
 import lombok.RequiredArgsConstructor;
-import org.identifiers.cloud.ws.linkchecker.api.requests.ScoringRequestWithIdPayload;
+import org.identifiers.cloud.commons.messages.requests.linkchecker.ScoringRequestWithIdPayload;
 import org.identifiers.cloud.ws.linkchecker.channels.PublisherException;
 import org.identifiers.cloud.ws.linkchecker.channels.management.flushhistorytrackingdata.FlushHistoryTrackingDataPublisher;
 import org.identifiers.cloud.ws.linkchecker.data.models.*;

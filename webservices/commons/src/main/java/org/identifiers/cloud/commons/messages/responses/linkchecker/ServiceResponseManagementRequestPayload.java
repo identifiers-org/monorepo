@@ -1,4 +1,4 @@
-package org.identifiers.cloud.ws.linkchecker.api.responses;
+package org.identifiers.cloud.commons.messages.responses.linkchecker;
 
 import lombok.Getter;
 import lombok.Setter;

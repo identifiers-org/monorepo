@@ -1,7 +1,7 @@
 package org.identifiers.cloud.ws.linkchecker.api.models;
 
-import org.identifiers.cloud.ws.linkchecker.api.requests.ScoringRequestWithIdPayload;
-import org.identifiers.cloud.ws.linkchecker.api.requests.ServiceRequestScoreResource;
+import org.identifiers.cloud.commons.messages.requests.ServiceRequest;
+import org.identifiers.cloud.commons.messages.requests.linkchecker.ScoringRequestWithIdPayload;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckResult;
 import org.identifiers.cloud.ws.linkchecker.models.ResourceTracker;
 import org.identifiers.cloud.ws.linkchecker.services.HistoryTrackingService;
@@ -59,8 +59,8 @@ class LinkScoringApiModelTest {
     void getScoreForResolvedId(int numValidResults, int numInvalidResults) {
         setupModelAndMocks(numValidResults, numInvalidResults);
 
-        var request = new ServiceRequestScoreResource();
         var payload = new ScoringRequestWithIdPayload().setId(RESOURCE_ID);
+        var request = ServiceRequest.of(payload);
         request.setPayload(payload);
 
         var response = model.getScoreForResolvedId(request);

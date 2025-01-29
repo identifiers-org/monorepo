@@ -2,12 +2,12 @@ package org.identifiers.cloud.ws.linkchecker.api.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.identifiers.cloud.ws.linkchecker.api.models.LinkScoringApiModel;
-import org.identifiers.cloud.ws.linkchecker.api.requests.ServiceRequestScoreProvider;
-import org.identifiers.cloud.ws.linkchecker.api.requests.ServiceRequestScoreResource;
-import org.identifiers.cloud.ws.linkchecker.api.requests.ServiceRequestScoring;
-import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseScoringRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.identifiers.cloud.commons.messages.requests.ServiceRequest;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.requests.linkchecker.*;
+import org.identifiers.cloud.commons.messages.responses.linkchecker.*;
 
 /**
  * Project: link-checker
@@ -23,20 +23,23 @@ public class LinkScoringApiController {
     private final LinkScoringApiModel model;
 
     @PostMapping("/getScoreForUrl")
-    public ResponseEntity<ServiceResponseScoringRequest> getScoreForUrl(@RequestBody ServiceRequestScoring request) {
-        ServiceResponseScoringRequest response = model.getScoreForUrl(request);
-        return new ResponseEntity<>(response, response.getHttpStatus());
+    public ResponseEntity<ServiceResponse<ServiceResponseScoringRequestPayload>>
+    getScoreForUrl(@RequestBody ServiceRequest<ScoringRequestPayload> request) {
+        var response = model.getScoreForUrl(request);
+        return ResponseEntity.status(response.getHttpStatus()).body(response);
     }
 
     @PostMapping("/getScoreForResolvedId")
-    public ResponseEntity<ServiceResponseScoringRequest> getScoreForResolvedId(@RequestBody ServiceRequestScoreResource request) {
-        ServiceResponseScoringRequest response = model.getScoreForResolvedId(request);
-        return new ResponseEntity<>(response, response.getHttpStatus());
+    public ResponseEntity<ServiceResponse<ServiceResponseScoringRequestPayload>>
+    getScoreForResolvedId(@RequestBody ServiceRequest<ScoringRequestWithIdPayload> request) {
+        var response = model.getScoreForResolvedId(request);
+        return ResponseEntity.status(response.getHttpStatus()).body(response);
     }
 
     @PostMapping("/getScoreForProvider")
-    public ResponseEntity<ServiceResponseScoringRequest> getScoreForProvider(@RequestBody ServiceRequestScoreProvider request) {
-        ServiceResponseScoringRequest response = model.getScoreForProvider(request);
-        return new ResponseEntity<>(response, response.getHttpStatus());
+    public ResponseEntity<ServiceResponse<ServiceResponseScoringRequestPayload>>
+    getScoreForProvider(@RequestBody ServiceRequest<ScoringRequestWithIdPayload> request) {
+        var response = model.getScoreForProvider(request);
+        return ResponseEntity.status(response.getHttpStatus()).body(response);
     }
 }

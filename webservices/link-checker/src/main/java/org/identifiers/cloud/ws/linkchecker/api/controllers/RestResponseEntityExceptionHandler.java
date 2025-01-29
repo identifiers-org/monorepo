@@ -1,8 +1,8 @@
 package org.identifiers.cloud.ws.linkchecker.api.controllers;
 
 import lombok.extern.slf4j.Slf4j;
-import org.identifiers.cloud.ws.linkchecker.api.ApiCentral;
-import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.ApiCentral;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package org.identifiers.cloud.ws.linkchecker.api.requests;
+package org.identifiers.cloud.commons.messages.requests.linkchecker;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;

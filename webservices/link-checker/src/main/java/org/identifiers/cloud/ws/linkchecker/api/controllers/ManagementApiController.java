@@ -2,7 +2,8 @@ package org.identifiers.cloud.ws.linkchecker.api.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.identifiers.cloud.ws.linkchecker.api.models.ManagementApiModel;
-import org.identifiers.cloud.ws.linkchecker.api.responses.ServiceResponseManagementRequest;
+import org.identifiers.cloud.commons.messages.responses.linkchecker.ServiceResponseManagementRequestPayload;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,8 +26,8 @@ public class ManagementApiController {
     private final ManagementApiModel model;
 
     @RequestMapping("flushLinkCheckingHistory")
-    public ResponseEntity<ServiceResponseManagementRequest> flushLinkCheckingHistory() {
-        ServiceResponseManagementRequest response = model.flushLinkCheckingHistory();
-        return new ResponseEntity<>(response, response.getHttpStatus());
+    public ResponseEntity<ServiceResponse<ServiceResponseManagementRequestPayload>> flushLinkCheckingHistory() {
+        var response = model.flushLinkCheckingHistory();
+        return ResponseEntity.status(response.getHttpStatus()).body(response);
     }
 }
