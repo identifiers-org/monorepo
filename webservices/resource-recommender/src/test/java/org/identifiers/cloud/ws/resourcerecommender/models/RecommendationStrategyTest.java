@@ -1,10 +1,11 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
 import org.assertj.core.util.Lists;
+import org.identifiers.cloud.commons.messages.models.ResolvedResource;
+import org.identifiers.cloud.commons.messages.models.ResourceRecommendation;
 import org.identifiers.cloud.libapi.models.linkchecker.responses.ServiceResponseScoringRequest;
 import org.identifiers.cloud.libapi.models.linkchecker.responses.ServiceResponseScoringRequestPayload;
 import org.identifiers.cloud.libapi.services.LinkCheckerService;
-import org.identifiers.cloud.ws.resourcerecommender.api.data.models.ResolvedResource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,18 +54,18 @@ class RecommendationStrategyTest {
         LongStream.range(0, 5).parallel().forEach(operand ->
                 unOfficialResolvedResources.add(new ResolvedResource()
                         .setOfficial(false)
-                        .setId(Long.toString(operand))
+                        .setId(operand)
                         .setCompactIdentifierResolvedUrl(String.format("http://endpoint/%d", operand)))
         );
         IntStream.range(5, 10).parallel().forEach(operand ->
                 officialResolvedResources.add(new ResolvedResource()
                         .setOfficial(true)
-                        .setId(Long.toString(operand))
+                        .setId(operand)
                         .setCompactIdentifierResolvedUrl(String.format("http://endpoint/%d", operand)))
         );
         ebiResource = new ResolvedResource()
                 .setOfficial(true)
-                .setId("10")
+                .setId(10)
                 .setCompactIdentifierResolvedUrl("https://ebi.ac.uk/something/20");
 
         // Make results of link checker the same for everyone

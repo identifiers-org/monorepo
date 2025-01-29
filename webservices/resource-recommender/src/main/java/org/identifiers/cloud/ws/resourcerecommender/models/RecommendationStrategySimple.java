@@ -1,6 +1,7 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
-import org.identifiers.cloud.ws.resourcerecommender.api.data.models.ResolvedResource;
+import org.identifiers.cloud.commons.messages.models.ResourceRecommendation;
+import org.identifiers.cloud.commons.messages.models.ResolvedResource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +26,7 @@ public class RecommendationStrategySimple implements RecommendationStrategy {
         List<ResourceRecommendation> recommendations = resolvedResources.parallelStream().map(resolvedResource -> {
             ResourceRecommendation resourceRecommendation = new ResourceRecommendation()
                     .setCompactIdentifierResolvedUrl(resolvedResource.getCompactIdentifierResolvedUrl())
-                    .setId(resolvedResource.getId());
+                    .setId(String.valueOf(resolvedResource.getId()));
             // TODO - Implement the function for every entry here
             if (resolvedResource.isOfficial()) {
                 thereIsOfficialResource.set(Boolean.TRUE);

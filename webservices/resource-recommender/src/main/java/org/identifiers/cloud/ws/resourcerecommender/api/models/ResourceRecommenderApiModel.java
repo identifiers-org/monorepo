@@ -2,16 +2,15 @@ package org.identifiers.cloud.ws.resourcerecommender.api.models;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.identifiers.cloud.ws.resourcerecommender.api.ApiCentral;
-import org.identifiers.cloud.ws.resourcerecommender.api.requests.ServiceRequestRecommend;
-import org.identifiers.cloud.ws.resourcerecommender.api.responses.ResponseRecommendPayload;
-import org.identifiers.cloud.ws.resourcerecommender.api.responses.ServiceResponseRecommend;
+import org.identifiers.cloud.commons.messages.models.ResolvedResource;
+import org.identifiers.cloud.commons.messages.models.ResourceRecommendation;
+import org.identifiers.cloud.commons.messages.requests.ServiceRequest;
+import org.identifiers.cloud.commons.messages.requests.resourcerecommender.RequestRecommendPayload;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.resourcerecommender.ResponseRecommendPayload;
 import org.identifiers.cloud.ws.resourcerecommender.models.RecommendationStrategy;
-import org.identifiers.cloud.ws.resourcerecommender.api.data.models.ResolvedResource;
-import org.identifiers.cloud.ws.resourcerecommender.models.ResourceRecommendation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -56,13 +55,11 @@ public class ResourceRecommenderApiModel {
         }
     }
 
-    public ServiceResponseRecommend getRecommendations(ServiceRequestRecommend request) {
+    public ServiceResponse<ResponseRecommendPayload> getRecommendations(ServiceRequest<RequestRecommendPayload> request) {
         // NOTE - I know, I should not use try-catch as an if-else block, but in this case, this logic is so simple...
         // TODO - check payload as well?
-        ServiceResponseRecommend response = new ServiceResponseRecommend();
-        response.setApiVersion(ApiCentral.apiVersion);
-        // Set default payload
-        response.setPayload(new ResponseRecommendPayload().setResourceRecommendations(new ArrayList<>()));
+        var payload = new ResponseRecommendPayload().setResourceRecommendations(new ArrayList<>());
+        var response = ServiceResponse.of(payload);
         try {
             response.getPayload()
                     .setResourceRecommendations(evaluateRecommendations(request.getPayload().getResolvedResources()));

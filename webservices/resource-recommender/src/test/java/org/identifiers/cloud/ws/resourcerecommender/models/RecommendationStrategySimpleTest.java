@@ -1,7 +1,8 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
 import org.assertj.core.util.Lists;
-import org.identifiers.cloud.ws.resourcerecommender.api.data.models.ResolvedResource;
+import org.identifiers.cloud.commons.messages.models.ResolvedResource;
+import org.identifiers.cloud.commons.messages.models.ResourceRecommendation;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -39,13 +40,13 @@ public class RecommendationStrategySimpleTest {
         LongStream.range(0, 10).parallel().forEach(operand ->
                 unOfficialResolvedResources.add(new ResolvedResource()
                         .setOfficial(false)
-                        .setId(Long.toString(operand))
+                        .setId(operand)
                         .setCompactIdentifierResolvedUrl(String.format("http://endpoint/%d", operand)))
         );
         IntStream.range(10, 20).parallel().forEach(operand ->
                 officialResolvedResources.add(new ResolvedResource()
                         .setOfficial(true)
-                        .setId(Long.toString(operand))
+                        .setId(operand)
                         .setCompactIdentifierResolvedUrl(String.format("http://endpoint/%d", operand)))
         );
     }

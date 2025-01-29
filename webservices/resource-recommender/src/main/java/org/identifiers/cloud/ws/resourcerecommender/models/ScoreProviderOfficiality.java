@@ -1,7 +1,7 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
 import lombok.extern.slf4j.Slf4j;
-import org.identifiers.cloud.ws.resourcerecommender.api.data.models.ResolvedResource;
+import org.identifiers.cloud.commons.messages.models.ResolvedResource;
 
 /**
  * Project: resource-recommender

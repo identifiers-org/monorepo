@@ -1,9 +1,10 @@
 package org.identifiers.cloud.ws.resourcerecommender.api.controllers;
 
+import org.identifiers.cloud.commons.messages.requests.ServiceRequest;
+import org.identifiers.cloud.commons.messages.requests.resourcerecommender.RequestRecommendPayload;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.resourcerecommender.ResponseRecommendPayload;
 import org.identifiers.cloud.ws.resourcerecommender.api.models.ResourceRecommenderApiModel;
-import org.identifiers.cloud.ws.resourcerecommender.api.requests.ServiceRequestRecommend;
-import org.identifiers.cloud.ws.resourcerecommender.api.responses.ServiceResponseRecommend;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,10 +25,11 @@ public class ResourceRecommenderApiController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<?> getRecommendations(@RequestBody ServiceRequestRecommend request) {
+    public ResponseEntity<ServiceResponse<ResponseRecommendPayload>>
+    getRecommendations(@RequestBody ServiceRequest<RequestRecommendPayload> request) {
         // The model associated with the controller should handle any possible exception that could happen while running
         // the business logic, thus, the controller should handle only exceptions within the domain of the controller.
-        ServiceResponseRecommend response = model.getRecommendations(request);
+        var response = model.getRecommendations(request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 }
