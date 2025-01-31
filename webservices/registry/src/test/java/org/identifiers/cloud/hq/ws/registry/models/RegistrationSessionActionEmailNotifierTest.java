@@ -5,13 +5,11 @@ import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationReques
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
 import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationRequest;
 import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationSession;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;

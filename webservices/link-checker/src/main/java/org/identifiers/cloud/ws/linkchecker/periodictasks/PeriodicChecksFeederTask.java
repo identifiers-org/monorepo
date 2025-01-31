@@ -1,7 +1,8 @@
 package org.identifiers.cloud.ws.linkchecker.periodictasks;
 
-import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
-import org.identifiers.cloud.libapi.models.resolver.ServiceResponseResolve;
+import org.identifiers.cloud.commons.messages.models.ResolvedResource;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.resolver.ResponseResolvePayload;
 import org.identifiers.cloud.libapi.services.ResolverService;
 import org.identifiers.cloud.ws.linkchecker.data.models.LinkCheckRequest;
 import org.slf4j.Logger;
@@ -64,7 +65,7 @@ public class PeriodicChecksFeederTask implements Runnable{
 
         // Get Resolution client and insight data on resolution samples, as they also contain the provider home URL,
         // we'll only need one request.
-        ServiceResponseResolve insightResponse = resolverService.getAllSampleIdsResolved();
+        ServiceResponse<ResponseResolvePayload> insightResponse = resolverService.getAllSampleIdsResolved();
         if (insightResponse.getHttpStatus().is2xxSuccessful()) {
             logger.info("Queuing link check requests for #{} entries from the Resolution insight API",
                     insightResponse.getPayload().getResolvedResources().size());

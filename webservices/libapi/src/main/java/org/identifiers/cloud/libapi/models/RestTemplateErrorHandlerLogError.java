@@ -19,7 +19,6 @@ import java.io.IOException;
  */
 public class RestTemplateErrorHandlerLogError implements ResponseErrorHandler {
     private static final Logger logger = LoggerFactory.getLogger(RestTemplateErrorHandlerLogError.class);
-    ClientHttpResponse clientHttpResponse;
 
     @Override
     public boolean hasError(ClientHttpResponse clientHttpResponse) throws IOException {

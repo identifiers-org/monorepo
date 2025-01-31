@@ -1,9 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourcePayload;
+import org.identifiers.cloud.commons.messages.requests.registry.ServiceRequestRegisterPrefixPayload;
+import org.identifiers.cloud.commons.messages.requests.registry.ServiceRequestRegisterResourcePayload;
 import org.springframework.lang.Nullable;
 
 import java.util.*;

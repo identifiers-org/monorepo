@@ -1,9 +1,9 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
-import org.identifiers.cloud.hq.ws.registry.api.requests.FairApiCoveragePayload;
-import org.identifiers.cloud.hq.ws.registry.api.requests.FairApiInteroperabilityPayload;
-import org.identifiers.cloud.hq.ws.registry.api.responses.FairApiCoverageResponse;
-import org.identifiers.cloud.hq.ws.registry.api.responses.FairApiInteroperabilityResponse;
+import org.identifiers.cloud.commons.messages.requests.registry.FairApiCoveragePayload;
+import org.identifiers.cloud.commons.messages.requests.registry.FairApiInteroperabilityPayload;
+import org.identifiers.cloud.commons.messages.responses.registry.FairApiCoverageResponse;
+import org.identifiers.cloud.commons.messages.responses.registry.FairApiInteroperabilityResponse;
 import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRepository;

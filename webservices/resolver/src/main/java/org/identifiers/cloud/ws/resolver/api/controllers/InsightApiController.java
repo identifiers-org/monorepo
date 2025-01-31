@@ -1,7 +1,8 @@
 package org.identifiers.cloud.ws.resolver.api.controllers;
 
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.resolver.ResponseResolvePayload;
 import org.identifiers.cloud.ws.resolver.api.models.InsightApiModel;
-import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponseResolve;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,14 +25,14 @@ public class InsightApiController {
     private InsightApiModel model;
 
     @RequestMapping(value = "/get_all_sample_ids_resolved")
-    public ResponseEntity<?> getAllSampleIdsResolved() {
-        ServiceResponseResolve response = model.getAllSampleIdsResolved();
+    public ResponseEntity<ServiceResponse<ResponseResolvePayload>> getAllSampleIdsResolved() {
+        ServiceResponse<ResponseResolvePayload> response = model.getAllSampleIdsResolved();
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     @RequestMapping(value = "/get_all_home_urls")
-    public ResponseEntity<?> getAllHomeUrls() {
-        ServiceResponseResolve response = model.getAllHomeUrls();
+    public ResponseEntity<ServiceResponse<ResponseResolvePayload>> getAllHomeUrls() {
+        ServiceResponse<ResponseResolvePayload> response = model.getAllHomeUrls();
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 }

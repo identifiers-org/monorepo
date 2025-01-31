@@ -1,8 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.services;
 
 import lombok.extern.slf4j.Slf4j;
+import org.identifiers.cloud.commons.messages.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.api.data.helpers.ApiAndDataModelsHelper;
-import org.identifiers.cloud.hq.ws.registry.api.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.data.models.Resource;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRepository;
@@ -37,7 +37,7 @@ public class NamespaceApiService {
     public List<Namespace> getNamespaceTreeDownToLeaves() {
         List<Namespace> namespaces = namespaceRepository
                 .findAll().stream()
-                .map(ApiAndDataModelsHelper::getNamespaceFrom)
+                .map(ApiAndDataModelsHelper::getMessagePojoFromEntity)
                 .toList();
         var resources = resourceRepository.findAll().parallelStream()
                 .collect(Collectors.groupingBy(Resource::getNamespaceId));
@@ -47,7 +47,7 @@ public class NamespaceApiService {
             var namespaceResources = resources
                     .get(namespaceId)
                     .stream()
-                    .map(ApiAndDataModelsHelper::getResourceFrom)
+                    .map(ApiAndDataModelsHelper::getMessagePojoFromEntity)
                     .toList();
             if (namespaceResources.isEmpty()) {
                 log.error("No resources found for namespace {}",

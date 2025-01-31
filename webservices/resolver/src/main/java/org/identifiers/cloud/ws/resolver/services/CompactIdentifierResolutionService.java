@@ -1,9 +1,9 @@
 package org.identifiers.cloud.ws.resolver.services;
 
 import lombok.extern.slf4j.Slf4j;
+import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
 import org.identifiers.cloud.ws.resolver.data.models.Namespace;
 import org.identifiers.cloud.ws.resolver.data.models.Resource;
-import org.identifiers.cloud.ws.resolver.models.ParsedCompactIdentifier;
 import org.identifiers.cloud.ws.resolver.models.ResolverDataFetcher;
 import org.identifiers.cloud.ws.resolver.models.ResolverDataHelper;
 import org.springframework.beans.factory.annotation.Qualifier;

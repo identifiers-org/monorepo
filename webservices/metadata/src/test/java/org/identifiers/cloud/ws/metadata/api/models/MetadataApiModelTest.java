@@ -1,10 +1,10 @@
 package org.identifiers.cloud.ws.metadata.api.models;
 
+import org.identifiers.cloud.commons.messages.models.Recommendation;
+import org.identifiers.cloud.commons.messages.models.ResolvedResource;
 import org.identifiers.cloud.commons.messages.requests.ServiceRequest;
 import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
-import org.identifiers.cloud.libapi.models.resolver.Recommendation;
-import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
-import org.identifiers.cloud.libapi.models.resolver.ServiceResponseResolve;
+import org.identifiers.cloud.commons.messages.responses.resolver.ResponseResolvePayload;
 import org.identifiers.cloud.libapi.services.ResolverService;
 import org.identifiers.cloud.ws.metadata.TestRedisServer;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.identifiers.cloud.commons.messages.requests.metadata.*;
-import org.identifiers.cloud.commons.messages.responses.metadata.*;
 
 import java.util.Collections;
 
@@ -65,9 +64,6 @@ class MetadataApiModelTest {
                 .setCompactIdentifierResolvedUrl(PAGE_WITH_METADATA_URL);
         ResponseResolvePayload payload = new ResponseResolvePayload()
                 .setResolvedResources(Collections.singletonList(resolvedResource));
-        ServiceResponseResolve response = new ServiceResponseResolve();
-        response.setApiVersion("1.0");
-        response.setPayload(payload);
-        return response;
+        return ServiceResponse.of(payload);
     }
 }

@@ -3,6 +3,10 @@ package org.identifiers.cloud.libapi;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.identifiers.cloud.libapi.models.ConfigurationException;
 import org.identifiers.cloud.libapi.models.RestTemplateErrorHandlerLogError;
 import org.slf4j.Logger;
@@ -10,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.ResponseErrorHandler;
 
 import java.io.IOException;
@@ -34,73 +39,34 @@ public class Configuration {
     /**
      * This structure models the keys that represent each identifiers.org satellite deployment.
      */
+    @Getter
+    @AllArgsConstructor
+    @Accessors(chain = true)
     public enum InfrastructureDeploymentSelector {
-        AWS("aws", "Amazon Web Services deployment"),
         GCLOUD("gcloud", "Google Cloud deployment"),
-        AZURE("azure", "Microsoft Azure deployment"),
-        ANY("any", "Any deployment");
+        ANY("any", "Any deployment"),
+        @Deprecated AWS("aws", "Amazon Web Services deployment"),
+        @Deprecated AZURE("azure", "Microsoft Azure deployment");
 
-        private String key;
-        private String description;
-
-        InfrastructureDeploymentSelector(String key, String description) {
-            this.key = key;
-            this.description = description;
-        }
-
-        public String getKey() {
-            return key;
-        }
-
-        public InfrastructureDeploymentSelector setKey(String key) {
-            this.key = key;
-            return this;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public InfrastructureDeploymentSelector setDescription(String description) {
-            this.description = description;
-            return this;
-        }
+        @Setter private String key;
+        @Setter private String description;
     }
 
     /**
      * This structure models keys associated with the different services in identifiers.org satellite deployments
      */
+    @Getter
+    @AllArgsConstructor
+    @Accessors(chain = true)
     public enum ServiceName {
         RESOLVER("resolver", "Compact ID Resolution Web Service"),
         METADATA("metadata", "Metadata Web Service"),
         REGISTRY("registry", "Registry Web Service");
         // As you can see, THERE IS NO key for the Resource Recommender service, as it is not offered to the public
-        private String name;
-        private String description;
-
-        ServiceName(String name, String description) {
-            this.name = name;
-            this.description = description;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public ServiceName setName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public ServiceName setDescription(String description) {
-            this.description = description;
-            return this;
-        }
+        @Setter private String name;
+        @Setter private String description;
     }
+
     public static InfrastructureDeploymentSelector deploymentSelection = InfrastructureDeploymentSelector.ANY;
     private static HashMap<String, HashMap<String, String>> servicesMap = null;
 

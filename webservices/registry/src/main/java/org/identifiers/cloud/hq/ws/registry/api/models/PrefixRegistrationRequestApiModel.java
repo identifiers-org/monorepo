@@ -2,13 +2,12 @@ package org.identifiers.cloud.hq.ws.registry.api.models;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefix;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixSessionEvent;
-import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefix;
-import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixPayload;
-import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixSessionEvent;
-import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixSessionEventPayload;
+import org.identifiers.cloud.commons.messages.requests.ServiceRequest;
+import org.identifiers.cloud.commons.messages.requests.registry.ServiceRequestRegisterPrefixPayload;
+import org.identifiers.cloud.commons.messages.requests.registry.ServiceRequestRegisterPrefixSessionEventPayload;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.registry.ServiceResponseRegisterPrefixPayload;
+import org.identifiers.cloud.commons.messages.responses.registry.ServiceResponseRegisterPrefixSessionEventPayload;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationRequest;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationSession;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.PrefixRegistrationSessionRepository;
@@ -42,42 +41,28 @@ public class PrefixRegistrationRequestApiModel {
     private final Map<String, RegistrationValidationChain> registrationValidationChains;
 
     // Helpers
-    private ServiceResponseRegisterPrefix createRegisterPrefixDefaultResponse() {
-        ServiceResponseRegisterPrefix response = new ServiceResponseRegisterPrefix();
-        response.setApiVersion(ApiCentral.apiVersion).setHttpStatus(HttpStatus.OK);
-        response.setPayload(new ServiceResponseRegisterPrefixPayload());
-        return response;
-    }
-
-    private ServiceResponseRegisterPrefixSessionEvent createRegisterPrefixSessionEventDefaultResponse() {
-        ServiceResponseRegisterPrefixSessionEvent response = new ServiceResponseRegisterPrefixSessionEvent();
-        response.setApiVersion(ApiCentral.apiVersion).setHttpStatus(HttpStatus.OK);
-        response.setPayload(new ServiceResponseRegisterPrefixSessionEventPayload());
-        return response;
-    }
-
-    private String getAdditionalInformationFrom(ServiceRequestRegisterPrefixSessionEvent request) {
+    private String getAdditionalInformationFrom(ServiceRequest<ServiceRequestRegisterPrefixSessionEventPayload> request) {
         if (request.getPayload().getAdditionalInformation() != null) {
             return request.getPayload().getAdditionalInformation();
         }
         return "No additional information specified";
     }
 
-    private String getCommentFrom(ServiceRequestRegisterPrefixSessionEvent request) {
+    private String getCommentFrom(ServiceRequest<ServiceRequestRegisterPrefixSessionEventPayload> request) {
         if (request.getPayload().getComment() != null) {
             return request.getPayload().getComment();
         }
         return "No comment provided";
     }
 
-    private String getRejectionReasonFrom(ServiceRequestRegisterPrefixSessionEvent request) {
+    private String getRejectionReasonFrom(ServiceRequest<ServiceRequestRegisterPrefixSessionEventPayload> request) {
         if (request.getPayload().getRejectionReason() != null) {
             return request.getPayload().getRejectionReason();
         }
         return "No rejection reason provided";
     }
 
-    private String getAcceptanceReasonFrom(ServiceRequestRegisterPrefixSessionEvent request) {
+    private String getAcceptanceReasonFrom(ServiceRequest<ServiceRequestRegisterPrefixSessionEventPayload> request) {
         if (request.getPayload().getAcceptanceReason() != null) {
             return request.getPayload().getAcceptanceReason();
         }
@@ -85,8 +70,8 @@ public class PrefixRegistrationRequestApiModel {
     }
 
     private PrefixRegistrationSession getPrefixRegistrationSession(String eventName, long sessionId,
-                                                                   ServiceRequestRegisterPrefixSessionEvent request,
-                                                                   ServiceResponseRegisterPrefixSessionEvent response) {
+                                                                   ServiceRequest<ServiceRequestRegisterPrefixSessionEventPayload> request,
+                                                                   ServiceResponse<ServiceResponseRegisterPrefixSessionEventPayload> response) {
         Optional<PrefixRegistrationSession> prefixRegistrationSession = prefixRegistrationSessionRepository.findById(sessionId);
         if (prefixRegistrationSession.isEmpty()) {
             response.setHttpStatus(HttpStatus.BAD_REQUEST);
@@ -99,8 +84,8 @@ public class PrefixRegistrationRequestApiModel {
     // END - Helpers
 
     // --- API ---
-    public ServiceResponseRegisterPrefix registerPrefix(ServiceRequestRegisterPrefix request) {
-        ServiceResponseRegisterPrefix response = createRegisterPrefixDefaultResponse();
+    public ServiceResponse<ServiceResponseRegisterPrefixPayload> registerPrefix(ServiceRequest<ServiceRequestRegisterPrefixPayload> request) {
+        var response = ServiceResponse.of(new ServiceResponseRegisterPrefixPayload());
 
         var errorList = registrationValidationChains.values().stream()
                 .map(chain -> chain.validate(request.getPayload()))
@@ -131,9 +116,9 @@ public class PrefixRegistrationRequestApiModel {
         return response;
     }
 
-    public ServiceResponseRegisterPrefixSessionEvent amendPrefixRegistrationRequest(
-            long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
-        ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
+    public ServiceResponse<ServiceResponseRegisterPrefixSessionEventPayload> amendPrefixRegistrationRequest(
+            long sessionId, ServiceRequest<ServiceRequestRegisterPrefixSessionEventPayload> request) {
+        var response = ServiceResponse.of(new ServiceResponseRegisterPrefixSessionEventPayload());
         String actor = authHelper.getCurrentUsername();
         // Locate the prefix registration request session
         PrefixRegistrationSession prefixRegistrationSession =
@@ -151,9 +136,9 @@ public class PrefixRegistrationRequestApiModel {
         return response;
     }
 
-    public ServiceResponseRegisterPrefixSessionEvent commentPrefixRegistrationRequest(
-            long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
-        ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
+    public ServiceResponse<ServiceResponseRegisterPrefixSessionEventPayload> commentPrefixRegistrationRequest(
+            long sessionId, ServiceRequest<ServiceRequestRegisterPrefixSessionEventPayload> request) {
+        var response = ServiceResponse.of(new ServiceResponseRegisterPrefixSessionEventPayload());
         String actor = authHelper.getCurrentUsername();
         // Locate the prefix registration request session
         PrefixRegistrationSession prefixRegistrationSession =
@@ -168,9 +153,9 @@ public class PrefixRegistrationRequestApiModel {
         return response;
     }
 
-    public ServiceResponseRegisterPrefixSessionEvent rejectPrefixRegistrationRequest(
-            long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
-        ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
+    public ServiceResponse<ServiceResponseRegisterPrefixSessionEventPayload> rejectPrefixRegistrationRequest(
+            long sessionId, ServiceRequest<ServiceRequestRegisterPrefixSessionEventPayload> request) {
+        var response = ServiceResponse.of(new ServiceResponseRegisterPrefixSessionEventPayload());
         String actor = authHelper.getCurrentUsername();
         // Locate the prefix registration request session
         PrefixRegistrationSession prefixRegistrationSession = getPrefixRegistrationSession("REJECT", sessionId, request, response);
@@ -181,9 +166,9 @@ public class PrefixRegistrationRequestApiModel {
         return response;
     }
 
-    public ServiceResponseRegisterPrefixSessionEvent acceptPrefixRegistrationRequest(
-            long sessionId, ServiceRequestRegisterPrefixSessionEvent request) {
-        ServiceResponseRegisterPrefixSessionEvent response = createRegisterPrefixSessionEventDefaultResponse();
+    public ServiceResponse<ServiceResponseRegisterPrefixSessionEventPayload> acceptPrefixRegistrationRequest(
+            long sessionId, ServiceRequest<ServiceRequestRegisterPrefixSessionEventPayload> request) {
+        var response = ServiceResponse.of(new ServiceResponseRegisterPrefixSessionEventPayload());
         String actor = authHelper.getCurrentUsername();
         // Locate the prefix registration request session
         PrefixRegistrationSession prefixRegistrationSession = getPrefixRegistrationSession("ACCEPT", sessionId, request, response);

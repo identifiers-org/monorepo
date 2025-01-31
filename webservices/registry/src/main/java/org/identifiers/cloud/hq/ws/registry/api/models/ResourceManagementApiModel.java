@@ -2,24 +2,19 @@ package org.identifiers.cloud.hq.ws.registry.api.models;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
+import org.identifiers.cloud.commons.messages.requests.ServiceRequest;
+import org.identifiers.cloud.commons.messages.requests.registry.*;
+import org.identifiers.cloud.commons.messages.responses.registry.*;
 import org.identifiers.cloud.hq.ws.registry.api.data.helpers.ApiAndDataModelsHelper;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestReactivateResource;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResource;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceSessionEvent;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceValidate;
-import org.identifiers.cloud.hq.ws.registry.api.responses.*;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
 import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationRequest;
 import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationSession;
-import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationRequestRepository;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationSessionRepository;
 import org.identifiers.cloud.hq.ws.registry.models.ResourceLifecycleManagementContext;
 import org.identifiers.cloud.hq.ws.registry.models.ResourceLifecycleManagementService;
 import org.identifiers.cloud.hq.ws.registry.models.ResourceRegistrationRequestManagementService;
 import org.identifiers.cloud.hq.ws.registry.models.helpers.AuthHelper;
 import org.identifiers.cloud.hq.ws.registry.models.validators.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -54,65 +49,29 @@ public class ResourceManagementApiModel {
     private final ResourceLifecycleManagementService resourceLifecycleManagementService;
 
     // --- Helpers ---
-    /**
-     * Initialize a response with the default values and the given payload.
-     * @param response response to initialize
-     * @param payload payload to set in the response
-     * @param <T> the type of payload
-     */
-    private <T> void initDefaultResponse(ServiceResponse<T> response, T payload) {
-        response.setApiVersion(ApiCentral.apiVersion)
-                .setHttpStatus(HttpStatus.OK);
-        response.setPayload(payload);
-    }
 
-    private ServiceResponseRegisterResource createRegisterResourceDefaultResponse() {
-        ServiceResponseRegisterResource response = new ServiceResponseRegisterResource();
-        initDefaultResponse(response, new ServiceResponseRegisterResourcePayload());
-        return response;
-    }
-
-    private ServiceResponseRegisterResourceSessionEvent createRegisterResourceSessionEventDefaultResponse() {
-        ServiceResponseRegisterResourceSessionEvent response = new ServiceResponseRegisterResourceSessionEvent();
-        initDefaultResponse(response, new ServiceResponseRegisterResourceSessionEventPayload());
-        return response;
-    }
-
-    private ServiceResponseDeactivateResource createResourceDeactivationDefaultResponse() {
-        ServiceResponseDeactivateResource response = new ServiceResponseDeactivateResource();
-        initDefaultResponse(response, new ServiceResponseDeactivateResourcePayload());
-        return response;
-    }
-
-    private ServiceResponseReactivateResource createResourceReactivationDefaultResponse() {
-        ServiceResponseReactivateResource response = new ServiceResponseReactivateResource();
-        initDefaultResponse(response, new ServiceResponseReactivateResourcePayload());
-        return response;
-    }
-
-
-    private String getAdditionalInformationFrom(ServiceRequestRegisterResourceSessionEvent request) {
+    private String getAdditionalInformationFrom(ServiceRequest<ServiceRequestRegisterResourceSessionEventPayload> request) {
         if (request.getPayload().getAdditionalInformation() != null) {
             return request.getPayload().getAdditionalInformation();
         }
         return "No additional information specified";
     }
 
-    private String getCommentFrom(ServiceRequestRegisterResourceSessionEvent request) {
+    private String getCommentFrom(ServiceRequest<ServiceRequestRegisterResourceSessionEventPayload> request) {
         if (request.getPayload().getComment() != null) {
             return request.getPayload().getComment();
         }
         return "No comment provided";
     }
 
-    private String getRejectionReason(ServiceRequestRegisterResourceSessionEvent request) {
+    private String getRejectionReason(ServiceRequest<ServiceRequestRegisterResourceSessionEventPayload> request) {
         if (request.getPayload().getRejectionReason() != null) {
             return request.getPayload().getRejectionReason();
         }
         return "No rejection reason provided";
     }
 
-    private String getAcceptanceReason(ServiceRequestRegisterResourceSessionEvent request) {
+    private String getAcceptanceReason(ServiceRequest<ServiceRequestRegisterResourceSessionEventPayload> request) {
         if (request.getPayload().getAcceptanceReason() != null) {
             return request.getPayload().getAcceptanceReason();
         }
@@ -120,8 +79,8 @@ public class ResourceManagementApiModel {
     }
 
     private ResourceRegistrationSession getResourceRegistrationSession(String eventName, long sessionId,
-                                                                       ServiceRequestRegisterResourceSessionEvent request,
-                                                                       ServiceResponseRegisterResourceSessionEvent response) {
+                                                                       ServiceRequest<ServiceRequestRegisterResourceSessionEventPayload> request,
+                                                                       ServiceResponse<ServiceResponseRegisterResourceSessionEventPayload> response) {
         Optional<ResourceRegistrationSession> resourceRegistrationSession = resourceRegistrationSessionRepository.findById(sessionId);
         if (resourceRegistrationSession.isEmpty()) {
             response.setHttpStatus(HttpStatus.BAD_REQUEST);
@@ -135,8 +94,8 @@ public class ResourceManagementApiModel {
 
     // --- API ---
     // Resource Registration API
-    public ServiceResponseRegisterResource registerResource(ServiceRequestRegisterResource request) {
-        ServiceResponseRegisterResource response = createRegisterResourceDefaultResponse();
+    public ServiceResponse<ServiceResponseRegisterResourcePayload> registerResource(ServiceRequest<ServiceRequestRegisterResourcePayload> request) {
+        var response = ServiceResponse.of(new ServiceResponseRegisterResourcePayload());
 
         var errors = this.registrationValidationChains.values().stream()
                 .map(chain -> chain.validate(request.getPayload()))
@@ -166,10 +125,11 @@ public class ResourceManagementApiModel {
         return response;
     }
 
-    public ServiceResponseRegisterResourceSessionEvent amendResourceRegistrationRequest(
-            long sessionId, ServiceRequestRegisterResourceSessionEvent request) {
+    public ServiceResponse<ServiceResponseRegisterResourceSessionEventPayload> amendResourceRegistrationRequest(
+            long sessionId, ServiceRequest<ServiceRequestRegisterResourceSessionEventPayload> request) {
         // Default response
-        ServiceResponseRegisterResourceSessionEvent response = createRegisterResourceSessionEventDefaultResponse();
+        var response = ServiceResponse.of(new ServiceResponseRegisterResourceSessionEventPayload());
+
         // TODO We need to get the actor from Spring Security
         String actor = authHelper.getCurrentUsername();
         // Locate the resource registration request session
@@ -183,9 +143,10 @@ public class ResourceManagementApiModel {
         return response;
     }
 
-    public ServiceResponseRegisterResourceSessionEvent commentResourceRegistrationRequest(long sessionId, ServiceRequestRegisterResourceSessionEvent request) {
+    public ServiceResponse<ServiceResponseRegisterResourceSessionEventPayload> commentResourceRegistrationRequest(long sessionId, ServiceRequest<ServiceRequestRegisterResourceSessionEventPayload> request) {
         // Default response
-        ServiceResponseRegisterResourceSessionEvent response = createRegisterResourceSessionEventDefaultResponse();
+        var response = ServiceResponse.of(new ServiceResponseRegisterResourceSessionEventPayload());
+
         // TODO We need to get the actor from Spring Security
         String actor = authHelper.getCurrentUsername();
         // Locate the resource registration request session
@@ -197,9 +158,9 @@ public class ResourceManagementApiModel {
         return response;
     }
 
-    public ServiceResponseRegisterResourceSessionEvent rejectResourceRegistrationRequest(long sessionId, ServiceRequestRegisterResourceSessionEvent request) {
+    public ServiceResponse<ServiceResponseRegisterResourceSessionEventPayload> rejectResourceRegistrationRequest(long sessionId, ServiceRequest<ServiceRequestRegisterResourceSessionEventPayload> request) {
         // Default response
-        ServiceResponseRegisterResourceSessionEvent response = createRegisterResourceSessionEventDefaultResponse();
+        var response = ServiceResponse.of(new ServiceResponseRegisterResourceSessionEventPayload());
         // TODO We need to get the actor from Spring Security
         String actor = authHelper.getCurrentUsername();
         // Locate the resource registration request session
@@ -211,9 +172,9 @@ public class ResourceManagementApiModel {
         return response;
     }
 
-    public ServiceResponseRegisterResourceSessionEvent acceptResourceRegistrationRequest(long sessionId, ServiceRequestRegisterResourceSessionEvent request) {
+    public ServiceResponse<ServiceResponseRegisterResourceSessionEventPayload> acceptResourceRegistrationRequest(long sessionId, ServiceRequest<ServiceRequestRegisterResourceSessionEventPayload> request) {
         // Default response
-        ServiceResponseRegisterResourceSessionEvent response = createRegisterResourceSessionEventDefaultResponse();
+        var response = ServiceResponse.of(new ServiceResponseRegisterResourceSessionEventPayload());
         // TODO We need to get the actor from Spring Security
         String actor = authHelper.getCurrentUsername();
         // Locate the resource registration request session
@@ -225,14 +186,13 @@ public class ResourceManagementApiModel {
         return response;
     }
 
-    private ServiceResponseRegisterResourceValidate doValidation(ServiceRequestRegisterResourceValidate request,
-                                                                 String valueName) {
-        ServiceResponseRegisterResourceValidate response = new ServiceResponseRegisterResourceValidate();
-        initDefaultResponse(response, new ServiceResponseRegisterResourceValidatePayload());
-        // Validate the request
+    private ServiceResponse<ServiceResponseRegisterResourceValidatePayload> doValidation(
+                                                        ServiceRequest<ServiceRequestRegisterResourcePayload> request,
+                                                        String valueName) {
+        var payload = new ServiceResponseRegisterResourceValidatePayload();
+        var response = ServiceResponse.of(payload);
 
-        var payload = request.getPayload();
-        Optional<String> error = registrationValidationChains.get(valueName).validate(payload);
+        Optional<String> error = registrationValidationChains.get(valueName).validate(request.getPayload());
         if (error.isPresent()){
             response.setErrorMessage(error.get());
             response.setHttpStatus(HttpStatus.BAD_REQUEST);
@@ -244,55 +204,55 @@ public class ResourceManagementApiModel {
     }
 
     // Validation API
-    public ServiceResponseRegisterResourceValidate validateProviderHomeUrl(ServiceRequestRegisterResourceValidate request) {
+    public ServiceResponse<ServiceResponseRegisterResourceValidatePayload> validateProviderHomeUrl(ServiceRequest<ServiceRequestRegisterResourcePayload> request) {
         return doValidation(request, "providerHomeUrl");
     }
 
-    public ServiceResponseRegisterResourceValidate validateProviderName(ServiceRequestRegisterResourceValidate request) {
+    public ServiceResponse<ServiceResponseRegisterResourceValidatePayload> validateProviderName(ServiceRequest<ServiceRequestRegisterResourcePayload> request) {
         return doValidation(request, "providerName");
     }
 
-    public ServiceResponseRegisterResourceValidate validateProviderDescription(ServiceRequestRegisterResourceValidate request) {
+    public ServiceResponse<ServiceResponseRegisterResourceValidatePayload> validateProviderDescription(ServiceRequest<ServiceRequestRegisterResourcePayload> request) {
         return doValidation(request, "providerDescription");
     }
 
-    public ServiceResponseRegisterResourceValidate validateProviderLocation(ServiceRequestRegisterResourceValidate request) {
+    public ServiceResponse<ServiceResponseRegisterResourceValidatePayload> validateProviderLocation(ServiceRequest<ServiceRequestRegisterResourcePayload> request) {
         return doValidation(request, "providerLocation");
     }
 
-    public ServiceResponseRegisterResourceValidate validateProviderCode(ServiceRequestRegisterResourceValidate request) {
+    public ServiceResponse<ServiceResponseRegisterResourceValidatePayload> validateProviderCode(ServiceRequest<ServiceRequestRegisterResourcePayload> request) {
         return doValidation(request, "providerCode");
     }
 
-    public ServiceResponseRegisterResourceValidate validateInstitutionName(ServiceRequestRegisterResourceValidate request) {
+    public ServiceResponse<ServiceResponseRegisterResourceValidatePayload> validateInstitutionName(ServiceRequest<ServiceRequestRegisterResourcePayload> request) {
         return doValidation(request, "institutionName");
     }
 
-    public ServiceResponseRegisterResourceValidate validateInstitutionHomeUrl(ServiceRequestRegisterResourceValidate request) {
+    public ServiceResponse<ServiceResponseRegisterResourceValidatePayload> validateInstitutionHomeUrl(ServiceRequest<ServiceRequestRegisterResourcePayload> request) {
         return doValidation(request, "institutionHomeUrl");
     }
 
-    public ServiceResponseRegisterResourceValidate validateInstitutionDescription(ServiceRequestRegisterResourceValidate request) {
+    public ServiceResponse<ServiceResponseRegisterResourceValidatePayload> validateInstitutionDescription(ServiceRequest<ServiceRequestRegisterResourcePayload> request) {
         return doValidation(request, "institutionDescription");
     }
 
-    public ServiceResponseRegisterResourceValidate validateInstitutionLocation(ServiceRequestRegisterResourceValidate request) {
+    public ServiceResponse<ServiceResponseRegisterResourceValidatePayload> validateInstitutionLocation(ServiceRequest<ServiceRequestRegisterResourcePayload> request) {
         return doValidation(request, "institutionLocation");
     }
 
-    public ServiceResponseRegisterResourceValidate validateProviderUrlPattern(ServiceRequestRegisterResourceValidate request) {
+    public ServiceResponse<ServiceResponseRegisterResourceValidatePayload> validateProviderUrlPattern(ServiceRequest<ServiceRequestRegisterResourcePayload> request) {
         return doValidation(request, "providerUrlPattern");
     }
 
-    public ServiceResponseRegisterResourceValidate validateSampleId(ServiceRequestRegisterResourceValidate request) {
+    public ServiceResponse<ServiceResponseRegisterResourceValidatePayload> validateSampleId(ServiceRequest<ServiceRequestRegisterResourcePayload> request) {
         return doValidation(request, "sampleId");
     }
 
-    public ServiceResponseRegisterResourceValidate validateAdditionalInformation(ServiceRequestRegisterResourceValidate request) {
+    public ServiceResponse<ServiceResponseRegisterResourceValidatePayload> validateAdditionalInformation(ServiceRequest<ServiceRequestRegisterResourcePayload> request) {
         return doValidation(request, "additionalInformation");
     }
 
-    public ServiceResponseRegisterResourceValidate validateRequester(ServiceRequestRegisterResourceValidate request) {
+    public ServiceResponse<ServiceResponseRegisterResourceValidatePayload> validateRequester(ServiceRequest<ServiceRequestRegisterResourcePayload> request) {
         var ret = doValidation(request, "requesterName");
         if (HttpStatus.BAD_REQUEST.equals(ret.getHttpStatus())) {
             return ret;
@@ -301,23 +261,23 @@ public class ResourceManagementApiModel {
         }
     }
 
-    public ServiceResponseRegisterResourceValidate validateRequesterName(ServiceRequestRegisterResourceValidate request) {
+    public ServiceResponse<ServiceResponseRegisterResourceValidatePayload> validateRequesterName(ServiceRequest<ServiceRequestRegisterResourcePayload> request) {
         return doValidation(request, "requesterName");
     }
 
-    public ServiceResponseRegisterResourceValidate validateRequesterEmail(ServiceRequestRegisterResourceValidate request) {
+    public ServiceResponse<ServiceResponseRegisterResourceValidatePayload> validateRequesterEmail(ServiceRequest<ServiceRequestRegisterResourcePayload> request) {
         return doValidation(request, "requesterEmail");
     }
 
-    public ServiceResponseRegisterResourceValidate validateNamespacePrefix(ServiceRequestRegisterResourceValidate request) {
+    public ServiceResponse<ServiceResponseRegisterResourceValidatePayload> validateNamespacePrefix(ServiceRequest<ServiceRequestRegisterResourcePayload> request) {
         return doValidation(request, "prefix");
     }
 
-    public ServiceResponseRegisterResourceValidate validateAuthHelpDescription(ServiceRequestRegisterResourceValidate request) {
+    public ServiceResponse<ServiceResponseRegisterResourceValidatePayload> validateAuthHelpDescription(ServiceRequest<ServiceRequestRegisterResourcePayload> request) {
         return doValidation(request, "authHelpDescription");
     }
 
-    public ServiceResponseRegisterResourceValidate validateAuthHelpUrl(ServiceRequestRegisterResourceValidate request) {
+    public ServiceResponse<ServiceResponseRegisterResourceValidatePayload> validateAuthHelpUrl(ServiceRequest<ServiceRequestRegisterResourcePayload> request) {
         return doValidation(request, "authHelpUrl");
     }
 
@@ -334,8 +294,8 @@ public class ResourceManagementApiModel {
             response.setErrorMessage(report.getErrorMessage());
         }
     }
-    public ServiceResponseDeactivateResource deactivateResource(long resourceId) {
-        ServiceResponseDeactivateResource response = createResourceDeactivationDefaultResponse();
+    public ServiceResponse<ServiceResponseDeactivateResourcePayload> deactivateResource(long resourceId) {
+        var response = ServiceResponse.of(new ServiceResponseDeactivateResourcePayload());
         // TODO Get this information from Spring Security
         String actor = authHelper.getCurrentUsername();
         String additionalInformation = "--- no additional information specified ---";
@@ -350,14 +310,17 @@ public class ResourceManagementApiModel {
         return response;
     }
 
-    public ServiceResponseReactivateResource reactivateResource(long resourceId, ServiceRequestReactivateResource request) {
-        ServiceResponseReactivateResource response = createResourceReactivationDefaultResponse();
+    public ServiceResponse<ServiceResponseReactivateResourcePayload> reactivateResource(long resourceId,
+                                                                                        ServiceRequest<ServiceRequestReactivateResourcePayload> request) {
+        var response = ServiceResponse.of(new ServiceResponseReactivateResourcePayload());
         // TODO Get this from Spring Security
         String actor = authHelper.getCurrentUsername();
         String additionalInformation = "--- no additional information specified ---";
         // In the future, I may need a data model transformation helper
-        ResourceLifecycleManagementContext context = resourceLifecycleManagementService.createEmptyContext().setResourceReactivationUrlPattern(request.getPayload().getProviderUrlPattern());
-        ResourceLifecycleManagementOperationReport activationReport = resourceLifecycleManagementService.reactivateResource(resourceId, context, actor, additionalInformation);
+        ResourceLifecycleManagementContext context = resourceLifecycleManagementService
+            .createEmptyContext().setResourceReactivationUrlPattern(request.getPayload().getProviderUrlPattern());
+        ResourceLifecycleManagementOperationReport activationReport = resourceLifecycleManagementService
+                                            .reactivateResource(resourceId, context, actor, additionalInformation);
         // Let's see what we got back
         processResourceLifecycleManagementOperationReport(response, activationReport);
         response.getPayload().setComment(activationReport.getAdditionalInformation());

@@ -2,7 +2,7 @@ package org.identifiers.cloud.hq.ws.registry.api.controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ExportedDocument;
+import org.identifiers.cloud.hq.ws.registry.api.data.exporters.ExportedDocument;
 import org.identifiers.cloud.hq.ws.registry.api.models.RegistryInsightApiModel;
 import org.identifiers.cloud.hq.ws.registry.models.LowAvailabilityOnLinkCheckerService;
 import org.springframework.format.annotation.DateTimeFormat;

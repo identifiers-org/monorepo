@@ -1,8 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
-import org.identifiers.cloud.hq.ws.registry.api.data.models.Requester;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourcePayload;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourceValidate;
+import org.identifiers.cloud.commons.messages.models.Requester;
+import org.identifiers.cloud.commons.messages.requests.ServiceRequest;
+import org.identifiers.cloud.commons.messages.requests.registry.ServiceRequestRegisterResourcePayload;
 import org.identifiers.cloud.hq.ws.registry.configuration.ValidatorsConfiguration;
 import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRegistrationSessionRepository;
@@ -95,8 +95,7 @@ class ResourceManagementApiModelTest {
                 .when(namespaceService).getNamespaceByPrefix(anyString());
 
         var payload = new ServiceRequestRegisterResourcePayload();
-        var request = new ServiceRequestRegisterResourceValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setNamespacePrefix("existing_prefix");
         var answer = model.validateNamespacePrefix(request);
@@ -123,8 +122,7 @@ class ResourceManagementApiModelTest {
                 .checkIfNamespaceExistsByPrefix(anyString());
 
         var payload = new ServiceRequestRegisterResourcePayload();
-        var request = new ServiceRequestRegisterResourceValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setProviderCode("pcode");
         var answer = model.validateProviderCode(request);
@@ -145,8 +143,7 @@ class ResourceManagementApiModelTest {
                 .findSimilarByUrlPattern(anyString());
 
         var payload = new ServiceRequestRegisterResourcePayload();
-        var request = new ServiceRequestRegisterResourceValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setProviderUrlPattern("https://valid.com/?q={$id}");
         var answer = model.validateProviderUrlPattern(request);
@@ -177,8 +174,7 @@ class ResourceManagementApiModelTest {
                 .getNamespaceByPrefix(anyString());
 
         var payload = new ServiceRequestRegisterResourcePayload();
-        var request = new ServiceRequestRegisterResourceValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setSampleId("welp");
         var answer = model.validateSampleId(request);
@@ -211,8 +207,7 @@ class ResourceManagementApiModelTest {
     @Test
     void validateProviderName() {
         var payload = new ServiceRequestRegisterResourcePayload();
-        var request = new ServiceRequestRegisterResourceValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setProviderName("Renato");
         var answer = model.validateProviderName(request);
@@ -230,8 +225,7 @@ class ResourceManagementApiModelTest {
     @Test
     void validateProviderDescription() {
         var payload = new ServiceRequestRegisterResourcePayload();
-        var request = new ServiceRequestRegisterResourceValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setProviderDescription("VALID DESCRIPTION");
         var answer = model.validateProviderDescription(request);
@@ -249,8 +243,7 @@ class ResourceManagementApiModelTest {
     @Test
     void validateProviderHomeUrl() {
         var payload = new ServiceRequestRegisterResourcePayload();
-        var request = new ServiceRequestRegisterResourceValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setProviderHomeUrl("https://valid.com");
         var answer = model.validateProviderHomeUrl(request);
@@ -268,9 +261,7 @@ class ResourceManagementApiModelTest {
     @Test
     void validateProviderLocation() {
         var payload = new ServiceRequestRegisterResourcePayload();
-        var request = new ServiceRequestRegisterResourceValidate();
-        request.setPayload(payload);
-
+        var request = ServiceRequest.of(payload);
 
         for (var code : countryCodeExamples) {
             payload.setProviderLocation(code);
@@ -292,8 +283,7 @@ class ResourceManagementApiModelTest {
     @Test
     void validateInstitutionName() {
         var payload = new ServiceRequestRegisterResourcePayload();
-        var request = new ServiceRequestRegisterResourceValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setInstitutionName("VALID NAME");
         var answer = model.validateInstitutionName(request);
@@ -311,8 +301,7 @@ class ResourceManagementApiModelTest {
     @Test
     void validateInstitutionDescription() {
         var payload = new ServiceRequestRegisterResourcePayload();
-        var request = new ServiceRequestRegisterResourceValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setInstitutionDescription("VALID DESCRIPTION");
         var answer = model.validateInstitutionDescription(request);
@@ -330,8 +319,7 @@ class ResourceManagementApiModelTest {
     @Test
     void validateInstitutionHomeUrl() {
         var payload = new ServiceRequestRegisterResourcePayload();
-        var request = new ServiceRequestRegisterResourceValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setInstitutionHomeUrl("https://valid.com");
         var answer = model.validateInstitutionHomeUrl(request);
@@ -349,9 +337,7 @@ class ResourceManagementApiModelTest {
     @Test
     void validateInstitutionLocation() {
         var payload = new ServiceRequestRegisterResourcePayload();
-        var request = new ServiceRequestRegisterResourceValidate();
-        request.setPayload(payload);
-
+        var request = ServiceRequest.of(payload);
 
         for (var code : countryCodeExamples) {
             payload.setInstitutionLocation(code);
@@ -373,8 +359,7 @@ class ResourceManagementApiModelTest {
     @Test
     void validateAdditionalInformation() {
         var payload = new ServiceRequestRegisterResourcePayload();
-        var request = new ServiceRequestRegisterResourceValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         var values = new String[]{ "welp", "   ", "", null };
         for (var value : values) {
@@ -390,8 +375,8 @@ class ResourceManagementApiModelTest {
     @Test
     void validateRequester() {
         var payload = new ServiceRequestRegisterResourcePayload();
-        var request = new ServiceRequestRegisterResourceValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
+
         var requester = new Requester();
         payload.setRequester(requester);
 
@@ -418,8 +403,8 @@ class ResourceManagementApiModelTest {
     @Test
     void validateRequesterName() {
         var payload = new ServiceRequestRegisterResourcePayload();
-        var request = new ServiceRequestRegisterResourceValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
+
         var requester = new Requester();
         payload.setRequester(requester);
 
@@ -439,8 +424,8 @@ class ResourceManagementApiModelTest {
     @Test
     void validateRequesterEmail() {
         var payload = new ServiceRequestRegisterResourcePayload();
-        var request = new ServiceRequestRegisterResourceValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
+
         var requester = new Requester();
         payload.setRequester(requester);
 
@@ -462,8 +447,7 @@ class ResourceManagementApiModelTest {
     @Test
     void validateAuthHelpDescription() {
         var payload = new ServiceRequestRegisterResourcePayload();
-        var request = new ServiceRequestRegisterResourceValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setProtectedUrls(true);
         payload.setAuthHelpDescription("VALID DESCRIPTION");
@@ -488,8 +472,7 @@ class ResourceManagementApiModelTest {
     @Test
     void validateAuthHelpUrl() {
         var payload = new ServiceRequestRegisterResourcePayload();
-        var request = new ServiceRequestRegisterResourceValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setProtectedUrls(true);
         payload.setAuthHelpUrl("https://valid.com");

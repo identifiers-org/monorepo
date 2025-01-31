@@ -1,9 +1,15 @@
 package org.identifiers.cloud.libapi.services;
 
 import org.identifiers.cloud.libapi.Configuration;
-import org.identifiers.cloud.libapi.models.metadata.*;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.metadata.*;
+import org.identifiers.cloud.commons.messages.requests.ServiceRequest;
+import org.identifiers.cloud.commons.messages.requests.metadata.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +18,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+
+import static org.springframework.http.HttpMethod.GET;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -26,53 +34,11 @@ public class MetadataService {
     public static final String apiVersion = "1.0";
     private static final Logger logger = LoggerFactory.getLogger(MetadataService.class);
     // Re-try pattern, externalize this later if needed
-    private RetryTemplate retryTemplate = Configuration.retryTemplate();
-    private String serviceApiBaseline;
-
-    private MetadataService() {
-
-    }
+    private final RetryTemplate retryTemplate = Configuration.retryTemplate();
+    private final String serviceApiBaseline;
 
     MetadataService(String host, String port) {
         serviceApiBaseline = String.format("http://%s:%s", host, port);
-    }
-
-    /**
-     * This helper method prepares a default or baseline response to a metadata fetch request for a given Compact ID,
-     * customized with the given HTTP Status and error message.
-     *
-     * A default response when requesting metadata for a given Compact ID is a response that contains no metadata.
-     * @param httpStatus custom HTTP Status to set in the default response being created
-     * @param errorMessage custom error message to set in the default response being created
-     * @return a default response for a metadata fetching request on a Compact ID
-     */
-    private ServiceResponseFetchMetadata createDefaultResponseFetchMetadata(HttpStatus httpStatus, String errorMessage) {
-        ServiceResponseFetchMetadata response = new ServiceResponseFetchMetadata();
-        response.setApiVersion(apiVersion)
-                .setHttpStatus(httpStatus)
-                .setErrorMessage(errorMessage);
-        response.setPayload(new ResponseFetchMetadataPayload().setMetadata(""));
-        return response;
-    }
-
-    /**
-     * This helper method prepares a default or baseline response to a metadata fetch request for a given URL, customized with
-     * the given HTTP Status and error message.
-     *
-     * A default response when requesting metadata for a given URL is a response that contains no metadata.
-     * @param httpStatus custom HTTP Status to set in the default response being created
-     * @param errorMessage custom error message to set in the default response being created
-     * @return a default response for a metadata fetching request on a given URL
-     */
-    private ServiceResponseFetchMetadataForUrl createDefaultResponseFetchMetadataForUrl(HttpStatus httpStatus, String errorMessage) {
-        ServiceResponseFetchMetadataForUrl response = new ServiceResponseFetchMetadataForUrl();
-        response.setApiVersion(apiVersion)
-                .setHttpStatus(httpStatus)
-                .setErrorMessage(errorMessage);
-        ResponseFetchMetadataForUrlPayload payload = new ResponseFetchMetadataForUrlPayload();
-        payload.setMetadata("");
-        response.setPayload(payload);
-        return response;
     }
 
     /**
@@ -81,18 +47,21 @@ public class MetadataService {
      * @param serviceApiEndpoint this is the endpoint URL where to submit the request to.
      * @return a metadata fetch request response.
      */
-    private ServiceResponseFetchMetadata doRequestFetchMetadata(String serviceApiEndpoint) {
-        ServiceResponseFetchMetadata response = createDefaultResponseFetchMetadata(HttpStatus.OK, "");
+    private ServiceResponse<ResponseFetchMetadataPayload> doRequestFetchMetadata(String serviceApiEndpoint) {
+        var payload = new ResponseFetchMetadataPayload().setMetadata("");
+        var response = ServiceResponse.of(payload);
         try {
-            ResponseEntity<ServiceResponseFetchMetadata> requestResponse = retryTemplate.execute(retryContext -> {
-                // Make the request
+            var typeRef = new ParameterizedTypeReference<ServiceResponse<ResponseFetchMetadataPayload>>() {};
+            var requestResponse = retryTemplate.execute(retryContext -> {
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.setErrorHandler(Configuration.responseErrorHandler());
-                return restTemplate.getForEntity(serviceApiEndpoint, ServiceResponseFetchMetadata.class);
+                return restTemplate.exchange(serviceApiEndpoint, GET, null, typeRef);
             });
             response = requestResponse.getBody();
-            response.setHttpStatus(HttpStatus.valueOf(requestResponse.getStatusCode().value()));
-            if (HttpStatus.valueOf(requestResponse.getStatusCode().value()) != HttpStatus.OK) {
+           if (response != null) {
+              response.setHttpStatus(requestResponse.getStatusCode().value());
+           }
+           if (HttpStatus.valueOf(requestResponse.getStatusCode().value()) != HttpStatus.OK) {
                 String errorMessage = String.format("ERROR fetching metadata " +
                                 "at '%s', " +
                                 "HTTP status code '%d', " +
@@ -107,7 +76,7 @@ public class MetadataService {
             String errorMessage = String.format("ERROR resolving Compact ID at '%s' " +
                     "because of '%s'", serviceApiEndpoint, e.getMessage());
             logger.error(errorMessage);
-            response = createDefaultResponseFetchMetadata(HttpStatus.BAD_REQUEST, errorMessage);
+            response = ServiceResponse.ofError(HttpStatus.BAD_REQUEST, errorMessage);
         }
         return response;
     }
@@ -118,14 +87,13 @@ public class MetadataService {
      * @param serviceApiEndpoint service endpoint URL for this request.
      * @return a request entity with all set to go, including the request body.
      */
-    private RequestEntity<ServiceRequestFetchMetadataForUrl> prepareRequestFetchMetadataForUrl(String url,
-                                                                                               String serviceApiEndpoint) {
+    private RequestEntity<ServiceRequest<RequestFetchMetadataForUrlPayload>>
+    prepareRequestFetchMetadataForUrl(String url, String serviceApiEndpoint) {
         // Prepare the request body
-        ServiceRequestFetchMetadataForUrl requestBody = new ServiceRequestFetchMetadataForUrl();
-        requestBody.setApiVersion(apiVersion);
-        requestBody.setPayload(new RequestFetchMetadataForUrlPayload().setUrl(url));
+        var payload = new RequestFetchMetadataForUrlPayload().setUrl(url);
+        var requestBody = ServiceRequest.of(payload);
         // Prepare the request entity
-        RequestEntity<ServiceRequestFetchMetadataForUrl> request = null;
+        RequestEntity<ServiceRequest<RequestFetchMetadataForUrlPayload>> request = null;
         try {
             request = RequestEntity.post(new URI(serviceApiEndpoint)).body(requestBody);
         } catch (URISyntaxException e) {
@@ -140,10 +108,12 @@ public class MetadataService {
      * @param request already prepared metadata fetch request for URL
      * @return response from the service
      */
-    private ResponseEntity<ServiceResponseFetchMetadataForUrl> makeRequestFetchMetadataForUrl(RequestEntity<ServiceRequestFetchMetadataForUrl> request) {
+    private ResponseEntity<ServiceResponse<RequestFetchMetadataForUrlPayload>>
+    makeRequestFetchMetadataForUrl(RequestEntity<ServiceRequest<RequestFetchMetadataForUrlPayload>> request) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(Configuration.responseErrorHandler());
-        return restTemplate.exchange(request, ServiceResponseFetchMetadataForUrl.class);
+        var typeRef = new ParameterizedTypeReference<ServiceResponse<RequestFetchMetadataForUrlPayload>>() {};
+        return restTemplate.exchange(request, typeRef);
     }
 
     // --- API ---
@@ -157,7 +127,7 @@ public class MetadataService {
      * @return service response, that includes potentially found metadata, or indications on what could have happened
      * via HTTP Status codes and additional information on the error message field.
      */
-    public ServiceResponseFetchMetadata getMetadataForCompactId(String compactId) {
+    public ServiceResponse<ResponseFetchMetadataPayload> getMetadataForCompactId(String compactId) {
         String serviceApiEndpoint = String.format("%s/%s", serviceApiBaseline, compactId);
         return doRequestFetchMetadata(serviceApiEndpoint);
     }
@@ -173,7 +143,7 @@ public class MetadataService {
      * @return service response, that includes potentially found metadata, or indications on what could have happened
      * via HTTP Status codes and additional information on the error message field.
      */
-    public ServiceResponseFetchMetadata getMetadataForCompactId(String compactId, String selector) {
+    public ServiceResponse<ResponseFetchMetadataPayload> getMetadataForCompactId(String compactId, String selector) {
         String serviceApiEndpoint = String.format("%s/%s/%s", serviceApiBaseline, selector, compactId);
         return doRequestFetchMetadata(serviceApiEndpoint);
     }
@@ -186,7 +156,7 @@ public class MetadataService {
      * @return service response, that includes potentially found metadata, or indications on what could have happened
      * via HTTP Status codes and additional information on the error message field.
      */
-    public ServiceResponseFetchMetadata getMetadataForRawRequest(String rawRequest) {
+    public ServiceResponse<ResponseFetchMetadataPayload> getMetadataForRawRequest(String rawRequest) {
         String serviceApiEndpoint = String.format("%s/%s", serviceApiBaseline, rawRequest);
         return doRequestFetchMetadata(serviceApiEndpoint);
     }
@@ -200,45 +170,48 @@ public class MetadataService {
      * @return service response, that includes potentially found metadata, or indications on what could have happened
      * via HTTP Status codes and additional information on the error message field.
      */
-    public ServiceResponseFetchMetadataForUrl getMetadataForUrl(String url) {
+    public ServiceResponse<RequestFetchMetadataForUrlPayload> getMetadataForUrl(String url) {
         String serviceApiEndpoint = String.format("%s/getMetadataForUrl", serviceApiBaseline);
-        ServiceResponseFetchMetadataForUrl response = createDefaultResponseFetchMetadataForUrl(HttpStatus.OK, "");
+        var payload = new RequestFetchMetadataForUrlPayload();
+        var response = ServiceResponse.of(payload);
         logger.info("Requesting metadata for URL '{}' at service '{}'", url, serviceApiEndpoint);
         // Prepare the request
-        RequestEntity<ServiceRequestFetchMetadataForUrl> request = prepareRequestFetchMetadataForUrl(url, serviceApiEndpoint);
+        var request = prepareRequestFetchMetadataForUrl(url, serviceApiEndpoint);
         try {
-            ResponseEntity<ServiceResponseFetchMetadataForUrl> requestResponse = retryTemplate.execute(retryContext -> {
+            var requestResponse = retryTemplate.execute(retryContext -> {
                 // Do the actual request
                 if (request != null) {
                     return makeRequestFetchMetadataForUrl(request);
                 }
                 // If we get here, send back a custom-made error response
-                return new ResponseEntity<>(createDefaultResponseFetchMetadataForUrl(HttpStatus.BAD_REQUEST,
-                        String.format("INVALID URI %s", serviceApiEndpoint)),
-                        HttpStatus.BAD_REQUEST);
+                ServiceResponse<RequestFetchMetadataForUrlPayload> errorServiceResponse = ServiceResponse
+                      .ofError(HttpStatus.BAD_REQUEST, String.format("INVALID URI %s", serviceApiEndpoint));
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorServiceResponse);
             });
             // Set the response to return to the client
             response = requestResponse.getBody();
             // Set actual HTTP Status in the response body
-            response.setHttpStatus(HttpStatus.valueOf(requestResponse.getStatusCode().value()));
+            if (response != null) {
+                response.setHttpStatus(requestResponse.getStatusCode());
+            }
             if (HttpStatus.valueOf(requestResponse.getStatusCode().value()) != HttpStatus.OK) {
                 String errorMessage = String.format("ERROR retrieving metadata for URL '%s' " +
-                                "at '%s', " +
-                                "HTTP status code '%d', " +
-                                "explanation '%s'",
-                        url,
-                        serviceApiEndpoint,
-                        requestResponse.getStatusCode().value(),
-                        requestResponse.getBody().getErrorMessage());
+                                                          "at '%s', " +
+                                                          "HTTP status code '%d', " +
+                                                          "explanation '%s'",
+                                                    url,
+                                                    serviceApiEndpoint,
+                                                    requestResponse.getStatusCode().value(),
+                                                    requestResponse.getBody().getErrorMessage());
                 logger.error(errorMessage);
             }
+            return response;
         } catch (RuntimeException e) {
             // Make sure we return a default response in case anything bad happens
             String errorMessage = String.format("ERROR retrieving resource recommendations from '%s' " +
-                    "because of '%s'", serviceApiEndpoint, e.getMessage());
+                                                      "because of '%s'", serviceApiEndpoint, e.getMessage());
             logger.error(errorMessage);
-            response = createDefaultResponseFetchMetadataForUrl(HttpStatus.BAD_REQUEST, errorMessage);
+            return ServiceResponse.ofError(HttpStatus.BAD_REQUEST, errorMessage);
         }
-        return response;
     }
 }

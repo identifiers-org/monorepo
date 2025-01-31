@@ -1,12 +1,11 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
 import lombok.RequiredArgsConstructor;
-import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
-import org.identifiers.cloud.hq.ws.registry.api.data.models.Namespace;
-import org.identifiers.cloud.hq.ws.registry.api.data.models.Resource;
+import org.identifiers.cloud.commons.messages.models.Namespace;
+import org.identifiers.cloud.commons.messages.models.Resource;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.registry.ResolverDatasetPayload;
 import org.identifiers.cloud.hq.ws.registry.api.data.services.NamespaceApiService;
-import org.identifiers.cloud.hq.ws.registry.api.responses.ResolverDatasetPayload;
-import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseGetResolverDataset;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -27,12 +26,9 @@ public class ResolutionApiModel {
     private final NamespaceApiService namespaceApiService;
 
     // Model API
-    public ServiceResponseGetResolverDataset getResolverDataset(boolean rewriteForEmbeddedPrefixes) {
+    public ServiceResponse<ResolverDatasetPayload> getResolverDataset(boolean rewriteForEmbeddedPrefixes) {
         // Default response
-        ServiceResponseGetResolverDataset response = new ServiceResponseGetResolverDataset();
-        response.setApiVersion(ApiCentral.apiVersion);
-        response.setHttpStatus(HttpStatus.OK);
-        response.setPayload(new ResolverDatasetPayload());
+        var response = ServiceResponse.of(new ResolverDatasetPayload());
         try {
             response.getPayload().setNamespaces(namespaceApiService.getNamespaceTreeDownToLeaves());
             if (rewriteForEmbeddedPrefixes) {

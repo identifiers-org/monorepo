@@ -1,11 +1,9 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
 import org.identifiers.cloud.commons.messages.models.ResolvedResource;
-import org.identifiers.cloud.libapi.models.linkchecker.responses.ServiceResponseScoringRequest;
 import org.identifiers.cloud.libapi.services.ApiServicesFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 
 /**
@@ -30,7 +28,7 @@ public class ScoreProviderOnReliability implements ScoreProvider {
 
     @Override
     public int getScoreForResource(ResolvedResource resolvedResource) {
-        ServiceResponseScoringRequest response = ApiServicesFactory
+        var response = ApiServicesFactory
                 .getLinkCheckerService(linkCheckerServiceHost, linkCheckerServicePort)
                 .getScoreForResolvedId(
                       String.valueOf(resolvedResource.getId()),

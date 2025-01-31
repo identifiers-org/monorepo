@@ -1,6 +1,8 @@
 package org.identifiers.cloud.ws.resolver.models;
 
-import org.identifiers.cloud.libapi.models.resourcerecommender.ResourceRecommendation;
+
+import org.identifiers.cloud.commons.messages.models.ResourceRecommendation;
+import org.identifiers.cloud.commons.messages.models.ResolvedResource;
 
 import java.util.List;
 

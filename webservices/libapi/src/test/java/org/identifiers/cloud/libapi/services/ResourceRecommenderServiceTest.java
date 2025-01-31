@@ -2,9 +2,10 @@ package org.identifiers.cloud.libapi.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.identifiers.cloud.libapi.models.resourcerecommender.Location;
-import org.identifiers.cloud.libapi.models.resourcerecommender.ResolvedResource;
-import org.identifiers.cloud.libapi.models.resourcerecommender.ServiceResponseRecommend;
+import org.identifiers.cloud.commons.messages.models.ResolvedResource;
+import org.identifiers.cloud.commons.messages.models.Location;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.resourcerecommender.ResponseRecommendPayload;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +42,7 @@ public class ResourceRecommenderServiceTest {
                 .setMirId(String.format("MIR:%08d", index))
                 .setNamespaceDeprecationDate(new Date(System.currentTimeMillis()))
                 .setNamespacePrefix("testprefix")
-                .setId(Integer.toString(index))
+                .setId(index)
         ).collect(Collectors.toList());
         // Set an official one
         resolvedResources.get(0).setOfficial(true);
@@ -51,7 +52,7 @@ public class ResourceRecommenderServiceTest {
         ResourceRecommenderService service = ApiServicesFactory
                 .getResourceRecommenderService("localhost", "8083");
         // Call the service
-        ServiceResponseRecommend response = service.requestRecommendations(resolvedResources);
+        ServiceResponse<ResponseRecommendPayload> response = service.requestRecommendations(resolvedResources);
         // Just for debugging purposes, serialized response into the logs
         ObjectMapper mapper = new ObjectMapper();
         try {

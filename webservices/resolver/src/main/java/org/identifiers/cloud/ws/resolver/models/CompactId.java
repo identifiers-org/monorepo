@@ -10,6 +10,7 @@ import java.util.List;
  * Timestamp: 2018-01-26 12:26
  * ---
  */
+ @Deprecated
 public class CompactId {
     public static final String COMPACT_ID_PREFIX_AND_ID_SEPARATOR = ":";
 

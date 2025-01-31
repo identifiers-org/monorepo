@@ -7,7 +7,6 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.ws.sparql.data.resolution_models.EndpointResponse;
 import org.identifiers.cloud.ws.sparql.data.resolution_models.Namespace;
@@ -16,7 +15,6 @@ import org.identifiers.cloud.ws.sparql.data.URIextended;
 
 import org.springframework.stereotype.Service;
 
-import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 import static java.lang.Boolean.FALSE;
 
 

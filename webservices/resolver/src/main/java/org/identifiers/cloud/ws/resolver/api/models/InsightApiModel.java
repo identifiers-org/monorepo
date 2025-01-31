@@ -1,8 +1,7 @@
 package org.identifiers.cloud.ws.resolver.api.models;
 
-import org.identifiers.cloud.ws.resolver.api.ApiCentral;
-import org.identifiers.cloud.ws.resolver.api.responses.ResponseResolvePayload;
-import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponseResolve;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.resolver.ResponseResolvePayload;
 import org.identifiers.cloud.ws.resolver.models.ResolverDataHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -26,22 +25,23 @@ public class InsightApiModel {
     private ResolverDataHelper resolverDataHelper;
 
     // NOTE - This is fine, don't panic ^_^
-    public ServiceResponseResolve getAllSampleIdsResolved() {
+    public ServiceResponse<ResponseResolvePayload> getAllSampleIdsResolved() {
         // Prepare default answer
-        ServiceResponseResolve resolverApiResponse = new ServiceResponseResolve();
-        // TODO - Split this with a default value and take care of any possible exception
-        resolverApiResponse
-                .setPayload(new ResponseResolvePayload()
-                        .setResolvedResources(resolverDataHelper.resolveAllResourcesWithTheirSampleId()));
-        if (resolverApiResponse.getPayload().getResolvedResources().isEmpty()) {
-            resolverApiResponse.setErrorMessage("NO PROVIDERS found in the Resolution Service data set.");
-            resolverApiResponse.setHttpStatus(HttpStatus.NOT_FOUND);
+
+        var resolvedResources = resolverDataHelper.resolveAllResourcesWithTheirSampleId();
+        var payload = new ResponseResolvePayload().setResolvedResources(resolvedResources);
+
+        if (payload.getResolvedResources().isEmpty()) {
+            return ServiceResponse.ofError(
+                HttpStatus.NOT_FOUND,
+                "NO PROVIDERS found in the Resolution Service data set."
+            );
+        } else {
+            return ServiceResponse.of(payload);
         }
-        resolverApiResponse.setApiVersion(ApiCentral.apiVersion);
-        return resolverApiResponse;
     }
 
-    public ServiceResponseResolve getAllHomeUrls() {
+    public ServiceResponse<ResponseResolvePayload> getAllHomeUrls() {
         return getAllSampleIdsResolved();
     }
 }

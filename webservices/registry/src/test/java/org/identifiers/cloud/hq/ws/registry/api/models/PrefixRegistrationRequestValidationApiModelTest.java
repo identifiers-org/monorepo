@@ -1,8 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
-import org.identifiers.cloud.hq.ws.registry.api.data.models.Requester;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixValidate;
+import org.identifiers.cloud.commons.messages.models.Requester;
+import org.identifiers.cloud.commons.messages.requests.ServiceRequest;
+import org.identifiers.cloud.commons.messages.requests.registry.ServiceRequestRegisterPrefixPayload;
 import org.identifiers.cloud.hq.ws.registry.configuration.ValidatorsConfiguration;
 import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.data.services.NamespaceService;
@@ -79,8 +79,7 @@ class PrefixRegistrationRequestValidationApiModelTest {
     @Test
     void validateName() {
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setName("Renato");
         var answer = model.validateName(request);
@@ -98,8 +97,7 @@ class PrefixRegistrationRequestValidationApiModelTest {
     @Test
     void validateDescription() {
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setDescription("VALID DESCRIPTION");
         var answer = model.validateDescription(request);
@@ -120,8 +118,7 @@ class PrefixRegistrationRequestValidationApiModelTest {
                 .when(namespaceService).getNamespaceByPrefix(anyString());
 
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setRequestedPrefix("new.prefix");
         var answer = model.validateRequestedPrefix(request);
@@ -145,8 +142,7 @@ class PrefixRegistrationRequestValidationApiModelTest {
                 .getNamespaceByPrefix(anyString());
 
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setProviderCode("pcode");
         var answer = model.validateProviderCode(request);
@@ -166,8 +162,7 @@ class PrefixRegistrationRequestValidationApiModelTest {
         doReturn(null).when(resourceService).findSimilarByUrlPattern(anyString());
 
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setProviderUrlPattern("https://valid.com/?q={$id}");
         var answer = model.validateProviderUrlPattern(request);
@@ -194,8 +189,7 @@ class PrefixRegistrationRequestValidationApiModelTest {
     @Test
     void validateSampleId() {
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setSampleId("welp");
         var answer = model.validateSampleId(request);
@@ -234,8 +228,7 @@ class PrefixRegistrationRequestValidationApiModelTest {
     @Test
     void validateIdRegexPattern() {
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setIdRegexPattern("[a-z]+");
         var answer = model.validateIdRegexPattern(request);
@@ -264,8 +257,7 @@ class PrefixRegistrationRequestValidationApiModelTest {
     @Test
     void validateProviderName() {
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setProviderName("Renato");
         var answer = model.validateProviderName(request);
@@ -283,8 +275,7 @@ class PrefixRegistrationRequestValidationApiModelTest {
     @Test
     void validateProviderDescription() {
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setProviderDescription("VALID DESCRIPTION");
         var answer = model.validateProviderDescription(request);
@@ -302,8 +293,7 @@ class PrefixRegistrationRequestValidationApiModelTest {
     @Test
     void validateProviderHomeUrl() {
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setProviderHomeUrl("https://valid.com");
         var answer = model.validateProviderHomeUrl(request);
@@ -321,9 +311,7 @@ class PrefixRegistrationRequestValidationApiModelTest {
     @Test
     void validateProviderLocation() {
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
-
+        var request = ServiceRequest.of(payload);
 
         for (var code : countryCodeExamples) {
             payload.setProviderLocation(code);
@@ -345,8 +333,7 @@ class PrefixRegistrationRequestValidationApiModelTest {
     @Test
     void validateInstitutionName() {
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setInstitutionName("VALID NAME");
         var answer = model.validateInstitutionName(request);
@@ -364,8 +351,7 @@ class PrefixRegistrationRequestValidationApiModelTest {
     @Test
     void validateInstitutionDescription() {
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setInstitutionDescription("VALID DESCRIPTION");
         var answer = model.validateInstitutionDescription(request);
@@ -383,8 +369,7 @@ class PrefixRegistrationRequestValidationApiModelTest {
     @Test
     void validateInstitutionHomeUrl() {
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setInstitutionHomeUrl("https://valid.com");
         var answer = model.validateInstitutionHomeUrl(request);
@@ -402,9 +387,7 @@ class PrefixRegistrationRequestValidationApiModelTest {
     @Test
     void validateInstitutionLocation() {
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
-
+        var request = ServiceRequest.of(payload);
 
         for (var code : countryCodeExamples) {
             payload.setInstitutionLocation(code);
@@ -426,8 +409,7 @@ class PrefixRegistrationRequestValidationApiModelTest {
     @Test
     void validateReferences() {
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         var values = new String[][]{ {"welp", "   ", "", null}, {}, null };
         for (var value : values) {
@@ -441,8 +423,7 @@ class PrefixRegistrationRequestValidationApiModelTest {
     @Test
     void validateAdditionalInformation() {
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         var values = new String[]{ "welp", "   ", "", null };
         for (var value : values) {
@@ -458,8 +439,8 @@ class PrefixRegistrationRequestValidationApiModelTest {
     @Test
     void validateRequester() {
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
+
         var requester = new Requester();
         payload.setRequester(requester);
 
@@ -486,8 +467,8 @@ class PrefixRegistrationRequestValidationApiModelTest {
     @Test
     void validateRequesterName() {
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
+
         var requester = new Requester();
         payload.setRequester(requester);;
 
@@ -507,8 +488,8 @@ class PrefixRegistrationRequestValidationApiModelTest {
     @Test
     void validateRequesterEmail() {
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
+
         var requester = new Requester();
         payload.setRequester(requester);
 
@@ -530,8 +511,7 @@ class PrefixRegistrationRequestValidationApiModelTest {
     @Test
     void validateAuthHelpDescription() {
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setProtectedUrls(true);
         payload.setAuthHelpDescription("VALID DESCRIPTION");
@@ -556,8 +536,7 @@ class PrefixRegistrationRequestValidationApiModelTest {
     @Test
     void validateAuthHelpUrl() {
         var payload = new ServiceRequestRegisterPrefixPayload();
-        var request = new ServiceRequestRegisterPrefixValidate();
-        request.setPayload(payload);
+        var request = ServiceRequest.of(payload);
 
         payload.setProtectedUrls(true);
         payload.setAuthHelpUrl("https://valid.com");

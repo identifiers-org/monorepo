@@ -1,11 +1,11 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.helpers;
 
-import org.identifiers.cloud.hq.ws.registry.api.data.models.Institution;
-import org.identifiers.cloud.hq.ws.registry.api.data.models.Location;
-import org.identifiers.cloud.hq.ws.registry.api.data.models.Namespace;
-import org.identifiers.cloud.hq.ws.registry.api.data.models.Resource;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourcePayload;
+import org.identifiers.cloud.commons.messages.models.Institution;
+import org.identifiers.cloud.commons.messages.models.Location;
+import org.identifiers.cloud.commons.messages.models.Namespace;
+import org.identifiers.cloud.commons.messages.models.Resource;
+import org.identifiers.cloud.commons.messages.requests.registry.ServiceRequestRegisterPrefixPayload;
+import org.identifiers.cloud.commons.messages.requests.registry.ServiceRequestRegisterResourcePayload;
 import org.identifiers.cloud.hq.ws.registry.data.models.PrefixRegistrationRequest;
 import org.identifiers.cloud.hq.ws.registry.data.models.ResourceRegistrationRequest;
 
@@ -61,59 +61,59 @@ public class ApiAndDataModelsHelper {
     // making mistakes, but, at the same time, this is the meaning of it, and that's why we have packages,
     // right?
 
-    public static Location getLocationFrom(org.identifiers.cloud.hq.ws.registry.data.models.Location location) {
+    public static Location getMessagePojoFromEntity(org.identifiers.cloud.hq.ws.registry.data.models.Location entity) {
         return new Location()
-                .setCountryCode(location.getCountryCode())
-                .setCountryName(location.getCountryName());
+                .setCountryCode(entity.getCountryCode())
+                .setCountryName(entity.getCountryName());
     }
 
-    public static Institution getInstitutionFrom(org.identifiers.cloud.hq.ws.registry.data.models.Institution institution) {
+    public static Institution getMessagePojoFromEntity(org.identifiers.cloud.hq.ws.registry.data.models.Institution entity) {
         return new Institution()
-                .setId(institution.getId())
-                .setName(institution.getName())
-                .setDescription(institution.getDescription())
-                .setHomeUrl(institution.getHomeUrl())
-                .setRorId(institution.getRorId())
-                .setLocation(getLocationFrom(institution.getLocation()));
+                .setId(entity.getId())
+                .setName(entity.getName())
+                .setDescription(entity.getDescription())
+                .setHomeUrl(entity.getHomeUrl())
+                .setRorId(entity.getRorId())
+                .setLocation(getMessagePojoFromEntity(entity.getLocation()));
     }
 
-    public static Resource getResourceFrom(org.identifiers.cloud.hq.ws.registry.data.models.Resource resource) {
+    public static Resource getMessagePojoFromEntity(org.identifiers.cloud.hq.ws.registry.data.models.Resource entity) {
         return new Resource()
-                .setId(resource.getId())
-                .setMirId(resource.getMirId())
-                .setUrlPattern(resource.getUrlPattern())
-                .setName(resource.getName())
-                .setDescription(resource.getDescription())
-                .setOfficial(resource.isOfficial())
-                .setProviderCode(resource.getProviderCode())
-                .setSampleId(resource.getSampleId())
-                .setResourceHomeUrl(resource.getResourceHomeUrl())
-                .setInstitution(getInstitutionFrom(resource.getInstitution()))
-                .setLocation(getLocationFrom(resource.getLocation()))
-                .setDeprecated(resource.isDeprecated())
-                .setDeprecationDate(resource.getDeprecationDate())
-                .setRenderDeprecatedLanding(resource.isRenderDeprecatedLanding())
-                .setProtectedUrls(resource.isProtectedUrls())
-                .setRenderProtectedLanding(resource.isRenderProtectedLanding())
-                .setAuthHelpDescription(resource.getAuthHelpDescription())
-                .setAuthHelpUrl(resource.getAuthHelpUrl());
+                .setId(entity.getId())
+                .setMirId(entity.getMirId())
+                .setUrlPattern(entity.getUrlPattern())
+                .setName(entity.getName())
+                .setDescription(entity.getDescription())
+                .setOfficial(entity.isOfficial())
+                .setProviderCode(entity.getProviderCode())
+                .setSampleId(entity.getSampleId())
+                .setResourceHomeUrl(entity.getResourceHomeUrl())
+                .setInstitution(getMessagePojoFromEntity(entity.getInstitution()))
+                .setLocation(getMessagePojoFromEntity(entity.getLocation()))
+                .setDeprecated(entity.isDeprecated())
+                .setDeprecationDate(entity.getDeprecationDate())
+                .setRenderDeprecatedLanding(entity.isRenderDeprecatedLanding())
+                .setProtectedUrls(entity.isProtectedUrls())
+                .setRenderProtectedLanding(entity.isRenderProtectedLanding())
+                .setAuthHelpDescription(entity.getAuthHelpDescription())
+                .setAuthHelpUrl(entity.getAuthHelpUrl());
     }
 
-    public static Namespace getNamespaceFrom(org.identifiers.cloud.hq.ws.registry.data.models.Namespace namespace) {
+    public static Namespace getMessagePojoFromEntity(org.identifiers.cloud.hq.ws.registry.data.models.Namespace entity) {
         return new Namespace()
-                .setId(namespace.getId())
-                .setMirId(namespace.getMirId())
-                .setPrefix(namespace.getPrefix())
-                .setName(namespace.getName())
-                .setPattern(namespace.getPattern())
-                .setDescription(namespace.getDescription())
-                .setCreated(namespace.getCreated())
-                .setModified(namespace.getModified())
-                .setSampleId(namespace.getSampleId())
-                .setNamespaceEmbeddedInLui(namespace.isNamespaceEmbeddedInLui())
-                .setDeprecated(namespace.isDeprecated())
-                .setDeprecationDate(namespace.getDeprecationDate())
-                .setRenderDeprecatedLanding(namespace.isRenderDeprecatedLanding());
+                .setId(entity.getId())
+                .setMirId(entity.getMirId())
+                .setPrefix(entity.getPrefix())
+                .setName(entity.getName())
+                .setPattern(entity.getPattern())
+                .setDescription(entity.getDescription())
+                .setCreated(entity.getCreated())
+                .setModified(entity.getModified())
+                .setSampleId(entity.getSampleId())
+                .setNamespaceEmbeddedInLui(entity.isNamespaceEmbeddedInLui())
+                .setDeprecated(entity.isDeprecated())
+                .setDeprecationDate(entity.getDeprecationDate())
+                .setRenderDeprecatedLanding(entity.isRenderDeprecatedLanding());
     }
 
     // Get a Resource Registration Request from the request payload

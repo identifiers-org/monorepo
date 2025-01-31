@@ -3,7 +3,6 @@ package org.identifiers.cloud.libapi.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.identifiers.cloud.libapi.models.resolver.ServiceResponseResolve;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.identifiers.cloud.commons.messages.responses.resolver.ResponseResolvePayload;

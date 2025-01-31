@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.identifiers.cloud.ws.resolver.models.ResolvedResource;
+import org.identifiers.cloud.commons.messages.models.ResolvedResource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +27,6 @@ import java.util.List;
 @Accessors(chain = true)
 public class ResolutionServiceResult {
     private boolean resolved = false;
-    private String errorMessage = "--- NO ERROR SET ---";
+    private String                 errorMessage      = "--- NO ERROR SET ---";
     private List<ResolvedResource> resolvedResources = new ArrayList<>();
 }

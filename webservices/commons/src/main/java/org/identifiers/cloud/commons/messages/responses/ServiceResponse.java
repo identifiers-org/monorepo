@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import org.identifiers.cloud.commons.messages.ApiCentral;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 
 import java.io.Serializable;
 
@@ -16,7 +17,17 @@ public class ServiceResponse<T> implements Serializable {
     private T payload = null;
 
     @JsonIgnore
-    private HttpStatus httpStatus = HttpStatus.OK;
+    private HttpStatusCode httpStatus = HttpStatus.OK;
+
+    public ServiceResponse<T> setHttpStatus(HttpStatusCode httpStatus) {
+        this.httpStatus = httpStatus;
+        return this;
+    }
+
+    public ServiceResponse<T> setHttpStatus(int httpStatus) {
+        this.httpStatus = HttpStatusCode.valueOf(httpStatus);
+        return this;
+    }
 
     public static <I> ServiceResponse<I> of(I payload) {
         return new ServiceResponse<I>()

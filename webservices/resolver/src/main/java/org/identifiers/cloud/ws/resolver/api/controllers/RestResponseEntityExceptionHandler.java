@@ -1,7 +1,6 @@
 package org.identifiers.cloud.ws.resolver.api.controllers;
 
-import org.identifiers.cloud.ws.resolver.api.ApiCentral;
-import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -32,9 +31,8 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         // Last hope for logging of unforeseen errors
         // Also a way to make all responses to be of type ServiceResponse
         logger.error("Unforeseen exception", ex);
-        ServiceResponse responseBody = new ServiceResponse()
-                .setApiVersion(ApiCentral.apiVersion)
-                .setErrorMessage(String.format("Unforeseen exception at %s: %s", now(), ex.getMessage()));
+        var responseBody = ServiceResponse.ofError(HttpStatus.INTERNAL_SERVER_ERROR,
+                        String.format("Unforeseen exception at %s: %s", now(), ex.getMessage()));
         return handleExceptionInternal(ex, responseBody, new HttpHeaders(),
                 HttpStatus.INTERNAL_SERVER_ERROR, request);
     }

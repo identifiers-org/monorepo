@@ -1,9 +1,8 @@
 package org.identifiers.cloud.ws.resolver.api.models;
 
 import lombok.extern.slf4j.Slf4j;
-import org.identifiers.cloud.ws.resolver.api.ApiCentral;
-import org.identifiers.cloud.ws.resolver.api.responses.ResponseResolvePayload;
-import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponseResolve;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.resolver.ResponseResolvePayload;
 import org.identifiers.cloud.ws.resolver.data.models.Namespace;
 import org.identifiers.cloud.ws.resolver.data.repositories.NamespaceRespository;
 import org.identifiers.cloud.ws.resolver.models.*;
@@ -15,10 +14,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -45,16 +44,8 @@ public class ResolverApiModel {
     @Value("${org.identifiers.cloud.ws.resolver.mirid.resolution.url_format}")
     private String miridResolutionFormat;
 
-    // Helpers
-    private ServiceResponseResolve createDefaultResponse() {
-        return (ServiceResponseResolve)
-                new ServiceResponseResolve()
-                .setApiVersion(ApiCentral.apiVersion)
-                .setPayload(new ResponseResolvePayload().setResolvedResources(new ArrayList<>()));
-    }
-
     @Deprecated
-    private CompactId getCompactIdentifier(String compactId, ServiceResponseResolve response) {
+    private CompactId getCompactIdentifier(String compactId, ServiceResponse<ResponseResolvePayload> response) {
         try {
             return new CompactId(compactId);
         } catch (CompactIdException e) {
@@ -66,9 +57,9 @@ public class ResolverApiModel {
     // END - Helpers
 
     // --- Resolution API ---
-    public ServiceResponseResolve resolveRawCompactId(String rawCompactId) {
+    public ServiceResponse<ResponseResolvePayload> resolveRawCompactId(String rawCompactId) {
         // This is the only entry method right now
-        ServiceResponseResolve response = createDefaultResponse();
+        var response = new ServiceResponse<ResponseResolvePayload>();
         ParsedCompactIdentifier parsedCompactIdentifier = compactIdParsingHelper.parseCompactIdRequest(rawCompactId);
         ResolutionServiceResult resolutionServiceResult = resolutionService.resolve(parsedCompactIdentifier);
         if (resolutionServiceResult.isResolved()) {

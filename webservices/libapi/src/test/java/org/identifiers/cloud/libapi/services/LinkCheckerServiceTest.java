@@ -2,7 +2,6 @@ package org.identifiers.cloud.libapi.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.identifiers.cloud.libapi.models.linkchecker.responses.ServiceResponseScoringRequest;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +30,7 @@ public class LinkCheckerServiceTest {
     public void testReliabilityScoringForProvider() {
         String providerId = "MIR:00100175";
         String url = "http://doqcs.ncbs.res.in/";
-        ServiceResponseScoringRequest response = ApiServicesFactory
+        var response = ApiServicesFactory
                 .getLinkCheckerService(serviceHost, servicePort)
                 .getScoreForProvider(providerId, url);
         logger.info("Reliability score for provider ID #{}, URL '{}' ---> '{}'",
@@ -53,7 +52,7 @@ public class LinkCheckerServiceTest {
     public void testReliabilityScoringForResource() {
         String resourceId = "MIR:00100695";
         String url = "http://taxonomy.bio2rdf.org/describe/?url=http://bio2rdf.org/taxonomy:9606";
-        ServiceResponseScoringRequest response = ApiServicesFactory
+        var response = ApiServicesFactory
                 .getLinkCheckerService(serviceHost, servicePort)
                 .getScoreForResolvedId(resourceId, url);
         logger.info("Reliability score for Resource ID #{}, URL '{}' ---> '{}'",

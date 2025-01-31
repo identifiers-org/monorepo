@@ -1,7 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators;
 
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourcePayload;
+
+import org.identifiers.cloud.commons.messages.requests.registry.ServiceRequestRegisterPrefixPayload;
+import org.identifiers.cloud.commons.messages.requests.registry.ServiceRequestRegisterResourcePayload;
 
 import java.util.Optional;
 import java.util.function.Function;

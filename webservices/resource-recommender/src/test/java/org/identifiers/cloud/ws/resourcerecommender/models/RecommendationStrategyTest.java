@@ -3,8 +3,8 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
 import org.assertj.core.util.Lists;
 import org.identifiers.cloud.commons.messages.models.ResolvedResource;
 import org.identifiers.cloud.commons.messages.models.ResourceRecommendation;
-import org.identifiers.cloud.libapi.models.linkchecker.responses.ServiceResponseScoringRequest;
-import org.identifiers.cloud.libapi.models.linkchecker.responses.ServiceResponseScoringRequestPayload;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.linkchecker.ServiceResponseScoringRequestPayload;
 import org.identifiers.cloud.libapi.services.LinkCheckerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,9 +69,8 @@ class RecommendationStrategyTest {
                 .setCompactIdentifierResolvedUrl("https://ebi.ac.uk/something/20");
 
         // Make results of link checker the same for everyone
-        ServiceResponseScoringRequest req = new ServiceResponseScoringRequest();
         ServiceResponseScoringRequestPayload payload = new ServiceResponseScoringRequestPayload().setScore(100);
-        req.setPayload(payload);
+        var req = ServiceResponse.of(payload);
         when(linkCheckerService.getScoreForProvider(anyString(), anyString())).thenReturn(req);
         when(linkCheckerService.getScoreForProvider(anyString(), anyString(), anyBoolean())).thenReturn(req);
         when(linkCheckerService.getScoreForResolvedId(anyString(), anyString(), anyBoolean())).thenReturn(req);

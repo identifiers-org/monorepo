@@ -1,7 +1,6 @@
 package org.identifiers.satellite.frontend.satellitewebspa.api.controllers;
 
 import lombok.extern.slf4j.Slf4j;
-import org.identifiers.cloud.libapi.models.resolver.ServiceResponseResolve;
 import org.identifiers.cloud.libapi.services.ApiServicesFactory;
 import org.identifiers.satellite.frontend.satellitewebspa.api.models.ResolutionApiModel;
 import org.identifiers.satellite.frontend.satellitewebspa.services.AsyncMatomoCidResolutionService;
@@ -51,9 +50,8 @@ public class ResolutionApiController {
 
         log.info("Resolution request CID: '{}'", rawCompactIdentifier);
 
-        ServiceResponseResolve responseResolve =
-                ApiServicesFactory.getResolverService(resolverHost, resolverPort)
-                        .requestResolutionRawRequest(rawCompactIdentifier);
+        var responseResolve = ApiServicesFactory.getResolverService(resolverHost, resolverPort)
+                                                .requestResolutionRawRequest(rawCompactIdentifier);
 
         matomoService.asyncHandleCidResolution(request, responseResolve);
 

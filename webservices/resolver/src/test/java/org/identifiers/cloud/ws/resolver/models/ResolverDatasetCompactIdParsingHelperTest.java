@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.ws.resolver.TestRedisServer;
@@ -9,7 +10,6 @@ import org.identifiers.cloud.ws.resolver.periodictasks.ResolverDataUpdater;
 import org.identifiers.cloud.ws.resolver.periodictasks.models.HqServiceResponseGetResolverDataset;
 import org.identifiers.cloud.ws.resolver.periodictasks.models.ResolverDataSourcer;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -29,7 +29,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.util.ResourceUtils;
 import org.testcontainers.shaded.org.apache.commons.lang3.StringUtils;
-import org.testcontainers.shaded.org.hamcrest.text.IsEqualIgnoringCase;
 
 import java.io.IOException;
 import java.util.List;

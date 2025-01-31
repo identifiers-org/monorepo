@@ -1,6 +1,6 @@
 package org.identifiers.cloud.ws.metadata.api.controllers;
 
-import org.identifiers.cloud.ws.metadata.api.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;

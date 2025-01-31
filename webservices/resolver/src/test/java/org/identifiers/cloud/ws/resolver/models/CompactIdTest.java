@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * Unit tests for Compact ID parsing
  */
+@Deprecated
 class CompactIdTest {
     @ParameterizedTest
     @MethodSource("testingValues")

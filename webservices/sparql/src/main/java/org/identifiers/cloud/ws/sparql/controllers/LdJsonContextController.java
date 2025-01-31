@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
-import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
-
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(originPatterns = "*", maxAge = 3600)

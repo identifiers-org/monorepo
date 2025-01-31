@@ -1,11 +1,11 @@
 package org.identifiers.cloud.ws.resolver.services;
 
 import lombok.extern.slf4j.Slf4j;
-import org.identifiers.cloud.ws.resolver.data.models.Institution;
-import org.identifiers.cloud.ws.resolver.data.models.Location;
-import org.identifiers.cloud.ws.resolver.models.ParsedCompactIdentifier;
-import org.identifiers.cloud.ws.resolver.models.Recommendation;
-import org.identifiers.cloud.ws.resolver.models.ResolvedResource;
+import org.identifiers.cloud.commons.messages.models.Institution;
+import org.identifiers.cloud.commons.messages.models.Location;
+import org.identifiers.cloud.commons.messages.models.Recommendation;
+import org.identifiers.cloud.commons.messages.models.ResolvedResource;
+import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

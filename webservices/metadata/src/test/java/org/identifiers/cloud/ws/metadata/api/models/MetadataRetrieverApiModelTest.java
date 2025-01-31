@@ -1,11 +1,10 @@
 package org.identifiers.cloud.ws.metadata.api.models;
 
-import org.identifiers.cloud.libapi.models.resolver.ParsedCompactIdentifier;
-import org.identifiers.cloud.libapi.models.resolver.ResponseResolvePayload;
-import org.identifiers.cloud.libapi.models.resolver.ServiceResponseResolve;
+import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.resolver.ResponseResolvePayload;
 import org.identifiers.cloud.libapi.services.ResolverService;
 import org.identifiers.cloud.ws.metadata.TestRedisServer;
-import org.identifiers.cloud.ws.metadata.api.ApiCentral;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
@@ -46,10 +44,7 @@ class MetadataRetrieverApiModelTest {
         var payload = new ResponseResolvePayload()
                 .setResolvedResources(Collections.emptyList())
                 .setParsedCompactIdentifier(pci);
-        var response = new ServiceResponseResolve()
-                .setApiVersion(ApiCentral.apiVersion)
-                        .setHttpStatus(HttpStatus.OK)
-                                .setPayload(payload);
+        var response = ServiceResponse.of(payload);
         doReturn(response)
                 .when(resolverService)
                 .requestResolutionRawRequest(pci.getRawRequest());

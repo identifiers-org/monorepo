@@ -1,9 +1,14 @@
 package org.identifiers.cloud.libapi.services;
 
+import org.identifiers.cloud.commons.messages.requests.ServiceRequest;
+import org.identifiers.cloud.commons.messages.requests.resourcerecommender.RequestRecommendPayload;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.resourcerecommender.ResponseRecommendPayload;
+import org.identifiers.cloud.commons.messages.models.ResolvedResource;
 import org.identifiers.cloud.libapi.Configuration;
-import org.identifiers.cloud.libapi.models.resourcerecommender.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -48,14 +53,14 @@ public class ResourceRecommenderService {
      * @param serviceApiEndpoint the service end point where the request should be submitted to.
      * @return a RequestEntity with all the given information.
      */
-    private RequestEntity<ServiceRequestRecommend> prepareRecommendRequest(List<ResolvedResource> resources,
+    private RequestEntity<ServiceRequest<RequestRecommendPayload>> prepareRecommendRequest(List<ResolvedResource> resources,
                                                                            String serviceApiEndpoint) {
         // Prepare the request body
-        ServiceRequestRecommend requestBody = new ServiceRequestRecommend();
+        ServiceRequest<RequestRecommendPayload> requestBody = new ServiceRequest<RequestRecommendPayload>();
         requestBody.setApiVersion(apiVersion);
         requestBody.setPayload(new RequestRecommendPayload().setResolvedResources(resources));
         // Prepare the request entity
-        RequestEntity<ServiceRequestRecommend> request = null;
+        RequestEntity<ServiceRequest<RequestRecommendPayload>> request = null;
         try {
             request = RequestEntity.post(new URI(serviceApiEndpoint)).body(requestBody);
         } catch (URISyntaxException e) {
@@ -69,10 +74,11 @@ public class ResourceRecommenderService {
      * @param request the request to be submitted.
      * @return a ResponseEntity out of the received service response.
      */
-    private ResponseEntity<ServiceResponseRecommend> makeRequest(RequestEntity<ServiceRequestRecommend> request) {
+    private ResponseEntity<ServiceResponse<ResponseRecommendPayload>> makeRequest(RequestEntity<ServiceRequest<RequestRecommendPayload>> request) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(Configuration.responseErrorHandler());
-        return restTemplate.exchange(request, ServiceResponseRecommend.class);
+        var typeRef = new ParameterizedTypeReference<ServiceResponse<ResponseRecommendPayload>>() {};
+        return restTemplate.exchange(request, typeRef);
     }
 
     /**
@@ -83,10 +89,9 @@ public class ResourceRecommenderService {
      * @return a recommend request service response, with empty recommendation data, and customized HTTP Status code and
      * error information.
      */
-    private ServiceResponseRecommend createDefaultResponse(HttpStatus httpStatus, String errorMessage) {
-        ServiceResponseRecommend response = new ServiceResponseRecommend();
-        response
-                .setApiVersion(apiVersion)
+    private ServiceResponse<ResponseRecommendPayload> createDefaultResponse(HttpStatus httpStatus, String errorMessage) {
+        ServiceResponse<ResponseRecommendPayload> response = new ServiceResponse<ResponseRecommendPayload>();
+        response.setApiVersion(apiVersion)
                 .setHttpStatus(httpStatus)
                 .setErrorMessage(errorMessage);
         response.setPayload(new ResponseRecommendPayload().setResourceRecommendations(new ArrayList<>()));
@@ -100,15 +105,15 @@ public class ResourceRecommenderService {
      * @return a recommend request response from the service or, a guaranteed default response customized with the HTTP
      * Status code and the error message that describe what could have happened.
      */
-    public ServiceResponseRecommend requestRecommendations(final List<ResolvedResource> resources) {
+    public ServiceResponse<ResponseRecommendPayload> requestRecommendations(final List<ResolvedResource> resources) {
         String serviceApiEndpoint = serviceApiBaseline;
-        ServiceResponseRecommend response = createDefaultResponse(HttpStatus.OK, "");
+        ServiceResponse<ResponseRecommendPayload> response = createDefaultResponse(HttpStatus.OK, "");
         logger.info("Looking for resource recommendations at '{}'", serviceApiEndpoint);
         if (!resources.isEmpty()) {
             // Prepare the request
-            RequestEntity<ServiceRequestRecommend> request = prepareRecommendRequest(resources, serviceApiEndpoint);
+            RequestEntity<ServiceRequest<RequestRecommendPayload>> request = prepareRecommendRequest(resources, serviceApiEndpoint);
             try {
-                ResponseEntity<ServiceResponseRecommend> requestResponse = retryTemplate.execute(retryContext -> {
+                ResponseEntity<ServiceResponse<ResponseRecommendPayload>> requestResponse = retryTemplate.execute(retryContext -> {
                     // Do the actual request
                     if (request != null) {
                         return makeRequest(request);

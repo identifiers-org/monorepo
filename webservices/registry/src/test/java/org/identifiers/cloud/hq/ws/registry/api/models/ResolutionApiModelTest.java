@@ -1,8 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
 import org.apache.commons.lang3.StringUtils;
-import org.identifiers.cloud.hq.ws.registry.api.data.models.Namespace;
-import org.identifiers.cloud.hq.ws.registry.api.data.models.Resource;
+import org.identifiers.cloud.commons.messages.models.Namespace;
+import org.identifiers.cloud.commons.messages.models.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.util.UriComponentsBuilder;
 

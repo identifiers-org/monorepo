@@ -20,7 +20,7 @@ public class Institution implements Serializable {
     private String name;
     private String homeUrl;
     private String description;
-    private String   rorId;
+    private String rorId;
     // Geographical location for this institution
     private Location location;
 }

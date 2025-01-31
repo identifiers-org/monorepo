@@ -2,7 +2,6 @@ package org.identifiers.cloud.hq.ws.registry.api.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.identifiers.cloud.hq.ws.registry.api.models.ResolutionApiModel;
-import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseGetResolverDataset;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +24,7 @@ public class ResolutionApiController {
             @RequestParam(defaultValue = "false")
             boolean rewriteForEmbeddedPrefixes
     ) {
-        ServiceResponseGetResolverDataset response = model.getResolverDataset(rewriteForEmbeddedPrefixes);
+        var response = model.getResolverDataset(rewriteForEmbeddedPrefixes);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 }

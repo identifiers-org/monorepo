@@ -1,9 +1,9 @@
 package org.identifiers.cloud.ws.resolver.models;
 
 import lombok.extern.slf4j.Slf4j;
-import org.identifiers.cloud.libapi.models.resourcerecommender.Location;
-import org.identifiers.cloud.libapi.models.resourcerecommender.ResolvedResource;
-import org.identifiers.cloud.libapi.models.resourcerecommender.ResourceRecommendation;
+import org.identifiers.cloud.commons.messages.models.Location;
+import org.identifiers.cloud.commons.messages.models.ResourceRecommendation;
+import org.identifiers.cloud.commons.messages.models.ResolvedResource;
 import org.identifiers.cloud.libapi.services.ResourceRecommenderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,32 +33,31 @@ public class ResourceRecommenderWsStrategy implements ResourceRecommenderStrateg
     ResourceRecommenderService resourceRecommenderService;
 
     @Override
-    public List<ResourceRecommendation> getRecommendations(List<org.identifiers.cloud.ws.resolver.models.ResolvedResource> resources) throws ResourceRecommenderStrategyException {
+    public List<ResourceRecommendation> getRecommendations(List<ResolvedResource> resources) throws ResourceRecommenderStrategyException {
         // Whatever happens, the client library will always return a default empty answer that is valid
         if (resources.isEmpty()) {
             return Collections.emptyList();
         } else if (resources.size() == 1) {
-            return resources.stream().map(this::getResolverLibapiResolverResource).map(resolvedResource ->
+            return resources.stream().map(resolvedResource ->
                     new ResourceRecommendation()
                             .setRecommendationExplanation("Only resource available for this CID")
                             .setRecommendationIndex(100)
-                            .setId(resolvedResource.getId())
+                            .setId(String.valueOf(resolvedResource.getId()))
             ).collect(Collectors.toList());
         } else {
             return resourceRecommenderService
                     .requestRecommendations(resources.parallelStream()
-                            .map(this::getResolverLibapiResolverResource)
                             .collect(Collectors.toList()))
                     .getPayload()
                     .getResourceRecommendations();
         }
     }
 
-    ResolvedResource getResolverLibapiResolverResource(org.identifiers.cloud.ws.resolver.models.ResolvedResource resolvedResource) {
+    ResolvedResource getResolverLibapiResolverResource(ResolvedResource resolvedResource) {
         return new ResolvedResource()
                 .setOfficial(resolvedResource.isOfficial())
                 .setCompactIdentifierResolvedUrl(resolvedResource.getCompactIdentifierResolvedUrl())
-                .setId(Long.toString(resolvedResource.getId()))
+                .setId(resolvedResource.getId())
                 .setResourceHomeUrl(resolvedResource.getResourceHomeUrl())
                 .setDeprecatedNamespace(resolvedResource.isDeprecatedNamespace())
                 .setNamespaceDeprecationDate(resolvedResource.getNamespaceDeprecationDate())

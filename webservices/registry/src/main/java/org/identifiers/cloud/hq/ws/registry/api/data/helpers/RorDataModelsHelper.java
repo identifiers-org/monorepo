@@ -1,7 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.api.data.helpers;
 
-import org.identifiers.cloud.hq.ws.registry.api.data.models.Institution;
-import org.identifiers.cloud.hq.ws.registry.api.data.models.Location;
+import org.identifiers.cloud.commons.messages.models.Institution;
+import org.identifiers.cloud.commons.messages.models.Location;
 import org.identifiers.cloud.hq.ws.registry.models.rororg.Organization;
 
 /**

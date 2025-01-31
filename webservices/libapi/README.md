@@ -54,18 +54,18 @@ libraryDependencies += "org.identifiers.cloud" % "libapi" % "1.1.0"
 The following code snippet shows how to get an instance of the service wrapper for
 [identifiers.org](https://identifiers.org) _Resolver Service_, and query the service for a given Compact ID.
 ```java
-import org.identifiers.cloud.libapi.services.ApiServicesFactory;
-import org.identifiers.cloud.libapi.models.resolver.ServiceResponseResolve;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.resolver.ResponseResolvePayload;
 
 // For accessing a locally deployed Resolver service at 'localhost:8080', and requesting resolution of
 // Compact ID 'CHEBI:36927'
-ServiceResponseResolve response = ApiServicesFactory
+ServiceResponse<ResponseResolvePayload> response = ApiServicesFactory
                 .getResolverService("localhost", "8080")
                 .requestCompactIdResolution("CHEBI:36927");
 
 // For accessing a locally deployed Resolver service at 'localhost:8080', and requesting resolution of
 // Compact ID 'CHEBI:36927', but constraining the resource provider to 'ebi'
-ServiceResponseResolve response = ApiServicesFactory
+ServiceResponse<ResponseResolvePayload> response = ApiServicesFactory
                 .getResolverService("localhost", "8080")
                 .requestCompactIdResolution("CHEBI:36927", "ebi");
 ```
@@ -80,17 +80,18 @@ The following code snippet shows how to get an instance of the service wrapper f
 [identifiers.org](https://identifiers.org) _Metadata Service_, and submit metadata requests.
 ```java
 import org.identifiers.cloud.libapi.services.ApiServicesFactory;
-import org.identifiers.cloud.libapi.models.metadata.ServiceResponseFetchMetadata;
-import org.identifiers.cloud.libapi.models.metadata.ServiceResponseFetchMetadataForUrl;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.metadata.ServiceResponseFetchMetadata;
+import org.identifiers.cloud.commons.messages.responses.metadata.ServiceResponseFetchMetadataForUrl;
 
 // Requesting metadata for a given Compact ID, the Metadata Service will choose the resource provider with the highest
 // recommendation index / score.
-ServiceResponseFetchMetadata response = ApiServicesFactory
+ServiceResponse<ResponseFetchMetadataPayload> response = ApiServicesFactory
                 .getMetadataService("localhost", "8082")
                 .getMetadataForCompactId("CHEBI:36927");
 
 // Requesting metadata for a given URL.
-ServiceResponseFetchMetadataForUrl response = ApiServicesFactory
+ServiceResponse<ResponseFetchMetadataForUrlPayload> response = ApiServicesFactory
                 .getMetadataService("localhost", "8082")
                 .getMetadataForUrl("http://reactome.org/content/detail/R-HSA-201451");
 ```
@@ -104,10 +105,10 @@ pointing to any of the [identifiers.org](https://identifiers.org) cloud deployme
 The following code snippet shows how to get an instance of the service wrapper for
 [identifiers.org](https://identifiers.org) _Registry Service_, and submit registration or validation requests.
 ```java
-import org.identifiers.cloud.libapi.models.registry.Requester;
-import org.identifiers.cloud.libapi.models.registry.requests.prefixregistration.ServiceRequestRegisterPrefixPayload;
-import org.identifiers.cloud.libapi.models.registry.responses.prefixregistration.ServiceResponseRegisterPrefix;
-import org.identifiers.cloud.libapi.models.registry.responses.validation.ServiceResponseValidateRequest;
+import org.identifiers.cloud.commons.messages.models.Requester;
+import org.identifiers.cloud.commons.messages.requests.registry.ServiceRequestRegisterPrefixPayload;
+import org.identifiers.cloud.commons.messages.responses.registry.ServiceResponseRegisterPrefixPayload;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
 
 
 // Preparing a prefix registration request payload
@@ -129,7 +130,7 @@ ServiceRequestRegisterPrefixPayload payload =
                                             .setName("Requester Full Name"));
 
 // Prefix registration request
-ServiceResponseRegisterPrefix response =
+ServiceResponse<ServiceResponseRegisterPrefixPayload> response =
                 ApiServicesFactory.getRegistryService("localhost", "8081")
                         .requestPrefixRegistration(payload);
 
@@ -141,7 +142,7 @@ ServiceRequestRegisterPrefixPayload payload =
             new ServiceRequestRegisterPrefixPayload()
                                     .setName("A Name for this prefix Registration Request");
 // Request validation
-ServiceResponseValidateRequest response =
+ServiceResponse<ServiceResponseRegisterPrefixPayload> response =
                 ApiServicesFactory.getRegistryService("localhost", "8081")
                         .requestValidationName(payload);
 ```

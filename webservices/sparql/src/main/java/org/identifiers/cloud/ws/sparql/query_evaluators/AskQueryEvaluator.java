@@ -11,7 +11,6 @@ import org.eclipse.rdf4j.rio.UnsupportedRDFormatException;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @Slf4j
 @Service

@@ -15,6 +15,7 @@ import org.springframework.retry.support.RetryTemplate;
  * This is an implementation of a client for the MIR ID Controller API Service
  */
 @Slf4j
+@Deprecated(forRemoval = true)
 public class MirIdControllerService {
 
     private RetryTemplate retryTemplate = Configuration.retryTemplate();

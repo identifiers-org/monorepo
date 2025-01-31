@@ -1,10 +1,9 @@
 package org.identifiers.cloud.ws.resolver.api.controllers;
 
-import org.identifiers.cloud.ws.resolver.api.ApiCentral;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.resolver.ResponseResolvePayload;
 import org.identifiers.cloud.ws.resolver.services.MatomoTrackingService;
 import org.identifiers.cloud.ws.resolver.api.models.ResolverApiModel;
-import org.identifiers.cloud.ws.resolver.api.responses.ResponseResolvePayload;
-import org.identifiers.cloud.ws.resolver.api.responses.ServiceResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,16 +116,14 @@ public class ResolverApiController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch(NumberFormatException e) {
-            ServiceResponse response = new ServiceResponse();
-            response.setApiVersion(ApiCentral.apiVersion);
-            response.setErrorMessage("MIRIDs must be in the format MIR:XXXXXXXX or integers up to 8 digit");
+            var response = ServiceResponse.ofError(HttpStatus.BAD_REQUEST,
+                "MIRIDs must be in the format MIR:XXXXXXXX or integers up to 8 digit");
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         } catch (URISyntaxException e) {
             // Should never actually happen on production.
             // If so, check the WS_RESOLVER_CONFIG_REGISTRY_NAMESPACE_REDIRECT_FORMAT application property
-            ServiceResponse response = new ServiceResponse();
-            response.setApiVersion(ApiCentral.apiVersion);
-            response.setErrorMessage("MIRID resolution format is not setup correctly on server. Please contact support at identifiers-org@ebi.ac.uk");
+            var response = ServiceResponse.ofError(HttpStatus.INTERNAL_SERVER_ERROR,
+                "MIRID resolution format is not setup correctly on server. Please contact support at identifiers-org@ebi.ac.uk");
             logger.error("Invalid URI format for MIRID resolution. {}", e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }

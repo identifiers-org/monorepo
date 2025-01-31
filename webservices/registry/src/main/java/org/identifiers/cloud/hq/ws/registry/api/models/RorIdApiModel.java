@@ -33,7 +33,7 @@ public class RorIdApiModel {
             // TCheck if the institution already is in the registry
             Institution institution = institutionRepository.findByRorId(rorId);
             if (institution != null) {
-                return new ResponseEntity<>(ApiAndDataModelsHelper.getInstitutionFrom(institution), HttpStatus.OK);
+                return new ResponseEntity<>(ApiAndDataModelsHelper.getMessagePojoFromEntity(institution), HttpStatus.OK);
             }
             // Fetch if the institution is not in the registry
             Organization organization = rorOrgApiService.getOrganizationDetails(rorId);

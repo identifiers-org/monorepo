@@ -3,18 +3,13 @@ package org.identifiers.cloud.libapi.services;
 import org.identifiers.cloud.libapi.Configuration;
 import org.identifiers.cloud.commons.messages.responses.resolver.ResponseResolvePayload;
 import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
-import org.identifiers.cloud.libapi.models.resolver.ServiceResponseResolve;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.web.client.RestTemplate;
-
-import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
 
 /**
  * @author Manuel Bernal Llinares <mbdebian@gmail.com>
@@ -29,7 +24,7 @@ public class ResolverService {
     public static final String apiVersion = "1.0";
     private static final Logger logger = LoggerFactory.getLogger(ResolverService.class);
     // Re-try pattern, externalize this later if needed
-    private RetryTemplate retryTemplate = Configuration.retryTemplate();
+    private final RetryTemplate retryTemplate = Configuration.retryTemplate();
     private String serviceApiBaseline;
 
     private ResolverService() {
@@ -58,8 +53,10 @@ public class ResolverService {
                 return restTemplate.exchange(serviceApiEndpoint, HttpMethod.GET, null, responseType);
             });
             response = requestResponse.getBody();
-            response.setHttpStatus(HttpStatus.valueOf(requestResponse.getStatusCode().value()));
-            if (HttpStatus.valueOf(requestResponse.getStatusCode().value()) != HttpStatus.OK) {
+            if (response != null) {
+                response.setHttpStatus(requestResponse.getStatusCode());
+            }
+           if (HttpStatus.valueOf(requestResponse.getStatusCode().value()) != HttpStatus.OK) {
                 String errorMessage = String.format("ERROR resolving Compact ID " +
                                 "at '%s', " +
                                 "HTTP status code '%d', " +

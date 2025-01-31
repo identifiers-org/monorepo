@@ -1,12 +1,12 @@
 package org.identifiers.cloud.ws.resolver.services;
 
+import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
 import org.identifiers.cloud.ws.resolver.TestRedisServer;
 import org.identifiers.cloud.ws.resolver.data.models.Location;
 import org.identifiers.cloud.ws.resolver.data.models.Namespace;
 import org.identifiers.cloud.ws.resolver.data.models.Resource;
 import org.identifiers.cloud.ws.resolver.data.repositories.NamespaceRespository;
 import org.identifiers.cloud.ws.resolver.models.CompactIdParsingHelper;
-import org.identifiers.cloud.ws.resolver.models.ParsedCompactIdentifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
-import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ExportedDocument;
-import org.identifiers.cloud.hq.ws.registry.api.data.models.exporters.ebisearch.EbiSearchExporter;
+import org.identifiers.cloud.hq.ws.registry.api.data.exporters.ExportedDocument;
+import org.identifiers.cloud.hq.ws.registry.api.data.exporters.ebisearch.EbiSearchExporter;
 import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.data.services.NamespaceService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,10 +1,11 @@
 package org.identifiers.cloud.hq.ws.registry.api.controllers;
 
 import lombok.extern.slf4j.Slf4j;
-import org.identifiers.cloud.hq.ws.registry.api.data.models.NamespaceStatistics;
+import org.identifiers.cloud.commons.messages.models.NamespaceStatistics;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
 import org.identifiers.cloud.hq.ws.registry.api.models.StatisticsModel;
-import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponse;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,11 +44,10 @@ public class StatisticsController {
             return ResponseEntity.notFound().build();
         }
 
-        ServiceResponse<NamespaceStatistics> response;
         try {
-            NamespaceStatistics stats = model.getMatomoStatisticsFor(prefix);
+            var stats = model.getMatomoStatisticsFor(prefix);
             log.debug("Found statistics for {}: {}", prefix, stats);
-            response = ServiceResponse.getBaseResponse(stats);
+            var response = ServiceResponse.of(stats);
             return ResponseEntity.ok().body(response);
         } catch (RestClientException e) {
             if (log.isDebugEnabled()) {
@@ -55,8 +55,8 @@ public class StatisticsController {
             } else {
                 log.error("Error on matomo get {}", e.getMessage());
             }
-            response = ServiceResponse.getBaseResponse();
-            response.setErrorMessage(e.getMessage());
+            ServiceResponse<NamespaceStatistics> response =
+                        ServiceResponse.ofError(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
             return ResponseEntity.internalServerError().body(response);
         }
     }

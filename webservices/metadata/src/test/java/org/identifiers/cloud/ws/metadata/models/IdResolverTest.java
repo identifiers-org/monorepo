@@ -1,8 +1,8 @@
 package org.identifiers.cloud.ws.metadata.models;
 
-import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
-import org.identifiers.cloud.libapi.models.resolver.ResponseResolvePayload;
-import org.identifiers.cloud.libapi.models.resolver.ServiceResponseResolve;
+import org.identifiers.cloud.commons.messages.models.ResolvedResource;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.resolver.ResponseResolvePayload;
 import org.identifiers.cloud.libapi.services.ResolverService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -30,11 +30,10 @@ class IdResolverTest {
 
     @Test
     void testValidId() {
-        ResponseResolvePayload payload = new ResponseResolvePayload()
+        var payload = new ResponseResolvePayload()
                 .setResolvedResources(Collections.singletonList(new ResolvedResource()));
-        ServiceResponseResolve response = (ServiceResponseResolve) new ServiceResponseResolve()
-                .setApiVersion("1.0")
-                .setPayload(payload);
+        var response = ServiceResponse.of(payload);
+
         Mockito.when(resolverService.requestCompactIdResolution(Mockito.anyString()))
                                     .thenReturn(response);
         assertFalse(idResolver.resolve("valid_id").isEmpty());
@@ -42,11 +41,10 @@ class IdResolverTest {
 
     @Test
     void testInvalidId() {
-        ResponseResolvePayload payload = new ResponseResolvePayload()
+        var payload = new ResponseResolvePayload()
                 .setResolvedResources(Collections.emptyList());
-        ServiceResponseResolve response = (ServiceResponseResolve) new ServiceResponseResolve()
-                .setApiVersion("1.0")
-                .setPayload(payload);
+        var response = ServiceResponse.of(payload);
+
         Mockito.when(resolverService.requestCompactIdResolution(Mockito.anyString())).thenReturn(response);
 
         assertTrue(idResolver.resolve("invalid_id").isEmpty());

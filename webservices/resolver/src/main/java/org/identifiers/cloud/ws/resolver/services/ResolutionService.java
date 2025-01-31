@@ -1,6 +1,6 @@
 package org.identifiers.cloud.ws.resolver.services;
 
-import org.identifiers.cloud.ws.resolver.models.ParsedCompactIdentifier;
+import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
 
 /**
  * Project: resolver

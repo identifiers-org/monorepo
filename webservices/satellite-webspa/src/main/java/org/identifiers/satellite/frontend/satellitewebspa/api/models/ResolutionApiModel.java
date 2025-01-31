@@ -1,8 +1,9 @@
 package org.identifiers.satellite.frontend.satellitewebspa.api.models;
 
 import lombok.extern.slf4j.Slf4j;
-import org.identifiers.cloud.libapi.models.resolver.ResolvedResource;
-import org.identifiers.cloud.libapi.models.resolver.ServiceResponseResolve;
+import org.identifiers.cloud.commons.messages.models.ResolvedResource;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.resolver.ResponseResolvePayload;
 import org.identifiers.satellite.frontend.satellitewebspa.api.exceptions.FailedResolutionException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.RedirectView;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class ResolutionApiModel {
-    public RedirectView resolveRawCompactIdentifier(ServiceResponseResolve responseResolve) {
+    public RedirectView resolveRawCompactIdentifier(ServiceResponse<ResponseResolvePayload> responseResolve) {
         if (responseResolve.getHttpStatus().is2xxSuccessful()) {
             String location;
             if (!responseResolve.getPayload().getResolvedResources().isEmpty()) {

@@ -1,8 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.api.controllers;
 
 import lombok.extern.slf4j.Slf4j;
-import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
-import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +27,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler(value = { ResourceNotFoundException.class })
     protected ResponseEntity<Object> handleResourceNotFound (ResourceNotFoundException ex, WebRequest request) {
-        ServiceResponse<Object> responseBody = ServiceResponse.getBaseResponse()
-                .setApiVersion(ApiCentral.apiVersion)
-                .setErrorMessage(ex.getMessage());
+        var responseBody = ServiceResponse.ofError(HttpStatus.NOT_FOUND, ex.getMessage());
         return handleExceptionInternal(ex, responseBody, new HttpHeaders(),
                 HttpStatus.NOT_FOUND, request);
     }
@@ -40,9 +37,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         // Last hope for logging of unforeseen errors
         // Also a way to make all responses to be of type ServiceResponse
         log.error("Unforeseen exception", ex);
-        ServiceResponse<Object> responseBody = ServiceResponse.getBaseResponse()
-                .setApiVersion(ApiCentral.apiVersion)
-                .setErrorMessage(String.format("Unforeseen exception at %s: %s", now(), ex.getMessage()));
+        var responseBody = ServiceResponse.ofError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
         return handleExceptionInternal(ex, responseBody, new HttpHeaders(),
                 HttpStatus.INTERNAL_SERVER_ERROR, request);
     }

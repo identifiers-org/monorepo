@@ -1,8 +1,8 @@
 package org.identifiers.cloud.hq.ws.registry.models.validators.payload;
 
 import lombok.RequiredArgsConstructor;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixPayload;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterResourcePayload;
+import org.identifiers.cloud.commons.messages.requests.registry.ServiceRequestRegisterPrefixPayload;
+import org.identifiers.cloud.commons.messages.requests.registry.ServiceRequestRegisterResourcePayload;
 import org.identifiers.cloud.hq.ws.registry.data.models.Namespace;
 import org.identifiers.cloud.hq.ws.registry.data.services.NamespaceService;
 import org.identifiers.cloud.hq.ws.registry.models.validators.RegistrationPayloadValidator;

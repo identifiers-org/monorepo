@@ -1,5 +1,5 @@
 package org.identifiers.cloud.ws.metadata.retrievers.ebisearch;
-import org.identifiers.cloud.libapi.models.resolver.ParsedCompactIdentifier;
+import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public class EbiSearchMetadataRetrieverTest {
 
 
-   final   ParsedCompactIdentifier parsedCompactIdentifier =
+   final ParsedCompactIdentifier parsedCompactIdentifier =
          new ParsedCompactIdentifier()
                .setNamespace("uniprot")
                .setLocalId("P12345")

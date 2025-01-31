@@ -1,7 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
 import lombok.extern.slf4j.Slf4j;
-import org.identifiers.cloud.hq.ws.registry.api.data.models.NamespaceStatistics;
+import org.identifiers.cloud.commons.messages.models.NamespaceStatistics;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;

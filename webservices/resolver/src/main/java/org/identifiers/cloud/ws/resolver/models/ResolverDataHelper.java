@@ -1,6 +1,11 @@
 package org.identifiers.cloud.ws.resolver.models;
 
-import org.identifiers.cloud.libapi.models.resourcerecommender.ResourceRecommendation;
+import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
+import org.identifiers.cloud.commons.messages.models.Recommendation;
+import org.identifiers.cloud.commons.messages.models.ResolvedResource;
+import org.identifiers.cloud.commons.messages.models.ResourceRecommendation;
+import org.identifiers.cloud.ws.resolver.data.models.Institution;
+import org.identifiers.cloud.ws.resolver.data.models.Location;
 import org.identifiers.cloud.ws.resolver.data.models.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,6 +55,21 @@ public class ResolverDataHelper {
         return url.replace("{$id}", localId);
     }
 
+    private static org.identifiers.cloud.commons.messages.models.Location getMessagePojoFromEntity(Location entity) {
+        return new org.identifiers.cloud.commons.messages.models.Location()
+                .setCountryCode(entity.getCountryCode()).setCountryName(entity.getCountryName());
+    }
+
+    private static org.identifiers.cloud.commons.messages.models.Institution getMessagePojoFromEntity(Institution entity) {
+        return new org.identifiers.cloud.commons.messages.models.Institution()
+                .setName(entity.getName())
+                .setId(entity.getId())
+                .setDescription(entity.getDescription())
+                .setLocation(getMessagePojoFromEntity(entity.getLocation()))
+                .setHomeUrl(entity.getHomeUrl())
+                .setRorId(entity.getRorId());
+    }
+
     /**
      * This helper will translate from Resource data model to Resolved Resource data model, with two missing pieces:
      * Recommendation scoring and Resolved URL, so that needs to be added later by the calling client
@@ -62,8 +82,8 @@ public class ResolverDataHelper {
                 .setId(resource.getId())
                 .setProviderCode(resource.getProviderCode())
                 .setDescription(resource.getDescription())
-                .setInstitution(resource.getInstitution())
-                .setLocation(resource.getLocation())
+                .setInstitution(getMessagePojoFromEntity(resource.getInstitution()))
+                .setLocation(getMessagePojoFromEntity(resource.getLocation()))
                 .setOfficial(resource.isOfficial())
                 .setResourceHomeUrl(resource.getResourceHomeUrl())
                 .setDeprecatedResource(resource.isDeprecated())

@@ -1,10 +1,9 @@
 package org.identifiers.cloud.hq.ws.registry.api.controllers;
 
+import org.identifiers.cloud.commons.messages.requests.ServiceRequest;
+import org.identifiers.cloud.commons.messages.requests.registry.ServiceRequestRegisterPrefixPayload;
+import org.identifiers.cloud.commons.messages.requests.registry.ServiceRequestRegisterPrefixSessionEventPayload;
 import org.identifiers.cloud.hq.ws.registry.api.models.PrefixRegistrationRequestApiModel;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefix;
-import org.identifiers.cloud.hq.ws.registry.api.requests.ServiceRequestRegisterPrefixSessionEvent;
-import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefix;
-import org.identifiers.cloud.hq.ws.registry.api.responses.ServiceResponseRegisterPrefixSessionEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,32 +27,36 @@ public class PrefixRegistrationRequestApiController {
     private PrefixRegistrationRequestApiModel model;
 
     @PostMapping(value = "/registerPrefix")
-    public ResponseEntity<?> registerPrefix(@RequestBody ServiceRequestRegisterPrefix request) {
-        ServiceResponseRegisterPrefix response = model.registerPrefix(request);
+    public ResponseEntity<?> registerPrefix(@RequestBody ServiceRequest<ServiceRequestRegisterPrefixPayload> request) {
+        var response = model.registerPrefix(request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     @PostMapping(value = "/amendPrefixRegistrationRequest/{sessionId}")
-    public ResponseEntity<?> amendPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterPrefixSessionEvent request) {
-        ServiceResponseRegisterPrefixSessionEvent response = model.amendPrefixRegistrationRequest(sessionId, request);
+    public ResponseEntity<?> amendPrefixRegistrationRequest(@PathVariable long sessionId,
+                            @RequestBody ServiceRequest<ServiceRequestRegisterPrefixSessionEventPayload> request) {
+        var response = model.amendPrefixRegistrationRequest(sessionId, request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     @PostMapping(value = "/commentPrefixRegistrationRequest/{sessionId}")
-    public ResponseEntity<?> commentPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterPrefixSessionEvent request) {
-        ServiceResponseRegisterPrefixSessionEvent response = model.commentPrefixRegistrationRequest(sessionId, request);
+    public ResponseEntity<?> commentPrefixRegistrationRequest(@PathVariable long sessionId,
+                            @RequestBody ServiceRequest<ServiceRequestRegisterPrefixSessionEventPayload> request) {
+        var response = model.commentPrefixRegistrationRequest(sessionId, request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     @PostMapping(value = "/rejectPrefixRegistrationRequest/{sessionId}")
-    public ResponseEntity<?> rejectPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterPrefixSessionEvent request) {
-        ServiceResponseRegisterPrefixSessionEvent response = model.rejectPrefixRegistrationRequest(sessionId, request);
+    public ResponseEntity<?> rejectPrefixRegistrationRequest(@PathVariable long sessionId,
+                            @RequestBody ServiceRequest<ServiceRequestRegisterPrefixSessionEventPayload> request) {
+        var response = model.rejectPrefixRegistrationRequest(sessionId, request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 
     @PostMapping(value = "/acceptPrefixRegistrationRequest/{sessionId}")
-    public ResponseEntity<?> acceptPrefixRegistrationRequest(@PathVariable long sessionId, @RequestBody ServiceRequestRegisterPrefixSessionEvent request) {
-        ServiceResponseRegisterPrefixSessionEvent response = model.acceptPrefixRegistrationRequest(sessionId, request);
+    public ResponseEntity<?> acceptPrefixRegistrationRequest(@PathVariable long sessionId,
+                            @RequestBody ServiceRequest<ServiceRequestRegisterPrefixSessionEventPayload> request) {
+        var response = model.acceptPrefixRegistrationRequest(sessionId, request);
         return new ResponseEntity<>(response, response.getHttpStatus());
     }
 }

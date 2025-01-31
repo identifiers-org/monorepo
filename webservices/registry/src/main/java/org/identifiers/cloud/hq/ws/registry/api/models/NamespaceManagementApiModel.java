@@ -1,8 +1,9 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
 import lombok.extern.slf4j.Slf4j;
-import org.identifiers.cloud.hq.ws.registry.api.ApiCentral;
-import org.identifiers.cloud.hq.ws.registry.api.responses.*;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.registry.ServiceResponseDeactivateNamespacePayload;
+import org.identifiers.cloud.commons.messages.responses.registry.ServiceResponseReactivateNamespacePayload;
 import org.identifiers.cloud.hq.ws.registry.models.NamespaceLifecycleManagementContext;
 import org.identifiers.cloud.hq.ws.registry.models.NamespaceLifecycleManagementOperationReport;
 import org.identifiers.cloud.hq.ws.registry.models.NamespaceLifecycleManagementService;
@@ -30,25 +31,6 @@ public class NamespaceManagementApiModel {
     @Autowired
     private AuthHelper authHelper;
 
-    // Helpers
-    private <T> void initDefaultResponse(ServiceResponse<T> response, T payload) {
-        response.setApiVersion(ApiCentral.apiVersion)
-                .setHttpStatus(HttpStatus.OK);
-        response.setPayload(payload);
-    }
-
-    private ServiceResponseDeactivateNamespace createNamespaceDeactivationDefaultResponse() {
-        ServiceResponseDeactivateNamespace response = new ServiceResponseDeactivateNamespace();
-        initDefaultResponse(response, new ServiceResponseDeactivateNamespacePayload());
-        return response;
-    }
-
-    private ServiceResponseReactivateNamespace createNamespaceReactivationDefaultResponse() {
-        ServiceResponseReactivateNamespace response = new ServiceResponseReactivateNamespace();
-        initDefaultResponse(response, new ServiceResponseReactivateNamespacePayload());
-        return response;
-    }
-
     // API
     // Helpers
     private void processNamespaceLifecycleManagementOperationReport(ServiceResponse<?> response, NamespaceLifecycleManagementOperationReport report) {
@@ -62,8 +44,8 @@ public class NamespaceManagementApiModel {
         }
     }
 
-    public ServiceResponseDeactivateNamespace deactivateNamespace(long namespaceId) {
-        ServiceResponseDeactivateNamespace response = createNamespaceDeactivationDefaultResponse();
+    public ServiceResponse<ServiceResponseDeactivateNamespacePayload> deactivateNamespace(long namespaceId) {
+        var response = ServiceResponse.of(new ServiceResponseDeactivateNamespacePayload());
         // TODO Get this from Spring Security
         String actor = authHelper.getCurrentUsername();
         String additionalInformation = "--- no additional information specified ---";
@@ -74,8 +56,8 @@ public class NamespaceManagementApiModel {
         return response;
     }
 
-    public ServiceResponseReactivateNamespace reactivateNamespace(long namespaceId) {
-        ServiceResponseReactivateNamespace response = createNamespaceReactivationDefaultResponse();
+    public ServiceResponse<ServiceResponseReactivateNamespacePayload> reactivateNamespace(long namespaceId) {
+        var response = ServiceResponse.of(new ServiceResponseReactivateNamespacePayload());
         // TODO Get this from Spring Security
         String actor = authHelper.getCurrentUsername();
         String additionalInformation = "--- no additional information specified ---";
