@@ -56,11 +56,17 @@ public class ResolverDataHelper {
     }
 
     private static org.identifiers.cloud.commons.messages.models.Location getMessagePojoFromEntity(Location entity) {
+        if (entity == null) {
+            return null;
+        }
         return new org.identifiers.cloud.commons.messages.models.Location()
                 .setCountryCode(entity.getCountryCode()).setCountryName(entity.getCountryName());
     }
 
     private static org.identifiers.cloud.commons.messages.models.Institution getMessagePojoFromEntity(Institution entity) {
+        if (entity == null) {
+            return null;
+        }
         return new org.identifiers.cloud.commons.messages.models.Institution()
                 .setName(entity.getName())
                 .setId(entity.getId())

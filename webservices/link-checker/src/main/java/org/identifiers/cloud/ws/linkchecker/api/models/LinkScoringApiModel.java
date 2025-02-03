@@ -84,7 +84,7 @@ public class LinkScoringApiModel {
                 request.getPayload().getId(),
                 request.getPayload().getUrl(),
                 request.getPayload().getAccept401or403() ? "Yes" : "No");
-        var response = new ServiceResponse<ServiceResponseScoringRequestPayload>();
+        var response = ServiceResponse.of(new ServiceResponseScoringRequestPayload());
         try {
             var tracker = historyTrackingService.getTrackerForResource(request.getPayload());
             var historyStats = tracker.getHistoryStats(SIMPLE);

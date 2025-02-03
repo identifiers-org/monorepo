@@ -1,7 +1,9 @@
 package org.identifiers.cloud.ws.resolver.services;
 
+import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
 import org.identifiers.cloud.ws.resolver.TestRedisServer;
+import org.identifiers.cloud.ws.resolver.data.models.Institution;
 import org.identifiers.cloud.ws.resolver.data.models.Location;
 import org.identifiers.cloud.ws.resolver.data.models.Namespace;
 import org.identifiers.cloud.ws.resolver.data.models.Resource;
@@ -20,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 
+@Slf4j
 @SpringBootTest(classes = {TestRedisServer.class})
 class ResolutionServiceTest {
     @Autowired ResolutionService resolutionService;
@@ -38,7 +41,8 @@ class ResolutionServiceTest {
         Resource resource = new Resource()
                 .setId(1).setName("valid resource").setDeprecated(false)
                 .setUrlPattern("https://mockedurl.com?q={$id}")
-                .setLocation(new Location().setCountryCode("GB").setCountryName("UK"));
+                .setLocation(new Location().setCountryCode("GB").setCountryName("UK"))
+                .setInstitution(new Institution().setName("Institution").setId(1));
         namespace.setResources(Collections.singletonList(resource));
 
         //Order is important here

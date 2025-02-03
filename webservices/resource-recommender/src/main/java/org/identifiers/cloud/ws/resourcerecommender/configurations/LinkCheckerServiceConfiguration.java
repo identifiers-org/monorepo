@@ -20,12 +20,7 @@ public class LinkCheckerServiceConfiguration {
     }
 
     @Bean
-    public ScoreProviderOnReliability scoreProviderOnReliability(
-            @Value("${org.identifiers.cloud.ws.resourcerecommender.backend.service.linkchecker.host}")
-            String serviceLinkCheckerHost,
-            @Value("${org.identifiers.cloud.ws.resourcerecommender.backend.service.linkchecker.port}")
-            String serviceLinkCheckerPort
-    ) {
-        return new ScoreProviderOnReliability(serviceLinkCheckerHost, serviceLinkCheckerPort);
+    public ScoreProviderOnReliability scoreProviderOnReliability(LinkCheckerService linkCheckerService) {
+        return new ScoreProviderOnReliability(linkCheckerService);
     }
 }

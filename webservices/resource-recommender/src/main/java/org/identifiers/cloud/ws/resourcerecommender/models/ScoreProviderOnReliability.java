@@ -2,6 +2,7 @@ package org.identifiers.cloud.ws.resourcerecommender.models;
 
 import org.identifiers.cloud.commons.messages.models.ResolvedResource;
 import org.identifiers.cloud.libapi.services.ApiServicesFactory;
+import org.identifiers.cloud.libapi.services.LinkCheckerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -19,21 +20,16 @@ import org.springframework.http.HttpStatus;
 public class ScoreProviderOnReliability implements ScoreProvider {
     private static final Logger logger = LoggerFactory.getLogger(ScoreProviderOnReliability.class);
 
-    private final String linkCheckerServiceHost;
-    private final String linkCheckerServicePort;
-    public ScoreProviderOnReliability(String linkCheckerServiceHost, String linkCheckerServicePort) {
-        this.linkCheckerServiceHost = linkCheckerServiceHost;
-        this.linkCheckerServicePort = linkCheckerServicePort;
+    private final LinkCheckerService linkCheckerService;
+    public ScoreProviderOnReliability(LinkCheckerService linkCheckerService) {
+        this.linkCheckerService = linkCheckerService;
     }
 
     @Override
     public int getScoreForResource(ResolvedResource resolvedResource) {
-        var response = ApiServicesFactory
-                .getLinkCheckerService(linkCheckerServiceHost, linkCheckerServicePort)
-                .getScoreForResolvedId(
-                      String.valueOf(resolvedResource.getId()),
-                        resolvedResource.getCompactIdentifierResolvedUrl(),
-                        resolvedResource.isProtectedUrls());
+        var response = linkCheckerService.getScoreForResolvedId(String.valueOf(resolvedResource.getId()),
+                                                                resolvedResource.getCompactIdentifierResolvedUrl(),
+                                                                resolvedResource.isProtectedUrls());
         if (response.getHttpStatus() != HttpStatus.OK) {
             // Just report the error an keep going with the default scoring
             logger.error("FAILED Reliability score for " +

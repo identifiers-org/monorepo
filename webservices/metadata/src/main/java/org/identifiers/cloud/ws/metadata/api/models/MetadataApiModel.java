@@ -175,7 +175,7 @@ public class MetadataApiModel {
 
     // --- API Methods ---
     public ServiceResponse<ResponseFetchMetadataPayload> getMetadataFor(String compactId) {
-        var response = new ServiceResponse<ResponseFetchMetadataPayload>();
+        var response = ServiceResponse.of(new ResponseFetchMetadataPayload());
         List<ResolvedResource> resources = resolveCompactId(compactId, response);
         if (response.getHttpStatus() == HttpStatus.OK) {
             // Select the provider
@@ -210,7 +210,7 @@ public class MetadataApiModel {
     }
 
     public ServiceResponse<ResponseFetchMetadataPayload> getMetadataForRawRequest(String rawRequest) {
-        var response = new ServiceResponse<ResponseFetchMetadataPayload>();
+        var response = ServiceResponse.of(new ResponseFetchMetadataPayload());
         logger.info("Getting metadata for RAW Request '{}'", rawRequest);
         List<ResolvedResource> resources = resolveRawRequest(rawRequest, response);
         if (response.getHttpStatus() == HttpStatus.OK) {

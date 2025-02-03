@@ -110,13 +110,13 @@ class RecommendationStrategyTest {
         Collections.shuffle(resources);
         List<ResourceRecommendation> recommendations = recommendationStrategy.getRecommendations(resources);
         int ebiRecommendation = recommendations.stream()
-                .filter(r -> Objects.equals(r.getId(), ebiResource.getId()))
+                .filter(r -> Objects.equals(String.valueOf(r.getId()), ebiResource.getId()))
                 .mapToInt(ResourceRecommendation::getRecommendationIndex)
-                .findFirst().getAsInt();
+                .findFirst().orElse(0);
         int maxOtherRecommendations = recommendations.stream()
-                .filter(r -> !Objects.equals(r.getId(), ebiResource.getId()))
+                .filter(r -> !Objects.equals(String.valueOf(r.getId()), ebiResource.getId()))
                 .mapToInt(ResourceRecommendation::getRecommendationIndex)
-                .max().getAsInt();
+                .max().orElse(Integer.MAX_VALUE);
 
         assertTrue(maxOtherRecommendations < ebiRecommendation,
                 "EBI resources take preference when other parameters are equivalent");
