@@ -1,66 +1,36 @@
 # This Makefile helps on building the production container image, and with the release cycle
-# Author: Manuel Bernal Llinares <mbdebian@gmail.com>	#
-# Some "facts"
-container_name = identifiersorg/cloud-ws-link-checker
-docker_compose_development_file = docker-compose-development.yml
-springboot_development_profile = development
-tag_version = $(shell cat VERSION)
 
-# Default target
-all: deploy
+# These are meant to be run from the parent folder
 
-release: deploy set_next_development_version
-	@echo "<===|DEVOPS|===> [RELEASE] New Software Release, and next development version prepared"
-	@git add pom.xml
-	@git commit -am "Next project development version prepared"
-	@git push
+link_checker_container_name = identifiersorg/cloud-ws-link-checker
+link_checker_docker_compose_development_file = link-checker/docker-compose-development.yml
+link_checker_springboot_development_profile = development
+link_checker_tag_version = $(shell cat link-checker/VERSION)
 
-sync_project_version:
-	@echo "<===|DEVOPS|===> [SYNC] Synchronizing project version to version '${tag_version}'"
-	@mvn versions:set -DnewVersion=${tag_version} -DgenerateBackupPoms=false
+link_checker_sync_project_version:
+	@echo "<===|DEVOPS|===> [SYNC] Synchronizing project version to version '${link_checker_tag_version}'"
+	@mvn versions:set -DnewVersion=${link_checker_tag_version} -DgenerateBackupPoms=false -pl link-checker
 
-set_next_development_version:
-	@echo "<===|DEVOPS|===> [SYNC] Setting the new development version, current ${tag_version}"
-	@mvn versions:set -DnewVersion=$(shell ./increment_version.sh -p ${tag_version})-SNAPSHOT
-
-deploy: clean container_production_push
-	@echo "<===|DEVOPS|===> [DEPLOY] Deploying service container version ${tag_version}"
-
-development_env_up:
+link_checker_development_env_up:
 	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing development environment UP"
-	@docker compose -f $(docker_compose_development_file) up -d
+	@docker compose -f $(link_checker_docker_compose_development_file) up -d
 
-development_env_down:
+link_checker_development_env_down:
 	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing development environment DOWN"
-	@docker compose -f $(docker_compose_development_file) down
+	@docker compose -f $(link_checker_docker_compose_development_file) down
 
-development_run_tests: development_env_up
-	@echo "<===|DEVOPS|===> [TESTS] Running Unit Tests"
-	@mvn -Dspring.profiles.active=$(springboot_development_profile) clean test
-
-app_structure:
+link_checker_app_structure:
 	@echo "<===|DEVOPS|===> [PACKAGE] Application"
-	@mvn clean > /dev/null
-	@mvn package -DskipTests
-	@mkdir -p target/app/log
-	@mkdir -p target/app/tmp
-	@cp target/link-checker-$(shell mvn help:evaluate -Dexpression=project.version | grep -v '^\[').jar target/app/service.jar
+	@mvn clean package -DskipTests -pl link-checker -am
+	@mkdir -p link-checker/target/app/log
+	@mkdir -p link-checker/target/app/tmp
+	@cp link-checker/target/link-checker.jar link-checker/target/app/service.jar
 
-container_production_build: app_structure
-	@echo "<===|DEVOPS|===> [BUILD] Production container $(container_name):$(tag_version)"
-	@docker build -t $(container_name):$(tag_version) -t $(container_name):latest .
+link_checker_container_production_build: link_checker_app_structure
+	@echo "<===|DEVOPS|===> [BUILD] Production container $(link_checker_container_name):$(link_checker_tag_version)"
+	@docker build -t $(link_checker_container_name):$(link_checker_tag_version) -t $(link_checker_container_name):latest link-checker/
 
-container_production_push: container_production_build
-	@echo "<===|DEVOPS|===> [PUBLISH]> Production container $(container_name):$(tag_version)"
-	@docker push $(container_name):$(tag_version)
-	@docker push $(container_name):latest
-
-dev_container_build: clean container_production_build
-	@echo "<===|DEVOPS|===> [DEV] Preparing local container"
-
-clean:
-	@echo "<===|DEVOPS|===> [CLEAN] Cleaning the space"
-	@mvn clean > /dev/null
-	@mvn versions:commit
-
-.PHONY: all clean app_structure container_production_build container_production_push dev_container_build deploy release sync_project_version set_next_development_version
+link_checker_container_production_push: link_checker_container_production_build
+	@echo "<===|DEVOPS|===> [PUBLISH]> Production container $(link_checker_container_name):$(link_checker_tag_version)"
+	@docker push $(link_checker_container_name):$(link_checker_tag_version)
+	@docker push $(link_checker_container_name):latest

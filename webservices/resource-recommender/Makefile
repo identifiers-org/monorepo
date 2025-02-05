@@ -1,70 +1,36 @@
 # This Makefile helps on building the production container image
 
-#														#
-# Author: Manuel Bernal Llinares <mbdebian@gmail.com>	#
-#														#
+# These are meant to be run from the parent folder
 
-# Container name
-container_name = identifiersorg/cloud-ws-resource-recommender
-docker_compose_development_file = docker-compose-development.yml
-springboot_development_profile = development
-tag_version = $(shell cat VERSION)
+rr_container_name = identifiersorg/cloud-ws-resource-recommender
+rr_docker_compose_development_file = resource-recommender/docker-compose-development.yml
+rr_springboot_development_profile = development
+rr_tag_version = $(shell cat resource-recommender/VERSION)
 
-# Default target
-all: deploy
+rr_sync_project_version:
+	@echo "<===|DEVOPS|===> [SYNC] Synchronizing project version to version '${rr_tag_version}'"
+	@mvn versions:set -DnewVersion=${rr_tag_version} -DgenerateBackupPoms=false -pl resource-recommender
 
-release: deploy set_next_development_version
-	@echo "<===|DEVOPS|===> [RELEASE] Software Release, preparing next development version"
-	@git add pom.xml
-	@git commit -am "Next project development version prepared"
-	@git push
-
-sync_project_version:
-	@echo "<===|DEVOPS|===> [SYNC] Synchronizing project version to version '${tag_version}'"
-	@mvn versions:set -DnewVersion=${tag_version} -DgenerateBackupPoms=false
-
-set_next_development_version:
-	@echo "<===|DEVOPS|===> [SYNC] Setting the new development version, current ${tag_version}"
-	@mvn versions:set -DnewVersion=$(shell ./increment_version.sh -p ${tag_version})-SNAPSHOT
-
-deploy: clean container_production_push
-	@echo "<===|DEVOPS|===> [DEPLOY] Deploying service container version ${tag_version}"
-
-development_env_up:
+rr_development_env_up:
 	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing development environment UP"
-	@docker-compose -f $(docker_compose_development_file) up -d
+	@docker-compose -f $(rr_docker_compose_development_file) up -d
 
-development_env_down:
+rr_development_env_down:
 	@echo "<===|DEVOPS|===> [ENVIRONMENT] Bringing development environment DOWN"
-	@docker-compose -f $(docker_compose_development_file) down
+	@docker-compose -f $(rr_docker_compose_development_file) down
 
-development_run_tests: development_env_up
-	@echo "<===|DEVOPS|===> [TESTS] Running Unit Tests"
-	@mvn -Dspring.profiles.active=$(springboot_development_profile) clean test
-
-app_structure:
+rr_app_structure:
 	@echo "<===|DEVOPS|===> [PACKAGE] Application"
-	@mvn clean > /dev/null
-	@mvn package -DskipTests
-	@mkdir -p target/app/log
-	@mkdir -p target/app/tmp
-	@cp target/resource-recommender-$(shell mvn -q help:evaluate -Dexpression=project.version -DforceStdout).jar target/app/service.jar
+	@mvn clean package -DskipTests -pl resource-recommender -am
+	@mkdir -p resource-recommender/target/app/log
+	@mkdir -p resource-recommender/target/app/tmp
+	@cp resource-recommender/target/resource-recommender.jar resource-recommender/target/app/service.jar
 
-container_production_build: app_structure
-	@echo "<===|DEVOPS|===> [BUILD] Production container $(container_name):$(tag_version)"
-	@docker build -t $(container_name):$(tag_version) -t $(container_name):latest .
+rr_container_production_build: rr_app_structure
+	@echo "<===|DEVOPS|===> [BUILD] Production container $(rr_container_name):$(rr_tag_version)"
+	@docker build -t $(rr_container_name):$(rr_tag_version) -t $(rr_container_name):latest resource-recommender/
 
-container_production_push: container_production_build
-	@echo "<===|DEVOPS|===> [PUBLISH]> Production container $(container_name):$(tag_version)"
-	@docker push $(container_name):$(tag_version)
-	@docker push $(container_name):latest
-
-dev_container_build: clean container_production_build
-	@echo "<===|DEVOPS|===> [DEV] Preparing local container"
-
-clean:
-	@echo "<===|DEVOPS|===> [CLEAN] Cleaning the space"
-	@mvn clean > /dev/null
-	@mvn versions:commit
-
-.PHONY: all clean app_structure container_production_build container_production_push dev_container_build deploy release sync_project_version set_next_development_version
+rr_container_production_push: rr_container_production_build
+	@echo "<===|DEVOPS|===> [PUBLISH]> Production container $(rr_container_name):$(rr_tag_version)"
+	@docker push $(rr_container_name):$(rr_tag_version)
+	@docker push $(rr_container_name):latest

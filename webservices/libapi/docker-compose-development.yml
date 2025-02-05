@@ -1,6 +1,5 @@
 # identifiers.org Satellite docker-compose based cloud deployment
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
-version: "3.5"
 services:
     # Dependencies from Satellite
     link-checker:
@@ -79,6 +78,8 @@ services:
             - HQ_WS_MIRID_CONTROLLER_CONFIG_APPLICATION_ACTIVE_PROFILE=development,authdisabled
         ports:
             - "8181:8181"
+        volumes:
+            - "../../db/mirid-controller:/docker-entrypoint-initdb.d"
         depends_on:
             - redis
             - hqpostgresql
@@ -93,7 +94,7 @@ services:
             - "5430:5432"
             - "5431:5432"
         volumes:
-            - "registry:/var/lib/postgresql/data"
+            - "../../db/registry:/docker-entrypoint-initdb.d"
     redis:
         image: redis:4.0.8-alpine
         ports:
@@ -107,7 +108,3 @@ services:
 networks:
     default:
         name: libapinet
-volumes:
-    registry:
-        name: idorg_registry
-        external: true

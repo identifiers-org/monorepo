@@ -104,11 +104,6 @@
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>org.identifiers.cloud</groupId>
-        <artifactId>libapi</artifactId>
-        <version>3.0.0</version>
-      </dependency>
-      <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
         <version>31.1-jre</version>
@@ -214,6 +209,15 @@
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
           <version>3.4.2</version>
+          <executions>
+            <execution>
+              <id>spring-boot-repackage</id>
+              <goals>
+                <goal>repackage</goal>
+              </goals>
+              <phase>package</phase>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
