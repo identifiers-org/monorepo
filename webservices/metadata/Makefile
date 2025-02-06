@@ -3,14 +3,14 @@
 # These are meant to be run from the parent folder
 
 # Google Chrome Driver
-version_latest_chrome_driver = 2.42
-url_base_chrome_driver = http://chromedriver.storage.googleapis.com/
-binary_linux_chromedriver = chromedriver_linux64.zip
-binary_mac_chromedriver = chromedriver_mac64.zip
-binary_windows_chromedriver = chromedriver_win32.zip
-url_download_linux_chromedriver = $(url_base_chrome_driver)$(version_latest_chrome_driver)/$(binary_linux_chromedriver)
-url_download_mac_chromedriver = $(url_base_chrome_driver)$(version_latest_chrome_driver)/$(binary_mac_chromedriver)
-url_download_windows_chromedriver = $(url_base_chrome_driver)$(version_latest_chrome_driver)/$(binary_windows_chromedriver)
+version_latest_chrome_driver = 132.0.6834.160
+url_base_chrome_driver = https://storage.googleapis.com/chrome-for-testing-public/
+binary_linux_chromedriver = chromedriver-linux64
+binary_mac_chromedriver = chromedriver-mac-arm64
+binary_windows_chromedriver = chromedriver-win64
+url_download_linux_chromedriver = $(url_base_chrome_driver)$(version_latest_chrome_driver)/linux64/$(binary_linux_chromedriver).zip
+url_download_mac_chromedriver = $(url_base_chrome_driver)$(version_latest_chrome_driver)/mac-arm64/$(binary_mac_chromedriver).zip
+url_download_windows_chromedriver = $(url_base_chrome_driver)$(version_latest_chrome_driver)/win64/$(binary_windows_chromedriver).zip
 # Development support
 metadata_container_name = identifiersorg/cloud-ws-metadata
 metadata_docker_compose_development_file = metadata/docker-compose-development.yml
@@ -49,13 +49,13 @@ chromedriver: metadata/tmp metadata/bin/selenium
 	@echo "<===|DEVOPS|===> [CHROME DRIVERS] Ensuring drivers exist"
 	@cd metadata/tmp; if [ ! -e ../bin/selenium/chromedriver-linux ]; then \
 		wget $(url_download_linux_chromedriver); \
-		unzip $(binary_linux_chromedriver); mv chromedriver ../bin/selenium/chromedriver-linux; fi
+		unzip $(binary_linux_chromedriver).zip; mv $(binary_linux_chromedriver)/chromedriver ../bin/selenium/chromedriver-linux; fi
 	@cd metadata/tmp; if [ ! -e ../bin/selenium/chromedriver-mac ]; then \
 		wget $(url_download_mac_chromedriver); \
-		unzip $(binary_mac_chromedriver); mv chromedriver ../bin/selenium/chromedriver-mac; fi
+		unzip $(binary_mac_chromedriver).zip; mv $(binary_mac_chromedriver)/chromedriver ../bin/selenium/chromedriver-mac; fi
 	@cd metadata/tmp; if [ ! -e ../bin/selenium/chromedriver.exe ]; then \
 		wget $(url_download_windows_chromedriver); \
-		unzip $(binary_windows_chromedriver); mv chromedriver.exe ../bin/selenium/; fi
+		unzip $(binary_windows_chromedriver).zip; mv $(binary_windows_chromedriver)/chromedriver.exe ../bin/selenium/; fi
 
 metadata/tmp:
 	@echo "<===|DEVOPS|===> [FOLDER] Preparing temporary folder"

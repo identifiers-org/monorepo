@@ -143,7 +143,7 @@ public class RegistryService {
             if (response != null) {
                 response.setHttpStatus(responseEntity.getStatusCode());
             }
-           if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
+           if (!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
                 String errorMessage = String.format("VALIDATION ERROR " +
                                 "at '%s', " +
                                 "HTTP status code '%d', " +

@@ -22,7 +22,16 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@SpringBootTest//(properties = {
+//        "spring.mail.host=",
+//        "spring.mail.port=",
+//        "spring.mail.username=",
+//        "spring.mail.password=",
+//        "spring.mail.protocol=smtp",
+//        "spring.mail.properties.mail.smtp.auth=true",
+//        "spring.mail.properties.mail.smtp.starttls.enable=true",
+//        "spring.mail.properties.mail.debug=true",
+//})
 class RegistrationSessionActionEmailNotifierSMTPTest {
     public static final String REQUESTER_NAME = "Developer";
     public static final String REQUESTER_EMAIL = "dev@email.com";
@@ -49,6 +58,17 @@ class RegistrationSessionActionEmailNotifierSMTPTest {
         mailServer.setUser(username, password);
     }
 
+//    @Test
+//    @Disabled("Meant to be used for manual test of emails")
+//    void testSimpleEmail(@Autowired JavaMailSender mailSender) throws MessagingException {
+//        var message = new SimpleMailMessage();
+//        message.setTo("...");
+//        message.setFrom("...");
+//        message.setSubject("Test");
+//        message.setText("Test");
+//
+//        mailSender.send(message);
+//    }
 
     @Test
     void testNamespaceNotifiersPerformAction() {

@@ -43,7 +43,7 @@ public class ResolverService {
      * error message contains information on what could have happened with the request.
      */
     private ServiceResponse<ResponseResolvePayload> doRequestResolution(String serviceApiEndpoint) {
-        var response = new ServiceResponse<ResponseResolvePayload>();
+        ServiceResponse<ResponseResolvePayload> response;
         try {
             var responseType = new ParameterizedTypeReference<ServiceResponse<ResponseResolvePayload>> () {};
             var requestResponse = retryTemplate.execute(retryContext -> {

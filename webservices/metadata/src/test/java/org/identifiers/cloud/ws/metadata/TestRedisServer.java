@@ -12,7 +12,7 @@ public class TestRedisServer {
     static final GenericContainer<?> redis;
 
     static {
-        DockerImageName img = DockerImageName.parse("redis");
+        DockerImageName img = DockerImageName.parse("redis:4.0.8-alpine");
         redis = new GenericContainer<>(img)
                 .withExposedPorts(6379)
                 .withReuse(false);

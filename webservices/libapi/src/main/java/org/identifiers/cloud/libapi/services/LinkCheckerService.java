@@ -129,9 +129,6 @@ public class LinkCheckerService {
         payload.setId(resourceId).setUrl(url).setAccept401or403(isProtectedUrls);
         var requestBody = ServiceRequest.of(payload);
 
-        // Prepare response
-        var response = new ServiceResponse<ServiceResponseScoringRequestPayload>();
-
         // Prepare the request entity
         RequestEntity<ServiceRequest<ScoringRequestWithIdPayload>> requestEntity;
         try {
@@ -144,6 +141,8 @@ public class LinkCheckerService {
             return ServiceResponse.ofError(HttpStatus.BAD_REQUEST, errMessage);
         }
 
+        // Prepare response
+        ServiceResponse<ServiceResponseScoringRequestPayload> response;
         // Make the request using the re-try pattern
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(Configuration.responseErrorHandler());
@@ -178,7 +177,7 @@ public class LinkCheckerService {
                     url,
                     endpoint,
                     e.getMessage());
-            response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR).setErrorMessage(errorMessage);
+            response = ServiceResponse.ofError(HttpStatus.INTERNAL_SERVER_ERROR, errorMessage);
             logger.error(errorMessage);
         }
         return response;

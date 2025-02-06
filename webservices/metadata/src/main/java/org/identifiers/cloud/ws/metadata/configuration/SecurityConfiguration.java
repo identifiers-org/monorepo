@@ -38,6 +38,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/actuator/loggers/**").hasAuthority(requiredRole)
                 .requestMatchers(HttpMethod.GET, "/actuator/health/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/actuator/health").permitAll()
+                .requestMatchers(HttpMethod.GET, "/getMetadataForUrl").permitAll()
                 .requestMatchers(HttpMethod.GET, "/**").permitAll())
             .csrf(AbstractHttpConfigurer::disable)
             .logout(AbstractHttpConfigurer::disable)

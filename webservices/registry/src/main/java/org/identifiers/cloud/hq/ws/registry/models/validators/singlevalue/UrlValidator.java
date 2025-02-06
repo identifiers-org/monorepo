@@ -4,14 +4,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.identifiers.cloud.hq.ws.registry.models.validators.SingleValueValidator;
-import org.springframework.http.HttpStatusCode;
+import org.springframework.http.*;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.awt.*;
 import java.net.UnknownHostException;
 import java.util.Optional;
 import java.util.Set;
 
+import static org.apache.commons.validator.routines.UrlValidator.ALLOW_LOCAL_URLS;
 import static org.springframework.http.HttpStatus.*;
 
 
@@ -19,16 +21,16 @@ import static org.springframework.http.HttpStatus.*;
 @RequiredArgsConstructor
 public class UrlValidator extends SingleValueValidator {
     final org.apache.commons.validator.routines.UrlValidator apacheUrlValidator =
-            new org.apache.commons.validator.routines.UrlValidator(
-                    org.apache.commons.validator.routines.UrlValidator.ALLOW_LOCAL_URLS
-            );
+            new org.apache.commons.validator.routines.UrlValidator(ALLOW_LOCAL_URLS);
     final RestTemplate restTemplate;
 
     static final Set<HttpStatusCode> STATUSES_TO_ACCEPT_WHEN_PROTECTED = Set.of(
             FORBIDDEN, UNAUTHORIZED, PROXY_AUTHENTICATION_REQUIRED, UNAVAILABLE_FOR_LEGAL_REASONS
     );
-
-
+    static final HttpHeaders headers = new HttpHeaders();
+    static {
+        headers.setAccept(MediaType.parseMediaTypes("*/*"));
+    }
 
     @Override
     public Optional<String> validate(String url, String valueLabel) {
@@ -48,7 +50,9 @@ public class UrlValidator extends SingleValueValidator {
         String newUrl = null;
         HttpStatusCode status;
         try {
-            var response = restTemplate.getForEntity(url, Void.class);
+
+            var requestEntity = new HttpEntity<>(headers);
+            var response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, Void.class);
             status = response.getStatusCode();
             if (status.is3xxRedirection()) {
                 newUrl = String.valueOf(response.getHeaders().getLocation());

@@ -59,7 +59,7 @@ public class ResolverApiModel {
     // --- Resolution API ---
     public ServiceResponse<ResponseResolvePayload> resolveRawCompactId(String rawCompactId) {
         // This is the only entry method right now
-        var response = new ServiceResponse<ResponseResolvePayload>();
+        var response = ServiceResponse.of(new ResponseResolvePayload());
         ParsedCompactIdentifier parsedCompactIdentifier = compactIdParsingHelper.parseCompactIdRequest(rawCompactId);
         ResolutionServiceResult resolutionServiceResult = resolutionService.resolve(parsedCompactIdentifier);
         if (resolutionServiceResult.isResolved()) {

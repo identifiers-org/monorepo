@@ -90,11 +90,10 @@ public class ResourceRecommenderService {
      * error information.
      */
     private ServiceResponse<ResponseRecommendPayload> createDefaultResponse(HttpStatus httpStatus, String errorMessage) {
-        ServiceResponse<ResponseRecommendPayload> response = new ServiceResponse<ResponseRecommendPayload>();
-        response.setApiVersion(apiVersion)
-                .setHttpStatus(httpStatus)
+        var payload = new ResponseRecommendPayload().setResourceRecommendations(new ArrayList<>());
+        var response = ServiceResponse.of(payload);
+        response.setHttpStatus(httpStatus)
                 .setErrorMessage(errorMessage);
-        response.setPayload(new ResponseRecommendPayload().setResourceRecommendations(new ArrayList<>()));
         return response;
     }
 

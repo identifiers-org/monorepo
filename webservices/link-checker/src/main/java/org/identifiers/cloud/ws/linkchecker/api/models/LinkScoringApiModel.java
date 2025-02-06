@@ -54,11 +54,12 @@ public class LinkScoringApiModel {
                 request.getPayload().getId(),
                 request.getPayload().getUrl(),
                 request.getPayload().getAccept401or403() ? "Yes" : "No");
-        var response = new ServiceResponse<ServiceResponseScoringRequestPayload>();
+        var payload = new ServiceResponseScoringRequestPayload();
+        var response = ServiceResponse.of(payload);
         try {
             var tracker = historyTrackingService.getTrackerForProvider(request.getPayload());
             var statsHistory = tracker.getHistoryStats(SIMPLE);
-            response.getPayload().setScore(Math.round(statsHistory.getUpPercentage()));
+            payload.setScore(Math.round(statsHistory.getUpPercentage()));
         } catch (Exception e) {
             response.setErrorMessage(String.format("Scoring could not be calculated due to '%s'", e.getMessage()));
             response.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);

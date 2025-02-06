@@ -36,7 +36,7 @@ public class MetadataApiController {
         return ResponseEntity.status(response.getHttpStatus()).body(response);
     }
 
-    @GetMapping(value = "/getMetadataForUrl")
+    @PostMapping(value = "/getMetadataForUrl")
     public ResponseEntity<ServiceResponse<ResponseFetchMetadataPayload>>
     getMetadataForUrl(@RequestBody ServiceRequest<RequestFetchMetadataForUrlPayload> request) {
         var response = model.getMetadataForUrl(request);

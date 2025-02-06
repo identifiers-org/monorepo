@@ -8,8 +8,10 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.Map;
 
 import static org.springframework.http.HttpMethod.GET;
@@ -44,11 +46,21 @@ public class LowAvailabilityOnLinkCheckerService {
     @Scheduled(fixedRateString = "${org.identifiers.cloud.hq.ws.registry.services.link-checker.update-interval}")
     public void retrieveResourcesWithLowAvailability() {
         log.info("[BEGIN] Retrieving resources with low availability");
-        var responseEntity = restTemplate.exchange("http://{host}:{port}/getResourcesWithLowAvailability?minAvailability={minAvailability}",
-                GET, null, RESPONSE_TYPE, linkCheckerHost, linkCheckerPort, minAvailability);
-        resourcesToAvailabilityMap = responseEntity.getBody();
+        try {
+            var responseEntity = restTemplate.exchange("http://{host}:{port}/getResourcesWithLowAvailability?minAvailability={minAvailability}",
+                    GET, null, RESPONSE_TYPE, linkCheckerHost, linkCheckerPort, minAvailability);
+            resourcesToAvailabilityMap = responseEntity.getBody();
+        } catch (ResourceAccessException ex) {
+            if (log.isDebugEnabled()) {
+                log.error("Failed to retrieve resources with low availability", ex);
+            } else {
+                log.error("Failed to retrieve resources with low availability: {}", ex.getMessage());
+            }
+        }
         if (resourcesToAvailabilityMap != null) {
             log.debug("Found {} resources", resourcesToAvailabilityMap.size());
+        } else {
+            log.debug("Found zero resources");
         }
         log.info("[ END ] Retrieving resources with low availability");
     }

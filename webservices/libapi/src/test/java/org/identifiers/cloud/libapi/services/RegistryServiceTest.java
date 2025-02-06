@@ -41,8 +41,8 @@ public class RegistryServiceTest {
           .setSupportingReferences(new String[]{"ref1", "ref2"})
           .setAdditionalInformation("Additional information about this unit test")
           .setRequester(new Requester()
-                              .setEmail("mbernal@ebi.ac.uk")
-                              .setName("Manuel Bernal Llinares"));
+                              .setEmail("rjuacaba@ebi.ac.uk")
+                              .setName("renatocjn@gmail.com"));
 
     private <T> void checkResultOk(ServiceResponse<T> response, String context) {
         // Just for debugging purposes, serialized response into the logs
