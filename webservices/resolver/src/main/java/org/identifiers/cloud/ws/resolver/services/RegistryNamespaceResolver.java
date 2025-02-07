@@ -5,7 +5,7 @@ import org.identifiers.cloud.commons.messages.models.Institution;
 import org.identifiers.cloud.commons.messages.models.Location;
 import org.identifiers.cloud.commons.messages.models.Recommendation;
 import org.identifiers.cloud.commons.messages.models.ResolvedResource;
-import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
+import org.identifiers.cloud.commons.messages.models.ParsedCompactIdentifier;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
+import org.identifiers.cloud.commons.messages.models.ParsedCompactIdentifier;
 
 import java.net.URI;
 import java.net.URISyntaxException;

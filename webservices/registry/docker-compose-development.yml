@@ -10,7 +10,7 @@ services:
         ports:
             - "5430:5432"
         volumes:
-            - "../db/registry:/docker-entrypoint-initdb.d"
+            - "../../db/registry:/docker-entrypoint-initdb.d"
     miridpostgresql:
         image: postgres
         environment:
@@ -20,11 +20,24 @@ services:
         ports:
             - "5431:5432"
         volumes:
-            - "../db/mirid-controller:/docker-entrypoint-initdb.d"
+            - "../../db/mirid-controller:/docker-entrypoint-initdb.d"
     redis:
         image: redis:4.0.8-alpine
         ports:
             - "6379:6379"
+    link-checker:
+        image: identifiersorg/cloud-ws-link-checker
+        environment:
+            - WS_LINK_CHECKER_CONFIG_REDIS_HOST=redis
+            - WS_LINK_CHECKER_CONFIG_REDIS_PORT=6379
+            - WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST=localhost
+            - WS_LINK_CHECKER_CONFIG_DAEMON_PERIODIC_LINK_CHECK_REQUESTER_ENABLED=false
+            - WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_JWT_ISSUERURI=https://auth.identifiers.org/auth/realms/idorg
+            - SPRING_PROFILES_ACTIVE=authdisabled
+        ports:
+            - "8084:8084"
+        depends_on:
+            - redis
     miridcontroller:
         image: identifiersorg/cloud-hq-ws-mirid-controller
         environment:

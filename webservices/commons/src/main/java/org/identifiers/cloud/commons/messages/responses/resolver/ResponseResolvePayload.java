@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
+import org.identifiers.cloud.commons.messages.models.ParsedCompactIdentifier;
 import org.identifiers.cloud.commons.messages.models.ResolvedResource;
 
 import java.io.Serializable;

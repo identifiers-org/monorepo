@@ -3,7 +3,7 @@ package org.identifiers.cloud.ws.metadata.retrievers.togoid;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
+import org.identifiers.cloud.commons.messages.models.ParsedCompactIdentifier;
 import org.identifiers.cloud.ws.metadata.retrievers.MetadataRetriever;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.DefaultResourceLoader;

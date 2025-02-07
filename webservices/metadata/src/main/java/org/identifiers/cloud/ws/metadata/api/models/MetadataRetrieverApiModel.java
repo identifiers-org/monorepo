@@ -2,7 +2,7 @@ package org.identifiers.cloud.ws.metadata.api.models;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
+import org.identifiers.cloud.commons.messages.models.ParsedCompactIdentifier;
 import org.identifiers.cloud.ws.metadata.retrievers.MetadataRetriever;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package org.identifiers.cloud.ws.resolver.models;
 
-import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
+import org.identifiers.cloud.commons.messages.models.ParsedCompactIdentifier;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.ws.resolver.TestRedisServer;

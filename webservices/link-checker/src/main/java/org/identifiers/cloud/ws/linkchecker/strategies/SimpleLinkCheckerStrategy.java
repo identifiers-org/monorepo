@@ -2,10 +2,9 @@ package org.identifiers.cloud.ws.linkchecker.strategies;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.identifiers.cloud.commons.urlchecking.UrlChecker;
 
 import java.net.*;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
 import java.sql.Timestamp;
 
 /**
@@ -20,9 +19,9 @@ import java.sql.Timestamp;
  */
 @Slf4j
 public class SimpleLinkCheckerStrategy extends LinkCheckerStrategy {
-    public SimpleLinkCheckerStrategy(HttpClient linkCheckerHttpClient, String appVersion,
-                                     String javaVersion, String appHomepage) {
-        super(linkCheckerHttpClient, appVersion, javaVersion, appHomepage);
+    public SimpleLinkCheckerStrategy(String appVersion, String javaVersion,
+                                     String appHomepage, UrlChecker urlChecker) {
+        super(appVersion, javaVersion, appHomepage, urlChecker);
     }
 
     @Override
@@ -31,14 +30,11 @@ public class SimpleLinkCheckerStrategy extends LinkCheckerStrategy {
         LinkCheckerReport report = new LinkCheckerReport()
                 .setUrl(checkingUrl.toString())
                 .setTimestamp(new Timestamp(System.currentTimeMillis()));
-        HttpRequest request = HttpRequest.newBuilder().GET()
-                .uri(checkingUrl.toURI())
-                .header("Accept", "*/*")
-                .header("User-Agent", this.idorgAgentStr)
-                .version(HttpClient.Version.HTTP_1_1)
-                .build();
 
-        this.performRequestAndFillReport(request, report, accept401or403);
+        var urlAssessment = urlChecker.check(checkingUrl, accept401or403);
+        report.setUrlAssessmentOk(urlAssessment.isOk())
+                .setHttpStatus(urlAssessment.statusCodeValue());
+
         return report;
     }
 }

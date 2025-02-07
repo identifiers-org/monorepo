@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.identifiers.cloud.commons.messages.requests.registry.ServiceRequestRegisterPrefixPayload;
 import org.identifiers.cloud.commons.messages.requests.registry.ServiceRequestRegisterResourcePayload;
 import org.identifiers.cloud.hq.ws.registry.models.validators.RegistrationPayloadValidator;
-import org.identifiers.cloud.hq.ws.registry.models.validators.singlevalue.UrlValidator;
+import org.identifiers.cloud.hq.ws.registry.models.validators.singlevalue.UrlValueValidator;
 
 import java.util.Optional;
 
@@ -15,7 +15,7 @@ import static org.identifiers.cloud.hq.ws.registry.models.helpers.ResourceAccess
 @Slf4j
 @RequiredArgsConstructor
 public class SampleUrlRequestValidator extends RegistrationPayloadValidator {
-    final UrlValidator urlStringValidator;
+    final UrlValueValidator urlStringValidator;
 
     @Override
     public Optional<String> validate(ServiceRequestRegisterResourcePayload resourceRequest, String valueLabel) {

@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
 import org.identifiers.cloud.commons.messages.responses.resolver.ResponseResolvePayload;
-import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
+import org.identifiers.cloud.commons.messages.models.ParsedCompactIdentifier;
 import org.identifiers.cloud.commons.messages.models.ResolvedResource;
 import org.matomo.java.tracking.MatomoRequest;
 import org.matomo.java.tracking.MatomoRequest.MatomoRequestBuilder;

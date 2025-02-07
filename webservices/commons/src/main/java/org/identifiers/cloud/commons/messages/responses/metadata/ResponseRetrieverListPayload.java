@@ -2,7 +2,7 @@ package org.identifiers.cloud.commons.messages.responses.metadata;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
+import org.identifiers.cloud.commons.messages.models.ParsedCompactIdentifier;
 
 import java.io.Serializable;
 import java.util.List;

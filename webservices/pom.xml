@@ -21,6 +21,7 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <rdf4j.version>5.0.1</rdf4j.version>
+    <sslcontext-kickstart.version>8.3.7</sslcontext-kickstart.version>
   </properties>
 
 
@@ -137,6 +138,11 @@
         <version>8.3.7</version>
       </dependency>
       <dependency>
+        <groupId>io.github.hakky54</groupId>
+        <artifactId>sslcontext-kickstart-for-pem</artifactId>
+        <version>8.3.7</version>
+      </dependency>
+      <dependency>
         <groupId>org.redisson</groupId>
         <artifactId>redisson-spring-boot-starter</artifactId>
         <version>3.24.3</version>
@@ -210,29 +216,4 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-maven-plugin</artifactId>
-          <version>3.4.2</version>
-          <executions>
-            <execution>
-              <id>spring-boot-repackage</id>
-              <goals>
-                <goal>repackage</goal>
-              </goals>
-              <phase>package</phase>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-report-plugin</artifactId>
-          <version>3.3.1</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
 </project>

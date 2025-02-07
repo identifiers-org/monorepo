@@ -1,6 +1,6 @@
 package org.identifiers.cloud.ws.metadata.api.models;
 
-import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
+import org.identifiers.cloud.commons.messages.models.ParsedCompactIdentifier;
 import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
 import org.identifiers.cloud.commons.messages.responses.resolver.ResponseResolvePayload;
 import org.identifiers.cloud.libapi.services.ResolverService;

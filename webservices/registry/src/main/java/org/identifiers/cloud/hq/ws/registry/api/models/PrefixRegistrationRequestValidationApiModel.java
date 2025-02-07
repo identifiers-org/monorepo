@@ -30,6 +30,13 @@ public class PrefixRegistrationRequestValidationApiModel {
                                                                                String fieldName) {
         var response = ServiceResponse.of(new ServiceResponseRegisterPrefixPayload());
         // Validate the request
+        if (request.getPayload() == null) {
+            response.setErrorMessage("Payload is required");
+            response.setHttpStatus(HttpStatus.BAD_REQUEST);
+            response.setPayload(null);
+            return response;
+        }
+
         RegistrationValidationChain validationChain = registrationValidationChains.get(fieldName);
         Optional<String> error = validationChain.validate(request.getPayload());
         if (error.isPresent()) {

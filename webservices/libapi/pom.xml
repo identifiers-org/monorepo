@@ -28,6 +28,7 @@
         <groupId>org.identifiers</groupId>
         <artifactId>identifiers-webservices</artifactId>
         <version>0.1.0-SNAPSHOT</version>
+        <relativePath />
     </parent>
 
     <developers>
@@ -140,10 +141,12 @@
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-library</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-core</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>

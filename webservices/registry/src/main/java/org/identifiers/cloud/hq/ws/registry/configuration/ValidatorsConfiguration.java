@@ -3,21 +3,20 @@ package org.identifiers.cloud.hq.ws.registry.configuration;
 import lombok.NonNull;
 import org.identifiers.cloud.commons.messages.requests.registry.ServiceRequestRegisterPrefixPayload;
 import org.identifiers.cloud.commons.messages.requests.registry.ServiceRequestRegisterResourcePayload;
+import org.identifiers.cloud.commons.urlchecking.HttpClientHelper;
+import org.identifiers.cloud.commons.urlchecking.UrlChecker;
 import org.identifiers.cloud.hq.ws.registry.data.services.NamespaceService;
 import org.identifiers.cloud.hq.ws.registry.data.services.ResourceService;
 import org.identifiers.cloud.hq.ws.registry.models.validators.*;
 import org.identifiers.cloud.hq.ws.registry.models.validators.payload.*;
 import org.identifiers.cloud.hq.ws.registry.models.validators.singlevalue.*;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.ResponseErrorHandler;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.time.Duration;
 import java.util.Map;
 
 @Configuration
@@ -25,20 +24,18 @@ public class ValidatorsConfiguration {
     final int minDescriptionLength;
     final NamespaceService namespaceService;
     final ResourceService resourceService;
-    final RestTemplate urlValidatorRestTemplate;
+    final UrlChecker urlChecker;
     public ValidatorsConfiguration(@Value("${org.identifiers.cloud.hq.ws.registry.validation.mindescriptionlength}")
                                    int minDescriptionLength,
-                                   RestTemplateBuilder restTemplateBuilder,
                                    NamespaceService namespaceService,
-                                   ResourceService resourceService) {
+                                   ResourceService resourceService) throws IOException {
         this.minDescriptionLength = minDescriptionLength;
         this.namespaceService = namespaceService;
-        this.urlValidatorRestTemplate = restTemplateBuilder
-                .errorHandler(new NoopErrorHandler())
-                .setConnectTimeout(Duration.ofMinutes(2))
-                .setReadTimeout(Duration.ofMinutes(2))
-                .build();
         this.resourceService = resourceService;
+
+        var sslFactory = HttpClientHelper.getBaseSSLFactoryBuilder(true).build();
+        var httpClient = HttpClientHelper.getBaseHttpClientBuilder(sslFactory).build();
+        this.urlChecker = new UrlChecker(httpClient);
     }
 
 
@@ -71,8 +68,8 @@ public class ValidatorsConfiguration {
     }
 
     @Bean
-    public UrlValidator urlValidator() {
-        return new UrlValidator(urlValidatorRestTemplate);
+    public UrlValueValidator urlValidator() {
+        return new UrlValueValidator(urlChecker);
     }
 
     @Bean

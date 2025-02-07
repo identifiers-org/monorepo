@@ -1,8 +1,8 @@
 package org.identifiers.cloud.ws.linkchecker.configuration;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.altindag.ssl.SSLFactory;
-import nl.altindag.ssl.util.CertificateUtils;
+import org.identifiers.cloud.commons.urlchecking.HttpClientHelper;
+import org.identifiers.cloud.commons.urlchecking.UrlChecker;
 import org.identifiers.cloud.libapi.services.ApiServicesFactory;
 import org.identifiers.cloud.libapi.services.ResolverService;
 import org.identifiers.cloud.ws.linkchecker.data.models.FlushHistoryTrackingDataMessage;
@@ -23,14 +23,10 @@ import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.support.collections.DefaultRedisList;
-import org.springframework.util.StringUtils;
 
+import java.io.IOException;
 import java.net.http.HttpClient;
-import java.time.Duration;
 import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.Executors;
-
-import static java.time.temporal.ChronoUnit.SECONDS;
 
 /**
  * Project: link-checker
@@ -141,35 +137,27 @@ public class ApplicationConfig {
 
     @Bean
     public HttpClient linkCheckerHttpClient(@Value("${org.identifiers.cloud.ws.linkchecker.daemon.websiteswithtrustedcerts}")
-                                            String websitesWithTrustedCerts){
-        var sslFactoryBuilder = SSLFactory.builder().withDefaultTrustMaterial();
-        if (StringUtils.hasText(websitesWithTrustedCerts)) {
-            var websiteList = websitesWithTrustedCerts.split(",");
-            var urlCertificates = CertificateUtils.getCertificatesFromExternalSources(websiteList);
-            urlCertificates.values().forEach(sslFactoryBuilder::withTrustMaterial);
-        }
+                                            String[] websitesWithTrustedCerts) throws IOException {
+        var sslFactory = HttpClientHelper.getBaseSSLFactoryBuilder(true, websitesWithTrustedCerts).build();
+        return HttpClientHelper.getBaseHttpClientBuilder(sslFactory).build();
+    }
 
-        var sslFactory = sslFactoryBuilder.build();
-        return HttpClient.newBuilder()
-                .sslContext(sslFactory.getSslContext())
-                .sslParameters(sslFactory.getSslParameters())
-                .followRedirects(HttpClient.Redirect.ALWAYS)
-                .connectTimeout(Duration.of(12, SECONDS))
-                .executor(Executors.newCachedThreadPool())
-                .version(HttpClient.Version.HTTP_1_1)
-                .build();
+    @Bean
+    public UrlChecker urlChecker(HttpClient linkCheckerHttpClient) {
+        return new UrlChecker(linkCheckerHttpClient);
     }
 
     @Bean
     LinkCheckerStrategy linkCheckerStrategy(
             @Value("${org.identifiers.cloud.ws.linkchecker.daemon.periodiclinkcheckingtask.strategy}")
-            String strategyToUse, HttpClient linkCheckerHttpClient,
+            String strategyToUse,
+            UrlChecker urlChecker,
             @Value("${app.version}") String appVersion,
             @Value("${java.version}") String javaVersion,
             @Value("${app.homepage}") String appHomepage
     ) {
         return strategyToUse.equalsIgnoreCase("simple") ?
-                new SimpleLinkCheckerStrategy(linkCheckerHttpClient, appVersion, javaVersion, appHomepage) :
-                new MultiUserAgentLinkCheckerStrategy(linkCheckerHttpClient, appVersion, javaVersion, appHomepage);
+                new SimpleLinkCheckerStrategy(appVersion, javaVersion, appHomepage, urlChecker) :
+                new MultiUserAgentLinkCheckerStrategy(appVersion, javaVersion, appHomepage, urlChecker);
     }
 }

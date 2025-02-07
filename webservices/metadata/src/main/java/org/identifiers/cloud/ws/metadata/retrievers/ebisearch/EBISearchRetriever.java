@@ -1,7 +1,7 @@
 package org.identifiers.cloud.ws.metadata.retrievers.ebisearch;
 
 import lombok.extern.slf4j.Slf4j;
-import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
+import org.identifiers.cloud.commons.messages.models.ParsedCompactIdentifier;
 import org.identifiers.cloud.ws.metadata.configuration.EbiSearchRetrieverConfig;
 import org.identifiers.cloud.ws.metadata.retrievers.MetadataRetriever;
 import org.springframework.beans.factory.annotation.Value;

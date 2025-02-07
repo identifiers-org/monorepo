@@ -12,10 +12,23 @@
 	<description>Resource Recommendation Web Service for Identifiers.org platform</description>
 	<url>https://identifiers.org</url>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.identifiers</groupId>
+				<artifactId>identifiers-webservices</artifactId>
+				<version>0.1.0-SNAPSHOT</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<parent>
-		<groupId>org.identifiers</groupId>
-		<artifactId>identifiers-webservices</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.1.5</version>
+		<relativePath />
 	</parent>
 
 

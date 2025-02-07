@@ -1,11 +1,11 @@
 package org.identifiers.cloud.ws.linkchecker.strategies;
 
 import lombok.SneakyThrows;
+import org.identifiers.cloud.commons.urlchecking.UrlChecker;
 
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -22,9 +22,9 @@ import java.util.List;
  */
 public class MultiUserAgentLinkCheckerStrategy extends LinkCheckerStrategy {
     private final List<String> userAgentsToUse;
-    public MultiUserAgentLinkCheckerStrategy(HttpClient linkCheckerHttpClient, String appVersion,
-                                             String javaVersion, String appHomepage) {
-        super(linkCheckerHttpClient, appVersion, javaVersion, appHomepage);
+    public MultiUserAgentLinkCheckerStrategy(String appVersion, String javaVersion,
+                                             String appHomepage, UrlChecker urlChecker) {
+        super(appVersion, javaVersion, appHomepage, urlChecker);
         userAgentsToUse = List.of(
                 this.idorgAgentStr,// Actual agent first in case it is valid
                 "", // Try blank agent before any fake user agent
@@ -39,15 +39,18 @@ public class MultiUserAgentLinkCheckerStrategy extends LinkCheckerStrategy {
         LinkCheckerReport report = new LinkCheckerReport()
                 .setUrl(checkingUrl.toString())
                 .setTimestamp(new Timestamp(System.currentTimeMillis()));
+
+        var uri = checkingUrl.toURI();
         for (String userAgent : this.userAgentsToUse) {
-            HttpRequest request = HttpRequest.newBuilder().GET()
-                    .uri(checkingUrl.toURI())
-                    .header("Accept", "*/*")
-                    .header("User-Agent", userAgent)
-                    .version(HttpClient.Version.HTTP_1_1)
-                    .build();
-            boolean wasCriticalError = this.performRequestAndFillReport(request, report, accept401or403);
-            if (report.isUrlAssessmentOk() || wasCriticalError) {
+            var request = UrlChecker.getBaseRequestBuilder(uri)
+                    .header("User-Agent", userAgent).build();
+
+            var urlAssessment = urlChecker.check(request, accept401or403);
+            if (urlAssessment.isOk()) {
+                report.setHttpStatus(urlAssessment.statusCodeValue())
+                        .setUrlAssessmentOk(true);
+
+                // Stop on the first UA that is OK
                 return report;
             }
         }

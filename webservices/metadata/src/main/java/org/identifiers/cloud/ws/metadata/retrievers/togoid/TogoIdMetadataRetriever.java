@@ -1,7 +1,7 @@
 package org.identifiers.cloud.ws.metadata.retrievers.togoid;
 
 import org.eclipse.rdf4j.query.resultio.QueryResultIO;
-import org.identifiers.cloud.commons.compactidparsing.ParsedCompactIdentifier;
+import org.identifiers.cloud.commons.messages.models.ParsedCompactIdentifier;
 import org.identifiers.cloud.ws.metadata.retrievers.SparqlBasedMetadataRetriever;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
