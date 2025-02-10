@@ -52,11 +52,9 @@ public class InstitutionService {
         if (registeredInstitution == null) { // if still not found, just create a new one.
             institution.setLocation(locationService.registerLocation(institution.getLocation()));
             registeredInstitution = repository.save(institution);
-            log.info(String.format("Registered Institution with ID '%d', name '%s'",
-                    registeredInstitution.getId(), registeredInstitution.getName()));
+            log.info("Registered Institution with ID '{}', name '{}'", registeredInstitution.getId(), registeredInstitution.getName());
         } else {
-            log.info(String.format("Associating to existing institution with ID '%d', name '%s'",
-                    registeredInstitution.getId(), registeredInstitution.getName()));
+            log.info("Associating to existing institution with ID '{}', name '{}'", registeredInstitution.getId(), registeredInstitution.getName());
         }
 
         return registeredInstitution;

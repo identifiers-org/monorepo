@@ -8,9 +8,9 @@ import java.util.regex.Pattern;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
-import org.identifiers.cloud.ws.sparql.data.resolution_models.EndpointResponse;
-import org.identifiers.cloud.ws.sparql.data.resolution_models.Namespace;
-import org.identifiers.cloud.ws.sparql.data.resolution_models.Resource;
+import org.identifiers.cloud.commons.messages.responses.registry.ResolverDatasetPayload;
+import org.identifiers.cloud.commons.messages.models.Namespace;
+import org.identifiers.cloud.commons.messages.models.Resource;
 import org.identifiers.cloud.ws.sparql.data.URIextended;
 
 import org.springframework.stereotype.Service;
@@ -26,28 +26,24 @@ public final class SameAsResolver {
 
     private List<PrefixPatterns> prefixPatterns;
 
-    public void parseResolverDataset(String json) throws JsonProcessingException {
-        parseResolverDataset(EndpointResponse.fromJson(json));
-    }
-
-    public void parseResolverDataset(EndpointResponse endpointResponse) throws JsonProcessingException {
+    public void parseResolverDataset(ResolverDatasetPayload endpointResponse) throws JsonProcessingException {
         prefixPatterns = new ArrayList<>();
-        for (Namespace namespace : endpointResponse.namespaces()) {
-            PrefixPatterns prefixPattern = new PrefixPatterns(namespace.pattern());
+        for (Namespace namespace : endpointResponse.getNamespaces()) {
+            PrefixPatterns prefixPattern = new PrefixPatterns(namespace.getPattern());
 
-            for (Resource resource : namespace.resources()) {
-                add(prefixPattern, namespace.prefix(), resource.urlPattern(),
-                        resource.deprecated(), namespace.namespaceEmbeddedInLui());
+            for (Resource resource : namespace.getResources()) {
+                add(prefixPattern, namespace.getPrefix(), resource.getUrlPattern(),
+                        resource.isDeprecated(), namespace.isNamespaceEmbeddedInLui());
             }
-            if (!namespace.namespaceEmbeddedInLui()) {
+            if (!namespace.isNamespaceEmbeddedInLui()) {
                 add(prefixPattern,false,
-                        "https://identifiers.org/" + namespace.prefix() + ":{$id}");
+                        "https://identifiers.org/" + namespace.getPrefix() + ":{$id}");
                 add(prefixPattern,false,
-                        "http://identifiers.org/" + namespace.prefix() + ":{$id}");
+                        "http://identifiers.org/" + namespace.getPrefix() + ":{$id}");
                 add(prefixPattern,true,
-                        "https://identifiers.org/" + namespace.prefix() + "/{$id}");
+                        "https://identifiers.org/" + namespace.getPrefix() + "/{$id}");
                 add(prefixPattern,true,
-                        "http://identifiers.org/" + namespace.prefix() + "/{$id}");
+                        "http://identifiers.org/" + namespace.getPrefix() + "/{$id}");
             } else {
                 add(prefixPattern, false,
                         "http://identifiers.org/{$id}");

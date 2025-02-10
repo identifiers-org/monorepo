@@ -56,7 +56,7 @@ public class ResourceRecommenderService {
     private RequestEntity<ServiceRequest<RequestRecommendPayload>> prepareRecommendRequest(List<ResolvedResource> resources,
                                                                            String serviceApiEndpoint) {
         // Prepare the request body
-        ServiceRequest<RequestRecommendPayload> requestBody = new ServiceRequest<RequestRecommendPayload>();
+        ServiceRequest<RequestRecommendPayload> requestBody = new ServiceRequest<>();
         requestBody.setApiVersion(apiVersion);
         requestBody.setPayload(new RequestRecommendPayload().setResolvedResources(resources));
         // Prepare the request entity

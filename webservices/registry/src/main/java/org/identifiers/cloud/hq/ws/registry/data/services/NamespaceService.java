@@ -60,9 +60,7 @@ public class NamespaceService {
         // Get a MIR ID for the new namespace
         try {
             namespace.setMirId(mirIdService.mintId());
-            log.info(String.format("REGISTERING NAMESPACE '%s', MIR ID minted '%s'",
-                    namespace.getPrefix(),
-                    namespace.getMirId()));
+            log.info("REGISTERING NAMESPACE '{}', MIR ID minted '{}'", namespace.getPrefix(), namespace.getMirId());
         } catch (MirIdServiceException e) {
             throw new NamespaceServiceException(String.format("REGISTERING NAMESPACE '%s', " +
                     "MIR ID minting resulted in the following error: '%s'",
@@ -71,10 +69,7 @@ public class NamespaceService {
         }
         // Persist the new namespace
         Namespace registeredNamespace = repository.save(namespace);
-        log.info(String.format("REGISTERED NAMESPACE '%s', MIR ID '%s', internal ID '%d'",
-                registeredNamespace.getPrefix(),
-                registeredNamespace.getMirId(),
-                registeredNamespace.getId()));
+        log.info("REGISTERED NAMESPACE '{}', MIR ID '{}', internal ID '{}'", registeredNamespace.getPrefix(), registeredNamespace.getMirId(), registeredNamespace.getId());
         return registeredNamespace;
     }
 

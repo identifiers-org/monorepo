@@ -75,21 +75,16 @@ public class CompactIdParsingHelperV1 implements CompactIdParsingHelper {
                             }
                         } else {
                             // ERROR We have a provider code but the namespace does not exist
-                            log.error(String.format("For RAW compact identifier parsing '%s', " +
-                                    "we have provider code '%s' " +
-                                    "but the namespace '%s' " +
-                                    "DOES NOT EXIST, so it could be considered a local ID, which makes no sense in this context",
-                                    rawCompactIdentifier,
-                                    possibleProviderCode,
-                                    possibleNamespace));
+                            log.error("For RAW compact identifier parsing '{}', we have provider code '{}' " +
+                                    "but the namespace '{}' DOES NOT EXIST, so it could be considered a local ID, " +
+                                            "which makes no sense in this context",
+                                    rawCompactIdentifier, possibleProviderCode, possibleNamespace);
                         }
                     } else {
                         // ERROR We have a provider code but no information on a namespace for what it looks like a local ID
-                        log.error(String.format("For RAW compact identifier parsing '%s', " +
-                                        "we have provider code '%s' " +
-                                        "but no information regarding namespace, for what it looks like a local ID",
-                                rawCompactIdentifier,
-                                possibleProviderCode));
+                        log.error("For RAW compact identifier parsing '{}', " +
+                                "we have provider code '{}' " +
+                                "but no information regarding namespace, for what it looks like a local ID", rawCompactIdentifier, possibleProviderCode);
                     }
                 } else {
                     // It's a namespace
@@ -117,7 +112,7 @@ public class CompactIdParsingHelperV1 implements CompactIdParsingHelper {
             }
         }
         if (parsedCompactIdentifier.getNamespace() != null) {
-            log.info(String.format("Collecting deprecation information on namespace '%s'", parsedCompactIdentifier.getNamespace()));
+            log.info("Collecting deprecation information on namespace '{}'", parsedCompactIdentifier.getNamespace());
             Namespace foundNamespace = namespaceRespository.findByPrefix(parsedCompactIdentifier.getNamespace());
             if ((foundNamespace != null) && (foundNamespace.isDeprecated())) {
                 parsedCompactIdentifier.setDeprecatedNamespace(true);
@@ -127,10 +122,10 @@ public class CompactIdParsingHelperV1 implements CompactIdParsingHelper {
         }
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            log.info(String.format("Parsed Compact Identifier '%s'", objectMapper.writeValueAsString(parsedCompactIdentifier)));
+            log.info("Parsed Compact Identifier '{}'", objectMapper.writeValueAsString(parsedCompactIdentifier));
         } catch (JsonProcessingException e) {
             // Let's do nothing
-            log.error(String.format("Exception when serializing parsed compact identifier for RAW compact identifier '%s'", rawCompactIdentifier));
+            log.error("Exception when serializing parsed compact identifier for RAW compact identifier '{}'", rawCompactIdentifier);
         }
         return parsedCompactIdentifier;
     }
@@ -139,12 +134,12 @@ public class CompactIdParsingHelperV1 implements CompactIdParsingHelper {
         Namespace namespaceRecord = namespaceRespository.findByPrefix(namespace);
         if (namespaceRecord != null) {
             if (namespaceRecord.isNamespaceEmbeddedInLui())
-                log.info(String.format("Namespace '%s' has LUIs with embedded namespace prefix", namespace));
+                log.info("Namespace '{}' has LUIs with embedded namespace prefix", namespace);
             else
-                log.info(String.format("Namespace '%s' DOES NOT HAVE LUIs with embedded namespace prefix", namespace));
+                log.info("Namespace '{}' DOES NOT HAVE LUIs with embedded namespace prefix", namespace);
             return namespaceRecord.isNamespaceEmbeddedInLui();
         }
-        log.info(String.format("Namespace '%s' NOT FOUND", namespace));
+        log.info("Namespace '{}' NOT FOUND", namespace);
         return false;
     }
 }

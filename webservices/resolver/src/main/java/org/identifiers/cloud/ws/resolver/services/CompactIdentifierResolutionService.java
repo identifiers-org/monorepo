@@ -75,8 +75,8 @@ public class CompactIdentifierResolutionService implements ResolutionService {
             }
             // Get the resources
             List<Resource> resources = resolverDataFetcher.findResourcesByPrefix(parsedCompactIdentifier.getNamespace());
-            log.info(String.format("CompactId '%s', with prefix '%s' got #%d resources back from the data backend",
-                    parsedCompactIdentifier.getRawRequest(), parsedCompactIdentifier.getNamespace(), resources.size()));
+            log.info("CompactId '{}', with prefix '{}' got #{} resources back from the data backend",
+                    parsedCompactIdentifier.getRawRequest(), parsedCompactIdentifier.getNamespace(), resources.size());
             // Have we found any resources?
             if (resources.isEmpty()) {
                 // If no providers, produce error response
@@ -95,11 +95,11 @@ public class CompactIdentifierResolutionService implements ResolutionService {
                             return false;
                         })
                         .collect(Collectors.toList());
-                log.info(String.format("CompactId '%s', with prefix '%s' got #%d resources with provider code '%s'",
+                log.info("CompactId '{}', with prefix '{}' got #{} resources with provider code '{}'",
                         parsedCompactIdentifier.getRawRequest(),
                         parsedCompactIdentifier.getNamespace(),
                         filteredResources.size(),
-                        parsedCompactIdentifier.getProviderCode()));
+                        parsedCompactIdentifier.getProviderCode());
                 if (filteredResources.isEmpty()) {
                     String errorMessage = String.format("For Compact ID '%s', prefix '%s', " +
                                     "NO RESOURCES FOUND with PROVIDER CODE '%s'",

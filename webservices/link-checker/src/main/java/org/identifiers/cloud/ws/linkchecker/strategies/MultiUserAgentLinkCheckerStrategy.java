@@ -5,7 +5,6 @@ import org.identifiers.cloud.commons.urlchecking.UrlChecker;
 
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.http.HttpClient;
 
 import java.sql.Timestamp;
 import java.util.List;

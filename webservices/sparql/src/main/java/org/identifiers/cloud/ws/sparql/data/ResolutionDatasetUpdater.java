@@ -3,19 +3,20 @@ package org.identifiers.cloud.ws.sparql.data;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.identifiers.cloud.ws.sparql.data.resolution_models.EndpointResponse;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.registry.ResolverDatasetPayload;
 import org.identifiers.cloud.ws.sparql.services.SameAsResolver;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandler;
-import java.net.http.HttpResponse.BodyHandlers;
 import java.time.Duration;
+import java.util.Objects;
 import java.util.concurrent.ScheduledExecutorService;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -25,15 +26,17 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 @RequiredArgsConstructor
 public final class ResolutionDatasetUpdater implements Runnable {
     @Value("${org.identifiers.cloud.ws.sparql.updater.resolverDatasetUrl}")
-    URI resolverURI;
+    URI resolutionDatasetUri;
     @Value("${org.identifiers.cloud.ws.sparql.updater.timeInterval}")
     Duration timeInterval;
 
     private final SameAsResolver sameAsResolver;
-    private final HttpClient httpClient;
+    private final RestTemplate restTemplate;
     private final ScheduledExecutorService updateExecutorService;
     private final LdJsonContextService ldJsonContextService;
 
+    private final ParameterizedTypeReference<ServiceResponse<ResolverDatasetPayload>>
+            resolutionDatasetTypeRef = new ParameterizedTypeReference<>() {};
 
     @PostConstruct
     public void schedulePeriodicRuns() {
@@ -44,27 +47,20 @@ public final class ResolutionDatasetUpdater implements Runnable {
 
     @Override
     public void run() {
-        log.debug("Updating resolve dataset from {}", resolverURI);
-        HttpRequest get = HttpRequest
-                .newBuilder(resolverURI)
-                .GET()
-                .build();
-
+        log.debug("Updating resolve dataset from {}", resolutionDatasetUri);
         try {
-            BodyHandler<String> bh = BodyHandlers.ofString();
-            final HttpResponse<String> send = httpClient.send(get, bh);
-            int code = send.statusCode();
-            if (code == 200) {
-                String json = send.body();
-                var endpointResponse = EndpointResponse.fromJson(json);
-                sameAsResolver.parseResolverDataset(endpointResponse);
-                ldJsonContextService.updatePrefixes(endpointResponse);
+            var resolutionDatasetResponse = restTemplate.exchange(resolutionDatasetUri,
+                    HttpMethod.GET, null, resolutionDatasetTypeRef);
+            if (resolutionDatasetResponse.getStatusCode().equals(HttpStatus.OK)) {
+                var resolutionDataset = Objects.requireNonNull(resolutionDatasetResponse.getBody()).getPayload();
+                sameAsResolver.parseResolverDataset(resolutionDataset);
+                ldJsonContextService.updatePrefixes(resolutionDataset);
             } else {
-                log.error("Failed to update resolution data with HTTP code: {}", code);
+                log.error("Failed to update resolution data with HTTP code: {}",
+                        resolutionDatasetResponse.getStatusCode());
             }
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             log.error("Failed to update resolution data", e);
-            if (e instanceof InterruptedException) Thread.currentThread().interrupt();
         }
         log.info("Resolution dataset updated successfully");
     }

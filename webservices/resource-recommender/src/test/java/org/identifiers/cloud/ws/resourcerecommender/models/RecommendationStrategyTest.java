@@ -110,11 +110,11 @@ class RecommendationStrategyTest {
         Collections.shuffle(resources);
         List<ResourceRecommendation> recommendations = recommendationStrategy.getRecommendations(resources);
         int ebiRecommendation = recommendations.stream()
-                .filter(r -> Objects.equals(String.valueOf(r.getId()), ebiResource.getId()))
+                .filter(r -> Objects.equals(r.getId(), String.valueOf(ebiResource.getId())))
                 .mapToInt(ResourceRecommendation::getRecommendationIndex)
                 .findFirst().orElse(0);
         int maxOtherRecommendations = recommendations.stream()
-                .filter(r -> !Objects.equals(String.valueOf(r.getId()), ebiResource.getId()))
+                .filter(r -> !Objects.equals(r.getId(), String.valueOf(ebiResource.getId())))
                 .mapToInt(ResourceRecommendation::getRecommendationIndex)
                 .max().orElse(Integer.MAX_VALUE);
 

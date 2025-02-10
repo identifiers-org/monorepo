@@ -1,13 +1,14 @@
 package org.identifiers.cloud.ws.sparql.resolver;
 
 
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.registry.ResolverDatasetPayload;
 import org.identifiers.cloud.ws.sparql.data.URIextended;
 import org.identifiers.cloud.ws.sparql.services.SameAsResolver;
 import org.junit.jupiter.api.BeforeAll;
@@ -22,12 +23,14 @@ public class SameAsResolverTest {
 
     @BeforeAll
     public static void before() throws IOException {
-        File file = ResourceUtils.getFile("classpath:resolutionDataset.json");
-        String json = IOUtils.toString(
-                Files.readAllBytes(file.toPath()),
-                Charset.defaultCharset().name()
-        );
-        SAME_AS_RESOLVER.parseResolverDataset(json);
+        var testResolutionDatasetFile = ResourceUtils.getFile("classpath:resolutionDataset.json");
+        try (var fis = new FileInputStream(testResolutionDatasetFile)) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            var typeRef = new TypeReference<ServiceResponse<ResolverDatasetPayload>>() {};
+            var testResolutionDataset = objectMapper.readValue(fis, typeRef);
+
+            SAME_AS_RESOLVER.parseResolverDataset(testResolutionDataset.getPayload());
+        }
     }
 
     @Test

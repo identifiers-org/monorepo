@@ -1,7 +1,5 @@
 package org.identifiers.cloud.hq.ws.registry.api.controllers;
 
-import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
-import org.identifiers.cloud.commons.messages.responses.registry.ServiceResponseDeactivateNamespacePayload;
 import org.identifiers.cloud.hq.ws.registry.api.models.NamespaceManagementApiModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

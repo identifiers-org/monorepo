@@ -42,7 +42,7 @@ public class ApplicationConfig {
         @Value("${spring.redis.port}") int redisPort,
         @Value("${spring.redis.host}") String redisHost
     ) {
-        log.info(String.format("Using Redis on host '%s' port '%d'", redisHost, redisPort));
+        log.info("Using Redis on host '{}' port '{}'", redisHost, redisPort);
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(redisHost,
                 redisPort);
         return new LettuceConnectionFactory(redisStandaloneConfiguration);

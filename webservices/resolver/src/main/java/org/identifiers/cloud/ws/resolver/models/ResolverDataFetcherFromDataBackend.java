@@ -26,7 +26,7 @@ public class ResolverDataFetcherFromDataBackend implements ResolverDataFetcher {
 
     @Override
     public List<Resource> findResourcesByPrefix(String prefix) {
-        log.info(String.format("Find resources by prefix for '%s'", prefix));
+        log.info("Find resources by prefix for '{}'", prefix);
         if (prefix != null) {
             Namespace namespace = namespaceRespository.findByPrefix(prefix);
             if (namespace != null) {
@@ -40,7 +40,7 @@ public class ResolverDataFetcherFromDataBackend implements ResolverDataFetcher {
 
     @Override
     public Namespace findNamespaceByPrefix(String prefix) {
-        log.info(String.format("Searching for namespace '%s'", prefix));
+        log.info("Searching for namespace '{}'", prefix);
         return namespaceRespository.findByPrefix(prefix);
     }
 

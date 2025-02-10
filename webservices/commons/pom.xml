@@ -15,7 +15,6 @@
         <groupId>org.identifiers</groupId>
         <artifactId>identifiers-webservices</artifactId>
         <version>0.1.0-SNAPSHOT</version>
-        <relativePath/>
     </parent>
 
     <dependencies>

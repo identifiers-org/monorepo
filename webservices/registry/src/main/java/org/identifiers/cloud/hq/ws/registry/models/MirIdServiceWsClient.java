@@ -76,7 +76,7 @@ public class MirIdServiceWsClient implements MirIdService {
         } catch (RestClientException | NullPointerException e) {
             throw new MirIdServiceException(e.getMessage(), e);
         }
-        log.info(String.format("MIR ID MINTING, newly minted ID '%s'", mirId));
+        log.info("MIR ID MINTING, newly minted ID '{}'", mirId);
         return mirId;
     }
 
@@ -84,7 +84,7 @@ public class MirIdServiceWsClient implements MirIdService {
             backoff = @Backoff(delayExpression = "${org.identifiers.cloud.hq.ws.registry.backend.service.miridcontroller.request.retry_backoff}"))
     @Override
     public void keepAlive(String mirId) throws MirIdServiceException {
-        log.info(String.format("Requesting '%s' MIR ID to be kept alive", mirId));
+        log.info("Requesting '{}' MIR ID to be kept alive", mirId);
         int status = 500;
         HttpURLConnection connection = null;
         try {
@@ -110,8 +110,8 @@ public class MirIdServiceWsClient implements MirIdService {
                     "something went WRONG on the other side!", mirId, status));
         } else if (statusCode.is4xxClientError()) {
             // We've got an error on our side
-            log.error(String.format("MIR ID '%s' keepAlive FAILED, status code '%d', " +
-                    "WE did something WRONG", mirId, status));
+            log.error("MIR ID '{}' keepAlive FAILED, status code '{}', " +
+                    "WE did something WRONG", mirId, status);
         } else if (statusCode.is3xxRedirection()) {
             // This is a unicorn at this current iteration of the platform development
             throw new MirIdServiceException(String.format("MIR ID '%s' keepAlive FAILED, status code '%d', " +
@@ -119,7 +119,7 @@ public class MirIdServiceWsClient implements MirIdService {
                     "platform development has no redirections for the MIR ID Controller API Service", mirId, status));
         } else {
             // If we get here, it is within the HTTP 2xx status space
-            log.info(String.format("SUCCESS, Request for '%s' MIR ID to be kept alive", mirId));
+            log.info("SUCCESS, Request for '{}' MIR ID to be kept alive", mirId);
         }
     }
 

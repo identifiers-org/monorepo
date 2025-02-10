@@ -71,7 +71,7 @@ public class MetadataFetcherChromeEngineBased implements MetadataFetcher {
     public Object fetchMetadataFor(String url) throws MetadataFetcherException {
         logger.info("Connecting to google chrome driver");
         RemoteWebDriver driver = new RemoteWebDriver(chromeDriverService.getUrl(), chromeOptions);
-        List<Object> metadataObjects = Collections.emptyList();
+        List<Object> metadataObjects;
         try {
             logger.info("Using Google Chrome driver to get URL '{}' content", url);
             driver.get(url); // FIXME: Not sure if this waits for all elements to load

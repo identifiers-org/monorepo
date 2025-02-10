@@ -1,7 +1,6 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
 import org.identifiers.cloud.commons.messages.models.ResolvedResource;
-import org.identifiers.cloud.libapi.services.ApiServicesFactory;
 import org.identifiers.cloud.libapi.services.LinkCheckerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

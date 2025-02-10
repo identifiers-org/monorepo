@@ -1,8 +1,8 @@
 package org.identifiers.cloud.ws.sparql.data;
 
 import lombok.Getter;
-import org.identifiers.cloud.ws.sparql.data.resolution_models.EndpointResponse;
-import org.identifiers.cloud.ws.sparql.data.resolution_models.Namespace;
+import org.identifiers.cloud.commons.messages.responses.registry.ResolverDatasetPayload;
+import org.identifiers.cloud.commons.messages.models.Namespace;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 public class LdJsonContextService {
     private Map<String, Map<String, String>> jsonLdContexts = Map.of();
 
-    public void updatePrefixes(EndpointResponse endpointResponse) {
-        var expandedPrefixes = endpointResponse.namespaces().stream().map(Namespace::prefix)
+    public void updatePrefixes(ResolverDatasetPayload endpointResponse) {
+        var expandedPrefixes = endpointResponse.getNamespaces().stream().map(Namespace::getPrefix)
                 .collect(Collectors.toMap(Function.identity(), this::getContextExpandedPrefix));
         jsonLdContexts = Map.of("@context", expandedPrefixes);
     }

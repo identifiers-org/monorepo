@@ -22,7 +22,7 @@ public class TestRedisServer {
     @Bean
     @Primary
     public RedissonClient testRedissonClient() {
-        DockerImageName img = DockerImageName.parse("redis:7.2-alpine");
+        DockerImageName img = DockerImageName.parse("redis:7.4-alpine");
         redis = new GenericContainer<>(img)
                 .withExposedPorts(6379)
                 .withReuse(true);

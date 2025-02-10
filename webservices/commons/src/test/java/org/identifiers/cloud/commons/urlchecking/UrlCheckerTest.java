@@ -2,6 +2,7 @@ package org.identifiers.cloud.commons.urlchecking;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -22,6 +23,7 @@ class UrlCheckerTest {
         urlChecker = new UrlChecker(httpClient);
     }
 
+    @Disabled("This is meant to be used as a manual developer test to check specific URLs")
     @ParameterizedTest
     @ValueSource(strings = {
             "https://aopwiki.org/relationships/5"

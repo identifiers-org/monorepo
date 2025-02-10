@@ -76,7 +76,7 @@ public class RegistryNamespaceResolver implements ResolutionService {
                                     .setRecommendation(new Recommendation().setRecommendationIndex(100).setRecommendationExplanation(recommendationExplanation))
                                     .setCompactIdentifierResolvedUrl(registryUrlPattern.replace(registryUrlPlaceholder, parsedCompactIdentifier.getNamespace())));
             result.setResolved(true);
-            log.info(String.format("Resolution request '%s' DID RESOLVED as a namespace request", parsedCompactIdentifier.getRawRequest()));
+            log.info("Resolution request '{}' DID RESOLVED as a namespace request", parsedCompactIdentifier.getRawRequest());
         } else {
             String errorMessage = String.format("Resolution request '%s' is NOT A NAMESPACE", parsedCompactIdentifier.getRawRequest());
             log.info(errorMessage);

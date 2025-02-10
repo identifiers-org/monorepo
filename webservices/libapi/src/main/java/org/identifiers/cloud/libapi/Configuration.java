@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.retry.backoff.FixedBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.ResponseErrorHandler;
 
 import java.io.IOException;

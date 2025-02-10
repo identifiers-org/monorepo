@@ -69,14 +69,14 @@ public class RorOrgApiServiceApiClient implements RorOrgApiService {
         // TODO - Run some ROR ID validation first... maybe?
         // TODO - If 404, do not re-try
         String queryUrl = String.format("%s/%s/%s", rorApiBaseUrl, rorApiUrlSuffixOrganization, getEncodedQueryPath(rorId));
-        log.info(String.format("Fetching Organization Information for ROR ID '%s', query URL '%s'", rorId, queryUrl));
+        log.info("Fetching Organization Information for ROR ID '{}', query URL '{}'", rorId, queryUrl);
         try {
             //ResponseEntity<Organization> response = getRestTemplate().getForEntity(new URI(queryUrl), Organization.class);
             ResponseEntity<Organization> response = getRestTemplate().exchange(new URI(queryUrl), HttpMethod.GET, null, Organization.class);
-            log.info(String.format("Fetching Organization Information for ROR ID '%s', query URL '%s', response code '%d'", rorId, queryUrl, response.getStatusCode().value()));
+            log.info("Fetching Organization Information for ROR ID '{}', query URL '{}', response code '{}'", rorId, queryUrl, response.getStatusCode().value());
             if (response.getStatusCode().is2xxSuccessful()) {
                 ObjectMapper objectMapper = new ObjectMapper();
-                log.info(String.format("For ROR ID '%s', response body '%s'", rorId, objectMapper.writeValueAsString(response.getBody())));
+                log.info("For ROR ID '{}', response body '{}'", rorId, objectMapper.writeValueAsString(response.getBody()));
                 if (!response.hasBody()) {
                     String errorMessage = String.format("Organization information fetch for ROR ID '%s' came back with EMTPY RESPONSE BODY", rorId);
                     log.error(errorMessage);

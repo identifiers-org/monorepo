@@ -76,7 +76,7 @@ public class PrefixRegistrationRequestApiModel {
         if (prefixRegistrationSession.isEmpty()) {
             response.setHttpStatus(HttpStatus.BAD_REQUEST);
             response.setErrorMessage(String.format("INVALID Prefix Registration %s Request, session with ID '%d' IS NOT VALID", eventName, sessionId));
-            log.error(String.format("INVALID %s request on NON-EXISTING prefix registration session, with ID '%d'", eventName, sessionId));
+            log.error("INVALID {} request on NON-EXISTING prefix registration session, with ID '{}'", eventName, sessionId);
             return null;
         }
         return prefixRegistrationSession.get();
@@ -111,7 +111,7 @@ public class PrefixRegistrationRequestApiModel {
                 requestedPrefix = request.getPayload().getRequestedPrefix();
             }
 
-            log.error(String.format("INVALID Prefix registration request for prefix '%s', due to '%s'", requestedPrefix, joinedMessages));
+            log.error("INVALID Prefix registration request for prefix '{}', due to '{}'", requestedPrefix, joinedMessages);
         }
         return response;
     }
