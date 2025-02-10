@@ -3,7 +3,7 @@ FROM amazoncorretto:17-alpine
 LABEL maintainer="Renato Caminha Juacaba Neto <rjuacaba@ebi.ac.uk>"
 
 # Environment - defaults
-ENV HQ_WS_MIRID_CONTROLLER_JVM_MEMORY_MAX 768m
+ENV HQ_WS_MIRID_CONTROLLER_JVM_MEMORY_MAX=768m
 
 # Prepare the application folder
 RUN mkdir -p /home/app

@@ -3,7 +3,7 @@ FROM amazoncorretto:17-alpine
 LABEL maintainer="Renato Caminha Juacaba neto <rjuacaba@ebi.ac.uk>"
 
 # Environment - defaults
-ENV HQ_WS_REGISTRY_JVM_MEMORY_MAX 1024m
+ENV HQ_WS_REGISTRY_JVM_MEMORY_MAX=1024m
 
 # Prepare the application folder
 RUN mkdir -p /home/app

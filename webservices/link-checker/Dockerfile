@@ -3,9 +3,9 @@ FROM amazoncorretto:17-alpine
 LABEL maintainer="Manuel Bernal Llinares <mbdebian@gmail.com>"
 
 # Environment - defaults
-ENV WS_LINK_CHECKER_JVM_MEMORY_MAX 768m
-ENV WS_LINK_CHECKER_CONFIG_REDIS_HOST redis
-ENV WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST resolver
+ENV WS_LINK_CHECKER_JVM_MEMORY_MAX=768m
+ENV WS_LINK_CHECKER_CONFIG_REDIS_HOST=redis
+ENV WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST=resolver
 
 # Prepare the application folder
 RUN mkdir -p /home/app

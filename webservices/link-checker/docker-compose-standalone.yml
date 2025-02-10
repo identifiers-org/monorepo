@@ -30,7 +30,7 @@ services:
             - redis
             - recommender
     redis:
-        image: redis:4.0.8-alpine
+        image: redis:7.4-alpine
         ports:
             - "6379:6379"
     recommender:

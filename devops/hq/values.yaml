@@ -77,7 +77,7 @@ frontend:
 redis:
   component: redis
   tier: backend
-  image: redis:4.0.8-alpine
+  image: redis:7.4-alpine
   requests:
     cpu: 300m
     memory: 512Mi
