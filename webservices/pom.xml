@@ -54,6 +54,18 @@
       </roles>
     </developer>
     <developer>
+      <id>vijayvenkateshs</id>
+      <name>Vijay Venkatesh Subramoniam</name>
+      <email>vsubramoniam@ebi.ac.uk</email>
+      <organization>EMBL-European Bioinformatics Institute</organization>
+      <organizationUrl>https://ebi.ac.uk/</organizationUrl>
+      <timezone>Europe/London</timezone>
+      <roles>
+        <role>architect</role>
+        <role>developer</role>
+      </roles>
+    </developer>
+    <developer>
       <id>mbernal</id>
       <name>Manuel Bernal-Llinares</name>
       <email>mbdebian@gmail.com</email>
