@@ -1,6 +1,8 @@
 package org.identifiers.cloud.ws.linkchecker.api.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.linkchecker.ServiceResponseResourceAvailabilityPayload;
 import org.identifiers.cloud.ws.linkchecker.api.models.LinkScoringApiModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +19,11 @@ public class CurationController {
     private final LinkScoringApiModel model;
 
     @GetMapping("/getResourcesWithLowAvailability")
-    public ResponseEntity<Map<String, Float>> getResourcesWithLowAvailability(
+    public ResponseEntity<ServiceResponse<ServiceResponseResourceAvailabilityPayload>> getResourcesWithLowAvailability(
             @RequestParam(defaultValue="80", required=false) int minAvailability)
     {
         var response = model.getResourcesIdsWithAvailabilityLowerThan(minAvailability);
-        if (response.isEmpty()) {
+        if (response.getPayload().isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.ok(response);

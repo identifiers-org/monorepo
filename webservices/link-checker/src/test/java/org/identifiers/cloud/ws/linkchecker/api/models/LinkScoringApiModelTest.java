@@ -75,14 +75,14 @@ class LinkScoringApiModelTest {
         setupModelAndMocks(numValidResults, numInvalidResults);
 
         var response = model.getResourcesIdsWithAvailabilityLowerThan(expectedScore - 1);
-        assertEquals(0, response.size());
+        assertEquals(0, response.getPayload().size());
 
         response = model.getResourcesIdsWithAvailabilityLowerThan(expectedScore + 1);
-        assertEquals(1, response.size());
+        assertEquals(1, response.getPayload().size());
 
-        var entry = response.entrySet().iterator().next();
-        assertEquals(RESOURCE_ID, entry.getKey());
-        assertTrue(entry.getValue() < expectedScore + 1);
+        var entry = response.getPayload().iterator().next();
+        assertEquals(RESOURCE_ID, entry.resourceId());
+        assertTrue(entry.availability() < expectedScore + 1);
     }
 
 
