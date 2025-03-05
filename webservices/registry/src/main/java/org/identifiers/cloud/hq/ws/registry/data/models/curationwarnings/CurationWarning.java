@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Accessors(chain = true)
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="target_type", discriminatorType = DiscriminatorType.STRING, columnDefinition = "not null")
+@DiscriminatorColumn(name="target_type", discriminatorType = DiscriminatorType.STRING, columnDefinition = "VARCHAR(100) NOT NULL")
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
