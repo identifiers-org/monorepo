@@ -1,13 +1,15 @@
 package org.identifiers.cloud.commons.messages.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Value;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Map;
 
-@Value @Builder
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class CurationWarningNotification implements Serializable {
     @Serial
     private static final long serialVersionUID = 8233497873563092422L;

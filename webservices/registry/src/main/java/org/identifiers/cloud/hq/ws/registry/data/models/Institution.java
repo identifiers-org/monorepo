@@ -3,12 +3,14 @@ package org.identifiers.cloud.hq.ws.registry.data.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.identifiers.cloud.hq.ws.registry.data.models.curationwarnings.InstitutionCurationWarning;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
