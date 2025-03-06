@@ -58,15 +58,14 @@ public class CurationController {
 
     @GetMapping("/queryWarnings")
     public PagedModel<?> query(@RequestParam(defaultValue = "all") String targetType,
-                               @RequestParam(required = false) String warningType,
+                               @RequestParam(defaultValue = "all") String warningType,
                                @RequestParam(defaultValue = "false") Boolean includeClosed,
                                Pageable pageable) {
         var values = curatingWarningModel.getExampleCurationWarningFor(targetType)
-                .setType(warningType).setOpen(true);
+                .setType(warningType.equals("all") ? null : warningType).setOpen(true);
 
         ExampleMatcher matcher = ExampleMatcher.matching()
-                .withIgnoreCase().withIgnoreNullValues().withIgnorePaths("id")
-                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+                .withIgnoreCase().withIgnoreNullValues().withIgnorePaths("id");
         if (includeClosed) matcher = matcher.withIgnorePaths("open");
 
         Example<CurationWarning> example = Example.of(values, matcher);
