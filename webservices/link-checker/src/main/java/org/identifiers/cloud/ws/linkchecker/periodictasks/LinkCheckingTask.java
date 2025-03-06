@@ -71,8 +71,6 @@ public class LinkCheckingTask implements Runnable{
 
         logger.info("Using executor with {} threads", numberOfThreads);
         Assert.state(numberOfThreads > 0, "Number of threads must be a positive number");
-
-
     }
 
     public long getNextRandomWait() {

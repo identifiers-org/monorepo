@@ -1,0 +1,30 @@
+# Please note that this is meant to be used as a String template for the "format" function.
+#  It expects the template variable to be replaced with a list of WikiData IRI separated by spaces
+#  e.g. wd:Q1341845 wd:Q11346475 wd:Q622664 wd:Q41506 wd:Q11713409 wd:Q1133630
+#  This is done programmatically by the helper class and the query will fail if run directly
+
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?institution ?name ?homeUrl ?rorId ?locCode ?locName
+WHERE {
+    VALUES ?institution { %s }
+    VALUES ?acceptedInstitutionTypes { wd:Q3918 wd:Q43229 wd:Q483242 }
+
+    OPTIONAL { ?institution rdfs:label ?name }
+    OPTIONAL { ?institution wdt:P856 ?homeUrl }
+    OPTIONAL { ?institution wdt:P6782 ?rorId }
+    OPTIONAL {
+        ?institution wdt:P17 ?country .
+        ?country wdt:P297 ?locCode ;
+        rdfs:label ?locName .
+    }
+    ?institution wdt:P31 ?class .
+    ?class wdt:P279 ?sclass .
+    ?sclass wdt:P279 ?ssclass .
+    FILTER (?class = ?acceptedInstitutionTypes || ?sclass = ?acceptedInstitutionTypes || ?ssclass = ?acceptedInstitutionTypes)
+
+    FILTER (lang(?name) = "en")
+    FILTER (lang(?locName) = "en")
+}

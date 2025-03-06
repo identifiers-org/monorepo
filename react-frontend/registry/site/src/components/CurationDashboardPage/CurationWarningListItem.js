@@ -1,70 +1,118 @@
-import React, { useState } from "react";
-import { config } from "../../config/Config";
-import { Link } from "react-router-dom";
+import React, {useEffect, useState} from "react";
 import Spinner from "../common/Spinner";
+import CurationWarningEventList from "./CurationWarningEventList";
+import CurationWarningDetails from "./CurationWarningDetails";
 
-export default ({resourceId, availability}) => {
+const targetTypes = {
+  institution: Symbol("Institution"),
+  resource: Symbol("Resource"),
+  namespace: Symbol("Namespace")
+}
+
+const getTypeForTarget = (target) => {
+  if (target === null) return null;
+
+  if (target?.hasOwnProperty("resourceHomeUrl")) {
+    return targetTypes.resource;
+  } else if (target?.hasOwnProperty("prefix")) {
+    return targetTypes.namespace;
+  } else if (!target?.hasOwnProperty("mirId")) {
+    return targetTypes.institution;
+  } else {
+    return null;
+  }
+}
+
+const dateTimeFormat = new Intl.DateTimeFormat('en', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+
+export default ({warning}) => {
   const [loading, setLoading] = useState(null);
   const [failed, setFailed] = useState(false);
-  const [expanded, setExpanded] = useState(false);
 
-  const [resource, setResource] = useState(null);
-  const [namespace, setNamespace] = useState(null);
+  const [target, setTarget] = useState(null);
 
-  if (loading === null) {
-    setLoading(true);
-    const resourcePromise = fetch(config.registryApi + "/restApi/resources/" + resourceId)
-      .then(response => response.json()).then(json => setResource(json));
-    const namespacePromise = fetch(config.registryApi + "/restApi/resources/" + resourceId + "/namespace")
-      .then(response => response.json()).then(json => setNamespace(json));
-
-    Promise.all([resourcePromise, namespacePromise])
-      .catch(() => setFailed(true))
-      .finally(() => setLoading(false));
-  }
+  useEffect(() => {
+    if (loading === null) {
+      const targetUrl = warning?._links?.target.href;
+      if (targetUrl) {
+        setLoading(true);
+        fetch(targetUrl)
+            .then(response => response.json())
+            .then(json => setTarget(json))
+            .catch(() => setFailed(true))
+            .finally(() => setLoading(false));
+      }
+    }
+  }, [
+    setLoading, setTarget, warning, setFailed
+  ])
 
   if (loading) {
     return <div className="card mb-1">
-      <div className="card-header py-1 pr-1"> <Spinner compact noText noCenter /> </div>
+      <div className="card-header py-1 pr-1"><Spinner compact noText noCenter/></div>
     </div>;
   }
   if (failed) {
     return <div className="card mb-1">
-      <div className="card-header py-1 pr-1"> Failed get information for resource {resourceId}! </div>
+      <div className="card-header py-1 pr-1"> Failed get information for target of notification!</div>
     </div>;
   }
 
-
-  const namespaceUrl = "/registry/" + namespace?.prefix
-  const sampleUrl = resource?.urlPattern.replace("{$id}", resource?.sampleId);
-  return (<div className="card mb-1">
-    <div className="card-header py-1 pr-1 d-flex justify-content-between clear-link"
-         onClick={() => setExpanded(!expanded)} title="Click to expand">
-      <span>
-        {expanded ? <i className="icon icon-common icon-minus mr-2"/> :
-          <i className="icon icon-common icon-plus mr-2"/>}
-        Resource <strong>{resource?.name}</strong> of
-        namespace <strong>{namespace?.name}</strong> has
-        availability of <strong>{availability}%</strong>
-      </span>
-      <Link to={namespaceUrl} className="clear-link btn btn-primary btn-sm px-1 py-0 text-white">
-        Go to namespace page
-        <i className="icon icon-common icon-arrow-right ml-2"></i>
-      </Link>
-    </div>
-    {expanded &&
-      <div className="card-body py-2">
-        <h6 className="mt-1 mb-2  ">Check the URLs below and verify if they need to be updated or if the resource should be deprecated.</h6>
-        <div className="list-as-two-column-table striped">
-          <div className="t-row">
-            <div className="text-dark font-weight-bold">Resource Home page:</div>
-            <div><a href={resource?.resourceHomeUrl}>{resource?.resourceHomeUrl}</a></div>
+  const modalId = `warning-model-${warning.globalId}`;
+  return <>
+    <tr>
+      <td>{warning.type}</td>
+      <td><span className="font-weight-bold">{getTypeForTarget(target)?.description}</span> {target?.name}</td>
+      <td>{dateTimeFormat.format(new Date(warning.lastNotification))}</td>
+      <td>{warning.latestEvent.type}</td>
+      <td>
+        <button type="button" className="btn btn-sm btn-primary" data-toggle="modal" data-target={`#${modalId}`}>
+          <i className="icon icon-common icon-search-plus"></i>
+        </button>
+      </td>
+    </tr>
+    <div className="modal" tabIndex="-1" id={modalId}>
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">
+              {warning.type} on {getTypeForTarget(target)?.description} {target?.name}
+            </h5>
+            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
-          <div className="t-row">
-            <div className="font-weight-bold">Sample URL:</div>
-            <div><a href={sampleUrl} target="_blank">{sampleUrl}</a></div>
+          <div className="modal-body">
+            <h3>Details</h3>
+            <CurationWarningDetails warning={warning} target={target} />
+
+            <h3 className="mt-4">Events</h3>
+            <CurationWarningEventList detailsUrl={warning?._links?.events.href} />
+          </div>
+          <div className="modal-footer">
+            { warning?.open &&
+                <button type="button" className="btn btn-secondary m-0 ml-1">
+                  <i className="icon icon-common icon-clock mr-1"></i>
+                  Snooze
+                </button>
+            }
+            { warning.latestEvent.type === "SNOOZED" &&
+                <button type="button" className="btn secondary m-0 ml-1">
+                  <i className="icon icon-common icon-calendar-check mr-1"></i>
+                  Reopen
+                </button>
+            }
+            <button type="button" className="btn btn-danger m-0 ml-1">
+              <i className="icon icon-common icon-bomb mr-1"></i>
+              Delete
+            </button>
           </div>
         </div>
-      </div>}
-  </div>)
+      </div>
+    </div>
+  </>;
 }
