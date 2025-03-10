@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.api.models;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.identifiers.cloud.commons.messages.models.CurationWarningNotification;
 import org.identifiers.cloud.hq.ws.registry.data.models.curationwarnings.*;
@@ -14,6 +15,7 @@ import org.identifiers.cloud.hq.ws.registry.data.repositories.curationwarnings.R
 import org.identifiers.cloud.hq.ws.registry.models.helpers.AuthHelper;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.*;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 
 import static org.identifiers.cloud.hq.ws.registry.data.models.curationwarnings.CurationWarningEvent.Type.*;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class CuratingWarningModel {
@@ -88,11 +91,16 @@ public class CuratingWarningModel {
 
         updateLatestEvents(warning);
 
-        transactionTemplate.executeWithoutResult(s -> {
-            warning.getDetails().clear();
-            warning.getDetails().addAll(details);
-            curationWarningRepository.save(warning);
-        });
+        try {
+            transactionTemplate.executeWithoutResult(s -> {
+                warning.getDetails().clear();
+                warning.getDetails().addAll(details);
+                curationWarningRepository.save(warning);
+            });
+        } catch (TransactionException e) {
+            log.error("Failed to save notification: {}", e.getMessage());
+            log.debug("Stacktrace:", e);
+        }
     }
 
     private void updateLatestEvents(CurationWarning warning) {

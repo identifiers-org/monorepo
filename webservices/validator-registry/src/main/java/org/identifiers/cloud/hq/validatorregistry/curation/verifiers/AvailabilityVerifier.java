@@ -1,11 +1,11 @@
 package org.identifiers.cloud.hq.validatorregistry.curation.verifiers;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.commons.messages.models.Resource;
 import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
 import org.identifiers.cloud.commons.messages.responses.linkchecker.ServiceResponseResourceAvailabilityPayload;
 import org.identifiers.cloud.commons.messages.models.CurationWarningNotification;
+import org.identifiers.cloud.hq.validatorregistry.helpers.StatusHelper;
 import org.identifiers.cloud.hq.validatorregistry.helpers.TargetEntityHelper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -23,9 +23,8 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 @ConditionalOnProperty(prefix="org.identifiers.cloud.verifiers.availability", name="enabled")
-public class AvailabilityVerifier implements RegistryEntityVerifier<Resource> {
+public class AvailabilityVerifier extends RegistryEntityVerifier<Resource> {
     public static final String NOTIFICATION_TYPE = "low-availability-resource";
 
     @Value("${org.identifiers.cloud.verifiers.availability.endpoint}")
@@ -36,6 +35,12 @@ public class AvailabilityVerifier implements RegistryEntityVerifier<Resource> {
     private final RestTemplate restTemplate;
 
     private Map<Long, Float> resourceAvailabilities;
+
+    public AvailabilityVerifier(RestTemplate restTemplate,
+                                StatusHelper statusHelper) {
+        super(statusHelper);
+        this.restTemplate = restTemplate;
+    }
 
     @Override
     public void preValidateTask() {
@@ -71,7 +76,7 @@ public class AvailabilityVerifier implements RegistryEntityVerifier<Resource> {
     }
 
     @Override
-    public Optional<CurationWarningNotification> validate(Resource entity) {
+    public Optional<CurationWarningNotification> doValidate(Resource entity) {
         if (CollectionUtils.isEmpty(resourceAvailabilities)) {
             return Optional.empty();
         }

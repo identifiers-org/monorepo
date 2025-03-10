@@ -1,15 +1,15 @@
 package org.identifiers.cloud.hq.validatorregistry.curation.verifiers;
 
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.commons.urlchecking.UrlAssessment;
 import org.identifiers.cloud.commons.urlchecking.UrlChecker;
 import org.identifiers.cloud.commons.messages.models.CurationWarningNotification;
+import org.identifiers.cloud.hq.validatorregistry.helpers.StatusHelper;
 import org.identifiers.cloud.hq.validatorregistry.helpers.TargetEntityHelper;
 
-import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -17,8 +17,7 @@ import java.util.function.Function;
 import static org.identifiers.cloud.hq.validatorregistry.curation.verifiers.CuratorReviewVerifier.CURATOR_REVIEW_VALUE;
 
 @Slf4j
-@RequiredArgsConstructor
-public class UrlVerifier<T> implements RegistryEntityVerifier<T> {
+public class UrlVerifier<T> extends RegistryEntityVerifier<T> {
     public static final String NOTIFICATION_TYPE = "url-not-ok";
     private final UrlChecker urlChecker;
     private final Function<T, String> urlGetter;
@@ -27,10 +26,19 @@ public class UrlVerifier<T> implements RegistryEntityVerifier<T> {
     @Setter @Accessors(chain = true)
     private Function<T, Boolean> protectedGetter = null;
 
-    private final HashMap<String, UrlAssessment> assessmentCache = new HashMap<>();
+    private final Hashtable<String, UrlAssessment> assessmentCache = new Hashtable<>();
+
+    public UrlVerifier(StatusHelper statusHelper,
+                       UrlChecker urlChecker,
+                       Function<T, String> urlGetter, String fieldName) {
+        super(statusHelper);
+        this.urlChecker = urlChecker;
+        this.urlGetter = urlGetter;
+        this.fieldName = fieldName;
+    }
 
     @Override
-    public Optional<CurationWarningNotification> validate(T entity) {
+    public Optional<CurationWarningNotification> doValidate(T entity) {
         var urlValue = urlGetter.apply(entity);
 
         //Curator review value is handled by its verifier
@@ -40,6 +48,7 @@ public class UrlVerifier<T> implements RegistryEntityVerifier<T> {
 
         log.debug("Checking URL {}", urlValue);
         var urlAssessment = assessmentCache.computeIfAbsent(urlValue, url -> urlChecker.check(url, isProtected));
+
         if (urlAssessment.isOk()) {
             log.debug("URL {} is OK w/ code {}", urlValue, urlAssessment.getStatusCode());
             return Optional.empty();

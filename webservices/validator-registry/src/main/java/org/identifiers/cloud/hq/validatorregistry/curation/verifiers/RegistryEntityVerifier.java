@@ -1,13 +1,25 @@
 package org.identifiers.cloud.hq.validatorregistry.curation.verifiers;
 
+import lombok.AllArgsConstructor;
 import org.identifiers.cloud.commons.messages.models.CurationWarningNotification;
+import org.identifiers.cloud.hq.validatorregistry.helpers.StatusHelper;
 
 import java.util.Optional;
 
-public interface RegistryEntityVerifier<T> {
-    Optional<CurationWarningNotification> validate(T entity);
+@AllArgsConstructor
+public abstract class RegistryEntityVerifier<T> {
+    private final StatusHelper statusHelper;
 
-    default void preValidateTask() {
+    public Optional<CurationWarningNotification> validate(T entity) {
+        statusHelper.startTask();
+        var out = doValidate(entity);
+        statusHelper.finishTask();
+        return out;
+    }
+
+    protected abstract Optional<CurationWarningNotification> doValidate(T entity);
+
+    public void preValidateTask() {
         // Do nothing by default
     }
 }

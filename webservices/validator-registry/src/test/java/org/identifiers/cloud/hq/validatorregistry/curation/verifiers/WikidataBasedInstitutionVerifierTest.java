@@ -52,7 +52,7 @@ class WikidataBasedInstitutionVerifierTest {
     }
 
     @Test
-    void validateFromMatchWithDifferences() {
+    void doValidateFromMatchWithDifferences() {
         var notification = verifier.validateFromMatch(institution, mockMatch);
         assertTrue(notification.isPresent());
         assertEquals(institution.getId(), notification.get().getTargetId());
@@ -60,7 +60,7 @@ class WikidataBasedInstitutionVerifierTest {
     }
 
     @Test
-    void validateFromMatchRorMatch() {
+    void doValidateFromMatchRorMatch() {
         var match = wikiDataHelper.getOrganizationDetailsFromRorId("02catss52");
         assertTrue(match.isPresent());
 

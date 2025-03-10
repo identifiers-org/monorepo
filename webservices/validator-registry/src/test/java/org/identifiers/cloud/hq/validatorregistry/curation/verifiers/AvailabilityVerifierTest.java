@@ -43,18 +43,18 @@ class AvailabilityVerifierTest {
         availabilityVerifier.preValidateTask();
 
         var resource = new Resource().setId(10);
-        var notification = availabilityVerifier.validate(resource);
+        var notification = availabilityVerifier.doValidate(resource);
         assertNotNull(notification);
         assertTrue(notification.isPresent());
         assertEquals(10, notification.get().getTargetId());
 
         resource.setId(15);
-        notification = availabilityVerifier.validate(resource);
+        notification = availabilityVerifier.doValidate(resource);
         assertNotNull(notification);
         assertFalse(notification.isPresent());
 
         resource.setId(20);
-        notification = availabilityVerifier.validate(resource);
+        notification = availabilityVerifier.doValidate(resource);
         assertNotNull(notification);
         assertFalse(notification.isPresent());
     }

@@ -16,6 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
@@ -30,10 +32,10 @@ class DebugCurationEngineTest {
     @SpyBean
     private CurationWarningNotificationPoster poster;
     @Captor
-    private ArgumentCaptor<Collection<CurationWarningNotification>> notifications;
+    private ArgumentCaptor<List<CurationWarningNotification>> notifications;
 
     @Test
-    void testEngine() {
+    void testEngine() throws ExecutionException, InterruptedException {
         curationEngine.setNamespacesEnabled(false);
         curationEngine.setResourcesEnabled(false);
         curationEngine.setInstitutionsEnabled(false);

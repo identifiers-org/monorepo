@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.ws.registry.api.controllers;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.commons.messages.models.CurationWarningNotification;
 import org.identifiers.cloud.commons.messages.requests.ServiceRequest;
 import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/curationApi")
 @RequiredArgsConstructor
@@ -31,11 +33,15 @@ public class CurationController {
 
     @PostMapping("/notifications")
     public void receiveNotifications(@RequestBody ServiceRequest<List<CurationWarningNotification>> notifications) {
+        if (notifications.getPayload() == null) return;
+
+        log.debug("Processing {} curation warning notifications", notifications.getPayload().size());
         for (var notification : notifications.getPayload()) {
             if (notification == null) continue;
 
             curatingWarningModel.updateCurationWarningWithNotification(notification);
         }
+        log.debug("Finished processing notifications");
     }
 
     @PatchMapping("/snooze")

@@ -21,7 +21,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class ResolutionDatasetFetcher {
 
-    @Value("${org.identifiers.cloud.dataset.endpoint}")
+    @Value("${org.identifiers.cloud.registry.dataset-endpoint}")
     private URI datasetEndpoint;
 
     private final ParameterizedTypeReference<ServiceResponse<ResolverDatasetPayload>>

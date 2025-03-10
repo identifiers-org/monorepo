@@ -16,8 +16,8 @@ import org.springframework.stereotype.Component;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.*;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.function.Predicate.not;
@@ -29,6 +29,7 @@ public class CurationEngine {
     private final Set<RegistryEntityVerifier<Institution>> institutionValidators;
     private final Set<RegistryEntityVerifier<Namespace>> namespaceValidators;
     private final Set<RegistryEntityVerifier<Resource>> resourceValidators;
+    private final ExecutorService executorService;
 
     private final ResolutionDatasetFetcher datasetFetcher;
     private final CurationWarningNotificationPoster curationWarningNotificationPoster;
@@ -47,17 +48,25 @@ public class CurationEngine {
 
         var namespaces = datasetFetcher.fetch();
 
+        log.info("Parallel pool size {}", ForkJoinPool.commonPool().getPoolSize());
+
         var namespaceNotificationStream = getNamespaceNotificationStream(namespaces);
         var resourceNotificationStream = getResourceNotificationStream(namespaces);
         var institutionNotificationStream = getInstitutionNotificationStream(namespaces);
-
-        var allNotifications = Stream.of(namespaceNotificationStream,
-                                         resourceNotificationStream,
-                                         institutionNotificationStream)
+        var futures = Stream.of(namespaceNotificationStream,
+                                resourceNotificationStream,
+                                institutionNotificationStream)
                 .flatMap(Function.identity())
-                .collect(Collectors.toUnmodifiableSet());
+                .parallel()
+                .toList();
 
-        curationWarningNotificationPoster.post(allNotifications);
+        var allNotifications = futures.stream()
+                .map(this::getFromFuture)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList();
+
+//        curationWarningNotificationPoster.post(allNotifications);
     }
 
     private <T> void runPreValidateTasks(Set<RegistryEntityVerifier<T>> validators) {
@@ -71,41 +80,54 @@ public class CurationEngine {
     }
 
 
-    Stream<CurationWarningNotification> validate(Namespace namespace) {
-        return namespaceValidators.stream()
-                .map(v -> v.validate(namespace))
-                .filter(Optional::isPresent).map(Optional::get);
+    Stream<CompletableFuture<Optional<CurationWarningNotification>>> validate(Namespace namespace) {
+        return namespaceValidators.parallelStream()
+                .map(v ->
+                        CompletableFuture.supplyAsync(
+                                () -> v.validate(namespace),
+                                executorService
+                        )
+                );
     }
 
-    Stream<CurationWarningNotification> validate(Resource resource) {
+    Stream<CompletableFuture<Optional<CurationWarningNotification>>> validate(Resource resource) {
         return resourceValidators.parallelStream()
-                .map(v -> v.validate(resource))
-                .filter(Optional::isPresent).map(Optional::get);
+                .map(v ->
+                        CompletableFuture.supplyAsync(
+                                () -> v.validate(resource),
+                                executorService
+                        )
+                );
     }
 
-    Stream<CurationWarningNotification> validate(Institution institution) {
+    Stream<CompletableFuture<Optional<CurationWarningNotification>>> validate(Institution institution) {
         return institutionValidators.parallelStream()
-                .map(v -> v.validate(institution))
-                .filter(Optional::isPresent).map(Optional::get);
+                .map(v ->
+                        CompletableFuture.supplyAsync(
+                                () -> v.validate(institution),
+                                executorService
+                        )
+                );
     }
 
 
 
-    private Stream<CurationWarningNotification> getInstitutionNotificationStream(Collection<Namespace> namespaces) {
+    private Stream<CompletableFuture<Optional<CurationWarningNotification>>>
+    getInstitutionNotificationStream(Collection<Namespace> namespaces) {
         if (institutionsEnabled) {
             return namespaces.parallelStream()
                     .filter(not(Namespace::isDeprecated))
                     .flatMap(n -> n.getResources().stream())
                     .filter(not(Resource::isDeprecated))
-                    .skip(100)
-                    .limit(100)
                     .map(Resource::getInstitution)
                     .flatMap(this::validate);
         } else {
             return Stream.empty();
         }
     }
-    private Stream<CurationWarningNotification> getResourceNotificationStream(Collection<Namespace> namespaces) {
+
+    private Stream<CompletableFuture<Optional<CurationWarningNotification>>>
+    getResourceNotificationStream(Collection<Namespace> namespaces) {
         if (resourcesEnabled) {
             return namespaces.parallelStream()
                     .filter(not(Namespace::isDeprecated))
@@ -116,13 +138,24 @@ public class CurationEngine {
             return Stream.empty();
         }
     }
-    private Stream<CurationWarningNotification> getNamespaceNotificationStream(Collection<Namespace> namespaces) {
+
+    private Stream<CompletableFuture<Optional<CurationWarningNotification>>>
+    getNamespaceNotificationStream(Collection<Namespace> namespaces) {
         if (namespacesEnabled) {
             return namespaces.parallelStream()
                     .filter(not(Namespace::isDeprecated))
                     .flatMap(this::validate);
         } else {
             return Stream.empty();
+        }
+    }
+
+    private <T> Optional<T> getFromFuture(CompletableFuture<Optional<T>> future) {
+        try {
+            return future.join();
+        } catch (CancellationException | CompletionException e) {
+            log.error("Error during validation task", e);
+            return Optional.empty();
         }
     }
 }

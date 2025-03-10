@@ -1,11 +1,11 @@
 package org.identifiers.cloud.hq.validatorregistry.curation.verifiers;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.similarity.JaroWinklerSimilarity;
 import org.identifiers.cloud.commons.messages.models.Institution;
 import org.identifiers.cloud.commons.messages.models.CurationWarningNotification;
+import org.identifiers.cloud.hq.validatorregistry.helpers.StatusHelper;
 import org.identifiers.cloud.hq.validatorregistry.helpers.TargetEntityHelper;
 import org.identifiers.cloud.hq.validatorregistry.helpers.WikiDataHelper;
 import org.identifiers.cloud.hq.validatorregistry.helpers.WikiDataHelper.WikiDataOrganizationDetails;
@@ -24,9 +24,8 @@ import java.util.stream.Stream;
  */
 @Slf4j
 @Service
-@RequiredArgsConstructor
 @ConditionalOnProperty(prefix = "org.identifiers.cloud.verifiers.wikidata", name = "enabled")
-public class WikidataBasedInstitutionVerifier implements RegistryEntityVerifier<Institution> {
+public class WikidataBasedInstitutionVerifier extends RegistryEntityVerifier<Institution> {
     private static final String NOTIFICATION_TYPE = "wikidata-institution-diff";
     private static final JaroWinklerSimilarity similarityMeasurer = new JaroWinklerSimilarity();
 
@@ -35,13 +34,28 @@ public class WikidataBasedInstitutionVerifier implements RegistryEntityVerifier<
 
     private final WikiDataHelper wikiDataHelper;
 
+    public WikidataBasedInstitutionVerifier(StatusHelper statusHelper,
+                                            WikiDataHelper wikiDataHelper) {
+        super(statusHelper);
+        this.wikiDataHelper = wikiDataHelper;
+    }
 
 
     @Override
-    public Optional<CurationWarningNotification> validate(Institution institution) {
+    public Optional<CurationWarningNotification> doValidate(Institution institution) {
+        try {
+            // This is a limiter due to wikidata's query limits
+            // https://www.mediawiki.org/wiki/Wikidata_Query_Service/User_Manual#Query_limits
+            Thread.currentThread().wait(400,0);
+        } catch (InterruptedException e) {
+            log.debug("Wikidata rate limiter interrupted");
+        }
+        log.debug("Checking wikidata for institution {}", institution.getName());
+
         if (StringUtils.isNotBlank(institution.getRorId())) {
             var details = wikiDataHelper.getOrganizationDetailsFromRorId(institution.getRorId());
             if (details.isPresent()) {
+                log.debug("Found wikidata match for {} based on ROR ID", institution.getName());
                 return validateFromMatch(institution, details.get());
             }
         }
@@ -113,7 +127,8 @@ public class WikidataBasedInstitutionVerifier implements RegistryEntityVerifier<
                 .map(wikiDataHelper::searchForWikiDataIds)
                 .flatMap(Collection::stream)
                 .toList();
-        var possibleWikidataMatches = wikiDataHelper.getOrganizationDetailsFromQids(possibleWikidataIdMatches);
+        var possibleWikidataMatches = wikiDataHelper.getOrganizationDetailsFromQids(possibleWikidataIdMatches)
+                .stream().filter(WikidataBasedInstitutionVerifier::isUsefulWikidataInfo).toList();
 
         if (possibleWikidataMatches.isEmpty()) {
             return Optional.empty();
@@ -124,6 +139,7 @@ public class WikidataBasedInstitutionVerifier implements RegistryEntityVerifier<
                 .filter(d -> currentHomeUrl.equals(d.getHomeUrl()))
                 .findFirst();
         if (oneWithSameHomeUrl.isPresent()) {
+            log.debug("Found wikidata match for {} based on URL", institution.getName());
             return validateFromMatch(institution, oneWithSameHomeUrl.get());
         }
 
@@ -135,6 +151,7 @@ public class WikidataBasedInstitutionVerifier implements RegistryEntityVerifier<
         if (closestMatch.isPresent()) {
             var match = closestMatch.get();
             if (distances.get(match) <= maxDistanceForMatch) {
+                log.debug("Found wikidata match for {} based on similarity", institution.getName());
                 return validateFromMatch(institution, match);
             }
         }
@@ -172,7 +189,9 @@ public class WikidataBasedInstitutionVerifier implements RegistryEntityVerifier<
      * @param url value to normalize
      * @return normalized URL
      */
-    private String normalizeUrl(String url) {
+    private static String normalizeUrl(String url) {
+        if (url == null) return null;
+
         if (url.endsWith("/")) {
             url = url.substring(0, url.length() - 1);
         }
@@ -185,5 +204,9 @@ public class WikidataBasedInstitutionVerifier implements RegistryEntityVerifier<
             url = url.replaceFirst("www.", "");
         }
         return url;
+    }
+
+    private static boolean isUsefulWikidataInfo(WikiDataOrganizationDetails details) {
+        return StringUtils.isNoneBlank(details.getHomeUrl(), details.getName(), details.getLocCode());
     }
 }

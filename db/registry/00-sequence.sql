@@ -64,3 +64,17 @@ create sequence public.resource_seq
 
 alter sequence public.resource_seq owner to devusername;
 
+create sequence public.curation_warning_detail_seq
+    start with 5000
+    increment by 50;
+alter sequence public.curation_warning_detail_seq owner to devusername;
+
+create sequence public.curation_warning_event_seq
+    start with 5000
+    increment by 50;
+alter sequence public.curation_warning_event_seq owner to devusername;
+
+create sequence public.curation_warning_seq
+    start with 5000
+    increment by 50;
+alter sequence public.curation_warning_seq owner to devusername;
