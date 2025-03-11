@@ -7,7 +7,7 @@ resolver_docker_compose_development_file = resolver/docker-compose-development.y
 resolver_springboot_development_profile = development
 resolver_tag_version = $(shell cat resolver/VERSION)
 
-sync_project_version:
+resolver_sync_project_version:
 	@echo "<===|DEVOPS|===> [SYNC] Synchronizing project version to version '${resolver_tag_version}'"
 	@mvn versions:set -DnewVersion=${resolver_tag_version} -DgenerateBackupPoms=false -pl resolver
 

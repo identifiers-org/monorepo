@@ -80,7 +80,12 @@ class CompactIdParsingHelperV2Test {
             Arguments.of("provider/lui_namespace:123", "provider", "lui_namespace", "lui_namespace:123"),
             Arguments.of("provider/lui_namespace/123", "provider", "lui_namespace", "lui_namespace/123"),
             Arguments.of("provider/lui_namespace:123/123", "provider", "lui_namespace", "lui_namespace:123/123"),
-            Arguments.of("provider/lui_namespace/123:123", "provider", "lui_namespace", "lui_namespace/123:123")
+            Arguments.of("provider/lui_namespace/123:123", "provider", "lui_namespace", "lui_namespace/123:123"),
+
+            ////// This is a special case that has to be supported for old syntax of embedded namespaces
+            // for example "chebi/CHEBI:0000000" when CHEBI:00000000 is what is meant to be used
+            Arguments.of("lui_namespace/lui_namespace:123",
+                    null, "lui_namespace", "lui_namespace:123")
         );
     }
 

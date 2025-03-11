@@ -46,6 +46,8 @@ spec:
           env:
             - name: ORG_IDENTIFIERS_CLOUD_WS_SPARQL_IMPORTS
               value: "https://raw.githubusercontent.com/identifiers-org/ontop/refs/heads/main/idorg-ontology/idorg-ontology-materialized.rdf,https://raw.githubusercontent.com/identifiers-org/ontop/refs/heads/main/idorg-ontology/idorg-ontology.ttl"
+            - name: WS_SPARQL_JVM_MEMORY_MAX
+              value: {{ .Values.sparql.requests.memory | lower | trimSuffix "i" | quote }}
           resources:
             requests:
               memory: {{ .Values.sparql.requests.memory }}

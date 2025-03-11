@@ -83,6 +83,8 @@ class CompactIdParsingHelperV1Test {
                     "lui_namespace:123", null, "lui_namespace", "lui_namespace:123"),
             Arguments.of("Embedded lui namespace + lui + provider",
                     "provider/lui_namespace:123", "provider", "lui_namespace", "lui_namespace:123"),
+            Arguments.of("Old embedded LUI syntax: repeated prefix + ID",
+                    "lui_namespace/lui_namespace:123", null, "lui_namespace", "lui_namespace:123"),
             // The below is inconsistent
             Arguments.of("Embedded lui namespace + lui + provider using slash",
                     "provider/lui_namespace/123", "provider", null, null)

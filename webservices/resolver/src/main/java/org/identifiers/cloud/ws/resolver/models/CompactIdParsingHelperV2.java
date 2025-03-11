@@ -1,5 +1,6 @@
 package org.identifiers.cloud.ws.resolver.models;
 
+import org.apache.commons.lang3.StringUtils;
 import org.identifiers.cloud.commons.messages.models.ParsedCompactIdentifier;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -54,19 +55,31 @@ public class CompactIdParsingHelperV2 implements CompactIdParsingHelper {
         }
         else if (firstColonIdx == -1) {
             // Only slashes, could be provider/namespace/id or namespace/id, id may include slashes
-            parseSlashOnlyRequest(rawCompactIdentifier,
-                    firstSlashIdx, parsedCompactIdentifier);
+            parseSlashOnlyRequest(rawCompactIdentifier, firstSlashIdx, parsedCompactIdentifier);
         } else {
             // Request has both colons and slashes, so any CURIE scheme is valid
             String providerCode = null;
             var remainingRequest = rawCompactIdentifier;
             var possibleNamespace = rawCompactIdentifier.substring(0, firstSlashIdx);
-            if (firstSlashIdx < firstColonIdx && !prefixExistsLowercase(possibleNamespace)) {
+            if (firstSlashIdx < firstColonIdx) {
                 // Since the colon cannot be part of the provider code and prefix,
                 // the request is very likely to be of type provider/namespace...
                 //   But it's also possible that it is namespace/id with the id containing a colon
-                providerCode = rawCompactIdentifier.substring(0, firstSlashIdx);
-                remainingRequest = rawCompactIdentifier.substring(firstSlashIdx+1);
+                if (!prefixExistsLowercase(possibleNamespace)) {
+                    // If the pre-slash part isn't a namespace, it can only be a provider code
+                    providerCode = rawCompactIdentifier.substring(0, firstSlashIdx);
+                    remainingRequest = rawCompactIdentifier.substring(firstSlashIdx + 1);
+                } else {
+                    // If the pre-slash is a namespace, we check if it is the special case of the old syntax
+                    //  from before embedded LUI namespaces where the prefix showed two times.
+                    //  This is necessary because some users have not updated their system to the new syntax
+                    //  The syntax is prefix/prefix:ID
+                    //  @see CompactIdParsingHelperV2Test
+                    var possibleRepeatedNamespace = rawCompactIdentifier.substring(firstSlashIdx+1, firstColonIdx);
+                    if (StringUtils.equalsIgnoreCase(possibleNamespace, possibleRepeatedNamespace)) {
+                        remainingRequest = rawCompactIdentifier.substring(firstSlashIdx + 1);
+                    }
+                }
             }
             findValidNamespaceAndLocalId(remainingRequest, parsedCompactIdentifier);
             if (parsedCompactIdentifier.getNamespace() != null) {
