@@ -39,7 +39,6 @@ public class CurationWarningEvent {
 
     public enum Type {
         CREATED,
-        SNOOZED,
         SOLVED,
         REOPENED
     }

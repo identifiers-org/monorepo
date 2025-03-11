@@ -15,13 +15,9 @@ public interface CurationWarningRepository extends JpaRepository<CurationWarning
     @RestResource(exported = false)
     Optional<CurationWarning> findByGlobalId(String globalId);
 
-    @RestResource(path = "findByOpenStatus")
-    Page<CurationWarning> findByOpen(boolean isOpen, Pageable pageable);
-
-    @RestResource(path = "findBy")
-    Page<CurationWarning> findAllBy(Example<CurationWarning> example, Pageable pageable);
+    @RestResource(exported = false)
+    List<CurationWarning> findByGlobalIdNotInAndOpenTrue(List<String> globalIds);
 
     @RestResource(exported = false)
-    @Query("select distinct cw.type from CurationWarning cw")
-    List<String> findAllDistinctTypes();
+    List<CurationWarning> findAllByOpenTrue();
 }

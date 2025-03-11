@@ -1,13 +1,8 @@
 import React, {useEffect, useState} from "react";
 import Spinner from "../common/Spinner";
+import dateTimeFormat from "../../utils/dateTimeFormat";
 
-const dateTimeFormat = new Intl.DateTimeFormat('en', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-});
-
-export default ({ detailsUrl }) => {
+export default ({ eventsUrl }) => {
     const [loading, setLoading] = useState(null);
     const [failed, setFailed] = useState(false);
     const [eventList, setEventList] = useState([])
@@ -15,7 +10,7 @@ export default ({ detailsUrl }) => {
     useEffect(() => {
         if (loading === null) {
             setLoading(true);
-            fetch(detailsUrl)
+            fetch(eventsUrl)
                 .then(response => response.json())
                 .then(json => setEventList(json._embedded?.curationWarningEvents))
                 .catch(() => setFailed(true))

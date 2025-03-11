@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Spinner from "../common/Spinner";
 import CurationWarningEventList from "./CurationWarningEventList";
 import CurationWarningDetails from "./CurationWarningDetails";
+import dateTimeFormat from "../../utils/dateTimeFormat";
 
 const targetTypes = {
   institution: Symbol("Institution"),
@@ -22,12 +23,6 @@ const getTypeForTarget = (target) => {
     return null;
   }
 }
-
-const dateTimeFormat = new Intl.DateTimeFormat('en', {
-  year: 'numeric',
-  month: 'short',
-  day: 'numeric',
-});
 
 export default ({warning}) => {
   const [loading, setLoading] = useState(null);
@@ -62,7 +57,7 @@ export default ({warning}) => {
     </div>;
   }
 
-  const modalId = `warning-model-${warning.globalId}`;
+  const modalId = `warning-model-${warning.globalId}`.replaceAll(':', '-');
   return <>
     <tr>
       <td>{warning.type}</td>
@@ -91,17 +86,17 @@ export default ({warning}) => {
             <CurationWarningDetails warning={warning} target={target} />
 
             <h3 className="mt-4">Events</h3>
-            <CurationWarningEventList detailsUrl={warning?._links?.events.href} />
+            <CurationWarningEventList eventsUrl={warning?._links?.events.href} />
           </div>
           <div className="modal-footer">
             { warning?.open &&
-                <button type="button" className="btn btn-secondary m-0 ml-1">
+                <button type="button" className="btn btn-primary m-0 ml-1">
                   <i className="icon icon-common icon-clock mr-1"></i>
                   Snooze
                 </button>
             }
             { warning.latestEvent.type === "SNOOZED" &&
-                <button type="button" className="btn secondary m-0 ml-1">
+                <button type="button" className="btn btn-primary m-0 ml-1">
                   <i className="icon icon-common icon-calendar-check mr-1"></i>
                   Reopen
                 </button>

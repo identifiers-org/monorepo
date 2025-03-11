@@ -58,6 +58,10 @@ public class Institution {
     @ManyToOne(optional = false)
     private Location location;
 
+    @ManyToOne
+    @ToString.Exclude
+    private Resource resource;
+
     // ROR IDs, long URL just in case...
     @Column(length = 2000, unique = true)
     private String rorId;

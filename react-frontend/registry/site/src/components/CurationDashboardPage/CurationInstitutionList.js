@@ -13,12 +13,16 @@ import CurationInstitutionItem from './CurationInstitutionItem';
 class CurationInstitutionList extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {debounceSearch: undefined}
   }
 
   updateCurationInstitutionList = (params) => {
-    this.props.getCurationInstitutionListFromRegistry(params);
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.has('institution')) {
+      this.props.getCurationInstitutionListFromRegistry({size: 1000});
+    } else {
+      this.props.getCurationInstitutionListFromRegistry(params);
+    }
   }
 
   componentDidMount() {
@@ -69,6 +73,13 @@ class CurationInstitutionList extends React.Component {
       state: { nameContent }
     } = this;
 
+    const params = new URLSearchParams(window.location.search);
+    let filteredInstitutionList = curationInstitutionList;
+    if (params.has('institution')) {
+      const institutionId = params.get('institution');
+      filteredInstitutionList = curationInstitutionList.filter(i => i.id === institutionId)
+    }
+
     return (
       <>
         <div className="row">
@@ -102,10 +113,10 @@ class CurationInstitutionList extends React.Component {
         <div className="row justify-content-md-center mt-2">
           <div className="col">
             {
-              curationInstitutionList.length === 0 ? (
+              filteredInstitutionList.length === 0 ? (
                 <p>No institutions stored.</p>
               ) : (
-                curationInstitutionList.map(institution => (
+                  filteredInstitutionList.map(institution => (
                   <CurationInstitutionItem
                     key={`cii-${institution.id}`}
                     institution={institution}

@@ -5,9 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.commons.messages.models.CurationWarningNotification;
 import org.identifiers.cloud.commons.messages.requests.ServiceRequest;
 import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
+import org.identifiers.cloud.commons.messages.responses.registry.WarningsSummaryTable;
 import org.identifiers.cloud.hq.ws.registry.api.models.CuratingWarningModel;
 import org.identifiers.cloud.hq.ws.registry.data.models.curationwarnings.CurationWarning;
-import org.identifiers.cloud.hq.ws.registry.data.models.curationwarnings.CurationWarningEvent;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.curationwarnings.CurationWarningRepository;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -16,9 +16,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.server.EntityLinks;
+import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
 import java.util.List;
 
 @Slf4j
@@ -41,25 +43,13 @@ public class CurationController {
 
             curatingWarningModel.updateCurationWarningWithNotification(notification);
         }
+
+        log.debug("Marking stale curation warnings");
+        var notifiedGlobalIds = notifications.getPayload().stream()
+                .map(CurationWarningNotification::getGlobalId).toList();
+        curatingWarningModel.updateStaleCurationWarnings(notifiedGlobalIds);
+
         log.debug("Finished processing notifications");
-    }
-
-    @PatchMapping("/snooze")
-    public ResponseEntity<Void> snoozeCurationWarning(@RequestBody ServiceRequest<Long> request) {
-        Long id = request.getPayload();
-        if (id == null) return ResponseEntity.badRequest().build();
-
-        return curatingWarningModel.addNewEventToOpenCurationWarning(id, CurationWarningEvent.Type.SNOOZED) ?
-            ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
-    }
-
-    @PatchMapping("/markSolved")
-    public ResponseEntity<Void> markCurationWarningAsSolved(@RequestBody ServiceRequest<Long> request) {
-        Long id = request.getPayload();
-        if (id == null) return ResponseEntity.badRequest().build();
-
-        return curatingWarningModel.addNewEventToOpenCurationWarning(id, CurationWarningEvent.Type.SOLVED) ?
-                ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/queryWarnings")
@@ -92,8 +82,13 @@ public class CurationController {
         return models;
     }
 
-    @GetMapping("/getWarningTypesByTargetType")
-    public ServiceResponse<List<String>> getWarningTypes(@RequestParam(defaultValue = "all") String type) {
-        return ServiceResponse.of(curatingWarningModel.getAllCurationWarnings(type));
+    @GetMapping("/warningsSummary")
+    public ResponseEntity<ServiceResponse<WarningsSummaryTable>> getWarningSummary() {
+        var openWarnings = curationWarningRepository.findAllByOpenTrue();
+        var table = curatingWarningModel.getSummaryTable(openWarnings);
+
+        var serviceResponse = ServiceResponse.of(table);
+        var cacheControl = CacheControl.maxAge(Duration.ofMinutes(1)).noTransform().mustRevalidate();
+        return ResponseEntity.ok().cacheControl(cacheControl).body(serviceResponse);
     }
 }
