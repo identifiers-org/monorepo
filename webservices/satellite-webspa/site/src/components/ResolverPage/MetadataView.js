@@ -6,14 +6,16 @@ import MetadataCard from "./MetadataCard";
 const MetadataView = ({curie}) => {
   const [loading, setLoading] = useState(false);
   const [successful, setSuccessful] = useState(false);
-  const [metadataValues, setMetadataValues] = useState(null)
-  
+  const [metadataValues, setMetadataValues] = useState(null);
+  const [parsedCid, setParsedCid] = useState(null);
+
   const handleMetadataPayload = useCallback(payload => {
     if (payload === null || payload === undefined) {
       setSuccessful(false);
       setLoading(false)
     } else {
       const fetchHeaders = {headers: {accept: "application/json"}};
+      setParsedCid(payload.parsedCompactIdentifier)
       const retrieverFetches = payload.ableRetrievers.map(url => fetch(url, fetchHeaders))
       Promise.allSettled(retrieverFetches)
         .then(results => results.filter(r => r.status === "fulfilled"))
@@ -21,13 +23,12 @@ const MetadataView = ({curie}) => {
           Promise.all(fulfilledResults.filter(r => r.value.status === 200).map(r => r.value.json()))
         )
         .then(metadataValues => {
-          console.log('values', metadataValues)
           setMetadataValues(metadataValues)
           setSuccessful(true)
           setLoading(false)
         })
     }
-  }, [setSuccessful, setLoading, setMetadataValues])
+  }, [setSuccessful, setLoading, setMetadataValues, setParsedCid])
   
   useEffect(() => {
     if (!loading && metadataValues === null) {
@@ -75,11 +76,11 @@ const MetadataView = ({curie}) => {
         These are acquired via
         our <a target="_blank" href="https://docs.identifiers.org/pages/metadata_service.html">metadata service API</a>.
       </small>
-      {metadataValues?.map((m, i) => <MetadataCard key={"view_" + i} metadata={m}/>)}
+      {metadataValues?.map((m, i) => <MetadataCard key={"view_" + i} metadata={m} parsedCid={parsedCid}/>)}
     </div>
   }
 }
-  
+
 MetadataView.propTypes = {
   curie: PropTypes.string.isRequired
 }
