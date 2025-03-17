@@ -62,6 +62,10 @@ public class Institution {
     @ToString.Exclude
     private Resource resource;
 
+    @OneToMany(mappedBy = "institution")
+    @ToString.Exclude
+    private List<InstitutionCurationWarning> curationWarnings;
+
     // ROR IDs, long URL just in case...
     @Column(length = 2000, unique = true)
     private String rorId;

@@ -146,4 +146,8 @@ public class Namespace {
     @OneToMany(mappedBy = "namespace")
     @ToString.Exclude
     private List<Resource> resources;
+
+    @OneToMany(mappedBy = "namespace")
+    @ToString.Exclude
+    private List<NamespaceCurationWarning> curationWarnings;
 }

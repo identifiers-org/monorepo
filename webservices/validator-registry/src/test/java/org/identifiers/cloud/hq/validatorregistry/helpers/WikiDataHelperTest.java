@@ -1,6 +1,7 @@
 package org.identifiers.cloud.hq.validatorregistry.helpers;
 
 import org.identifiers.cloud.hq.validatorregistry.configurations.ApplicationConfiguration;
+import org.identifiers.cloud.hq.validatorregistry.configurations.AuthenticatedRestTemplateConfiguration;
 import org.identifiers.cloud.hq.validatorregistry.helpers.WikiDataHelper.WikiDataOrganizationDetails;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,7 +17,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(classes = {WikiDataHelperTest.TestConfig.class, ApplicationConfiguration.class, WikiDataHelper.class})
+@SpringBootTest(classes = {
+        WikiDataHelperTest.TestConfig.class,
+        ApplicationConfiguration.class,
+        AuthenticatedRestTemplateConfiguration.class,
+        WikiDataHelper.class
+})
 class WikiDataHelperTest {
     public static final String EBI_ROR_ID = "02catss52";
     public static final String EBI_WIKIDATA_ID = "Q1341845";

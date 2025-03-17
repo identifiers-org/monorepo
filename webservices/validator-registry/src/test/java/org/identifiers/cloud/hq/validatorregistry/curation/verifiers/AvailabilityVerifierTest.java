@@ -5,9 +5,14 @@ import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
 import org.identifiers.cloud.commons.messages.responses.linkchecker.ServiceResponseResourceAvailabilityPayload;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +21,10 @@ import org.springframework.web.client.RestTemplate;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
-@SpringBootTest
 class AvailabilityVerifierTest {
-    @Autowired
     AvailabilityVerifier availabilityVerifier;
-
-    @MockBean
-    RestTemplate restTemplate;
 
     @BeforeEach
     void setUpMocks() {
@@ -33,16 +34,26 @@ class AvailabilityVerifierTest {
 
         var serviceResponse = ServiceResponse.of(mockAvailability);
         var responseEntity = ResponseEntity.ok(serviceResponse);
+
+        RestTemplate restTemplate = mock();
         doReturn(responseEntity).when(restTemplate).exchange(
                         any(), eq(HttpMethod.GET), isNull(), any(ParameterizedTypeReference.class)
         );
+
+        availabilityVerifier = new AvailabilityVerifier(restTemplate, mock(),
+                "http://google.com", 25);
     }
 
     @Test
     void verify() {
         availabilityVerifier.preValidateTask();
 
-        var resource = new Resource().setId(10);
+        var resource = new Resource()
+                .setId(10)
+                .setSampleId("Rick Astley")
+                .setResourceHomeUrl("http://google.com")
+                .setUrlPattern("http://google.com?q={$id}");
+
         var notification = availabilityVerifier.doValidate(resource);
         assertNotNull(notification);
         assertTrue(notification.isPresent());

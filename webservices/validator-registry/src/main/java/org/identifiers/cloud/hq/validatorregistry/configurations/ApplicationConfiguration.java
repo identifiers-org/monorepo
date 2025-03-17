@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -22,29 +23,14 @@ import static org.springframework.http.HttpHeaders.ACCEPT;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
-@EnableScheduling
 @Configuration
+@EnableScheduling
+@EnableWebSecurity
 public class ApplicationConfiguration {
     @Bean
     ExecutorService executorService() {
         var threadFactory = new ThreadFactoryBuilder().setNameFormat("validation-%d").build();
         return Executors.newFixedThreadPool(30, threadFactory);
-    }
-
-    @Bean
-    RestTemplate restTemplate(
-            RestTemplateBuilder restTemplateBuilder,
-            @Value("${app.version}") String appVersion,
-            @Value("${java.version}") String javaVersion,
-            @Value("${app.contact}") String appContact
-    ) {
-        var idorgAgentStr = String.format(
-                "IdorgRegistryValidator/%s (%s) Java-http-client/%s",
-                javaVersion, appContact, appVersion);
-        return restTemplateBuilder
-                .defaultHeader(ACCEPT, APPLICATION_JSON_VALUE)
-                .defaultHeader(USER_AGENT, idorgAgentStr)
-                .build();
     }
 
     @Bean

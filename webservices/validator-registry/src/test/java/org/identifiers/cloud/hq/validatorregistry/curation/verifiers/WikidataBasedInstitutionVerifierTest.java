@@ -2,6 +2,7 @@ package org.identifiers.cloud.hq.validatorregistry.curation.verifiers;
 
 import org.identifiers.cloud.commons.messages.models.Institution;
 import org.identifiers.cloud.commons.messages.models.Location;
+import org.identifiers.cloud.hq.validatorregistry.TestApplicationConfiguration;
 import org.identifiers.cloud.hq.validatorregistry.helpers.TargetEntityHelper;
 import org.identifiers.cloud.hq.validatorregistry.helpers.WikiDataHelper;
 import org.identifiers.cloud.hq.validatorregistry.helpers.WikiDataHelper.WikiDataOrganizationDetails;
@@ -14,7 +15,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@SpringBootTest(properties = {
+        "org.identifiers.cloud.verifiers.wikidata.enabled=true",
+        "logging.level.org.springframework=DEBUG"
+}, classes = TestApplicationConfiguration.class)
 class WikidataBasedInstitutionVerifierTest {
 
     @Autowired

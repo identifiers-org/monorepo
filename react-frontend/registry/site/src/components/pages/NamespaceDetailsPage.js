@@ -145,7 +145,6 @@ class NamespaceDetailsPage extends React.Component {
   };
 
   handleClickDiscardChangesButton = async () => {
-    console.log('this.state.namespaceFieldsChanged', this.state.namespaceFieldsChanged);
     if (this.state.namespaceFieldsChanged.size === 0) {
       this.setState({editNamespace: false});
       return;

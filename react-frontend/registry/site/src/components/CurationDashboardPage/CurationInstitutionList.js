@@ -8,6 +8,7 @@ import { setCurationInstitutionListParams } from '../../actions/CurationDashboar
 // Components.
 import Paginator from '../common/Paginator';
 import CurationInstitutionItem from './CurationInstitutionItem';
+import {useSearchParams} from "react-router-dom";
 
 
 class CurationInstitutionList extends React.Component {
@@ -17,8 +18,7 @@ class CurationInstitutionList extends React.Component {
   }
 
   updateCurationInstitutionList = (params) => {
-    const searchParams = new URLSearchParams(window.location.search);
-    if (searchParams.has('institution')) {
+    if ('institution' in this.props.params) {
       this.props.getCurationInstitutionListFromRegistry({size: 1000});
     } else {
       this.props.getCurationInstitutionListFromRegistry(params);
@@ -73,10 +73,9 @@ class CurationInstitutionList extends React.Component {
       state: { nameContent }
     } = this;
 
-    const params = new URLSearchParams(window.location.search);
     let filteredInstitutionList = curationInstitutionList;
-    if (params.has('institution')) {
-      const institutionId = params.get('institution');
+    if ('institution' in this.props.params) {
+      const institutionId = this.props.params.institution;
       filteredInstitutionList = curationInstitutionList.filter(i => i.id === institutionId)
     }
 
@@ -143,4 +142,8 @@ const mapDispatchToProps = (dispatch) => ({
   setCurationInstitutionListParams: (params) => dispatch(setCurationInstitutionListParams(params))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CurationInstitutionList);
+const ConnectedCurationInstitutionList = connect(mapStateToProps, mapDispatchToProps)(CurationInstitutionList);
+export default props => {
+  const [params] = useSearchParams();
+  return <ConnectedCurationInstitutionList {...props} params={params}/>
+}

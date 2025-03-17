@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.commons.messages.models.Namespace;
 import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
 import org.identifiers.cloud.commons.messages.responses.registry.ResolverDatasetPayload;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -18,7 +19,6 @@ import java.util.Collections;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class ResolutionDatasetFetcher {
 
     @Value("${org.identifiers.cloud.registry.dataset-endpoint}")
@@ -27,11 +27,16 @@ public class ResolutionDatasetFetcher {
     private final ParameterizedTypeReference<ServiceResponse<ResolverDatasetPayload>>
             datasetTypeRef = new ParameterizedTypeReference<>() {};
 
-    private final RestTemplate restTemplate;
+    private final RestTemplate restTemplateExternal;
+
+    public ResolutionDatasetFetcher(@Qualifier("restTemplateExternal")
+                                    RestTemplate restTemplateExternal) {
+        this.restTemplateExternal = restTemplateExternal;
+    }
 
     public Collection<Namespace> fetch() {
         try {
-            var httpResponse = restTemplate.exchange(
+            var httpResponse = restTemplateExternal.exchange(
                     datasetEndpoint,
                     HttpMethod.GET,
                     null,

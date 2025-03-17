@@ -15,7 +15,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class CurationWarningNotificationPoster {
-    private final RestTemplate restTemplate;
+    private final RestTemplate restTemplateInternalAuthEnabled;
 
     @Value("${org.identifiers.cloud.registry.notification-endpoint}")
     URI notificationEndpoint;
@@ -25,9 +25,11 @@ public class CurationWarningNotificationPoster {
 
         var serviceRequest = ServiceRequest.of(notifications);
         try {
-            restTemplate.postForEntity(notificationEndpoint, serviceRequest, Void.class);
+            restTemplateInternalAuthEnabled.postForEntity(notificationEndpoint, serviceRequest, Void.class);
         } catch (Exception e) {
             log.error("Failed to send notifications to {}", notificationEndpoint, e);
         }
+
+        log.debug("Finished posting notifications");
     }
 }

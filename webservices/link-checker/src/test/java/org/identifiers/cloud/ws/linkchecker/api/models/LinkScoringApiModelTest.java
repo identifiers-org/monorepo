@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 class LinkScoringApiModelTest {
-    private static final String RESOURCE_ID = "totally numeric ID";
+    private static final String RESOURCE_ID = "123";
     private int expectedScore;
 
     LinkScoringApiModel model;
@@ -81,7 +81,7 @@ class LinkScoringApiModelTest {
         assertEquals(1, response.getPayload().size());
 
         var entry = response.getPayload().iterator().next();
-        assertEquals(RESOURCE_ID, entry.resourceId());
+        assertEquals(Long.parseLong(RESOURCE_ID), entry.resourceId());
         assertTrue(entry.availability() < expectedScore + 1);
     }
 

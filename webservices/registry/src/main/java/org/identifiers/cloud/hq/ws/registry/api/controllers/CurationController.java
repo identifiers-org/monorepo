@@ -5,8 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.commons.messages.models.CurationWarningNotification;
 import org.identifiers.cloud.commons.messages.requests.ServiceRequest;
 import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
-import org.identifiers.cloud.commons.messages.responses.registry.WarningsSummaryTable;
+import org.identifiers.cloud.commons.messages.responses.registry.WarningsSummaryPayload;
 import org.identifiers.cloud.hq.ws.registry.api.models.CuratingWarningModel;
+import org.identifiers.cloud.hq.ws.registry.api.models.UsageScoreHelperBasedOnMatomo;
 import org.identifiers.cloud.hq.ws.registry.data.models.curationwarnings.CurationWarning;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.curationwarnings.CurationWarningRepository;
 import org.springframework.data.domain.Example;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -32,10 +34,13 @@ public class CurationController {
     private final CurationWarningRepository curationWarningRepository;
     private final PagedResourcesAssembler<CurationWarning> pagedAssembler;
     private final EntityLinks entityLinks;
+    private final Optional<UsageScoreHelperBasedOnMatomo> usageScorer;
 
     @PostMapping("/notifications")
     public void receiveNotifications(@RequestBody ServiceRequest<List<CurationWarningNotification>> notifications) {
         if (notifications.getPayload() == null) return;
+
+        usageScorer.ifPresent(UsageScoreHelperBasedOnMatomo::downloadDataset);
 
         log.debug("Processing {} curation warning notifications", notifications.getPayload().size());
         for (var notification : notifications.getPayload()) {
@@ -44,7 +49,6 @@ public class CurationController {
             curatingWarningModel.updateCurationWarningWithNotification(notification);
         }
 
-        log.debug("Marking stale curation warnings");
         var notifiedGlobalIds = notifications.getPayload().stream()
                 .map(CurationWarningNotification::getGlobalId).toList();
         curatingWarningModel.updateStaleCurationWarnings(notifiedGlobalIds);
@@ -83,9 +87,9 @@ public class CurationController {
     }
 
     @GetMapping("/warningsSummary")
-    public ResponseEntity<ServiceResponse<WarningsSummaryTable>> getWarningSummary() {
+    public ResponseEntity<ServiceResponse<WarningsSummaryPayload>> getWarningSummary() {
         var openWarnings = curationWarningRepository.findAllByOpenTrue();
-        var table = curatingWarningModel.getSummaryTable(openWarnings);
+        var table = curatingWarningModel.getSummaryPayload(openWarnings);
 
         var serviceResponse = ServiceResponse.of(table);
         var cacheControl = CacheControl.maxAge(Duration.ofMinutes(1)).noTransform().mustRevalidate();

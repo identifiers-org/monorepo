@@ -1,5 +1,6 @@
 package org.identifiers.cloud.hq.validatorregistry.configurations;
 
+import lombok.RequiredArgsConstructor;
 import org.identifiers.cloud.commons.messages.models.Institution;
 import org.identifiers.cloud.commons.messages.models.Namespace;
 import org.identifiers.cloud.commons.messages.models.Resource;
@@ -8,13 +9,15 @@ import org.identifiers.cloud.hq.validatorregistry.curation.verifiers.CuratorRevi
 import org.identifiers.cloud.hq.validatorregistry.curation.verifiers.RegistryEntityVerifier;
 import org.identifiers.cloud.hq.validatorregistry.curation.verifiers.UrlVerifier;
 import org.identifiers.cloud.hq.validatorregistry.helpers.StatusHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@RequiredArgsConstructor
 public class VerifiersConfiguration {
-    StatusHelper statusHelper = new StatusHelper();
+    private final StatusHelper statusHelper;
 
     @Bean
     @ConditionalOnProperty(prefix="org.identifiers.cloud.verifiers.curator-review", name = "enabled")

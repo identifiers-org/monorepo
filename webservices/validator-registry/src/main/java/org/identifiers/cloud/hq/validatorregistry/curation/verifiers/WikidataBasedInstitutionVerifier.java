@@ -24,7 +24,7 @@ import java.util.stream.Stream;
  */
 @Slf4j
 @Service
-@ConditionalOnProperty(prefix = "org.identifiers.cloud.verifiers.wikidata", name = "enabled")
+@ConditionalOnProperty(value = "org.identifiers.cloud.verifiers.wikidata.enabled")
 public class WikidataBasedInstitutionVerifier extends RegistryEntityVerifier<Institution> {
     private static final String NOTIFICATION_TYPE = "wikidata-institution-diff";
     private static final JaroWinklerSimilarity similarityMeasurer = new JaroWinklerSimilarity();

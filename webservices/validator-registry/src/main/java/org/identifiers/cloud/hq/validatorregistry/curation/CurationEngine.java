@@ -8,6 +8,7 @@ import org.identifiers.cloud.commons.messages.models.Institution;
 import org.identifiers.cloud.commons.messages.models.Namespace;
 import org.identifiers.cloud.commons.messages.models.Resource;
 import org.identifiers.cloud.hq.validatorregistry.curation.verifiers.RegistryEntityVerifier;
+import org.identifiers.cloud.hq.validatorregistry.helpers.StatusHelper;
 import org.identifiers.cloud.hq.validatorregistry.registryhelpers.CurationWarningNotificationPoster;
 import org.identifiers.cloud.hq.validatorregistry.registryhelpers.ResolutionDatasetFetcher;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +31,7 @@ public class CurationEngine {
     private final Set<RegistryEntityVerifier<Namespace>> namespaceValidators;
     private final Set<RegistryEntityVerifier<Resource>> resourceValidators;
     private final ExecutorService executorService;
+    private final StatusHelper statusHelper;
 
     private final ResolutionDatasetFetcher datasetFetcher;
     private final CurationWarningNotificationPoster curationWarningNotificationPoster;
@@ -48,8 +50,6 @@ public class CurationEngine {
 
         var namespaces = datasetFetcher.fetch();
 
-        log.info("Parallel pool size {}", ForkJoinPool.commonPool().getPoolSize());
-
         var namespaceNotificationStream = getNamespaceNotificationStream(namespaces);
         var resourceNotificationStream = getResourceNotificationStream(namespaces);
         var institutionNotificationStream = getInstitutionNotificationStream(namespaces);
@@ -66,7 +66,11 @@ public class CurationEngine {
                 .map(Optional::get)
                 .toList();
 
-//        curationWarningNotificationPoster.post(allNotifications);
+        executorService.shutdown();
+
+        statusHelper.stopPeriodicReporting();
+
+        curationWarningNotificationPoster.post(allNotifications);
     }
 
     private <T> void runPreValidateTasks(Set<RegistryEntityVerifier<T>> validators) {

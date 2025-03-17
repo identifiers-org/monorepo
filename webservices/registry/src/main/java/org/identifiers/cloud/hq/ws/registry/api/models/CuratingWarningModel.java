@@ -5,14 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.identifiers.cloud.commons.messages.models.CurationWarningNotification;
-import org.identifiers.cloud.commons.messages.responses.registry.WarningsSummaryTable;
-import org.identifiers.cloud.commons.messages.responses.registry.WarningsSummaryTable.TargetInfo;
+import org.identifiers.cloud.commons.messages.responses.registry.WarningsSummaryPayload;
+import org.identifiers.cloud.commons.messages.responses.registry.WarningsSummaryPayload.TargetInfo;
 import org.identifiers.cloud.hq.ws.registry.data.models.curationwarnings.*;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.curationwarnings.*;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.InstitutionRepository;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRepository;
-import org.identifiers.cloud.hq.ws.registry.models.helpers.AuthHelper;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionException;
@@ -32,8 +31,8 @@ public class CuratingWarningModel {
     private final ResourceRepository resourceRepository;
     private final NamespaceRepository namespaceRepository;
     private final TransactionTemplate transactionTemplate;
-    private final AuthHelper authHelper;
     private final CurationWarningEventsRepository curationWarningEventsRepository;
+    private final Optional<UsageScoreHelperBasedOnMatomo> usageScorer;
 
     public void updateCurationWarningWithNotification(CurationWarningNotification notification) {
         Objects.requireNonNull(notification);
@@ -68,7 +67,6 @@ public class CuratingWarningModel {
     }
 
     private void updateLatestEvents(CurationWarning warning) {
-        var actor = authHelper.getCurrentUsername();
 
         CurationWarningEvent.Type newEventType = null;
         if (warning.getLatestEvent() == null) {
@@ -80,9 +78,8 @@ public class CuratingWarningModel {
         // null event type when warning is open and not new
         if (newEventType != null) {
             var newEvent = new CurationWarningEvent()
-                    .setType(CREATED)
-                    .setCurationWarning(warning)
-                    .setActor(actor);
+                    .setType(newEventType)
+                    .setCurationWarning(warning);
             warning.getEvents().add(newEvent);
             curationWarningRepository.save(warning);
         }
@@ -141,57 +138,65 @@ public class CuratingWarningModel {
 
     public void updateStaleCurationWarnings(List<String> notifiedGlobalIds) {
         var staleCurationWarnings = curationWarningRepository.findByGlobalIdNotInAndOpenTrue(notifiedGlobalIds);
+        log.info("Marking {} warnings as stale", staleCurationWarnings.size());
 
         for (var curationWarning : staleCurationWarnings) {
             var newEvent = new CurationWarningEvent()
                     .setType(SOLVED)
-                    .setCurationWarning(curationWarning)
-                    .setActor(authHelper.getCurrentUsername());
+                    .setCurationWarning(curationWarning);
             curationWarningEventsRepository.save(newEvent);
         }
     }
 
-    public WarningsSummaryTable getSummaryTable(List<CurationWarning> curationWarnings) {
+    public WarningsSummaryPayload getSummaryPayload(List<CurationWarning> curationWarnings) {
         Map<TargetInfo, List<CurationWarning>> groupedWarnings = curationWarnings.stream()
                 .collect(Collectors.groupingBy(CuratingWarningModel::targetInfo));
 
-        var rows = new WarningsSummaryTable();
-        for (var entry : groupedWarnings.entrySet()) {
-            int accessNumber = RandomUtils.nextInt(0, 10_000);
-            int failingInstitutionUrl = 0;
-            int lowAvailabilityResources = 0;
-            boolean hasCurationValues = false;
-            boolean hasPossibleWikidataError = false;
+        var payload = new WarningsSummaryPayload();
+        var rows = groupedWarnings.entrySet().stream()
+                .map(e -> getSummaryEntry(e.getKey(), e.getValue()))
+                .toList();
+        payload.setSummaryEntries(rows);
 
-            for (var cw : entry.getValue()) {
-                switch (cw.getType()) {
-                    case "wikidata-institution-diff":
-                        hasPossibleWikidataError = true;
-                        break;
-                    case "curator-review":
-                        hasCurationValues = true;
-                        break;
-                    case "low-availability-resource":
-                        lowAvailabilityResources++;
-                        break;
-                    case "url-not-ok":
-                        failingInstitutionUrl++;
-                        break;
-                    default:
-                        log.warn("Unsupported curation warning type: {}", cw.getType());
-                }
+        Map<String, Long> scores = usageScorer.isPresent() ?
+                usageScorer.get().getScoresPerNamespace() : Map.of();
+        payload.setNamespaceUsage(scores);
+
+        return payload;
+    }
+
+    private static WarningsSummaryPayload.Entry getSummaryEntry(
+            TargetInfo targetInfo, List<CurationWarning> curationWarnings) {
+        int failingInstitutionUrl = 0;
+        int lowAvailabilityResources = 0;
+        boolean hasCurationValues = false;
+        boolean hasPossibleWikidataError = false;
+
+        for (var cw : curationWarnings) {
+            switch (cw.getType()) {
+                case "wikidata-institution-diff":
+                    hasPossibleWikidataError = true;
+                    break;
+                case "curator-review":
+                    hasCurationValues = true;
+                    break;
+                case "low-availability-resource":
+                    lowAvailabilityResources++;
+                    break;
+                case "url-not-ok":
+                    failingInstitutionUrl++;
+                    break;
+                default:
+                    log.warn("Unsupported curation warning type: {}", cw.getType());
             }
-            var row = new WarningsSummaryTable.Row();
-            row.setTargetInfo(entry.getKey());
-            row.setAccessNumber(accessNumber);
-            row.setFailingInstitutionUrl(failingInstitutionUrl);
-            row.setLowAvailabilityResources(lowAvailabilityResources);
-            row.setHasCurationValues(hasCurationValues);
-            row.setHasPossibleWikidataError(hasPossibleWikidataError);
-            rows.add(row);
         }
-
-        return rows;
+        var row = new WarningsSummaryPayload.Entry();
+        row.setTargetInfo(targetInfo);
+        row.setFailingInstitutionUrl(failingInstitutionUrl);
+        row.setLowAvailabilityResources(lowAvailabilityResources);
+        row.setHasCurationValues(hasCurationValues);
+        row.setHasPossibleWikidataError(hasPossibleWikidataError);
+        return row;
     }
 
     private static TargetInfo targetInfo(CurationWarning curationWarning) {
@@ -202,24 +207,14 @@ public class CuratingWarningModel {
                     .setLabel(icw.getInstitution().getName());
         } else if (curationWarning instanceof NamespaceCurationWarning nwc) {
             return info.setIdentifier(String.valueOf(nwc.getNamespace().getPrefix()))
-                    .setType("Namespace")
+                    .setType("Prefix")
                     .setLabel(nwc.getNamespace().getName());
         } else if (curationWarning instanceof ResourceCurationWarning rwc) {
             return info.setIdentifier(String.valueOf(rwc.getResource().getNamespace().getPrefix()))
-                    .setType("Resource")
+                    .setType("Prefix")
                     .setLabel(rwc.getResource().getNamespace().getName());
         } else {
             throw new IllegalArgumentException("Unsupported curation warning type: " + curationWarning.getType());
         }
-    }
-
-    public List<String> getSummaryHeaders() {
-        return List.of(
-                "Prefix",
-                "# Access",
-                "# Failing resources",
-                "Has curation values",
-                "Possible wiki data error"
-        );
     }
 }

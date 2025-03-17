@@ -1,0 +1,18 @@
+# This file contains properties to be used when AAA is enabled, this configuration contains both resource server and client information
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: ${VALIDATOR_CONFIG_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUERURI:http://localkeycloak:8080/auth/realms/idorg}
+        registration:
+          keycloak:
+            client-id: ${VALIDATOR_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTID:hq-registry-validator}
+            client-secret: ${VALIDATOR_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTSECRET:secrety-secret}
+            authorization-grant-type: client_credentials
+            client-authentication-method: client_secret_basic
+            provider: keycloak
+      resourceserver:
+        jwt:
+          issuer-uri: ${HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI:http://localkeycloak:8080/auth/realms/idorg}

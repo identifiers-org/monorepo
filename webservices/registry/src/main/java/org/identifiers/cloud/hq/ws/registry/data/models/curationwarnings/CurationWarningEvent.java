@@ -28,14 +28,8 @@ public class CurationWarningEvent {
     protected Date created;
 
     @Column(nullable = false)
-    private String actor;
-
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Type type;
-
-    @Column(length = 2000)
-    private String comment;
 
     public enum Type {
         CREATED,

@@ -1,16 +1,17 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import Spinner from "../common/Spinner";
 import dateTimeFormat from "../../utils/dateTimeFormat";
 
-export default ({ eventsUrl }) => {
+export default ({ href, preload }) => {
     const [loading, setLoading] = useState(null);
     const [failed, setFailed] = useState(false);
+    const [expanded, setExpanded] = useState(Boolean(preload))
     const [eventList, setEventList] = useState([])
 
-    useEffect(() => {
+    const ensureEventsPopulated = useCallback((loading, href) => {
         if (loading === null) {
             setLoading(true);
-            fetch(eventsUrl)
+            fetch(href)
                 .then(response => response.json())
                 .then(json => setEventList(json._embedded?.curationWarningEvents))
                 .catch(() => setFailed(true))
@@ -20,26 +21,38 @@ export default ({ eventsUrl }) => {
         setLoading, setEventList, setFailed
     ]);
 
+    if (preload && loading === null) {
+        ensureEventsPopulated(loading, href);
+    }
+
     if (loading) {
         return <div> <Spinner compact noText noCenter /> </div>;
     }
     if (failed) {
-        return <div> Failed get list of events for this warning! </div>;
+        return <div className="alert-danger alert"> Failed get list of events for this warning! </div>;
     }
 
-    return eventList?.slice(0,5).map((warningEvent, idx) => {
-        const date = new Date(warningEvent.created);
-        return (
-            <div key={'curation-event-' + idx} className="card mb-2">
-                <div className="card-header p-1">
-                    Marked as <span className="font-weight-bold">{warningEvent.type}</span> by {warningEvent.actor} on {dateTimeFormat.format(date)}
-                </div>
-                { warningEvent.comment &&
-                    <div className="card-body">
-                        <p className="card-text"> {warningEvent.comment} </p>
-                    </div>
-                }
-            </div>
-        )
-    })
+    return <div>
+        { !preload &&
+            <button type="button" className="btn btn-link text-decoration-none text-reset p-0 px-1 mt-2 mb-0"
+                    onClick={() => {
+                        ensureEventsPopulated(loading, href);
+                        setExpanded(!expanded)
+                    }}>
+                { expanded ? "Hide history" : "See history" }
+            </button>
+        }
+        { expanded &&
+            <table className="table table-striped">
+                <tbody>
+                    { eventList.map( (e, idx) =>
+                        <tr key={idx}>
+                            <td>{e.type}</td>
+                            <td>{dateTimeFormat.format(new Date(e.created))}</td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
+        }
+    </div>
 }

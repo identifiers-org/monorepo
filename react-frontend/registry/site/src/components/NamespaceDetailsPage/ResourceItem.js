@@ -217,7 +217,7 @@ class ResourceItem extends React.Component {
       handleClickReactivateButton,
       handleClickValidateChangesButton,
       props: { institutionList, locationList, resource },
-      state: { editResource, reactivateResource }
+      state: { editResource, reactivateResource, resourceId }
     } = this;
 
     const providerCodeLabel = resource.providerCode === 'CURATOR_REVIEW' ? 'Empty provider code' : resource.providerCode;
@@ -293,7 +293,7 @@ class ResourceItem extends React.Component {
           </div>
         )}
 
-        <div className="row">
+        <div className="row" id={`resource-${resourceId}`}>
           <div className="col overflow-y-scroll">
             <table className="table table-sm table-striped table-borderless">
               <tbody>

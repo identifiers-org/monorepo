@@ -36,7 +36,7 @@ class RorApiHelperTest {
     @TestConfiguration
     public static class TestConfig {
         @Bean
-        public RestTemplate restTemplate() {
+        public RestTemplate restTemplateExternal() {
             return new RestTemplate();
         }
     }

@@ -45,7 +45,7 @@ public class WikiDataHelper {;
                           String WikiDataActionEndpoint,
                           @Value("${org.identifiers.cloud.wikidata.search-limit}")
                           int searchLimit,
-                          RestTemplate restTemplate,
+                          RestTemplate restTemplateExternal,
                           SPARQLRepository wikidataSparqlRepository,
                           @Value("classpath:wikidataDetailsQueryTemplate.sparql")
                           Resource wikidataDetailsQuery,
@@ -53,7 +53,7 @@ public class WikiDataHelper {;
                           Resource wikidataRorDetailsQuery) throws IOException {
         this.tokenNameFinderModel = tokenNameFinderModel;
         this.tokenizerModel = tokenizerModel;
-        this.restTemplate = restTemplate;
+        this.restTemplate = restTemplateExternal;
         this.wikidataSparqlRepository = wikidataSparqlRepository;
         this.wikidataDetailsQueryStringTemplate = IOUtils.toString(
                 wikidataDetailsQuery.getInputStream(), StandardCharsets.UTF_8

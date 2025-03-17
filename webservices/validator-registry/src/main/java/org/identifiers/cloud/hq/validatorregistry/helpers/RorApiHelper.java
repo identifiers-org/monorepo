@@ -23,12 +23,12 @@ public class RorApiHelper {
     private String queryUrlTemplate;
 
 
-    private final RestTemplate restTemplate;
+    private final RestTemplate restTemplateExternal;
 
 
     public Optional<RorInformation> fetchRorInfoFor(String rorId) {
         try {
-            var httpResponse = restTemplate.getForEntity(idFetchUrlTemplate, RorInformation.class, rorId);
+            var httpResponse = restTemplateExternal.getForEntity(idFetchUrlTemplate, RorInformation.class, rorId);
 
             return httpResponse.getStatusCode().is2xxSuccessful() ?
                     Optional.ofNullable(httpResponse.getBody()) : Optional.empty();
@@ -41,7 +41,7 @@ public class RorApiHelper {
 
     public List<RorInformation> query(String query) {
         try {
-            var httpResponse = restTemplate.getForEntity(queryUrlTemplate, RorQueryResponse.class, query);
+            var httpResponse = restTemplateExternal.getForEntity(queryUrlTemplate, RorQueryResponse.class, query);
             if (httpResponse.getStatusCode().is2xxSuccessful() && httpResponse.getBody() != null) {
                 return httpResponse.getBody().items();
             } else {

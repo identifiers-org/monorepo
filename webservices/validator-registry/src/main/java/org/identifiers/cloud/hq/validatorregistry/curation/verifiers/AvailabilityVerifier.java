@@ -7,6 +7,7 @@ import org.identifiers.cloud.commons.messages.responses.linkchecker.ServiceRespo
 import org.identifiers.cloud.commons.messages.models.CurationWarningNotification;
 import org.identifiers.cloud.hq.validatorregistry.helpers.StatusHelper;
 import org.identifiers.cloud.hq.validatorregistry.helpers.TargetEntityHelper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.ParameterizedTypeReference;
@@ -27,19 +28,22 @@ import java.util.stream.Collectors;
 public class AvailabilityVerifier extends RegistryEntityVerifier<Resource> {
     public static final String NOTIFICATION_TYPE = "low-availability-resource";
 
-    @Value("${org.identifiers.cloud.verifiers.availability.endpoint}")
-    private String availabilityInformationEndpoint;
-    @Value("${org.identifiers.cloud.verifiers.availability.min}")
-    private Integer minAvailability;
-
+    private final String availabilityInformationEndpoint;
+    private final Integer minAvailability;
     private final RestTemplate restTemplate;
-
     private Map<Long, Float> resourceAvailabilities;
 
-    public AvailabilityVerifier(RestTemplate restTemplate,
-                                StatusHelper statusHelper) {
+    public AvailabilityVerifier(@Qualifier("restTemplateExternal")
+                                RestTemplate restTemplateExternal,
+                                StatusHelper statusHelper,
+                                @Value("${org.identifiers.cloud.verifiers.availability.endpoint}")
+                                String availabilityInformationEndpoint,
+                                @Value("${org.identifiers.cloud.verifiers.availability.min}")
+                                Integer minAvailability) {
         super(statusHelper);
-        this.restTemplate = restTemplate;
+        this.restTemplate = restTemplateExternal;
+        this.availabilityInformationEndpoint = availabilityInformationEndpoint;
+        this.minAvailability = minAvailability;
     }
 
     @Override
@@ -84,12 +88,15 @@ public class AvailabilityVerifier extends RegistryEntityVerifier<Resource> {
         if (resourceAvailabilities.containsKey(entity.getId())) {
             var avail = resourceAvailabilities.get(entity.getId());
             String globalId = String.format("%s:%s", NOTIFICATION_TYPE, entity.getId());
+            String sampleUrl = entity.getUrlPattern().replace("{$id}", entity.getSampleId());
             var notification = CurationWarningNotification.builder()
                     .targetType(TargetEntityHelper.getEntityTypeOf(entity))
                     .targetId(entity.getId())
                     .globalId(globalId)
                     .type(NOTIFICATION_TYPE)
-                    .details(Map.of("availability", String.valueOf(avail)))
+                    .details(Map.of("availability", String.valueOf(avail),
+                                    "home-url", entity.getResourceHomeUrl(),
+                                    "sample-url", sampleUrl))
                     .build();
             return Optional.of(notification);
         } else {
