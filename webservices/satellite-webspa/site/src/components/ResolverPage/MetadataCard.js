@@ -1,10 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const MetadataCard = ({metadata}) => {
+const MetadataCard = ({metadata, parsedCid}) => {
   const provider = metadata?.retrieverId ? metadata?.retrieverId[0] : "unknown";
   const contentElemId = `metadata-content-${provider}`
-  let uiCounter = 0;
+  let moreInfoHref = getMoreInfoHrefFor(provider, parsedCid);
+
+  const metadataValues = Object.entries(metadata)
+      .filter(([k,]) => k !== "retrieverId")
+      .flatMap(([k, v]) => v.map((vi, idx) =>
+          <li key={`list-group-item-${provider}-${k}-${idx}`} className="list-group-item">{k}:
+            <MetadataValue value={vi}/>
+          </li>
+      ));
+
   return (
     <div className="card mt-3 mb-3">
       <div className="card-header d-flex align-items-center">
@@ -13,14 +22,20 @@ const MetadataCard = ({metadata}) => {
           {GetTitleForRetrieverId(provider)}
         </button>
       </div>
-      <ul id={contentElemId} className="list-group list-group-flush collapse show">
-        {Object.entries(metadata)
-          .filter(([k,]) => k !== "retrieverId")
-          .flatMap(([k, v]) =>
-            v.map(vi => <li key={uiCounter++} className="list-group-item">{k}: <MetadataValue value={vi}/></li>)
-          )
-        }
-      </ul>
+      <div className="card-body">
+        <ul id={contentElemId} className="list-group list-group-flush collapse show">
+          { metadataValues }
+          { moreInfoHref &&
+            <li key={`list-group-item-${provider}-more`} className="list-group-item">
+              <a href={moreInfoHref} className="clear-link">
+                Click here for more
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+
+
     </div>
   )
 }
@@ -30,6 +45,15 @@ const MetadataValue = props => {
     return <a href={props.value}>{props.value}</a>;
   } else {
     return props.value;
+  }
+}
+
+const getMoreInfoHrefFor = (provider, parsedCid) => {
+  switch (provider) {
+    case "togoid":
+      return `https://togoid.dbcls.jp/?route=&ids=${parsedCid.localId}`;
+    default:
+      return undefined;
   }
 }
 
