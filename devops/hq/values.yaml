@@ -44,7 +44,6 @@ keycloak:
   issuer_uri: "https://auth.identifiers.org/auth/realms/idorg"
   access_token_uri: "https://auth.identifiers.org/auth/realms/idorg/protocol/openid-connect/token"
 
-
 registry:
   component: registry
   tier: api
@@ -63,6 +62,30 @@ registry:
   api_uri: "https://registry.api.identifiers.org"
   base_uri: "https://registry.identifiers.org"
   url_pattern_similarity_threshold: 0.90
+
+validator:
+  component: validator
+  tier: job
+  image: "identifiersorg/cloud-registry-validator:1.0.0"
+  schedule: "0 12 * * 0"
+  suspend: false
+  requests:
+    cpu: 100m
+    memory: 200Mi
+  is_enabled:
+    namespaces: "true"
+    institutions: "true"
+    resources: "true"
+    curator_review: "true"
+    availability: "true"
+    url_verifier: "true"
+    wikidata: "true"
+  wikidata_max_distance: 1.5
+  availability_min: 25
+  endpoints:
+    notifications: "https://registry.api.identifiers.org/curationApi/notifications"
+    dataset: "https://registry.api.identifiers.org/resolutionApi/getResolverDataset"
+    availability: ~
 
 frontend:
   component: web-hq

@@ -15,4 +15,4 @@ spring:
             provider: keycloak
       resourceserver:
         jwt:
-          issuer-uri: ${HQ_WS_REGISTRY_CONFIG_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI:http://localkeycloak:8080/auth/realms/idorg}
+          issuer-uri: ${VALIDATOR_CONFIG_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI:http://localkeycloak:8080/auth/realms/idorg}

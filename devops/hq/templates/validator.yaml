@@ -1,0 +1,109 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Values.validator.component }}
+  labels:
+    tier: {{ .Values.validator.tier }}
+    component: {{ .Values.validator.component }}
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 2
+  schedule: {{ .Values.validator.schedule }}
+  startingDeadlineSeconds: 180
+  suspend: {{ .Values.validator.suspend }}
+  jobTemplate:
+    spec:
+      backoffLimit: 4
+      ttlSecondsAfterFinished: 7200
+      template:
+        metadata:
+          name: {{ .Values.validator.component }}
+          labels:
+            tier: {{ .Values.validator.tier }}
+            component: {{ .Values.validator.component }}
+            {{- (include "common_labels" .) | indent 12 }}
+        spec:
+          activeDeadlineSeconds: 86400
+          restartPolicy: Never
+          terminationGracePeriodSeconds: 30
+          affinity:
+            {{- (include "node_affinity_requirements" .) | indent 12 }}
+            podAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 50
+                  podAffinityTerm:
+                    labelSelector:
+                      matchExpressions:
+                        {{- (include "common_label_match_expressions" .) | indent 24 }}
+                        - key: tier
+                          operator: In
+                          values:
+                            - {{ .Values.registry.tier }}
+                        - key: component
+                          operator: In
+                          values:
+                            - {{ .Values.registry.component }}
+                    topologyKey: "kubernetes.io/hostname"
+          containers:
+            - name: cloud-registry-validator
+              image: {{ .Values.validator.image }}
+              imagePullPolicy: Always
+              resources:
+                requests:
+                  memory: {{ .Values.validator.requests.memory }}
+                  cpu: {{ .Values.validator.requests.cpu }}
+              env:
+                - name: SPRING_PROFILES_ACTIVE
+                  value: "authenabled"
+                - name: VALIDATOR_CONFIG_REGISTRY_RESOLUTION_DATASET_ENDPOINT
+                  value: {{ .Values.validator.endpoints.dataset | quote }}
+                - name: VALIDATOR_CONFIG_REGISTRY_NOTIFICATION_ENDPOINT
+                  value: {{ .Values.validator.endpoints.notifications | quote }}
+                - name: VALIDATOR_CONFIG_VERIFIERS_NAMESPACES_ENABLED
+                  value: {{ .Values.validator.is_enabled.namespaces | quote }}
+                - name: VALIDATOR_CONFIG_VERIFIERS_RESOURCES_ENABLED
+                  value: {{ .Values.validator.is_enabled.resources | quote }}
+                - name: VALIDATOR_CONFIG_VERIFIERS_INSTITUTIONS_ENABLED
+                  value: {{ .Values.validator.is_enabled.institutions | quote }}
+                - name: VALIDATOR_CONFIG_VERIFIERS_CURATORREVIEW_ENABLED
+                  value: {{ .Values.validator.is_enabled.curator_review | quote }}
+                - name: VALIDATOR_CONFIG_VERIFIERS_AVAILABILITY_ENABLED
+                  value: {{ .Values.validator.is_enabled.availability | quote }}
+                - name: VALIDATOR_CONFIG_VERIFIERS_URLVERIFIER_ENABLED
+                  value: {{ .Values.validator.is_enabled.url_verifier | quote }}
+                - name: VALIDATOR_CONFIG_VERIFIERS_WIKIDATA_ENABLED
+                  value: {{ .Values.validator.is_enabled.wikidata | quote }}
+                - name: VALIDATOR_CONFIG_VERIFIERS_WIKIDATA_MAX_DISTANCE_FOR_MATCH
+                  value: {{ .Values.validator.wikidata_max_distance | quote }}
+                - name: VALIDATOR_CONFIG_VERIFIERS_AVAILABILITY_ENDPOINT
+                  value: {{ .Values.validator.endpoints.availability | quote }}
+                - name: VALIDATOR_CONFIG_VERIFIERS_AVAILABILITY_MIN
+                  value: {{ .Values.validator.availability_min | quote }}
+                - name: VALIDATOR_CONFIG_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUERURI
+                  value: {{ .Values.keycloak.issuer_uri | quote }}
+                - name: VALIDATOR_CONFIG_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI
+                  value: {{ .Values.keycloak.issuer_uri | quote }}
+                - name: "VALIDATOR_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTSECRET"
+                  valueFrom:
+                    secretKeyRef:
+                      name: "hq-validator-keycloak-credentials"
+                      key: "clientsecret"
+                - name: VALIDATOR_CONFIG_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENTID
+                  valueFrom:
+                    secretKeyRef:
+                      name: "hq-validator-keycloak-credentials"
+                      key: "clientid"
+                - name: HQ_WS_REGISTRY_JVM_MEMORY_MAX
+                  value: {{ .Values.validator.requests.memory | lower | trimSuffix "i" | quote }}
+                - name: MATOMO_AUTH_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: matomo-credentials
+                      key: auth_token
+                {{- range $key, $val := (default .Values.validator.env list) }}
+                - name: {{ $key }}
+                  value: {{ $val | quote }}
+                {{- end}}
+

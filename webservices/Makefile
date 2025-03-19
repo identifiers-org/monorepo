@@ -8,3 +8,4 @@ include ./resolver/Makefile
 include ./resource-recommender/Makefile
 include ./satellite-webspa/Makefile
 include ./sparql/Makefile
+include ./validator-registry/Makefile
