@@ -7,7 +7,7 @@ commonLabels:
 
 extraEnvVars:
 - name: PHP_MEMORY_LIMIT
-  value: "4G"
+  value: "5G"
 
 matomoWebsiteHost: "matomo.identifiers.org"
 matomoWebsiteName: "Identifiers.org"
@@ -37,16 +37,13 @@ volumePermissions:
 
 matomoSkipInstall: true
 
-updateStrategy:
-  type: Recreate
-
 resources:
   requests:
     cpu: 100m
     memory: 750Mi
   limits: 
     cpu: 900m
-    memory: 2G
+    memory: 5G
   
 
 mariadb:

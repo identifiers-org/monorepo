@@ -88,6 +88,8 @@ spec:
                       name: idorg-matomo-secrets
                 - name: MATOMO_SMTP_PROTOCOL
                   value: tls
+                - name: PHP_MEMORY_LIMIT
+                  value: "2G"
               image: docker.io/bitnami/matomo:4.14.2-debian-11-r10
               imagePullPolicy: IfNotPresent
               name: matomo-archiver
