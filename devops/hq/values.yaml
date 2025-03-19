@@ -48,7 +48,7 @@ keycloak:
 registry:
   component: registry
   tier: api
-  image: "identifiersorg/cloud-hq-ws-registry:2.5.1"
+  image: "identifiersorg/cloud-hq-ws-registry:2.6.0"
   replicas: 2
   requests:
     cpu: 100m
@@ -67,7 +67,7 @@ registry:
 frontend:
   component: web-hq
   tier: frontend
-  image: "identifiersorg/cloud-hq-web-frontend:1.13.0"
+  image: "identifiersorg/cloud-hq-web-frontend:1.14.0"
   replicas: 3
   requests:
     cpu: 10m

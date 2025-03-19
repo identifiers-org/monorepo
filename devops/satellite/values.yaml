@@ -46,7 +46,7 @@ resource_recommender:
 link_checker:
   component: link-checker
   tier: api
-  image: "identifiersorg/cloud-ws-link-checker:2.1.8"
+  image: "identifiersorg/cloud-ws-link-checker:2.2.0"
   replicas: 1
   requests:
     memory: 440Mi
