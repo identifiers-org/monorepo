@@ -1,0 +1,91 @@
+import React, {useEffect, useState} from "react";
+import {config} from "../../config/Config";
+import Spinner from "../common/Spinner";
+import CurationWarningDetails from "./CurationWarningDetails";
+import {Link} from "react-router-dom";
+
+const allSettledAndSuccessfulJsons = (fetches) =>
+    Promise.allSettled(fetches)
+        .then(results => results.filter(r =>
+            r.status === "fulfilled" && r.value.status === 200
+        ))
+        .then(results => Promise.all(results.map(r => r.value.json())))
+
+
+export default ({selectedTarget, modalId, editHref}) => {
+  const [loading, setLoading] = useState(null);
+  const [failed, setFailed] = useState(false);
+  const [curationWarnings, setCurationWarnings] = useState([])
+
+
+  useEffect(() => {
+    if (loading !== true && selectedTarget) {
+      setLoading(true);
+      setCurationWarnings([]);
+      const targetUrl = selectedTarget.type === 'Institution' ?
+          config.registryApi + `/restApi/institutions/` + selectedTarget.identifier :
+          config.registryApi + `/restApi/namespaces/search/findByPrefix?prefix=` + selectedTarget.identifier;
+      fetch(targetUrl)
+          .then(response => response.json())
+          .then(target => {
+            const directCws = fetch(target._links.curationWarnings.href);
+            if (selectedTarget.type === 'Prefix') {
+              // Fetch CW under namespace and under its resources
+              fetch(target._links.resources.href)
+                  .then(resp => resp.json())
+                  .then(resources => {
+                    const cwPromises = [directCws, ...resources._embedded.resources.map(res => fetch(res._links.curationWarnings.href))]
+                    allSettledAndSuccessfulJsons(cwPromises)
+                        .then(jsons => jsons.flatMap(json => json._embedded.curationWarnings))
+                        .then(warnings => warnings.filter(cw => cw.open))
+                        .then(warnings => setCurationWarnings(warnings))
+                        .catch(() => setFailed(true))
+                        .finally(() => setLoading(false))
+                  })
+                  .catch(() => setFailed(true))
+            } else {
+              directCws.then(response => response.json())
+                       .then(json => setCurationWarnings(json._embedded.curationWarnings))
+                       .catch(() => setFailed(true))
+                       .finally(() => setLoading(false))
+            }
+          })
+          .catch(() => setFailed(true))
+    }
+  }, [selectedTarget, setFailed, setLoading, setCurationWarnings]);
+
+  if (!selectedTarget) return undefined;
+
+  let body;
+  if (failed)
+    body = <Spinner/>
+  else if (loading)
+    body = <div className="alert alert-danger"> Failed to get details! </div>
+  else
+    body = curationWarnings.map((cw, idx) =>
+      <CurationWarningDetails key={idx} curationWarning={cw} targetInfo={selectedTarget}/>
+    )
+
+  return (
+      <div className="modal" id={modalId} tabIndex={-1}>
+        <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h6 className="modal-title">
+                Open warnings for {selectedTarget.label} ({selectedTarget.identifier})
+                <Link to={editHref} target="_blank" className="ml-2">
+                  <i className="icon icon-common icon-external-link-alt"></i>
+                </Link>
+              </h6>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              {body}
+            </div>
+          </div>
+        </div>
+      </div>
+  )
+}

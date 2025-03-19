@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.hq.ws.registry.api.data.exporters.ExportedDocument;
 import org.identifiers.cloud.hq.ws.registry.api.models.RegistryInsightApiModel;
-import org.identifiers.cloud.hq.ws.registry.models.LowAvailabilityOnLinkCheckerService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +30,6 @@ import java.util.Optional;
 @RequestMapping("registryInsightApi")
 public class RegistryInsightApiController {
     private final RegistryInsightApiModel insightModel;
-    private final Optional<LowAvailabilityOnLinkCheckerService> lowAvailabilityOnLinkCheckerService;
 
     @GetMapping("/getAllNamespacePrefixes")
     public ResponseEntity<?> getAllNamespacePrefixes() {
@@ -47,20 +45,5 @@ public class RegistryInsightApiController {
             return new ResponseEntity<>(export, HttpStatus.OK);
         else
             return ResponseEntity.noContent().build();
-    }
-
-    /**
-     * This is meant to be a temporary API to be replaced when an actual curation service is deployed
-     */
-    @GetMapping("/getResourcesWithLowAvailability")
-    public ResponseEntity<Map<String, Float>> getResourcesWithLowAvailability() {
-        if (lowAvailabilityOnLinkCheckerService.isEmpty()) return ResponseEntity.noContent().build();
-
-        var responseBody = lowAvailabilityOnLinkCheckerService.get().getResourcesToAvailabilityMap();
-        if (responseBody != null && !responseBody.isEmpty()) {
-            return ResponseEntity.ok((responseBody));
-        } else {
-            return ResponseEntity.noContent().build();
-        }
     }
 }

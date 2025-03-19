@@ -1,62 +1,117 @@
-import React, { memo, useState } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import { config } from "../../config/Config";
-import CurationWarningListItem from "./CurationWarningListItem"
-import Paginator from "../common/Paginator";
+import Spinner from "../common/Spinner";
+import CurationWarningModal from "./CurationWarningModal";
+
+import DataTable from "datatables.net-react";
+import DT from 'datatables.net-bs4';
+import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css'
+
+
+DataTable.use(DT);
 
 const CurationWarningList = () => {
-  const [warningList, setWarningList] = useState([]);
+  const [tableRows, setTableRows] = useState([]);
   const [loading, setLoading] = useState(null);
   const [failed, setFailed] = useState(false);
-  const [pgSize, setPgSize] = useState(5);
-  const [pageIdx, setPageIdx] = useState(0);
+  const [selectedTarget, setSelectedTarget] = useState(null);
 
-  if (loading === null) {
-    setLoading(true);
-    fetch(config.registryApi + "/registryInsightApi/getResourcesWithLowAvailability")
-      .then(response => response.json())
-      .then(json => setWarningList(Object.entries(json)))
-      .catch(() => setFailed(true))
-      .finally(() => setLoading(false));
+  const getLinkToTarget = useCallback((targetInfo, col) => {
+    const href = getHrefForTarget(targetInfo);
+    return <a className="btn btn-link" href={href} target="_blank">
+      <i className="icon icon-common icon-external-link-alt"></i>
+    </a>
+  }, []);
+
+  const getSelectTargetBttn = useCallback((targetInfo, col) =>
+      <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#targetInfoModal"
+              onClick={() => setSelectedTarget(targetInfo)}>
+        <i className="icon icon-common icon-search-plus"></i>
+      </button>
+    , [])
+
+  const parseWarningSummaryIntoRows = useCallback((summaryPayload) => {
+    if (summaryPayload == null || !Array.isArray(summaryPayload.summaryEntries)) return [];
+
+    const usageScores = summaryPayload.namespaceUsage;
+
+    return summaryPayload.summaryEntries.map(r => [
+          `${r.targetInfo.label} (${r.targetInfo.identifier})`,
+          r.targetInfo,
+          usageScores[r.targetInfo.identifier] || 0,
+          r.lowAvailabilityResources,
+          r.failingInstitutionUrl,
+          r.hasCurationValues,
+          r.hasPossibleWikidataError,
+          r.targetInfo,
+    ])
+  }, []);
+
+  useEffect(() => {
+    if (loading === null || loading === false) {
+      setLoading(true);
+
+      fetch(config.registryApi + "/curationApi/warningsSummary")
+          .then(response => response.json())
+          .then(json => parseWarningSummaryIntoRows(json.payload))
+          .then(rows => setTableRows(rows))
+          .catch(() => setFailed(true))
+          .finally(() => setLoading(false));
+    }
+  }, []);
+
+  if (loading) return <div> <Spinner/> </div>
+  if (failed) return <div className="alert alert-danger"> Failed to download warnings! </div>
+
+  const opts = {
+    columnDefs: [
+      {searchable: false, targets: [1,2,3,4,5,6,7]},
+      {sortable: false, targets: [7]},
+      {className: 'text-right', targets: [2,3,4]},
+      {className: 'text-center', targets: [1,7]}
+    ],
+    order: [[3, 'desc'], [2, 'desc']],
+    layout: {
+      topStart: null,
+      topEnd: {
+        search: {
+          placeholder: 'Search here...',
+          text: ''
+        }
+      }
+    },
+    pageLength: 5,
+    stateSave: true,
+    lengthChange: false
   }
+  return <>
+    <DataTable data={tableRows} slots={{1: getLinkToTarget, 7: getSelectTargetBttn}} options={opts}
+                    className="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th className="cursor-pointer" colSpan={2}>Target</th>
+          <th className="cursor-pointer">Access score</th>
+          <th className="cursor-pointer">Low availability</th>
+          <th className="cursor-pointer">Bad institution URL</th>
+          <th className="cursor-pointer">Curation review</th>
+          <th className="cursor-pointer">Wikidata discrepancy</th>
+          <th className="cursor-pointer"></th>
+        </tr>
+      </thead>
+    </DataTable>
+    <CurationWarningModal selectedTarget={selectedTarget}
+                          modalId="targetInfoModal"
+                          editHref={getHrefForTarget(selectedTarget)} />
+  </>
 
-  const paginationVals = {
-    items: null,
-    totalElements: 0,
-    totalPages: 0
-  };
-  if (loading) {
-    paginationVals.items = [<div key={0}> Loading... </div>];
-    paginationVals.totalElements = 1;
-    paginationVals.totalPages = 1;
-  } else if (failed) {
-    paginationVals.items = [<div key={0}> Failed to get list of curation warnings! </div>];
-    paginationVals.totalElements = 1;
-    paginationVals.totalPages = 1;
-  } else if (warningList) {
-    const first = pageIdx * pgSize;
-    const last = (pageIdx+1) * pgSize;
-    paginationVals.items =  warningList
-      .sort((a,b) => a[1]-b[1])//Sort by availability
-      .slice(first,last) //Pagination slice
-      .map(([resourceId, availability]) => //Map to list item components
-        <CurationWarningListItem key={resourceId} resourceId={resourceId} availability={availability} />
-      );
-    paginationVals.totalElements = warningList.length;
-    paginationVals.totalPages = Math.ceil(warningList.length / pgSize);
-  }
-
-  return (<>
-    <Paginator
-      navigate={v => setPageIdx(parseInt(v))}
-      number={pageIdx}
-      setSize={e => setPgSize(parseInt(e.target.value))}
-      size={pgSize}
-      totalElements={paginationVals.totalElements}
-      totalPages={paginationVals.totalPages}
-    />
-    {paginationVals.items}
-  </>)
 }
 
+const getHrefForTarget = targetInfo => {
+  if (!targetInfo) return null;
 
-export default memo(CurationWarningList, () => true);
+  return targetInfo.type === 'Institution' ?
+      '/curation?institution=' + targetInfo.identifier :
+      '/registry/' + targetInfo.identifier;
+}
+
+export default CurationWarningList;

@@ -1,0 +1,25 @@
+# Please note that this requires the rorId binding to be set before evaluation
+#  It expects the variable to be just the alpha numerical URI path instead of the full URI.
+#  e.g. 02jbv0t02, 018q2r417, 0168r3w48, 00f54p054, or 02catss52
+#  This is done programmatically by the helper class and the query will fail if run directly
+
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?institution ?name ?homeUrl ?rorId ?locCode ?locName
+WHERE {
+    ?institution wdt:P6782 ?rorId
+
+    OPTIONAL { ?institution rdfs:label ?name }
+    OPTIONAL { ?institution wdt:P856 ?homeUrl }
+    OPTIONAL {
+        ?institution wdt:P17 ?country .
+        ?country wdt:P297 ?locCode ;
+        rdfs:label ?locName .
+    }
+
+    FILTER (lang(?name) = "en")
+    FILTER (lang(?locName) = "en")
+}
+LIMIT 1

@@ -8,17 +8,21 @@ import { setCurationInstitutionListParams } from '../../actions/CurationDashboar
 // Components.
 import Paginator from '../common/Paginator';
 import CurationInstitutionItem from './CurationInstitutionItem';
+import {useSearchParams} from "react-router-dom";
 
 
 class CurationInstitutionList extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {debounceSearch: undefined}
   }
 
   updateCurationInstitutionList = (params) => {
-    this.props.getCurationInstitutionListFromRegistry(params);
+    if ('institution' in this.props.params) {
+      this.props.getCurationInstitutionListFromRegistry({size: 1000});
+    } else {
+      this.props.getCurationInstitutionListFromRegistry(params);
+    }
   }
 
   componentDidMount() {
@@ -69,6 +73,12 @@ class CurationInstitutionList extends React.Component {
       state: { nameContent }
     } = this;
 
+    let filteredInstitutionList = curationInstitutionList;
+    if ('institution' in this.props.params) {
+      const institutionId = this.props.params.institution;
+      filteredInstitutionList = curationInstitutionList.filter(i => i.id === institutionId)
+    }
+
     return (
       <>
         <div className="row">
@@ -102,10 +112,10 @@ class CurationInstitutionList extends React.Component {
         <div className="row justify-content-md-center mt-2">
           <div className="col">
             {
-              curationInstitutionList.length === 0 ? (
+              filteredInstitutionList.length === 0 ? (
                 <p>No institutions stored.</p>
               ) : (
-                curationInstitutionList.map(institution => (
+                  filteredInstitutionList.map(institution => (
                   <CurationInstitutionItem
                     key={`cii-${institution.id}`}
                     institution={institution}
@@ -132,4 +142,8 @@ const mapDispatchToProps = (dispatch) => ({
   setCurationInstitutionListParams: (params) => dispatch(setCurationInstitutionListParams(params))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CurationInstitutionList);
+const ConnectedCurationInstitutionList = connect(mapStateToProps, mapDispatchToProps)(CurationInstitutionList);
+export default props => {
+  const [params] = useSearchParams();
+  return <ConnectedCurationInstitutionList {...props} params={params}/>
+}

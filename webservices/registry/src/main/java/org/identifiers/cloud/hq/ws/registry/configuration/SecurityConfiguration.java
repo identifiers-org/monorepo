@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.converter.FormHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -89,6 +91,7 @@ public class SecurityConfiguration {
         http.authorizeHttpRequests(auth -> auth
                     .requestMatchers("/healthApi/**").permitAll()
                 // REST Repository - Institutions
+                    .requestMatchers(HttpMethod.GET, "/restApi/institutions/*/curationWarnings").hasAuthority("restApiCurationWarningsGet")
                     .requestMatchers(HttpMethod.GET, "/restApi/institutions/**").permitAll()
                     .requestMatchers(HttpMethod.HEAD, "/restApi/institutions/**").permitAll()
                     .requestMatchers(HttpMethod.POST, "/restApi/institutions/**").hasAuthority("restApiInstitutionPost")
@@ -103,6 +106,7 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.PATCH, "/restApi/locations/**").hasAuthority("restApiLocationPatch")
                     .requestMatchers(HttpMethod.DELETE, "/restApi/locations/**").denyAll()
                 // REST Repository - Namespaces
+                    .requestMatchers(HttpMethod.GET, "/restApi/namespaces/*/curationWarnings").hasAuthority("restApiCurationWarningsGet")
                     .requestMatchers(HttpMethod.GET, "/restApi/namespaces/*/contactPerson/**").hasAuthority("restApiPersonGet")
                     .requestMatchers(HttpMethod.GET, "/restApi/namespaces/**").permitAll()
                     .requestMatchers(HttpMethod.HEAD, "/restApi/namespaces/**").permitAll()
@@ -119,6 +123,7 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.PATCH, "/restApi/namespaceSynonyms/**").hasAuthority("restApiNamespaceSynonymPatch")
                     .requestMatchers(HttpMethod.DELETE, "/restApi/namespaceSynonyms/**").denyAll()
                 // REST Repository - Resources
+                    .requestMatchers(HttpMethod.GET, "/restApi/resources/*/curationWarnings").hasAuthority("restApiCurationWarningsGet")
                     .requestMatchers(HttpMethod.GET, "/restApi/resources/*/contactPerson/**").hasAuthority("restApiPersonGet")
                     .requestMatchers(HttpMethod.GET, "/restApi/resources/**").permitAll()
                     .requestMatchers(HttpMethod.HEAD, "/restApi/resources/**").permitAll()
@@ -245,6 +250,15 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.PUT, "/restApi/resourceRegistrationSessionEventStarts/**").hasAuthority("restApiResourceRegistrationSessionEventStartPut")
                     .requestMatchers(HttpMethod.PATCH, "/restApi/resourceRegistrationSessionEventStarts/**").hasAuthority("restApiResourceRegistrationSessionEventStartPatch")
                     .requestMatchers(HttpMethod.DELETE, "/restApi/resourceRegistrationSessionEventStarts/**").denyAll()
+                // REST Repository - Curation Warnings
+                    .requestMatchers(HttpMethod.GET, "/restApi/curationWarnings/**").hasAuthority("restApiCurationWarningsGet")
+                    .requestMatchers(HttpMethod.GET, "/restApi/namespaceCurationWarnings/**").hasAuthority("restApiCurationWarningsGet")
+                    .requestMatchers(HttpMethod.GET, "/restApi/resourceCurationWarnings/**").hasAuthority("restApiCurationWarningsGet")
+                    .requestMatchers(HttpMethod.GET, "/restApi/institutionCurationWarnings/**").hasAuthority("restApiCurationWarningsGet")
+                // Curation API
+                    .requestMatchers(HttpMethod.GET, "/curationApi/queryWarnings").hasAuthority("restApiCurationWarningsGet")
+                    .requestMatchers(HttpMethod.GET, "/curationApi/warningsSummary").hasAuthority("restApiCurationWarningsGet")
+                    .requestMatchers(HttpMethod.POST, "/curationApi/notifications").hasAuthority("restApiCurationWarningsNotify")
                 // Resolution API
                     .requestMatchers("/resolutionApi/**").permitAll()
                 // Semantic API
@@ -291,7 +305,9 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET, "/actuator/health/**").permitAll()
                     .requestMatchers("/actuator").hasAuthority(actuatorRequiredRole)
                     .requestMatchers("/actuator/loggers/**").hasAuthority(actuatorRequiredRole)
-                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll())
+                // CORS Method
+                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                )
                 .csrf(csrf -> csrf.ignoringRequestMatchers(
                         "/prefixRegistrationApi/registerPrefix",
                                 "/prefixRegistrationApi/validate*",
@@ -337,7 +353,14 @@ public class SecurityConfiguration {
                 .build();
     }
 
-
+    @Bean
+    @Profile("authenabled")
+    public RestTemplate matomoRestTemplate(RestTemplateBuilder restTemplateBuilder) {
+        return restTemplateBuilder
+                .setReadTimeout(Duration.ofSeconds(5))
+                .setConnectTimeout(Duration.ofSeconds(1))
+                .build();
+    }
 
     @Bean
     @Profile("!authenabled")

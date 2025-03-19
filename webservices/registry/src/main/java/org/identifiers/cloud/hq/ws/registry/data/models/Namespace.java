@@ -3,6 +3,7 @@ package org.identifiers.cloud.hq.ws.registry.data.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.identifiers.cloud.hq.ws.registry.data.models.curationwarnings.NamespaceCurationWarning;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -145,4 +146,8 @@ public class Namespace {
     @OneToMany(mappedBy = "namespace")
     @ToString.Exclude
     private List<Resource> resources;
+
+    @OneToMany(mappedBy = "namespace")
+    @ToString.Exclude
+    private List<NamespaceCurationWarning> curationWarnings;
 }

@@ -119,15 +119,17 @@ public class LinkScoringApiModel {
                        .setErrorMessage("This functionality if not available yet.");
     }
 
-    public Map<String, Float> getResourcesIdsWithAvailabilityLowerThan(int minAvailability) {
+    public ServiceResponse<ServiceResponseResourceAvailabilityPayload>
+    getResourcesIdsWithAvailabilityLowerThan(int minAvailability) {
         Predicate<ResourceTracker> availabilityFilter = tracker ->
                 tracker.getHistoryStats(SIMPLE).getUpPercentage() < minAvailability;
-        return historyTrackingService.getAllResourceTrackers()
+        var payload = historyTrackingService.getAllResourceTrackers()
                 .stream()
                 .filter(availabilityFilter)
-                .collect(Collectors.toMap(
-                        ResourceTracker::getId,
-                        tracker -> tracker.getHistoryStats(SIMPLE).getUpPercentage()
-                ));
+                .map(t -> new ServiceResponseResourceAvailabilityPayload.Item(
+                        Long.parseLong(t.getId()),
+                        t.getHistoryStats(SIMPLE).getUpPercentage()))
+                .collect(Collectors.toCollection(ServiceResponseResourceAvailabilityPayload::new));
+        return ServiceResponse.of(payload);
     }
 }
