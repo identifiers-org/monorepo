@@ -57,8 +57,16 @@ const getDescriptionFor = cw =>
       { Object.entries(cw.moreDetails).map( ([key, value], idx) =>
           <tr key={idx}>
             <td>{kebabCaseToSpaceSeparated(key)}</td>
-            <td>{value}</td>
+            <td><AnchorOrText str={value}/></td>
           </tr>
       )}
       </tbody>
     </table>
+
+const AnchorOrText = props => {
+  if (props.str.startsWith("http")) {
+    return <a href={props.str}>{props.str}</a>
+  } else {
+    return props.str;
+  }
+}

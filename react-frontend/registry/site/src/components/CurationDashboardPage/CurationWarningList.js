@@ -6,6 +6,7 @@ import CurationWarningModal from "./CurationWarningModal";
 import DataTable from "datatables.net-react";
 import DT from 'datatables.net-bs4';
 import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css'
+import {renewToken} from "../../utils/auth";
 
 
 DataTable.use(DT);
@@ -48,16 +49,21 @@ const CurationWarningList = () => {
   }, []);
 
   useEffect(() => {
-    if (loading === null || loading === false) {
-      setLoading(true);
+    const fn = async () => {
+      if (loading === null || loading === false) {
+        setLoading(true);
+        const authToken = await renewToken();
+        const init = {headers: {'Authorization': `Bearer ${authToken}`}};
 
-      fetch(config.registryApi + "/curationApi/warningsSummary")
-          .then(response => response.json())
-          .then(json => parseWarningSummaryIntoRows(json.payload))
-          .then(rows => setTableRows(rows))
-          .catch(() => setFailed(true))
-          .finally(() => setLoading(false));
+        fetch(config.registryApi + "/curationApi/warningsSummary", init)
+            .then(response => response.json())
+            .then(json => parseWarningSummaryIntoRows(json.payload))
+            .then(rows => setTableRows(rows))
+            .catch(() => setFailed(true))
+            .finally(() => setLoading(false));
+      }
     }
+    fn();
   }, []);
 
   if (loading) return <div> <Spinner/> </div>

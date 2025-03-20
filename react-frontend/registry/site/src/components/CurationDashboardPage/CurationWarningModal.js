@@ -3,6 +3,7 @@ import {config} from "../../config/Config";
 import Spinner from "../common/Spinner";
 import CurationWarningDetails from "./CurationWarningDetails";
 import {Link} from "react-router-dom";
+import {renewToken} from "../../utils/auth";
 
 const allSettledAndSuccessfulJsons = (fetches) =>
     Promise.allSettled(fetches)
@@ -19,48 +20,61 @@ export default ({selectedTarget, modalId, editHref}) => {
 
 
   useEffect(() => {
-    if (loading !== true && selectedTarget) {
-      setLoading(true);
-      setCurationWarnings([]);
-      const targetUrl = selectedTarget.type === 'Institution' ?
-          config.registryApi + `/restApi/institutions/` + selectedTarget.identifier :
-          config.registryApi + `/restApi/namespaces/search/findByPrefix?prefix=` + selectedTarget.identifier;
-      fetch(targetUrl)
-          .then(response => response.json())
-          .then(target => {
-            const directCws = fetch(target._links.curationWarnings.href);
-            if (selectedTarget.type === 'Prefix') {
-              // Fetch CW under namespace and under its resources
-              fetch(target._links.resources.href)
-                  .then(resp => resp.json())
-                  .then(resources => {
-                    const cwPromises = [directCws, ...resources._embedded.resources.map(res => fetch(res._links.curationWarnings.href))]
-                    allSettledAndSuccessfulJsons(cwPromises)
-                        .then(jsons => jsons.flatMap(json => json._embedded.curationWarnings))
-                        .then(warnings => warnings.filter(cw => cw.open))
-                        .then(warnings => setCurationWarnings(warnings))
-                        .catch(() => setFailed(true))
-                        .finally(() => setLoading(false))
-                  })
-                  .catch(() => setFailed(true))
-            } else {
-              directCws.then(response => response.json())
-                       .then(json => setCurationWarnings(json._embedded.curationWarnings))
-                       .catch(() => setFailed(true))
-                       .finally(() => setLoading(false))
-            }
-          })
-          .catch(() => setFailed(true))
+    const fn = async () => {
+      if (loading !== true && selectedTarget) {
+        setLoading(true);
+        setCurationWarnings([]);
+
+        const authToken = await renewToken();
+        const init = { headers: { 'Authorization': `Bearer ${authToken}` } }
+
+        const targetUrl = selectedTarget.type === 'Institution' ?
+            config.registryApi + `/restApi/institutions/` + selectedTarget.identifier :
+            config.registryApi + `/restApi/namespaces/search/findByPrefix?prefix=` + selectedTarget.identifier;
+        fetch(targetUrl, init)
+            .then(response => response.json())
+            .then(target => {
+              const directCws = fetch(target._links.curationWarnings.href, init);
+              if (selectedTarget.type === 'Prefix') {
+                // Fetch CW under namespace and under its resources
+                fetch(target._links.resources.href, init)
+                    .then(resp => resp.json())
+                    .then(resources => {
+                      const cwPromises = [
+                        directCws,
+                        ...resources._embedded.resources.map(res => fetch(res._links.curationWarnings.href, init))
+                      ]
+                      allSettledAndSuccessfulJsons(cwPromises)
+                          .then(jsons => jsons.flatMap(json => json._embedded.curationWarnings))
+                          .then(warnings => warnings.filter(cw => cw.open))
+                          .then(warnings => setCurationWarnings(warnings))
+                          .catch(() => setFailed(true))
+                          .finally(() => setLoading(false))
+                    })
+                    .catch(() => setFailed(true))
+              } else {
+                directCws.then(response => response.json())
+                    .then(json => {
+                      setCurationWarnings(json._embedded.curationWarnings)
+                      setFailed(false)
+                    })
+                    .catch(() => setFailed(true))
+                    .finally(() => setLoading(false))
+              }
+            })
+            .catch(() => setFailed(true))
+      }
     }
+    fn();
   }, [selectedTarget, setFailed, setLoading, setCurationWarnings]);
 
   if (!selectedTarget) return undefined;
 
   let body;
-  if (failed)
-    body = <Spinner/>
-  else if (loading)
-    body = <div className="alert alert-danger"> Failed to get details! </div>
+  if (loading)
+    body = <Spinner noText/>
+  else if (failed)
+    body = <div className="alert alert-danger"> Failed to get warnings! </div>
   else
     body = curationWarnings.map((cw, idx) =>
       <CurationWarningDetails key={idx} curationWarning={cw} targetInfo={selectedTarget}/>

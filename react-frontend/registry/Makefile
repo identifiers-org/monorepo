@@ -17,6 +17,7 @@ development_url_auth_redirect_uri = http://127.0.0.1:8180
 folder_site_dist = site/dist
 file_instance_app_structure_index = $(folder_site_dist)/index.html
 environment_content = $(shell cat $(file_template_environment_site_index))
+node = node:22.13-alpine
 
 # Default target
 all: deploy
@@ -26,7 +27,7 @@ release: deploy
 
 sync_project_version:
 	@echo "<===|DEVOPS|===> [SYNC] Synchronizing project version to version '${tag_version}'"
-	@docker run -v $(shell pwd)/${dev_site_root_folder}:/home/site node /bin/bash -c "npm --prefix /home/site version ${tag_version}"
+	@docker run -v $(shell pwd)/${dev_site_root_folder}:/home/site ${node} -c "npm --prefix /home/site version ${tag_version}"
 
 deploy: clean container_production_push
 	@echo "<===|DEVOPS|===> [DEPLOY] Deploying service container version ${tag_version}"
@@ -45,18 +46,18 @@ force_npm_reinstall:
 
 npm_install:
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Installing npm modules"
-	@docker run --user node --network=hqwebnet -p 8192:8192 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site install; npm rebuild"
+	@docker run --user node --network=hqwebnet -p 8192:8192 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it ${node} sh -c "npm --prefix /home/site install; npm rebuild"
 	@touch npm_install
 
 development_env_up: development_instantiate_index_template development_env_backend_up npm_install
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Launch development environment"
-	@docker run --user node --network=hqwebnet -p 8182:8182 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site start"
+	@docker run --user node --network=hqwebnet -p 8182:8182 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it ${node} sh -c "npm --prefix /home/site start"
 
 development_env_down: development_env_backend_down
 
 development_authenabled_env_up: development_instantiate_index_template development_authenabled_env_backend_up npm_install
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Launch development environment"
-	@docker run --user node --network=hqwebnet -p 8182:8182 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it node /bin/bash -c "npm --prefix /home/site start"
+	@docker run --user node --network=hqwebnet -p 8182:8182 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it ${node} sh -c "npm --prefix /home/site start"
 
 development_authenabled_env_down: development_authenabled_env_backend_down
 
@@ -86,7 +87,7 @@ instantiate_base_index_template:
 
 app_structure: clean instantiate_base_index_template
 	@echo "<===|DEVOPS|===> [PACKAGE] Building application structure"
-	@docker run -v $(shell pwd)/${dev_site_root_folder}:/home/site node /bin/bash -c "npm --prefix /home/site install; npm --prefix /home/site run build"
+	@docker run -v $(shell pwd)/${dev_site_root_folder}:/home/site ${node} sh -c "npm --prefix /home/site install; npm --prefix /home/site run build"
 	@echo "<===|DEVOPS|===> [PACKAGE] SPA based distribution prepared at '${folder_site_dist}', injecting configuration placeholders"
 	@sed -i "" "s@<div id=\"config_placeholder\"></div>@${environment_content}@g" ${file_instance_app_structure_index}
 
