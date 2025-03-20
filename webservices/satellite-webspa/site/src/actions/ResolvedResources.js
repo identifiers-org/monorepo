@@ -29,7 +29,9 @@ export const getResolvedResources = (query) => {
 
       // Add compact identifier to every resource.
       data.forEach(resolvedResource => {
-        if (resolvedResource.hasOwnProperty("providerCode") && resolvedResource.providerCode !== 'CURATOR_REVIEW') {
+        if (resolvedResource.hasOwnProperty("providerCode") &&
+            resolvedResource.providerCode !== data.payload?.parsedCompactIdentifier.prefix &&
+            resolvedResource.providerCode !== 'CURATOR_REVIEW') {
           resolvedResource['compactIdentifier'] = `${config.resolverApi}/${resolvedResource.providerCode}/${query}`
         } else {
           resolvedResource['compactIdentifier'] = `${config.resolverApi}/${query}`

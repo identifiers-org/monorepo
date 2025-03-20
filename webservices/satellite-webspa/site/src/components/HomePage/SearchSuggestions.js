@@ -154,33 +154,45 @@ class SearchSuggestions extends React.Component {
    * @returns {string}
    */
   preprocessQueryString = (query) => {
-    query = query.replace(':', ' ');
+    // First remove characters that may cause lucene syntax problems
+    const luceneProblemChars = [
+        '+', '-', '&', '|',
+        '!', '(', ')', '{',
+        '}', '[', ']', '^',
+        '~', '*', '?', ':',
+        '\\','/'
+    ];
+    for (const char of luceneProblemChars) {
+      query = query.replaceAll(char, ' ')
+    }
+    // Then split terms by whitespace or quotes
     const quoteSplitQuery = query.split('"');
-    let elements;
+    let terms;
     if (quoteSplitQuery.length < 3) {
       // No quotes
-      elements = query.split(/\s+/);
+      terms = query.split(/\s+/);
     } else {
       // With quotes. Try to preserve quoted terms.
-      elements = [];
+      terms = [];
       for (let idx in quoteSplitQuery) {
         let val = quoteSplitQuery[idx];
         if (idx % 2 === 1) {
           // quoted parts
-          elements.push('"' + val + '"');
+          terms.push('"' + val + '"');
         } else {
           // unquoted parts
-          elements.push(...val.split(/\s+/));
+          terms.push(...val.split(/\s+/));
         }
       }
     }
     // On single search term without quotes, add a prefix search for auto-completion
-    const peek = elements[0];
-    if (elements.length === 1 && peek.length > 2 && !(peek.startsWith("\"") && peek.endsWith("\""))) {
-      elements.push (`prefix:${peek}*^3`);
+    const peek = terms[0];
+    if (terms.length === 1 && peek.length > 2 && !(peek.startsWith("\"") && peek.endsWith("\""))) {
+      terms.push (`prefix:${peek}*^3`);
     }
-    // Remove blanks and join with OR operator among search terms
-    return elements.map(s => s?.trim()).filter(Boolean).join(" OR ");
+    // Remove blanks and join terms with OR operator among search terms
+    //  The OR operator work since an identifier is likely to be a term of the search
+    return terms.map(s => s?.trim()).filter(Boolean).join(" OR ");
   }
 
   updateScoreInPlaceByMatchingLuis = (namespaces) => {

@@ -16,14 +16,19 @@ const MetadataView = ({curie}) => {
       const fetchHeaders = {headers: {accept: "application/json"}};
       const retrieverFetches = payload.ableRetrievers.map(url => fetch(url, fetchHeaders))
       Promise.allSettled(retrieverFetches)
-        .then(results => results.filter(r => r.status === "fulfilled"))
+        .then(results => results.filter(r => r && r.status === "fulfilled"))
         .then(fulfilledResults =>
           Promise.all(fulfilledResults.filter(r => r.value.status === 200).map(r => r.value.json()))
         )
         .then(metadataValues => {
-          console.log('values', metadataValues)
           setMetadataValues(metadataValues)
           setSuccessful(true)
+        })
+        .catch((reason) => {
+          console.error("failed to fetch metadata", reason)
+          setSuccessful(false)
+        })
+        .finally(() => {
           setLoading(false)
         })
     }
@@ -34,10 +39,10 @@ const MetadataView = ({curie}) => {
       setLoading(true);
       fetch(config.metadataRetrieverApiBaseUrl + curie)
         .then(r => r.status === 200 ? r.json() : null)
-        .then(r => r.payload)
+        .then(r => r?.payload)
         .then(handleMetadataPayload)
     }
-  }, [loading, metadataValues, setLoading, handleMetadataPayload, config, curie]);
+  }, [setLoading, handleMetadataPayload, config, curie]);
   
   const wrapperClassName = "col-12 pt-3 pt-lg-0 px-0 pl-md-2 ";
   if (loading) {

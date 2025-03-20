@@ -8,6 +8,14 @@ import PropTypes from 'prop-types';
 
 
 class SearchHelper extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      evaluation: null,
+      queryParts: null
+    };
+  }
 
   copyToClipboard = (text, ev) => {
     ev.preventDefault();
@@ -32,11 +40,21 @@ class SearchHelper extends React.Component {
     return !nextProps.loading;
   }
 
-  render() {
-    const { namespaceList, query, setSearchState } = this.props;
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const {namespaceList, query, setSearchState} = this.props;
     const [evaluation, queryParts] = evaluateQuery(query, namespaceList);
 
-    setSearchState(evaluation);
+    if (evaluation !== prevState.evaluation || query !== prevProps.query) {
+      this.setState({evaluation, queryParts})
+      setSearchState(evaluation);
+    }
+  }
+
+  render() {
+    const { namespaceList, query } = this.props;
+    const { evaluation, queryParts } = this.state;
+
+    if (!evaluation || !queryParts) return <></>
 
     const idorgURI = evaluation === SearchStates.VALID_CURIE && queryParts?.id && queryParts?.prefix ?
       `${config.resolverHardcodedUrl}/${queryParts.prefix}:${queryParts.id}` : null
@@ -124,7 +142,7 @@ class SearchHelper extends React.Component {
             <div className="table-responsive">
               <table className="table table-borderless">
                 <tbody>
-                  {queryParts?.resource &&
+                  { queryParts?.resource &&
                     <tr>
                       <td className="w-25 p-0 font-weight-light font-italic text-muted"><small>Resource:</small></td>
                       <td className="p-0 text-block"><small>{queryParts.resource || 'default'}</small></td>
@@ -142,7 +160,7 @@ class SearchHelper extends React.Component {
                       <td className="p-0 text-block"><small>{queryParts.id || 'empty'}</small></td>
                     </tr>
                   }
-                  {idorgURI &&
+                  { idorgURI &&
                       <tr>
                         <td className="w-25 p-0 font-weight-light font-italic text-muted"><small>URI:</small></td>
                         <td className="p-0 text-block">
