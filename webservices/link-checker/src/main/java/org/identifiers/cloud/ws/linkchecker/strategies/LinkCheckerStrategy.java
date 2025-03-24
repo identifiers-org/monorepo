@@ -22,7 +22,7 @@ public abstract class LinkCheckerStrategy {
     protected LinkCheckerStrategy(String appVersion, String javaVersion,
                                   String appHomepage, UrlChecker urlChecker) {
         this.urlChecker = urlChecker;
-        this.idorgAgentStr = String.format("Java-http-client/%s +%s LinkChecker/%s", javaVersion, appHomepage, appVersion);
+        this.idorgAgentStr = String.format("LinkChecker/%s +%s Java/%s", appVersion, appHomepage, javaVersion);
     }
 
     public abstract LinkCheckerReport check(URL url, boolean accept401or403) throws LinkCheckerException;

@@ -1,7 +1,9 @@
 package org.identifiers.cloud.ws.linkchecker.strategies;
 
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.commons.urlchecking.UrlChecker;
+import org.springframework.util.StringUtils;
 
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -19,6 +21,7 @@ import java.util.List;
  * <p>
  * This class implements a link checking strategy that makes multiple HTTP GET requests with different user agents to avoid basic bot detection.
  */
+@Slf4j
 public class MultiUserAgentLinkCheckerStrategy extends LinkCheckerStrategy {
     private final List<String> userAgentsToUse;
     public MultiUserAgentLinkCheckerStrategy(String appVersion, String javaVersion,
@@ -41,14 +44,16 @@ public class MultiUserAgentLinkCheckerStrategy extends LinkCheckerStrategy {
 
         var uri = checkingUrl.toURI();
         for (String userAgent : this.userAgentsToUse) {
+            if (log.isDebugEnabled()) {
+                log.debug("Trying user agent: {}", StringUtils.hasText(userAgent) ? userAgent : "<blank>");
+            }
             var request = UrlChecker.getBaseRequestBuilder(uri)
                     .header("User-Agent", userAgent).build();
 
             var urlAssessment = urlChecker.check(request, accept401or403);
+            report.setHttpStatus(urlAssessment.statusCodeValue())
+                  .setUrlAssessmentOk(urlAssessment.isOk());
             if (urlAssessment.isOk()) {
-                report.setHttpStatus(urlAssessment.statusCodeValue())
-                        .setUrlAssessmentOk(true);
-
                 // Stop on the first UA that is OK
                 return report;
             }
