@@ -19,7 +19,7 @@ const CurationWarningList = () => {
 
   const getLinkToTarget = useCallback((targetInfo, col) => {
     const href = getHrefForTarget(targetInfo);
-    return <a className="btn btn-link" href={href} target="_blank">
+    return <a className="btn btn-link m-0 p-1" href={href} target="_blank">
       <i className="icon icon-common icon-external-link-alt"></i>
     </a>
   }, []);
@@ -41,8 +41,8 @@ const CurationWarningList = () => {
           r.targetInfo,
           usageScores[r.targetInfo.identifier] || 0,
           r.lowAvailabilityResources,
-          r.failingInstitutionUrl,
           r.hasCurationValues,
+          r.failingInstitutionUrl,
           r.hasPossibleWikidataError,
           r.targetInfo,
     ])
@@ -74,17 +74,24 @@ const CurationWarningList = () => {
       {searchable: false, targets: [1,2,3,4,5,6,7]},
       {sortable: false, targets: [7]},
       {className: 'text-right', targets: [2,3,4]},
-      {className: 'text-center', targets: [1,7]}
+      {className: 'text-center p-2', targets: [1,7]}
     ],
     order: [[3, 'desc'], [2, 'desc']],
     layout: {
-      topStart: null,
+      topStart: {
+        info: {
+          text: "Warnings _START_ to _END_ out of _TOTAL_"
+        },
+        paging: {}
+      },
       topEnd: {
         search: {
           placeholder: 'Search here...',
           text: ''
         }
-      }
+      },
+      bottomStart: null,
+      bottomEnd: null
     },
     pageLength: 5,
     stateSave: true,
@@ -95,13 +102,13 @@ const CurationWarningList = () => {
                     className="table table-striped table-bordered">
       <thead>
         <tr>
-          <th className="cursor-pointer" colSpan={2}>Target</th>
-          <th className="cursor-pointer">Access score</th>
-          <th className="cursor-pointer">Low availability</th>
-          <th className="cursor-pointer">Bad institution URL</th>
-          <th className="cursor-pointer">Curation review</th>
-          <th className="cursor-pointer">Wikidata discrepancy</th>
-          <th className="cursor-pointer"></th>
+          <th className="cursor-pointer" colSpan={2} scope="col">Target</th>
+          <th className="cursor-pointer" scope="col">Access score</th>
+          <th className="cursor-pointer" scope="col">Low availability</th>
+          <th className="cursor-pointer" scope="col">Curation review</th>
+          <th className="cursor-pointer" scope="col">Bad institution URL</th>
+          <th className="cursor-pointer" scope="col">Wikidata discrepancy</th>
+          <th scope="col"></th>
         </tr>
       </thead>
     </DataTable>

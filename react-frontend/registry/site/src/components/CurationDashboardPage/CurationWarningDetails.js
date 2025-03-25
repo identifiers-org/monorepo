@@ -8,11 +8,11 @@ const CurationWarningDetails = ({curationWarning}) => {
 
   return <div className="card mb-2">
     <div className="card-header p-1 px-3">
-      <button className="btn btn-link text-decoration-none text-reset p-0 px-1 mr-2"
+      <button className="btn btn-link text-decoration-none text-reset p-0 mr-2"
               onClick={() => setExpanded(!expanded)}>
         { expanded ?
-            <i className="icon icon-common icon-minus mr-2"></i> :
-            <i className="icon icon-common icon-plus mr-2"></i>
+            <i className="icon icon-common icon-caret-up mr-1" /> :
+            <i className="icon icon-common icon-caret-down mr-1" />
         }
         { getLabelFor(curationWarning) }
       </button>
