@@ -27,7 +27,7 @@ release: deploy
 
 sync_project_version:
 	@echo "<===|DEVOPS|===> [SYNC] Synchronizing project version to version '${tag_version}'"
-	@docker run -v $(shell pwd)/${dev_site_root_folder}:/home/site ${node} -c "npm --prefix /home/site version ${tag_version}"
+	@docker run -v $(shell pwd)/${dev_site_root_folder}:/home/site -w /home/site ${node} npm version ${tag_version}
 
 deploy: clean container_production_push
 	@echo "<===|DEVOPS|===> [DEPLOY] Deploying service container version ${tag_version}"
