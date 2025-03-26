@@ -11,7 +11,6 @@ public abstract class RegistryEntityVerifier<T> {
     private final StatusHelper statusHelper;
 
     public Optional<CurationWarningNotification> validate(T entity) {
-        statusHelper.startTask();
         var out = doValidate(entity);
         statusHelper.finishTask();
         return out;

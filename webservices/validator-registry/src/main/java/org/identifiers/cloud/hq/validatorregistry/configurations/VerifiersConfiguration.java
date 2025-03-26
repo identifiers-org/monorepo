@@ -20,51 +20,77 @@ public class VerifiersConfiguration {
     private final StatusHelper statusHelper;
 
     @Bean
-    @ConditionalOnProperty(prefix="org.identifiers.cloud.verifiers.curator-review", name = "enabled")
+    @ConditionalOnProperty(value = {
+            "org.identifiers.cloud.verifiers.curator-review.enabled",
+            "org.identifiers.cloud.verifiers.curator-review.enabled.namespace.name"
+    }, matchIfMissing = true)
     RegistryEntityVerifier<Namespace> namespaceNameCuratorReviewVerifier() {
         return new CuratorReviewVerifier<>("name", Namespace::getName, statusHelper);
     }
     @Bean
-    @ConditionalOnProperty(prefix="org.identifiers.cloud.verifiers.curator-review", name = "enabled")
+    @ConditionalOnProperty(value = {
+            "org.identifiers.cloud.verifiers.curator-review.enabled",
+            "org.identifiers.cloud.verifiers.curator-review.enabled.namespace.description"
+    }, matchIfMissing = true)
     RegistryEntityVerifier<Namespace> namespaceDescriptionCuratorReviewVerifier() {
         return new CuratorReviewVerifier<>("description", Namespace::getDescription, statusHelper);
     }
 
 
     @Bean
-    @ConditionalOnProperty(prefix="org.identifiers.cloud.verifiers.curator-review", name = "enabled")
+    @ConditionalOnProperty(value = {
+            "org.identifiers.cloud.verifiers.curator-review.enabled",
+            "org.identifiers.cloud.verifiers.curator-review.enabled.resource.name"
+    }, matchIfMissing = true)
     RegistryEntityVerifier<Resource> resourceNameCuratorReviewVerifier() {
         return new CuratorReviewVerifier<>("name", Resource::getName, statusHelper);
     }
     @Bean
-    @ConditionalOnProperty(prefix="org.identifiers.cloud.verifiers.curator-review", name = "enabled")
+    @ConditionalOnProperty(value = {
+            "org.identifiers.cloud.verifiers.curator-review.enabled",
+            "org.identifiers.cloud.verifiers.curator-review.enabled.resource.description"
+    }, matchIfMissing = true)
     RegistryEntityVerifier<Resource> resourceDescriptionCuratorReviewVerifier() {
         return new CuratorReviewVerifier<>("description", Resource::getDescription, statusHelper);
     }
     @Bean
-    @ConditionalOnProperty(prefix="org.identifiers.cloud.verifiers.curator-review", name = "enabled")
+    @ConditionalOnProperty(value = {
+            "org.identifiers.cloud.verifiers.curator-review.enabled",
+            "org.identifiers.cloud.verifiers.curator-review.enabled.resource.home-url"
+    }, matchIfMissing = true)
     RegistryEntityVerifier<Resource> resourceHomeUrlCuratorReviewVerifier() {
         return new CuratorReviewVerifier<>("home-url", Resource::getResourceHomeUrl, statusHelper);
     }
     @Bean
-    @ConditionalOnProperty(prefix="org.identifiers.cloud.verifiers.curator-review", name = "enabled")
+    @ConditionalOnProperty(value = {
+            "org.identifiers.cloud.verifiers.curator-review.enabled",
+            "org.identifiers.cloud.verifiers.curator-review.enabled.resource.provider-code"
+    }, matchIfMissing = true)
     RegistryEntityVerifier<Resource> resourceProviderCodeCuratorReviewVerifier() {
         return new CuratorReviewVerifier<>("provider-code", Resource::getProviderCode, statusHelper);
     }
 
-
     @Bean
-    @ConditionalOnProperty(prefix="org.identifiers.cloud.verifiers.curator-review", name = "enabled")
+    @ConditionalOnProperty(value = {
+            "org.identifiers.cloud.verifiers.curator-review.enabled",
+            "org.identifiers.cloud.verifiers.curator-review.enabled.institution.name"
+    }, matchIfMissing = true)
     RegistryEntityVerifier<Institution> institutionNameCuratorReviewVerifier() {
         return new CuratorReviewVerifier<>("name", Institution::getName, statusHelper);
     }
     @Bean
-    @ConditionalOnProperty(prefix="org.identifiers.cloud.verifiers.curator-review", name = "enabled")
+    @ConditionalOnProperty(value = {
+            "org.identifiers.cloud.verifiers.curator-review.enabled",
+            "org.identifiers.cloud.verifiers.curator-review.enabled.institution.description"
+    }, matchIfMissing = true)
     RegistryEntityVerifier<Institution> institutionDescriptionCuratorReviewVerifier() {
         return new CuratorReviewVerifier<>("description", Institution::getDescription, statusHelper);
     }
     @Bean
-    @ConditionalOnProperty(prefix="org.identifiers.cloud.verifiers.curator-review", name = "enabled")
+    @ConditionalOnProperty(value = {
+            "org.identifiers.cloud.verifiers.curator-review.enabled",
+            "org.identifiers.cloud.verifiers.curator-review.enabled.institution.home-url"
+    }, matchIfMissing = true)
     RegistryEntityVerifier<Institution> institutionHomeUrlCuratorReviewVerifier() {
         return new CuratorReviewVerifier<>("home-url", Institution::getHomeUrl, statusHelper);
     }
@@ -74,7 +100,7 @@ public class VerifiersConfiguration {
 
 
     @Bean
-    @ConditionalOnProperty(prefix = "org.identifiers.cloud.verifiers.url-verifier", name = "enabled")
+    @ConditionalOnProperty("org.identifiers.cloud.verifiers.url-verifier.enabled")
     RegistryEntityVerifier<Institution> institutionHomePageVerifier(UrlChecker urlChecker) {
         return new UrlVerifier<>(statusHelper, urlChecker, Institution::getHomeUrl, "home-url");
     }

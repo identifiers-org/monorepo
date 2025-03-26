@@ -102,6 +102,9 @@ spec:
                     secretKeyRef:
                       name: matomo-credentials
                       key: auth_token
+                - name: VALIDATOR_CONFIG_ENGINE_POOL_SIZE
+                  value: {{ .Values.validator.thread_pool | quote }}
+
                 {{- range $key, $val := (default .Values.validator.env list) }}
                 - name: {{ $key }}
                   value: {{ $val | quote }}

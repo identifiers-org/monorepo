@@ -28,9 +28,12 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @EnableWebSecurity
 public class ApplicationConfiguration {
     @Bean
-    ExecutorService executorService() {
+    ExecutorService executorService(
+            @Value("${org.identifiers.cloud.verifier.engine.pool-size}")
+            int poolSize
+    ) {
         var threadFactory = new ThreadFactoryBuilder().setNameFormat("validation-%d").build();
-        return Executors.newFixedThreadPool(30, threadFactory);
+        return Executors.newFixedThreadPool(poolSize, threadFactory);
     }
 
     @Bean

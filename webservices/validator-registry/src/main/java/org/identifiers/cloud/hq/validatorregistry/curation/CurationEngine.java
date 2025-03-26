@@ -43,6 +43,9 @@ public class CurationEngine {
     @Value("${org.identifiers.cloud.verifiers.institutions.enabled}") @Setter
     private boolean institutionsEnabled;
 
+    @Value("${org.identifiers.cloud.verifier.engine.post-enabled}") @Setter
+    private boolean posterEnabled;
+
     public void execute() {
         if (namespacesEnabled) runPreValidateTasks(namespaceValidators);
         if (resourcesEnabled) runPreValidateTasks(resourceValidators);
@@ -57,8 +60,9 @@ public class CurationEngine {
                                 resourceNotificationStream,
                                 institutionNotificationStream)
                 .flatMap(Function.identity())
-                .parallel()
-                .toList();
+                .parallel().toList();
+
+        statusHelper.setTotal(futures.size());
 
         var allNotifications = futures.stream()
                 .map(this::getFromFuture)
@@ -70,7 +74,15 @@ public class CurationEngine {
 
         statusHelper.stopPeriodicReporting();
 
-        curationWarningNotificationPoster.post(allNotifications);
+        if (posterEnabled) {
+            curationWarningNotificationPoster.post(allNotifications);
+        } else if (log.isInfoEnabled()){
+            log.info("Poster is disabled, found {} notifications", allNotifications.size());
+            var warningTypes = allNotifications.stream()
+                    .map(CurationWarningNotification::getType)
+                    .distinct().toList();
+            log.info("Notification types generated: {}", warningTypes);
+        }
     }
 
     private <T> void runPreValidateTasks(Set<RegistryEntityVerifier<T>> validators) {
