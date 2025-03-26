@@ -1,7 +1,7 @@
 {
   "name": "identifiers-org-cloud-hq-web-frontend",
   "browserslist": "> 0.5%, last 2 versions, not dead",
-  "version": "1.15.1",
+  "version": "1.15.2",
   "description": "Identifiers.org HQ web frontend written in js",
   "scripts": {
     "start": "rm -Rf .parcel-cache; PARCEL_WORKERS=0 NODE_ENV=development parcel serve --no-cache src/index.html --port 8182",

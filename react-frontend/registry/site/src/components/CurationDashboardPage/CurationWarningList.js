@@ -25,7 +25,7 @@ const CurationWarningList = () => {
   }, []);
 
   const getSelectTargetBttn = useCallback((targetInfo, col) =>
-      <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#targetInfoModal"
+      <button type="button" className="btn btn-primary py-1 px-2" data-toggle="modal" data-target="#targetInfoModal"
               onClick={() => setSelectedTarget(targetInfo)}>
         <i className="icon icon-common icon-search-plus"></i>
       </button>
@@ -73,8 +73,9 @@ const CurationWarningList = () => {
     columnDefs: [
       {searchable: false, targets: [1,2,3,4,5,6,7]},
       {sortable: false, targets: [7]},
-      {className: 'text-right', targets: [2,3,4]},
-      {className: 'text-center p-2', targets: [1,7]}
+      {className: 'align-middle', targets: '_all'},
+      {className: 'text-center', targets: [1,7]},
+      {className: 'text-right', targets: [2,3,5]},
     ],
     order: [[3, 'desc'], [2, 'desc']],
     layout: {
@@ -85,6 +86,10 @@ const CurationWarningList = () => {
         paging: {}
       },
       topEnd: {
+        pageLength: {
+          text: 'Entries per page: _MENU_',
+          menu: [5, 20, 100]
+        },
         search: {
           placeholder: 'Search here...',
           text: ''
@@ -93,13 +98,12 @@ const CurationWarningList = () => {
       bottomStart: null,
       bottomEnd: null
     },
-    pageLength: 5,
-    stateSave: true,
-    lengthChange: false
+    pageLength: 20,
+    stateSave: true
   }
-  return <>
+  return <div id="curation-warning-list-container">
     <DataTable data={tableRows} slots={{1: getLinkToTarget, 7: getSelectTargetBttn}} options={opts}
-                    className="table table-striped table-bordered">
+                    className="table table-sm table-striped table-bordered">
       <thead>
         <tr>
           <th className="cursor-pointer" colSpan={2} scope="col">Target</th>
@@ -115,7 +119,7 @@ const CurationWarningList = () => {
     <CurationWarningModal selectedTarget={selectedTarget}
                           modalId="targetInfoModal"
                           editHref={getHrefForTarget(selectedTarget)} />
-  </>
+  </div>
 
 }
 

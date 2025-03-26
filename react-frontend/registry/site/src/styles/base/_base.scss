@@ -250,3 +250,20 @@ button[data-toggle='collapse'] {
     content: '▲ ';
   }
 }
+
+#curation-warning-list-container {
+  .dt-length > label {
+    margin-right: .5rem;
+  }
+  td:first-child, th:first-child {
+    padding-left: 1rem;
+  }
+  .dt-container > .row {
+    & > :first-child {
+      padding-left: 0;
+    }
+    & > :last-child {
+      padding-right: 0;
+    }
+  }
+}
