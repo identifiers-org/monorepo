@@ -69,9 +69,11 @@ public class UrlChecker {
             }
         } catch (ConnectException e) {
             log.warn("[HTTP NaN] Failed to connect to {}", uri);
+            log.debug("message: {}", e.getMessage());
             return UrlAssessment.notOk(NOT_FOUND, "Failed to connect to server");
         } catch (SSLHandshakeException e) {
             log.warn("[HTTP NaN] SSL error on connect to {}", uri);
+            log.debug("Stack trace:", e);
             return UrlAssessment.notOk(NOT_FOUND, "Failed to connect to server due to SSL error");
         } catch (IOException e) {
             log.warn("[HTTP NaN] IO Exception when connecting to {}", uri, e);

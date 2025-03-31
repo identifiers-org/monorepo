@@ -27,17 +27,21 @@ public class UrlAssessment {
         return statusCode.value();
     }
 
-    static UrlAssessment ok(HttpStatusCode statusCode) {
+    public static UrlAssessment ok() {
+        return new UrlAssessment(HttpStatus.OK, null);
+    }
+    public static UrlAssessment ok(HttpStatusCode statusCode) {
         return new UrlAssessment(statusCode, null);
     }
-    static UrlAssessment notOk(HttpStatusCode statusCode, String error) {
+    public static UrlAssessment notOk(HttpStatusCode statusCode, @NonNull String error) {
+        assert StringUtils.hasText(error);
         return new UrlAssessment(statusCode, error);
     }
 
-    static UrlAssessment ok(int statusCode) {
+    public static UrlAssessment ok(int statusCode) {
         return ok(HttpStatus.valueOf(statusCode));
     }
-    static UrlAssessment notOk(int statusCode, String error) {
+    public static UrlAssessment notOk(int statusCode, @NonNull String error) {
         return notOk(HttpStatus.valueOf(statusCode), error);
     }
 }

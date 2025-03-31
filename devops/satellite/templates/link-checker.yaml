@@ -81,6 +81,8 @@ spec:
               value: {{ .Values.actuator_auth.issuer_uri }}
             - name: SPRING_PROFILES_ACTIVE
               value: {{ .Values.active_profiles }}
+            - name: WS_LINK_CHECKER_CONFIG_DAEMON_LINK_CHECKER_NTHREADS
+              value: {{ .Values.link_checker.nthreads | quote }}
             {{- range $key, $val := .Values.link_checker.env }}
             - name: {{ $key }}
               value: {{ $val | quote }}
