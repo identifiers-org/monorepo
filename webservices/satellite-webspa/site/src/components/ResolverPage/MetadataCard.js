@@ -15,19 +15,20 @@ const MetadataCard = ({metadata, parsedCid}) => {
       ));
 
   return (
-    <div className="card mt-3 mb-3">
+    <div className="metadata-card card mt-3 mb-3">
       <div className="card-header d-flex align-items-center">
         <button title="click to expand or collapse" type="button" data-toggle="collapse"
                 data-target={"#" + contentElemId} aria-expanded="false" aria-controls={contentElemId}>
+          <span className="collapse-symbol" />
           {GetTitleForRetrieverId(provider)}
         </button>
       </div>
-      <div className="card-body">
-        <ul id={contentElemId} className="list-group list-group-flush collapse show">
+      <div id={contentElemId} className="card-body collapse show p-0">
+        <ul className="list-group list-group-flush">
           { metadataValues }
           { moreInfoHref &&
             <li key={`list-group-item-${provider}-more`} className="list-group-item">
-              <a href={moreInfoHref} className="clear-link">
+              <a href={moreInfoHref} target="_blank" className="clear-link">
                 Click here for more
               </a>
             </li>
@@ -42,7 +43,7 @@ const MetadataCard = ({metadata, parsedCid}) => {
 
 const MetadataValue = props => {
   if (typeof props.value === "string" && isValidUrl(props.value)) {
-    return <a href={props.value}>{props.value}</a>;
+    return <a href={props.value}> {props.value} </a>;
   } else {
     return props.value;
   }
