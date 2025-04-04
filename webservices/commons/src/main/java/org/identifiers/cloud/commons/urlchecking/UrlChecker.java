@@ -12,6 +12,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.http.HttpClient;
+import java.net.http.HttpConnectTimeoutException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Set;
@@ -67,7 +68,7 @@ public class UrlChecker {
                 return UrlAssessment.notOk(httpStatus,
                         "Status " + httpStatus + " is not acceptable for URL " + uri);
             }
-        } catch (ConnectException e) {
+        } catch (ConnectException | HttpConnectTimeoutException e) {
             log.warn("[HTTP NaN] Failed to connect to {}", uri);
             log.debug("message: {}", e.getMessage());
             return UrlAssessment.notOk(NOT_FOUND, "Failed to connect to server");
@@ -76,7 +77,8 @@ public class UrlChecker {
             log.debug("Stack trace:", e);
             return UrlAssessment.notOk(NOT_FOUND, "Failed to connect to server due to SSL error");
         } catch (IOException e) {
-            log.warn("[HTTP NaN] IO Exception when connecting to {}", uri, e);
+            log.warn("[HTTP NaN] IO Exception when connecting to `{}`. Message: {}", uri, e.getMessage());
+            log.debug("Stack trace:", e);
             return UrlAssessment.notOk(INTERNAL_SERVER_ERROR,
                     "Error trying to connect to server: " + e.getMessage());
         } catch (InterruptedException e) {
