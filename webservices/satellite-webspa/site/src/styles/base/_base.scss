@@ -187,3 +187,15 @@ a, a:hover, a:active {
 @keyframes spinner_svv2 {
   100% { transform: rotate(360deg) }
 }
+
+.metadata-card {
+  [data-toggle='collapse'] {
+    &.collapsed .collapse-symbol:before {
+      content: '▼ '
+    }
+    .collapse-symbol:before {
+      font-size: 1.2rem;
+      content: '▲ ';
+    }
+  }
+}
