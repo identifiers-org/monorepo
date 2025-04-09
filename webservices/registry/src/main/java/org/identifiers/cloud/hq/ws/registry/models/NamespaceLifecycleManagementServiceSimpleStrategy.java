@@ -70,6 +70,7 @@ public class NamespaceLifecycleManagementServiceSimpleStrategy implements Namesp
                 // in the other direction
                 namespace.setDeprecated(true);
                 namespace.setDeprecationDate(new Date(System.currentTimeMillis()));
+                namespace.setRenderDeprecatedLanding(true);
                 String message = String.format("Namespace with ID '%d', MIR ID '%s' SUCCESSFULLY DEPRECATED", namespace.getId(), namespace.getMirId());
                 report.setAdditionalInformation(message);
                 log.info(message);

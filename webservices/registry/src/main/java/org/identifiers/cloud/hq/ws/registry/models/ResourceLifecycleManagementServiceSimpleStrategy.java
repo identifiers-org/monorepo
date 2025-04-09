@@ -86,6 +86,7 @@ public class ResourceLifecycleManagementServiceSimpleStrategy implements Resourc
                 // Deprecate the resource
                 resource.setDeprecated(true);
                 resource.setDeprecationDate(new Date(System.currentTimeMillis()));
+                resource.setRenderDeprecatedLanding(true);
 //                String newUrlPattern = deprecationUrlTemplate.replace(deprecationPlaceholderMirId, resource.getMirId()).replace(deprecationPlaceholderLuiPattern, patternLui);
 //                resource.setUrlPattern(newUrlPattern);
                 String message = String.format("Resource with ID '%d', MIR ID '%s' SUCCESSFULY DEPRECATED, its new URL pattern is '%s'", resource.getId(), resource.getMirId(), resource.getUrlPattern());
@@ -127,6 +128,7 @@ public class ResourceLifecycleManagementServiceSimpleStrategy implements Resourc
                 resource.setRenderProtectedLanding(false);
                 resource.setDeprecationDate(null);
                 resource.setDeprecationStatement(null);
+                resource.setRenderDeprecatedLanding(false);
                 // By keeping previous deprecation date, we have information on when was the last time the resource was deactivated
                 String message = String.format("Resource with ID '%d', MIR ID '%s' SUCCESSFULLY RE-ACTIVATED, its new URL pattern is '%s'", resource.getId(), resource.getMirId(), resource.getUrlPattern());
                 report.setAdditionalInformation(message);
