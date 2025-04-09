@@ -1,8 +1,15 @@
-# Development environment definition
-# Author: Manuel Bernal Llinares
-version: "3.5"
 services:
-    postgresql:
+    mirid-postgresql:
+        image: postgres
+        environment:
+            - POSTGRES_DB=devdatabase
+            - POSTGRES_USER=devusername
+            - POSTGRES_PASSWORD=devpassword
+        ports:
+            - "5431:5432"
+        volumes:
+            - "../../db/mirid-controller:/docker-entrypoint-initdb.d"
+    registry-postgresql:
         image: postgres
         environment:
             - POSTGRES_DB=devdatabase
@@ -11,7 +18,7 @@ services:
         ports:
             - "5430:5432"
         volumes:
-            - "../db/registry:/docker-entrypoint-initdb.d"
+            - "../../db/registry:/docker-entrypoint-initdb.d"
     redis:
         image: redis:7.4-alpine
         ports:
@@ -19,7 +26,7 @@ services:
     hqregistry:
         image: identifiersorg/cloud-hq-ws-registry
         environment:
-            - HQ_WS_REGISTRY_CONFIG_JDBC_URL=jdbc:postgresql://postgresql:5432/devdatabase
+            - HQ_WS_REGISTRY_CONFIG_JDBC_URL=jdbc:postgresql://registry-postgresql:5432/devdatabase
             - HQ_WS_REGISTRY_CONFIG_RDBMS_USERNAME=devusername
             - HQ_WS_REGISTRY_CONFIG_RDBMS_PASSWORD=devpassword
             - HQ_WS_REGISTRY_CONFIG_BACKEND_SERVICE_MIRID_CONTROLLER_HOST=hqmiridcontroller
@@ -30,13 +37,13 @@ services:
         ports:
             - "8180:8180"
         depends_on:
-            - postgresql
+            - registry-postgresql
             - hqmiridcontroller
             - fakesmtp
     hqmiridcontroller:
         image: identifiersorg/cloud-hq-ws-mirid-controller
         environment:
-            - HQ_WS_MIRID_CONTROLLER_CONFIG_JDBC_URL=jdbc:postgresql://postgresql:5432/devdatabase
+            - HQ_WS_MIRID_CONTROLLER_CONFIG_JDBC_URL=jdbc:postgresql://mirid-postgresql:5432/devdatabase
             - HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_USERNAME=devusername
             - HQ_WS_MIRID_CONTROLLER_CONFIG_RDBMS_PASSWORD:devpassword
             - HQ_WS_MIRID_CONTROLLER_CONFIG_REDIS_HOST=redis
@@ -45,13 +52,11 @@ services:
             - "8181:8181"
         depends_on:
             - redis
-            - postgresql
+            - mirid-postgresql
     fakesmtp:
         image: digiplant/fake-smtp
         ports:
             - "1025:25"
-        volumes:
-            - ./tmp/fakesmtp:/var/mail
 networks:
     default:
         name: hqwebnet

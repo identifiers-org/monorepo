@@ -27,7 +27,7 @@ public class SchemaOrgApiModel {
             return new ResponseEntity<>(schemaOrgMetadataProvider.getForPlatform(), HttpStatus.OK);
         } catch (SchemaOrgMetadataProviderException e) {
             String errorMessage = String.format("Could not produce platform metadata due to '%s'", e.getMessage());
-            log.error(errorMessage);
+            log.warn(errorMessage);
             return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -37,7 +37,7 @@ public class SchemaOrgApiModel {
             return new ResponseEntity<>(schemaOrgMetadataProvider.getForNamespace(namespaceId), HttpStatus.OK);
         } catch (SchemaOrgMetadataProviderException e) {
             String errorMessage = String.format("Could not produce metadata for namespace ID '%d' due to '%s'", namespaceId, e.getMessage());
-            log.error(errorMessage);
+            log.warn(errorMessage);
             return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
         }
     }
@@ -47,7 +47,7 @@ public class SchemaOrgApiModel {
             return new ResponseEntity<>(schemaOrgMetadataProvider.getForNamespacePrefix(namespacePrefix.toLowerCase()), HttpStatus.OK);
         } catch (SchemaOrgMetadataProviderException e) {
             String errorMessage = String.format("Could not produce metadata for namespace with prefix '%s' due to '%s'", namespacePrefix, e.getMessage());
-            log.error(errorMessage);
+            log.warn(errorMessage);
             return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
         }
     }

@@ -88,12 +88,12 @@ const PrefixRegistrationRequestSchema = object({
   authHelpUrl: string().label("Authentication details URL").trim().url()
     .when("protectedUrls", { is: true,
       then: schema => schema.required().validatePrefixRequestWithRegistryEndpoint(),
-      otherwise: schema => schema.transform(() => null) // TODO - check why this transform doesn't work with formik
+      otherwise: schema => schema.nullable().transform(() => null)
     }),
   authHelpDescription: string().label("Authentication description").trim()
     .when("protectedUrls", { is: true,
       then: schema => schema.required().min(50).validatePrefixRequestWithRegistryEndpoint(),
-      otherwise: schema => schema.transform(() => null) // TODO - check why this transform doesn't work with formik
+      otherwise: schema => schema.nullable().transform(() => null)
     }),
 
   requester: object({

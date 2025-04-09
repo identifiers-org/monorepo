@@ -58,7 +58,14 @@ const validators = {
     if (typeof registrationRequest.providerUrlPattern === 'undefined') {
       return {valid: true};
     }
-    return validateThroughAPI(url, {sampleId, providerUrlPattern: registrationRequest.providerUrlPattern});
+    const payload = {
+      sampleId,
+      providerUrlPattern: registrationRequest.providerUrlPattern
+    }
+    if (registrationRequest.hasOwnProperty("namespacePrefix")) {
+      payload.namespacePrefix = registrationRequest.namespacePrefix;
+    }
+    return validateThroughAPI(url, payload);
   },
 
   idRegexPattern: async (idRegexPattern, registrationRequest, registrationRequestType) => {

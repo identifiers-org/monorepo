@@ -5,69 +5,47 @@ import Spinner from "../common/Spinner";
 
 import RegistrationRequestField from "./RegistrationRequestField";
 import {
-  cleanRequestValues,
   handleInstitutionIsProviderChange,
   handleRorAutocomplete,
-  PrefixAutoCompleter
+  PrefixAutoCompleter, ProtectedUrlFormFields, setAllFlags
 } from "./RequestFormsUtils";
-import {LoadFormButton, SaveFormButton} from "./LocalStorageFormikButtons";
-import {config} from "../../config/Config";
-
-export const submitResourceRequest = (values) => {
-  // Fixing values object
-  // TODO - This would be better done by yup on the schema definition but it doesn't seem to work with formik
-  values = cleanRequestValues(values)
-
-  const requestBody = {
-    apiVersion: "1.0",
-    payload: {
-      ...values,
-      requester: {
-        name: values.requesterName,
-        email: values.requesterEmail
-      }
-    }
-  };
-
-  const fetch_options = {
-    method: 'POST',
-    headers: {'content-type': 'application/json'},
-    body: JSON.stringify(requestBody)
-  };
-
-  // Make request and update the store.
-  const requestUrl = `${config.registryApi}/${config.resourceRequestEndpoint}`;
-  return fetch(requestUrl, fetch_options)
-}
+import {LoadFormButton, SaveFormButton} from "./LocalStorageButtons";
+import {useForm} from "react-hook-form";
+import {yupResolver} from "@hookform/resolvers/yup";
+import ResourceRegistrationRequestSchema, {ResourceRequestInitialValues} from "./ResourceRegistrationRequestSchema";
+import {onResourceSubmit} from "./RequestSubmitHandlers";
 
 const ResourceRequestForm = (props) => {
+  const [institutionIsProvider, setInstitutionIsProvider] = useState(false);
+  const methods = useForm({
+    resolver: yupResolver(ResourceRegistrationRequestSchema),
+    defaultValues: ResourceRequestInitialValues,
+    mode: 'onBlur',
+    reValidateMode: 'onBlur'
+  });
   const {
-    values, setValues,
-    touched, errors, setTouched,
-    handleSubmit, handleChange,
-    isSubmitting, submitCount
-  } = props
+    handleSubmit,
+    formState,
+    getValues,
+    setValue,
+    reset,
+    control,
+    resetField,
+    trigger
+  } = methods;
+  const {isValid} = formState;
+
 
   useEffect(() => {
-    if (submitCount > 0) {
-      const elem = document.querySelector('.is-invalid');
-      elem && elem.scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
-    }
-
-    const localHandleRorAutocomplete = handleRorAutocomplete(
-      handleChange, errors,
-      values, setValues,
-      touched, setTouched
-    )
     const rorIdInput = document.querySelector("#institutionRorId");
-    rorIdInput.addEventListener('change', localHandleRorAutocomplete);
-    return () => rorIdInput.removeEventListener('change', localHandleRorAutocomplete);
+    rorIdInput.addEventListener('blur', handleRorAutocomplete(methods));
+    return () => {
+      rorIdInput.removeEventListener('blur', handleRorAutocomplete(methods));
+    }
   });
 
-  const [institutionIsProvider, setInstitutionIsProvider] = useState(false);
-
   return (
-    <form className="form" role="form" onSubmit={handleSubmit} autoComplete="off">
+    <form className="form" role="form" onSubmit={handleSubmit(onResourceSubmit)} autoComplete="off">
       <div className="card mb-3">
         <div className="card-header">
           <h2 className="mb-3"><i className="icon icon-common icon-leaf" /> Namespace details</h2>
@@ -84,9 +62,8 @@ const ResourceRequestForm = (props) => {
             placeholderCaption="Select the namespace where you want to add a resource"
             label="Namespace"
             autocompleter={PrefixAutoCompleter}
-            autocompleterSetValue={(val) => setValues({...values, namespacePrefix: val}, true)}
-            errors={errors}
-            touched={touched}
+            autocompleterSetValue={(val) => setValue("namespacePrefix", val, setAllFlags)}
+            control={control}
           />
         </div>
       </div>
@@ -105,11 +82,12 @@ const ResourceRequestForm = (props) => {
           <RegistrationRequestField
             id="institutionRorId"
             description="The ROR ID of the organization."
-            example={<a href="https://ror.org/02catss52" target="_blank">https://ror.org/02catss52</a>}
+            example={<>
+              <a href="https://ror.org/02catss52" target="_blank">https://ror.org/02catss52</a> or <a href="https://ror.org/05cy4wa09" target="_blank">https://ror.org/05cy4wa09</a>
+            </>}
             label="ROR ID"
             type="text"
-            errors={errors}
-            touched={touched}
+            control={control}
           />
 
           <RegistrationRequestField
@@ -119,8 +97,7 @@ const ResourceRequestForm = (props) => {
             example="European Bioinformatics Institute, Hinxton, Cambridge, UK"
             label="Name"
             type="text"
-            errors={errors}
-            touched={touched}
+            control={control}
           />
 
           <RegistrationRequestField
@@ -131,8 +108,7 @@ const ResourceRequestForm = (props) => {
             label="Description"
             rows="5"
             type="textarea"
-            errors={errors}
-            touched={touched}
+            control={control}
           />
 
           <RegistrationRequestField
@@ -142,8 +118,7 @@ const ResourceRequestForm = (props) => {
             formsection="Institution details"
             label="Home URL"
             type="text"
-            errors={errors}
-            touched={touched}
+            control={control}
           />
 
           <RegistrationRequestField
@@ -155,8 +130,7 @@ const ResourceRequestForm = (props) => {
             options={props.locationList}
             registrationType="RESOURCE"
             type="select"
-            errors={errors}
-            touched={touched}
+            control={control}
           />
         </div>
       </div>
@@ -183,7 +157,7 @@ const ResourceRequestForm = (props) => {
                   id="institutionIsProvider"
                   className="form-check-input"
                   defaultChecked={institutionIsProvider}
-                  onChange={handleInstitutionIsProviderChange(values, setValues, setInstitutionIsProvider)}
+                  onChange={handleInstitutionIsProviderChange(setInstitutionIsProvider, methods)}
                   type="checkbox"
                 />
                 <label
@@ -201,35 +175,32 @@ const ResourceRequestForm = (props) => {
           <RegistrationRequestField
             id="providerName"
             description="The name of the provider."
-            disabled={institutionIsProvider}
+            readonly={institutionIsProvider}
             example="ChEBI (Chemical Entities of Biological Interest)"
             label="Name"
             type="text"
-            errors={errors}
-            touched={touched}
+            control={control}
           />
 
           <RegistrationRequestField
             id="providerDescription"
             description="Short description of the provider in one or multiple sentences."
-            disabled={institutionIsProvider}
+            readonly={institutionIsProvider}
             example="ChEBI (Chemical Entities of Biological Interest) at EMBL-EBI"
             label="Description"
             rows="5"
             type="textarea"
-            errors={errors}
-            touched={touched}
+            control={control}
           />
 
           <RegistrationRequestField
             id="providerHomeUrl"
             description="URL for a home page that describes the role of the provider in the current namespace."
-            disabled={institutionIsProvider}
+            readonly={institutionIsProvider}
             example="https://www.pdbe.org/"
             label="Home URL"
             type="text"
-            errors={errors}
-            touched={touched}
+            control={control}
           />
 
           <RegistrationRequestField
@@ -239,8 +210,7 @@ const ResourceRequestForm = (props) => {
             example="pdb"
             label="Provider code"
             type="text"
-            errors={errors}
-            touched={touched}
+            control={control}
           />
 
           <RegistrationRequestField
@@ -250,8 +220,7 @@ const ResourceRequestForm = (props) => {
             example="https://www.ebi.ac.uk/pdbe/entry/pdb/{$id}"
             label="URL Pattern"
             type="text"
-            errors={errors}
-            touched={touched}
+            control={control}
           />
 
           <RegistrationRequestField
@@ -261,55 +230,22 @@ const ResourceRequestForm = (props) => {
             formsection="Provider details"
             label="Sample Id"
             type="text"
-            errors={errors}
-            touched={touched}
+            control={control}
           />
 
           <RegistrationRequestField
             id="providerLocation"
             description="The location from which the provider is offering its services (main location in case of multiple ones)."
-            disabled={institutionIsProvider}
+            readonly={institutionIsProvider}
             label="Location"
             optionlabelfield="countryName"
             optionsfield="locations"
             options={props.locationList}
             type="select"
-            errors={errors}
-            touched={touched}
+            control={control}
           />
 
-          <RegistrationRequestField
-            id="protectedUrls"
-            description="Do links require users to authenticate to access information?"
-            label="Are links protected?"
-            type="checkbox"
-            errors={errors}
-            touched={touched}
-          />
-
-          {values.protectedUrls && <>
-            <RegistrationRequestField
-              id="authHelpDescription"
-              description="A short text describing the need for authentication and how to authenticate.
-                           This should be a little paragraph to give some information to users.
-                           The URL bellow should be where users find further details."
-              label="Authentication description"
-              type="textarea"
-              disabled={!values.protectedUrls}
-              errors={errors}
-              touched={touched}
-            />
-
-            <RegistrationRequestField
-              id="authHelpUrl"
-              description="URL for users to get details on how to authenticate to access resource"
-              label="Authentication details URL"
-              type="text"
-              disabled={!values.protectedUrls}
-              errors={errors}
-              touched={touched}
-            />
-          </>}
+          <ProtectedUrlFormFields control={control} resetField={resetField} trigger={trigger} />
         </div>
       </div>
 
@@ -329,8 +265,7 @@ const ResourceRequestForm = (props) => {
             field="requesterName"
             label="Full name"
             type="text"
-            errors={errors}
-            touched={touched}
+            control={control}
           />
 
           <RegistrationRequestField
@@ -339,8 +274,7 @@ const ResourceRequestForm = (props) => {
             field="requesterEmail"
             label="Email"
             type="text"
-            errors={errors}
-            touched={touched}
+            control={control}
           />
         </div>
       </div>
@@ -348,18 +282,20 @@ const ResourceRequestForm = (props) => {
       <div className="card">
         <div className="card-body">
           <div className="row">
-            {isSubmitting ? <center className="col-12"><Spinner noText/></center> :
+            {formState.isSubmitting ? <center className="col-12"><Spinner noText/></center> :
               <>
                 <div className="col-12 col-lg-6 mb-1">
-                  <button className="form-control btn btn-primary" type="submit">
+                  <button className="form-control btn btn-primary"
+                          type="submit" disabled={!isValid}
+                          title={!isValid ? "There are errors on the form" : undefined}>
                     Submit resource request
                   </button>
                 </div>
                 <div className="col-sm-12 col-md-6 col-lg-3 mb-1">
-                  <SaveFormButton />
+                  <SaveFormButton storageKey="idorg-resource-form" getValues={getValues} />
                 </div>
                 <div className="col-sm-12 col-md-6 col-lg-3 mb-1">
-                  <LoadFormButton />
+                  <LoadFormButton storageKey="idorg-resource-form" reset={reset} trigger={trigger} />
                 </div>
               </>
             }

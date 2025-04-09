@@ -1,9 +1,19 @@
-import React from 'react';
-import {Field} from 'formik';
+import React, {memo, useCallback, useRef} from 'react';
+import {useController, useFormContext} from "react-hook-form";
 
 const RegistrationRequestField = (props) => {
+  const {
+    field: {onChange, onBlur, value, name, ref},
+    fieldState: {invalid, isTouched, error},
+  } = useController({
+    name: props.id,
+    control: props.control,
+    disabled: props.disabled,
+  })
+
   const id = `form-control-${props.id}`;
-  const validityClass = props.touched[props.id] ? (props.errors[props.id] ? 'is-invalid' : 'is-valid') : '';
+  const validityClass = isTouched? (invalid ? 'is-invalid' : 'is-valid') : '';
+  const helpElementId = `${id}-helpblock`;
 
   let PreparedAutocompleter;
   if (props.autocompleter) {
@@ -25,43 +35,66 @@ const RegistrationRequestField = (props) => {
           switch (props.type) {
             case "text":
             case "password":
-            case "checkbox":
               return (
-                <Field
-                  as="input"
+                <input
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  name={name}
+                  ref={ref}
                   id={props.id}
-                  name={props.id}
                   type={props.type}
                   className={`form-control ${validityClass}`}
-                  style={props.type === "checkbox" ? {width: "initial"} : {}}
-                  aria-describedby={`${id}-helpblock`}
-                  disabled={props.disabled}
+                  aria-describedby={helpElementId}
+                  readOnly={props.readonly}
                   placeholder={props.placeholder}
                 />
               )
+            case "checkbox":
+              return (
+                  <input
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      checked={value}
+                      value={value}
+                      name={name}
+                      ref={ref}
+                      id={props.id}
+                      type={props.type}
+                      className={`form-control ${validityClass}`}
+                      aria-describedby={helpElementId}
+                      readOnly={props.readonly}
+                      placeholder={props.placeholder}
+                  />
+              )
             case "textarea":
               return (
-                <Field
-                  as="textarea"
+                <textarea
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  name={name}
+                  ref={ref}
                   id={props.id}
-                  name={props.id}
                   className={"form-control textarea " + validityClass}
-                  aria-describedby={`${id}-helpblock`}
-                  disabled={props.disabled}
+                  aria-describedby={helpElementId}
+                  readOnly={props.readonly}
                   placeholder={props.placeholder}
                   rows={props.rows}
                 />
               )
             case "select":
               return (
-                <Field
-                  as="select"
+                <select
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  name={name}
+                  ref={ref}
                   id={props.id}
-                  name={props.id}
-                  type={props.type}
                   className={"form-control " + validityClass}
-                  aria-describedby={`${id}-helpblock`}
-                  disabled={props.disabled}
+                  aria-describedby={helpElementId}
+                  disabled={props.readonly}
                 >
                   <option value="" disabled>{props.placeholder || 'Select...'}</option>
                   {
@@ -74,13 +107,13 @@ const RegistrationRequestField = (props) => {
                       </option>
                     ))
                   }
-                </Field>
+                </select>
               )
           }
         })()}
         { props.autocompleter && PreparedAutocompleter }
-        <div className={(props.touched[props.id] && props.errors[props.id]) ? 'd-block text-danger' : 'd-none'}>
-          <i className="icon icon-common icon-times-circle" /> { props.errors[props.id] }
+        <div className={invalid ? 'd-block text-danger' : 'd-none'}>
+          <i className="icon icon-common icon-times-circle" /> { error?.message }
         </div>
         <small id={`${id}-helpblock`} className="form-text text-muted">
           {props.description}
@@ -93,3 +126,24 @@ const RegistrationRequestField = (props) => {
 }
 
 export default RegistrationRequestField;
+
+// export default (props) => {
+//   const {
+//     register,
+//     getFieldState,
+//     formState
+//   } = useFormContext();
+//   const MemoizedRegistrationRequestField = memo(RegistrationRequestField,
+//       (prevProps, nextProps) => {
+//         const prevIsDirty = getFieldState(prevProps.id, prevProps.formState).isDirty;
+//         const nextIsDirty = getFieldState(prevProps.id, nextProps.formState).isDirty;
+//         return prevIsDirty === nextIsDirty
+//       }
+//   );
+//   return <MemoizedRegistrationRequestField
+//       {...props}
+//       register={register}
+//       getFieldState={getFieldState}
+//       formState={formState}
+//   />
+// }

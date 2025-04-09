@@ -10,13 +10,18 @@ export const getLocationListFromRegistry = () => {
   return async (dispatch) => {
     let requestUrl = config.registryApi + '/restApi/locations?size=1000';
 
-    const response = await fetch(requestUrl);
-    const json = await response.json();
-    const locations = json._embedded.locations.map(location => ({
-      id: location._links.self.href,
-      shortId: location._links.self.href.split('/').pop(),    // This is for uneven api contents. Should be fixed in backend.
-      label: location.countryName
-    })).sort((a, b) => a.name > b.name ? -1 : a.name < b.name ? 1 : 0);
+    let locations = [];
+    try {
+      const response = await fetch(requestUrl);
+      const json = await response.json();
+      locations = json._embedded.locations.map(location => ({
+        id: location._links.self.href,
+        shortId: location._links.self.href.split('/').pop(),    // This is for uneven api contents. Should be fixed in backend.
+        label: location.countryName
+      })).sort((a, b) => a.name > b.name ? -1 : a.name < b.name ? 1 : 0);
+    } catch (err) {
+      console.error(`Failed to fetch ${requestUrl}`, err);
+    }
 
     dispatch(setLocationList(locations));
   };

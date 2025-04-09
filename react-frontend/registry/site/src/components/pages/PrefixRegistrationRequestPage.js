@@ -1,44 +1,8 @@
-import React, { useEffect } from 'react';
-import { Formik } from 'formik';
+import React, {useEffect} from 'react';
 import { useMatomo } from '@jonkoops/matomo-tracker-react';
 
-import PrefixRegistrationRequestSchema, { PrefixRequestInitialValues } from
-    '../RequestPages/PrefixRegistrationRequestSchema';
 import PageTitle from "../common/PageTitle";
-
-import PrefixRequestForm, {submitPrefixRequest} from "../RequestPages/PrefixRequestForm";
-import {swalError, swalSuccess} from "../../utils/swalDialogs";
-import {clearSavedFormData} from "../RequestPages/LocalStorageFormikButtons";
-
-
-
-
-const onSubmit = async (values) => {
-  await submitPrefixRequest(values)
-    .then(response =>
-      response.json().then(json => {
-        if (response.ok)
-          swalSuccess.fire({
-            icon: 'success',
-            title: 'Prefix registration request sent',
-            text: 'Thank you. We will contact you shortly with more information about your request'
-          }).then(clearSavedFormData)
-        else
-          swalError.fire({
-            icon: 'error',
-            title: 'Something went wrong when submitting request',
-            text: json.errorMessage
-          })
-      })
-    ).catch(err => {
-      console.error(err)
-      swalError.fire({
-        icon: 'error',
-        title: 'Something went wrong when submitting request',
-        text: err.message
-      })
-    });
-}
+import PrefixRequestForm from "../RequestPages/PrefixRequestForm";
 
 export default () => {
   const { trackPageView } = useMatomo();
@@ -60,16 +24,7 @@ export default () => {
       <div className="container py-3">
         <div className="row">
           <div className="mx-auto col-sm-12 col-lg-10">
-            <Formik
-              initialValues={PrefixRequestInitialValues}
-              validationSchema={PrefixRegistrationRequestSchema}
-              onSubmit={onSubmit}
-              validateOnBlur={true}
-              validateOnChange={false}
-              validateOnMount={false}
-              displayName="PrefixRegistrationForm"
-              component={PrefixRequestForm}
-            />
+            <PrefixRequestForm />
           </div>
         </div>
       </div>

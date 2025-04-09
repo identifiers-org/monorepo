@@ -89,7 +89,7 @@ public class PrefixRegistrationRequestApiModel {
 
         var errorList = registrationValidationChains.values().stream()
                 .map(chain -> chain.validate(request.getPayload()))
-                .filter(Optional::isPresent).toList();
+                .filter(Optional::isPresent).map(Optional::get).toList();
 
         if (errorList.isEmpty()) {
             // Translate data model
@@ -103,7 +103,7 @@ public class PrefixRegistrationRequestApiModel {
         } else {
             response.setHttpStatus(HttpStatus.BAD_REQUEST);
 
-            var joinedMessages = errorList.stream().map(Optional::get).collect(Collectors.joining("\n"));
+            var joinedMessages = String.join("\n", errorList);
             response.setErrorMessage(String.format("INVALID Prefix registration request due to '%s'", joinedMessages));
 
             String requestedPrefix = "--- NO PREFIX SPECIFIED ---";

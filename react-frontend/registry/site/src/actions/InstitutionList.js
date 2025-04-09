@@ -16,15 +16,20 @@ export const getInstitutionListFromRegistry = () => {
   return async (dispatch) => {
     let requestUrl = config.registryApi + '/restApi/institutions?size=1000';
 
-    const response = await fetch(requestUrl);
-    const json = await response.json();
-    const institutions = json._embedded.institutions.map(institution => ({
-      id: institution._links.self.href,
-      shortId: institution._links.self.href.split('/').pop(),
-      name: institution.name,
-      homeUrl: institution.homeUrl,
-      description: institution.description
-    }));
+    let institutions = [];
+    try {
+      const response = await fetch(requestUrl);
+      const json = await response.json();
+      institutions = json._embedded.institutions.map(institution => ({
+        id: institution._links.self.href,
+        shortId: institution._links.self.href.split('/').pop(),
+        name: institution.name,
+        homeUrl: institution.homeUrl,
+        description: institution.description
+      }));
+    } catch (error) {
+      console.error(`Failed to fetch ${requestUrl}`, error);
+    }
 
     dispatch(setInstitutionList(institutions));
   };
