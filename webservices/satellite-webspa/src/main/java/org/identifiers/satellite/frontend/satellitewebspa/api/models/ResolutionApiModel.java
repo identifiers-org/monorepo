@@ -39,17 +39,32 @@ public class ResolutionApiModel {
                         log.info("Resolving to {}", location);
                     }
                 } else {
-                    // The namespace is ACTIVE, so we filter out the deprecated resources
-                    List<ResolvedResource> activeResolvedResources =
-                            responseResolve.getPayload().getResolvedResources().stream().filter(resolvedResource -> !resolvedResource.isDeprecatedResource()).collect(Collectors.toList());
-                    if (!activeResolvedResources.isEmpty()) {
+                    List<ResolvedResource> resolvedResources = responseResolve
+                            .getPayload().getResolvedResources();
+                    boolean allResourcesDeprecated = resolvedResources.stream()
+                            .allMatch(ResolvedResource::isDeprecatedResource);
+                    if (!allResourcesDeprecated) {
+                        // When at least one resource is not deprecated, use non deprecated ones
+                        //   This is important for resolving queries for deprecated provider codes
+                        resolvedResources = resolvedResources.stream()
+                                .filter(resolvedResource ->
+                                        !resolvedResource.isDeprecatedResource()
+                                ).collect(Collectors.toList());
+                    }
+                    if (!resolvedResources.isEmpty()) {
                         // We sort them and choose the highest ranking one
-                        activeResolvedResources.sort((o1, o2) -> Integer.compare(o2.getRecommendation().getRecommendationIndex(), o1.getRecommendation().getRecommendationIndex()));
-                        ResolvedResource resolvedResource = activeResolvedResources.get(0);
-                        if (resolvedResource.isProtectedUrls() && resolvedResource.isRenderProtectedLanding()) {
-                            location = "/protectedLanding/" + responseResolve.getPayload().getParsedCompactIdentifier().getRawRequest();
+                        resolvedResources.sort((o1, o2) ->
+                                Integer.compare(o2.getRecommendation().getRecommendationIndex(),
+                                        o1.getRecommendation().getRecommendationIndex()));
+                        ResolvedResource resolvedResource = resolvedResources.get(0);
+                        if (resolvedResource.isDeprecatedResource() && resolvedResource.isRenderDeprecatedLanding()) {
+                            location = "/deactivatedLanding/" + responseResolve
+                                    .getPayload().getParsedCompactIdentifier().getRawRequest();
+                        } else if (resolvedResource.isProtectedUrls() && resolvedResource.isRenderProtectedLanding()) {
+                            location = "/protectedLanding/" + responseResolve
+                                    .getPayload().getParsedCompactIdentifier().getRawRequest();
                         } else {
-                            location = activeResolvedResources.get(0).getCompactIdentifierResolvedUrl();
+                            location = resolvedResource.getCompactIdentifierResolvedUrl();
                         }
                         log.info("Resolving to {}", location);
                     } else {

@@ -101,7 +101,9 @@ public class ResolverApiController {
 
         matomoTrackingService.handleCidResolution(request, result);
 
-        return new ResponseEntity<>(result, result.getHttpStatus());
+        return ResponseEntity
+                .status(result.getHttpStatus())
+                .body(result);
     }
 
     @GetMapping(value = "/resolveMirId/{mirId}")

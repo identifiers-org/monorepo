@@ -45,6 +45,7 @@ public class Resource implements Serializable {
     // Deprecation / deactivation
     private boolean deprecated;
     private Date deprecationDate;
+    private boolean renderDeprecatedLanding;
     private boolean protectedUrls;
     private boolean renderProtectedLanding;
     private String authHelpUrl;

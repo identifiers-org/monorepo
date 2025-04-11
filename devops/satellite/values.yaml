@@ -27,7 +27,7 @@ sparql:
   component: sparql
   tier: api
   image: "identifiersorg/sparql-identifiers:2.1.3"
-  replicas: 1
+  replicas: 2
   requests:
     memory: 360Mi
     cpu: 100m
@@ -69,7 +69,7 @@ metadata:
 resolver:
   component: resolver
   tier: api
-  image: "identifiersorg/cloud-ws-resolver:3.2.0"
+  image: "identifiersorg/cloud-ws-resolver:3.2.1"
   replicas: 3
   port: 8080
   url: "https://resolver.api.identifiers.org"
@@ -85,7 +85,7 @@ matomo:
 frontend:
   component: web-satellite
   tier: frontend
-  image: "identifiersorg/cloud-satellite-web-spa:2.4.0"
+  image: "identifiersorg/cloud-satellite-web-spa:2.4.2"
   replicas: 3
   cors_origins: "*"
   port: 9090

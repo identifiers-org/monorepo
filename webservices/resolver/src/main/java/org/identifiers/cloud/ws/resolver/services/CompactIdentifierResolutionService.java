@@ -8,6 +8,7 @@ import org.identifiers.cloud.ws.resolver.models.ResolverDataFetcher;
 import org.identifiers.cloud.ws.resolver.models.ResolverDataHelper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -85,17 +86,12 @@ public class CompactIdentifierResolutionService implements ResolutionService {
                 return resolutionServiceResult;
             }
             // Check for provider
-            if (parsedCompactIdentifier.getProviderCode() != null) {
+            if (StringUtils.hasText(parsedCompactIdentifier.getProviderCode())) {
                 // Look for the one with the given provider code
                 List<Resource> filteredResources = resources.stream()
-                        .filter(resource -> {
-                            if (resource.getProviderCode() != null) {
-                                return resource.getProviderCode().equals(parsedCompactIdentifier.getProviderCode());
-                            }
-                            return false;
-                        })
+                        .filter(r -> parsedCompactIdentifier.getProviderCode().equals(r.getProviderCode()))
                         .collect(Collectors.toList());
-                log.info("CompactId '{}', with prefix '{}' got #{} resources with provider code '{}'",
+                log.info("CompactId '{}', with prefix '{}' got {} resources with provider code '{}'",
                         parsedCompactIdentifier.getRawRequest(),
                         parsedCompactIdentifier.getNamespace(),
                         filteredResources.size(),

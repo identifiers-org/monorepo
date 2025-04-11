@@ -19,9 +19,9 @@ export default () => {
 }
 
 
-const allDeprecatedResource = resolvedResources => {
+const allDeprecatedResource = resolvedResources =>
   resolvedResources.every(resource => resource.deprecatedResource)
-}
+
 
 
 const DeactivatedLanding = (resolverData) => {

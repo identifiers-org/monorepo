@@ -94,6 +94,7 @@ public class ResolverDataHelper {
                 .setResourceHomeUrl(resource.getResourceHomeUrl())
                 .setDeprecatedResource(resource.isDeprecated())
                 .setResourceDeprecationDate(resource.getDeprecationDate())
+                .setRenderDeprecatedLanding(resource.isRenderDeprecatedLanding())
                 .setMirId(resource.getMirId())
                 .setAuthHelpDescription(resource.getAuthHelpDescription())
                 .setAuthHelpUrl(resource.getAuthHelpUrl())
@@ -127,7 +128,7 @@ public class ResolverDataHelper {
                         .map(resource -> getResolvedResourceFrom(resource)
                                 .setDeprecatedNamespace(parsedCompactIdentifier.isDeprecatedNamespace())
                                 .setNamespaceDeprecationDate(parsedCompactIdentifier.getNamespaceDeprecationDate())
-                                .setRenderDeprecatedLanding(parsedCompactIdentifier.isRenderDeprecatedLanding() | resource.isRenderProtectedLanding())
+                                .setRenderDeprecatedLanding(parsedCompactIdentifier.isRenderDeprecatedLanding() | resource.isRenderDeprecatedLanding())
                                 .setNamespacePrefix(parsedCompactIdentifier.getNamespace())
                                 .setCompactIdentifierResolvedUrl(resolveUrlForLocalId(resource.getUrlPattern(),
                                         (parsedCompactIdentifier.isNamespaceEmbeddedInLui() ? trimOutEmbeddedNamespacePrefixFromLui(parsedCompactIdentifier.getLocalId()) : parsedCompactIdentifier.getLocalId())))

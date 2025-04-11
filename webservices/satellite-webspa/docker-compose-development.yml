@@ -14,7 +14,7 @@ services:
         networks:
             - satwebspanet
         volumes:
-            - "../db/registry:/docker-entrypoint-initdb.d"
+            - "../../db/registry:/docker-entrypoint-initdb.d"
     hqregistry:
         container_name: hqregistry
         image: identifiersorg/cloud-hq-ws-registry
@@ -44,7 +44,7 @@ services:
         networks:
             - satwebspanet
         volumes:
-            - "../db/mirid-controller:/docker-entrypoint-initdb.d"
+            - "../../db/mirid-controller:/docker-entrypoint-initdb.d"
     hqmiridcontroller:
         container_name: hqmiridcontroller
         image: identifiersorg/cloud-hq-ws-mirid-controller

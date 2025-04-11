@@ -10,7 +10,7 @@ services:
         ports:
             - "5430:5432"
         volumes:
-            - "../db/registry/:/docker-entrypoint-initdb.d/"
+            - "../../db/registry/:/docker-entrypoint-initdb.d/"
     hqregistry:
         image: identifiersorg/cloud-hq-ws-registry
         environment:
