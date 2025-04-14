@@ -40,10 +40,6 @@ allowEmptyPassword: false
 volumePermissions:
   enabled: true
 
-containerSecurityContext:
-  runAsNonRoot: false
-  runAsUser: 0
-
 matomoSkipInstall: true
 
 resources:
