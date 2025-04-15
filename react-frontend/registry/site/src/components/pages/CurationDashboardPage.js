@@ -2,13 +2,13 @@ import React from 'react';
 
 // Components.
 import PageTitle from '../common/PageTitle';
-import PrefixRegistrationSessionList from '../CurationDashboardPage/PrefixRegistrationSessionList';
-import ResourceRegistrationSessionList from '../CurationDashboardPage/ResourceRegistrationSessionList';
-import CurationWarningList from '../CurationDashboardPage/CurationWarningList'
+import PrefixRegistrationSessionList from '../CurationDashboardPage/PrefixRegistrationSessions/PrefixRegistrationSessionList';
+import ResourceRegistrationSessionList from '../CurationDashboardPage/ResourceRegistrationSessions/ResourceRegistrationSessionList';
+import CurationWarningList from '../CurationDashboardPage/CurationWarnings/CurationWarningList'
 import CurationInstitutionList from '../CurationDashboardPage/CurationInstitutionList';
 
 import { useMatomo } from '@jonkoops/matomo-tracker-react';
-import CurationWarningListInstructions from "../CurationDashboardPage/CurationWarningListInstructions";
+import CurationWarningListInstructions from "../CurationDashboardPage/CurationWarnings/CurationWarningListInstructions";
 
 const CurationDashboardPage = () => {
   const { trackPageView } = useMatomo();
@@ -48,8 +48,8 @@ const CurationDashboardPage = () => {
             title="Summary of open curation warnings"
             description=<>
                 This table summarizes warnings that require curator attention.
-                <button type="button" data-toggle="modal" className="btn btn-link d-inline px-1 py-0 m-0"
-                        data-target="#curation-warning-instructions-modal">
+                <button type="button" data-bs-toggle="modal" className="btn btn-link d-inline px-1 py-0 m-0"
+                        data-bs-target="#curation-warning-instructions-modal">
                   Click here for more information.
                 </button>
               </>

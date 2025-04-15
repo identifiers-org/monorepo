@@ -38,21 +38,23 @@ const AppRouter = (props) => (
   <BrowserRouter>
     <>
       <Header />
-      <div className="container mt-5">
-        <Routes>
-          <Route path="/" element={<HomePage/>} />
-          <Route path="/registry" element={<BrowseRegistryPage/>} />
-          <Route path="/registry/:prefix" element={<NamespaceDetailsPage/>} />
-          <Route path="/prefixregistrationrequest" element={<PrefixRegistrationRequestPage/>} />
-          <Route path="/resourceregistrationrequest" element={<ResourceRegistrationRequestPage/>} />
-          { config.enableAuthFeatures && condRoute(props.auth, <CurationDashboardPage/>, "/curation") }
-          { config.enableAuthFeatures && condRoute(props.auth, <ManagePrefixRegistrationRequestPage/>,
-                                                              "/curation/prefixRegistration/:id") }
-          { config.enableAuthFeatures && condRoute(props.auth, <ManageResourceRegistrationRequestPage/>,
-                                                              "/curation/resourceRegistration/:id") }
-          { config.enableAuthFeatures && condRoute(props.auth, <AccountPage/>, "/account") }
-          <Route component={NotFoundPage} />
-        </Routes>
+      <div className="container">
+        <div className="w-100 pt-5">
+          <Routes>
+            <Route path="/" element={<HomePage/>} />
+            <Route path="/registry" element={<BrowseRegistryPage/>} />
+            <Route path="/registry/:prefix" element={<NamespaceDetailsPage/>} />
+            <Route path="/prefixregistrationrequest" element={<PrefixRegistrationRequestPage/>} />
+            <Route path="/resourceregistrationrequest" element={<ResourceRegistrationRequestPage/>} />
+            { config.enableAuthFeatures && condRoute(props.auth, <CurationDashboardPage/>, "/curation") }
+            { config.enableAuthFeatures && condRoute(props.auth, <ManagePrefixRegistrationRequestPage/>,
+                "/curation/prefixRegistration/:id") }
+            { config.enableAuthFeatures && condRoute(props.auth, <ManageResourceRegistrationRequestPage/>,
+                "/curation/resourceRegistration/:id") }
+            { config.enableAuthFeatures && condRoute(props.auth, <AccountPage/>, "/account") }
+            <Route component={NotFoundPage} />
+          </Routes>
+        </div>
       </div>
       <Footer />
     </>

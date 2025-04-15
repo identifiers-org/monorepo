@@ -43,7 +43,7 @@ class EBINavDropDown extends React.Component {
         </a>
         {expanded && (
           <div>
-            <ul className="EBINav-dropdown">
+            <ul className="EBINav-dropdown px-0">
               {childrenList}
             </ul>
           </div>

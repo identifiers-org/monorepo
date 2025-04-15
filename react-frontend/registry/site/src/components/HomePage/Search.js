@@ -85,7 +85,7 @@ class Search extends React.Component {
 
     return (
         <form onSubmit={this.handleSubmit} role='search'>
-          <div className="form-group search-form-group">
+          <div className="search-form-group">
             <div className="input-group inline-search-input-group">
               <input
                   role='searchbox'
@@ -97,14 +97,12 @@ class Search extends React.Component {
                   spellCheck={false}
                   value={query}
               />
-              <div className="input-group-append">
-                <button className="btn btn-primary">
-                  {buttonCaption}
-                </button>
-              </div>
+              <button className="btn btn-primary text-white">
+                {buttonCaption}
+              </button>
             </div>
             {query && <SearchSuggestions query={query} ref={this.suggestionListRef}/>}
-            <a className="text-muted text-sm ml-1" href="https://www.ebi.ac.uk/ebisearch">
+            <a className="text-muted text-sm text-decoration-none ms-1" href="https://www.ebi.ac.uk/ebisearch">
               powered by EBI Search
             </a>
           </div>

@@ -1,8 +1,8 @@
 import React from 'react';
 
 // Components.
-import PrefixRegistrationSessionRequest from './PrefixRegistrationSessionRequest';
-import ResourceRegistrationSessionRequest from './ResourceRegistrationSessionRequest';
+import PrefixRegistrationSessionRequest from '../PrefixRegistrationSessions/PrefixRegistrationSessionRequest';
+import ResourceRegistrationSessionRequest from '../ResourceRegistrationSessions/ResourceRegistrationSessionRequest';
 
 
 class RegistrationSessionEventStart extends React.Component {
@@ -27,14 +27,14 @@ class RegistrationSessionEventStart extends React.Component {
       <>
         <div className="row">
           <div className="col mb-3">
-            <span className="text-muted font-weight-bold mr-3">Additional information:</span>
+            <span className="text-muted fw-bold me-3">Additional information:</span>
             <span className="text-dark">{data.additionalInformation}</span>
           </div>
         </div>
         <div className="row">
           <div className="col col-xs-8 col-sm-6 col-md-5 col-lg-4 col-xl-3">
             <a
-              className="btn btn-secondary btn-block"
+              className="btn btn-secondary w-100"
               href="#!"
               onClick={this.toggle}
             >

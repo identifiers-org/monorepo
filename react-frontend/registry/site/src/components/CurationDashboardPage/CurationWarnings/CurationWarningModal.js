@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {config} from "../../config/Config";
-import Spinner from "../common/Spinner";
+import {config} from "../../../config/Config";
+import Spinner from "../../common/Spinner";
 import CurationWarningDetails from "./CurationWarningDetails";
 import {Link} from "react-router-dom";
-import {renewToken} from "../../utils/auth";
+import {renewToken} from "../../../utils/auth";
 
 const allSettledAndSuccessfulJsons = (fetches) =>
     Promise.allSettled(fetches)
@@ -68,10 +68,11 @@ export default ({selectedTarget, modalId, editHref}) => {
     fn();
   }, [selectedTarget, setFailed, setLoading, setCurationWarnings]);
 
-  if (!selectedTarget) return undefined;
 
   let body;
-  if (loading)
+  if (!selectedTarget)
+    body = <></>;
+  else if (loading)
     body = <Spinner noText/>
   else if (failed)
     body = <div className="alert alert-danger"> Failed to get warnings! </div>
@@ -86,14 +87,12 @@ export default ({selectedTarget, modalId, editHref}) => {
           <div className="modal-content">
             <div className="modal-header">
               <h6 className="modal-title">
-                Open warnings for {selectedTarget.label} ({selectedTarget.identifier})
-                <Link to={editHref} target="_blank" className="ml-2">
+                Open warnings for {selectedTarget?.label} ({selectedTarget?.identifier})
+                <Link to={editHref} target="_blank" className="ms-2">
                   <i className="icon icon-common icon-external-link-alt"></i>
                 </Link>
               </h6>
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
             </div>
             <div className="modal-body">
               {body}

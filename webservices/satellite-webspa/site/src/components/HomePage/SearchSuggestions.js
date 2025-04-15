@@ -25,7 +25,7 @@ class SearchSuggestions extends React.Component {
       () => this.setState({
         loading: true
       }, this.updateNamespaces),
-      600);
+      50);
   }
 
   componentDidUpdate = (prevProps) => {
@@ -252,7 +252,7 @@ class SearchSuggestions extends React.Component {
             <div className="suggestions-box">
               <div className="row mx-1">
                 <div className="col align-self-end">
-                  <p className="text-muted text-right my-0"><small>Suggestions</small></p>
+                  <p className="text-muted text-end me-4 my-0"><small>Suggestions</small></p>
                 </div>
               </div>
 
@@ -281,16 +281,16 @@ class SearchSuggestions extends React.Component {
                             }}
                           >
                             <span
-                              className={`badge ${selectedNamespace === index ? 'badge-secondary border border-dark' : 'badge-dark border border-secondary'} font-weight-normal`}>
+                              className={`badge ${selectedNamespace === index ? 'bg-secondary border border-dark' : 'bg-dark border border-secondary'} fw-normal`}>
                                 {namespace.prefix}
                             </span>
 
                             <ResourceNameTag
-                              className={`mb-0 ml-2 ${selectedNamespace === index ? 'text-white' : ''} text-ellipsis`}
+                              className={`mb-0 ms-2 ${selectedNamespace === index ? 'text-white' : ''} text-ellipsis`}
                             >
                               {namespace.name}
                               <span
-                                className={`${selectedNamespace === index ? 'text-white bg-gray' : 'text-muted bg-white'} small ml-1 ml-sm-2`}>
+                                className={`${selectedNamespace === index ? 'text-white bg-gray' : 'text-muted bg-white'} small ms-1 ml-sm-2`}>
                                 <span className='d-none d-sm-inline'>sample:</span> {namespace.sample_id}
                               </span>
                             </ResourceNameTag>
@@ -305,7 +305,7 @@ class SearchSuggestions extends React.Component {
                             title='See namespace page'
                             type="button"
                           >
-                            <i className="icon icon-common icon-external-link-alt ml-1"/>
+                            <i className="icon icon-common icon-external-link-alt ms-1"/>
                           </button>
                         </div>
                       </div>

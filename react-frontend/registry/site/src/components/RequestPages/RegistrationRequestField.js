@@ -26,11 +26,11 @@ const RegistrationRequestField = (props) => {
   }
 
   return (
-    <div className="form-group row">
-      <label className="col-md-12 col-md-2 col-lg-3 col-form-label form-control-label" htmlFor={props.id}>
+    <div className="row mb-3">
+      <label className="col-md-12 col-md-2 col-lg-3 col-form-label form-control-label form-label" htmlFor={props.id}>
         {props.label}
       </label>
-      <div className="col-sm-12 col-md-10 col-lg-9">
+      <div className="col-sm-12 col-md-10 col-lg-9 pt-1">
         {(() => {
           switch (props.type) {
             case "text":
@@ -61,7 +61,7 @@ const RegistrationRequestField = (props) => {
                       ref={ref}
                       id={props.id}
                       type={props.type}
-                      className={`form-control ${validityClass}`}
+                      className={validityClass}
                       aria-describedby={helpElementId}
                       readOnly={props.readonly}
                       placeholder={props.placeholder}
@@ -92,7 +92,7 @@ const RegistrationRequestField = (props) => {
                   name={name}
                   ref={ref}
                   id={props.id}
-                  className={"form-control " + validityClass}
+                  className={"form-control form-select " + validityClass}
                   aria-describedby={helpElementId}
                   disabled={props.readonly}
                 >
@@ -115,7 +115,7 @@ const RegistrationRequestField = (props) => {
         <div className={invalid ? 'd-block text-danger' : 'd-none'}>
           <i className="icon icon-common icon-times-circle" /> { error?.message }
         </div>
-        <small id={`${id}-helpblock`} className="form-text text-muted">
+        <small id={`${id}-helpblock`} className={`form-text my-1 text-muted ${props.type === 'checkbox' && "ms-2"}`}>
           {props.description}
           {props.example && <span> <strong>Example:</strong> <span className="text-dark">{props.example}</span>.</span>}
         </small>

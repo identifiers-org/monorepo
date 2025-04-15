@@ -123,7 +123,7 @@ const DisconnectedPrefixAutoCompleter = (props) => {
       <div className="inline-search-container">
         <div className="suggestions-box">
           <div className="row mx-1">
-            <div className="col align-self-end"><p className="text-muted text-right my-0"><small>Suggestions</small></p>
+            <div className="col align-self-end"><p className="text-muted text-end my-0"><small>Suggestions</small></p>
             </div>
           </div>
           { props.namespaceList.length === 0 ? <span className="suggestion">No namespaces found</span> :
@@ -169,7 +169,7 @@ export const ProtectedUrlFormFields = (props) => {
   return <>
     <RegistrationRequestField
         id="protectedUrls"
-        description="Do links require users to authenticate to access information?"
+        description="Tick this box if users are required to authenticate to access resolved URLs."
         label="Are links protected?"
         type="checkbox"
         control={control}

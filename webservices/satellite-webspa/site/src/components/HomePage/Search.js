@@ -112,6 +112,8 @@ class Search extends React.Component {
   handleButtonClick = () => {
     if (this.state.isSearchValid) {
       this.props.onButtonClick(this.state.query);
+    } else {
+      this.search.current && this.search.current.focus();
     }
   }
 
@@ -132,14 +134,14 @@ class Search extends React.Component {
     return (
       <form onSubmit={this.handleSubmit} role='search'>
         <div className="form-group">
-          <small className="form-text text-muted ml-1">
+          <small className="form-text text-muted ms-1">
             Examples:{' '}
             {
               this.exampleCuries.map(example => (
                   <a role='suggestion' key={example} tabIndex='0'
                      onClick={this.handleExampleClick}
                      onKeyDown={this.handleExampleClick}
-                     className='text-primary text-decoration-none mr-2'>
+                     className='text-primary text-decoration-none me-2'>
                     {example}
                   </a>
               ))
@@ -157,16 +159,16 @@ class Search extends React.Component {
                 ref={this.search}
                 value={query}
             />
-            <div className="input-group-append">
-              <button
-                  className="btn btn-primary search-button"
-                  onFocus={this.handleFocusShowSuggestions}
-                  onClick={this.handleButtonClick}
-                  disabled={!isSearchValid}
-              >
-                {buttonCaption}
-              </button>
-            </div>
+            <button
+                className="btn btn-primary text-white search-button"
+                onFocus={this.handleFocusShowSuggestions}
+                onClick={this.handleButtonClick}
+                disabled={!isSearchValid}
+                title={isSearchValid ? undefined : "The compact identifier is not valid"}
+                type="submit"
+            >
+              {buttonCaption}
+            </button>
             {config.showSearchSuggestions && showSuggestions &&
                 <SearchSuggestions
                     setSearchState={this.setSearchState}
@@ -177,7 +179,8 @@ class Search extends React.Component {
                 />
             }
           </div>
-          <a className="text-muted text-sm ml-1" href="https://www.ebi.ac.uk/ebisearch">
+          <a className="text-muted text-sm ms-1 text-decoration-none"
+             href="https://www.ebi.ac.uk/ebisearch" target="_blank">
             powered by EBI Search
           </a>
         </div>

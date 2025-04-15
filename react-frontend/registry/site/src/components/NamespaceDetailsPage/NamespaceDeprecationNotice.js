@@ -9,8 +9,8 @@ export default () =>
         <span className="mx-3"> This namespace is <strong>deactivated</strong> </span>
         <i className="icon icon-common icon-trash"/>
       </h3>
-      <p className="mb-0 text-white text-center">
-        The data from this namespace is, currently, either not available or supported anymore.
+      <p className="m-0 py-1 px-2 text-white text-center">
+        The data from this namespace is, currently, either not available or supported anymore. See below for more information.<br/>
         Compact identifiers still resolve as normal but we recommend that you use another namespace if you can.
       </p>
     </div>

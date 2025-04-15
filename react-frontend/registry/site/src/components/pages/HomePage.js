@@ -51,7 +51,7 @@ class HomePage extends React.Component {
 
     const boxPadding = isSmallScreen() || isIpadScreen() ? 'p-3' : 'p-5';
     const searchBarPadding = isSmallScreen() ? 'p-1' : 'px-5';
-    const topSpacer = isSmallScreen() ? '' : 'spacer-8';
+    const topSpacer = isSmallScreen() ? '' : 'spacer-5';
 
     return (
       <div className={`row border ${topSpacer}`}>
@@ -63,13 +63,13 @@ class HomePage extends React.Component {
               directory of Compact Identifiers. This website allows performing searches on the registry by using the
               search bar on the right side or the <a
                 href="#!"
-                className="text-primary"
+                className="text-primary text-decoration-none"
                 onClick={handleClickRegistryBrowser}
               >
                 Registry Browser
               </a>. Resource maintainers can also find the <a
                 href="#!"
-                className="text-primary"
+                className="text-primary text-decoration-none"
                 onClick={handleClickPrefixRegistrationRequestForm}
               >
                 Prefix Registration Request form
@@ -79,13 +79,13 @@ class HomePage extends React.Component {
         </div>
 
         <div className="col col-12 col-xl-6 bg-light">
-          <h4 className={`mt-3 ${boxPadding}`}><i className="icon icon-common icon-search mr-2"/>
+          <h4 className={`mt-3 ${boxPadding}`}><i className="icon icon-common icon-search me-2"/>
             Search the registry <br/>
           </h4>
           <div className={`row justify-content-center mt-2 ${searchBarPadding}`}>
             <div className="col col-lg-7 col-xl-12">
               <Search
-                  buttonCaption={<span><i className="icon icon-common icon-search mr-1"/> Search</span>}
+                  buttonCaption={<span><i className="icon icon-common icon-search me-1"/> Search</span>}
                   placeholderCaption="Enter a namespace to search the registry"
               />
             </div>

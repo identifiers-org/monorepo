@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 // Actions.
-import { prefixRegistrationRequestAccept } from '../../actions/CurationDashboardPage/PrefixRegistrationSession';
-import { setRegistrationSessionAccept } from '../../actions/CurationDashboardPage/RegistrationSessionAccept';
+import { prefixRegistrationRequestAccept } from '../../../actions/CurationDashboardPage/PrefixRegistrationSession';
+import { setRegistrationSessionAccept } from '../../../actions/CurationDashboardPage/RegistrationSessionAccept';
 
 // Utils.
-import { swalSuccess, swalError } from '../../utils/swalDialogs';
+import { swalSuccess, swalError } from '../../../utils/swalDialogs';
 
 
 class PrefixRegistrationSessionAcceptForm extends React.Component {
@@ -74,12 +74,10 @@ class PrefixRegistrationSessionAcceptForm extends React.Component {
         </div>
 
         {/* ========================================  FORM FOR REGISTRATION ACCEPT ======================================== */}
-        <div className="row no-gutters align-items-center bg-light rounded p-2 mb-1">
+        <div className="row g-0 align-items-center bg-light rounded p-2 mb-1">
           <div className="col">
             <div className="input-group">
-              <div className="input-group-prepend">
-                <span className="input-group-text">Acceptance reason</span>
-              </div>
+              <span className="input-group-text">Acceptance reason</span>
               <textarea
                 className="form-control"
                 aria-label="Acceptace reason"
@@ -92,7 +90,7 @@ class PrefixRegistrationSessionAcceptForm extends React.Component {
         <div className="row">
           <div className="col mt-2">
             <a
-              className="btn btn-success btn-block text-white"
+              className="btn btn-success w-100 text-white"
               href="#!"
               onClick={handleAccept}
             >

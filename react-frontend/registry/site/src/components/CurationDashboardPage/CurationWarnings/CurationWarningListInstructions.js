@@ -1,16 +1,14 @@
 import React, {memo} from "react";
-import openIndividualWarningsImg from 'url:../../assets/individual_warnings.png'
-import individualWarningDetailsImg from 'url:../../assets/warning_details.png'
+import openIndividualWarningsImg from 'url:../../../assets/individual_warnings.png'
+import individualWarningDetailsImg from 'url:../../../assets/warning_details.png'
 
 export default memo(() => <div className="modal-content">
   <h2 className="modal-header">
     <span>
-      <i className="icon icon-common icon-info mr-2"></i>
+      <i className="icon icon-common icon-info me-2"></i>
       Instructions for handling curation warnings
     </span>
-    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
   </h2>
 
   <div className="modal-body">
@@ -19,7 +17,7 @@ export default memo(() => <div className="modal-content">
       {/*Warnings and how to solve*/}
       <div className="card mt-3">
         <div className="card-header">
-        <button type="button" data-toggle="collapse" data-target="#warnings-and-table-descrition" title="Click to toogle"
+        <button type="button" data-bs-toggle="collapse" data-bs-target="#warnings-and-table-descrition" title="Click to toogle"
                   className="h4 my-0 py-0 collapsed" aria-expanded="false" aria-controls="warnings-and-table-descrition">
             <span className="collapse-symbol" />
             Warnings and how to solve them
@@ -55,7 +53,7 @@ export default memo(() => <div className="modal-content">
       {/*Descriptions of columns*/}
       <div className="card mt-3">
         <div className="card-header">
-          <button type="button" data-toggle="collapse" data-target="#types-of-warnings-description" title="Click to toogle"
+          <button type="button" data-bs-toggle="collapse" data-bs-target="#types-of-warnings-description" title="Click to toogle"
                   className="h4 my-0 py-0 collapsed" aria-expanded="false" aria-controls="types-of-warnings-description">
             <span className="collapse-symbol" />
             Description of columns
@@ -70,11 +68,11 @@ export default memo(() => <div className="modal-content">
           </p>
 
           <p>
-            The type of entry a column applies to is displayed by <span className="badge badge-light">badges</span>.
+            The type of entry a column applies to is displayed by <span className="badge bg-light text-dark">badges</span>.
           </p>
 
           <div className="row border-top border-info py-2">
-            <div className="col-12 col-sm-12 col-md-3 col-lg-2 font-weight-bold"> Target </div>
+            <div className="col-12 col-sm-12 col-md-3 col-lg-2 fw-bold"> Target </div>
             <div className="col-12 col-sm-12 col-md-9 col-lg-10">
               This indicates which type of entry that row groups warnings by. It's either one of:
               <ul>
@@ -85,9 +83,9 @@ export default memo(() => <div className="modal-content">
           </div>
 
           <div className="row border-top border-info py-2">
-            <div className="col-12 col-sm-12 col-md-3 col-lg-2 font-weight-bold">
+            <div className="col-12 col-sm-12 col-md-3 col-lg-2 fw-bold">
               Access score
-              <span className="badge badge-light">Namespaces</span>
+              <span className="badge bg-light rounded-pill text-dark ms-1">Namespaces</span>
             </div>
             <div className="col-12 col-sm-12 col-md-9 col-lg-10">
               A numerical score that indicates how much usage a namespace has.
@@ -99,9 +97,9 @@ export default memo(() => <div className="modal-content">
           </div>
 
           <div className="row border-top border-info py-2">
-            <div className="col-12 col-sm-12 col-md-3 col-lg-2 font-weight-bold">
+            <div className="col-12 col-sm-12 col-md-3 col-lg-2 fw-bold">
               Low availability
-              <span className="badge badge-light">Namespaces</span>
+              <span className="badge bg-light rounded-pill text-dark ms-1">Namespaces</span>
             </div>
             <div className="col-12 col-sm-12 col-md-9 col-lg-10">
               This number indicates the number of resources under the namespace that are
@@ -115,9 +113,9 @@ export default memo(() => <div className="modal-content">
           </div>
 
           <div className="row border-top border-info py-2">
-            <div className="col-12 col-sm-12 col-md-3 col-lg-2 font-weight-bold">
+            <div className="col-12 col-sm-12 col-md-3 col-lg-2 fw-bold">
               Curation review
-              <span className="badge badge-light">Both</span>
+              <span className="badge bg-light rounded-pill text-dark ms-1">Both</span>
             </div>
             <div className="col-12 col-sm-12 col-md-9 col-lg-10">
               Some registry entries have the value "CURATOR_REVIEW" set as to mark the entry to be curated.
@@ -127,9 +125,9 @@ export default memo(() => <div className="modal-content">
           </div>
 
           <div className="row border-top border-info py-2">
-            <div className="col-12 col-sm-12 col-md-3 col-lg-2 font-weight-bold">
+            <div className="col-12 col-sm-12 col-md-3 col-lg-2 fw-bold">
               Bad institution URL
-              <span className="badge badge-light">Institutions</span>
+              <span className="badge bg-light rounded-pill text-dark ms-1">Institutions</span>
             </div>
             <div className="col-12 col-sm-12 col-md-9 col-lg-10">
               Since the link checker does not measure availability for institution URLs, a one shot request is made
@@ -139,9 +137,9 @@ export default memo(() => <div className="modal-content">
           </div>
 
           <div className="row border-top border-bottom border-info py-2">
-            <div className="col-12 col-sm-12 col-md-3 col-lg-2 font-weight-bold">
+            <div className="col-12 col-sm-12 col-md-3 col-lg-2 fw-bold">
               Wikidata discrepancy
-              <span className="badge badge-light">Institutions</span>
+              <span className="badge bg-light rounded-pill text-dark ms-1">Institutions</span>
             </div>
             <div className="col-12 col-sm-12 col-md-9 col-lg-10">
               Using a best-effort algorithm, the validator tries to match institutions to wikidata entries.
@@ -155,7 +153,7 @@ export default memo(() => <div className="modal-content">
       {/*Sorting*/}
       <div className="card mt-3">
         <div className="card-header">
-          <button type="button" data-toggle="collapse" data-target="#sorting-description" title="Click to toogle"
+          <button type="button" data-bs-toggle="collapse" data-bs-target="#sorting-description" title="Click to toogle"
                   className="h4 my-0 py-0 collapsed" aria-expanded="false" aria-controls="sorting-description">
             <span className="collapse-symbol" />
             Sorting the summary table
@@ -185,7 +183,7 @@ export default memo(() => <div className="modal-content">
       {/*individual warnings*/}
       <div className="card mt-3">
         <div className="card-header">
-          <button type="button" data-toggle="collapse" data-target="#individual-warnings-description" title="Click to toogle"
+          <button type="button" data-bs-toggle="collapse" data-bs-target="#individual-warnings-description" title="Click to toogle"
                   className="h4 my-0 py-0 collapsed" aria-expanded="false" aria-controls="individual-warnings-description">
             <span className="collapse-symbol" />
             Seeing individual curation warnings
@@ -235,7 +233,7 @@ export default memo(() => <div className="modal-content">
       {/*Warning updates*/}
       <div className="card mt-3">
         <div className="card-header">
-          <button type="button" data-toggle="collapse" data-target="#warning-update-descrition" title="Click to toogle"
+          <button type="button" data-bs-toggle="collapse" data-bs-target="#warning-update-descrition" title="Click to toogle"
                   className="h4 my-0 py-0 collapsed" aria-expanded="false" aria-controls="warning-update-descrition">
             <span className="collapse-symbol" />
             How warnings are updated
@@ -245,11 +243,11 @@ export default memo(() => <div className="modal-content">
           <p>
             Warnings are updated periodically by the registry verifier job.
             This job runs weekly and checks all entries for possible issues.
-            The job sends notifications to the registry for warnings that are active.
+            After running, it sends notifications to the registry for warnings that are active.
           </p>
 
           <p>
-            When a warning is not notified by the job, it is marked as solved, otherwise it is marked as open.
+            When a active warning is not notified by the job, it is marked as solved.
             A history of when jobs are opened and solved is kept for each warning by the registry.
             This history can be seen when inspecting a row of the warning summary table.
           </p>

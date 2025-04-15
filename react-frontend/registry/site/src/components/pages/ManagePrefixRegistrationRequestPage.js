@@ -6,16 +6,16 @@ import { useMatomo } from '@jonkoops/matomo-tracker-react';
 import { getPrefixRegistrationSessionFromRegistry } from '../../actions/CurationDashboardPage/PrefixRegistrationSession';
 
 // Components.
-import RegistrationSessionNewEventBtn from '../CurationDashboardPage/RegistrationSessionNewEventBtn';
+import RegistrationSessionNewEventBtn from '../CurationDashboardPage/RegistrationSessionEvents/RegistrationSessionNewEventBtn';
 
-import RegistrationSessionEvent from '../CurationDashboardPage/RegistrationSessionEvent';
+import RegistrationSessionEvent from '../CurationDashboardPage/RegistrationSessionEvents/RegistrationSessionEvent';
 
-import PrefixRegistrationSessionAcceptForm from '../CurationDashboardPage/PrefixRegistrationSessionAcceptForm';
-import PrefixRegistrationSessionAmendForm from '../CurationDashboardPage/PrefixRegistrationSessionAmendForm';
-import PrefixRegistrationSessionCommentForm from '../CurationDashboardPage/PrefixRegistrationSessionCommentForm';
-import PrefixRegistrationSessionRejectForm from '../CurationDashboardPage/PrefixRegistrationSessionRejectForm';
+import PrefixRegistrationSessionAcceptForm from '../CurationDashboardPage/PrefixRegistrationSessions/PrefixRegistrationSessionAcceptForm';
+import PrefixRegistrationSessionAmendForm from '../CurationDashboardPage/PrefixRegistrationSessions/PrefixRegistrationSessionAmendForm';
+import PrefixRegistrationSessionCommentForm from '../CurationDashboardPage/PrefixRegistrationSessions/PrefixRegistrationSessionCommentForm';
+import PrefixRegistrationSessionRejectForm from '../CurationDashboardPage/PrefixRegistrationSessions/PrefixRegistrationSessionRejectForm';
 
-import PrefixRegistrationSessionRequestDetails from '../CurationDashboardPage/PrefixRegistrationSessionRequest';
+import PrefixRegistrationSessionRequestDetails from '../CurationDashboardPage/PrefixRegistrationSessions/PrefixRegistrationSessionRequest';
 import PageTitle from '../common/PageTitle';
 
 import { useParams } from 'react-router-dom';

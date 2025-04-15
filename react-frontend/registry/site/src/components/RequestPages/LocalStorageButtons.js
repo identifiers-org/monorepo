@@ -24,7 +24,7 @@ export const SaveFormButton = ({storageKey, getValues}) => {
   }, [getValues, storageKey]);
 
   return (
-    <button className="form-control btn btn-secondary"
+    <button className="form-control btn btn-secondary text-white"
             type="button" onClick={saveCurrentValuesToLocalStorage}>
       Save contents
     </button>
@@ -63,7 +63,7 @@ export const LoadFormButton = ({storageKey, reset, trigger}) => {
   }, [reset, trigger, storageKey]);
 
   return (
-    <button className="form-control btn btn-secondary"
+    <button className="form-control btn btn-secondary text-white"
             type="button" onClick={setValuesFromLocalStorage}>
       Load previous save
     </button>

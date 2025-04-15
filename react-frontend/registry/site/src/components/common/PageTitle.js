@@ -7,7 +7,7 @@ const PageTitle = ({ icon, id, title, extraTitle, description }) => (
       <div className="col">
         <h1 id={id}>
           <i className={`icon icon-common ${icon}`} />&nbsp;{title}
-          <span className="font-italic"> {extraTitle}</span>
+          <span className="fst-italic"> {extraTitle}</span>
         </h1>
       </div>
     </div>

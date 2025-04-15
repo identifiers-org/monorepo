@@ -26,7 +26,7 @@ import { renewToken } from './utils/auth';
 import { MatomoProvider, createInstance as createMatomoInstance } from '@jonkoops/matomo-tracker-react';
 
 import "@popperjs/core"
-import "bootstrap/dist/js/bootstrap.min"
+import * as bootstrap from 'bootstrap' // Required to load boostrap js in app
 
 // ==================== APP Initialization ====================
 (async () => {

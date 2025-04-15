@@ -21,26 +21,26 @@ class ResourceList extends React.Component {
 
     return (
       resolvedResources.length === 0 ? (
-        <div className="col-12 col-lg px-0 pr-md-2">
+        <div className="col-12 col-lg px-0 pe-md-2">
           <div className="row mb-5">
             <div className="col align-middle">
-              <i className="icon icon-common icon-bomb size-200 mr-2 mt-4" />
+              <i className="icon icon-common icon-bomb size-200 me-2 mt-4" />
               Error resolving query: {query ? `nothing found for compact identifier \"${query}\"` : "Query is empty."}
-
             </div>
           </div>
           <div className="row">
             <div className="col">
               <a
                 href={`${window.location.protocol}//${window.location.hostname}${window.location.port ? ':' + window.location.port : ''}`}
+                className="text-decoration-none"
               >
-                <i className="icon icon-common icon-arrow-left mr-2" />Go back
+                <i className="icon icon-common icon-arrow-left me-2" />Go back
               </a>
             </div>
           </div>
         </div>
       ) : (
-        <div className="col-12 col-lg px-0 pr-md-2">
+        <div className="col-12 col-lg px-0 pe-md-2">
           <small className="text-muted">
             Found {resolvedResources.length} {resolvedResources.length === 1 ? 'entry' : 'entries'}.
           </small>

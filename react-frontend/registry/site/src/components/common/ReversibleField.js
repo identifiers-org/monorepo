@@ -38,27 +38,25 @@ class ReversibleField extends React.Component {
     const isCheckbox = fieldChild.props.type === 'checkbox';
 
     const preparedFieldChild = React.cloneElement(fieldChild, {
-      className: `form-control${modified ? ' border-warning border-2' : ''}${isCheckbox ? ' checkbox-input' : ''}`,
-      value,
+      className: `form-control${modified ? ' border-warning border-2' : ''}${isCheckbox ? ' form-check-input checkbox-input' : ''}`,
+      value: value || "",
       checked: value,
       onChange: (e) => handleChangeField(fieldChild.props.type === 'checkbox' ? e.target.checked : e.target.value)
     });
 
     return (
-      <div className={`input-group input-group-sm${isCheckbox ? ' justify-content-between' : ''}`}>
+      <div className={`input-group input-group-sm${isCheckbox ? ' form-check justify-content-between' : ''}`}>
         {preparedFieldChild}
         {
-          modified && (
-            <div className="input-group-append">
-              <button
-                className="btn btn-warning"
-                onClick={() => handleChangeField(undefined)}
-              >
-                Revert
-              </button>
-              <span className="badge badge-dark ml-2 badge-modified">Modified</span>
-            </div>
-          )
+          modified && (<>
+            <button
+              className="btn btn-warning"
+              onClick={() => handleChangeField(undefined)}
+            >
+              Revert
+            </button>
+            <span className="badge badge-dark ms-2 badge-modified">Modified</span>
+          </>)
         }
       </div>
     );

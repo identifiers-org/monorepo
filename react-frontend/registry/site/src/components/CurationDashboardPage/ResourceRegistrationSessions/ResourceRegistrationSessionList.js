@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Paginator from '../common/Paginator';
+import Paginator from '../../common/Paginator';
 import ResourceRegistrationSessionItem from './ResourceRegistrationSessionItem';
 
-import { getRegistrationSessionListFromRegistry } from '../../actions/CurationDashboardPage/RegistrationSessionList';
-import { setRegistrationSessionListParams } from '../../actions/CurationDashboardPage/RegistrationSessionListParams';
+import { getRegistrationSessionListFromRegistry } from '../../../actions/CurationDashboardPage/RegistrationSessionList';
+import { setRegistrationSessionListParams } from '../../../actions/CurationDashboardPage/RegistrationSessionListParams';
 
-import { equalParams } from '../../utils/equalParams';
+import { equalParams } from '../../../utils/equalParams';
 
 
 class ResourceRegistrationSessionList extends React.Component {

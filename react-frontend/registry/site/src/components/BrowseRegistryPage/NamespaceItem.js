@@ -18,7 +18,7 @@ const NamespaceItem = (namespace) => {
         </td>
         <td className="med align-middle text-center">
           <span
-            className="text-warning font-weight-bold border border-secondary badge badge-dark"
+            className="text-warning fw-bold border border-secondary badge bg-dark"
           >
             {namespace.prefix}
           </span>
@@ -30,9 +30,9 @@ const NamespaceItem = (namespace) => {
               <RoleConditional requiredRoles={['editNamespace']}>
                 <Link to={`/registry/${namespace.prefix}?editNamespace=true`}>
                   <button
-                    className="btn btn-sm btn-success ml-3 edit-button"
+                    className="btn btn-sm btn-success ms-3 edit-button"
                     >
-                    <i className="icon icon-common icon-edit mr-1" />Edit namespace
+                    <i className="icon icon-common icon-edit me-1" />Edit namespace
                   </button>
                 </Link>
               </RoleConditional>

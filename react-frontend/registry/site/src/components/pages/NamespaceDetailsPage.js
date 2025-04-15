@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { useMatomo } from '@jonkoops/matomo-tracker-react';
@@ -203,7 +203,7 @@ class NamespaceDetailsPage extends React.Component {
     if (result.value) {
       const result = await reactivateNamespace(namespaceId);
 
-      document.querySelector("#deactivationModal button.close")?.click();
+      document.querySelector("#deactivationModal button.btn-close")?.click();
 
       if (result.status === 200) {
         successToast('Namespace reactivation successful');
@@ -294,13 +294,13 @@ class NamespaceDetailsPage extends React.Component {
               >
                 <>
                   <button
-                    className="btn btn-sm btn-warning edit-button mr-2"
+                    className="btn btn-sm btn-warning edit-button me-2"
                     onClick={handleClickValidateChangesButton}
                   >
-                    <i className="icon icon-common icon-tasks mr-1" />Perform validation
+                    <i className="icon icon-common icon-tasks me-1" />Perform validation
                   </button>
                   <button
-                    className="btn btn-sm btn-success edit-button mr-2"
+                    className="btn btn-sm btn-success edit-button me-2"
                     onClick={handleClickCommitChangesButton}
                   >
                     <i className="icon icon-common icon-check" /> Commit changes
@@ -326,22 +326,22 @@ class NamespaceDetailsPage extends React.Component {
                     className="btn btn-sm btn-success edit-button"
                     onClick={handleClickEditButton}
                     >
-                    <i className="icon icon-common icon-edit mr-1"/>Edit namespace
+                    <i className="icon icon-common icon-edit me-1"/>Edit namespace
                   </button>
                   {namespace.deprecated ? (
                     <button
-                      className="btn btn-sm btn-warning edit-button ml-2"
+                      className="btn btn-sm btn-warning edit-button ms-2"
                       onClick={handleClickReactivateButton}
                     >
                       {/* TODO: change to trash-restore when EBI adds it to EBI-Font-icons */}
-                      <i className="icon icon-common icon-caret-square-up mr-1"/>Reactivate namespace
+                      <i className="icon icon-common icon-caret-square-up me-1"/>Reactivate namespace
                     </button>
                   ) : (
                     <button
-                      className="btn btn-sm btn-danger edit-button ml-2"
+                      className="btn btn-sm btn-danger edit-button ms-2"
                       onClick={handleClickDeactivateButton}
                     >
-                      <i className="icon icon-common icon-trash mr-1"/>Deactivate namespace
+                      <i className="icon icon-common icon-trash me-1"/>Deactivate namespace
                     </button>
                   )}
                 </>
@@ -357,13 +357,13 @@ class NamespaceDetailsPage extends React.Component {
         </div>
 
         <div className="row mb-3">
-          <div className="col overflow-y-scroll">
+          <div className="col">
             <table className="table table-sm table-striped table-borderless">
               <tbody>
                 <tr>
-                  <td className="w-35">
+                  <th scope="row" className="w-35 fw-medium">
                     Name
-                  </td>
+                  </th>
                   <td>
                     {editNamespace ? (
                       <RoleConditional
@@ -380,7 +380,7 @@ class NamespaceDetailsPage extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td>Description</td>
+                  <th scope="row" className="fw-medium">Description</th>
                   <td>
                     {editNamespace ? (
                       <RoleConditional
@@ -397,7 +397,7 @@ class NamespaceDetailsPage extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td>Local Unique Identifier (LUI) pattern</td>
+                  <th scope="row" className="fw-medium">Local Unique Identifier (LUI) pattern</th>
                   <td>
                     {editNamespace ? (
                       <RoleConditional
@@ -414,7 +414,7 @@ class NamespaceDetailsPage extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td>Prefix embedded in LUI</td>
+                  <th scope="row" className="fw-medium">Prefix embedded in LUI</th>
                   <td>
                     {editNamespace ? (
                       <RoleConditional
@@ -431,7 +431,7 @@ class NamespaceDetailsPage extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td>Legacy registry identifier</td>
+                  <th scope="row" className="fw-medium">Legacy registry identifier</th>
                   <td>{namespace.mirId}</td>
                 </tr>
               </tbody>
@@ -447,20 +447,20 @@ class NamespaceDetailsPage extends React.Component {
         </div>
 
         <div className="row mb-3">
-          <div className="col overflow-y-scroll">
+          <div className="col overflow-y-none">
             <table className="table table-sm table-striped table-borderless">
               <tbody>
                 <tr>
-                  <td className="w-35">Date of deactivation</td>
+                  <th scope="row" className="w-35 fw-medium">Date of deactivation</th>
                   <td>{this.dateFormat(namespace.deprecationDate)}</td>
                 </tr>
                 <tr>
-                  <td>
+                  <th scope="row" className="fw-medium">
                     Approximated expiration date
-                    <span className="ml-1" title="Approximation of when this collection went offline">
+                    <span className="ms-1" title="Approximation of when this collection went offline">
                       <i className="icon icon-common icon-question-circle"></i>
                     </span>
-                  </td>
+                  </th>
                   <td>
                     {editNamespace ? (
                       <RoleConditional
@@ -479,7 +479,7 @@ class NamespaceDetailsPage extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td>Deactivation statement</td>
+                  <th scope="row" className="fw-medium">Deactivation statement</th>
                   <td>
                     {editNamespace ? (
                       <RoleConditional
@@ -498,12 +498,12 @@ class NamespaceDetailsPage extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td>
+                  <th scope="row" className="fw-medium">
                     Data acquisition
-                    <span className="ml-1" title="Instructions on how to currently access data">
+                    <span className="ms-1" title="Instructions on how to currently access data">
                       <i className="icon icon-common icon-question-circle"></i>
                     </span>
-                  </td>
+                  </th>
                   <td>
                     {editNamespace ? (
                       <RoleConditional
@@ -522,12 +522,12 @@ class NamespaceDetailsPage extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td>
+                  <th scope="row" className="fw-medium">
                     Succeeding namespace
-                    <span className="ml-1" title="Namespace that currently handles data of this namespace">
+                    <span className="ms-1" title="Namespace that currently handles data of this namespace">
                       <i className="icon icon-common icon-question-circle"></i>
                     </span>
-                  </td>
+                  </th>
                   <td>
                     {editNamespace ? (
                       <RoleConditional
@@ -547,7 +547,7 @@ class NamespaceDetailsPage extends React.Component {
                 </tr>
                 <RoleConditional requiredRoles={['editNamespace']}>
                   <tr>
-                    <td> Deactivation landing page </td>
+                    <th scope="row" className="fw-medium"> Deactivation landing page </th>
                     <td>
                       { editNamespace ? (
                         <ReversibleField fieldName="renderDeprecatedLanding"
@@ -574,31 +574,31 @@ class NamespaceDetailsPage extends React.Component {
         </div>
 
         <div className="row mb-3">
-          <div className="col overflow-y-scroll">
+          <div className="col overflow-y-none">
             <table className="table table-sm table-striped table-borderless">
               <tbody>
                 <tr>
-                  <td className="w-35">
+                  <th scope="row" className="w-35 fw-medium">
                     Prefix
-                  </td>
+                  </th>
                   <td>
                     {namespaceEffectivePrefix}
                   </td>
                 </tr>
                 <tr>
-                  <td>Registry URI</td>
+                  <th scope="row" className="fw-medium">Registry URI</th>
                   <td><a href={config.baseUrl + "registry/" + namespace.prefix} target="_blank">{config.baseUrl}registry/{namespace.prefix}</a></td>
                 </tr>
                 <tr>
-                  <td>Sample URL</td>
+                  <th scope="row" className="fw-medium">Sample URL</th>
                   <td><a href={sampleUrl} target="_blank" rel="noopener noreferrer">{sampleUrl}</a></td>
                 </tr>
                 <tr>
-                  <td>Sample Compact identifier</td>
+                  <th scope="row" className="fw-medium">Sample Compact identifier</th>
                   <td>{namespaceEffectivePrefix}:{namespace.sampleId}</td>
                 </tr>
                 <tr>
-                  <td>Sample ID (LUI)</td>
+                  <th scope="row" className="fw-medium">Sample ID (LUI)</th>
                   <td>
                     {editNamespace ? (
                         <RoleConditional

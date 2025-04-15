@@ -101,7 +101,7 @@ const SearchSuggestions = forwardRef((props, ref) => {
       <div className="suggestions-box">
         <div className="row mx-1">
           <div className="col align-self-end">
-            <p className="text-muted text-right my-0"><small>Suggestions</small></p>
+            <p className="text-muted text-end my-0"><small>Suggestions</small></p>
           </div>
         </div>
 
@@ -112,7 +112,7 @@ const SearchSuggestions = forwardRef((props, ref) => {
                 key={`li-suggestion-${namespace.prefix}`}
                 className={`suggestion ${selectedNamespace === index ? 'suggestion__selected' : ''}`}
               >
-                <div className="row no-gutters py-1 mx-2">
+                <div className="row g-0 py-1 mx-2">
                   <div className="col">
                     <button
                       type='button'
@@ -133,11 +133,11 @@ const SearchSuggestions = forwardRef((props, ref) => {
                       }}
                     >
                       <span
-                        className={`badge ${selectedNamespace === index ? 'badge-secondary border border-dark' : 'badge-dark border border-secondary'} font-weight-normal`}>
+                        className={`badge ${selectedNamespace === index ? 'bg-secondary border border-dark' : 'bg-dark border border-secondary'} font-weight-normal`}>
                           {namespace.prefix}
                       </span>
                       <p
-                        className={`mb-0 ml-2 ${selectedNamespace === index ? 'text-white' : ''}`}
+                        className={`mb-0 ms-2 ${selectedNamespace === index ? 'text-white' : ''}`}
                       >
                         {namespace.name}
                       </p>

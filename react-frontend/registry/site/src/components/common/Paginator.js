@@ -120,11 +120,9 @@ class Paginator extends React.Component {
 
         <div className={`col col-xs-12 col-sm-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-2 ${smallOrder3} ${smallCenter}`}>
           <div className="input-group input-group-sm">
-            <div className="input-group-prepend">
-              <label className="input-group-text" htmlFor="perPageSelect">Per page</label>
-            </div>
+            <label className="input-group-text" htmlFor="perPageSelect">Per page</label>
             <select
-              className="custom-select"
+              className="form-select custom-select"
               id="perPageSelect"
               onChange={setSize}
               defaultValue={size}

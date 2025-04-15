@@ -4,7 +4,7 @@
 
 .footer-section {
   padding: 0 1rem;
-  margin-top: 10rem;
+  margin-top: 10rem !important;
   margin-left: auto !important;
   margin-right: auto !important;
 }
@@ -12,4 +12,11 @@
 .global-footer .row {
   display: block;
   margin: 0 auto !important;
+}
+
+.global-footer {
+  .column, ul {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+  }
 }

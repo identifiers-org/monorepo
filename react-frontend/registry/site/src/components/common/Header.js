@@ -93,11 +93,11 @@ class Header extends React.Component {
               <li className="training"><a href="//www.ebi.ac.uk/training">Training</a></li>
               <li className="about"><a href="//www.ebi.ac.uk/about">About us</a></li>
               <li className="search">
-                <a href="#" data-toggle="search-global-dropdown"><span className="show-for-small-only">Search</span></a>
-                <div id="search-global-dropdown" className="dropdown-pane" data-dropdown data-options="closeOnClick:true;"></div>
+                <a href="#" data-bs-toggle="search-global-dropdown"><span className="show-for-small-only">Search</span></a>
+                <div id="search-global-dropdown" className="dropdown-pane" data-bs-dropdown data-options="closeOnClick:true;"></div>
               </li>
-              <li className="float-right show-for-medium embl-selector">
-                <button className="button float-right" type="button" data-toggle="embl-dropdown">Hinxton</button>
+              <li className="float-end show-for-medium embl-selector">
+                <button className="button float-end" type="button" data-bs-toggle="embl-dropdown">Hinxton</button>
               </li>
             </ul>
           </nav>
@@ -108,7 +108,7 @@ class Header extends React.Component {
             <div id="masthead" className="masthead" data-sticky data-sticky-on="large" data-top-anchor="main-content-area:top" data-btm-anchor="main-content-area:bottom">
               <div className="masthead-inner row expanded">
                 <div className="columns medium-12" id="local-title">
-                  <div className="d-flex ml-3 mb-2">
+                  <div className="d-flex ms-3 mb-2">
                     <img src={identifiersLogo} />
                     <div className="logo-text">
                       <h1>Identifiers.org</h1>
@@ -117,45 +117,45 @@ class Header extends React.Component {
                   </div>
                 </div>
 
-                <div className="sticky-placeholder">
+                <div className="sticky-placeholder px-0">
                   <Sticky>
                     <EBINavBar>
                       <EBINavItem className="nav-item">
                         <a href={config.satelliteUrl} className="nav-link nav-link-dark">
-                          <i className="icon icon-common icon-external-link-alt mr-1" />Resolution
+                          <i className="icon icon-common icon-external-link-alt me-1" />Resolution
                         </a>
                       </EBINavItem>
 
                       <EBINavItem className="nav-item">
                         <NavLink to="/" className="nav-link" activeClassName="active">
-                          <i className="icon icon-common icon-list mr-1" />Registry
+                          <i className="icon icon-common icon-list me-1" />Registry
                         </NavLink>
                       </EBINavItem>
 
                       <EBINavItem className="nav-item">
                         <NavLink to="/registry" className="nav-link" activeClassName="active">
-                          <i className="icon icon-common icon-search mr-1" />Browse the registry
+                          <i className="icon icon-common icon-search me-1" />Browse the registry
                         </NavLink>
                       </EBINavItem>
 
                       <EBINavDropDown
-                        caption={<span><i className="icon icon-common icon-hand-point-up mr-1" />Make a request</span>}
+                        caption={<span><i className="icon icon-common icon-hand-point-up me-1" />Make a request</span>}
                       >
                         <EBINavItem className="nav-item">
                           <NavLink to="/prefixregistrationrequest" className="nav-link" activeClassName="active">
-                            <i className="icon icon-common icon-leaf mr-1" />Request prefix
+                            <i className="icon icon-common icon-leaf me-1" />Request prefix
                           </NavLink>
                         </EBINavItem>
                         <EBINavItem className="nav-item">
                           <NavLink to="/resourceregistrationrequest" className="nav-link" activeClassName="active">
-                            <i className="icon icon-common icon-cube mr-1" />Request resource
+                            <i className="icon icon-common icon-cube me-1" />Request resource
                           </NavLink>
                         </EBINavItem>
                       </EBINavDropDown>
 
                       <EBINavItem className="nav-item">
                         <a href={config.documentationUrl} className="nav-link nav-link-dark">
-                          <i className="icon icon-common icon-documentation mr-1" />Documentation
+                          <i className="icon icon-common icon-documentation me-1" />Documentation
                         </a>
                       </EBINavItem>
 
@@ -164,7 +164,7 @@ class Header extends React.Component {
                         config.enableAuthFeatures && !auth.authenticated && (
                           <EBINavItem className="nav-item">
                             <a href="#!" onClick={handleClickSignIn}>
-                              <i className="icon icon-common icon-sign-in-alt mr-1" />Sign in
+                              <i className="icon icon-common icon-sign-in-alt me-1" />Sign in
                             </a>
                           </EBINavItem>
                         )
@@ -176,7 +176,7 @@ class Header extends React.Component {
                           // If logged in.
                           <EBINavItem className="nav-item">
                             <NavLink to="/curation" className="nav-link" activeClassName="active">
-                              <i className="icon icon-common icon-tachometer-alt mr-1" />Curation dashboard
+                              <i className="icon icon-common icon-tachometer-alt me-1" />Curation dashboard
                             </NavLink>
                           </EBINavItem>
                         )
@@ -187,7 +187,7 @@ class Header extends React.Component {
                           // If logged in.
                           <EBINavItem className="nav-item">
                             <a href={`${config.authApi}/realms/idorg/account`} target="_blank" rel="noopener noreferrer" className="nav-link nav-link-dark">
-                              <i className="icon icon-common icon-user mr-1" />Account
+                              <i className="icon icon-common icon-user me-1" />Account
                             </a>
                           </EBINavItem>
                         )
@@ -198,15 +198,15 @@ class Header extends React.Component {
                           // If logged in.
                           <EBINavItem className="nav-item">
                             <a href="#!" onClick={handleClickSignOut}>
-                              <i className="icon icon-common icon-sign-out-alt mr-1" />Sign out
+                              <i className="icon icon-common icon-sign-out-alt me-1" />Sign out
                             </a>
                           </EBINavItem>
                         )
                       }
 
-                      <EBINavItem className="nav-item float-right">
+                      <EBINavItem className="nav-item float-end">
                         <a href={config.feedbackUrl} target="_blank" rel="noopener noreferrer" className="nav-link nav-link-dark">
-                          <i className="icon icon-common icon-comments mr-1" />Feedback
+                          <i className="icon icon-common icon-comments me-1" />Feedback
                         </a>
                       </EBINavItem>
 

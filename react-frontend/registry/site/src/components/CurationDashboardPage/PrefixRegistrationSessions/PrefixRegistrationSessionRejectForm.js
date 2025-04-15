@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
-import { prefixRegistrationRequestReject } from '../../actions/CurationDashboardPage/PrefixRegistrationSession';
-import { setRegistrationSessionReject } from '../../actions/CurationDashboardPage/RegistrationSessionReject';
+import { prefixRegistrationRequestReject } from '../../../actions/CurationDashboardPage/PrefixRegistrationSession';
+import { setRegistrationSessionReject } from '../../../actions/CurationDashboardPage/RegistrationSessionReject';
 
-import { swalSuccess, swalError } from '../../utils/swalDialogs';
+import { swalSuccess, swalError } from '../../../utils/swalDialogs';
 
 class PrefixRegistrationSessionRejectForm extends React.Component {
   constructor(props) {
@@ -74,12 +74,10 @@ class PrefixRegistrationSessionRejectForm extends React.Component {
         </div>
 
         {/* ======================================== FORM FOR REGISTRATION REJECT ======================================== */}
-        <div className="row no-gutters align-items-center bg-light rounded p-2 mb-1">
+        <div className="row g-0 align-items-center bg-light rounded p-2 mb-1">
           <div className="col">
             <div className="input-group">
-              <div className="input-group-prepend">
-                <span className="input-group-text">Rejection reason</span>
-              </div>
+              <span className="input-group-text">Rejection reason</span>
               <textarea
                 className="form-control"
                 aria-label="Rejectace reason"
@@ -92,7 +90,7 @@ class PrefixRegistrationSessionRejectForm extends React.Component {
         <div className="row">
           <div className="col mt-2">
             <a
-              className="btn btn-danger btn-block text-white"
+              className="btn btn-danger w-100 text-white"
               href="#!"
               onClick={handleReject}
             >

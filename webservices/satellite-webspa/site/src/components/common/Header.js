@@ -62,9 +62,9 @@ class Header extends React.Component {
         <div id="content">
           <div data-sticky-container>
             <div id="masthead" className="masthead" data-sticky data-sticky-on="large" data-top-anchor="main-content-area:top" data-btm-anchor="main-content-area:bottom">
-              <div className="masthead-inner row expanded">
+              <div className="masthead-inner row expanded mx-0 px-0">
                 <div className="columns medium-12" id="local-title">
-                  <div className="d-flex ml-3 mb-2">
+                  <div className="d-flex ms-3 mb-2">
                     <img src={identifiersLogo} alt="identifiers logo"/>
                     <div className="logo-text">
                       <h1>Identifiers.org</h1>
@@ -73,7 +73,7 @@ class Header extends React.Component {
                   </div>
                 </div>
 
-                <div className="sticky-placeholder">
+                <div className="sticky-placeholder px-0">
                   <Sticky>
                     <EBINavBar>
                       <EBINavItem className="nav-item">
@@ -95,16 +95,16 @@ class Header extends React.Component {
                       </EBINavItem>
 
                       <EBINavDropDown
-                        caption={<span><i className="icon icon-common icon-hand-point-up mr-1" />Make a request</span>}
+                        caption={<span><i className="icon icon-common icon-hand-point-up me-1" />Make a request</span>}
                       >
                         <EBINavItem className="nav-item">
                           <a href={`${config.registryUrl}/prefixregistrationrequest`} className="nav-link nav-link-dark">
-                            <i className="icon icon-common icon-leaf mr-1" />Request prefix
+                            <i className="icon icon-common icon-leaf me-1" />Request prefix
                           </a>
                         </EBINavItem>
                         <EBINavItem className="nav-item">
                           <a href={`${config.registryUrl}/resourceregistrationrequest`} className="nav-link nav-link-dark">
-                            <i className="icon icon-common icon-cube mr-1" />Request resource
+                            <i className="icon icon-common icon-cube me-1" />Request resource
                           </a>
                         </EBINavItem>
                       </EBINavDropDown>
@@ -115,7 +115,7 @@ class Header extends React.Component {
                         </a>
                       </EBINavItem>
 
-                      <EBINavItem className="nav-item float-right">
+                      <EBINavItem className="nav-item float-end">
                         <a href={config.feedbackUrl} target="_blank" className="nav-link nav-link-dark">
                           <i className="icon icon-common icon-comments" /> Feedback
                         </a>

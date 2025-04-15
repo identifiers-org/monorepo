@@ -61,13 +61,13 @@ const DeactivatedLandingContents = ({ namespace, registryPageUrl, bestResolvedUr
 
   <div className="d-flex flex-wrap" style={{gap: ".25rem"}}>
     <a className="btn btn-primary text-white flex-fill"  href={registryPageUrl}>
-      <em className="font-weight-bold">
+      <em className="fw-bold">
         Go to the registry's page for more information
       </em> <br className="d-inline d-sm-none"/>
       {registryPageUrl}
     </a>
     <a target="_blank" className="btn btn-primary text-white flex-fill" href={bestResolvedUrl}>
-      <em className="font-weight-bold">
+      <em className="fw-bold">
         Go to latest available online location
       </em> <br className="d-inline d-sm-none"/>
       {bestResolvedUrl}

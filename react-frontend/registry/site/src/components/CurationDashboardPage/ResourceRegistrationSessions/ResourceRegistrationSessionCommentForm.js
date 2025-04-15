@@ -2,27 +2,27 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 // Components.
-import { prefixRegistrationRequestComment } from '../../actions/CurationDashboardPage/PrefixRegistrationSession';
-import { setRegistrationSessionComment } from '../../actions/CurationDashboardPage/RegistrationSessionComment';
+import { resourceRegistrationRequestComment } from '../../../actions/CurationDashboardPage/ResourceRegistrationSession';
+import { setRegistrationSessionComment } from '../../../actions/CurationDashboardPage/RegistrationSessionComment';
 
 // Utils.
-import { swalSuccess, swalError } from '../../utils/swalDialogs';
+import { swalSuccess, swalError } from '../../../utils/swalDialogs';
 
 
-class PrefixRegistrationSessionCommentForm extends React.Component {
+class ResourceRegistrationSessionCommentForm extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      comment: this.props.prefixRegistrationSessionComment.comment
+      comment: this.props.resourceRegistrationSessionComment.comment
     }
   }
 
 
   static getDerivedStateFromProps(nextProps, prevState) {
     // If comment changed, change state.
-    if (nextProps.prefixRegistrationSessionComment.comment !== prevState.comment) {
-      return {comment: nextProps.prefixRegistrationSessionComment.comment};
+    if (nextProps.resourceRegistrationSessionComment.comment !== prevState.comment) {
+      return {comment: nextProps.resourceRegistrationSessionComment.comment};
     } else return null;
   }
 
@@ -31,8 +31,8 @@ class PrefixRegistrationSessionCommentForm extends React.Component {
     const {
       id,
       handleFormSubmit,
-      prefixRegistrationRequestComment,
-      setPrefixRegistrationSessionComment
+      resourceRegistrationRequestComment,
+      setResourceRegistrationSessionComment
     } = this.props;
     const { comment } = this.state;
 
@@ -40,28 +40,28 @@ class PrefixRegistrationSessionCommentForm extends React.Component {
       return;
     }
 
-    const response = await prefixRegistrationRequestComment(id, comment);
+    const response = await resourceRegistrationRequestComment(id, comment);
 
     if (response.status === 200) {
       await swalSuccess.fire({
-        title: 'Prefix Registration Request comment added successfully'
+        title: 'Resource Registration Request comment added successfully'
       });
 
-      setPrefixRegistrationSessionComment('', '');
+      setResourceRegistrationSessionComment('', '');
       handleFormSubmit();
     } else {
       await swalError.fire({
         title: 'Error',
-        text: 'Could not add comment to Prefix Registration Request'
+        text: 'Could not add comment to Resource Registration Request'
       });
     }
   }
 
 
   handleCommentChange = (e) => {
-    const { setPrefixRegistrationSessionComment } = this.props;
+    const { setResourceRegistrationSessionComment } = this.props;
 
-    setPrefixRegistrationSessionComment(e.target.value, 'additionalInformation');
+    setResourceRegistrationSessionComment(e.target.value, 'additionalInformation');
   }
 
 
@@ -82,12 +82,10 @@ class PrefixRegistrationSessionCommentForm extends React.Component {
         </div>
 
         {/* ========================================  FORM FOR REGISTRATION COMMENT ======================================== */}
-        <div className="row no-gutters align-items-center bg-light rounded p-2 mb-1">
+        <div className="row g-0 align-items-center bg-light rounded p-2 mb-1">
           <div className="col">
             <div className="input-group">
-              <div className="input-group-prepend">
-                <span className="input-group-text">Comment</span>
-              </div>
+              <span className="input-group-text">Comment</span>
               <textarea
                 className="form-control"
                 aria-label="Comment reason"
@@ -101,7 +99,7 @@ class PrefixRegistrationSessionCommentForm extends React.Component {
         <div className="row">
           <div className="col mt-2">
             <a
-              className="btn btn-secondary btn-block text-white"
+              className="btn btn-secondary w-100 text-white"
               href="#!"
               onClick={handleComment}
             >
@@ -120,13 +118,13 @@ class PrefixRegistrationSessionCommentForm extends React.Component {
 
 // Mapping
 const mapStateToProps = (state) => ({
-  prefixRegistrationSessionComment: state.curationDashboard.prefixRegistrationSessionComment
+  resourceRegistrationSessionComment: state.curationDashboard.resourceRegistrationSessionComment
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  prefixRegistrationRequestComment: (id, reason) => dispatch(prefixRegistrationRequestComment(id, reason)),
-  setPrefixRegistrationSessionComment: (comment) => dispatch(setRegistrationSessionComment(comment, undefined, 'prefix'))
+  resourceRegistrationRequestComment: (id, reason) => dispatch(resourceRegistrationRequestComment(id, reason)),
+  setResourceRegistrationSessionComment: (comment) => dispatch(setRegistrationSessionComment(comment, undefined, 'resource'))
 });
 
-export default connect (mapStateToProps, mapDispatchToProps)(PrefixRegistrationSessionCommentForm);
+export default connect (mapStateToProps, mapDispatchToProps)(ResourceRegistrationSessionCommentForm);
 

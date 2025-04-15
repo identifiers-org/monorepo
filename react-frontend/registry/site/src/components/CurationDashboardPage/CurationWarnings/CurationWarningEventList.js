@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
-import Spinner from "../common/Spinner";
-import dateTimeFormat from "../../utils/dateTimeFormat";
-import {renewToken} from "../../utils/auth";
+import Spinner from "../../common/Spinner";
+import dateTimeFormat from "../../../utils/dateTimeFormat";
+import {renewToken} from "../../../utils/auth";
 
 export default ({ href, preload }) => {
     const [loading, setLoading] = useState(null);

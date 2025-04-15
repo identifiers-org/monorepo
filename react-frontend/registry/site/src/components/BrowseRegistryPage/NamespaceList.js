@@ -150,7 +150,7 @@ class NamespaceList extends React.Component {
         {/*  </div>*/}
         {/*</div>*/}
         <div className="row">
-          <div className="col col-12 col-xl-8 mt-2 overflow-y-scroll p-1 d-none d-md-block">
+          <div className="col col-12 col-xl-8 mt-2 overflow-y-none p-1 d-none d-md-block">
             <div>
               <Paginator
                 navigate={this.handlePageChange}
@@ -166,13 +166,11 @@ class NamespaceList extends React.Component {
           {/* SEARCH BAR */}
           <div className="col col-12 col-xl-4 mt-2 p-1">
             <div className="input-group input-group-sm mb-3">
-              <div className="input-group-prepend">
-                <span className="input-group-text"
-                      id="registry-search"
-                      title="powered by EBI Search">
-                  Search
-                </span>
-              </div>
+              <span className="input-group-text"
+                    id="registry-search"
+                    title="powered by EBI Search">
+                Search
+              </span>
               <input
                   type="text"
                   className="form-control"
@@ -191,9 +189,9 @@ class NamespaceList extends React.Component {
         { loading ? <Spinner /> : (
           <div>
             { namespaceList.length === 0 ? <p className="text-center my-5">No items</p> :
-              <div className="card mb-3 overflow-y-scroll">
+              <div className="card mb-3">
                 <table className="table table-sm table-striped table-hover table-borderless table-fixed">
-                  <thead className="thead-light thead-rounded">
+                  <thead className="table-light thead-rounded">
                     <tr>
                       <th className={`${isSmallScreen ? 'small-wide' : 'wide'}`}>
                         <i className="icon icon-common icon-list" /> Name

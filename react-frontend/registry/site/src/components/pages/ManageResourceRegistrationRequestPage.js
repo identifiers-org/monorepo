@@ -7,16 +7,16 @@ import { useMatomo } from '@jonkoops/matomo-tracker-react';
 import { getResourceRegistrationSessionFromRegistry } from '../../actions/CurationDashboardPage/ResourceRegistrationSession';
 
 // Components.
-import RegistrationSessionNewEventBtn from '../CurationDashboardPage/RegistrationSessionNewEventBtn';
+import RegistrationSessionNewEventBtn from '../CurationDashboardPage/RegistrationSessionEvents/RegistrationSessionNewEventBtn';
 
-import RegistrationSessionEvent from '../CurationDashboardPage/RegistrationSessionEvent';
+import RegistrationSessionEvent from '../CurationDashboardPage/RegistrationSessionEvents/RegistrationSessionEvent';
 
-import ResourceRegistrationSessionAcceptForm from '../CurationDashboardPage/ResourceRegistrationSessionAcceptForm';
-import ResourceRegistrationSessionAmendForm from '../CurationDashboardPage/ResourceRegistrationSessionAmendForm';
-import ResourceRegistrationSessionCommentForm from '../CurationDashboardPage/ResourceRegistrationSessionCommentForm';
-import ResourceRegistrationSessionRejectForm from '../CurationDashboardPage/ResourceRegistrationSessionRejectForm';
+import ResourceRegistrationSessionAcceptForm from '../CurationDashboardPage/ResourceRegistrationSessions/ResourceRegistrationSessionAcceptForm';
+import ResourceRegistrationSessionAmendForm from '../CurationDashboardPage/ResourceRegistrationSessions/ResourceRegistrationSessionAmendForm';
+import ResourceRegistrationSessionCommentForm from '../CurationDashboardPage/ResourceRegistrationSessions/ResourceRegistrationSessionCommentForm';
+import ResourceRegistrationSessionRejectForm from '../CurationDashboardPage/ResourceRegistrationSessions/ResourceRegistrationSessionRejectForm';
 
-import ResourceRegistrationSessionRequestDetails from '../CurationDashboardPage/ResourceRegistrationSessionRequest';
+import ResourceRegistrationSessionRequestDetails from '../CurationDashboardPage/ResourceRegistrationSessions/ResourceRegistrationSessionRequest';
 import PageTitle from '../common/PageTitle';
 
 

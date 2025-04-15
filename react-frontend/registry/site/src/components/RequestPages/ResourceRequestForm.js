@@ -144,31 +144,28 @@ const ResourceRequestForm = (props) => {
         </div>
 
         <div className="card-body">
-          <div className="form-group row">
+          <div className="row mb-3">
             <label
-              className="col col-lg-3 col-form-label form-control-label"
+              className="col-lg-3 col-form-label form-label form-control-label"
               htmlFor="institutionIsProvider"
             >
               Copy Institution details
             </label>
-            <div className="col col-lg-9">
-              <div className="form-check">
-                <input
-                  id="institutionIsProvider"
-                  className="form-check-input"
-                  defaultChecked={institutionIsProvider}
-                  onChange={handleInstitutionIsProviderChange(setInstitutionIsProvider, methods)}
-                  type="checkbox"
-                />
-                <label
-                  id="institutionIsProvider-helpblock"
-                  className="form-text"
-                  htmlFor="institutionIsProvider"
-                >
-                  Tick this box to copy the details provided for the owning institution of the provider. Please,
-                  keep in mind that 'URL Pattern' and 'Provider code' will need to be filled after the autofill.
-                </label>
-              </div>
+            <div className="col-sm-12 col-md-10 col-lg-9">
+              <input
+                id="institutionIsProvider"
+                defaultChecked={institutionIsProvider}
+                onChange={handleInstitutionIsProviderChange(setInstitutionIsProvider, methods)}
+                type="checkbox"
+              />
+              <label
+                id="institutionIsProvider-helpblock"
+                className="form-text text-muted d-inline ms-2"
+                htmlFor="institutionIsProvider"
+              >
+                Tick this box to copy the details provided for the owning institution of the provider. Please,
+                keep in mind that 'URL Pattern' and 'Provider code' will need to be filled after the autofill.
+              </label>
             </div>
           </div>
 
@@ -285,7 +282,7 @@ const ResourceRequestForm = (props) => {
             {formState.isSubmitting ? <center className="col-12"><Spinner noText/></center> :
               <>
                 <div className="col-12 col-lg-6 mb-1">
-                  <button className="form-control btn btn-primary"
+                  <button className="form-control btn btn-primary text-white"
                           type="submit" disabled={!isValid}
                           title={!isValid ? "There are errors on the form" : undefined}>
                     Submit resource request

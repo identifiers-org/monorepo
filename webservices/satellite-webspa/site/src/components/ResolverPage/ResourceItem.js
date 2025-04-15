@@ -4,15 +4,20 @@ import React from 'react';
 const ResourceItem = ({ data }) => (
   <div className="card mt-3">
     <div className="card-header d-flex align-items-center">
-      <i className="icon icon-common icon-cubes size-200 mr-2" />
+      <i className="icon icon-common icon-cubes size-200 me-2" />
 
       <a
         href={data.compactIdentifierResolvedUrl}
-        className="ml-2 clear-link w-90"
+        className="ms-2 clear-link w-90"
         target="_blank"
       >
         <p className="mb-0">
           {data.description}
+          {(data.deprecatedNamespace || data.deprecatedResource) && (
+              <span className="badge bg-danger bg-opacity-50 rounded-pill mx-1">
+                deactivated
+              </span>
+          )}
         </p>
         <p className="mb-0">
           <small className="text-muted text-wordbreak">{data.compactIdentifier}</small>
@@ -24,7 +29,7 @@ const ResourceItem = ({ data }) => (
       <li className="list-group-item">
         <p className="mb-0">
           <a
-            className="text-success"
+            className="text-success text-decoration-none"
             href={data.compactIdentifierResolvedUrl}
             target="_blank"
           >
@@ -32,7 +37,7 @@ const ResourceItem = ({ data }) => (
           </a>
         </p>
         <p className="mb-0">
-          <span className="font-weight-bold">
+          <span className="fw-bold">
             {data.institution.name}
           </span>
         </p>

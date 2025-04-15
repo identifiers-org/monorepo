@@ -84,9 +84,7 @@ class CurationInstitutionList extends React.Component {
         <div className="row">
           <div className="col">
             <div className="input-group input-group-sm mb-3">
-              <div className="input-group-prepend">
-                <span className="input-group-text" id="registry-search">Search</span>
-              </div>
+              <span className="input-group-text" id="registry-search">Search</span>
               <input
                 type="text"
                 className="form-control"

@@ -46,7 +46,7 @@ const MetadataView = ({curie}) => {
     }
   }, [setLoading, handleMetadataPayload, config, curie]);
   
-  const wrapperClassName = "col-12 pt-3 pt-lg-0 px-0 pl-md-2 ";
+  const wrapperClassName = "col-12 pt-3 pt-lg-0 px-0 ps-md-2 ";
   if (loading) {
     return (
       <div className={wrapperClassName + "col-lg-2"}>

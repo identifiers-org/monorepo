@@ -237,13 +237,13 @@ class ResourceItem extends React.Component {
             >
               <>
                 <button
-                  className="btn btn-sm btn-warning edit-button mb-1 mr-2 w-20"
+                  className="btn btn-sm btn-warning edit-button mb-1 me-2 w-20"
                   onClick={handleClickValidateChangesButton}
                 >
-                  <i className="icon icon-common icon-tasks mr-1" />Perform validation
+                  <i className="icon icon-common icon-tasks me-1" />Perform validation
                 </button>
                 <button
-                  className="btn btn-sm btn-success edit-button mb-1 mr-2 w-15"
+                  className="btn btn-sm btn-success edit-button mb-1 me-2 w-15"
                   onClick={handleClickCommitChangesButton}
                 >
                   <i className="icon icon-common icon-check" /> {`Commit ${buttonCaption}`}
@@ -269,22 +269,22 @@ class ResourceItem extends React.Component {
                     className="btn btn-sm btn-success edit-button mb-1 w-20"
                     onClick={handleClickEditButton}
                   >
-                    <i className="icon icon-common icon-edit mr-1"/>Edit resource
+                    <i className="icon icon-common icon-edit me-1"/>Edit resource
                   </button>
                   {resource.deprecated ? (
                     <button
-                      className="btn btn-sm btn-warning edit-button ml-2 mb-1 w-15"
+                      className="btn btn-sm btn-warning edit-button ms-2 mb-1 w-15"
                       onClick={handleClickReactivateButton}
                     >
                       {/* TODO: change to trash-restore when EBI adds it to EBI-Font-icons */}
-                      <i className="icon icon-common icon-caret-square-up mr-1"/>Reactivate resource
+                      <i className="icon icon-common icon-caret-square-up me-1"/>Reactivate resource
                     </button>
                   ) : (
                     <button
-                      className="btn btn-sm btn-danger edit-button ml-2 mb-1 w-15"
+                      className="btn btn-sm btn-danger edit-button ms-2 mb-1 w-15"
                       onClick={handleClickDeactivateButton}
                     >
-                      <i className="icon icon-common icon-trash mr-1"/>Deactivate resource
+                      <i className="icon icon-common icon-trash me-1"/>Deactivate resource
                     </button>
                   )}
                 </>
@@ -294,7 +294,7 @@ class ResourceItem extends React.Component {
         )}
 
         <div className="row" id={`resource-${resourceId}`}>
-          <div className="col overflow-y-scroll">
+          <div className="col overflow-y-none">
             <table className="table table-sm table-striped table-borderless">
               <tbody>
                 <tr>
@@ -304,33 +304,33 @@ class ResourceItem extends React.Component {
                   >
                     {resource.deprecated && (
                       <>
-                        <p className="font-weight-bold text-center mb-0 lh-05">DEACTIVATED</p>
+                        <p className="fw-bold text-center mb-0 lh-05">DEACTIVATED</p>
                         <p className="text-center mb-3"><small>on {moment(resource.deprecationDate).format('ll')}</small></p>
                       </>
                     )}
                     {editResource ? (
                       <RoleConditional
                         requiredRoles={['editResource']}
-                        fallbackComponent={<p className="font-weight-bold text-center n-0">{providerCodeLabel}</p>}
+                        fallbackComponent={<p className="fw-bold text-center n-0">{providerCodeLabel}</p>}
                       >
                         <>
-                          <p className="text-center font-weight-bold m-0">Provider code</p>
+                          <p className="text-center fw-bold m-0">Provider code</p>
                           <ReversibleField fieldName="providerCode" defaultValue={resource.providerCode} handleChangeField={handleChangeField}>
                             <input type="text" />
                           </ReversibleField>
-                          <p className="text-center font-weight-bold m-0">Primary</p>
+                          <p className="text-center fw-bold m-0">Primary</p>
                           <ReversibleField fieldName="official" defaultValue={resource.official} handleChangeField={handleChangeField}>
                             <input type="checkbox" className="form-check-input"/>
                           </ReversibleField>
                         </>
                       </RoleConditional>
                     ) : (
-                      <p className="font-weight-bold text-center n-0">{providerCodeLabel}</p>
+                      <p className="fw-bold text-center n-0">{providerCodeLabel}</p>
                     )}
                     <p className="text-center m-0">{resource.mirId}</p>
-                    <p className="font-weight-bold text-center m-0">{resource.official ? 'Primary' : ''}</p>
+                    <p className="fw-bold text-center m-0">{resource.official ? 'Primary' : ''}</p>
                   </td>
-                  <td className="w-20 px-3">Name</td>
+                  <th scope="row" className="fw-medium w-20 px-3">Name</th>
                   <td className="resourceitem-table__wide">
                     {editResource ? (
                       <RoleConditional
@@ -347,7 +347,7 @@ class ResourceItem extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td className="w-20 px-3">Description</td>
+                  <th scope="row" className="fw-medium px-3">Description</th>
                   <td className="resourceitem-table__wide">
                     {editResource ? (
                       <RoleConditional
@@ -365,11 +365,11 @@ class ResourceItem extends React.Component {
                 </tr>
                 {resource.deprecated && ( <>
                   <tr>
-                    <td className="w-20 px-3">Date of deactivation</td>
+                    <th scope="row" className="fw-medium px-3">Date of deactivation</th>
                     <td>{this.dateFormat(resource.deprecationDate)}</td>
                   </tr>
                   <tr>
-                    <td className="w-20 px-3">Approximated expiration date</td>
+                    <td className="px-3">Approximated expiration date</td>
                     <td>
                       {editResource ? (
                         <RoleConditional
@@ -388,7 +388,7 @@ class ResourceItem extends React.Component {
                     </td>
                   </tr>
                   <tr>
-                    <td className="w-20 px-3">Deactivation statement</td>
+                    <th scope="row" className="fw-medium px-3">Deactivation statement</th>
                     <td>
                       {editResource ? (
                         <RoleConditional
@@ -408,7 +408,7 @@ class ResourceItem extends React.Component {
                   </tr>
                   <RoleConditional requiredRoles={['editResource']}>
                     <tr>
-                      <td className="w-20 px-3">Deactivation landing page</td>
+                      <th scope="row" className="fw-medium px-3">Deactivation landing page</th>
                       <td>
                         {editResource ? (
                           <ReversibleField fieldName="renderDeprecatedLanding"
@@ -424,7 +424,7 @@ class ResourceItem extends React.Component {
                   </RoleConditional>
                 </>)}
                 <tr>
-                  <td className="px-3">URL Pattern</td>
+                  <th scope="row" className="fw-medium px-3">URL Pattern</th>
                   <td>
                     {editResource || reactivateResource ? (
                       <RoleConditional
@@ -443,7 +443,7 @@ class ResourceItem extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-3 align-middle">Home URL</td>
+                  <th scope="row" className="fw-medium px-3 align-middle">Home URL</th>
                   <td>
                   {editResource ? (
                       <RoleConditional
@@ -460,7 +460,7 @@ class ResourceItem extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-3">Has protected URLs</td>
+                  <th scope="row" className="fw-medium px-3">Has protected URLs</th>
                   <td>
                     {editResource ? (
                       <RoleConditional
@@ -478,7 +478,7 @@ class ResourceItem extends React.Component {
                 </tr>
                 {resource.protectedUrls && <>
                   <tr>
-                    <td className="px-3">Authorization help URL</td>
+                    <th scope="row" className="fw-medium px-3">Authorization help URL</th>
                     <td>
                       {editResource ? (
                         <RoleConditional
@@ -495,7 +495,7 @@ class ResourceItem extends React.Component {
                     </td>
                   </tr>
                   <tr>
-                    <td className="px-3">Authorization description</td>
+                    <th scope="row" className="fw-medium px-3">Authorization description</th>
                     <td>
                       {editResource ? (
                         <RoleConditional
@@ -516,7 +516,7 @@ class ResourceItem extends React.Component {
                     fallbackComponent={resource.renderProtectedLanding}
                   >
                     <tr>
-                      <td className="px-3">Render protected landing</td>
+                      <th scope="row" className="fw-medium px-3">Render protected landing</th>
                       <td>
                         {editResource ? (
                             <ReversibleField fieldName="renderProtectedLanding" defaultValue={resource.renderProtectedLanding} handleChangeField={handleChangeField}>
@@ -530,7 +530,7 @@ class ResourceItem extends React.Component {
                   </RoleConditional>
                 </>}
                 <tr>
-                  <td className="px-3">Location</td>
+                  <th scope="row" className="px-3 fw-medium">Location</th>
                   <td>
                     {editResource ? (
                       <RoleConditional
@@ -562,7 +562,7 @@ class ResourceItem extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-3">Sample ID (LUI)</td>
+                  <th scope="row" className="fw-medium px-3">Sample ID (LUI)</th>
                   <td>
                   {editResource ? (
                       <RoleConditional
@@ -579,7 +579,7 @@ class ResourceItem extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-3">Institution</td>
+                  <th scope="row" className="fw-medium px-3">Institution</th>
                   <td className="d-flex">
                     {editResource ? (
                       <RoleConditional
@@ -606,7 +606,7 @@ class ResourceItem extends React.Component {
                             </select>
                           </ReversibleField>
                           <button
-                            className="btn btn-sm btn-primary ml-2"
+                            className="btn btn-sm btn-primary ms-2"
                             onClick={handleClickAddInstitution}
                           >
                             <i className="icon icon-common icon-plus" />
@@ -619,7 +619,7 @@ class ResourceItem extends React.Component {
                   </td>
                 </tr>
                 <tr>
-                  <td className="w-20 px-3">Institution ROR ID</td>
+                  <th scope="row" className="fw-medium px-3">Institution ROR ID</th>
                   <td className="resourceitem-table__wide">
                     {resource.institution.rorId ? <a target="_blank" href={resource.institution.rorId}> {resource.institution.rorId} </a> : "Unknown"}
                   </td>

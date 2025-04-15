@@ -1,6 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux';
+import * as bootstrap from 'bootstrap'; // See https://getbootstrap.com/docs/5.0/getting-started/parcel/
 
 // Actions.
 import { getConfigFromDevopsApi } from './actions/Config';
@@ -45,7 +46,8 @@ import 'bootstrap/dist/js/bootstrap'
   // Get initial data.
   // Configuration from devops endpoint, which will be residing in the same url as the app.
   const configUrlPort = process.env.NODE_ENV === 'development' ? 9090 : window.location.port;
-  const configUrl = `${window.location.protocol}//${window.location.hostname}:${configUrlPort}`;
+  // const configUrl = `${window.location.protocol}//${window.location.hostname}:${configUrlPort}`;
+  const configUrl = `http://identifiers.org`;
 
   await store.dispatch(getConfigFromDevopsApi(configUrl));
 

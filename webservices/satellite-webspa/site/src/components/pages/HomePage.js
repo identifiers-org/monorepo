@@ -24,7 +24,7 @@ class HomePage extends React.Component {
   render() {
     const boxPadding = isSmallScreen() || isIpadScreen() ? 'p-3' : 'p-5';
     const searchBarPadding = isSmallScreen() ? 'p-1' : 'px-5';
-    const topSpacer = isSmallScreen() ? '' : 'spacer-8';
+    const topSpacer = isSmallScreen() ? '' : 'spacer-5';
     const { navigate } = this.props;
 
     return (
@@ -47,11 +47,11 @@ class HomePage extends React.Component {
         </div>
 
         <div className="col col-12 col-xl-6 bg-light">
-          <h4 className={`mt-3 ${boxPadding}`}><i className="icon icon-common icon-search mr-2" />Resolve a Compact Identifier</h4>
+          <h4 className={`mt-3 ${boxPadding}`}><i className="icon icon-common icon-search me-2" />Resolve a Compact Identifier</h4>
           <div className={`row justify-content-center mt-2 ${searchBarPadding}`}>
             <div className="col col-lg-7 col-xl-12">
               <Search
-                buttonCaption={<span><i className="icon icon-common icon-search mr-1" /> Resolve</span>}
+                buttonCaption={<span><i className="icon icon-common icon-search me-1" /> Resolve</span>}
                 placeholderCaption="Enter an identifier to resolve"
                 onButtonClick={(query) => navigate(`resolve?query=${query}`)}
               />

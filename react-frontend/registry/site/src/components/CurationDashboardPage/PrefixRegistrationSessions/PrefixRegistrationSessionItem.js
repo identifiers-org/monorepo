@@ -3,10 +3,10 @@ import moment from 'moment';
 
 import { Link } from 'react-router-dom';
 
-import ResourceRegistrationSessionRequest from './ResourceRegistrationSessionRequest';
+import PrefixRegistrationSessionRequest from './PrefixRegistrationSessionRequest';
 
 
-class ResourceRegistrationSessionItem extends React.Component {
+class PrefixRegistrationSessionItem extends React.Component {
   constructor(props) {
     super(props)
 
@@ -21,7 +21,7 @@ class ResourceRegistrationSessionItem extends React.Component {
 
 
   render() {
-    const { id, resourceRegistrationRequest } = this.props.request;
+    const { id, prefixRegistrationRequest } = this.props.request;
     const { expanded } = this.state;
 
     return (
@@ -36,22 +36,22 @@ class ResourceRegistrationSessionItem extends React.Component {
                   onClick={this.toggle}
                 >
                   <p className="m-0">
-                    {expanded ? <i className="icon icon-common icon-minus mr-2" /> : <i className="icon icon-common icon-plus mr-2" />}
-                    <strong>Requested Resource: </strong>
-                    Provider <strong>{resourceRegistrationRequest.providerCode}</strong> for namespace <strong>{resourceRegistrationRequest.namespacePrefix}</strong>
+                    {expanded ? <i className="icon icon-common icon-minus me-2" /> : <i className="icon icon-common icon-plus me-2" />}
+                    <strong>Requested Prefix: </strong>
+                    {prefixRegistrationRequest.requestedPrefix}
                   </p>
-                  <p className="m-0 pl-2 text-small text-muted">
+                  <p className="m-0 ps-2 text-small text-muted">
                     <small>
                       <strong>Date of original request: </strong>
-                      {moment(resourceRegistrationRequest.created).format('llll')}
+                      {moment(prefixRegistrationRequest.created).format('llll')}
                     </small>
                   </p>
                 </a>
               </div>
               <div className="col col-md-2 col-lg-3 col-xl-2 pt-2">
                 <Link
-                  className="clear-link btn btn-warning btn-block"
-                  to={`/curation/resourceRegistration/${id}`}
+                  className="clear-link btn btn-warning w-100"
+                  to={`/curation/prefixRegistration/${id}`}
                 >
                   <i className="icon icon-common icon-ellipsis-h" /> Manage
                 </Link>
@@ -61,7 +61,7 @@ class ResourceRegistrationSessionItem extends React.Component {
 
           {expanded && (
             <div className="card-body">
-              <ResourceRegistrationSessionRequest data={resourceRegistrationRequest} />
+              <PrefixRegistrationSessionRequest data={prefixRegistrationRequest} />
             </div>
           )}
         </div>
@@ -71,4 +71,4 @@ class ResourceRegistrationSessionItem extends React.Component {
 }
 
 
-export default ResourceRegistrationSessionItem;
+export default PrefixRegistrationSessionItem;

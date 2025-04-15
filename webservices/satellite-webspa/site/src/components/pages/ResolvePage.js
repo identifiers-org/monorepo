@@ -95,24 +95,25 @@ class ResolvePage extends React.Component {
                       <button
                         className="btn btn-sm btn-primary-outline"
                         onClick={() => {handleCopyToClipboard(compactIdentifier)}}
+                        type="button"
                       >
                         <i className="icon icon-common icon-copy size-150" />
                       </button>
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col">
+                  <div className="col px-0">
                     <h4 className="mb-0">
-                      <div className="inline-block border border-right-0 p-1 pr-2" style={{backgroundColor: "#00000008"}}>
+                      <div className="inline-block border border-end-0 p-1 pe-2" style={{backgroundColor: "#00000008"}}>
                         Compact Identifier
                       </div>
                       <div className="inline-block border-bottom  py-1 px-2">
-                        <strong className="text-primary font-italic">{query}</strong>
+                        <strong className="text-primary fst-italic">{query}</strong>
                       </div>
                     </h4>
                   </div>
                 </div>
-                <div className="row">
+                <div className="row g-0">
                   <ResourceList/>
                   <MetadataView curie={query}/>
                 </div>

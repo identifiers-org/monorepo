@@ -183,7 +183,7 @@ class CurationInstitutionItem extends React.Component {
                   <div className="d-inline border bg-light p-1">
                     <a href={`${namespaceDetailsUrl}/${namespace.prefix}`} target="_blank" rel="noopener noreferrer">
                       <span
-                        className="align-top text-warning font-weight-bold border border-secondary badge badge-dark mr-2"
+                        className="align-top text-warning fw-bold border border-secondary badge bg-dark me-2"
                       >
                         {namespace.prefix}
                       </span>
@@ -229,7 +229,7 @@ class CurationInstitutionItem extends React.Component {
      return (
       <div>
         <div className="card mb-1">
-          <div className="card-header py-1 pr-1">
+          <div className="card-header py-1 pe-1">
             <div className="row justify-content-between">
               <div className="col col-md-10 col-lg-9 col-xl-10">
                 {editInstitution ? (
@@ -247,45 +247,45 @@ class CurationInstitutionItem extends React.Component {
                     href="#!"
                     onClick={this.toggle}
                   >
-                    {expanded ? <i className="icon icon-common icon-minus mr-2" /> : <i className="icon icon-common icon-plus mr-2" />}
-                    <i className="icon icon-common icon-sitemap mr-2" />
+                    {expanded ? <i className="icon icon-common icon-minus me-2" /> : <i className="icon icon-common icon-plus me-2" />}
+                    <i className="icon icon-common icon-sitemap me-2" />
                     {name}
                   </a>
                 )}
               </div>
-              <div className="col col-md-2 col-lg-3 col-xl-2 text-right">
+              <div className="col col-md-2 col-lg-3 col-xl-2 text-end">
                 {!editInstitution ? (
                   <RoleConditional
                     requiredRoles={['editInstitution']}
                   >
                     <>
                       <button
-                        className="clear-link btn btn-warning btn-sm m-0 mr-2 py-0 px-2"
+                        className="clear-link btn btn-warning btn-sm m-0 me-2 py-0 px-2"
                         onClick={handleClickEditButton}
                       >
-                        <i className="icon icon-common icon-ellipsis-h mr-1" />Edit
+                        <i className="icon icon-common icon-ellipsis-h me-1" />Edit
                       </button>
                       <button
                         className="clear-link btn btn-danger btn-sm m-0 py-0 px-2"
                         onClick={handleClickDeleteButton}
                       >
-                        <i className="icon icon-common icon-trash mr-1" />Delete
+                        <i className="icon icon-common icon-trash me-1" />Delete
                       </button>
                     </>
                   </RoleConditional>
                 ) : (
                   <>
                     <button
-                      className="clear-link btn btn-success btn-sm m-0 mr-2 py-0 px-2"
+                      className="clear-link btn btn-success btn-sm m-0 me-2 py-0 px-2"
                       onClick={handleClickCommitButton}
                     >
-                      <i className="icon icon-common icon-check mr-1" />Commit
+                      <i className="icon icon-common icon-check me-1" />Commit
                     </button>
                     <button
                       className="clear-link btn btn-danger btn-sm m-0 py-0 px-2"
                       onClick={handleClickDiscardButton}
                     >
-                      <i className="icon icon-common icon-ellipsis-h mr-1" />Discard
+                      <i className="icon icon-common icon-ellipsis-h me-1" />Discard
                     </button>
                   </>
                 )}

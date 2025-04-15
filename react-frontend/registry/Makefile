@@ -50,12 +50,10 @@ standalone_instantiate_index_template: instantiate_base_index_template
 
 force_npm_reinstall:
 	@echo "<===|DEVOPS|===> [CLEAN] Deleting npm updated flag"
-	@rm npm_install
 
 npm_install:
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Installing npm modules"
-	@docker run --user node --network=hqwebnet -p 8192:8192 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it ${node} sh -c "npm --prefix /home/site install; npm rebuild"
-	@touch npm_install
+	@docker run --user node --network=hqwebnet -p 8192:8192 -v $(shell pwd)/${dev_site_root_folder}:/home/site -it ${node} sh -c "npm --prefix /home/site ci; npm rebuild"
 
 development_env_up: development_instantiate_index_template development_env_backend_up npm_install
 	@echo "<===|DEVOPS|===> [DEVELOPMENT] Launch development environment"
@@ -95,7 +93,7 @@ instantiate_base_index_template:
 
 app_structure: clean instantiate_base_index_template
 	@echo "<===|DEVOPS|===> [PACKAGE] Building application structure"
-	@docker run -v $(shell pwd)/${dev_site_root_folder}:/home/site ${node} sh -c "npm --prefix /home/site install; npm --prefix /home/site run build"
+	@docker run -v $(shell pwd)/${dev_site_root_folder}:/home/site -w /home/site ${node} sh -c "npm ci; npm run build"
 	@echo "<===|DEVOPS|===> [PACKAGE] SPA based distribution prepared at '${folder_site_dist}', injecting configuration placeholders"
 	@sed -i "" "s@<div id=\"config_placeholder\"></div>@${environment_content}@g" ${file_instance_app_structure_index}
 

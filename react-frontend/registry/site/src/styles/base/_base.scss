@@ -180,8 +180,8 @@ a, a:hover, a:active {
   display: flex !important;
 }
 
-.spacer-8 {
-  margin-top: 8rem;
+.spacer-5 {
+  margin-top: 5rem !important;
 }
 
 // Fixes for responsive tables.
@@ -221,14 +221,6 @@ a, a:hover, a:active {
   width: 66%;
 }
 
-.order-1 {
-  order: 1;
-}
-
-.order-2 {
-  order: 2;
-}
-
 .lh-05 {
   line-height: .5;
 }
@@ -241,7 +233,7 @@ a, a:hover, a:active {
   font-size: .75rem;
 }
 
-button[data-toggle='collapse'] {
+button[data-bs-toggle='collapse'] {
   &.collapsed .collapse-symbol:before {
     content: '▼ '
   }
@@ -270,4 +262,15 @@ button[data-toggle='collapse'] {
 
 input[type='checkbox'].form-control {
   width: initial;
+}
+
+#app {
+  box-sizing: border-box;
+  min-height: calc(100vh);
+  display: flex;
+  flex-direction: column;
+}
+.container {
+  flex-grow: 1;
+  display: flex;
 }

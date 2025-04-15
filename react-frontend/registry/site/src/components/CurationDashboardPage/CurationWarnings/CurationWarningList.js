@@ -1,12 +1,12 @@
 import React, {useCallback, useEffect, useState} from "react";
-import { config } from "../../config/Config";
-import Spinner from "../common/Spinner";
+import { config } from "../../../config/Config";
+import Spinner from "../../common/Spinner";
 import CurationWarningModal from "./CurationWarningModal";
 
 import DataTable from "datatables.net-react";
-import DT from 'datatables.net-bs4';
-import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css'
-import {renewToken} from "../../utils/auth";
+import 'datatables.net-bs5/css/dataTables.bootstrap5.min.css'
+import {renewToken} from "../../../utils/auth";
+import DT from 'datatables.net-bs5';
 
 
 DataTable.use(DT);
@@ -19,13 +19,13 @@ const CurationWarningList = () => {
 
   const getLinkToTarget = useCallback((targetInfo, col) => {
     const href = getHrefForTarget(targetInfo);
-    return <a className="btn btn-link m-0 p-1" href={href} target="_blank">
+    return <a className="btn btn-link m-0 p-1 text-decoration-none" href={href} target="_blank">
       <i className="icon icon-common icon-external-link-alt"></i>
     </a>
   }, []);
 
   const getSelectTargetBttn = useCallback((targetInfo, col) =>
-      <button type="button" className="btn btn-primary py-1 px-2" data-toggle="modal" data-target="#targetInfoModal"
+      <button type="button" className="btn btn-primary text-light py-1 px-2" data-bs-toggle="modal" data-bs-target="#targetInfoModal"
               onClick={() => setSelectedTarget(targetInfo)}>
         <i className="icon icon-common icon-search-plus"></i>
       </button>
@@ -75,7 +75,7 @@ const CurationWarningList = () => {
       {sortable: false, targets: [7]},
       {className: 'align-middle', targets: '_all'},
       {className: 'text-center', targets: [1,7]},
-      {className: 'text-right', targets: [2,3,5]},
+      {className: 'text-end', targets: [2,3,5]},
     ],
     order: [[3, 'desc'], [2, 'desc']],
     layout: {

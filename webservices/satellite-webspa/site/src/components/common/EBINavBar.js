@@ -34,7 +34,7 @@ class EBINavBar extends React.Component {
     return (
       <div className={`${EBINavBar.baseClass} ${modifierClasses}`}>
         <nav>
-          <ul id="local-nav" className="dropdown menu float-left" data-description="navigational">
+          <ul id="local-nav" className="dropdown menu float-start" data-description="navigational">
             {childrenList.slice(0, visibleElements)}
             {childrenList.length > visibleElements && (
               <>
