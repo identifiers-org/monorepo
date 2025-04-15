@@ -30,19 +30,25 @@ mailer:
 keycloak:
   component: keycloak
   tier: backend
-  image: "identifiersorg/keycloak:6.0.1"
+  image: "identifiersorg/keycloak:26.2"
   requests:
     cpu: 300m
     memory: 1024Mi
   database:
     vendor: "postgres"
-    host: "hq-postgresql"
-    dbname: "dbhqkeycloak"
+    url: "jdbc:postgresql://hq-postgresql:5432/dbhqkeycloak"
     port: 5432
   port: 8080
   base_uri: "https://auth.identifiers.org"
   issuer_uri: "https://auth.identifiers.org/auth/realms/idorg"
   access_token_uri: "https://auth.identifiers.org/auth/realms/idorg/protocol/openid-connect/token"
+  env:
+    - name: KC_HOSTNAME
+      value: "auth.identifiers.org"
+    - name: KC_HTTP_ENABLED
+      value: "true"
+    - name: KC_PROXY_HEADERS
+      value: "xforwarded" 
 
 registry:
   component: registry
@@ -91,7 +97,7 @@ validator:
 frontend:
   component: web-hq
   tier: frontend
-  image: "identifiersorg/cloud-hq-web-frontend:1.16.0"
+  image: "identifiersorg/cloud-hq-web-frontend:1.17.0"
   replicas: 3
   requests:
     cpu: 10m
@@ -126,7 +132,7 @@ echo_headers:
   component: nginx-echo-headers
   tier: api
   image: "brndnmtthws/nginx-echo-headers"
-  replicas: 1
+  replicas: 0
   port: 8080
   requests:
     memory: 10Mi
