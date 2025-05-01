@@ -34,7 +34,7 @@ public class SparqlController {
             evaluationService.evaluate(response, query, acceptHeader,
                     toArray(defaultGraphUri), toArray(namedGraphUri));
         } catch (IllegalStateException | IOException e) {
-            log.error("error on sparql post", e);
+            log.debug("error on sparql post", e);
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         }
     }
@@ -50,7 +50,7 @@ public class SparqlController {
             evaluationService.evaluate(response, query, acceptHeader,
                     toArray(defaultGraphUri), toArray(namedGraphUri));
         } catch (MalformedQueryException | IllegalStateException | IOException e) {
-            log.error("error on sparql get", e);
+            log.debug("error on sparql get", e);
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         }
     }

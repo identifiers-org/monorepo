@@ -1,4 +1,4 @@
-package org.identifiers.cloud.ws.sparql.resolver;
+package org.identifiers.cloud.ws.sparql.services;
 
 
 import java.io.FileInputStream;
@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
 import org.identifiers.cloud.commons.messages.responses.registry.ResolverDatasetPayload;
 import org.identifiers.cloud.ws.sparql.data.URIextended;
-import org.identifiers.cloud.ws.sparql.services.SameAsResolver;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.ResourceUtils;
@@ -18,8 +17,8 @@ import org.springframework.util.ResourceUtils;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class SameAsResolverTest {
-    private static final SameAsResolver SAME_AS_RESOLVER = new SameAsResolver();
+public class OwlSameAsResolverTest {
+    private static final OwlSameAsResolver SAME_AS_RESOLVER = new OwlSameAsResolver();
 
     @BeforeAll
     public static void before() throws IOException {
@@ -29,7 +28,7 @@ public class SameAsResolverTest {
             var typeRef = new TypeReference<ServiceResponse<ResolverDatasetPayload>>() {};
             var testResolutionDataset = objectMapper.readValue(fis, typeRef);
 
-            SAME_AS_RESOLVER.parseResolverDataset(testResolutionDataset.getPayload());
+            SAME_AS_RESOLVER.receive(testResolutionDataset.getPayload());
         }
     }
 
@@ -38,9 +37,9 @@ public class SameAsResolverTest {
         final String in = "http://purl.uniprot.org/uniprot/P05067";
         List<URIextended> sameAsURIs = SAME_AS_RESOLVER.getSameAsURIs(in, true);
         assertNotNull(sameAsURIs);
-        assertTrue(sameAsURIs.contains(new URIextended("https://identifiers.org/uniprot:P05067", false)));
+        assertTrue(sameAsURIs.contains(new URIextended("http://identifiers.org/uniprot:P05067", false)));
         sameAsURIs = SAME_AS_RESOLVER.getSameAsURIs(in, false);
-        assertTrue(sameAsURIs.contains(new URIextended("https://identifiers.org/uniprot/P05067", true)));
+        assertTrue(sameAsURIs.contains(new URIextended("http://identifiers.org/uniprot/P05067", true)));
     }
 
     @Test

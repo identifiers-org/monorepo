@@ -5,23 +5,24 @@ import lombok.extern.slf4j.Slf4j;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.Rio;
 import org.eclipse.rdf4j.sail.memory.MemoryStore;
-import org.identifiers.cloud.ws.sparql.services.SameAsResolver;
 import org.identifiers.cloud.ws.sparql.data.sail.IdorgStore;
 import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
+import org.identifiers.cloud.ws.sparql.services.VirtualStatementResolver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collection;
 
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
 public class RepositoryConfiguration {
     @Bean
-    public Repository getRepository(SameAsResolver sameAsResolver,
+    public Repository getRepository(Collection<VirtualStatementResolver> virtualStatementResolvers,
                                     @Value("${org.identifiers.cloud.ws.sparql.imports}")
                                     URL[] imports) throws IOException {
         var idotStore = new MemoryStore();
@@ -38,7 +39,7 @@ public class RepositoryConfiguration {
             }
         }
 
-        IdorgStore idorgStore = new IdorgStore(sameAsResolver);
+        IdorgStore idorgStore = new IdorgStore(virtualStatementResolvers);
         idorgStore.setBaseSail(idotStore);
         SailRepository sailRepository = new SailRepository(idorgStore);
         sailRepository.init();

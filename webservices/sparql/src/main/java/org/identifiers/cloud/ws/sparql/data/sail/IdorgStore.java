@@ -1,7 +1,6 @@
 package org.identifiers.cloud.ws.sparql.data.sail;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.sail.Sail;
@@ -9,17 +8,19 @@ import org.eclipse.rdf4j.sail.SailConnection;
 import org.eclipse.rdf4j.sail.SailException;
 import org.eclipse.rdf4j.sail.StackableSail;
 import org.eclipse.rdf4j.sail.helpers.AbstractSail;
-import org.identifiers.cloud.ws.sparql.services.SameAsResolver;
+import org.identifiers.cloud.ws.sparql.services.VirtualStatementResolver;
+
+import java.util.Collection;
 
 public class IdorgStore extends AbstractSail implements StackableSail {
 	private ValueFactory vf;
-	@Setter @Getter	private AbstractSail baseSail;
-	private final SameAsResolver sameAsResolver;
+	@Getter	private AbstractSail baseSail;
+	private final Collection<VirtualStatementResolver> virtualStatementResolvers;
 
-	public IdorgStore(SameAsResolver sameAsResolver) {
+	public IdorgStore(Collection<VirtualStatementResolver> virtualStatementResolvers) {
 	    super();
-	    this.sameAsResolver = sameAsResolver;
-	    this.vf = SimpleValueFactory.getInstance();
+        this.virtualStatementResolvers = virtualStatementResolvers;
+        this.vf = SimpleValueFactory.getInstance();
 	}
 
 	@Override
@@ -39,7 +40,7 @@ public class IdorgStore extends AbstractSail implements StackableSail {
 
 	@Override
 	protected SailConnection getConnectionInternal() throws SailException {
-		return new IdorgConnection(getValueFactory(), sameAsResolver, baseSail);
+		return new IdorgConnection(vf, baseSail, virtualStatementResolvers);
 	}
 
 	public void setValueFactory(ValueFactory vf) {

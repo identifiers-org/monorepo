@@ -1,10 +1,10 @@
 package org.identifiers.cloud.ws.sparql.data.sail;
 
+import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.rdf4j.common.iteration.CloseableIteration;
 import org.eclipse.rdf4j.common.iteration.CloseableIteratorIteration;
-import org.eclipse.rdf4j.common.iteration.UnionIteration;
 import org.eclipse.rdf4j.common.transaction.IsolationLevel;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Namespace;
@@ -13,7 +13,9 @@ import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.SimpleNamespace;
+import org.eclipse.rdf4j.model.vocabulary.DCTERMS;
 import org.eclipse.rdf4j.model.vocabulary.OWL;
+import org.eclipse.rdf4j.model.vocabulary.RDFS;
 import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.Dataset;
 import org.eclipse.rdf4j.query.QueryEvaluationException;
@@ -22,19 +24,21 @@ import org.eclipse.rdf4j.query.algebra.evaluation.EvaluationStrategy;
 import org.eclipse.rdf4j.query.algebra.evaluation.impl.DefaultEvaluationStrategy;
 import org.eclipse.rdf4j.repository.sparql.federation.SPARQLServiceResolver;
 import org.eclipse.rdf4j.sail.*;
+import org.eclipse.rdf4j.sail.evaluation.SailTripleSource;
 import org.eclipse.rdf4j.sail.helpers.AbstractSail;
 import org.eclipse.rdf4j.sail.helpers.AbstractSailConnection;
-import org.identifiers.cloud.ws.sparql.services.SameAsResolver;
+import org.identifiers.cloud.ws.sparql.services.VirtualStatementResolver;
 
 public class IdorgConnection extends AbstractSailConnection {
     private final ValueFactory vf;
-    private final SameAsResolver sameAsResolver;
+    private final Collection<VirtualStatementResolver> virtualStatementResolvers;
     private final SPARQLServiceResolver fd = new SPARQLServiceResolver();
 
-    public IdorgConnection(ValueFactory vf, SameAsResolver sameAsResolver, AbstractSail sailBase) {
+    public IdorgConnection(ValueFactory vf, AbstractSail sailBase,
+                           Collection<VirtualStatementResolver> virtualStatementResolvers) {
         super(sailBase);
         this.vf = vf;
-        this.sameAsResolver = sameAsResolver;
+        this.virtualStatementResolvers = virtualStatementResolvers;
     }
 
     @Override
@@ -43,14 +47,10 @@ public class IdorgConnection extends AbstractSailConnection {
                                                                         BindingSet bindingSet,
                                                                         boolean b) throws SailException {
         try {
-            IdorgTripleSource tripleSource = new IdorgTripleSource(vf, sameAsResolver);
+            var baseSailSource = new SailTripleSource(getSailBase().getConnection(), true, vf);
+            IdorgTripleSource tripleSource = new IdorgTripleSource(vf, virtualStatementResolvers, baseSailSource);
             EvaluationStrategy strategy = new DefaultEvaluationStrategy(tripleSource, fd);
-            tupleExpr = tupleExpr.clone();
-
-            var baseResultSet = getSailBase().getConnection()
-                    .evaluate(tupleExpr, dataset, bindingSet, b);
-            var idorgResultSet = strategy.evaluate(tupleExpr, bindingSet);
-            return new UnionIteration<>(baseResultSet, idorgResultSet);
+            return strategy.evaluate(tupleExpr.clone(), bindingSet);
         } catch (QueryEvaluationException e) {
             throw new SailException(e);
         }
@@ -69,9 +69,9 @@ public class IdorgConnection extends AbstractSailConnection {
                                                                             boolean b,
                                                                             Resource... contexts) throws SailException {
 		try {
-			var bedFileFilterReader = new IdorgTripleSource(vf, sameAsResolver).getStatements(subj, pred, obj, contexts);
-            var baseStatements = this.getSailBase().getConnection().getStatements(subj, pred, obj, b, contexts);
-            return  new CloseableIteratorIteration<>(new UnionIteration<>(bedFileFilterReader, baseStatements));
+            var baseSailSource = new SailTripleSource(getSailBase().getConnection(), true, vf);
+            return new IdorgTripleSource(vf, virtualStatementResolvers, baseSailSource)
+                    .getStatements(subj, pred, obj, contexts);
 		} catch (QueryEvaluationException e1) {
 			throw new SailException(e1);
 		}
@@ -95,9 +95,14 @@ public class IdorgConnection extends AbstractSailConnection {
 
     @Override
     public String getNamespaceInternal(String prefix) throws SailException {
-        if (OWL.PREFIX.equals(prefix))
-            return OWL.NAMESPACE;
-        return getSailBase().getConnection().getNamespace(prefix);
+        return switch (prefix) {
+            case OWL.PREFIX -> OWL.NAMESPACE;
+            case RDFS.PREFIX -> RDFS.NAMESPACE;
+            case DCTERMS.PREFIX, "dct" -> DCTERMS.NAMESPACE;
+            case "idot" -> "http://identifiers.org/idot/";
+            case "idorg" -> "http://identifiers.org/";
+            default -> getSailBase().getConnection().getNamespace(prefix);
+        };
     }
 
     @Override

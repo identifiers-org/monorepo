@@ -5,17 +5,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.commons.messages.responses.ServiceResponse;
 import org.identifiers.cloud.commons.messages.responses.registry.ResolverDatasetPayload;
-import org.identifiers.cloud.ws.sparql.services.SameAsResolver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
 import java.net.URI;
 import java.time.Duration;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -30,10 +30,9 @@ public final class ResolutionDatasetUpdater implements Runnable {
     @Value("${org.identifiers.cloud.ws.sparql.updater.timeInterval}")
     Duration timeInterval;
 
-    private final SameAsResolver sameAsResolver;
     private final RestTemplate restTemplate;
     private final ScheduledExecutorService updateExecutorService;
-    private final LdJsonContextService ldJsonContextService;
+    private final Collection<ResolverDatasetSubscriber> subscribers;
 
     private final ParameterizedTypeReference<ServiceResponse<ResolverDatasetPayload>>
             resolutionDatasetTypeRef = new ParameterizedTypeReference<>() {};
@@ -53,13 +52,12 @@ public final class ResolutionDatasetUpdater implements Runnable {
                     HttpMethod.GET, null, resolutionDatasetTypeRef);
             if (resolutionDatasetResponse.getStatusCode().equals(HttpStatus.OK)) {
                 var resolutionDataset = Objects.requireNonNull(resolutionDatasetResponse.getBody()).getPayload();
-                sameAsResolver.parseResolverDataset(resolutionDataset);
-                ldJsonContextService.updatePrefixes(resolutionDataset);
+                subscribers.forEach(s -> s.receive(resolutionDataset));
             } else {
                 log.error("Failed to update resolution data with HTTP code: {}",
                         resolutionDatasetResponse.getStatusCode());
             }
-        } catch (IOException e) {
+        } catch (RestClientException e) {
             log.error("Failed to update resolution data", e);
         }
         log.info("Resolution dataset updated successfully");
