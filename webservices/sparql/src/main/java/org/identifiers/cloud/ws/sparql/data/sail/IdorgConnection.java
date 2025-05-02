@@ -100,7 +100,6 @@ public class IdorgConnection extends AbstractSailConnection {
             case RDFS.PREFIX -> RDFS.NAMESPACE;
             case DCTERMS.PREFIX, "dct" -> DCTERMS.NAMESPACE;
             case "idot" -> "http://identifiers.org/idot/";
-            case "idorg" -> "http://identifiers.org/";
             default -> getSailBase().getConnection().getNamespace(prefix);
         };
     }
