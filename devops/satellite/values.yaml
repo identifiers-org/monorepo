@@ -32,7 +32,7 @@ sparql:
     memory: 360Mi
     cpu: 100m
   port: 8080
-  imports: "https://raw.githubusercontent.com/identifiers-org/ontop/refs/heads/main/idorg-ontology/idorg-ontology-materialized.ttl,https://raw.githubusercontent.com/identifiers-org/ontop/refs/heads/main/idorg-ontology/idorg-ontology.ttl"
+  imports: "https://raw.githubusercontent.com/identifiers-org/ontop/refs/heads/main/idorg-ontology/idorg-ontology-materialized.ttl,https://github.com/identifiers-org/ontop/raw/refs/heads/main/idorg-ontology/idorg-ontology-void-notations.ttl"
 
 resource_recommender:
   component: resource-recommender
