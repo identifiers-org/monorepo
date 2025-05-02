@@ -111,6 +111,7 @@ public final class OwlSameAsResolver extends VirtualStatementResolver implements
     public List<URIextended> getSameAsURIs(String uri, Optional<Boolean> activeFlag) {
         log.debug("getSameAsURIs for {}, active flag: {}", uri, activeFlag.isPresent() && activeFlag.get());
         List<URIextended> resultList = new ArrayList<>();
+        resultList.add(new URIextended(uri, false));
         for (PrefixPatterns patterns : prefixPatterns) {
             for (BeforeAfterActive beforeAndAfterId : patterns.beforeAndAfterId) {
 
