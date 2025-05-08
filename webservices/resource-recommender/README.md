@@ -1,4 +1,3 @@
-# Overview
 This Web Service implements recommendations / scoring for _resolved resources_ computed by [identifiers.org](https://identifiers.org) _Resolution Service_.
 
 
@@ -14,7 +13,4 @@ _resolved resource_.
 ## How to get scoring data from this service
 Scoring information is obtained via the Compact ID _Resolution Service_, when it resolves a
 Compact ID into a list of providers, a.k.a. _resolved resources_.
-
-
-### Contact
-Manuel Bernal Llinares
+Each resolved resource has its own recommendation score.

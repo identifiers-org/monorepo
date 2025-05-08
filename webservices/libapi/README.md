@@ -4,6 +4,11 @@ This is a Java library that implements clients for [identifiers.org](https://ide
 The following sections will explain how to use the different service wrappers to access
 [identifiers.org](https://identifiers.org) Web Services on any of its cloud deployments.
 
+> [!IMPORTANT]
+> This library won't be updated on maven central as it had basically zero downloads for a while.
+> If you wish to use it, please let us know and we can find a solution for you.
+> It is currently a way to share functionality between the web services.
+
 
 # How to link this library in your code
 This library is available at Maven Central, you can use it by just adding the following dependency:
