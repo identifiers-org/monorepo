@@ -49,9 +49,10 @@ spec:
             - name: WS_SPARQL_JVM_MEMORY_MAX
               value: {{ .Values.sparql.requests.memory | lower | trimSuffix "i" | quote }}
           resources:
-            requests:
-              memory: {{ .Values.sparql.requests.memory }}
-              cpu: {{ .Values.sparql.requests.cpu }}
+            requests: 
+              {{- toYaml .Values.sparql.requests | nindent 14 }}
+            limits: 
+              {{- toYaml .Values.sparql.limits | nindent 14  }}
           ports:
             - containerPort: {{ .Values.sparql.port }}
           readinessProbe:
