@@ -64,7 +64,7 @@ public class ResolverService {
                         serviceApiEndpoint,
                         requestResponse.getStatusCode().value(),
                         requestResponse.getBody().getErrorMessage());
-                logger.error(errorMessage);
+                logger.warn(errorMessage);
             }
         } catch (RuntimeException e) {
             // Make sure we return a default response in case anything bad happens

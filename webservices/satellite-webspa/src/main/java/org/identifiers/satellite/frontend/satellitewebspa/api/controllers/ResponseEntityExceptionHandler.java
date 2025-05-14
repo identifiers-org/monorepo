@@ -28,18 +28,11 @@ public class ResponseEntityExceptionHandler extends org.springframework.web.serv
 
     @ExceptionHandler(value = { FailedResolutionException.class })
     protected ModelAndView failedResolution(FailedResolutionException ex, HttpServletResponse response) {
-        // Last hope for logging of unforeseen errors
-        // Also a way to make all responses to be of type ServiceResponse
-//        String newPath = UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString())
-//                .queryParam("message", ex.getMessage())
-//                .build().toString();
-//        logger.debug("redirecting to: {}", newPath);
-//        return new RedirectView(newPath);
         log.debug("failedResolutionException", ex);
         String encodedMessage = URLEncoder.encode(ex.getMessage(), UTF_8);
-        String cookieVal = String.format("message=%s; SameSite=None", encodedMessage);
+        String cookieVal = String.format("message=%s; SameSite=Lax", encodedMessage);
         response.addHeader("Set-Cookie", cookieVal);
-        response.addHeader("Set-Cookie", "title=Resolution+failed; SameSite=None");
+        response.addHeader("Set-Cookie", "title=Resolution+failed; SameSite=Lax");
         return new ModelAndView("/index.html", NOT_FOUND);
     }
 }

@@ -42,7 +42,7 @@ webspa_app_structure:
 	@mkdir -p $(webspa_folder_spring_boot_static)
 	@cp -R $(webspa_folder_site_dist)/* $(webspa_folder_spring_boot_static)/.
 
-webspa_container_production_build: webspa_clean_local_statics
+webspa_container_production_build: webspa_clean_local_static_files
 	@echo "<===|DEVOPS|===> [BUILD] Production container $(webspa_container_name):$(webspa_tag_version)"
 	@docker build -f satellite-webspa.dockerfile -t $(webspa_container_name):$(webspa_tag_version) -t $(webspa_container_name):latest .
 
@@ -51,6 +51,6 @@ webspa_container_production_push: webspa_container_production_build
 	@docker push $(webspa_container_name):$(webspa_tag_version)
 	@docker push $(webspa_container_name):latest
 
-webspa_clean_local_statics:
-	@echo "<===|DEVOPS|===> [CLEAN]> Cleaning static files in $(webspa_folder_spring_boot_static)"
-	@rm -f $(webspa_folder_spring_boot_static)/*
+webspa_clean_local_static_files:
+	@echo "<===|DEVOPS|===> [CLEAN]> Cleaning static files in $(webspa_folder_spring_boot_static) and $(webspa_folder_site_dist)/*"
+	@rm -f $(webspa_folder_spring_boot_static)/* $(webspa_folder_site_dist)/*
