@@ -53,7 +53,7 @@ const MetadataValue = props => {
   if (typeof props.value === "string" && isValidUrl(props.value)) {
     return <a href={props.value} className="text-decoration-none"> {props.value} </a>;
   } else {
-    return <>&nbsp;props.value</>;
+    return <>&nbsp;{props.value}</>;
   }
 }
 
