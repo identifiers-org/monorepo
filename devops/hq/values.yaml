@@ -57,7 +57,7 @@ registry:
   replicas: 2
   requests:
     cpu: 100m
-    memory: 420Mi
+    memory: 2Gi
   database:
     driver: "postgresql"
     host: "hq-postgresql"
@@ -97,11 +97,11 @@ validator:
 frontend:
   component: web-hq
   tier: frontend
-  image: "identifiersorg/cloud-hq-web-frontend:1.18.1"
+  image: "identifiersorg/cloud-hq-web-frontend:1.18.2"
   replicas: 3
   requests:
     cpu: 10m
-    memory: 64Mi
+    memory: 128Mi
   port: 80
 
 redis:

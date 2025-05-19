@@ -40,7 +40,8 @@ class NamespaceList extends React.Component {
           fields: 'name,prefix,description',
           start: page*size, size
         }
-    ).then(([hitCount, namespaces]) => {
+    )
+    .then(([hitCount, namespaces]) => {
       this.setState({
         namespaceList: namespaces,
         namespaceListParams: {
@@ -89,8 +90,16 @@ class NamespaceList extends React.Component {
   handleSearchChange = e => {
     clearTimeout(this.debounceRef.current);
     this.debounceRef.current = setTimeout(() => {
-      this.props.setSearchParams({query: e.target.value});
-      this.updateNamespaceList();
+      const { namespaceListParams } = this.state;
+      this.setState({
+        namespaceListParams: {
+          ...namespaceListParams,
+          page: 0
+        }
+      }, () => {
+        this.props.setSearchParams({query: e.target.value});
+        this.updateNamespaceList();
+      })
     }, 500);
   };
 
@@ -99,7 +108,7 @@ class NamespaceList extends React.Component {
     this.setState({
       namespaceListParams: {
         ...namespaceListParams,
-        size: parseInt(e.target.value),
+        size: parseInt(e.target.value) || 0,
         page: 0
       }
     }, () => this.updateNamespaceList());

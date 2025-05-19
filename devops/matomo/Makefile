@@ -18,3 +18,6 @@ uninstall:
 
 diff-install:
 	@helm plugin install https://github.com/databus23/helm-diff
+
+status:
+	@kubectl ${K8S_NAMESPACE} rollout status deployment

@@ -29,10 +29,10 @@ sparql:
   image: "identifiersorg/sparql-identifiers:2.2.1"
   replicas: 2
   requests:
-    memory: 360Mi
+    memory: 500Mi
     cpu: 100m
   limits:
-    memory: 500Mi
+    memory: 600Mi
   port: 8080
   imports: "https://raw.githubusercontent.com/identifiers-org/ontop/refs/heads/main/idorg-ontology/idorg-ontology-materialized.ttl,https://github.com/identifiers-org/ontop/raw/refs/heads/main/idorg-ontology/idorg-ontology-void-notations.ttl"
 
@@ -43,7 +43,7 @@ resource_recommender:
   replicas: 2
   port: 8083
   requests:
-    memory: 360Mi
+    memory: 500Mi
     cpu: 150m
 
 link_checker:
@@ -53,7 +53,7 @@ link_checker:
   replicas: 1
   nthreads: 30
   requests:
-    memory: 440Mi
+    memory: 500Mi
     cpu: 100m
   limits:
     cpu: 800m
@@ -78,7 +78,7 @@ resolver:
   url: "https://resolver.api.identifiers.org"
   cors_origins: "*"
   requests:
-    memory: 360Mi
+    memory: 600Mi
     cpu: 100m
 
 matomo:
@@ -93,7 +93,7 @@ frontend:
   cors_origins: "*"
   port: 9090
   requests:
-    memory: 420Mi
+    memory: 600Mi
     cpu: 100m
 
 registry:

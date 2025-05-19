@@ -30,11 +30,9 @@ const SearchSuggestions = forwardRef((props, ref) => {
       if (query) {
         const { prefix } = querySplit(query);
         const namespaces = (
-          await EbiSearchService.queryEbiSearchForRelevantNamespaces(
-            query, {
+          await EbiSearchService.queryEbiSearchForRelevantNamespaces(query, {
               fields: 'name,prefix,lui_pattern,sample_id'
-            }
-          )
+          })
         )?.slice(0, config.suggestionQuerySize) || [];
 
         setNamespaceList(namespaces);
@@ -96,12 +94,21 @@ const SearchSuggestions = forwardRef((props, ref) => {
     return () => clearTimeout(debounce);
   }, [query, updateNamespaces, setDebounce]);
 
+  const noResults = !namespaceList || namespaceList.length === 0;
   return (
     <div className="inline-search-container">
       <div className="suggestions-box">
         <div className="row mx-1">
           <div className="col align-self-end">
-            <p className="text-muted text-end my-0"><small>Suggestions</small></p>
+            <p className="text-muted text-end my-0">
+              <small>
+                {  loading && <> Loading </> }
+                { !loading && noResults && <> No </> }
+                Suggestions
+                {  loading && <> &hellip; </> }
+                { !loading && noResults && <>, try another query </> }
+              </small>
+            </p>
           </div>
         </div>
 

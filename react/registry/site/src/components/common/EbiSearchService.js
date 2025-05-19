@@ -1,21 +1,41 @@
 import { config } from "../../config/Config";
 
+export const preprocessQueryString = (query) => {
+  if (query === '*:*') {
+    // Match all query should just go through
+    return query;
+  }
+
+  // Escape lucene problem chars
+  const luceneProblemChars = [
+    '\\', '+', '-', '&',
+    '!', '(', ')', '{',
+    '}', '[', ']', '^',
+    '~', '*', '?', ':',
+    '/', '|'
+  ];
+  for (const char of luceneProblemChars) {
+    query = query.replaceAll(char, "\\" + char)
+  }
+  return query;
+}
 
 export default Object.freeze({
   async queryEbiSearchForRelevantNamespacesWithHitCount(query, opts = {}) {
     const {ebiSearchDomainEndpoint, ebiSearchResponseSize} = config;
 
+    const preppedQuery = preprocessQueryString(query);
     const params = new URLSearchParams({
       fields: 'prefix, name',
       size: ebiSearchResponseSize.toString(),
-      query: query,
+      query: preppedQuery,
       format: 'JSON',
       ...opts
     });
     return fetch(ebiSearchDomainEndpoint + '?' + params)
-      .then(r => r.json())
+      .then(r => r.json(), err => { console.error(err); return {} })
       .then(json => [
-        json.hitCount,
+        json.hitCount || 0,
         json.entries?.map(e => {
           return e.fields;
         }) || []
