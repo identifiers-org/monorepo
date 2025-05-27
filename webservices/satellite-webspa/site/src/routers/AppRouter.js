@@ -2,11 +2,11 @@ import React from 'react';
 import { createBrowserRouter, defer, Outlet, RouterProvider } from 'react-router-dom';
 
 import HomePage from '../components/pages/HomePage';
-// import NotFoundPage from '../components/pages/NotFoundPage';
 import ResolvePage from '../components/pages/ResolvePage';
 import ErrorPage from "../components/pages/ErrorPage";
 import ProtectedLandingPage from "../components/pages/ProtectedLandingPage";
 import DeactivatedLandingPage from "../components/pages/DeactivatedLanding";
+import ReverseResolvePage from "../components/pages/ReverseResolvePage";
 import AppLayout from "./AppRouterLayout";
 
 import store from '../store/store';
@@ -42,6 +42,9 @@ const routes = [
           }, {
             path: "/resolve",
             element: <ResolvePage/>
+          }, {
+            path: "/reverseResolve",
+            element: <ReverseResolvePage/>
           }, {
             path: "/protectedLanding/*",
             element: <ProtectedLandingPage/>,

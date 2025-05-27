@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchStates from "./SearchStates";
-import { swalToast } from '../../utils/swalDialogs';
+import {copyToClipboard} from "../../utils/copyToClipboard";
 import { config } from "../../config/Config";
 
 import { evaluateQuery } from '../../utils/identifiers';
@@ -15,25 +15,6 @@ class SearchHelper extends React.Component {
       evaluation: null,
       queryParts: null
     };
-  }
-
-  copyToClipboard = (text, ev) => {
-    ev.preventDefault();
-    ev.stopPropagation();
-    navigator.clipboard.writeText(text).then(
-      () => {
-        swalToast.fire({
-          icon: 'success',
-          title: 'Copied to clipboard'
-        })
-      },
-      (err) => {
-        swalToast.fire({
-          icon: 'error',
-          title: `Failed to copy to clipboard: ${err}`
-        })
-      }
-    );
   }
 
   shouldComponentUpdate(nextProps, nextState, nextContext) {
