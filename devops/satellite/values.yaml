@@ -78,7 +78,7 @@ resolver:
   url: "https://resolver.api.identifiers.org"
   cors_origins: "*"
   requests:
-    memory: 600Mi
+    memory: 800Mi
     cpu: 100m
 
 matomo:
@@ -93,7 +93,7 @@ frontend:
   cors_origins: "*"
   port: 9090
   requests:
-    memory: 600Mi
+    memory: 800Mi
     cpu: 100m
 
 registry:
