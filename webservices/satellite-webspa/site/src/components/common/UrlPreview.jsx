@@ -41,6 +41,10 @@ export default ({url}) => {
     }
   }, []);
 
+  if (location.protocol === 'https:' && url.startsWith("http")) {
+    url = url.replace(/^http:\/\//, 'https://');
+  }
+
   return (<>
     <button className="text-muted ms-1 text-decoration-none" type="button" title="Toggle preview"
             onClick={onTogglePreviewClicked}>

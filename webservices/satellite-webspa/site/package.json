@@ -5,10 +5,11 @@
     "last 2 versions",
     "not dead"
   ],
-  "version": "2.5.2",
+  "version": "2.6.0",
   "description": "Identifiers.org satellite web frontend",
   "scripts": {
     "start": "NODE_ENV=development parcel serve --no-cache --port 9091 --hmr-port 50001 src/index.html",
+    "start:https": "NODE_ENV=development parcel serve --https --no-cache --port 9091 --hmr-port 50001 src/index.html",
     "build": "NODE_ENV=production parcel build --no-cache --dist-dir dist src/index.html",
     "precommit": "lint-staged",
     "predeploy": "yarn run build",
