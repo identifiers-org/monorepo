@@ -5140,7 +5140,7 @@
           {
             "id": 58,
             "mirId": "MIR:00100023",
-            "urlPattern": "https://www.ncbi.nlm.nih.gov/pubmed/{$id}",
+            "urlPattern": "https://pubmed.ncbi.nlm.nih.gov/{$id}/",
             "name": "NCBI PubMed",
             "description": "NCBI PubMed",
             "official": true,

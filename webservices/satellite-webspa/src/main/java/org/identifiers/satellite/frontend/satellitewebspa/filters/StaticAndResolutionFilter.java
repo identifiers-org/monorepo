@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Project: satellite-webspa
@@ -27,6 +28,13 @@ public class StaticAndResolutionFilter implements Filter {
     @Autowired
     private ResourceLoader resourceLoader;
 
+    private static final String[] SPA_PATH_PREFIXES = new String[] {
+            "/deactivatedLanding",
+            "/protectedLanding",
+            "/resolve",
+            "/reverseResolve"
+    };
+
     private boolean doesResourceExists(String path) {
         Resource resource = resourceLoader.getResource("classpath:/static" + path);
         return resource.exists();
@@ -37,10 +45,11 @@ public class StaticAndResolutionFilter implements Filter {
         log.debug("Running my custom filter");
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         String path = req.getRequestURI().substring(req.getContextPath().length());
+
         if (doesResourceExists(path)) {
             log.debug("Delegate to default - path '{}'", path);
             filterChain.doFilter(servletRequest, servletResponse); // Goes to default servlet.
-        } else if (path.startsWith("/resolve") || path.startsWith("/protectedLanding") || path.startsWith("/deactivatedLanding")) {
+        } else if (isSpaPath(path)) {
             log.debug("Delegate to index.html (SPA routing) - path '{}'", path);
             servletRequest.getRequestDispatcher("/index.html").forward(servletRequest, servletResponse);
         } else if (path.startsWith("/devopsApi") || path.startsWith("/healthApi")) {
@@ -51,5 +60,10 @@ public class StaticAndResolutionFilter implements Filter {
             log.debug("Sending the request to the resolution API - path '{}'", newPath);
             servletRequest.getRequestDispatcher(newPath).forward(servletRequest, servletResponse); // Goes to your
         }
+    }
+
+    private boolean isSpaPath(String path) {
+        return Arrays.stream(SPA_PATH_PREFIXES)
+                .anyMatch(path::startsWith);
     }
 }

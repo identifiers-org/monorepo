@@ -11,10 +11,10 @@ import ResourceList from '../ResolverPage/ResourceList';
 import MetadataView from "../ResolverPage/MetadataView";
 
 // Utils.
-import { swalToast } from '../../utils/swalDialogs';
 import { querySplit } from '../../utils/identifiers';
 import { useLocation } from 'react-router-dom';
 import { useMatomo } from '@datapunt/matomo-tracker-react';
+import {copyToClipboard} from "../../utils/copyToClipboard";
 
 class ResolvePage extends React.Component {
   constructor(props) {
@@ -51,28 +51,8 @@ class ResolvePage extends React.Component {
     getSchemaOrgMetadataFromRegistry();
   }
 
-
-  handleCopyToClipboard = (value) => {
-    navigator.clipboard.writeText(value).then(
-      () => {
-        swalToast.fire({
-          icon: 'success',
-          title: 'Copied to clipboard'
-        })
-      },
-      (err) => {
-        swalToast.fire({
-          icon: 'error',
-          title: `Failed to copy to clipboard: ${err}`
-        })
-      }
-    );
-  }
-
-
   render() {
     const {
-      handleCopyToClipboard,
       props: { config },
       state: { isLoading, query }
     } = this;
@@ -94,7 +74,7 @@ class ResolvePage extends React.Component {
                     </h4>
                       <button
                         className="btn btn-sm btn-primary-outline"
-                        onClick={() => {handleCopyToClipboard(compactIdentifier)}}
+                        onClick={(e) => {copyToClipboard(compactIdentifier, e)}}
                         type="button"
                       >
                         <i className="icon icon-common icon-copy size-150" />

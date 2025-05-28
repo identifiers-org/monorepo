@@ -242,7 +242,7 @@ class SearchSuggestions extends React.Component {
     const ResourceNameTag = isSmallScreen() ? 'small' : 'p';
 
     return (
-      <div className="inline-search-container">
+      <div id="search-suggestions-container" className="inline-search-container">
         <button type='button' onClick={closeSuggestions} className='closeBttn' title='Close suggestion box'>
           <i className="icon icon-common icon-close"></i>
         </button>

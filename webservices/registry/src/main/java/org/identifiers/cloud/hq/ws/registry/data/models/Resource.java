@@ -6,7 +6,6 @@ import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
-import org.identifiers.cloud.hq.ws.registry.data.models.curationwarnings.NamespaceCurationWarning;
 import org.identifiers.cloud.hq.ws.registry.data.models.curationwarnings.ResourceCurationWarning;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;

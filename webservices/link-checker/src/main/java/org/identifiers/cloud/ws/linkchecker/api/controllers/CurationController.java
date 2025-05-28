@@ -7,8 +7,6 @@ import org.identifiers.cloud.ws.linkchecker.api.models.LinkScoringApiModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 
 /**
  * This is a temporary feature while we don't have a dedicated curation pipeline
