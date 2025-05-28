@@ -28,6 +28,7 @@ public class ReverseResolutionService {
             return Optional.empty();
         }
 
+        log.debug("Query url: {}", queryUrl);
         var likelyMatch = prefixResolver.resolve(queryUrl, queryAccession);
         if (likelyMatch.isPresent()) {
             var match = matchFromData(likelyMatch.get(), queryUrl, queryAccession, request.isForceUrls());
@@ -99,8 +100,7 @@ public class ReverseResolutionService {
         }
         return new ReverseResolutionMatch(
                 match.prefix(),
-                possibleUrl,
-                curie,
+                possibleUrl, curie,
                 luiPatternMatch,
                 similarityScore);
     }

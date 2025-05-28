@@ -1,6 +1,5 @@
 package org.identifiers.cloud.hq.validatorregistry.registryhelpers;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.identifiers.cloud.commons.messages.models.Namespace;
 import org.identifiers.cloud.commons.messages.responses.ServiceResponse;

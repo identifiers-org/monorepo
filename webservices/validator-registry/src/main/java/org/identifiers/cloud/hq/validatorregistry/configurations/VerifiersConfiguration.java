@@ -9,7 +9,6 @@ import org.identifiers.cloud.hq.validatorregistry.curation.verifiers.CuratorRevi
 import org.identifiers.cloud.hq.validatorregistry.curation.verifiers.RegistryEntityVerifier;
 import org.identifiers.cloud.hq.validatorregistry.curation.verifiers.UrlVerifier;
 import org.identifiers.cloud.hq.validatorregistry.helpers.StatusHelper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

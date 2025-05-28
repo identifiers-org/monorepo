@@ -51,7 +51,7 @@ class ResolverDatasetCompactIdParsingHelperTest {
         static List<Namespace> namespaces;
 
         @Bean @Primary
-        public ResolverDataSourcer mockedDatasourcer() throws IOException {
+        public ResolverDataSourcer mockedDataSourcer() throws IOException {
             var sourcer = mock(ResolverDataSourcer.class);
 
             getTestNamespaces();

@@ -7,21 +7,15 @@ import org.eclipse.rdf4j.repository.sparql.SPARQLRepository;
 import org.identifiers.cloud.commons.urlchecking.HttpClientHelper;
 import org.identifiers.cloud.commons.urlchecking.UrlChecker;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import static org.springframework.http.HttpHeaders.ACCEPT;
-import static org.springframework.http.HttpHeaders.USER_AGENT;
-import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @Configuration
 @EnableScheduling

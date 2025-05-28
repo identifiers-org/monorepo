@@ -2,7 +2,6 @@ package org.identifiers.cloud.hq.ws.registry.api.models;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.identifiers.cloud.commons.messages.models.CurationWarningNotification;
 import org.identifiers.cloud.commons.messages.responses.registry.WarningsSummaryPayload;

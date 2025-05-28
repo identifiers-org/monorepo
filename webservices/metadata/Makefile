@@ -3,7 +3,7 @@
 # These are meant to be run from the parent folder
 
 # Google Chrome Driver
-version_latest_chrome_driver = 134.0.6998.88
+version_latest_chrome_driver = 136.0.7103.114
 url_base_chrome_driver = https://storage.googleapis.com/chrome-for-testing-public/
 binary_linux_chromedriver = chromedriver-linux64
 binary_mac_chromedriver = chromedriver-mac-arm64
