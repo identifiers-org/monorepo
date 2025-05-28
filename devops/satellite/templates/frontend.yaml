@@ -101,13 +101,13 @@ spec:
             httpGet:
               path: /healthApi/readiness_check
               port: {{ .Values.frontend.port }}
-            initialDelaySeconds: 5
+            initialDelaySeconds: 15
             periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /healthApi/liveness_check
               port: {{ .Values.frontend.port }}
-            initialDelaySeconds: 5
+            initialDelaySeconds: 15
             periodSeconds: 10
 ---
 apiVersion: v1

@@ -113,13 +113,13 @@ spec:
             httpGet:
               path: /actuator/health/readiness
               port: {{ .Values.resolver.port }}
-            initialDelaySeconds: 5
+            initialDelaySeconds: 15
             periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
               port: {{ .Values.resolver.port }}
-            initialDelaySeconds: 5
+            initialDelaySeconds: 15
             periodSeconds: 10
 ---
 apiVersion: v1
