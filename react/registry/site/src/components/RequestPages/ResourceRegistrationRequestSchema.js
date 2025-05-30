@@ -46,8 +46,10 @@ const ResourceRegistrationRequestSchema = object({
     .required().trim().validateResourceRequestWithRegistryEndpoint(),
   institutionRorId: string().label("Instituton ROR ID")
     .notRequired().trim().url()
-    .matches(/^https:\/\/ror.org\/0[a-z|0-9]{6}[0-9]{2}$/,
-      "Please input the whole https URL, ex: https://ror.org/02catss52"),
+    .matches(/^https:\/\/ror.org\/0[a-z|0-9]{6}[0-9]{2}$/, {
+      message: "Please input the whole https URL, ex: https://ror.org/02catss52",
+      excludeEmptyString: true
+    }),
 
   providerName: string().label("Provider Name")
     .required().trim().validateResourceRequestWithRegistryEndpoint(),
