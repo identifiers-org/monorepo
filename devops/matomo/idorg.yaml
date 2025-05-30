@@ -16,7 +16,7 @@ commonLabels:
 
 extraEnvVars:
 - name: PHP_MEMORY_LIMIT
-  value: "5.3G"
+  value: "5200M"
 
 matomoWebsiteHost: "matomo.identifiers.org"
 matomoWebsiteName: "Identifiers.org"
@@ -26,6 +26,7 @@ matomoPassword: changethis
 matomoEmail: identifiers-org@ebi.ac.uk
 
 image:
+  repository: "identifiersorg/matomo"
   tag: "5.3.1"
   debug: true
 
@@ -97,3 +98,20 @@ ingress:
     kubernetes.io/ingress.allow-http: "true"
     networking.gke.io/managed-certificates: idorg-matomo-managed-cert
     networking.gke.io/v1beta1.FrontendConfig: "matomo-redirect-config"
+
+podAnnotations:
+  kubectl.kubernetes.io/default-container: "idorg-matomo"
+
+sidecars:
+  - name: redis
+    image: redis:7.4-alpine
+    imagePullPolicy: Always
+    resources:
+      requests:
+        memory: 200Mi
+        cpu: 100m
+      limits:
+        memory: 1Gi
+        cpu: 200m
+    ports:
+      - containerPort: 6379
