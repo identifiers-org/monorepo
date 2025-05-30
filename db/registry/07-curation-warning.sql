@@ -38,10 +38,7 @@ create table public.curation_warning_event
     id                  bigint       not null
         primary key,
     created             timestamp(6) not null,
-    type                varchar(255) not null
-        constraint curation_warning_event_type_check
-            check ((type)::text = ANY
-                   ((ARRAY ['CREATED'::character varying, 'SNOOZED'::character varying, 'SOLVED'::character varying, 'REOPENED'::character varying])::text[])),
+    type                varchar(255) not null,
     curation_warning_id bigint       not null
         constraint fkr42rn6ygnwbi9ffjx4w71pdws
             references public.curation_warning
