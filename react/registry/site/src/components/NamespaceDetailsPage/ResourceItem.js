@@ -220,7 +220,12 @@ class ResourceItem extends React.Component {
       state: { editResource, reactivateResource, resourceId }
     } = this;
 
-    const providerCodeLabel = resource.providerCode === null || resource.providerCode === 'CURATOR_REVIEW' ? 'Empty provider code' : resource.providerCode;
+    const providerCodeLabel =
+        resource.providerCode === null ||
+        resource.providerCode.trim() === '' ||
+        resource.providerCode === 'CURATOR_REVIEW' ?
+            'Empty provider code' :
+            resource.providerCode;
     const locationCountryCode = resource ? resource.location._links.self.href : undefined;
     const institutionId = resource ? resource.institution._links.self.href : undefined;
 

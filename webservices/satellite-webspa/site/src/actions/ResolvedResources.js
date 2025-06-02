@@ -31,6 +31,8 @@ export const getResolvedResources = (query) => {
       data.forEach(resolvedResource => {
         if (resolvedResource.hasOwnProperty("providerCode") &&
             resolvedResource.providerCode !== data.payload?.parsedCompactIdentifier.prefix &&
+            resolvedResource.providerCode &&
+            resolvedResource.providerCode.trim() !== '' &&
             resolvedResource.providerCode !== 'CURATOR_REVIEW') {
           resolvedResource['compactIdentifier'] = `${config.resolverApi}/${resolvedResource.providerCode}/${query}`
         } else {
