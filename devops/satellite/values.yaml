@@ -51,7 +51,7 @@ link_checker:
   tier: api
   image: "identifiersorg/cloud-ws-link-checker:2.2.1"
   replicas: 1
-  nthreads: 30
+  nthreads: 10
   requests:
     memory: 500Mi
     cpu: 100m
