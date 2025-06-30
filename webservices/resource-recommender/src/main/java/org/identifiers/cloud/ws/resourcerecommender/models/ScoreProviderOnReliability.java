@@ -1,10 +1,14 @@
 package org.identifiers.cloud.ws.resourcerecommender.models;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import org.identifiers.cloud.commons.messages.models.ResolvedResource;
 import org.identifiers.cloud.libapi.services.LinkCheckerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+
+import java.time.Duration;
 
 /**
  * Project: resource-recommender
@@ -15,17 +19,34 @@ import org.springframework.http.HttpStatus;
  * ---
  * <p>
  * This score provider is based on reliability scoring information provided by the link checker service.
+ *
+ * Simple caching is employed to reduce http calls to link checker
  */
 public class ScoreProviderOnReliability implements ScoreProvider {
     private static final Logger logger = LoggerFactory.getLogger(ScoreProviderOnReliability.class);
+    private final Cache<Long, Integer> resourceScoreCache;
 
     private final LinkCheckerService linkCheckerService;
-    public ScoreProviderOnReliability(LinkCheckerService linkCheckerService) {
+    public ScoreProviderOnReliability(
+            LinkCheckerService linkCheckerService,
+            int maxCacheSize,
+            Duration maxCachedDuration
+    ) {
         this.linkCheckerService = linkCheckerService;
+        resourceScoreCache = CacheBuilder.newBuilder()
+                .maximumSize(maxCacheSize)
+                .expireAfterWrite(maxCachedDuration)
+                .build();
     }
 
     @Override
     public int getScoreForResource(ResolvedResource resolvedResource) {
+        Integer cachedScore = resourceScoreCache.getIfPresent(resolvedResource.getId());
+        if (cachedScore != null) {
+            logger.debug("Using cached reliability score for resource {}", resolvedResource.getId());
+            return cachedScore;
+        }
+
         var response = linkCheckerService.getScoreForResolvedId(String.valueOf(resolvedResource.getId()),
                                                                 resolvedResource.getCompactIdentifierResolvedUrl(),
                                                                 resolvedResource.isProtectedUrls());
@@ -42,6 +63,8 @@ public class ScoreProviderOnReliability implements ScoreProvider {
                     response.getErrorMessage());
         }
         logger.debug("ID {} reliability score: {}", resolvedResource.getId(), response.getPayload().getScore());
+        resourceScoreCache.put(resolvedResource.getId(), response.getPayload().getScore());
+
         return response.getPayload().getScore();
     }
 

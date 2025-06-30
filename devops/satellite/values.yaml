@@ -39,11 +39,11 @@ sparql:
 resource_recommender:
   component: resource-recommender
   tier: api
-  image: "identifiersorg/cloud-ws-resource-recommender:2.0.1"
+  image: "identifiersorg/cloud-ws-resource-recommender:2.1.0"
   replicas: 2
   port: 8083
   requests:
-    memory: 500Mi
+    memory: 350Mi
     cpu: 150m
 
 link_checker:
