@@ -35,7 +35,7 @@ spec:
                 - -c
                 - |
                   ln -s /bitnami/matomo/config/config.ini.php /opt/bitnami/matomo/config/config.ini.php ;
-                  /opt/bitnami/php/bin/php /opt/bitnami/matomo/console core:archive --url=matomo.identifiers.org --php-cli-options="-d memory_limit=2G" ;
+                  /opt/bitnami/php/bin/php /opt/bitnami/matomo/console core:archive --skip-segments-today --url=matomo.identifiers.org --php-cli-options="-d memory_limit=2G" ;
               env:
                 - name: MAILTO
                   value: identifiers-org@ebi.ac.uk
