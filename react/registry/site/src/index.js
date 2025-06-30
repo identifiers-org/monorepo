@@ -82,7 +82,7 @@ import * as bootstrap from 'bootstrap' // Required to load boostrap js in app
     <Provider store={store}>
       <MatomoProvider value={instance}>
         <StrictMode> <AppRouter /> </StrictMode>
-      </MatomoProvider>,
+      </MatomoProvider>
     </Provider>
   );
 })()

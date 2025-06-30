@@ -97,7 +97,7 @@ validator:
 frontend:
   component: web-hq
   tier: frontend
-  image: "identifiersorg/cloud-hq-web-frontend:1.18.4"
+  image: "identifiersorg/cloud-hq-web-frontend:1.18.5"
   replicas: 3
   requests:
     cpu: 10m
