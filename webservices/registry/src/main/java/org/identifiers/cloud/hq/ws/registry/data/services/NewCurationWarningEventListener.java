@@ -9,8 +9,7 @@ import org.identifiers.cloud.hq.ws.registry.data.models.curationwarnings.Curatio
 public class NewCurationWarningEventListener {
     @PrePersist
     private void onCreate(CurationWarningEvent event) {
-        boolean isEventForOpenWarning = event.getType() == CurationWarningEvent.Type.CREATED ||
-                                        event.getType() == CurationWarningEvent.Type.REOPENED;
+        boolean isEventForOpenWarning = event.getType() != CurationWarningEvent.Type.SOLVED;
         event.getCurationWarning().setOpen(isEventForOpenWarning);
     }
 
@@ -19,8 +18,7 @@ public class NewCurationWarningEventListener {
         var curationWarning = event.getCurationWarning();
         var newLatest = curationWarning.getLatestEvent();
         boolean isPreviousEventForOpenWarning = newLatest.getType() == null ||
-                                                newLatest.getType() == CurationWarningEvent.Type.CREATED ||
-                                                newLatest.getType() == CurationWarningEvent.Type.REOPENED;
+                event.getType() != CurationWarningEvent.Type.SOLVED;
         curationWarning.setOpen(isPreviousEventForOpenWarning);
     }
 }

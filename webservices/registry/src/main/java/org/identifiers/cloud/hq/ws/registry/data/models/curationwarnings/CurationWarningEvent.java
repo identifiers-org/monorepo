@@ -33,7 +33,8 @@ public class CurationWarningEvent {
     public enum Type {
         CREATED,
         SOLVED,
-        REOPENED
+        REOPENED,
+        DISABLED
     }
 
     @ManyToOne(optional = false)

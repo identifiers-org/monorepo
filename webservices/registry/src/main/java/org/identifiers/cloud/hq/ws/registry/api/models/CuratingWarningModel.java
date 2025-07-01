@@ -11,6 +11,7 @@ import org.identifiers.cloud.hq.ws.registry.data.repositories.curationwarnings.*
 import org.identifiers.cloud.hq.ws.registry.data.repositories.InstitutionRepository;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.NamespaceRepository;
 import org.identifiers.cloud.hq.ws.registry.data.repositories.ResourceRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionException;
@@ -51,7 +52,7 @@ public class CuratingWarningModel {
         details.forEach(d -> d.setCurationWarning(warning));
         warning.setLastNotification(new Date()); // Current date
 
-        updateLatestEvents(warning);
+        updateLatestEventWithNotification(warning);
 
         try {
             transactionTemplate.executeWithoutResult(s -> {
@@ -65,7 +66,7 @@ public class CuratingWarningModel {
         }
     }
 
-    private void updateLatestEvents(CurationWarning warning) {
+    private void updateLatestEventWithNotification(CurationWarning warning) {
 
         CurationWarningEvent.Type newEventType = null;
         if (warning.getLatestEvent() == null) {
@@ -82,6 +83,47 @@ public class CuratingWarningModel {
             warning.getEvents().add(newEvent);
             curationWarningRepository.save(warning);
         }
+    }
+
+    public HttpStatus markCurationAsDisabled(long warningId) {
+        var warningOpt = curationWarningRepository.findById(warningId);
+        if (warningOpt.isEmpty())
+            return HttpStatus.NOT_FOUND;
+
+        var warning = warningOpt.get();
+        var lastEvent = warning.getLatestEvent();
+        var invalidStatusLst = List.of(DISABLED, SOLVED);
+        if (invalidStatusLst.contains(lastEvent.getType())) {
+            return HttpStatus.BAD_REQUEST;
+        }
+
+        var warningEvents = warning.getEvents();
+        var newEvent = new CurationWarningEvent()
+                .setType(DISABLED)
+                .setCurationWarning(warning);
+        warningEvents.add(newEvent);
+        curationWarningRepository.save(warning);
+        return HttpStatus.OK;
+    }
+
+    public HttpStatus markCurationAsEnabled(long warningId) {
+        var warningOpt = curationWarningRepository.findById(warningId);
+        if (warningOpt.isEmpty())
+            return HttpStatus.NOT_FOUND;
+
+        var warning = warningOpt.get();
+        var lastEvent = warning.getLatestEvent();
+        if (!DISABLED.equals(lastEvent.getType())) {
+            return HttpStatus.BAD_REQUEST;
+        }
+
+        var warningEvents = warning.getEvents();
+        var newEvent = new CurationWarningEvent()
+                .setType(REOPENED)
+                .setCurationWarning(warning);
+        warningEvents.add(newEvent);
+        curationWarningRepository.save(warning);
+        return HttpStatus.OK;
     }
 
     public CurationWarning getExampleCurationWarningFor(String targetType) {
@@ -171,7 +213,12 @@ public class CuratingWarningModel {
         boolean hasCurationValues = false;
         boolean hasPossibleWikidataError = false;
 
+        boolean allDisabled = true;
         for (var cw : curationWarnings) {
+            if (cw.getLatestEvent().getType() != DISABLED) {
+                allDisabled = false;
+            }
+
             switch (cw.getType()) {
                 case "wikidata-institution-diff":
                     hasPossibleWikidataError = true;
@@ -195,6 +242,7 @@ public class CuratingWarningModel {
         row.setLowAvailabilityResources(lowAvailabilityResources);
         row.setHasCurationValues(hasCurationValues);
         row.setHasPossibleWikidataError(hasPossibleWikidataError);
+        row.setAllDisabled(allDisabled);
         return row;
     }
 

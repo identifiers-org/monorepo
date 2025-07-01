@@ -28,6 +28,7 @@ public class WarningsSummaryPayload implements Serializable {
         int lowAvailabilityResources = 0;
         boolean hasCurationValues = false;
         boolean hasPossibleWikidataError = false;
+        boolean allDisabled = false;
     }
 
     @Data

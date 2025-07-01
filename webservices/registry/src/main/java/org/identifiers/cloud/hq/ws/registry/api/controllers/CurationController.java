@@ -95,4 +95,16 @@ public class CurationController {
         var cacheControl = CacheControl.maxAge(Duration.ofMinutes(1)).noTransform().mustRevalidate();
         return ResponseEntity.ok().cacheControl(cacheControl).body(serviceResponse);
     }
+
+    @GetMapping("/disable")
+    public ResponseEntity<Void> disableWarning(@RequestParam long id) {
+        var result = curatingWarningModel.markCurationAsDisabled(id);
+        return ResponseEntity.status(result).build();
+    }
+
+    @GetMapping("/enable")
+    public ResponseEntity<Void> enableWarning(@RequestParam long id) {
+        var result = curatingWarningModel.markCurationAsEnabled(id);
+        return ResponseEntity.status(result).build();
+    }
 }
