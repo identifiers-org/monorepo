@@ -189,8 +189,8 @@ public class CuratingWarningModel {
         }
     }
 
-    public WarningsSummaryPayload getSummaryPayload(List<CurationWarning> curationWarnings) {
-        Map<TargetInfo, List<CurationWarning>> groupedWarnings = curationWarnings.stream()
+    public WarningsSummaryPayload getSummaryPayload(List<CurationWarning> openWarnings) {
+        Map<TargetInfo, List<CurationWarning>> groupedWarnings = openWarnings.stream()
                 .collect(Collectors.groupingBy(CuratingWarningModel::targetInfo));
 
         var payload = new WarningsSummaryPayload();
@@ -199,15 +199,16 @@ public class CuratingWarningModel {
                 .toList();
         payload.setSummaryEntries(rows);
 
-        Map<String, Long> scores = usageScorer.isPresent() ?
-                usageScorer.get().getScoresPerNamespace() : Map.of();
+        Map<String, Long> scores = usageScorer
+                .map(UsageScoreHelperBasedOnMatomo::getScoresPerNamespace)
+                .orElseGet(Map::of);
         payload.setNamespaceUsage(scores);
 
         return payload;
     }
 
-    private static WarningsSummaryPayload.Entry getSummaryEntry(
-            TargetInfo targetInfo, List<CurationWarning> curationWarnings) {
+    private static WarningsSummaryPayload.Entry getSummaryEntry(TargetInfo targetInfo,
+                                                                List<CurationWarning> curationWarnings) {
         int failingInstitutionUrl = 0;
         int lowAvailabilityResources = 0;
         boolean hasCurationValues = false;
@@ -215,7 +216,7 @@ public class CuratingWarningModel {
 
         boolean allDisabled = true;
         for (var cw : curationWarnings) {
-            if (cw.getLatestEvent().getType() != DISABLED) {
+            if (cw.isOpen() && cw.getLatestEvent().getType() != DISABLED) {
                 allDisabled = false;
             }
 

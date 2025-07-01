@@ -92,8 +92,7 @@ public class CurationController {
         var table = curatingWarningModel.getSummaryPayload(openWarnings);
 
         var serviceResponse = ServiceResponse.of(table);
-        var cacheControl = CacheControl.maxAge(Duration.ofMinutes(1)).noTransform().mustRevalidate();
-        return ResponseEntity.ok().cacheControl(cacheControl).body(serviceResponse);
+        return ResponseEntity.ok().body(serviceResponse);
     }
 
     @GetMapping("/disable")
