@@ -257,8 +257,8 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET, "/curationApi/queryWarnings").hasAuthority("restApiCurationWarningsGet")
                     .requestMatchers(HttpMethod.GET, "/curationApi/warningsSummary").hasAuthority("restApiCurationWarningsGet")
                     .requestMatchers(HttpMethod.POST, "/curationApi/notifications").hasAuthority("restApiCurationWarningsNotify")
-                    .requestMatchers(HttpMethod.POST, "/curationApi/enable").hasAuthority("restApiCurationWarningsEnable")
-                    .requestMatchers(HttpMethod.POST, "/curationApi/disable").hasAuthority("restApiCurationWarningsDisable")
+                    .requestMatchers(HttpMethod.GET, "/curationApi/enable").hasAuthority("restApiCurationWarningsEnable")
+                    .requestMatchers(HttpMethod.GET, "/curationApi/disable").hasAuthority("restApiCurationWarningsDisable")
                 // Resolution API
                     .requestMatchers("/resolutionApi/**").permitAll()
                 // Semantic API

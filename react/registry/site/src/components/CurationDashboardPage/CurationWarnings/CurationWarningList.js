@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import { config } from "../../../config/Config";
 import Spinner from "../../common/Spinner";
 import CurationWarningModal from "./CurationWarningModal";
@@ -8,14 +8,17 @@ import 'datatables.net-bs5/css/dataTables.bootstrap5.min.css'
 import {renewToken} from "../../../utils/auth";
 import DT from 'datatables.net-bs5';
 
-
 DataTable.use(DT);
 
 const CurationWarningList = () => {
   const [tableRows, setTableRows] = useState([]);
+  const [filteredTableRows, setFilteredTableRows] = useState([])
   const [loading, setLoading] = useState(null);
   const [failed, setFailed] = useState(false);
   const [selectedTarget, setSelectedTarget] = useState(null);
+  const [hideDisabled, setHideDisabled] = useState(true);
+  const tableApiRef = useRef();
+
 
   const getLinkToTarget = useCallback((targetInfo, col) => {
     const href = getHrefForTarget(targetInfo);
@@ -31,45 +34,68 @@ const CurationWarningList = () => {
       </button>
     , [])
 
+
   const parseWarningSummaryIntoRows = useCallback((summaryPayload) => {
     if (summaryPayload == null || !Array.isArray(summaryPayload.summaryEntries)) return [];
 
     const usageScores = summaryPayload.namespaceUsage;
 
     return summaryPayload.summaryEntries.map(r => [
-          `${r.targetInfo.label} (${r.targetInfo.identifier})`,
-          r.targetInfo,
-          usageScores[r.targetInfo.identifier] || 0,
-          r.allDisabled ? "Yes" : "No",
-          r.lowAvailabilityResources,
-          r.hasCurationValues,
-          r.failingInstitutionUrl,
-          r.hasPossibleWikidataError,
-          r.targetInfo,
+      `${r.targetInfo.label} (${r.targetInfo.identifier})`,
+      r.targetInfo,
+      usageScores[r.targetInfo.identifier] || 0,
+      r.allDisabled ? "Yes" : "No",
+      r.lowAvailabilityResources,
+      r.hasCurationValues,
+      r.failingInstitutionUrl,
+      r.hasPossibleWikidataError,
+      r.targetInfo,
     ])
   }, []);
 
-  useEffect(() => {
-    const fn = async () => {
-      if (loading === null || loading === false) {
-        setLoading(true);
-        const authToken = await renewToken();
-        const init = {headers: {'Authorization': `Bearer ${authToken}`}};
 
-        fetch(config.registryApi + "/curationApi/warningsSummary", init)
-            .then(response => response.json())
-            .then(json => parseWarningSummaryIntoRows(json.payload))
-            .then(rows => setTableRows(rows))
-            .catch(() => setFailed(true))
-            .finally(() => setLoading(false));
-      }
+  const fetchWarningSummaryRows = useCallback(async () => {
+    if (loading === null || loading === false) {
+      setLoading(true);
+      const authToken = await renewToken();
+      const init = {headers: {'Authorization': `Bearer ${authToken}`}};
+
+      await fetch(config.registryApi + "/curationApi/warningsSummary", init)
+          .then(response => response.json())
+          .then(json => parseWarningSummaryIntoRows(json.payload))
+          .then(rows => {
+            setTableRows(rows)
+            setFilteredTableRows(rows)
+          })
+          .catch(() => setFailed(true))
+          .finally(() => setLoading(false));
     }
-    fn();
-  }, []);
+  }, [])
+
+
+  // Update filtered rows based on hideDisable variable
+  useEffect(() => {
+    setFilteredTableRows(
+        hideDisabled ? tableRows.filter(r => r[3] !== 'Yes') : tableRows
+    );
+    tableApiRef.current?.dt()
+        .column(3)
+        .visible(!hideDisabled)
+        .draw();
+  }, [tableRows, hideDisabled]);
+
+  // Fetch warning summary on component mount
+  useEffect(() => {
+    fetchWarningSummaryRows().then(() => {
+      tableApiRef.current?.dt().draw();
+    })
+  }, [])
+
 
   if (loading) return <div> <Spinner/> </div>
   if (failed) return <div className="alert alert-danger"> Failed to download warnings! </div>
 
+  const numDisabled = tableRows.filter(r => r[3] === 'Yes').length
   const opts = {
     columnDefs: [
       {searchable: false, targets: [1,2,3,4,5,6,7,8]},
@@ -103,42 +129,54 @@ const CurationWarningList = () => {
     stateSave: true
   }
   return <div id="curation-warning-list-container">
-    <DataTable data={tableRows} slots={{1: getLinkToTarget, 8: getSelectTargetBttn}} options={opts}
-                    className="table table-sm table-striped table-bordered">
+    <div className="form-check form-switch float-end mt-2 ms-2"
+      title={`${numDisabled} disabled rows`}>
+      <input className="form-check-input rounded-pill" onChange={e => {setHideDisabled(e.target.checked)}}
+             type="checkbox" role="switch" id="checkChecked" checked={hideDisabled}/>
+      <label className="form-check-label" htmlFor="checkChecked">
+        Hide disabled
+      </label>
+    </div>
+
+
+    <DataTable data={filteredTableRows} slots={{1: getLinkToTarget, 8: getSelectTargetBttn}} options={opts}
+               className="table table-sm table-striped table-bordered" ref={tableApiRef}>
       <thead>
-        <tr>
-          <th className="cursor-pointer" colSpan={2} scope="col">Target</th>
-          <th className="cursor-pointer" scope="col"
-              title="Target usage score based on previous month">
-            Access score
-          </th>
-          <th className="cursor-pointer" scope="col"
-              title="Whether all warnings are disabled">
-            Disabled
-          </th>
-          <th className="cursor-pointer" scope="col"
-              title="Number of resources marked as low availability">
-            Low availability
-          </th>
-          <th className="cursor-pointer" scope="col"
-              title="Whether one or more fields are marked as CURATOR_REVIEW">
-            Curation review
-          </th>
-          <th className="cursor-pointer" scope="col"
-              title="Number of institutions with non-responsive URLs">
-            Bad institution URL
-          </th>
-          <th className="cursor-pointer" scope="col"
-              title="Whether there is discrepancy between institution information and Wikidata">
-            Wikidata discrepancy
-          </th>
-          <th scope="col"></th>
-        </tr>
+      <tr>
+        <th className="cursor-pointer" colSpan={2} scope="col">
+          Target
+        </th>
+        <th className="cursor-pointer" scope="col"
+            title="Target usage score based on previous month">
+          Access score
+        </th>
+        <th className="cursor-pointer" scope="col"
+            title="Whether all warnings are disabled">
+          Disabled
+        </th>
+        <th className="cursor-pointer" scope="col"
+            title="Number of resources marked as low availability">
+          Low availability
+        </th>
+        <th className="cursor-pointer" scope="col"
+            title="Whether one or more fields are marked as CURATOR_REVIEW">
+          Curation review
+        </th>
+        <th className="cursor-pointer" scope="col"
+            title="Number of institutions with non-responsive URLs">
+          Bad institution URL
+        </th>
+        <th className="cursor-pointer" scope="col"
+            title="Whether there is discrepancy between institution information and Wikidata">
+          Wikidata discrepancy
+        </th>
+        <th scope="col"></th>
+      </tr>
       </thead>
     </DataTable>
     <CurationWarningModal selectedTarget={selectedTarget}
                           modalId="targetInfoModal"
-                          editHref={getHrefForTarget(selectedTarget)} />
+                          editHref={getHrefForTarget(selectedTarget)}/>
   </div>
 
 }

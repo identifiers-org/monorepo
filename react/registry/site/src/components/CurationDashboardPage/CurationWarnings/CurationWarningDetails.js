@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import CurationWarningEventList from "./CurationWarningEventList";
 import {config} from "../../../config/Config";
 import {swalError} from "../../../utils/swalDialogs";
+import {renewToken} from "../../../utils/auth";
 
 
 const CurationWarningDetails = ({curationWarningInit}) => {
@@ -13,8 +14,10 @@ const CurationWarningDetails = ({curationWarningInit}) => {
 
 
 
-  const renewCurationWarning = useCallback(async () => {
-    await fetch (curationWarning._links.self.href)
+  const renewCurationWarning = useCallback(async (token) => {
+    const init = {headers: {'Authorization': `Bearer ${token}`}};
+
+    await fetch (curationWarning._links.self.href, init)
         .then(
             async response => {
               if (response.ok) {
@@ -37,20 +40,23 @@ const CurationWarningDetails = ({curationWarningInit}) => {
         )
   }, [isDisabled, curationWarning]);
 
+
   const toggleDisabledStatus = useCallback(async () => {
     const cwId = curationWarning._links.self.href.split('/').pop();
     const endpoint = isDisabled ?
-        "/curationApi/enable?" :
-        "/curationApi/disable?";
+        "/curationApi/enable?" : "/curationApi/disable?";
     const params = new URLSearchParams({
       id: cwId
     })
 
-    await fetch (config.registryApi + endpoint + params)
+    const authToken = await renewToken();
+    const init = {headers: {'Authorization': `Bearer ${authToken}`}};
+
+    await fetch (config.registryApi + endpoint + params, init)
         .then(
             async response => {
               if (response.ok) {
-                await renewCurationWarning()
+                await renewCurationWarning(authToken)
               } else {
                 await swalError.fire({
                   title: 'Error',
