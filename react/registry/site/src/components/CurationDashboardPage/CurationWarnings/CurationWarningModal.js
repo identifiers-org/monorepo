@@ -78,7 +78,7 @@ export default ({selectedTarget, modalId, editHref}) => {
     body = <div className="alert alert-danger"> Failed to get warnings! </div>
   else
     body = curationWarnings.map((cw, idx) =>
-      <CurationWarningDetails key={idx} curationWarning={cw} targetInfo={selectedTarget}/>
+      <CurationWarningDetails key={idx} curationWarningInit={cw} targetInfo={selectedTarget}/>
     )
 
   return (

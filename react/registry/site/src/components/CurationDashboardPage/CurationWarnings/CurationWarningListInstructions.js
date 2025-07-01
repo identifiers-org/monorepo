@@ -186,7 +186,7 @@ export default memo(() => <div className="modal-content">
           <button type="button" data-bs-toggle="collapse" data-bs-target="#individual-warnings-description" title="Click to toogle"
                   className="h4 my-0 py-0 collapsed" aria-expanded="false" aria-controls="individual-warnings-description">
             <span className="collapse-symbol" />
-            Seeing individual curation warnings
+            Inspecting individual curation warnings under row
           </button>
         </div>
         <div id='individual-warnings-description' className="card-body collapse">
@@ -241,7 +241,7 @@ export default memo(() => <div className="modal-content">
         </div>
         <div className="card-body collapse" id="warning-update-descrition">
           <p>
-            Warnings are updated periodically by the registry verifier job.
+            <strong>Warnings are updated periodically by the registry verifier job</strong>.
             This job runs weekly and checks all entries for possible issues.
             After running, it sends notifications to the registry for warnings that are active.
           </p>
@@ -255,6 +255,36 @@ export default memo(() => <div className="modal-content">
           <p>
             Please note that the availability metric of the link checker takes 36h to update.
             So a resource may be marked as low availability from one run of the validator job.
+          </p>
+        </div>
+      </div>
+
+      {/*Disabled warnings*/}
+      <div className="card mt-3">
+        <div className="card-header">
+          <button type="button" data-bs-toggle="collapse" data-bs-target="#disabled-warning-descrition" title="Click to toogle"
+                  className="h4 my-0 py-0 collapsed" aria-expanded="false" aria-controls="disabled-warning-descrition">
+            <span className="collapse-symbol" />
+            Disabled warnings
+          </button>
+        </div>
+        <div className="card-body collapse" id="disabled-warning-descrition">
+          <p>
+            When inspecting a line of the warning summary table, <strong>you can disable specific warnings</strong>.
+            This is intended as way to ignore warnings due to reasons such as them being false positives.
+          </p>
+
+          <p>
+            Disabled warnings still show on the summary table and upon notification they stay as disabled.
+            Please note that a disabled warning will still be marked as solved if not notified by a run of the verifier job.
+            So it could happen that an intermittent warning to be marked as disabled,
+            then be detected as solved by the verifier, and then notified again later by the verifier job.
+          </p>
+
+          <p>
+            When all warnings are marked as disabled, the summary table line is considered disabled, allowing sorting
+            the table to show other warnings first.
+            <strong> To enable a warning</strong>, simply click on the "<em>enable</em>" button when inspecting a line in the warning table.
           </p>
         </div>
       </div>

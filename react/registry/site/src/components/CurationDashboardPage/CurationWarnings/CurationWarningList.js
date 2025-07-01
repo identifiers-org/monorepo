@@ -40,6 +40,7 @@ const CurationWarningList = () => {
           `${r.targetInfo.label} (${r.targetInfo.identifier})`,
           r.targetInfo,
           usageScores[r.targetInfo.identifier] || 0,
+          r.allDisabled ? "Yes" : "No",
           r.lowAvailabilityResources,
           r.hasCurationValues,
           r.failingInstitutionUrl,
@@ -71,13 +72,13 @@ const CurationWarningList = () => {
 
   const opts = {
     columnDefs: [
-      {searchable: false, targets: [1,2,3,4,5,6,7]},
-      {sortable: false, targets: [7]},
+      {searchable: false, targets: [1,2,3,4,5,6,7,8]},
+      {sortable: false, targets: [8]},
       {className: 'align-middle', targets: '_all'},
-      {className: 'text-center', targets: [1,7]},
-      {className: 'text-end', targets: [2,3,5]},
+      {className: 'text-center', targets: [1,8]},
+      {className: 'text-end', targets: [2,4,6]},
     ],
-    order: [[3, 'desc'], [2, 'desc']],
+    order: [[3, 'asc'], [2, 'desc']],
     layout: {
       topStart: {
         info: {
@@ -102,16 +103,35 @@ const CurationWarningList = () => {
     stateSave: true
   }
   return <div id="curation-warning-list-container">
-    <DataTable data={tableRows} slots={{1: getLinkToTarget, 7: getSelectTargetBttn}} options={opts}
+    <DataTable data={tableRows} slots={{1: getLinkToTarget, 8: getSelectTargetBttn}} options={opts}
                     className="table table-sm table-striped table-bordered">
       <thead>
         <tr>
           <th className="cursor-pointer" colSpan={2} scope="col">Target</th>
-          <th className="cursor-pointer" scope="col">Access score</th>
-          <th className="cursor-pointer" scope="col">Low availability</th>
-          <th className="cursor-pointer" scope="col">Curation review</th>
-          <th className="cursor-pointer" scope="col">Bad institution URL</th>
-          <th className="cursor-pointer" scope="col">Wikidata discrepancy</th>
+          <th className="cursor-pointer" scope="col"
+              title="Target usage score based on previous month">
+            Access score
+          </th>
+          <th className="cursor-pointer" scope="col"
+              title="Whether all warnings are disabled">
+            Disabled
+          </th>
+          <th className="cursor-pointer" scope="col"
+              title="Number of resources marked as low availability">
+            Low availability
+          </th>
+          <th className="cursor-pointer" scope="col"
+              title="Whether one or more fields are marked as CURATOR_REVIEW">
+            Curation review
+          </th>
+          <th className="cursor-pointer" scope="col"
+              title="Number of institutions with non-responsive URLs">
+            Bad institution URL
+          </th>
+          <th className="cursor-pointer" scope="col"
+              title="Whether there is discrepancy between institution information and Wikidata">
+            Wikidata discrepancy
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>

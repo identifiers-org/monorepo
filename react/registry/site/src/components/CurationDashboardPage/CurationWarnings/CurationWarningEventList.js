@@ -9,6 +9,8 @@ export default ({ href, preload }) => {
     const [expanded, setExpanded] = useState(Boolean(preload))
     const [eventList, setEventList] = useState([])
 
+
+
     useEffect(() => {
         if ((preload || expanded) && loading === null) {
             const fn = async () => {
@@ -18,7 +20,7 @@ export default ({ href, preload }) => {
                 const init = {headers: {'Authorization': `Bearer ${authToken}`}};
                 fetch(href, init)
                     .then(response => response.json())
-                    .then(json => setEventList(json._embedded?.curationWarningEvents))
+                    .then(json => setEventList(json._embedded?.curationWarningEvents.slice(0,5)))
                     .catch(() => setFailed(true))
                     .finally(() => setLoading(false));
             }
@@ -27,6 +29,10 @@ export default ({ href, preload }) => {
     }, [
         expanded, preload, setLoading, setEventList, setFailed
     ]);
+
+
+
+
 
     if (loading) {
         return <div> <Spinner compact noText noCenter /> </div>;
