@@ -115,3 +115,134 @@ sidecars:
         cpu: 200m
     ports:
       - containerPort: 6379
+
+
+extraDeploy:
+  - apiVersion: batch/v1
+    kind: CronJob
+    metadata:
+      labels:
+        app: idorg
+        component: matomo-archiver
+      name: matomo-archiver
+    spec:
+      concurrencyPolicy: Forbid
+      failedJobsHistoryLimit: 3
+      jobTemplate:
+        spec:
+          parallelism: 4
+          completions: 4
+          completionMode: Indexed
+          backoffLimit: 4
+          template:
+            metadata:
+              labels:
+                app: idorg
+                component: matomo-archiver
+              name: matomo-archiver
+            spec:
+              activeDeadlineSeconds: 86400
+              affinity:
+                podAffinity:
+                  requiredDuringSchedulingIgnoredDuringExecution:
+                    - labelSelector:
+                        matchExpressions:
+                          - key: component
+                            operator: In
+                            values:
+                              - matomo-archiver
+                      topologyKey: topology.kubernetes.io/zone
+              containers:
+                - command:
+                    - sh
+                    - -c
+                    - |
+                      ln -s /bitnami/matomo/config/config.ini.php /opt/bitnami/matomo/config/config.ini.php ;
+                      sleep ${JOB_COMPLETION_INDEX}m ;
+                      /opt/bitnami/php/bin/php /opt/bitnami/matomo/console core:archive --url=matomo.identifiers.org --php-cli-options="-d memory_limit=2G" ;
+                  env:
+                    - name: MAILTO
+                      value: identifiers-org@ebi.ac.uk
+                    - name: BITNAMI_DEBUG
+                      value: "true"
+                    - name: ALLOW_EMPTY_PASSWORD
+                      value: "no"
+                    - name: APACHE_HTTP_PORT_NUMBER
+                      value: "8080"
+                    - name: APACHE_HTTPS_PORT_NUMBER
+                      value: "8443"
+                    - name: MATOMO_DATABASE_HOST
+                      value: matomomysql
+                    - name: MATOMO_DATABASE_PORT_NUMBER
+                      value: "3306"
+                    - name: MATOMO_DATABASE_NAME
+                      value: matomo_db_idorg
+                    - name: MATOMO_DATABASE_USER
+                      value: matomo_idorg
+                    - name: MATOMO_DATABASE_PASSWORD
+                      valueFrom:
+                        secretKeyRef:
+                          key: db-password
+                          name: idorg-matomo-secrets
+                    - name: MATOMO_SKIP_BOOTSTRAP
+                      value: "yes"
+                    - name: MATOMO_USERNAME
+                      value: idorg
+                    - name: MATOMO_PASSWORD
+                      valueFrom:
+                        secretKeyRef:
+                          key: matomo-password
+                          name: idorg-matomo
+                    - name: MATOMO_EMAIL
+                      value: identifiers-org@ebi.ac.uk
+                    - name: MATOMO_WEBSITE_NAME
+                      value: Identifiers.org
+                    - name: MATOMO_WEBSITE_HOST
+                      value: matomo.identifiers.org
+                    - name: MATOMO_SMTP_HOST
+                      value: smtp.eu.mailgun.org
+                    - name: MATOMO_SMTP_PORT
+                      value: "587"
+                    - name: MATOMO_SMTP_USER
+                      value: matomo@identifiers.org
+                    - name: MATOMO_SMTP_PASSWORD
+                      valueFrom:
+                        secretKeyRef:
+                          key: smtp-password
+                          name: idorg-matomo-secrets
+                    - name: MATOMO_SMTP_PROTOCOL
+                      value: tls
+                    - name: PHP_MEMORY_LIMIT
+                      value: "2G"
+                  image: docker.io/bitnami/matomo:5.3.1
+                  imagePullPolicy: IfNotPresent
+                  name: matomo-archiver
+                  resources:
+                    limits:
+                      cpu: 100m
+                      memory: 2100M
+                    requests:
+                      cpu: 10m
+                      memory: 200Mi
+                  securityContext:
+                    runAsNonRoot: false
+                    runAsUser: 0
+                  volumeMounts:
+                    - mountPath: /bitnami/matomo
+                      name: matomo-data
+                      readOnly: true
+              nodeSelector:
+                idorg-deployment: matomo
+              restartPolicy: Never
+              terminationGracePeriodSeconds: 30
+              volumes:
+                - name: matomo-data
+                  persistentVolumeClaim:
+                    claimName: idorg-matomo-matomo
+                    readOnly: true
+          ttlSecondsAfterFinished: 7200
+      schedule: 5 * * * *
+      startingDeadlineSeconds: 180
+      successfulJobsHistoryLimit: 1
+      suspend: false
+
