@@ -40,6 +40,9 @@ allowEmptyPassword: false
 
 volumePermissions:
   enabled: true
+  image:
+    repository: bash
+    tag: 5.3-alpine3.22
 
 matomoSkipInstall: true
 
@@ -130,8 +133,8 @@ extraDeploy:
       failedJobsHistoryLimit: 3
       jobTemplate:
         spec:
-          parallelism: 4
-          completions: 4
+          parallelism: 3
+          completions: 3
           completionMode: Indexed
           backoffLimit: 4
           template:
@@ -159,7 +162,7 @@ extraDeploy:
                     - |
                       ln -s /bitnami/matomo/config/config.ini.php /opt/bitnami/matomo/config/config.ini.php ;
                       sleep ${JOB_COMPLETION_INDEX}m ;
-                      /opt/bitnami/php/bin/php /opt/bitnami/matomo/console core:archive --url=matomo.identifiers.org --php-cli-options="-d memory_limit=2G" ;
+                      /opt/bitnami/php/bin/php /opt/bitnami/matomo/console core:archive --concurrent-archivers 8 --url=matomo.identifiers.org --php-cli-options="-d memory_limit=2G" ;
                   env:
                     - name: MAILTO
                       value: identifiers-org@ebi.ac.uk
