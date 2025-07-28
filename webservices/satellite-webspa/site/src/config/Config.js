@@ -44,4 +44,6 @@ export const config = {
   ebiSearchDomainEndpoint: 'https://www.ebi.ac.uk/ebisearch/ws/rest/identifiers_registry',
   ebiSearchResponseSize: 100,
   ebiSearchRescoreWhenSingleIdDetected: true,
+
+  frontPageNoticeEnabled: false
 };

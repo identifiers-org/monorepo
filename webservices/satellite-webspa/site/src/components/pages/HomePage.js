@@ -3,6 +3,7 @@ import { config } from '../../config/Config'
 
 // Components.
 import Search from '../HomePage/Search';
+import Notice from "../HomePage/Notice";
 
 // Utils.
 import { isSmallScreen, isIpadScreen } from '../../utils/responsive';
@@ -32,29 +33,18 @@ class HomePage extends React.Component {
       <div className={`row border ${topSpacer}`}>
         <div className={`col col-12 col-xl-6 ${boxPadding} d-flex align-items-center justify-content-center flex-column`}>
           <h1 className="text-primary mb-4 text-left w-100">Identifiers.org Resolution Service</h1>
-            <p className="mb-0 text-justify text-muted">
-              The Identifiers.org Resolution Service provides consistent access to life science data using Compact
-              Identifiers. Compact Identifiers consist of an assigned unique prefix and a local provider designated
-              accession number (prefix:accession). The resolving location of Compact Identifiers is determined using
-              information that is stored in the Identifiers.org  <a
-                href={config.registryUrl}
-                className="text-primary"
-              >
-                Registry
-              </a>.
-            </p>
-            <div className="alert alert-info mt-3">
-              <h4 className="text-info-emphasis">
-                <i className="icon icon-common icon-bullhorn me-2"></i>
-                We need your help!
-              </h4>
-              <p className="mb-0 text-justify text-muted">
-                Has identifiers.org saved you time or effort?
-                Please take 15 minutes to fill in a survey and help EMBL-EBI make the case for why open data
-                resources are critical to life science research.
-                <a href="https://www.surveymonkey.com/r/QGFMBH8"> Click here to fill in the survey </a>
-              </p>
-            </div>
+          <p className="mb-0 text-justify text-muted">
+            The Identifiers.org Resolution Service provides consistent access to life science data using Compact
+            Identifiers. Compact Identifiers consist of an assigned unique prefix and a local provider designated
+            accession number (prefix:accession). The resolving location of Compact Identifiers is determined using
+            information that is stored in the Identifiers.org  <a
+              href={config.registryUrl}
+              className="text-primary"
+            >
+              Registry
+            </a>.
+          </p>
+          { config.frontPageNoticeEnabled && <Notice /> }
         </div>
 
         <div className="col col-12 col-xl-6 bg-light py-5 d-flex align-items-center justify-content-center">
