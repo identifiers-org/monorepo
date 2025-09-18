@@ -1,0 +1,1 @@
+Please find the continued work on the browser extension for identifiers.org at <https://github.com/identifiers-org/browser-extension>.
