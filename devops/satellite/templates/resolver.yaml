@@ -122,11 +122,23 @@ spec:
             initialDelaySeconds: 15
             periodSeconds: 10
 ---
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: sticky-session-backend-config
+  labels:
+    tier: devops
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  sessionAffinity:
+    affinityType: "CLIENT_IP"
+---
 apiVersion: v1
 kind: Service
 metadata:
   annotations:
     cloud.google.com/neg: '{"ingress":false}'
+    cloud.google.com/backend-config: '{"default": "sticky-session-backend-config"}'
   name: {{ .Values.resolver.component }}
   labels:
     tier: {{ .Values.resolver.tier}}
@@ -143,6 +155,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    cloud.google.com/backend-config: '{"default": "sticky-session-backend-config"}'
   name: nodeport-{{ .Values.resolver.component }}
   labels:
     tier: {{ .Values.resolver.tier}}
