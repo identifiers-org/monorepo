@@ -161,11 +161,6 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>com.google.guava</groupId>
-        <artifactId>guava</artifactId>
-        <version>31.1-jre</version>
-      </dependency>
-      <dependency>
         <groupId>io.github.hakky54</groupId>
         <artifactId>sslcontext-kickstart</artifactId>
         <version>8.3.7</version>
@@ -240,7 +235,7 @@
       <dependency>
         <groupId>org.wiremock.integrations</groupId>
         <artifactId>wiremock-spring-boot</artifactId>
-        <version>3.6.0</version>
+        <version>3.7.0</version>
       </dependency>
       <dependency>
         <groupId>org.wiremock</groupId>

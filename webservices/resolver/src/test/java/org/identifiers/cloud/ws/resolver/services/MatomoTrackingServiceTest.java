@@ -1,11 +1,12 @@
 package org.identifiers.cloud.ws.resolver.services;
 
-import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import org.identifiers.cloud.ws.resolver.services.MatomoTrackingService.MatomoTrackingInfo;
 import org.junit.jupiter.api.Test;
 import org.matomo.java.tracking.MatomoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.wiremock.spring.ConfigureWireMock;
+import org.wiremock.spring.EnableWireMock;
 
 import java.time.Duration;
 import java.util.Collections;
@@ -21,7 +22,9 @@ import static org.junit.jupiter.api.Assertions.*;
     "org.identifiers.matomo.baseUrl=http://localhost:9999/matomo.php",
     "matomo.tracker.api-endpoint=http://localhost:9999/matomo.php"
 })
-@WireMockTest(httpPort = 9999)
+@EnableWireMock({
+        @ConfigureWireMock(port = 9999)
+})
 class MatomoTrackingServiceTest {
     @Autowired
     MatomoTrackingService service;

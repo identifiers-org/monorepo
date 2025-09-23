@@ -21,10 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(
-        classes = {TestRedisServer.class},
-        properties = {
-                "logging.level.org.identifiers.cloud.ws.resolver=DEBUG"
-        }
+        classes = {TestRedisServer.class}
 )
 class ReverseResolutionServiceTest {
     @Autowired

@@ -72,7 +72,7 @@ metadata:
 resolver:
   component: resolver
   tier: api
-  image: "identifiersorg/cloud-ws-resolver:3.3.0"
+  image: "identifiersorg/cloud-ws-resolver:3.4.3"
   replicas: 3
   port: 8080
   url: "https://resolver.api.identifiers.org"

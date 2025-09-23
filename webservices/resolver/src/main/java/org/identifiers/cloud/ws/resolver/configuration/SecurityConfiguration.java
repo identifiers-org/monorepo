@@ -39,6 +39,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/actuator/loggers").hasAuthority(requiredRole)
                 .requestMatchers("/actuator/loggers/**").hasAuthority(requiredRole)
                 .requestMatchers(HttpMethod.POST, "/reverse/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/mcp/message").permitAll()
                 .requestMatchers(HttpMethod.GET, "/actuator/health").permitAll()
                 .requestMatchers(HttpMethod.GET, "/actuator/health/**").permitAll()
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
