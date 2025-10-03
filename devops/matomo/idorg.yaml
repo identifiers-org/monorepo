@@ -133,9 +133,6 @@ extraDeploy:
       failedJobsHistoryLimit: 3
       jobTemplate:
         spec:
-          parallelism: 3
-          completions: 3
-          completionMode: Indexed
           backoffLimit: 4
           template:
             metadata:
@@ -161,8 +158,7 @@ extraDeploy:
                     - -c
                     - |
                       ln -s /bitnami/matomo/config/config.ini.php /opt/bitnami/matomo/config/config.ini.php ;
-                      sleep ${JOB_COMPLETION_INDEX}m ;
-                      /opt/bitnami/php/bin/php /opt/bitnami/matomo/console core:archive --concurrent-archivers 8 --url=matomo.identifiers.org --php-cli-options="-d memory_limit=2G" ;
+                      /opt/bitnami/php/bin/php /opt/bitnami/matomo/console core:archive --url=matomo.identifiers.org --php-cli-options="-d memory_limit=2G" ;
                   env:
                     - name: MAILTO
                       value: identifiers-org@ebi.ac.uk
@@ -217,7 +213,7 @@ extraDeploy:
                       value: tls
                     - name: PHP_MEMORY_LIMIT
                       value: "2G"
-                  image: docker.io/bitnami/matomo:5.3.1
+                  image: identifiersorg/matomo:5.3.1
                   imagePullPolicy: IfNotPresent
                   name: matomo-archiver
                   resources:
