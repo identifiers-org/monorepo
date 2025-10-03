@@ -142,7 +142,8 @@ class SearchSuggestions extends React.Component {
     const splitQuery = query.replace('"', ' ').replace(':', ' ').split(/\s+/);
 
     const possibleId = this.getPossibleLocalIdFromQuery(splitQuery, namespace.lui_pattern) || '';
-    this.props.setSuggestion(`${namespace.prefix}:${possibleId}`);
+    const effectivePrefix = getEffectivePrefix(namespace);
+    this.props.setSuggestion(`${effectivePrefix || namespace.prefix}:${possibleId}`);
   }
 
   /**
@@ -282,7 +283,7 @@ class SearchSuggestions extends React.Component {
                           >
                             <span
                               className={`badge ${selectedNamespace === index ? 'bg-secondary border border-dark' : 'bg-dark border border-secondary'} fw-normal`}>
-                                {namespace.prefix}
+                                {getEffectivePrefix(namespace) || namespace.prefix}
                             </span>
 
                             <ResourceNameTag
@@ -323,6 +324,21 @@ class SearchSuggestions extends React.Component {
       </div>
     );
   }
+}
+
+const getEffectivePrefix = (namespace) => {
+  if (namespace) {
+    const colonIdx = namespace.lui_pattern.indexOf(":");
+    if (colonIdx > 1) {
+      const startPositionPrefix = (namespace.lui_pattern[0] === '^' ? 1 : 0);
+      const embeddedPrefix = namespace.lui_pattern.slice(startPositionPrefix, namespace.lui_pattern.indexOf(":"));
+      if (embeddedPrefix.toLowerCase() === namespace.prefix.toLowerCase()) {
+        return embeddedPrefix;
+      }
+    }
+    return namespace.prefix;
+  }
+  return undefined;
 }
 
 SearchSuggestions.propTypes = {
