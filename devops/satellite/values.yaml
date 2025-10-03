@@ -88,7 +88,7 @@ matomo:
 frontend:
   component: web-satellite
   tier: frontend
-  image: "identifiersorg/cloud-satellite-web-spa:2.6.4"
+  image: "identifiersorg/cloud-satellite-web-spa:2.6.5"
   replicas: 3
   cors_origins: "*"
   port: 9090
