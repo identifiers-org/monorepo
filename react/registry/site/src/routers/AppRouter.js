@@ -26,40 +26,44 @@ import ManagePrefixRegistrationRequestPage from '../components/pages/ManagePrefi
 import ManageResourceRegistrationRequestPage from '../components/pages/ManageResourceRegistrationRequestPage';
 
 // Router.
-import PrivateRoute from './privateRoute';
+import PrivateRoute from "./PrivateRoute";
 
-const condRoute = (auth, element, path) => {
-  const hasRole = auth.keycloak.hasResourceRole('curationDashboard'),
-        redirectElem = <Navigate replace to={"/"} />;
-  return <Route path={path} element={hasRole ? element : redirectElem} />
-}
-
-const AppRouter = (props) => (
+const AppRouter = () => (
   <BrowserRouter>
-    <>
-      <Header />
-      <div className="container">
-        <div className="w-100 pt-5">
-          <Routes>
-            <Route path="/" element={<HomePage/>} />
-            <Route path="/registry" element={<BrowseRegistryPage/>} />
-            <Route path="/registry/:prefix" element={<NamespaceDetailsPage/>} />
-            <Route path="/prefixregistrationrequest" element={<PrefixRegistrationRequestPage/>} />
-            <Route path="/resourceregistrationrequest" element={<ResourceRegistrationRequestPage/>} />
-            { config.enableAuthFeatures && condRoute(props.auth, <CurationDashboardPage/>, "/curation") }
-            { config.enableAuthFeatures && condRoute(props.auth, <ManagePrefixRegistrationRequestPage/>,
-                "/curation/prefixRegistration/:id") }
-            { config.enableAuthFeatures && condRoute(props.auth, <ManageResourceRegistrationRequestPage/>,
-                "/curation/resourceRegistration/:id") }
-            { config.enableAuthFeatures && condRoute(props.auth, <AccountPage/>, "/account") }
-            <Route component={NotFoundPage} />
-          </Routes>
-        </div>
+    <Header />
+    <div className="container">
+      <div className="w-100 pt-5">
+        <Routes>
+          <Route path="/" element={<HomePage/>} />
+          <Route path="/registry" element={<BrowseRegistryPage/>} />
+          <Route path="/registry/:prefix" element={<NamespaceDetailsPage/>} />
+          <Route path="/prefixregistrationrequest" element={<PrefixRegistrationRequestPage/>} />
+          <Route path="/resourceregistrationrequest" element={<ResourceRegistrationRequestPage/>} />
+          <Route path="/curation" element={
+            <PrivateRoute>
+              <CurationDashboardPage/>
+             </PrivateRoute>
+          } />
+          <Route path="/curation/prefixRegistration/:id" element={
+            <PrivateRoute>
+              <ManagePrefixRegistrationRequestPage/>
+            </PrivateRoute>
+          } />
+          <Route path="/curation/resourceRegistration/:id" element={
+            <PrivateRoute>
+              <ManageResourceRegistrationRequestPage/>
+            </PrivateRoute>
+          } />
+          <Route path="/curation/resourceRegistration/:id" element={
+            <PrivateRoute>
+              <AccountPage/>
+            </PrivateRoute>
+          } />
+          <Route component={NotFoundPage} />
+        </Routes>
       </div>
-      <Footer />
-    </>
+    </div>
+    <Footer />
   </BrowserRouter>
 );
-
-const mapStateToProps = (state) => ({ auth: state.auth });
-export default connect(mapStateToProps)(AppRouter);
+export default AppRouter;

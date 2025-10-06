@@ -28,7 +28,7 @@ export const doSignOut = () => {
   return async (dispatch, getState) => {
     const { keycloak } = getState().auth;
 
-    await keycloak.logout();
+    await keycloak.logout({redirectUri: window.location.origin});
     dispatch(setAuthenticated(keycloak));
   };
 };
