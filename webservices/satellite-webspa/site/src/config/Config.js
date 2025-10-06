@@ -1,3 +1,4 @@
+
 export const config = {
   // Url used for resolving a resource to get its providers. Used when clicking 'resolve' in the home page.
   resolverApi: 'https://resolver.api.identifiers.org',
@@ -45,5 +46,5 @@ export const config = {
   ebiSearchResponseSize: 100,
   ebiSearchRescoreWhenSingleIdDetected: true,
 
-  frontPageNoticeEnabled: false
+  daysPeriodToShowLatestUpdatePost: 90
 };

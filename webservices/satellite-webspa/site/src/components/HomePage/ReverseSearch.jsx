@@ -84,6 +84,10 @@ export default () => {
             </button>
             <ReverseSearchMatch url={url} match={match} loading={loading} />
           </div>
+          <a className="text-muted text-sm ms-1 text-decoration-none"
+             href="https://docs.identifiers.org/pages/api#resolution-api-services" target="_blank">
+            powered by our resolution API
+          </a>
         </form>
       </div>
     )

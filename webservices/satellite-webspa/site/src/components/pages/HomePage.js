@@ -44,7 +44,7 @@ class HomePage extends React.Component {
               Registry
             </a>.
           </p>
-          { config.frontPageNoticeEnabled && <Notice /> }
+          <Notice />
         </div>
 
         <div className="col col-12 col-xl-6 bg-light py-5 d-flex align-items-center justify-content-center">
@@ -59,7 +59,6 @@ class HomePage extends React.Component {
               <hr className="my-4"/>
               <h4><i className="icon icon-common icon-search pe-2" />
                 Convert provider URL to identifiers.org URL
-                <i className="icon icon-common icon-beta text-primary fs-2 ms-2"></i>
               </h4>
               <ReverseResolution />
             </div>
