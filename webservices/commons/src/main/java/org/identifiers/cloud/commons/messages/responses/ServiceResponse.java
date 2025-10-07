@@ -1,6 +1,7 @@
 package org.identifiers.cloud.commons.messages.responses;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.identifiers.cloud.commons.messages.ApiCentral;
@@ -9,10 +10,14 @@ import org.springframework.http.HttpStatusCode;
 
 import java.io.Serializable;
 
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
+
 @Data
 @Accessors(chain = true)
 public class ServiceResponse<T> implements Serializable {
+    @Schema(description = "API version", allowableValues = ApiCentral.apiVersion, requiredMode = REQUIRED)
     private String apiVersion = ApiCentral.apiVersion;
+    @Schema(description = "Error message in case of error", nullable = true)
     private String errorMessage = null;
     private T payload = null;
 

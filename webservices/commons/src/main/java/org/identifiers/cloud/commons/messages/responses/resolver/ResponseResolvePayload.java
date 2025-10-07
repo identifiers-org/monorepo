@@ -1,5 +1,6 @@
 package org.identifiers.cloud.commons.messages.responses.resolver;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,6 +19,8 @@ import java.util.List;
 @EqualsAndHashCode
 @Accessors(chain = true)
 public class ResponseResolvePayload implements Serializable {
+    @Schema(nullable = true)
     private List<ResolvedResource>  resolvedResources;
+    @Schema(nullable = true)
     private ParsedCompactIdentifier parsedCompactIdentifier;
 }

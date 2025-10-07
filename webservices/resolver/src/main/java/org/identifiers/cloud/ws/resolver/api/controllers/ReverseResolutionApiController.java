@@ -1,5 +1,10 @@
 package org.identifiers.cloud.ws.resolver.api.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +25,15 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("reverse")
+@Tag(name = "Provider URL conversion API", description = "Convert provider URLs into identifiers.org URIs")
 public class ReverseResolutionApiController {
     private final ReverseResolutionService service;
 
+    @Operation(summary = "convert based on URL prefix")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Match was found"),
+            @ApiResponse(responseCode = "204", description = "Match wasn't found", content = @Content)
+    })
     @PostMapping(value = "byPrefix", consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<ServiceResponse<ReverseResolutionMatch>> prefixBasedReverseResolution(
             @RequestBody ServiceRequest<ReverseResolutionRequestPayload> data
@@ -45,6 +56,10 @@ public class ReverseResolutionApiController {
         }
     }
 
+    @Operation(summary = "convert based on URL similarity")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Match(es) found")
+    })
     @PostMapping(value = "bySimilarity", consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<ServiceResponse<List<ReverseResolutionMatch>>> similarityBasedReverseResolution(
             @RequestBody ServiceRequest<ReverseResolutionRequestPayload> data
